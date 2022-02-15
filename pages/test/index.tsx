@@ -7,7 +7,7 @@ const Test = () => {
   const router = useRouter();
   return (
     <>
-      <div css={aaa}>Test page 이동</div>
+      <div css={aaa}>Test page 이동!</div>
       <button type={'button'} onClick={() => router.push('/')}>
         이동
       </button>
