@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import Button from '../../components/atoms/Button';
 import { useRouter } from 'next/router';
 
-const Test = () => {
+const Note = () => {
   const router = useRouter();
   return (
     <>
@@ -16,7 +16,7 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Note;
 
 const aaa = css`
   color: red;

@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import SettingOrganisms from '../components/organisms/SettingOrganisms';
 
 const Home: NextPage = () => {
   const API: any = process.env.NEXT_PUBLIC_API;
@@ -31,9 +32,11 @@ const Home: NextPage = () => {
       </Head>
 
       <div style={{ fontSize: '25px', color: '#123533' }}>Diby 0.1 setting</div>
-      <button type={'button'} onClick={() => router.push('/test')}>
+      <button type={'button'} onClick={() => router.push('/note')}>
         이동
       </button>
+
+      <SettingOrganisms />
     </div>
   );
 };

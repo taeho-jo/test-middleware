@@ -4,7 +4,8 @@
   "env": {
     "browser": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": ["next","eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:storybook/recommended", "prettier"],
   "plugins": ["@typescript-eslint", "@emotion"],

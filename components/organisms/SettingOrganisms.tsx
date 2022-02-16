@@ -8,12 +8,11 @@ import TestFormBox2 from '../molecules/TestFormBox/TestFormBox2';
 const SettingOrganisms = () => {
   return (
     <>
+      <SettingMolecules />
       <FlexBox justify={'space-between'}>
         <TestFormBox />
         <TestFormBox2 />
       </FlexBox>
-
-      <SettingMolecules />
       <div>Init Organisms</div>
     </>
   );
