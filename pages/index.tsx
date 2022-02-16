@@ -30,7 +30,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>Diby 0.1 setting</div>
+      <div style={{ fontSize: '25px', color: '#123533' }}>Diby 0.1 setting</div>
       <button type={'button'} onClick={() => router.push('/test')}>
         이동
       </button>
