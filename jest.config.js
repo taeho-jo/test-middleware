@@ -6,17 +6,17 @@ module.exports = {
   ],
   coverageThreshold: {
     "global": {
-      "statements": -1,
-      "branches": -1,
-      "functions": -1,
-      "lines": -1
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
     },
-    "components/atoms/**/*/tsx": {
-      "statements": -1,
-      "branches": -1,
-      "functions": -1,
-      "lines": -1
-    }
+    // "components/atoms/**/*/tsx": {
+    //   "statements": -1,
+    //   "branches": -1,
+    //   "functions": -1,
+    //   "lines": -1
+    // }
   },
   moduleNameMapper: {
     // Handle CSS imports (with CSS modules)
