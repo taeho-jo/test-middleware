@@ -4,6 +4,20 @@ module.exports = {
     '!**/*.d.ts',
     '!**/node_modules/**',
   ],
+  coverageThreshold: {
+    "global": {
+      "statements": -1,
+      "branches": -1,
+      "functions": -1,
+      "lines": -1
+    },
+    "components/atoms/**/*/tsx": {
+      "statements": -1,
+      "branches": -1,
+      "functions": -1,
+      "lines": -1
+    }
+  },
   moduleNameMapper: {
     // Handle CSS imports (with CSS modules)
     // https://jestjs.io/docs/webpack#mocking-css-modules
