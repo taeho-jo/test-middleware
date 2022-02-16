@@ -13,7 +13,7 @@ const SettingOrganisms = () => {
         <TestFormBox />
         <TestFormBox2 />
       </FlexBox>
-      <div>Init Organisms</div>
+      {/*<div>Init Organisms</div>*/}
     </>
   );
 };
