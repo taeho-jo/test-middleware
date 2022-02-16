@@ -1,9 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`atoms/Button matches snapshot 1`] = `
+exports[`Button active button 1`] = `
 <div>
   <button
-    class="css-ljgqd9-test"
+    class="css-2wj85a-test"
+  >
+    Button
+  </button>
+</div>
+`;
+
+exports[`Button border button 1`] = `
+<div>
+  <button
+    class="css-2wj85a-test"
+  >
+    Button
+  </button>
+</div>
+`;
+
+exports[`Button large button 1`] = `
+<div>
+  <button
+    class="css-1vu1mz8-test"
+  >
+    Button
+  </button>
+</div>
+`;
+
+exports[`Button loading button 1`] = `
+<div>
+  <button
+    class="css-2wj85a-test"
     type="button"
   >
     <span
