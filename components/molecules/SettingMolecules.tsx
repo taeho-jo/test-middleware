@@ -11,17 +11,12 @@ const SettingMolecules = () => {
   return (
     <>
       <FlexBox height={'500px'}>
-        <SimpleLineChart data={data} />
-      </FlexBox>
-
-      <FlexBox height={'500px'}>
         <SimpleBarChart data={data} />
       </FlexBox>
 
-      <Button size={'lg'} bgColor={'primary'} loading={false} active={true}>
-        그래프확인
-      </Button>
-      <div>Init Molecules</div>
+      <FlexBox height={'500px'}>
+        <SimpleLineChart data={data} />
+      </FlexBox>
     </>
   );
 };

@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button active button 1`] = `
+<div>
+  <button
+    class="css-1ul253k-test"
+  >
+    Button
+  </button>
+</div>
+`;
+
+exports[`Button border button 1`] = `
+<div>
+  <button
+    class="css-193gijs-test"
+  >
+    Button
+  </button>
+</div>
+`;
+
+exports[`Button large button 1`] = `
+<div>
+  <button
+    class="css-1p52opr-test"
+  >
+    Button
+  </button>
+</div>
+`;
+
+exports[`Button loading button 1`] = `
+<div>
+  <button
+    class="css-1ul253k-test"
+    type="button"
+  >
+    <span
+      class="css-9q8ohv"
+    />
+  </button>
+</div>
+`;
+
+exports[`Button middle button 1`] = `
+<div>
+  <button
+    class="css-1fd2bue-test"
+  >
+    Button
+  </button>
+</div>
+`;
+
+exports[`Button none button 1`] = `
+<div>
+  <button
+    class="css-1ul253k-test"
+  >
+    Button
+  </button>
+</div>
+`;
+
+exports[`Button text button 1`] = `
+<div>
+  <button
+    class="css-qerfha-test"
+  >
+    Button
+  </button>
+</div>
+`;

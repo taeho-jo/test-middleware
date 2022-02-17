@@ -1,27 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import type { NextPage } from 'next';
-import axios from 'axios';
+// Components
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import TestHomeOrganisms from '../components/organisms/testHomeOrganisms';
 
 const Home: NextPage = () => {
-  const API: any = process.env.NEXT_PUBLIC_API;
-
-  const router = useRouter();
-
-  const initData = async () => {
-    try {
-      const res: any = await axios.get(API);
-      console.log(res, 'ASDFASDF');
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    initData();
-  });
-
   return (
     <div>
       <Head>
@@ -30,10 +13,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div style={{ fontSize: '25px', color: '#123533' }}>Diby 0.1 setting</div>
-      <button type={'button'} onClick={() => router.push('/test')}>
-        이동
-      </button>
+      <TestHomeOrganisms />
     </div>
   );
 };

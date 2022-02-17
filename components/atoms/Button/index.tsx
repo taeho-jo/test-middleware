@@ -6,7 +6,7 @@ import { css } from '@emotion/react';
 import { commonStyles } from '../../../styles/Common.styles';
 const { colors } = commonStyles;
 // Types
-interface PropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface PropsType {
   children?: string | React.ReactNode;
   size?: 'sm' | 'md' | 'lg';
   bgColor?: 'primary' | 'secondary' | 'gray' | 'black' | 'danger';
@@ -14,6 +14,7 @@ interface PropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
   type?: 'button' | 'submit' | 'reset';
   border?: 'none' | 'outline' | 'text';
+  onClick?: () => void;
 }
 
 const ButtonSizeStyle = {
@@ -30,9 +31,14 @@ const Button = ({
   active = true,
   type = 'button',
   border = 'none',
+  onClick,
 }: PropsType) => {
   return loading ? (
-    <button type={type} css={test(size, bgColor, active, border)}>
+    <button
+      type={type}
+      css={test(size, bgColor, active, border)}
+      onClick={onClick}
+    >
       <ClipLoader
         color={border === 'none' ? colors.wh_1 : colors[bgColor]}
         loading={loading}
@@ -40,7 +46,9 @@ const Button = ({
       />
     </button>
   ) : (
-    <button css={test(size, bgColor, active, border)}>{children}</button>
+    <button css={test(size, bgColor, active, border)} onClick={onClick}>
+      {children}
+    </button>
   );
 };
 
@@ -65,5 +73,6 @@ const test = (size, bgColor, active, border) => css`
   justify-content: center;
   align-items: center;
   margin: 4px;
+  outline: none;
   ${active ? `&:hover { background: ${colors[`hover_${bgColor}`]};}` : ''}
 `;
