@@ -16,6 +16,7 @@ interface PropsType {
   width?: string;
   height?: string;
   padding?: string;
+  onClick?: () => void;
 }
 
 const FlexBox = ({
@@ -26,9 +27,13 @@ const FlexBox = ({
   height = 'auto',
   padding = '10px 30px',
   direction = 'row',
+  onClick,
 }: PropsType) => {
   return (
-    <div css={flexBox(width, height, justify, align, padding, direction)}>
+    <div
+      onClick={onClick}
+      css={flexBox(width, height, justify, align, padding, direction)}
+    >
       {children}
     </div>
   );
