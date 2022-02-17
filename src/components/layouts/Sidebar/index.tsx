@@ -40,7 +40,12 @@ const MENU_LIST = [
   {
     label: 'Note',
     path: '/note',
-    child: [],
+    child: [
+      {
+        label: 'Counter',
+        path: '/note/counter',
+      },
+    ],
   },
 ];
 
@@ -68,21 +73,17 @@ const Sidebar = ({ showSidebar, onClick }: PropsTyps) => {
   // 페이지 이동 함수
   const handleClickMenu = useCallback(
     (label: string, path: string, isChildren?: boolean) => {
-      console.log(
-        isChildren,
-        path,
-        label,
-        subMenuName,
-        showSubMenu,
-        'asdfasdf',
-      );
-
+      console.log(label, path, isChildren);
       if (isChildren) {
         router.push(path);
       }
       if (!isChildren) {
         if (label === 'Test') {
           handleUpdateSubMenuName('Test');
+          handleChangeShowSubMenu(true);
+          router.push(path);
+        } else if (label === 'Note') {
+          handleUpdateSubMenuName('Note');
           handleChangeShowSubMenu(true);
           router.push(path);
         } else {
@@ -100,11 +101,14 @@ const Sidebar = ({ showSidebar, onClick }: PropsTyps) => {
     if (path === '/graph' || path === '/form') {
       handleUpdateSubMenuName('Test');
       handleChangeShowSubMenu(true);
+    } else if (path === '/note' || path === '/note/counter') {
+      handleUpdateSubMenuName('Note');
+      handleChangeShowSubMenu(true);
     } else {
       handleUpdateSubMenuName('');
       handleChangeShowSubMenu(false);
     }
-  }, [subMenuName, showSubMenu, router.pathname]);
+  }, [router.pathname]);
 
   return (
     <aside css={sidebarStyle(showSidebar)}>
@@ -127,26 +131,31 @@ const Sidebar = ({ showSidebar, onClick }: PropsTyps) => {
                 fontWeight={'bold'}
                 cursor={'pointer'}
               />
-              {el.child.length > 0 && !showSubMenu ? (
-                <MdOutlineKeyboardArrowUp
-                  color={'white'}
-                  size={28}
-                  cursor={'pointer'}
-                  onClick={() => handleClickMenu(el.label, el.path, false)}
-                />
-              ) : el.child.length > 0 && showSubMenu ? (
+
+              {el.child.length === 0 ? null : el.child.length > 0 &&
+                showSubMenu &&
+                subMenuName === el.label ? (
                 <MdOutlineKeyboardArrowDown
                   color={'white'}
                   size={28}
                   cursor={'pointer'}
                   onClick={() => handleClickMenu(el.label, el.path, false)}
                 />
-              ) : null}
+              ) : (
+                <MdOutlineKeyboardArrowUp
+                  color={'white'}
+                  size={28}
+                  cursor={'pointer'}
+                  onClick={() => handleClickMenu(el.label, el.path, false)}
+                />
+              )}
             </FlexBox>
 
             {/*Sub Menu*/}
             {el.child.length > 0 && showSubMenu && subMenuName === el.label
               ? el?.child?.map((item, index) => {
+                  console.log(el.label);
+                  console.log(item);
                   return (
                     <div css={subMenuStyle} key={index}>
                       <FlexBox
