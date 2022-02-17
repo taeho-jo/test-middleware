@@ -12,6 +12,7 @@ interface PropsType {
     | 'flex-start'
     | 'flex-end';
   align?: string;
+  direction?: 'row' | 'column';
   width?: string;
   height?: string;
   padding?: string;
@@ -24,19 +25,23 @@ const FlexBox = ({
   width = '100%',
   height = 'auto',
   padding = '10px 30px',
+  direction = 'row',
 }: PropsType) => {
   return (
-    <div css={flexBox(width, height, justify, align, padding)}>{children}</div>
+    <div css={flexBox(width, height, justify, align, padding, direction)}>
+      {children}
+    </div>
   );
 };
 
 export default FlexBox;
 
-const flexBox = (width, height, justify, align, padding) => css`
+const flexBox = (width, height, justify, align, padding, direction) => css`
   width: ${width};
   height: ${height};
   display: flex;
   justify-content: ${justify};
   align-items: ${align};
   padding: ${padding};
+  flex-direction: ${direction};
 `;

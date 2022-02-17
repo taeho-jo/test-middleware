@@ -2,6 +2,9 @@ import { css } from '@emotion/react';
 
 const reset = css`
   * {
+    box-sizing: border-box;
+  }
+  * {
     html,
     body,
     div,
@@ -74,7 +77,6 @@ const reset = css`
     video {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
     article,
     aside,

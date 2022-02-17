@@ -5,11 +5,11 @@ module.exports = {
     '!**/node_modules/**',
   ],
   coverageThreshold: {
-    "global": {
-      "statements": 0,
-      "branches": 20,
-      "functions": 0,
-      "lines": 0
+    global: {
+      statements: 0,
+      branches: 0,
+      functions: 0,
+      lines: 0,
     },
     // "components/atoms/**/*/tsx": {
     //   "statements": -1,

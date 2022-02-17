@@ -3,7 +3,7 @@ import React from 'react';
 import SettingMolecules from '../molecules/SettingMolecules';
 import TestFormBox from '../molecules/TestFormBox';
 import FlexBox from '../atoms/FlexBox';
-import TestFormBox2 from '../molecules/TestFormBox/TestFormBox2';
+// import TestFormBox2 from '../molecules/TestFormBox/TestFormBox2';
 
 const SettingOrganisms = () => {
   return (
@@ -11,7 +11,7 @@ const SettingOrganisms = () => {
       <SettingMolecules />
       <FlexBox justify={'space-between'}>
         <TestFormBox />
-        <TestFormBox2 />
+        {/*<TestFormBox2 />*/}
       </FlexBox>
       <div>Init Organisms</div>
     </>
