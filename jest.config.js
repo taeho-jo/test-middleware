@@ -1,6 +1,6 @@
 module.exports = {
   collectCoverageFrom: [
-    'components/atoms/**/*.{js,jsx,ts,tsx}',
+    'src/components/atoms/**/*.{js,jsx,ts,tsx}',
     '!**/*.d.ts',
     '!**/node_modules/**',
   ],

@@ -4,7 +4,7 @@ import FlexBox from '../../atoms/FlexBox';
 import TestGraphMolecules from '../../molecules/TestGraphMolecules';
 import SimpleBarChart from '../../atoms/SimpleBarChart';
 import { data, verticalData } from '../../../assets/dummy/dummyData';
-import VerticalBarGraph from '../../atoms/VerticalBarGraph/VerticalBarGraph';
+import Index from '../../atoms/VerticalBarGraph';
 
 const TestGraphOrganisms = () => {
   return (
@@ -14,7 +14,7 @@ const TestGraphOrganisms = () => {
       </FlexBox>
 
       <TestGraphMolecules title={'vertical bar graph'}>
-        <VerticalBarGraph data={verticalData} tooltip={false} legend={false} />
+        <Index data={verticalData} tooltip={false} legend={false} />
       </TestGraphMolecules>
 
       <TestGraphMolecules title={'simple bar graph'}>

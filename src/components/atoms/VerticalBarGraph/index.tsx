@@ -26,23 +26,7 @@ interface PropsType {
   legend?: boolean;
 }
 
-const renderCustomizedLabel = props => {
-  const { x, y, height, value } = props;
-  return (
-    <text
-      fontSize={14}
-      x={x + 20}
-      y={y + height / 2 + 6}
-      fill={'#0D0D0D'}
-      fontWeight={'bold'}
-      textAnchor="start"
-    >
-      {value}
-    </text>
-  );
-};
-
-const VerticalBarGraph = ({
+const VerticlBarGraph = ({
   cartesianGrid = true,
   xAxis = true,
   yAxis = true,
@@ -53,6 +37,22 @@ const VerticalBarGraph = ({
 }: PropsType) => {
   const [focusBar, setFocusBar] = useState<number | null>(null);
   const [hoverBar, setHoverBar] = useState<number | null>(null);
+
+  const renderCustomizedLabel = useCallback(props => {
+    const { x, y, height, value } = props;
+    return (
+      <text
+        fontSize={14}
+        x={x + 20}
+        y={y + height / 2 + 6}
+        fill={'#0D0D0D'}
+        fontWeight={'bold'}
+        textAnchor="start"
+      >
+        {value}
+      </text>
+    );
+  }, []);
 
   const handleSelectBarChart = useCallback(
     state => {
@@ -125,4 +125,4 @@ const VerticalBarGraph = ({
   );
 };
 
-export default VerticalBarGraph;
+export default VerticlBarGraph;

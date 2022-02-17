@@ -8,10 +8,9 @@ import { data } from '../../../assets/dummy/dummyData';
 interface PropsType {
   title: string;
   children: React.ReactNode;
-  data: any;
 }
 
-const TestGraphMolecules = ({ title, children }) => {
+const TestGraphMolecules = ({ title, children }: PropsType) => {
   return (
     <FlexBox padding={'0'} direction={'column'}>
       <BoxTitle title={title} />
