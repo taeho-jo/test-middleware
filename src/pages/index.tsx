@@ -1,10 +1,23 @@
 import React from 'react';
-import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+// Libraries
+import axios from 'axios';
 // Components
 import Head from 'next/head';
 import TestHomeOrganisms from '../components/organisms/testHomeOrganisms';
 
-const Home: NextPage = () => {
+const Home = () => {
+  const router = useRouter();
+  const logout = async () => {
+    try {
+      const res: any = await axios.get('/api/logout');
+      if (res.status === 200) {
+        await router.push('/login');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <div>
       <Head>
@@ -14,6 +27,7 @@ const Home: NextPage = () => {
       </Head>
 
       <TestHomeOrganisms />
+      <button onClick={logout}>Logout</button>
     </div>
   );
 };
