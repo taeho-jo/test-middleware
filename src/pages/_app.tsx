@@ -1,8 +1,12 @@
 import React from 'react';
-import type { AppProps } from 'next/app';
-import GlobalStyles from '../styles/GlobalStyles';
-import Layout from '../components/layouts/Layout';
+// Libraries
 import { wrapper } from '../store';
+// Components
+import Layout from '../components/layouts/Layout';
+// Styles
+import GlobalStyles from '../styles/GlobalStyles';
+// Types
+import type { AppProps } from 'next/app';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

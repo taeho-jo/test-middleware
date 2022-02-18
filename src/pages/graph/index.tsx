@@ -1,4 +1,5 @@
 import React from 'react';
+// Components
 import TestGraphOrganisms from '../../components/organisms/testGraphOrganisms';
 
 const Graph = () => {
