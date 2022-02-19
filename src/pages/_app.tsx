@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 // Libraries
 import { wrapper } from '../store';
 // Components
@@ -7,14 +7,24 @@ import Layout from '../components/layouts/Layout';
 import GlobalStyles from '../styles/GlobalStyles';
 // Types
 import type { AppProps } from 'next/app';
+import type { NextPage } from 'next';
 
-function MyApp({ Component, pageProps }: AppProps) {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? (page => page);
   return (
     <>
       <GlobalStyles />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      {/*<Layout>*/}
+      {getLayout(<Component {...pageProps} />)}
+      {/*</Layout>*/}
     </>
   );
 }
