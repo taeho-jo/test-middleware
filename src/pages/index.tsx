@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useRouter } from 'next/router';
 // Libraries
 import axios from 'axios';
 // Components
 import Head from 'next/head';
 import TestHomeOrganisms from '../components/organisms/testHomeOrganisms';
+import Layout from '../components/layouts/Layout';
 
 const Home = () => {
   const router = useRouter();
@@ -33,3 +34,7 @@ const Home = () => {
 };
 
 export default Home;
+
+Home.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
