@@ -1,14 +1,10 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 // Components
 import TestFormOrganisms from '../../components/organisms/testFormOrganisms';
-import Layout from '../../components/layouts/Layout';
+import withAuth from '../../hoc/withAuth';
 
 const Form = () => {
   return <TestFormOrganisms />;
 };
 
-export default Form;
-
-Form.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
-};
+export default withAuth(Form);

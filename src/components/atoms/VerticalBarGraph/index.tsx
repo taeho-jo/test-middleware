@@ -26,7 +26,7 @@ interface PropsType {
   legend?: boolean;
 }
 
-const VerticlBarGraph = ({
+const VerticalBarGraph = ({
   cartesianGrid = true,
   xAxis = true,
   yAxis = true,
@@ -117,7 +117,7 @@ const VerticlBarGraph = ({
             dataKey={'name'}
             position="insideLeft"
             style={{ fill: '#fff', fontWeight: 'bold' }}
-            content={renderCustomizedLabel}
+            content={React.memo(renderCustomizedLabel)}
           />
         </Bar>
       </BarChart>
@@ -125,4 +125,4 @@ const VerticlBarGraph = ({
   );
 };
 
-export default VerticlBarGraph;
+export default VerticalBarGraph;

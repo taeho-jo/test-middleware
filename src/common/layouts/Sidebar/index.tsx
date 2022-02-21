@@ -1,16 +1,16 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
+// Components
+import Button from '../../../components/atoms/Button';
+import FlexBox from '../../../components/atoms/FlexBox';
+import ShortText from '../../../components/atoms/ShortText';
 // Libraries
 import {
-  MdOutlineKeyboardArrowUp,
   MdOutlineKeyboardArrowDown,
+  MdOutlineKeyboardArrowUp,
 } from 'react-icons/md';
 // Styles
 import { css } from '@emotion/react';
-import Button from '../../atoms/Button';
-import FlexBox from '../../atoms/FlexBox';
-import ShortText from '../../atoms/ShortText';
 // Types
 interface PropsTyps {
   showSidebar: boolean;

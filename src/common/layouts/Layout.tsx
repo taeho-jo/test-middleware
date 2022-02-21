@@ -1,14 +1,19 @@
 import React, { useCallback, useState } from 'react';
+// Redux
+import { useSelector } from 'react-redux';
+import { ReducerType } from '../../store/reducers';
 // Components
 import Sidebar from './Sidebar';
 // Styles
 import { css } from '@emotion/react';
+
 // Types
 interface PropsType {
   children: React.ReactNode;
 }
 
 const Layout = ({ children }: PropsType) => {
+  const token = useSelector<ReducerType, string>(state => state.auth.token);
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
 
   const handleChangeShowSidebar = useCallback(() => {
@@ -16,10 +21,21 @@ const Layout = ({ children }: PropsType) => {
   }, [showSidebar]);
 
   return (
-    <div css={mainContainer}>
-      <Sidebar showSidebar={showSidebar} onClick={handleChangeShowSidebar} />
-      <main css={contentsContainer(showSidebar)}>{children}</main>
-    </div>
+    <>
+      {token ? (
+        <div css={mainContainer}>
+          <Sidebar
+            showSidebar={showSidebar}
+            onClick={handleChangeShowSidebar}
+          />
+          <main css={contentsContainer(showSidebar)}>{children}</main>
+        </div>
+      ) : (
+        <div css={mainContainer}>
+          <main css={contentsContainer(false)}>{children}</main>
+        </div>
+      )}
+    </>
   );
 };
 

@@ -1,32 +1,40 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+// Redux
+import { setToken } from '../../store/reducers/authReducer';
+import { useDispatch } from 'react-redux';
 // Libraries
-import axios from 'axios';
+import GoogleLogin from 'react-google-login';
 // Components
 import PageTitle from '../../components/atoms/PageTitle';
 import FlexBox from '../../components/atoms/FlexBox';
 
 const Login = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
-  const handleLogin = async () => {
-    try {
-      const res1 = await axios.get(process.env.NEXT_PUBLIC_API);
-      if (res1.status === 200) {
-        const res: any = await axios.post('/api/login', { token: '1234566' });
-        if (res.status === 200) {
-          await router.push('/');
-        } else {
-          await router.push('/login');
-        }
-      }
-    } catch (e) {
-      console.log(e);
+
+  const onLoginSuccess = async (res: any) => {
+    console.log(res.accessToken, 'RES RES RES');
+    const accessToken = res.accessToken;
+    if (res.accessToken) {
+      dispatch(setToken(accessToken));
+      await router.push('/');
     }
   };
+
   return (
     <FlexBox padding={'0'}>
       <PageTitle title={'Login!'} />
-      <button onClick={handleLogin}>login</button>
+      {/*<button onClick={handleLogin}>login</button>*/}
+      <FlexBox padding={'0'} justify={'flex-end'}>
+        <GoogleLogin
+          clientId="318189383837-p36tbqlb9fd40n868q48u9c2eqgd0r96.apps.googleusercontent.com"
+          buttonText="Login"
+          onSuccess={result => onLoginSuccess(result)}
+          onFailure={result => console.log(result)}
+          uxMode="popup"
+        />
+      </FlexBox>
     </FlexBox>
   );
 };
