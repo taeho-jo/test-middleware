@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Login from '../pages/login';
 // Redux
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../store/reducers';
