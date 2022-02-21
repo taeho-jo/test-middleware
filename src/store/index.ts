@@ -1,16 +1,42 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { MakeStore, createWrapper } from 'next-redux-wrapper';
 import logger from 'redux-logger';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage/session';
 
 import reducer from './reducers';
 
-const makeStore: MakeStore<any> = context =>
-  configureStore({
-    reducer,
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
-    devTools: process.env.NODE_ENV !== 'production',
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['auth'],
+  blacklist: ['counter'],
+};
+
+export const persistedReducer = persistReducer(persistConfig, reducer);
+
+const makeStore: MakeStore<any> = () => {
+  const store = configureStore({
+    reducer: persistedReducer,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }).concat(logger),
   });
 
-export const wrapper = createWrapper<any>(makeStore, {
-  debug: process.env.NODE_ENV !== 'production',
-});
+  const persistor = persistStore(store);
+  return { ...persistor, ...store };
+};
+
+export const wrapper = createWrapper<any>(makeStore, {});

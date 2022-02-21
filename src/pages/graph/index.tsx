@@ -1,14 +1,10 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 // Components
 import TestGraphOrganisms from '../../components/organisms/testGraphOrganisms';
-import Layout from '../../components/layouts/Layout';
+import withAuth from '../../hoc/withAuth';
 
 const Graph = () => {
   return <TestGraphOrganisms />;
 };
 
-export default Graph;
-
-Graph.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
-};
+export default withAuth(Graph);

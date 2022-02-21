@@ -1,24 +1,28 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
-// Libraries
-import axios from 'axios';
+// Redux
+import { useDispatch } from 'react-redux';
+import { resetToken } from '../store/reducers/authReducer';
 // Components
+import withAuth from '../hoc/withAuth';
 import Head from 'next/head';
 import TestHomeOrganisms from '../components/organisms/testHomeOrganisms';
-import Layout from '../components/layouts/Layout';
+
+// Libraries
+import { GoogleLogout } from 'react-google-login';
 
 const Home = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const logout = async () => {
     try {
-      const res: any = await axios.get('/api/logout');
-      if (res.status === 200) {
-        await router.push('/login');
-      }
+      dispatch(resetToken());
+      await router.push('/login');
     } catch (e) {
       console.log(e);
     }
   };
+
   return (
     <div>
       <Head>
@@ -28,13 +32,13 @@ const Home = () => {
       </Head>
 
       <TestHomeOrganisms />
-      <button onClick={logout}>Logout</button>
+      <GoogleLogout
+        clientId="318189383837-p36tbqlb9fd40n868q48u9c2eqgd0r96.apps.googleusercontent.com"
+        buttonText="Logout"
+        onLogoutSuccess={logout}
+      />
     </div>
   );
 };
 
-export default Home;
-
-Home.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
-};
+export default withAuth(Home);
