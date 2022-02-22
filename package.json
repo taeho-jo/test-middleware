@@ -16,6 +16,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@reduxjs/toolkit": "^1.7.2",
+    "@svgr/webpack": "^6.2.1",
     "@types/cookie": "^0.4.1",
     "@types/react-transition-group": "^4.4.4",
     "axios": "^0.26.0",
@@ -30,6 +31,7 @@
     "react-google-login": "^5.2.2",
     "react-hook-form": "^7.27.0",
     "react-icons": "^4.3.1",
+    "react-query": "^3.34.16",
     "react-redux": "^7.2.6",
     "react-spinners": "^0.11.0",
     "react-transition-group": "^4.4.2",

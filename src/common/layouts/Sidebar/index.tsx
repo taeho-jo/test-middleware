@@ -39,11 +39,15 @@ const MENU_LIST = [
   },
   {
     label: 'Note',
-    path: '/note',
+    path: '/note/counter',
     child: [
       {
         label: 'Counter',
         path: '/note/counter',
+      },
+      {
+        label: 'Querytest',
+        path: '/note/querytest',
       },
     ],
   },
