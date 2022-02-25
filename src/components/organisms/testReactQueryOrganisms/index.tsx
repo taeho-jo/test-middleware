@@ -1,60 +1,25 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import PageTitle from '../../atoms/PageTitle';
 import Icon from '../../atoms/Icon';
 import ClipLoader from 'react-spinners/ClipLoader';
 import FlexBox from '../../atoms/FlexBox';
-import { useGetHooks, useMultipleGetHooks } from '../../../hooks/useGetHooks';
-import { usePostHooks } from '../../../hooks/usePostHooks';
+import { useGetProductsListApi } from '../../../api/productsApi';
 import Button from '../../atoms/Button';
 
 const TestReactQueryOrganisms = () => {
-  const data = useGetHooks(['products'], '/products', {
-    onError: e => {
-      console.error('ProductAPI::::::::: ', e);
-    },
-  });
-  // const data2 = useGetHooks(['category'], '/products/categories', {});
-  //
-  // const dataAll = useMultipleGetHooks(
-  //   ['products', 'category'],
-  //   ['/products', '/products/categories'],
-  //   [{}, {}],
-  // );
-  //
-  // console.log('개별로 각각 호출 data ::: ', data);
-  // console.log('개별로 각각 호출 data2 ::: ', data2);
-  // console.log('전체로 한번에 호출 dataAll::::: ', dataAll);
+  const { isLoading, data, isError, error } = useGetProductsListApi();
 
-  // console.log(data2, '16847');
-  // const {
-  //   data: dataLogin,
-  //   isError: isErrorLogin,
-  //   error: errorLogin,
-  //   refetch,
-  // } = usePostHooks(
-  //   ['login'],
-  //   '/auth/login',
-  //   { username: 'mor_2314', password: '83r5^_' },
-  //   { enabled: false },
-  // );
-  //
-  // useEffect(() => {
-  //   if (dataLogin) {
-  //     alert(dataLogin.data.token);
-  //   }
-  // }, [dataLogin]);
-
-  if (data.isLoading) {
+  if (isLoading) {
     return (
       <>
         <FlexBox>
-          <ClipLoader color={'red'} loading={data.isLoading} size={150} />
+          <ClipLoader color={'red'} loading={isLoading} size={150} />
         </FlexBox>
       </>
     );
   }
-  if (data.isError) {
-    return <span>Error: {data.error['message']}</span>;
+  if (isError) {
+    return <span>Error: {error['message']}</span>;
   }
 
   return (
@@ -63,12 +28,33 @@ const TestReactQueryOrganisms = () => {
       {/*<Button size={'md'} type={'button'} onClick={refetch}>*/}
       {/*  버튼!!!!!!!!!*/}
       {/*</Button>*/}
-      <Icon name="TEST" size={30} />
-      <FlexBox direction={'column'}>
-        {data?.data?.data?.map(product => {
+      {/*<Icon name="TEST" size={30} />*/}
+      <FlexBox
+        backgroundColor={'pink'}
+        justify={'flex-start'}
+        align={'flex-start'}
+        wrap={'wrap'}
+      >
+        {data?.map(product => {
           return (
             <Fragment key={product.id}>
-              <div>{product.title}</div>
+              <FlexBox backgroundColor={'orange'} padding={'5px'} lg={4} md={6}>
+                <FlexBox
+                  align={'flex-start'}
+                  border={'1px solid red'}
+                  lg={12}
+                  md={12}
+                >
+                  <span>{product.title}</span>
+                </FlexBox>
+              </FlexBox>
+              {/*<FlexBox md={3}>1</FlexBox>*/}
+              {/*<FlexBox md={3}>1</FlexBox>*/}
+              {/*<FlexBox md={3}>1</FlexBox>*/}
+              {/*<FlexBox md={3}>1</FlexBox>*/}
+              {/*<FlexBox md={3}>1</FlexBox>*/}
+              {/*<FlexBox md={3}>1</FlexBox>*/}
+              {/*<FlexBox md={3}>1</FlexBox>*/}
             </Fragment>
           );
         })}

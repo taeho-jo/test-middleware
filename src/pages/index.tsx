@@ -10,6 +10,7 @@ import TestHomeOrganisms from '../components/organisms/testHomeOrganisms';
 
 // Libraries
 import { GoogleLogout } from 'react-google-login';
+import FlexBox from '../components/atoms/FlexBox';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,20 @@ const Home = () => {
         buttonText="Logout"
         onLogoutSuccess={logout}
       />
+      <FlexBox backgroundColor={'pink'} padding={'20px 0px'}>
+        <FlexBox md={5} padding={'5px'}>
+          <FlexBox border={'1px solid red'}>md 6</FlexBox>
+        </FlexBox>
+        <FlexBox md={4} padding={'5px'}>
+          <FlexBox border={'1px solid red'}>md 4</FlexBox>
+        </FlexBox>
+        <FlexBox md={2} padding={'5px'}>
+          <FlexBox border={'1px solid red'}>md 2</FlexBox>
+        </FlexBox>
+        <FlexBox md={1} padding={'5px'}>
+          <FlexBox border={'1px solid red'}>md 2</FlexBox>
+        </FlexBox>
+      </FlexBox>
     </div>
   );
 };

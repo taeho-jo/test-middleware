@@ -4,7 +4,7 @@ const AXIOS = axios.create({
   baseURL: URL,
   headers: { 'X-Custom-Header': 'foobar' },
   withCredentials: false,
-  timeout: 5000,
+  timeout: 100000,
 });
 
 export default AXIOS;
