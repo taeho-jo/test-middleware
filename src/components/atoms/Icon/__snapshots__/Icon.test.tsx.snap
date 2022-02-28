@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ICON test Icon 1`] = `
+<div>
+  <span
+    height="20"
+    viewbox="0 0 24 24"
+    width="20"
+  />
+</div>
+`;

@@ -35,7 +35,7 @@ const TestCounterOrganisms = () => {
 
   return (
     <>
-      <PageTitle title={'Form Test Page'} />
+      <PageTitle title={'RTK Counter Test Page'} />
       <div>
         <h1>Counter</h1>
         <button onClick={() => minusFive(5)}>---</button>

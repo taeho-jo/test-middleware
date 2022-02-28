@@ -12,9 +12,9 @@ interface PropsType {
 
 const TestGraphMolecules = ({ title, children }: PropsType) => {
   return (
-    <FlexBox padding={'0'} direction={'column'}>
+    <FlexBox padding={'0'} direction={'column'} lg={12}>
       <BoxTitle title={title} />
-      <FlexBox padding={'0'} height={'500px'}>
+      <FlexBox padding={'0'} height={'500px'} lg={12}>
         {children}
       </FlexBox>
     </FlexBox>

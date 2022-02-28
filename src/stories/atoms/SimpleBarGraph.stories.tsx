@@ -9,7 +9,7 @@ export default {
 } as ComponentMeta<typeof SimpleBarChart>;
 
 const Template: ComponentStory<typeof SimpleBarChart> = args => (
-  <FlexBox height={'500px'}>
+  <FlexBox height={'500px'} padding={'10px 30px'}>
     <SimpleBarChart {...args} />
   </FlexBox>
 );

@@ -39,11 +39,15 @@ const MENU_LIST = [
   },
   {
     label: 'Note',
-    path: '/note',
+    path: '/note/counter',
     child: [
       {
         label: 'Counter',
         path: '/note/counter',
+      },
+      {
+        label: 'Querytest',
+        path: '/note/querytest',
       },
     ],
   },
@@ -119,6 +123,7 @@ const Sidebar = ({ showSidebar, onClick }: PropsTyps) => {
         return (
           <Fragment key={index}>
             <FlexBox
+              padding={'10px 30px'}
               justify={'space-between'}
               width={'80%'}
               onClick={() => handleClickMenu(el.label, el.path, false)}
