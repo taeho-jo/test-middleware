@@ -1,5 +1,5 @@
-import { AXIOS_GET } from '../../hooks/useAxios';
-import { useQueries, useQuery } from 'react-query';
+import { AXIOS_GET, AXIOS_PUT } from '../../hooks/useAxios';
+import { useMutation, useQueries, useQuery, useQueryClient } from 'react-query';
 // Types
 import { ProductList } from './types';
 
@@ -16,10 +16,32 @@ export const useGetProductsListApi = () => {
     ['AllProduct'],
     () => AXIOS_GET('/products'),
     {
-      enabled: defaultConfig.enabled(true),
-      onError: e => defaultConfig.onError(e, 'GET', 'getProductsListApi'),
+      cacheTime: 0,
+      onError: e => defaultConfig.onError(e, 'GET', 'useGetProductsListApi'),
     },
   );
+};
+
+// Product Detail Api
+export const useGetProductDetailApi = id => {
+  const queryClient = useQueryClient();
+  return useQuery(['ProductDetail', id], () => AXIOS_GET(`/products/${id}`), {
+    onError: e => defaultConfig.onError(e, 'GET', 'useGetProductDetailApi'),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['AllProduct']);
+    },
+    // staleTime: 600000,
+    // enabled: false,
+  });
+};
+
+// Product Update Api
+export const usePutUpdateProductApi = (id, sendObject) => {
+  const handleUpdate = () => {
+    return AXIOS_PUT('/products/1', sendObject);
+  };
+
+  return useMutation(handleUpdate, {});
 };
 
 // Axios.all 요청과 같이 여러 request를 한 번에 보낼 때 사용 : useQueries

@@ -32,10 +32,15 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         defaultOptions: {
           queries: {
             refetchOnWindowFocus: false,
+            retry: false,
+            // refetchOnMount: false,
+            refetchOnReconnect: false,
           },
         },
       }),
   );
+  // const queryClient = new QueryClient();
+
   return (
     <PersistGate persistor={persistor} loading={<div>loading...</div>}>
       <QueryClientProvider client={queryClient}>

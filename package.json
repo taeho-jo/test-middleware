@@ -11,7 +11,8 @@
     "build:dev": "env-cmd -f .env.development next build",
     "build:prod": "next build",
     "test": "jest --coverage",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "serve-json": "json-server --watch db.json --port 4000"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
@@ -23,6 +24,7 @@
     "cookie": "^0.4.2",
     "env-cmd": "^10.1.0",
     "jest": "^27.5.1",
+    "json-server": "^0.17.0",
     "next": "12.0.10",
     "next-redux-wrapper": "^7.0.5",
     "prettier": "^2.5.1",

@@ -1,13 +1,19 @@
 import React, { Fragment } from 'react';
+import { useRouter } from 'next/router';
+// Components
 import PageTitle from '../../atoms/PageTitle';
-import Icon from '../../atoms/Icon';
 import ClipLoader from 'react-spinners/ClipLoader';
 import FlexBox from '../../atoms/FlexBox';
+// APIs
 import { useGetProductsListApi } from '../../../api/productsApi';
-import Button from '../../atoms/Button';
 
 const TestReactQueryOrganisms = () => {
+  const router = useRouter();
   const { isLoading, data, isError, error } = useGetProductsListApi();
+
+  const handleDetail = id => {
+    router.push(`/note/querytest/${id}`);
+  };
 
   if (isLoading) {
     return (
@@ -29,32 +35,45 @@ const TestReactQueryOrganisms = () => {
       {/*  버튼!!!!!!!!!*/}
       {/*</Button>*/}
       {/*<Icon name="TEST" size={30} />*/}
-      <FlexBox
-        backgroundColor={'pink'}
-        justify={'flex-start'}
-        align={'flex-start'}
-        wrap={'wrap'}
-      >
+      <FlexBox justify={'flex-start'} align={'flex-start'} wrap={'wrap'}>
         {data?.map(product => {
           return (
             <Fragment key={product.id}>
-              <FlexBox backgroundColor={'orange'} padding={'5px'} lg={4} md={6}>
+              <FlexBox
+                height={'100%'}
+                padding={'20px'}
+                lg={4}
+                md={12}
+                shadow={'10px 10px 15px rgba(0, 0, 0, .2)'}
+                onClick={() => handleDetail(product.id)}
+              >
                 <FlexBox
                   align={'flex-start'}
-                  border={'1px solid red'}
                   lg={12}
                   md={12}
+                  height={'500px'}
+                  justify={'flex-start'}
+                  direction={'column'}
+                  padding={'10px'}
                 >
-                  <span>{product.title}</span>
+                  <div>
+                    <p style={{ height: '3em' }}> {product.title}</p>
+                  </div>
+
+                  <FlexBox height={'350px'}>
+                    <img
+                      style={{ width: '50%' }}
+                      src={`${product.image}`}
+                      alt="product"
+                    />
+                  </FlexBox>
+
+                  <FlexBox padding={'10px 0'} justify={'flex-start'}>
+                    {product.category}
+                  </FlexBox>
+                  <FlexBox justify={'flex-start'}>${product.price}</FlexBox>
                 </FlexBox>
               </FlexBox>
-              {/*<FlexBox md={3}>1</FlexBox>*/}
-              {/*<FlexBox md={3}>1</FlexBox>*/}
-              {/*<FlexBox md={3}>1</FlexBox>*/}
-              {/*<FlexBox md={3}>1</FlexBox>*/}
-              {/*<FlexBox md={3}>1</FlexBox>*/}
-              {/*<FlexBox md={3}>1</FlexBox>*/}
-              {/*<FlexBox md={3}>1</FlexBox>*/}
             </Fragment>
           );
         })}

@@ -13,3 +13,9 @@ export const AXIOS_POST = async (url: string, sendObject: any) => {
 };
 
 // CREATE, UPDATE, DELETE POST 요청 ( DATA 수정 요청 )
+
+// PUT
+export const AXIOS_PUT = async (url: string, sendObject: any) => {
+  const { data } = await AXIOS.put(url, sendObject);
+  return data;
+};

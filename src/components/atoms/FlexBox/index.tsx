@@ -25,6 +25,8 @@ interface PropsType {
   lg?: number;
   backgroundColor?: string;
   border?: string;
+  radius?: string;
+  shadow?: string;
 }
 
 const calcWidthPercent = (span: any) => {
@@ -49,10 +51,11 @@ const FlexBox = ({
   xs,
   sm,
   md = 12,
-  lg,
+  lg = 12,
   backgroundColor,
+  radius,
+  shadow,
 }: PropsType) => {
-  console.log(calcWidthPercent(md));
   return (
     <div
       onClick={onClick}
@@ -71,6 +74,8 @@ const FlexBox = ({
         display,
         border,
         wrap,
+        radius,
+        shadow,
       )}
     >
       {children}
@@ -95,10 +100,9 @@ const flexBox = (
   display,
   border,
   wrap,
+  radius,
+  shadow,
 ) => css`
-  // flex-basis: ${calcWidthPercent(md)}%;
-
-  // flex: ${calcWidthPercent(md)};
   height: ${height};
   justify-content: ${justify};
   align-items: ${align};
@@ -108,6 +112,9 @@ const flexBox = (
   display: ${display};
   border: ${border};
   flex-wrap: ${wrap};
+  overflow: hidden;
+  border-radius: ${radius};
+  box-shadow: ${shadow};
   width: ${lg ? `${calcWidthPercent(lg)}%` : 'auto'};
   @media only screen and (max-width: 1024px) {
     width: ${md ? `${calcWidthPercent(md)}%` : 'auto'};
