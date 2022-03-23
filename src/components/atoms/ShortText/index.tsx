@@ -1,7 +1,7 @@
 import React from 'react';
 // Styles
 import { css } from '@emotion/react';
-import { colors, commonStyles } from '../../../styles/Common.styles';
+import { colors } from '../../../styles/Common.styles';
 
 // Types
 interface PropsType {
@@ -12,19 +12,9 @@ interface PropsType {
   cursor?: string;
   onClick?: () => void;
 }
-const ShortText = ({
-  text,
-  color = colors.black,
-  fontSize = '16px',
-  fontWeight = 'normal',
-  cursor = 'default',
-  onClick,
-}: PropsType) => {
+const ShortText = ({ text, color = colors.black, fontSize = '16px', fontWeight = 'normal', cursor = 'default', onClick }: PropsType) => {
   return (
-    <span
-      onClick={onClick}
-      css={textStyle(color, fontSize, fontWeight, cursor)}
-    >
+    <span onClick={onClick} css={textStyle(color, fontSize, fontWeight, cursor)}>
       {text}
     </span>
   );

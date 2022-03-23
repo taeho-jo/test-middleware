@@ -10,6 +10,8 @@ import InputFormBox from '../../molecules/InputFormBox';
 import { css } from '@emotion/react';
 import { body3_bold, body3_regular, caption1_regular } from '../../../styles/FontStyles';
 import { colors } from '../../../styles/Common.styles';
+import { setToken } from '../../../store/reducers/authReducer';
+import { useDispatch } from 'react-redux';
 
 const inputArr = [
   {
@@ -29,6 +31,7 @@ const inputArr = [
 ];
 
 const LoginPopup = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const handleMovePage = useCallback(path => {
@@ -39,6 +42,15 @@ const LoginPopup = () => {
     alert(data);
     handleMovePage('/signup/certified');
   }, []);
+
+  const onLoginSuccess = async (res: any) => {
+    console.log(res.accessToken, 'RES RES RES');
+    const accessToken = res.accessToken;
+    if (res.accessToken) {
+      dispatch(setToken(accessToken));
+      await router.push('/');
+    }
+  };
 
   return (
     <FlexBox style={{ marginTop: '112px' }} justify={'center'} direction={'column'}>
@@ -57,6 +69,13 @@ const LoginPopup = () => {
           <span css={caption1_regular}>or 간편한 가입을 원하신다면?</span>
         </div>
         <FlexBox justify={'center'} padding={'0 0 24px 0'}>
+          {/*<GoogleLogin*/}
+          {/*  clientId="318189383837-p36tbqlb9fd40n868q48u9c2eqgd0r96.apps.googleusercontent.com"*/}
+          {/*  buttonText="Login"*/}
+          {/*  onSuccess={result => onLoginSuccess(result)}*/}
+          {/*  onFailure={result => console.log(result)}*/}
+          {/*  uxMode="popup"*/}
+          {/*/>*/}
           <Button btnText={'구글로 시작하기'} full={false} buttonType={'action'} start={'icon'} icon={'GOOGLE'} padding={'8px 18px'} />
         </FlexBox>
 

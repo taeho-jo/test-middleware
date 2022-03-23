@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 // Styles
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
@@ -18,16 +18,7 @@ interface PropsType {
   [key: string]: any;
 }
 
-const FormInput = ({
-  type = 'text',
-  label,
-  errorMsg,
-  placeholder = 'placeholder',
-  register,
-  errors,
-  registerOptions,
-  ...props
-}: PropsType) => {
+const FormInput = ({ type = 'text', label, errorMsg, placeholder = 'placeholder', register, errors, registerOptions, ...props }: PropsType) => {
   // const inputFocus = useRef(null);
   //
   // useEffect(() => {
