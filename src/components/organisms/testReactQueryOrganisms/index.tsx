@@ -31,9 +31,9 @@ const TestReactQueryOrganisms = () => {
   return (
     <>
       <PageTitle title={'React Qeury Test Page'} />
-      {/*<Button size={'md'} type={'button'} onClick={refetch}>*/}
+      {/*<Button2 size={'md'} type={'button'} onClick={refetch}>*/}
       {/*  버튼!!!!!!!!!*/}
-      {/*</Button>*/}
+      {/*</Button2>*/}
       {/*<Icon name="TEST" size={30} />*/}
       <FlexBox justify={'flex-start'} align={'flex-start'} wrap={'wrap'}>
         {data?.map(product => {

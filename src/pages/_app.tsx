@@ -47,12 +47,12 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <Hydrate state={pageProps.dehydratedState}>
           <GlobalStyles />
           <Layout>
-            <AppAnimation>
-              <Component {...pageProps} />
-            </AppAnimation>
+            {/*<AppAnimation>*/}
+            <Component {...pageProps} />
+            {/*</AppAnimation>*/}
           </Layout>
         </Hydrate>
-        <ReactQueryDevtools initialIsOpen={false} position={'top-right'} />
+        <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} />
       </QueryClientProvider>
     </PersistGate>
   );

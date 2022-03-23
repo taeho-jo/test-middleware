@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 const reset = css`
   * {
     box-sizing: border-box;
+    font-family: Pretendard;
   }
   * {
     html,
@@ -107,11 +108,13 @@ const reset = css`
     }
     html {
       font-size: 10px;
+     
     }
     html,
     body {
       padding: 0;
       width: 100%;
+      min-width: 1280px;
       height: 100%;
     }
     /* 공통셋팅 */
@@ -135,7 +138,27 @@ const reset = css`
       margin: 0;
       padding: 0;
       font-size: 100%;
-    }
+    },
+    //h1 {
+    //  font-size: 24px;
+    //  height: 30px;
+    //},
+    //h2 {
+    //  font-size: 20px;
+    //  height: 24px;
+    //},
+    //h3 {
+    //  font-size: 18px;
+    //  height: 24px;
+    //},
+    //h4 {
+    //  font-size: 16px;
+    //  height: 20px;
+    //},
+    //h5 {
+    //  font-size: 14px;
+    //  height: 18px;
+    //},
   }
 `;
 

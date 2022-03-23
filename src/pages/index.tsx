@@ -7,10 +7,11 @@ import { resetToken } from '../store/reducers/authReducer';
 import withAuth from '../hoc/withAuth';
 import Head from 'next/head';
 import TestHomeOrganisms from '../components/organisms/testHomeOrganisms';
-
 // Libraries
 import { GoogleLogout } from 'react-google-login';
-import FlexBox from '../components/atoms/FlexBox';
+import { css } from '@emotion/react';
+import Icon from '../components/atoms/Icon';
+import { caption1_bold, heading1_bold } from '../styles/FontStyles';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -38,22 +39,21 @@ const Home = () => {
         buttonText="Logout"
         onLogoutSuccess={logout}
       />
-      <FlexBox backgroundColor={'pink'} padding={'20px 0px'}>
-        <FlexBox lg={5} padding={'5px'}>
-          <FlexBox border={'1px solid red'}>lg 6</FlexBox>
-        </FlexBox>
-        <FlexBox lg={4} padding={'5px'}>
-          <FlexBox border={'1px solid red'}>lg 4</FlexBox>
-        </FlexBox>
-        <FlexBox lg={2} padding={'5px'}>
-          <FlexBox border={'1px solid red'}>lg 2</FlexBox>
-        </FlexBox>
-        <FlexBox lg={1} padding={'5px'}>
-          <FlexBox border={'1px solid red'}>lg 2</FlexBox>
-        </FlexBox>
-      </FlexBox>
+      <Icon name={'NAVIGATION_ARROW_LEFT'} />
+      <div style={{ marginTop: '20px' }}>
+        <span css={blockSpan}>asdlfkja;sdlkfja;sldkf</span>
+        <h1 css={heading1_bold}>asdlfkja;sdlkfja;sldkf</h1>
+        <span css={caption1_bold}>asdlfkja;sdlkfja;sldkf</span>
+      </div>
     </div>
   );
 };
 
 export default withAuth(Home);
+
+const blockSpan = [
+  caption1_bold,
+  css`
+    display: block;
+  `,
+];

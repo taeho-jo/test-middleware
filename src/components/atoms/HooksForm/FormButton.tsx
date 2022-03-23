@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/react';
-import { commonStyles } from '../../../styles/Common.styles';
+import { colors } from '../../../styles/Common.styles';
 
 interface PropsType {
   name: string;
@@ -37,10 +37,10 @@ export default FormButton;
 const buttonStyle = (size, active, bgColor, hoverColor) => css`
   width: ${ButtonSizeStyle[size].width};
   height: 35px;
-  background: ${active ? bgColor : commonStyles.colors.grey_2};
+  background: ${active ? bgColor : colors.grey._3c};
   border: none;
   border-radius: 8px;
-  color: ${commonStyles.colors.wh_1};
+  color: ${colors.white};
   cursor: ${active ? 'pointer' : 'not-allowed'};
   font-weight: bold;
   display: flex;

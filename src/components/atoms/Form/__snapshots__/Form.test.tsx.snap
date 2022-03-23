@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Form form 1`] = `
+<div>
+  <form
+    class="css-1v858r4-formStyle"
+  >
+    아아
+  </form>
+</div>
+`;

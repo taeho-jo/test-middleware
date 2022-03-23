@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/react';
-import { commonStyles } from '../../../styles/Common.styles';
+import { colors } from '../../../styles/Common.styles';
 
 interface PropsType {
   label: string;
@@ -12,13 +12,7 @@ interface PropsType {
   selectList: string[];
 }
 
-const FormSelectBox = ({
-  label,
-  registerOptions,
-  register,
-  errors,
-  selectList,
-}: PropsType) => {
+const FormSelectBox = ({ label, registerOptions, register, errors, selectList }: PropsType) => {
   return (
     <div css={fragmentStyle}>
       <select css={selectStyle} {...register(label, registerOptions)}>
@@ -43,7 +37,7 @@ const fragmentStyle = css`
 const selectStyle = css`
   width: 100%;
   border-radius: 5px;
-  border: 1px solid ${commonStyles.colors.b_1};
+  border: 1px solid ${colors.black};
   padding: 10px 12px;
   outline: none;
 `;

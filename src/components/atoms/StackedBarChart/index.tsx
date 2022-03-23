@@ -35,9 +35,8 @@ for (const i in data[0]) {
     contentsArr.push(obj);
   }
 }
-console.log(contentsArr);
+
 const handleSelectBarChart = (index, state) => {
-  console.log(contentsArr);
   console.log(index, state);
 };
 

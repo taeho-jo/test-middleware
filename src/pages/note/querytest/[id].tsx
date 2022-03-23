@@ -2,7 +2,7 @@ import React from 'react';
 // Components
 import FlexBox from '../../../components/atoms/FlexBox';
 import ClipLoader from 'react-spinners/ClipLoader';
-import Button from '../../../components/atoms/Button';
+import Button from '../../../components/atoms/Button2';
 // APIs
 import {
   useGetProductDetailApi,

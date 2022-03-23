@@ -1,7 +1,7 @@
 import React from 'react';
 import FormInputLabel from '../../atoms/HooksForm/FormInputLabel';
 import FormInput from '../../atoms/HooksForm/FormInput';
-import Button from '../../atoms/Button';
+import Button from '../../atoms/Button2';
 import Form from '../../atoms/Form';
 import { useForm } from 'react-hook-form';
 

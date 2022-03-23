@@ -4,7 +4,13 @@ import React from 'react';
 
 describe('ICON', () => {
   it('test Icon', () => {
-    const utils = render(<Icon name="TEST" size={20} />);
+    const utils = render(<Icon name="TEST" />);
+    expect(utils.container).toMatchSnapshot();
+    // const wrapper = mount;
+  });
+
+  it('test Icon', () => {
+    const utils = render(<Icon name="TEST" size={22} />);
     expect(utils.container).toMatchSnapshot();
     // const wrapper = mount;
   });
