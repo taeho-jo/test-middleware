@@ -1,6 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/react';
-import { commonStyles } from '../../../styles/Common.styles';
+import { colors } from '../../../styles/Common.styles';
+import { caption1_regular } from '../../../styles/FontStyles';
 
 interface PropsType {
   children: React.ReactNode;
@@ -12,8 +13,4 @@ const FormInputLabel = ({ children }: PropsType) => {
 
 export default FormInputLabel;
 
-const labelStyle = css`
-  display: inline-block;
-  color: ${commonStyles.colors.b_1};
-  margin-bottom: 5px;
-`;
+const labelStyle = [caption1_regular, css``];

@@ -1,46 +1,33 @@
-export const commonStyles = {
-  colors: {
-    primary: '#0D2F73',
-    secondary: '#03738C',
-    gray: '#999',
-    black: '#282828',
-    danger: '#59050C',
-    hover_primary: 'rgba(13, 47, 115, 0.5)',
-    hover_secondary: 'rgba(3, 115, 140, 0.5)',
-    hover_gray: 'rgba(153, 153, 153, 0.5)',
-    hover_black: 'rgba(40, 40, 40, 0.5)',
-    hover_danger: 'rgba(89, 5, 12, 0.5)',
-    green_1: '#9BB9BF',
-    green_2: '#70898C',
-    brown: '#8C7251',
-    orange_1: '#D98E73',
-    orange_2: '#F25041',
-    wh_1: '#F2F2F2',
-    grey_1: '#D9D9D9',
-    grey_2: '#A6A4A5',
-    grey_3: '#595959',
-    b_1: '#0D0D0D',
+export const colors = {
+  green: {
+    _300: '#cfffac',
+    _500: '#a8ff69',
+    _700: '#8bce5b',
   },
-  font: {
-    fs12: '12px',
-    fs14: '14px',
-    fs16: '16px',
-    fs18: '18px',
-    fs20: '20px',
-    fs22: '22px',
-    fs24: '24px',
-    fs26: '26px',
-    fs28: '28px',
-    fs30: '30px',
-    fs32: '32px',
+  cyan: {
+    _300: '#95efe9',
+    _500: '#24e1d5',
+    _700: '#1db5ab',
   },
-  sm: {
-    width: '130px',
+  blue: {
+    _300: '#94bbf5',
+    _500: '#2878f0',
+    _700: '#2262c1',
   },
-  md: {
-    width: '180px',
+  violet: {
+    _300: '#ba9dee',
+    _500: '#7b3ce9',
+    _700: '#6431bc',
   },
-  lg: {
-    width: '230px',
+  red: '#fe4e56',
+  grey: {
+    _3c: '#3c3c46',
+    _66: '#666666',
+    _99: '#999999',
+    _cc: '#cccccc',
+    _ec: '#ececec',
+    _fa: '#fafafa',
   },
-};
+  black: '#282828',
+  white: '#ffffff',
+} as const;

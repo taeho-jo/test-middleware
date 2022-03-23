@@ -2,17 +2,13 @@ import React from 'react';
 
 // Styles
 import { css } from '@emotion/react';
+import { JustifyType } from '../../../common/types/commonTypes';
 
 interface PropsType {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   display?: 'block' | 'flex' | 'inline' | 'inline-block';
   wrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
-  justify?:
-    | 'center'
-    | 'space-between'
-    | 'space-around'
-    | 'flex-start'
-    | 'flex-end';
+  justify?: JustifyType;
   align?: string;
   direction?: 'row' | 'column';
   width?: string;
@@ -27,6 +23,9 @@ interface PropsType {
   border?: string;
   radius?: string;
   shadow?: string;
+  column?: string;
+  row?: string;
+  style?: any;
 }
 
 const calcWidthPercent = (span: any) => {
@@ -55,28 +54,37 @@ const FlexBox = ({
   backgroundColor,
   radius,
   shadow,
+  column,
+  row,
+  style,
 }: PropsType) => {
+  console.log(style, 'CSS');
   return (
     <div
       onClick={onClick}
-      css={flexBox(
-        xs,
-        sm,
-        md,
-        lg,
-        backgroundColor,
-        width,
-        height,
-        justify,
-        align,
-        padding,
-        direction,
-        display,
-        border,
-        wrap,
-        radius,
-        shadow,
-      )}
+      css={[
+        flexBox(
+          xs,
+          sm,
+          md,
+          lg,
+          backgroundColor,
+          width,
+          height,
+          justify,
+          align,
+          padding,
+          direction,
+          display,
+          border,
+          wrap,
+          radius,
+          shadow,
+          column,
+          row,
+        ),
+        style,
+      ]}
     >
       {children}
     </div>
@@ -102,6 +110,8 @@ const flexBox = (
   wrap,
   radius,
   shadow,
+  column,
+  row,
 ) => css`
   height: ${height};
   justify-content: ${justify};
@@ -115,6 +125,8 @@ const flexBox = (
   overflow: hidden;
   border-radius: ${radius};
   box-shadow: ${shadow};
+  grid-column: ${column};
+  grid-row: ${row};
   width: ${lg ? `${calcWidthPercent(lg)}%` : 'auto'};
   @media only screen and (max-width: 1024px) {
     width: ${md ? `${calcWidthPercent(md)}%` : 'auto'};

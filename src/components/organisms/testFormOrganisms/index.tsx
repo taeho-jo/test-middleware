@@ -7,7 +7,7 @@ import {
 } from '../../../api/superHeroApi';
 import FlexBox from '../../atoms/FlexBox';
 import ClipLoader from 'react-spinners/ClipLoader';
-import Button from '../../atoms/Button';
+import Button from '../../atoms/Button2';
 import { useMutation } from 'react-query';
 import { AXIOS_POST } from '../../../hooks/useAxios';
 

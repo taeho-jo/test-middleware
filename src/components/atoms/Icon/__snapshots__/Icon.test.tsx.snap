@@ -3,9 +3,19 @@
 exports[`ICON test Icon 1`] = `
 <div>
   <span
-    height="20"
+    height="16"
     viewbox="0 0 24 24"
-    width="20"
+    width="16"
+  />
+</div>
+`;
+
+exports[`ICON test Icon 2`] = `
+<div>
+  <span
+    height="22"
+    viewbox="0 0 24 24"
+    width="22"
   />
 </div>
 `;

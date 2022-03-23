@@ -1,78 +1,128 @@
-import React, { ButtonHTMLAttributes } from 'react';
-// Components
-import ClipLoader from 'react-spinners/ClipLoader';
+import React from 'react';
 // Styles
 import { css } from '@emotion/react';
-import { commonStyles } from '../../../styles/Common.styles';
-const { colors } = commonStyles;
-// Types
+import { colors } from '../../../styles/Common.styles';
+import Icon from '../Icon';
+import { body2_bold, caption1_regular } from '../../../styles/FontStyles';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { ColorsType, IconType } from '../../../common/types/commonTypes';
+
 interface PropsType {
-  children?: string | React.ReactNode;
-  size?: 'sm' | 'md' | 'lg';
-  bgColor?: 'primary' | 'secondary' | 'gray' | 'black' | 'danger';
-  loading?: boolean;
-  active?: boolean;
+  buttonType?: 'basic' | 'action' | 'icon';
+  backgroundColor?: ColorsType;
+  full?: boolean;
   type?: 'button' | 'submit' | 'reset';
-  border?: 'none' | 'outline' | 'text';
   onClick?: () => void;
+  btnText?: string;
+  isLoading?: boolean;
+  icon?: IconType;
+  padding?: string;
+  start?: string;
+  size?: number;
 }
 
-const ButtonSizeStyle = {
-  sm: { width: '60px', padding: '8px 0' },
-  md: { width: '80px', padding: '8px 0' },
-  lg: { width: '100px', padding: '8px 0' },
-};
-
 const Button = ({
-  children = 'Button',
-  size = 'sm',
-  bgColor = 'primary',
-  loading = false,
-  active = true,
+  buttonType = 'basic',
   type = 'button',
-  border = 'none',
+  backgroundColor = '#24e1d5',
+  full = false,
   onClick,
+  btnText = 'button',
+  isLoading = false,
+  icon,
+  padding,
+  start = '',
+  size,
 }: PropsType) => {
-  return loading ? (
-    <button
-      type={type}
-      css={test(size, bgColor, active, border)}
-      onClick={onClick}
-    >
-      <ClipLoader
-        color={border === 'none' ? colors.wh_1 : colors[bgColor]}
-        loading={loading}
-        size={16}
-      />
-    </button>
-  ) : (
-    <button css={test(size, bgColor, active, border)} onClick={onClick}>
-      {children}
-    </button>
+  return (
+    <>
+      {buttonType === 'basic' ? (
+        <button type={type} onClick={onClick} css={buttonStyle(backgroundColor, full, padding)}>
+          <div css={isLoading ? loadingStyle : ''}>
+            <ClipLoader color={'white'} loading={isLoading} size={16} />
+          </div>
+          <span css={isLoading ? textStyle : body2_bold}>{btnText}</span>
+        </button>
+      ) : buttonType === 'action' ? (
+        <button type={type} onClick={onClick} css={actionButtonStyle(full, padding)}>
+          {start === 'icon' ? (
+            <>
+              <Icon name={icon ? icon : 'NAVIGATION_CHEVRON_RIGHT'} size={size ? size : 24} />
+              <span css={[caption1_regular, { marginLeft: '12px' }]}>{btnText}</span>
+            </>
+          ) : (
+            <>
+              <span css={caption1_regular}>{btnText}</span>
+              <Icon name={icon ? icon : 'NAVIGATION_CHEVRON_RIGHT'} size={size ? size : 24} />
+            </>
+          )}
+        </button>
+      ) : (
+        <button type={type} onClick={onClick} css={iconButtonStyle}>
+          <Icon name={icon ? icon : 'NAVIGATION_CHEVRON_RIGHT'} size={size ? size : 24} />
+          {/*<Icon name={'ACTION_CREATE'} size={20} />*/}
+        </button>
+      )}
+    </>
   );
 };
 
 export default Button;
 
-const test = (size, bgColor, active, border) => css`
-  width: ${ButtonSizeStyle[size].width};
-  padding: ${ButtonSizeStyle[size].padding};
-  background: ${active && border === 'none'
-    ? colors[bgColor]
-    : active && (border === 'outline' || border === 'text')
-    ? '#fff'
-    : colors.gray};
-  border: ${border === 'none' || border === 'text'
-    ? 'none'
-    : `2px solid ${colors[bgColor]}`};
-  border-radius: 8px;
-  color: ${border === 'none' ? colors.wh_1 : colors[bgColor]};
-  cursor: ${active ? 'pointer' : 'not-allowed'};
-  font-weight: bold;
+// basic button
+const buttonStyle = (backgroundColor, full, padding) => css`
+  padding: ${padding ? padding : '14px 53.5px'};
+  background: ${backgroundColor ? backgroundColor : colors.cyan._500};
+  border-radius: 12px;
+  border: none;
+  color: ${colors.white};
+  width: ${full ? '100%' : 'auto'};
+  cursor: pointer;
+  position: relative;
+`;
+
+// action button
+const actionButtonStyle = (full, padding) => css`
+  padding: ${padding ? padding : '5px 7px 5px 16px'};
+  background: ${colors.white};
+  border: 1px solid ${colors.grey._3c};
+  border-radius: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  width: ${full ? '100%' : 'auto'};
+}
+`;
+
+// icon button
+const iconButtonStyle = css`
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  border: 1px solid ${colors.grey._3c};
+  background: ${colors.white};
+  width: 20px;
+  height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 4px;
-  outline: none;
-  ${active ? `&:hover { background: ${colors[`hover_${bgColor}`]};}` : ''}
 `;
+
+// loading style
+const loadingStyle = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  //z-index: 10;
+  padding: 14px 53.5px;
+`;
+
+const textStyle = [
+  body2_bold,
+  css`
+    visibility: hidden;
+  `,
+];

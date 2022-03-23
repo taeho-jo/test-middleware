@@ -6,12 +6,23 @@ import SimpleBarChart from '../../atoms/SimpleBarChart';
 import VerticalBarGraph from '../../atoms/VerticalBarGraph';
 // Dummy
 import { data, verticalData } from '../../../assets/dummy/dummyData';
+import StackedBarChart from '../../atoms/StackedBarChart';
 
 const TestGraphOrganisms = () => {
   return (
     <>
       <FlexBox padding={'0'}>
         <PageTitle title={'Graph Test Page!'} />
+      </FlexBox>
+
+      <FlexBox>
+        <TestGraphMolecules title={'stacked bar graph'}>
+          <StackedBarChart />
+        </TestGraphMolecules>
+
+        <TestGraphMolecules title={'stacked bar graph'}>
+          <StackedBarChart />
+        </TestGraphMolecules>
       </FlexBox>
 
       <TestGraphMolecules title={'vertical bar graph'}>

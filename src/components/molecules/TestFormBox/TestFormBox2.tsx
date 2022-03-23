@@ -2,7 +2,11 @@ import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 // Styles
 import { css } from '@emotion/react';
-import { commonStyles } from '../../../styles/Common.styles';
+import {
+  colors,
+  commonStyles,
+  typography,
+} from '../../../styles/Common.styles';
 
 const initValue = { name: '', animal: { name: '', color: '' }, money: '' };
 
@@ -64,7 +68,7 @@ const fragmentStyle = css`
 const inputStyle = css`
   width: 100%;
   border-radius: 5px;
-  border: 1px solid ${commonStyles.colors.b_1};
+  border: 1px solid ${colors.black};
   padding: 10px 12px;
   outline: none;
 `;
@@ -72,5 +76,5 @@ const inputStyle = css`
 const errorStyle = css`
   padding: 8px 0 0 8px;
   color: #ef3b7d;
-  font-size: ${commonStyles.font.fs12};
+  font-size: ${typography['12']};
 `;

@@ -3,7 +3,7 @@ import React from 'react';
 import FlexBox from '../FlexBox';
 // Styles
 import { css } from '@emotion/react';
-import { commonStyles } from '../../../styles/Common.styles';
+import { colors, commonStyles } from '../../../styles/Common.styles';
 // Types
 interface PropsType {
   title: string;
@@ -22,5 +22,5 @@ export default PageTitle;
 const mainTitleStyle = css`
   font-size: 30px;
   font-weight: 900;
-  color: ${commonStyles.colors.green_2};
+  color: ${colors.green._500};
 `;

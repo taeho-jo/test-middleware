@@ -1,7 +1,7 @@
 import React from 'react';
 // Styles
 import { css } from '@emotion/react';
-import { commonStyles } from '../../../styles/Common.styles';
+import { colors, commonStyles } from '../../../styles/Common.styles';
 
 // Types
 interface PropsType {
@@ -14,7 +14,7 @@ interface PropsType {
 }
 const ShortText = ({
   text,
-  color = commonStyles.colors.b_1,
+  color = colors.black,
   fontSize = '16px',
   fontWeight = 'normal',
   cursor = 'default',

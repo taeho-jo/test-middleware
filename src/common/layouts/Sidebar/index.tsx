@@ -11,6 +11,7 @@ import {
 } from 'react-icons/md';
 // Styles
 import { css } from '@emotion/react';
+import { colors } from '../../../styles/Common.styles';
 // Types
 interface PropsTyps {
   showSidebar: boolean;
@@ -117,7 +118,12 @@ const Sidebar = ({ showSidebar, onClick }: PropsTyps) => {
   return (
     <aside css={sidebarStyle(showSidebar)}>
       <FlexBox justify={'flex-end'} padding={'0'}>
-        <Button onClick={onClick}>{showSidebar ? '닫기' : '열기'}</Button>
+        <Button
+          buttonType={'basic'}
+          onClick={onClick}
+          backgroundColor={`${colors.blue._300}`}
+          btnText={showSidebar ? '닫기' : '열기'}
+        />
       </FlexBox>
       {MENU_LIST.map((el, index) => {
         return (
