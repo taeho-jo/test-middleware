@@ -3,7 +3,8 @@ import React from 'react';
 import FlexBox from '../FlexBox';
 // Styles
 import { css } from '@emotion/react';
-import { colors, commonStyles } from '../../../styles/Common.styles';
+import { colors } from '../../../styles/Common.styles';
+
 // Types
 interface PropsType {
   title: string;
