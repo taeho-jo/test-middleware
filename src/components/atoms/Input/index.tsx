@@ -1,7 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
-import { caption2_regular } from '../../../styles/FontStyles';
 
 interface PropsType {
   line?: boolean;

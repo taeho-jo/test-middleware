@@ -47,25 +47,13 @@ const TestReactQueryOrganisms = () => {
                 shadow={'10px 10px 15px rgba(0, 0, 0, .2)'}
                 onClick={() => handleDetail(product.id)}
               >
-                <FlexBox
-                  align={'flex-start'}
-                  lg={12}
-                  md={12}
-                  height={'500px'}
-                  justify={'flex-start'}
-                  direction={'column'}
-                  padding={'10px'}
-                >
+                <FlexBox align={'flex-start'} lg={12} md={12} height={'500px'} justify={'flex-start'} direction={'column'} padding={'10px'}>
                   <div>
                     <p style={{ height: '3em' }}> {product.title}</p>
                   </div>
 
                   <FlexBox height={'350px'}>
-                    <img
-                      style={{ width: '50%' }}
-                      src={`${product.image}`}
-                      alt="product"
-                    />
+                    <img style={{ width: '50%' }} src={`${product.image}`} alt="product" />
                   </FlexBox>
 
                   <FlexBox padding={'10px 0'} justify={'flex-start'}>

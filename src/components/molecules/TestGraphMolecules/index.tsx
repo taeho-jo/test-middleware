@@ -2,8 +2,6 @@ import React from 'react';
 // Components
 import FlexBox from '../../atoms/FlexBox';
 import BoxTitle from '../../atoms/BoxTitle';
-import SimpleBarChart from '../../atoms/SimpleBarChart';
-import { data } from '../../../assets/dummy/dummyData';
 
 interface PropsType {
   title: string;

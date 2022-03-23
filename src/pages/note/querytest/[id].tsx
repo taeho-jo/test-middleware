@@ -2,14 +2,12 @@ import React from 'react';
 // Components
 import FlexBox from '../../../components/atoms/FlexBox';
 import ClipLoader from 'react-spinners/ClipLoader';
-import Button from '../../../components/atoms/Button2';
+import Button from '../../../components/atoms/Button';
 // APIs
-import {
-  useGetProductDetailApi,
-  usePutUpdateProductApi,
-} from '../../../api/productsApi';
+import { useGetProductDetailApi, usePutUpdateProductApi } from '../../../api/productsApi';
 // Types
 import { GetServerSideProps } from 'next';
+
 interface PropsType {
   id: string;
 }
@@ -48,17 +46,13 @@ const TestReactQueryDetail = ({ id }: PropsType) => {
         <div style={{ zIndex: 999 }}>
           <div>asdfasdfasdfasdfasdfasdfasdfasdfasdfasdf</div>
           <FlexBox>
-            <ClipLoader
-              color={'blue'}
-              loading={updateData.isLoading}
-              size={150}
-            />
+            <ClipLoader color={'blue'} loading={updateData.isLoading} size={150} />
           </FlexBox>
         </div>
       ) : null}
-      <Button size={'lg'} onClick={updateHandler}>
-        Update
-      </Button>
+      {/*<Button size={'lg'} onClick={updateHandler}>*/}
+      {/*  Update*/}
+      {/*</Button>*/}
       <FlexBox direction={'column'}>
         <h1>{data?.title}</h1>
         <div>{data?.price}</div>

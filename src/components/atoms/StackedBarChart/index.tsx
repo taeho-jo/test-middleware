@@ -1,16 +1,5 @@
-import React, { Fragment, useCallback } from 'react';
-import {
-  ResponsiveContainer,
-  BarChart,
-  CartesianGrid,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Cell,
-  LabelList,
-  Legend,
-} from 'recharts';
+import React, { Fragment } from 'react';
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
 const data = [
   {
