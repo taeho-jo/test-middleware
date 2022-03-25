@@ -8,6 +8,7 @@ import { css } from '@emotion/react';
 import Header from './Header';
 import BackGroundImg2 from '../../assets/background_img2.png';
 import BackGroundImg from '../../assets/background_img.png';
+import AuthToast from '../../components/organisms/AuthToast';
 
 // Types
 interface PropsType {
@@ -31,6 +32,7 @@ const Layout = ({ children }: PropsType) => {
             {/*<Sidebar showSidebar={showSidebar} onClick={handleChangeShowSidebar} />*/}
             <main css={contentsContainer(showSidebar)}>{children}</main>
           </div>
+          <AuthToast />
         </>
       ) : (
         <>
@@ -42,6 +44,7 @@ const Layout = ({ children }: PropsType) => {
               </div>
             </main>
           </div>
+          <AuthToast />
         </>
       )}
     </>

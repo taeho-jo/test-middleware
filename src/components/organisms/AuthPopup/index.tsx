@@ -12,6 +12,7 @@ import { body3_bold, body3_regular, caption1_regular } from '../../../styles/Fon
 import { colors } from '../../../styles/Common.styles';
 import { setToken } from '../../../store/reducers/authReducer';
 import { useDispatch } from 'react-redux';
+import { removeToast, showToast } from '../../../store/reducers/toastReducer';
 
 const inputArr = [
   {
@@ -58,7 +59,6 @@ const LoginPopup = () => {
         <div css={iconBoxStyle}>
           <Icon name={'NAVIGATION_CLOSE_LG'} />
         </div>
-
         <InputFormBox
           handleSignUp={handleSignUp}
           inputArr={inputArr}
@@ -69,13 +69,6 @@ const LoginPopup = () => {
           <span css={caption1_regular}>or 간편한 가입을 원하신다면?</span>
         </div>
         <FlexBox justify={'center'} padding={'0 0 24px 0'}>
-          {/*<GoogleLogin*/}
-          {/*  clientId="318189383837-p36tbqlb9fd40n868q48u9c2eqgd0r96.apps.googleusercontent.com"*/}
-          {/*  buttonText="Login"*/}
-          {/*  onSuccess={result => onLoginSuccess(result)}*/}
-          {/*  onFailure={result => console.log(result)}*/}
-          {/*  uxMode="popup"*/}
-          {/*/>*/}
           <Button btnText={'구글로 시작하기'} full={false} buttonType={'action'} start={'icon'} icon={'GOOGLE'} padding={'8px 18px'} />
         </FlexBox>
 
@@ -99,6 +92,12 @@ const LoginPopup = () => {
             </div>
           )}
         </FlexBox>
+        <button onClick={() => dispatch(showToast({ isShow: true, message: '가입된 계정이 없습니다. 다시 확인해주세요!', duration: 3000 }))}>
+          asdfasdf
+        </button>
+        {/*<button onClick={() => dispatch(removeToast({ isShow: false, message: '가입된 계정이 없습니다. 다시 확인해주세요!', duration: 3000 }))}>*/}
+        {/*  123123123*/}
+        {/*</button>*/}
       </PopupBox>
     </FlexBox>
   );
