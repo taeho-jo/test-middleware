@@ -1,8 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { v4 as uuid_v4 } from 'uuid';
 
 export interface ToastType {
+  id?: string;
   message: string;
   isShow: boolean;
+  status: string;
   duration?: number;
 }
 
@@ -19,13 +22,11 @@ export const toastSlice = createSlice({
   initialState,
   reducers: {
     showToast: (state, action: PayloadAction<ToastType>) => {
-      state.toastArr.push(action.payload);
+      state.toastArr.push({ ...action.payload, id: uuid_v4() });
     },
-    removeToast: (state, action: PayloadAction<ToastType>) => {
-      state.toastArr.shift();
-    },
-    remove2Toast: state => {
-      state.toastArr.shift();
+    removeToast: (state, action: PayloadAction<string>) => {
+      const otherArr = state.toastArr.filter(el => el.id !== action.payload);
+      state.toastArr = otherArr;
     },
   },
 });

@@ -1,41 +1,82 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Toast from '../../atoms/Toast';
 import Portal from '../../atoms/Portal';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
-import { removeToast } from '../../../store/reducers/toastReducer';
+import { css } from '@emotion/react';
 
-const AuthToast = () => {
-  const dispatch = useDispatch();
-  const isShow = useSelector((state: ReducerType) => state.toast.isShow);
+interface PropsType {
+  position: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
+}
+
+const AuthToast = ({ position }: PropsType) => {
   const arr = useSelector((state: ReducerType) => state.toast.toastArr);
 
-  useEffect(() => {
-    let timer;
-    if (arr.length) {
-      timer = setInterval(() => {
-        console.log('ㅅ실행 실행');
-        dispatch(removeToast());
-      }, 3000);
-    } else {
-      clearInterval(timer);
-      console.log('정지!!!!!!!!!1');
+  const toastPosition = position => {
+    let located;
+    switch (position) {
+      case 'top-left':
+        located = {
+          top: '24px',
+          left: '50px',
+        };
+        break;
+      case 'top-center':
+        located = {
+          top: '24px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        };
+        break;
+      case 'top-right':
+        located = {
+          top: '24px',
+          right: '50px',
+        };
+        break;
+      case 'bottom-left':
+        located = {
+          bottom: '24px',
+          left: '50px',
+        };
+        break;
+      case 'bottom-center':
+        located = {
+          bottom: '24px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+        };
+        break;
+      case 'bottom-right':
+        located = {
+          bottom: '24px',
+          right: '50px',
+        };
+        break;
+      default:
+        located = {};
     }
-  }, []);
+    return located;
+  };
 
   return (
     <Portal selector={'toast-root'}>
-      <>
+      <div css={[positionStyle, toastPosition(position)]}>
         {arr?.map((el, index) => {
           if (el.isShow) {
-            return <Toast key={index} num={index} text={el.message} />;
+            return <Toast position={position} key={index} {...el} />;
           } else {
             return null;
           }
         })}
-      </>
+      </div>
     </Portal>
   );
 };
 
 export default AuthToast;
+
+const positionStyle = css`
+  position: fixed;
+  z-index: 100;
+`;

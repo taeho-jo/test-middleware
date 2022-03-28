@@ -11,7 +11,7 @@ import { css } from '@emotion/react';
 
 const mail = 'jotang@gmail.com';
 
-const Certified = () => {
+const Confirm = () => {
   const router = useRouter();
 
   const handleMovePage = useCallback(path => {
@@ -49,7 +49,7 @@ const Certified = () => {
   );
 };
 
-export default Certified;
+export default Confirm;
 
 const iconBoxStyle = css`
   position: absolute;

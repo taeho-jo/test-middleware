@@ -3,14 +3,16 @@ import Input from '../../atoms/Input';
 import Button from '../../atoms/Button';
 import Form from '../../atoms/Form';
 import { useForm } from 'react-hook-form';
-
-interface InputType {
-  label: string;
-  placeholder: string;
-  type: string;
-  pattern: RegExp;
-  errorMsg: string;
-}
+import { InputType } from '../../organisms/AddInfoPopup';
+//
+// export interface InputType {
+//   label: string;
+//   placeholder: string;
+//   type: string;
+//   pattern: RegExp;
+//   errorMsg: string;
+//   line: boolean
+// }
 
 interface PropsType {
   inputArr: InputType[];
@@ -46,6 +48,7 @@ const InputFormBox = ({ handleSignUp, inputArr, btnText, padding = '0' }: PropsT
         {inputArr.map((el, index) => {
           return (
             <Input
+              line={el.line ? el.line : false}
               type={el.type}
               onChangeStatus={handleChangeInputFocus}
               key={index}
