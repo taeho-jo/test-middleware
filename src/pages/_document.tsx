@@ -12,7 +12,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>C17AN's Devlog</title>
+          <title>Diby</title>
           <meta charSet="utf-8"></meta>
           <body>
             <Main />

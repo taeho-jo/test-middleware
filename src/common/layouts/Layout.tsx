@@ -32,11 +32,11 @@ const Layout = ({ children }: PropsType) => {
             {/*<Sidebar showSidebar={showSidebar} onClick={handleChangeShowSidebar} />*/}
             <main css={contentsContainer(showSidebar)}>{children}</main>
           </div>
-          <AuthToast />
+          <AuthToast position={'top-center'} />
         </>
       ) : (
         <>
-          <Header />
+          {/*<Header />*/}
           <div css={mainContainer}>
             <main css={fullMainContainer}>
               <div css={backgroundStyle(BackGroundImg2)}>
@@ -44,7 +44,7 @@ const Layout = ({ children }: PropsType) => {
               </div>
             </main>
           </div>
-          <AuthToast />
+          <AuthToast position={'top-center'} />
         </>
       )}
     </>
@@ -56,8 +56,7 @@ export default Layout;
 const mainContainer = css`
   position: relative;
   width: 100%;
-  height: calc(100vh - 64px);
-  //margin-top: 64px;
+  //height: calc(100vh - 64px);
   overflow: hidden;
 `;
 const contentsContainer = showSidebar => css`
@@ -68,8 +67,6 @@ const contentsContainer = showSidebar => css`
 `;
 const fullMainContainer = css`
   width: 100%;
-  //min-height: 100vh;
-  //padding: 30px;
   transition: 0.6s ease;
 `;
 const backgroundStyle = BackGroundImg => css`

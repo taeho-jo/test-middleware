@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 // Components
 import Button from '../../atoms/Button';
@@ -41,7 +41,7 @@ const LoginPopup = () => {
 
   const handleSignUp = useCallback(data => {
     alert(data);
-    handleMovePage('/signup/certified');
+    handleMovePage('/signup/confirm');
   }, []);
 
   const onLoginSuccess = async (res: any) => {
@@ -92,12 +92,6 @@ const LoginPopup = () => {
             </div>
           )}
         </FlexBox>
-        <button onClick={() => dispatch(showToast({ isShow: true, message: '가입된 계정이 없습니다. 다시 확인해주세요!', duration: 3000 }))}>
-          asdfasdf
-        </button>
-        {/*<button onClick={() => dispatch(removeToast({ isShow: false, message: '가입된 계정이 없습니다. 다시 확인해주세요!', duration: 3000 }))}>*/}
-        {/*  123123123*/}
-        {/*</button>*/}
       </PopupBox>
     </FlexBox>
   );
