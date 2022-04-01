@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       }),
   );
   return (
-    <PersistGate persistor={persistor} loading={<div>loading...</div>}>
+    <PersistGate persistor={persistor} loading={<div></div>}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <ThemeProvider theme={theme}>

@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 // Redux
 import { useDispatch } from 'react-redux';
 import { resetToken } from '../store/reducers/authReducer';
 // Components
 import withAuth from '../hoc/withAuth';
-import Head from 'next/head';
 import Section1 from '../../diby-client-landing/pages/Home/Section1';
 import Section2 from '../../diby-client-landing/pages/Home/Section2';
 import Section3 from '../../diby-client-landing/pages/Home/Section3';
@@ -14,7 +13,6 @@ import CustomFooter from '../../diby-client-landing/pages/Home/CustomFooter';
 // Libraries
 import { css } from '@emotion/react';
 import { caption1_bold } from '../styles/FontStyles';
-import AOS from 'aos';
 
 const Home = () => {
   const dispatch = useDispatch();
