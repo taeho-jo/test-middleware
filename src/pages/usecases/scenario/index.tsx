@@ -1,0 +1,8 @@
+import React from 'react';
+import { Solution3 } from '../../../../diby-client-landing/pages/Solution';
+
+const Scenario = () => {
+  return <Solution3 />;
+};
+
+export default Scenario;

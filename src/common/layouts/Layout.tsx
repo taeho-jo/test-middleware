@@ -1,14 +1,18 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/router';
 // Redux
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../store/reducers';
 // Components
+import Header from './Header';
+import AuthToast from '../../components/organisms/AuthToast';
+import AppBar from '../../../diby-client-landing/components/AppBar';
 // Styles
 import { css } from '@emotion/react';
-import Header from './Header';
-import BackGroundImg2 from '../../assets/background_img2.png';
+import AOS from 'aos';
+import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
+// import BackGroundImg2 from '../../assets/background_img2.png';
 import BackGroundImg from '../../assets/background_img.png';
-import AuthToast from '../../components/organisms/AuthToast';
 
 // Types
 interface PropsType {
@@ -19,34 +23,83 @@ const Layout = ({ children }: PropsType) => {
   const token = useSelector<ReducerType, string>(state => state.auth.token);
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
 
+  const router = useRouter();
+
   const handleChangeShowSidebar = useCallback(() => {
     setShowSidebar(prev => !prev);
   }, [showSidebar]);
 
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    console.log(canvasRef.current);
+    if (canvasRef.current) {
+      setGradient(canvasRef.current);
+    }
+  }, []);
+
+  useEffect(() => {
+    AOS.init({
+      once: true,
+      duration: 500,
+    });
+  }, []);
+
   return (
     <>
-      {token ? (
-        <>
-          <Header />
-          <div css={mainContainer}>
-            {/*<Sidebar showSidebar={showSidebar} onClick={handleChangeShowSidebar} />*/}
-            <main css={contentsContainer(showSidebar)}>{children}</main>
-          </div>
-          <AuthToast position={'top-center'} />
-        </>
-      ) : (
-        <>
-          {/*<Header />*/}
-          <div css={mainContainer}>
-            <main css={fullMainContainer}>
-              <div css={backgroundStyle(BackGroundImg2)}>
-                <div css={backgroundStyle(BackGroundImg)}>{children}</div>
-              </div>
-            </main>
-          </div>
-          <AuthToast position={'top-center'} />
-        </>
-      )}
+      <div css={mainContainer}>
+        <main css={contentsContainer(showSidebar)}>
+          {router.pathname === '/' ||
+          router.pathname === '/login' ||
+          router.pathname === '/signup' ||
+          router.pathname === '/signup/confirm' ||
+          router.pathname === '/pwInquiry' ||
+          router.pathname === '/pwInquiry/confirm' ||
+          router.pathname === '/addInfo/1' ||
+          router.pathname === '/addInfo/2' ||
+          router.pathname === '/addInfo/3' ? (
+            <>
+              <canvas css={gradientCanvas} id="gradient-canvas" ref={canvasRef}></canvas>
+              <div css={gradientDiv}></div>
+              <AppBar dark />
+            </>
+          ) : null}
+
+          <div css={backgroundStyle}>{children}</div>
+        </main>
+      </div>
+      <AuthToast position={'top-center'} />
+      {/*{!token ? (*/}
+      {/*  <>*/}
+      {/*    /!*<Header />*!/*/}
+      {/*    <div css={mainContainer}>*/}
+      {/*      <main css={contentsContainer(showSidebar)}>*/}
+      {/*        <canvas css={gradientCanvas} id="gradient-canvas" ref={canvasRef}></canvas>*/}
+      {/*        <div css={gradientDiv}></div>*/}
+
+      {/*        <div css={backgroundStyle}>{children}</div>*/}
+      {/*      </main>*/}
+      {/*    </div>*/}
+      {/*    <AuthToast position={'top-center'} />*/}
+      {/*  </>*/}
+      {/*) : (*/}
+      {/*  <>*/}
+      {/*    /!*<Header />*!/*/}
+      {/*    <div css={mainContainer}>*/}
+      {/*      <main css={fullMainContainer}>*/}
+      {/*        /!*<div style={{ width: '100%' }}>*!/*/}
+      {/*        /!*  <AppBar dark />*!/*/}
+      {/*        /!*</div>*!/*/}
+
+      {/*        <canvas css={gradientCanvas} id="gradient-canvas" ref={canvasRef}></canvas>*/}
+      {/*        <div css={gradientDiv}></div>*/}
+      {/*        /!*<div css={backgroundStyle(BackGroundImg2)}>*!/*/}
+      {/*        <div css={backgroundStyle}>{children}</div>*/}
+      {/*        /!*</div>*!/*/}
+      {/*      </main>*/}
+      {/*    </div>*/}
+      {/*    <AuthToast position={'top-center'} />*/}
+      {/*  </>*/}
+      {/*)}*/}
     </>
   );
 };
@@ -56,23 +109,109 @@ export default Layout;
 const mainContainer = css`
   position: relative;
   width: 100%;
-  //height: calc(100vh - 64px);
-  overflow: hidden;
+  //height: calc(100vh - 68px);
+  //height: 100vh;
+  //overflow: hidden;
+  //background-color: transparent;
 `;
 const contentsContainer = showSidebar => css`
   width: 100%;
   min-height: 100vh;
-  padding: ${showSidebar ? '30px 30px 30px 330px' : '30px 30px 30px 100px'};
+  // padding: ${showSidebar ? '30px 30px 30px 100px' : '30px 30px 30px 100px'};
   transition: 0.6s ease;
 `;
 const fullMainContainer = css`
   width: 100%;
   transition: 0.6s ease;
 `;
-const backgroundStyle = BackGroundImg => css`
-  background-color: rgba(0, 0, 0, 0.2);
-  height: 100vh;
-  overflow: hidden;
-  background-image: url(${BackGroundImg.src});
-  background-repeat: no-repeat;
+const backgroundStyle = css`
+  //background-color: rgba(0, 0, 0, 0.2);
+  //height: 100vh;
+  //overflow: hidden;
+  //background-image: url(${BackGroundImg.src});
+  //background-repeat: no-repeat;
 `;
+
+const gradientCanvas = css`
+  width: 100%;
+  /*height: 632px;*/
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  height: 792px;
+  /* Adjust the colors below to get a different gradient */
+  /* You can use https://whatamesh.vercel.app/ to generate them */
+  /*--gradient-color-1: #c3e4ff;*/
+  /*--gradient-color-2: #6ec3f4;*/
+  /*--gradient-color-3: #eae2ff;*/
+  /*--gradient-color-4: #b9beff;*/
+  --gradient-color-1: #3c3c46;
+  --gradient-color-2: #3d2f4d;
+  --gradient-color-3: #2d2d3f;
+  --gradient-color-4: #1f3c3f;
+  /*background: #3C3C46;*/
+  transform: skewY(-9deg);
+  transform-origin: top left;
+  border-image: linear-gradient(93.75deg, a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);
+`;
+
+const gradientDiv = css`
+  /*height: 640px;*/
+  height: 800px;
+
+  position: absolute;
+  top: 0px;
+  z-index: -1;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  border-bottom: 10px solid;
+  box-sizing: border-box;
+  background: transparent;
+
+  width: 100%;
+  border-image: linear-gradient(93.75deg, #a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);
+  border-image-slice: 1;
+
+  transform: skewY(-9deg);
+  transform-origin: top left;
+`;
+// #gradient-canvas {
+//   width: 100%;
+//   /*height: 632px;*/
+//   height: 792px;
+//   /* Adjust the colors below to get a different gradient */
+//   /* You can use https://whatamesh.vercel.app/ to generate them */
+//   /*--gradient-color-1: #c3e4ff;*/
+//   /*--gradient-color-2: #6ec3f4;*/
+//   /*--gradient-color-3: #eae2ff;*/
+//   /*--gradient-color-4: #b9beff;*/
+//   --gradient-color-1: #3C3C46;
+//   --gradient-color-2: #3d2f4d;
+//   --gradient-color-3: #2d2d3f;
+//   --gradient-color-4: #1f3c3f;
+//   /*background: #3C3C46;*/
+//   transform: skewY(-9deg);
+//   transform-origin: top left;
+//   border-image: linear-gradient(93.75deg, #A8FF69 8.23%, #24E1D5 35.57%, #2878F0 62.91%, #7B3CE9 91.55%),
+// }
+
+// .gradient-div {
+//   /*height: 640px;*/
+//   height: 800px;
+//   position: absolute;
+//   top: 0px;
+//   z-index: -1;
+//   width: 100%;
+//   border-top: 0px;
+//   border-left: 0px;
+//   border-right: 0px;
+//   border-bottom: 10px solid;
+//   border-image: linear-gradient(93.75deg, #A8FF69 8.23%, #24E1D5 35.57%, #2878F0 62.91%, #7B3CE9 91.55%);
+//   border-image-slice: 1;
+//   box-sizing: border-box;
+//   background: transparent;
+//
+//   transform: skewY(-9deg);
+//   transform-origin: top left;
+// }

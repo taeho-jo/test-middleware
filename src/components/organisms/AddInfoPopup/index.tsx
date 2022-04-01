@@ -3,7 +3,6 @@ import PopupBox from '../../atoms/PopupBox';
 import Icon from '../../atoms/Icon';
 import InputFormBox from '../../molecules/InputFormBox';
 import FlexBox from '../../atoms/FlexBox';
-import { body3_bold, body3_regular } from '../../../styles/FontStyles';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
 
