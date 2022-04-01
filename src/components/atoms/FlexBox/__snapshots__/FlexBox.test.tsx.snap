@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Flex Box flex width grid 1`] = `
+<div>
+  <div
+    class="css-1g0po3x-flexBox-FlexBox"
+  >
+    테스트
+  </div>
+</div>
+`;
+
+exports[`Flex Box flex width grid 2`] = `
+<div>
+  <div
+    class="css-9xs6ie-flexBox-FlexBox"
+  >
+    테스트
+  </div>
+</div>
+`;
+
+exports[`Flex Box flex width grid 3`] = `
+<div>
+  <div
+    class="css-1g0po3x-flexBox-FlexBox"
+  >
+    테스트
+  </div>
+</div>
+`;

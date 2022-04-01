@@ -4,7 +4,8 @@
   "env": {
     "browser": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": ["next","eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:storybook/recommended", "prettier"],
   "plugins": ["@typescript-eslint", "@emotion"],
@@ -12,6 +13,7 @@
     "ecmaVersion": 2020
   },
   "rules": {
+    "react-hooks/rules-of-hooks": 0,
     "react/no-unescaped-entities": 0,
     "prefer-const": ["error", {
       "destructuring": "any",
