@@ -58,4 +58,5 @@ export default Header;
 
 const marginStyle = css`
   margin-right: 12px;
+  background-color: transparent;
 `;

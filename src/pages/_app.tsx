@@ -6,12 +6,16 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 // Components
 import Layout from '../common/layouts/Layout';
-import AppAnimation from '../common/layouts/AppAnimation';
 // Libraries
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 // Styles
 import GlobalStyles from '../styles/GlobalStyles';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '../../diby-client-landing/Theme';
+import '../../../diby-front-landing/src/aos.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 // Types
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next';
@@ -39,18 +43,18 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         },
       }),
   );
-  // const queryClient = new QueryClient();
-
   return (
     <PersistGate persistor={persistor} loading={<div>loading...</div>}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <GlobalStyles />
-          <Layout>
-            {/*<AppAnimation>*/}
-            <Component {...pageProps} />
-            {/*</AppAnimation>*/}
-          </Layout>
+          <ThemeProvider theme={theme}>
+            <GlobalStyles />
+            <Layout>
+              {/*<AppAnimation>*/}
+              <Component {...pageProps} />
+              {/*</AppAnimation>*/}
+            </Layout>
+          </ThemeProvider>
         </Hydrate>
         <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} />
       </QueryClientProvider>

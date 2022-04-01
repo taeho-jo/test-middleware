@@ -1,3 +1,6 @@
+import IconAlert from '../../../public/assets/svg/icon_alert.svg';
+import IconFeedback2 from '../../../public/assets/svg/icon_feedback2.svg';
+
 export type JustifyType = 'center' | 'space-between' | 'space-around' | 'flex-start' | 'flex-end';
 
 export type ColorsType =
@@ -32,4 +35,7 @@ export type IconType =
   | 'NAVIGATION_CHEVRON_DOWN'
   | 'NAVIGATION_CHEVRON_RIGHT'
   | 'NAVIGATION_CLOSE_LG'
-  | 'NAVIGATION_CLOSE_SM';
+  | 'NAVIGATION_CLOSE_SM'
+  | 'ICON_ALERT'
+  | 'ICON_FEEDBACK2'
+  | 'ICON_TESTING';
