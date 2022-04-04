@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Grid, Stack, Button, IconButton, Popover } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { GridContainer } from './Grid';
+import { breakpoints } from '../Theme';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoWhite from '../assets/images/diby_white.png';
 import LogoBlack from '../assets/images/diby_black.png';
@@ -11,7 +12,6 @@ import icon1 from '../assets/images/icon_uitest.png';
 import icon2 from '../assets/images/icon_uxposition.png';
 import icon3 from '../assets/images/icon_scenario.png';
 import icon4 from '../assets/images/icon_customer.png';
-import { breakpoints } from '../Theme';
 
 const AppBarButton = styled(Button)({
   fontWeight: '700',
@@ -124,7 +124,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 handleClick('/tri');
               }}
             >
-              무료로 리서치 설계하기
+              설계하기
             </DesignButton>
           )}
 
