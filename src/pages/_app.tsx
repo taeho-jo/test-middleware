@@ -13,7 +13,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import GlobalStyles from '../styles/GlobalStyles';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from '../../diby-client-landing/Theme';
-import '../../../diby-front-landing/src/aos.css';
+import '../../diby-client-landing/aos.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 // Types
@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       }),
   );
   return (
-    <PersistGate persistor={persistor} loading={<div>loading...</div>}>
+    <PersistGate persistor={persistor} loading={<div></div>}>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
           <ThemeProvider theme={theme}>

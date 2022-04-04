@@ -21,17 +21,12 @@ interface PropsType {
 
 const Layout = ({ children }: PropsType) => {
   const token = useSelector<ReducerType, string>(state => state.auth.token);
-  const [showSidebar, setShowSidebar] = useState<boolean>(true);
+  const [showGradient, setShowGradient] = useState<boolean>(false);
 
   const router = useRouter();
 
-  const handleChangeShowSidebar = useCallback(() => {
-    setShowSidebar(prev => !prev);
-  }, [showSidebar]);
-
   const canvasRef = useRef(null);
   useEffect(() => {
-    console.log(canvasRef.current);
     if (canvasRef.current) {
       setGradient(canvasRef.current);
     }
@@ -44,21 +39,36 @@ const Layout = ({ children }: PropsType) => {
     });
   }, []);
 
+  useEffect(() => {
+    if (
+      router.pathname === '/' ||
+      router.pathname === '/login' ||
+      router.pathname === '/signup' ||
+      router.pathname === '/signup/confirm' ||
+      router.pathname === '/pwInquiry' ||
+      router.pathname === '/pwInquiry/confirm' ||
+      router.pathname === '/addInfo/1' ||
+      router.pathname === '/addInfo/2' ||
+      router.pathname === '/addInfo/3'
+    ) {
+      console.log('바뀐?');
+      setShowGradient(true);
+    } else {
+      setShowGradient(false);
+    }
+  }, [router]);
+
+  useEffect(() => {
+    console.log(showGradient, 'SHOW');
+  }, [showGradient]);
+
   return (
     <>
       <div css={mainContainer}>
-        <main css={contentsContainer(showSidebar)}>
-          {router.pathname === '/' ||
-          router.pathname === '/login' ||
-          router.pathname === '/signup' ||
-          router.pathname === '/signup/confirm' ||
-          router.pathname === '/pwInquiry' ||
-          router.pathname === '/pwInquiry/confirm' ||
-          router.pathname === '/addInfo/1' ||
-          router.pathname === '/addInfo/2' ||
-          router.pathname === '/addInfo/3' ? (
+        <main css={contentsContainer}>
+          <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
+          {showGradient ? (
             <>
-              <canvas css={gradientCanvas} id="gradient-canvas" ref={canvasRef}></canvas>
               <div css={gradientDiv}></div>
               <AppBar dark />
             </>
@@ -114,10 +124,10 @@ const mainContainer = css`
   //overflow: hidden;
   //background-color: transparent;
 `;
-const contentsContainer = showSidebar => css`
+const contentsContainer = css`
   width: 100%;
   min-height: 100vh;
-  // padding: ${showSidebar ? '30px 30px 30px 100px' : '30px 30px 30px 100px'};
+  // padding: 30px 30px 30px 100px;
   transition: 0.6s ease;
 `;
 const fullMainContainer = css`
@@ -132,7 +142,8 @@ const backgroundStyle = css`
   //background-repeat: no-repeat;
 `;
 
-const gradientCanvas = css`
+const gradientCanvas = showGradient => css`
+  display: ${showGradient ? 'unset' : 'none'};
   width: 100%;
   /*height: 632px;*/
   position: absolute;
@@ -141,15 +152,10 @@ const gradientCanvas = css`
   height: 792px;
   /* Adjust the colors below to get a different gradient */
   /* You can use https://whatamesh.vercel.app/ to generate them */
-  /*--gradient-color-1: #c3e4ff;*/
-  /*--gradient-color-2: #6ec3f4;*/
-  /*--gradient-color-3: #eae2ff;*/
-  /*--gradient-color-4: #b9beff;*/
   --gradient-color-1: #3c3c46;
   --gradient-color-2: #3d2f4d;
   --gradient-color-3: #2d2d3f;
   --gradient-color-4: #1f3c3f;
-  /*background: #3C3C46;*/
   transform: skewY(-9deg);
   transform-origin: top left;
   border-image: linear-gradient(93.75deg, a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);
@@ -176,42 +182,3 @@ const gradientDiv = css`
   transform: skewY(-9deg);
   transform-origin: top left;
 `;
-// #gradient-canvas {
-//   width: 100%;
-//   /*height: 632px;*/
-//   height: 792px;
-//   /* Adjust the colors below to get a different gradient */
-//   /* You can use https://whatamesh.vercel.app/ to generate them */
-//   /*--gradient-color-1: #c3e4ff;*/
-//   /*--gradient-color-2: #6ec3f4;*/
-//   /*--gradient-color-3: #eae2ff;*/
-//   /*--gradient-color-4: #b9beff;*/
-//   --gradient-color-1: #3C3C46;
-//   --gradient-color-2: #3d2f4d;
-//   --gradient-color-3: #2d2d3f;
-//   --gradient-color-4: #1f3c3f;
-//   /*background: #3C3C46;*/
-//   transform: skewY(-9deg);
-//   transform-origin: top left;
-//   border-image: linear-gradient(93.75deg, #A8FF69 8.23%, #24E1D5 35.57%, #2878F0 62.91%, #7B3CE9 91.55%),
-// }
-
-// .gradient-div {
-//   /*height: 640px;*/
-//   height: 800px;
-//   position: absolute;
-//   top: 0px;
-//   z-index: -1;
-//   width: 100%;
-//   border-top: 0px;
-//   border-left: 0px;
-//   border-right: 0px;
-//   border-bottom: 10px solid;
-//   border-image: linear-gradient(93.75deg, #A8FF69 8.23%, #24E1D5 35.57%, #2878F0 62.91%, #7B3CE9 91.55%);
-//   border-image-slice: 1;
-//   box-sizing: border-box;
-//   background: transparent;
-//
-//   transform: skewY(-9deg);
-//   transform-origin: top left;
-// }
