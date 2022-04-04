@@ -79,7 +79,7 @@ function Section4() {
     <Section>
       <GridContainer container spacing={16}>
         <Grid item sm={12} md={12} lg={12}>
-          <Header data-aos="fade-up">CX 팀을 위한 핵심 기능.</Header>
+          <Header data-aos="fade-up">CX 팀을 위한 핵심 기능</Header>
         </Grid>
         {data.map((item, index) => (
           <Grid item sm={6} md={6} lg={4} key={`id_${index}`}>

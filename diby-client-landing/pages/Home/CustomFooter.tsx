@@ -123,9 +123,6 @@ const NextButton = styled(Button)(({ theme }) => ({
     margin: 0,
     marginTop: '10px',
   },
-  // [theme.breakpoints.up('md')]: {
-  //   width: '320px',
-  // },
 }));
 
 const FormBox = styled('form')(({ theme }) => ({
@@ -134,9 +131,6 @@ const FormBox = styled('form')(({ theme }) => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
-  // [theme.breakpoints.up('md')]: {
-  //   width: '320px',
-  // },
 }));
 
 function Section5() {
@@ -150,15 +144,10 @@ function Section5() {
 
   const sendEmail = e => {
     e.preventDefault();
-    console.log(form.current, 'ASDF');
-    console.log(demoEmail, 'DEMo Email');
     const isEmail = emailRex.test(demoEmail);
-    console.log(isEmail);
     if (isEmail) {
       emailjs.sendForm('service_at8fasb', 'template_8hheby9', form.current, 'ReXcWmA6XR9BI1uLY').then(
         result => {
-          console.log(result);
-          console.log(result.text);
           if (result.status === 200 && result.text === 'OK') {
             setDemoEmail('');
             dispatch(showToast({ message: '데모 신청이 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }));
@@ -169,19 +158,9 @@ function Section5() {
         },
       );
     } else {
-      console.log('실패');
       dispatch(showToast({ message: '이메일 양식이 아닙니다.', isShow: true, status: 'warning', duration: 5000 }));
     }
   };
-
-  // const sendEmail = useCallback(
-  //   e => {
-  //     e.preventDefault();
-  //     console.log(demoEmail, 'DEMo Email');
-  //     const rex =
-  //   },
-  //   [demoEmail],
-  // );
 
   const handleUpdateEmail = useCallback(
     e => {
