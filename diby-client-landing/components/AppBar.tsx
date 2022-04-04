@@ -84,6 +84,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
               src={darkMode ? LogoWhite.src : LogoBlack.src}
               alt="diby"
               style={{
+                cursor: 'pointer',
                 width: '56px',
                 height: '30px',
                 objectFit: 'contain',
