@@ -46,19 +46,21 @@ const Header = styled('p')(({ theme }) => ({
 const Title = styled('p')(({ theme }) => ({
   whiteSpace: 'pre-wrap',
   [theme.breakpoints.down('md')]: {
+    width: '100%',
     fontSize: '24px',
     lineHeight: '32px',
   },
   [theme.breakpoints.up('md')]: {
+    width: '90%',
     fontSize: '32px',
     lineHeight: '48px',
   },
   [theme.breakpoints.up('lg')]: {
-    fontSize: '48px',
-    lineHeight: '64px',
+    fontSize: '40px',
+    lineHeight: '55px',
   },
   [theme.breakpoints.up('xl')]: {
-    fontSize: '48px',
+    fontSize: '38px',
     lineHeight: '64px',
   },
   fontWeight: 'bold',
@@ -115,7 +117,13 @@ const Section1 = ({ data }) => {
                 variant="contained"
                 endIcon={isMobile ? undefined : <ArrowRightAltIcon style={{ color: 'white' }} />}
               >
-                나에게 맞는 리서치 모듈 알아보기
+                {navigate.pathname === '/usecases/ui'
+                  ? 'UI 진단 테스트로 사용성 개선하기'
+                  : navigate.pathname === '/usecases/ux'
+                  ? 'UX 포지션 테스트로 UX 전략 수립하기'
+                  : navigate.pathname === '/usecases/scenario'
+                  ? '시나리오 테스트로 의사결정하기'
+                  : '퍼소나 테스트로 퍼소나 정의하기'}
               </NextButton>
             </Stack>
             <div style={{ flex: 1 }} />

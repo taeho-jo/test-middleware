@@ -33,6 +33,12 @@ const Desc = styled('p')(({ theme }) => ({
   lineHeight: '24px',
   fontWeight: 'bold',
   whiteSpace: 'pre-wrap',
+  [theme.breakpoints.down('md')]: {
+    width: '100%',
+  },
+  [theme.breakpoints.up('md')]: {
+    width: '92%',
+  },
 }));
 
 function SolutionCard(props: { title: string; desc: string; thumb: string; style?: React.CSSProperties }) {

@@ -143,7 +143,7 @@ function Section1() {
               </SwitchTransition>
               <Title>Better Yourself.</Title>
               <p style={{ margin: '40px 0 0 0', color: 'white', fontSize: '16px' }}>일 잘하는 기획자 / 디자이너 / 리서처 / 마케터가 사용하는</p>
-              <p style={{ margin: '10px 0 0 0', color: 'white', fontSize: '16px', fontWeight: 'bold' }}>CX Research Assistant Tool</p>
+              <p style={{ margin: '10px 0 0 0', color: 'white', fontSize: '16px', fontWeight: 'bold' }}>CX 리서치 솔루션</p>
               <NextButton
                 onClick={() => {
                   handleClick('/tri');
@@ -152,7 +152,7 @@ function Section1() {
                 variant="contained"
                 endIcon={isMobile ? undefined : <ArrowRightAltIcon style={{ color: 'white' }} />}
               >
-                나에게 맞는 리서치 모듈 알아보기
+                무료로 리서치 설계하기
               </NextButton>
             </Stack>
             <div style={{ flex: 1 }} />
