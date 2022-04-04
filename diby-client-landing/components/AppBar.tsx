@@ -124,7 +124,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 handleClick('/tri');
               }}
             >
-              무료로 리서치 설계하기
+              설계하기
             </DesignButton>
           )}
 
