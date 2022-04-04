@@ -116,9 +116,9 @@ function Section1() {
             <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
               <Header>1분안에 끝나는 설계안 받기</Header>
               <Title>지금 바로 무료로 설계안을 받아보세요.</Title>
-              <NextButton color="blue" variant="contained" endIcon={isMobile ? undefined : <ArrowRightAltIcon style={{ color: 'white' }} />}>
-                1분안에 끝나는 설계안 받아보기
-              </NextButton>
+              {/*<NextButton color="blue" variant="contained" endIcon={isMobile ? undefined : <ArrowRightAltIcon style={{ color: 'white' }} />}>*/}
+              {/*  1분안에 끝나는 설계안 받아보기*/}
+              {/*</NextButton>*/}
             </Stack>
           </LeftGrid>
           <RightGrid item xs={12} md={5} lg={6}>
