@@ -26,10 +26,12 @@ const AppBarIconButton = styled(IconButton)({
 });
 
 const DesignButton = styled(Button)({
-  width: '130px',
+  // width: '130px',
   borderRadius: '45px',
   fontWeight: '700',
   textTransform: 'none',
+  boxSizing: 'border-box',
+  padding: '4.5px 36px',
 });
 
 function AppBar({ dark = false }: { dark?: boolean }) {
@@ -93,7 +95,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
           {!isMobile && (
             <Stack className="hide-on-md" direction="row" justifyContent="center" alignItems="center" spacing={16} style={{ marginRight: '30px' }}>
               <AppBarButton color={darkMode ? 'white' : 'primary'} variant="text" onClick={handleClickUseCases}>
-                Use cases
+                테스트 서비스
               </AppBarButton>
               <AppBarButton
                 color={darkMode ? 'white' : 'primary'}
@@ -102,7 +104,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                   handleClick('/feature');
                 }}
               >
-                Feature
+                솔루션소개
               </AppBarButton>
               <AppBarButton
                 color={darkMode ? 'white' : 'primary'}
@@ -111,7 +113,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                   handleClick('/pricing');
                 }}
               >
-                Pricing
+                가격안내
               </AppBarButton>
             </Stack>
           )}
@@ -124,7 +126,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 handleClick('/tri');
               }}
             >
-              설계하기
+              무료로 리서치 설계하기
             </DesignButton>
           )}
 
@@ -234,7 +236,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 handleClick('/tri');
               }}
             >
-              설계하기
+              무료로 리서치 설계하기
             </DesignButton>
           </div>
         </div>
@@ -264,8 +266,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <img src={icon1.src} alt="diby" style={{ width: '40px', height: '40px', margin: 'auto 0 auto 40px' }} />
                 <div style={{ paddingLeft: '16px' }}>
-                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UI 진단</p>
-                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px' }}>사용성 개선 우선순위 선정</p>
+                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UI 진단 테스트</p>
+                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px' }}>사용성 문제점 파악</p>
                 </div>
               </div>
             </Button>
@@ -278,8 +280,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <img src={icon2.src} alt="diby" style={{ width: '40px', height: '40px', margin: 'auto 0 auto 40px' }} />
                 <div style={{ paddingLeft: '16px' }}>
-                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UX 포지션 분석</p>
-                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px' }}>UX 전략 수립</p>
+                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UX 포지션 테스트</p>
+                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px' }}>실사용자 대상 UX 평가 및 전략수립</p>
                 </div>
               </div>
             </Button>
@@ -294,7 +296,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <img src={icon3.src} alt="diby" style={{ width: '40px', height: '40px', margin: 'auto 0 auto 40px' }} />
                 <div style={{ paddingLeft: '16px' }}>
-                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>시나리오 검증</p>
+                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>시나리오 테스트</p>
                   <p style={{ margin: '0', textAlign: 'left', fontSize: '14px' }}>가설 검정 및 의사결정</p>
                 </div>
               </div>
@@ -308,8 +310,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <img src={icon4.src} alt="diby" style={{ width: '40px', height: '40px', margin: 'auto 0 auto 40px' }} />
                 <div style={{ paddingLeft: '16px' }}>
-                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>잠재 고객 조사</p>
-                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px' }}>목표 고객군 선별</p>
+                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>퍼소나 테스트</p>
+                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px' }}>핵심 고객 정의</p>
                 </div>
               </div>
             </Button>
