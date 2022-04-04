@@ -70,6 +70,12 @@ const Desc2 = styled('p')(({ theme }) => ({
   lineHeight: '24px',
   margin: '0',
   color: 'white',
+  [theme.breakpoints.down('md')]: {
+    width: '100%',
+  },
+  [theme.breakpoints.up('md')]: {
+    width: '90%',
+  },
 }));
 
 const SlideButton = styled(Button)(({ theme }) => ({

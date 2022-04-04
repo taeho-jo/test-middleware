@@ -142,7 +142,7 @@ function Section5() {
             CX Research 팀이 있는 {isTablet && <br />}
             혁신 기업까지,
             <br />
-            Diby.를 사용합니다.
+            Diby를 사용합니다.
           </Title>
           <div>
             <MailForm data-aos="fade-up" type="text" placeholder="E-mail을 입력해주세요." />

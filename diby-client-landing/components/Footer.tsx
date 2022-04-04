@@ -52,9 +52,9 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
         <p style={{ fontSize: '14px', margin: '24px 0', lineHeight: '20px', color: color }}>
           사용자 피드백이 필요한
           <br />
-          기획자, 디자이너, 마케터, 리서처를 위한
+          일 잘하는 기획자, 디자이너, 마케터, 리서처를 위한
           <br />
-          CX Research Assistant Tool입니다.
+          CX 리서치 솔루션입니다.
         </p>
         <p style={{ fontSize: '12px', color: color }}>Ⓒ DBDLAB Corp.</p>
         <FooterButton color={darkMode ? 'white' : 'primary'} style={{ fontSize: '14px', fontWeight: 'bold' }}>
