@@ -60,35 +60,38 @@ function Section2() {
     <div style={{ width: '100%', marginBottom: '60px', backgroundColor: '#F8F8F8' }}>
       <GridContainer container spacing={16}>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '112px' }}>
-          <Header data-aos="fade-up">#1. CX Research ️Assistant Tool</Header>
+          <Header data-aos="fade-up" style={{ fontSize: '20px' }}>
+            #1. CX Research ️Assistant Tool
+          </Header>
         </Grid>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '32px' }}>
           <Title data-aos="fade-up">
-            고객 문제 발견, 정의, 원인 파악, 데이터 해석
+            CX 리서치에 드는 시간과 비용을 줄이고,
             <br />
-            CX Research 를 위한 통합 솔루션
+            더많은 피드백을 더 빠르게 정리하세요.
           </Title>
         </Grid>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '32px' }}>
           <Desc data-aos="fade-up" style={{ fontWeight: 'bold' }}>
-            무엇이 문제인지 올바르게 정의하는 것이 첫번째 단계입니다.
+            리서치 방법 선정, 문항 설계, 응답자 모집까지 Diby 에서 빠르게 수행할 수 있습니다. Diby 의 고객 피드백에 특화된 분석 템플릿으로 문장형
+            데이터를 읽고 분류하는 시간을 절약하세요.
           </Desc>
         </Grid>
-        <Grid item xs={12} md={6} lg={4} style={{ paddingTop: '40px' }}>
-          <Desc data-aos="fade-up">
-            실시간 사용자 행동 데이터로 문제를 발견하고,
-            <br />
-            다양한 피드백 모듈로 원인을 파악하세요.
-          </Desc>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4} style={{ paddingTop: '40px' }}>
-          <Desc data-aos="fade-up">Diby를 사용하는 기획자/디자이너/리서처/마케터는</Desc>
-          <Desc data-aos="fade-up" style={{ color: '#24E1D5' }}>
-            시간을 절약하고, 전략 수립과 의사결정에
-            <br />
-            집중할 수 있습니다.
-          </Desc>
-        </Grid>
+        {/*<Grid item xs={12} md={6} lg={4} style={{ paddingTop: '40px' }}>*/}
+        {/*  <Desc data-aos="fade-up">*/}
+        {/*    실시간 사용자 행동 데이터로 문제를 발견하고,*/}
+        {/*    <br />*/}
+        {/*    다양한 피드백 모듈로 원인을 파악하세요.*/}
+        {/*  </Desc>*/}
+        {/*</Grid>*/}
+        {/*<Grid item xs={12} md={6} lg={4} style={{ paddingTop: '40px' }}>*/}
+        {/*  <Desc data-aos="fade-up">Diby를 사용하는 기획자/디자이너/리서처/마케터는</Desc>*/}
+        {/*  <Desc data-aos="fade-up" style={{ color: '#24E1D5' }}>*/}
+        {/*    시간을 절약하고, 전략 수립과 의사결정에*/}
+        {/*    <br />*/}
+        {/*    집중할 수 있습니다.*/}
+        {/*  </Desc>*/}
+        {/*</Grid>*/}
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '40px' }}>
           <LottieCard name="home_solution" />
         </Grid>

@@ -40,7 +40,7 @@ function Section4() {
           <Header data-aos="fade-up">Why Diby?</Header>
         </Grid>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '32px' }}>
-          <Title data-aos="fade-up">자동화된 CX Research 프로세스</Title>
+          <Title data-aos="fade-up">Diby로 체계적인 CX 리서치 문화를 도입하세요. </Title>
         </Grid>
         <Grid item xs={10} md={3} lg={3} style={{ paddingTop: '40px', paddingBottom: '40px' }}>
           <Stack direction="column" spacing={24} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
@@ -48,9 +48,9 @@ function Section4() {
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold', color: '#2878F0' }}>
               기술 우선
             </Desc>
-            <Desc data-aos="fade-up">인력 기반의 CX Research 시장을 기술 중심으로 혁신합니다.</Desc>
+            <Desc data-aos="fade-up">Diby는 인력기반의 CX 리서치 시장을 기술 중심으로 혁신합니다.</Desc>
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold' }}>
-              누구나 객관적이고 체계적인 Research 를 수행할 수 있습니다.
+              챗봇, 인공지능, 표정 분석등을 활용하여 새로운 리서치 방법을 제공합니다.
             </Desc>
           </Stack>
         </Grid>
@@ -60,9 +60,13 @@ function Section4() {
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold', color: '#2878F0' }}>
               애자일
             </Desc>
-            <Desc data-aos="fade-up">문제를 해결하기 위해 짧은 주기로 Research를 수행합니다.</Desc>
+            <Desc data-aos="fade-up">
+              리서치를 가볍고 빠르게 수행할 수 있습니다.
+              <br />
+              &nbsp;&nbsp;
+            </Desc>
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold' }}>
-              결과 대시보드로 팀원에게 피드백을 쉽게 받고 문제상황에 빠르게 대처할 수 있습니다.
+              짧은 주기로 여러번 수행하는 리서치로 고객 경험을 실제 의사결정에 반영해보세요.
             </Desc>
           </Stack>
         </Grid>
@@ -70,11 +74,11 @@ function Section4() {
           <Stack direction="column" spacing={24} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
             <LottieIcon name="home_icon_3" delay={1000} />
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold', color: '#2878F0' }}>
-              서비스 맞춤형
+              프로덕트 맞춤형
             </Desc>
-            <Desc data-aos="fade-up">서로 다른 비즈니스에 동일한 기준을 적용하지 않습니다.</Desc>
+            <Desc data-aos="fade-up">서로 다른 프로덕트에 동일한 기준을 적용하지 않습니다.</Desc>
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold' }}>
-              프로덕트 타입별로 문제를 정의하고 담당자가 선택하고 수행할 수 있는 다양한 솔루션을 제공합니다.
+              Diby 가 보유한 익명화된 데이터 기반으로 유사 업계 동향을 함께 확인하세요.
             </Desc>
           </Stack>
         </Grid>
@@ -82,11 +86,11 @@ function Section4() {
           <Stack direction="column" spacing={24} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
             <LottieIcon name="home_icon_4" delay={1500} />
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold', color: '#2878F0' }}>
-              다양한 모듈
+              다양한 템플릿
             </Desc>
-            <Desc data-aos="fade-up">챗봇, AI, 표정 분석 등을 활용하여 새로운 CX Research 모듈을 제공합니다.</Desc>
+            <Desc data-aos="fade-up">리서치의 목적에 맞게 선택하실 수 있는 다양한 템플릿을 제공합니다.</Desc>
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold' }}>
-              이 모듈은 모든 종류의 B2C 서비스에 적용할 수 있습니다.{' '}
+              원하시는대로 커스텀하거나, 추천 템플릿을 활용해보세요.{' '}
             </Desc>
           </Stack>
         </Grid>

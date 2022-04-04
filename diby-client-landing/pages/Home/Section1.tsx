@@ -143,7 +143,7 @@ function Section1() {
               </SwitchTransition>
               <Title>Better Yourself.</Title>
               <p style={{ margin: '40px 0 0 0', color: 'white', fontSize: '16px' }}>일 잘하는 기획자 / 디자이너 / 리서처 / 마케터가 사용하는</p>
-              <p style={{ margin: '10px 0 0 0', color: 'white', fontSize: '16px', fontWeight: 'bold' }}>CX Research Assistant Tool</p>
+              <p style={{ margin: '10px 0 0 0', color: 'white', fontSize: '16px', fontWeight: 'bold' }}>CX 리서치 솔루션</p>
               <NextButton
                 onClick={() => {
                   handleClick('/tri');

@@ -114,16 +114,16 @@ function Section3() {
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '32px' }}>
           <Title data-aos="fade-up">
             커피한잔 주문하듯이, <br />
-            고객의 피드백을 주문
+            고객의 피드백을 주문하세요.
           </Title>
         </Grid>
         <Grid item xs={10} md={12} lg={12} style={{ paddingTop: '32px' }}>
           <Desc data-aos="fade-up" style={{ fontWeight: 'bold' }}>
-            누구에게, 어떤 피드백을, 어떻게 받을지 고민하지 마세요.
+            리서치 응답자를 어디서 모으고, 어떤 보상을 줘야할지 고민하지마세요.
             <br />
-            음성, 텍스트, 표정, 감정, 유저 flow.
+            2만명의 Diby 패널에서 응답자를 찾거나, 보유하고 계신 고객에게 리서치 참여 링크를 보낼 수 있습니다.
             <br />
-            Diby는 당신에게 필요한 모든 종류의 피드백 수집을 지원합니다.
+            참여자 표집 조건과 리서치 난이도에 따라 보상금액을 자동 계산해드립니다.
           </Desc>
         </Grid>
         <Grid item xs={12} md={3} lg={3} style={{ paddingTop: '40px' }}>
@@ -133,11 +133,11 @@ function Section3() {
               섬세한 응답자 선별
             </Desc>
             <Desc data-aos="fade-up">
-              프로덕트 실사용여부,
+              성별, 취미, 직업 등
               <br />
-              취미, 국적, 직업, 성향에 맞추어
+              원하시는 조건을 충족하는 응답자만을
               <br />
-              가장 적합한 응답자를 찾습니다.
+              Diby 패널 중 선별하여 리서치를 수행합니다.
             </Desc>
           </Stack>
         </Grid>
@@ -148,9 +148,9 @@ function Section3() {
               데이터 품질 유지
             </Desc>
             <Desc data-aos="fade-up">
-              불량응답 분류 알고리즘과
+              불성실 피드백 식별 알고리즘과
               <br />
-              체계적인 패널를 통해
+              체계적인 패널 관리를 통해
               <br />
               의사결정에 도움이 되는
               <br />

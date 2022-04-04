@@ -34,7 +34,7 @@ const Title = styled('p')(({ theme }) => ({
 
 const Desc1 = styled('p')(({ theme }) => ({
   whiteSpace: 'pre-wrap',
-  fontSize: '16px',
+  fontSize: '26px',
   lineHeight: '24px',
   fontWeight: 'bold',
   paddingTop: '6px',
@@ -42,9 +42,15 @@ const Desc1 = styled('p')(({ theme }) => ({
 
 const Desc2 = styled('p')(({ theme }) => ({
   whiteSpace: 'pre-wrap',
-  fontSize: '16px',
+  fontSize: '18px',
   lineHeight: '24px',
   margin: '0',
+  [theme.breakpoints.down('md')]: {
+    width: '100%',
+  },
+  [theme.breakpoints.up('md')]: {
+    width: '90%',
+  },
 }));
 
 const SlideButton = styled(Button)(({ theme }) => ({
