@@ -61,7 +61,7 @@ function Section2() {
       <GridContainer container spacing={16}>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '112px' }}>
           <Header data-aos="fade-up" style={{ fontSize: '20px' }}>
-            #1. CX Research ️Assistant Tool
+            Untact CX Research
           </Header>
         </Grid>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '32px' }}>
@@ -73,8 +73,9 @@ function Section2() {
         </Grid>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '32px' }}>
           <Desc data-aos="fade-up" style={{ fontWeight: 'bold' }}>
-            리서치 방법 선정, 문항 설계, 응답자 모집까지 Diby 에서 빠르게 수행할 수 있습니다. Diby 의 고객 피드백에 특화된 분석 템플릿으로 문장형
-            데이터를 읽고 분류하는 시간을 절약하세요.
+            리서치 방법 선정, 문항 설계, 응답자 모집까지 Diby 에서 빠르게 수행할 수 있습니다.
+            <br />
+            Diby 의 고객 피드백에 특화된 분석 템플릿으로 문장형 데이터를 읽고 분류하는 시간을 절약하세요.
           </Desc>
         </Grid>
         {/*<Grid item xs={12} md={6} lg={4} style={{ paddingTop: '40px' }}>*/}
