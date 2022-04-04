@@ -60,11 +60,7 @@ function Section4() {
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold', color: '#2878F0' }}>
               애자일
             </Desc>
-            <Desc data-aos="fade-up">
-              리서치를 가볍고 빠르게 수행할 수 있습니다.
-              <br />
-              &nbsp;&nbsp;
-            </Desc>
+            <Desc data-aos="fade-up">리서치를 가볍고 빠르게 수행할 수 있습니다.</Desc>
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold' }}>
               짧은 주기로 여러번 수행하는 리서치로 고객 경험을 실제 의사결정에 반영해보세요.
             </Desc>
