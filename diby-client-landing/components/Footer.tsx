@@ -69,7 +69,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
 
       <Grid item xs={6} md={3} lg={2}>
         <Stack direction="column" spacing={16} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
-          <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#999999' }}>Use cases</p>
+          <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#999999' }}>테스트 서비스</p>
           <FooterButton
             color={darkMode ? 'white' : 'primary'}
             onClick={() => {
@@ -107,14 +107,14 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
 
       <Grid item xs={6} md={3} lg={2}>
         <Stack direction="column" spacing={16} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
-          <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#999999' }}>Product</p>
+          <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#999999' }}>제품</p>
           <FooterButton
             color={darkMode ? 'white' : 'primary'}
             onClick={() => {
               handleClick('/feature');
             }}
           >
-            Feature
+            솔루션 소개
           </FooterButton>
           <FooterButton
             color={darkMode ? 'white' : 'primary'}
@@ -122,12 +122,12 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
               handleClick('/pricing');
             }}
           >
-            Pricing
+            가격안내
           </FooterButton>
 
           {isTablet && (
             <Stack direction="column" spacing={16} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
-              <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#999999', paddingTop: '32px' }}>Contact</p>
+              <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#999999', paddingTop: '32px' }}>문의</p>
               <FooterButton
                 color={darkMode ? 'white' : 'primary'}
                 onClick={() => {
@@ -144,7 +144,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
       {!isTablet && (
         <Grid item xs={0} md={0} lg={2}>
           <Stack direction="column" spacing={16} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
-            <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#999999' }}>Contact</p>
+            <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#999999' }}>문의</p>
             <FooterButton
               color={darkMode ? 'white' : 'primary'}
               onClick={() => {

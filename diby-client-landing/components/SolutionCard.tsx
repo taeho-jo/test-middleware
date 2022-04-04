@@ -37,7 +37,7 @@ const Desc = styled('p')(({ theme }) => ({
     width: '100%',
   },
   [theme.breakpoints.up('md')]: {
-    width: '90%',
+    width: '92%',
   },
 }));
 
