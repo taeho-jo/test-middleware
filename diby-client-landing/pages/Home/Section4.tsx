@@ -82,11 +82,11 @@ function Section4() {
           <Stack direction="column" spacing={24} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
             <LottieIcon name="home_icon_4" delay={1500} />
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold', color: '#2878F0' }}>
-              다양한 템플릿
+              다양한 테스트
             </Desc>
-            <Desc data-aos="fade-up">리서치의 목적에 맞게 선택하실 수 있는 다양한 템플릿을 제공합니다.</Desc>
+            <Desc data-aos="fade-up">리서치의 목적에 맞게 선택하실 수 있는 다양한 테스트를 제공합니다.</Desc>
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold' }}>
-              원하시는대로 커스텀하거나, 추천 템플릿을 활용해보세요.{' '}
+              원하시는대로 커스텀하거나, 추천 테스트를 활용해보세요.{' '}
             </Desc>
           </Stack>
         </Grid>

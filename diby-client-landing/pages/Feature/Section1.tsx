@@ -123,16 +123,16 @@ function Section1() {
   const [count, setCount] = useState(0);
 
   const cards = [
-    { title: '고객 지표 문제점 감지', img: 'ICON_ALERT' },
-    { title: '실시간 피드백 수집', img: 'ICON_FEEDBACK2' },
-    { title: '다양한 테스트 진행', img: 'ICON_TESTING' },
+    { title: '테스트 방법 추천', img: 'ICON_ALERT' },
+    { title: '피드백 수집 및 품질 보장', img: 'ICON_FEEDBACK2' },
+    { title: '정성데이터 정량화', img: 'ICON_TESTING' },
   ];
 
   const processes = [
-    { title: '고객 지표 관리', image: IconCustomer },
-    { title: '릴리즈 별 성과 측정 ', image: IconRelease },
-    { title: '빠른 테스트로\n의사결정 근거 확보', image: IconTesting },
-    { title: '문제 해결\n프로세스 간소화', image: IconProcess },
+    { title: '원하는 조건으로\nDiby 패널에서\n응답자 리쿠르팅', image: IconCustomer },
+    { title: '시각화된 데이터로\n리서치 결과 정리 및\n원본 데이터 확인 ', image: IconRelease },
+    { title: '팀 구성원간\n리서치 결과 리포트\n자유롭게 공유', image: IconTesting },
+    { title: '전담 연구원의\n리서치 결과 요약과\n코멘트 제공', image: IconProcess },
   ];
 
   const handleResize = () => {
@@ -163,11 +163,11 @@ function Section1() {
       <GridContainer container spacing={16} style={{ paddingTop: '90px', paddingBottom: '50px' }}>
         <Grid item xs={12} md={6} lg={6}>
           <Title>
-            의사소통 비용을 줄이는
+            CX 리서치에서
             <br />
-            자동화된 CX Research
+            단순 반복작업 시간을
             <br />
-            프로세스 구축
+            80% 단축하세요.
           </Title>
         </Grid>
         {!isMobile && (

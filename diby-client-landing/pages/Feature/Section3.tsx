@@ -68,25 +68,25 @@ function Section3() {
 
   const slides = [
     {
-      title: 'Activity Monitoring 을 통한 문제 정의',
-      desc: '프로덕트별 맞춤화된 KPI 를 정의하고, 추적합니다.',
+      title: '데이터 기반 의사결정 ',
+      desc: '팀에서 추측한 가설이 아니라, 실제 고객의 피드백으로 의사결정하세요.',
       image: FeatureSlide1,
     },
     {
-      title: 'CX Research 설계',
-      desc: '가장 적합한 피드백 수집 방법을 추천하고, 검증된 문항을 제공합니다.',
+      title: '의사소통 비용 절약',
+      desc: '팀을 설득할 때, 가장 강력한 지원군은 고객입니다. 당신의 의견에 설득력을 더해보세요.',
       image: FeatureSlide2,
     },
     {
-      title: '피드백 주문',
-      desc: '원하는 순간, 원하는 조건의 응답자에게 피드백을 수집합니다.',
+      title: '업무 효율화',
+      desc: '누구나 할 수 있는 일은 Diby가 대신 해드립니다. 나만 할 수 있는 일에 집중하세요.',
       image: FeatureSlide3,
     },
-    {
-      title: 'CX Research 히스토리 관리 및 공유',
-      desc: '리서치 결과와 인사이트를 저장하여 의사결정에 효과적으로 활용할 수 있습니다.',
-      image: FeatureSlide4,
-    },
+    // {
+    //   title: 'CX Research 히스토리 관리 및 공유',
+    //   desc: '리서치 결과와 인사이트를 저장하여 의사결정에 효과적으로 활용할 수 있습니다.',
+    //   image: FeatureSlide4,
+    // },
   ];
 
   useEffect(() => {
@@ -111,9 +111,9 @@ function Section3() {
       <GridContainer container spacing={16}>
         <Grid item sm={12} md={12} lg={12}>
           <Header data-aos="fade-up">
-            하나의 대시보드에서
-            <br />
-            CX Research 프로세스를 모두 경험하세요.
+            Diby에서 CX 리서치를 시작하세요.
+            {/*<br />*/}
+            {/*CX Research 프로세스를 모두 경험하세요.*/}
           </Header>
           <Slider {...settings} className="slick-box">
             {slides.map((slide, index) => (

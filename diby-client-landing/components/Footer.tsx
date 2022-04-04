@@ -76,7 +76,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
               handleClick('/usecases/ui');
             }}
           >
-            UI 진단
+            UI 진단 테스트
           </FooterButton>
           <FooterButton
             color={darkMode ? 'white' : 'primary'}
@@ -84,7 +84,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
               handleClick('/usecases/ux');
             }}
           >
-            UX 포지션 분석
+            UX 포지션 테스트
           </FooterButton>
           <FooterButton
             color={darkMode ? 'white' : 'primary'}
@@ -92,7 +92,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
               handleClick('/usecases/scenario');
             }}
           >
-            시나리오 검증
+            시나리오 테스트
           </FooterButton>
           <FooterButton
             color={darkMode ? 'white' : 'primary'}
@@ -100,7 +100,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
               handleClick('/usecases/customer');
             }}
           >
-            잠재 고객 조사
+            퍼소나 테스트
           </FooterButton>
         </Stack>
       </Grid>
