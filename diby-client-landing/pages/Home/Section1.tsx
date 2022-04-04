@@ -152,7 +152,7 @@ function Section1() {
                 variant="contained"
                 endIcon={isMobile ? undefined : <ArrowRightAltIcon style={{ color: 'white' }} />}
               >
-                나에게 맞는 리서치 모듈 알아보기
+                무료로 리서치 설계하기
               </NextButton>
             </Stack>
             <div style={{ flex: 1 }} />

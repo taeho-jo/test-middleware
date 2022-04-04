@@ -9,10 +9,8 @@ interface PropsType {
   position: 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';
 }
 
-const AuthToast = ({ position }: PropsType) => {
+const AlertToast = ({ position }: PropsType) => {
   const arr = useSelector((state: ReducerType) => state.toast.toastArr);
-
-  console.log(arr, 'ARRRRRRR');
 
   const toastPosition = position => {
     let located;
@@ -76,7 +74,7 @@ const AuthToast = ({ position }: PropsType) => {
   );
 };
 
-export default AuthToast;
+export default AlertToast;
 
 const positionStyle = css`
   position: fixed;

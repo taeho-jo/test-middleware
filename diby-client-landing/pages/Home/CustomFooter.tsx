@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import emailjs from '@emailjs/browser';
 import { Button, Stack } from '@mui/material';
 import { styled, css } from '@mui/material/styles';
@@ -7,6 +8,8 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import ImgFooter1 from '../../assets/images/home/home_footer_1.png';
 import ImgFooter2 from '../../assets/images/home/home_footer_2.png';
 import { breakpoints } from '../../Theme';
+import { emailRex } from '../../../src/common/regex';
+import { showToast } from '../../../src/store/reducers/toastReducer';
 
 const Section = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
@@ -137,23 +140,56 @@ const FormBox = styled('form')(({ theme }) => ({
 }));
 
 function Section5() {
+  const dispatch = useDispatch();
   const form = useRef();
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < breakpoints.md);
   const [isTablet, setIsTablet] = useState(window.innerWidth < breakpoints.lg);
 
+  const [demoEmail, setDemoEmail] = useState('');
+
   const sendEmail = e => {
     e.preventDefault();
-
-    emailjs.sendForm('service_at8fasb', 'template_8hheby9', form.current, 'ReXcWmA6XR9BI1uLY').then(
-      result => {
-        console.log(result.text);
-      },
-      error => {
-        console.log(error.text);
-      },
-    );
+    console.log(form.current, 'ASDF');
+    console.log(demoEmail, 'DEMo Email');
+    const isEmail = emailRex.test(demoEmail);
+    console.log(isEmail);
+    if (isEmail) {
+      emailjs.sendForm('service_at8fasb', 'template_8hheby9', form.current, 'ReXcWmA6XR9BI1uLY').then(
+        result => {
+          console.log(result);
+          console.log(result.text);
+          if (result.status === 200 && result.text === 'OK') {
+            setDemoEmail('');
+            dispatch(showToast({ message: '데모 신청이 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+          }
+        },
+        error => {
+          dispatch(showToast({ message: error.text, isShow: true, status: 'warning', duration: 5000 }));
+        },
+      );
+    } else {
+      console.log('실패');
+      dispatch(showToast({ message: '이메일 양식이 아닙니다.', isShow: true, status: 'warning', duration: 5000 }));
+    }
   };
+
+  // const sendEmail = useCallback(
+  //   e => {
+  //     e.preventDefault();
+  //     console.log(demoEmail, 'DEMo Email');
+  //     const rex =
+  //   },
+  //   [demoEmail],
+  // );
+
+  const handleUpdateEmail = useCallback(
+    e => {
+      const value = e.target.value;
+      setDemoEmail(value);
+    },
+    [demoEmail],
+  );
 
   const handleResize = () => {
     setIsMobile(window.innerWidth < breakpoints.md);
@@ -179,7 +215,14 @@ function Section5() {
             Diby를 사용합니다.
           </Title>
           <FormBox ref={form} onSubmit={sendEmail}>
-            <MailForm data-aos="fade-up" type="text" name="email" placeholder="E-mail을 입력해주세요." />
+            <MailForm
+              value={demoEmail}
+              onChange={e => handleUpdateEmail(e)}
+              data-aos="fade-up"
+              type="text"
+              name="email"
+              placeholder="E-mail을 입력해주세요."
+            />
             {/*{!isTablet && (*/}
             <NextButton type="submit" data-aos="fade-up" color="blue" variant="contained" endIcon={<ArrowRightAltIcon style={{ color: 'white' }} />}>
               데모 신청하기

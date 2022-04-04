@@ -123,7 +123,7 @@ const Section1 = ({ data }) => {
                   ? 'UX 포지션 테스트로 UX 전략 수립하기'
                   : navigate.pathname === '/usecases/scenario'
                   ? '시나리오 테스트로 의사결정하기'
-                  : '퍼소나 분석 템플릿으로 퍼소나 정의하기'}
+                  : '퍼소나 테스트로 퍼소나 정의하기'}
               </NextButton>
             </Stack>
             <div style={{ flex: 1 }} />
