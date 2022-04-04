@@ -143,9 +143,9 @@ function Section1() {
   const desc1 = `필요할 때, 빠르게 피드백을${newlineForMobile}주문할 수 있습니다.\n인터랙티브 리포트는${newlineForMobile}60일간 조회할 수 있으며,\n모든 결과와 RAW DATA는${newlineForMobile}다운로드 할 수 있습니다.`;
   const desc2 =
     `서비스에 필요한 피드백을${newlineForMobile}정기 구독할 수 있습니다.\n` +
-    `담당자가 별도로 설정하지 않아도,\n지정된 날짜에 인터렉티브${newlineForMobile}리포트가 제공됩니다.\n\n` +
+    `담당자가 별도로 설정하지 않아도,\n지정된 날짜에 웹리포트가 제공됩니다.\n\n` +
     `리포트는 구독기간내에${newlineForMobile}무제한 조회할 수 있으며,\n모든 결과와 RAW DATA는${newlineForMobile}다운로드할 수 있습니다.`;
-
+  // 지정된 날짜에 인터렉티브${newlineForMobile}리포트가 제공됩니다.
   return (
     <Section>
       <GridContainer container spacing={16} style={{ paddingTop: '90px', paddingBottom: '90px' }}>
