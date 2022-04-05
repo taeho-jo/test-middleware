@@ -161,7 +161,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
         }}
       >
         <div style={{ padding: '32px 24px' }}>
-          <p style={{ margin: '0 0 10px 0', textAlign: 'left', fontSize: '16px', fontWeight: 'bold' }}>Solution</p>
+          <p style={{ margin: '0 0 10px 0', textAlign: 'left', fontSize: '16px', fontWeight: 'bold' }}>테스트 서비스</p>
           <div style={{ width: '280px', height: '60px', display: 'flex' }}>
             <Button
               style={{ flex: 1, padding: '0', margin: '0 auto 0 0', width: '110px', justifyContent: 'flex-start' }}
@@ -171,7 +171,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <img src={icon1.src} alt="diby" style={{ width: '24px', height: '24px', margin: 'auto 0' }} />
-                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UI 진단</p>
+                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UI 진단 테스트</p>
               </div>
             </Button>
             <Button
@@ -182,7 +182,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <img src={icon2.src} alt="diby" style={{ width: '24px', height: '24px', margin: 'auto 0' }} />
-                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UX 포지션 분석</p>
+                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UX 포지션 테스트</p>
               </div>
             </Button>
           </div>
@@ -195,7 +195,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <img src={icon3.src} alt="diby" style={{ width: '24px', height: '24px', margin: 'auto 0' }} />
-                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>시나리오 검증</p>
+                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>시나리오 테스트</p>
               </div>
             </Button>
             <Button
@@ -206,7 +206,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <img src={icon4.src} alt="diby" style={{ width: '24px', height: '24px', margin: 'auto 0' }} />
-                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>잠재 고객 조사</p>
+                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>퍼소나 테스트</p>
               </div>
             </Button>
           </div>
@@ -217,7 +217,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
               handleClick('/feature');
             }}
           >
-            <p style={{ width: '100%', fontSize: '16px', fontWeight: 'bold', textTransform: 'none', textAlign: 'left', margin: '0' }}>Feature</p>
+            <p style={{ width: '100%', fontSize: '16px', fontWeight: 'bold', textTransform: 'none', textAlign: 'left', margin: '0' }}>솔루션소개</p>
           </Button>
           <div style={{ margin: '0 -24px', borderTop: '1px dashed #ccc', opacity: '0.3' }} />
           <Button
@@ -226,7 +226,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
               handleClick('/pricing');
             }}
           >
-            <p style={{ width: '100%', fontSize: '16px', fontWeight: 'bold', textTransform: 'none', textAlign: 'left', margin: '0' }}>Pricing</p>
+            <p style={{ width: '100%', fontSize: '16px', fontWeight: 'bold', textTransform: 'none', textAlign: 'left', margin: '0' }}>가격안내</p>
           </Button>
           <div style={{ margin: '0 -24px', borderTop: '1px dashed #ccc', opacity: '0.3' }} />
           <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '18px' }}>
