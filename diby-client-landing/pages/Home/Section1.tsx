@@ -49,7 +49,7 @@ const RightGrid = styled(Grid)(({ theme }) => ({
 
 const Title = styled('p')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
-    fontSize: '40px',
+    fontSize: '37px',
     lineHeight: '56px',
   },
   [theme.breakpoints.up('md')]: {
