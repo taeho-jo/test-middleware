@@ -11,6 +11,7 @@ const Ux = () => {
 
         <meta property="og:title" content="UX 포지션 테스트, Diby" />
         <meta property="og:description" content="실사용자 대상 UX 평가 및 전략 수립" />
+        <meta property="og:url" content="https://diby.io/usecases/ux" />
         <meta property="og:site_name" content="UX 포지션 테스트, Diby" />
       </Head>
       <Solution2 />
