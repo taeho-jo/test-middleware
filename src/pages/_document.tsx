@@ -1,6 +1,7 @@
 // _document.js
 import React from 'react';
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
+import { seoAttr } from '../common/layouts/Seo/metaMethod';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -22,7 +23,17 @@ class MyDocument extends Document {
 
           <link rel="icon" href="/favicon.png" />
 
+          <meta name="description" content={seoAttr().description} />
+          <meta property="og:title" content={seoAttr().ogTitle} />
+          <meta property="og:description" content={seoAttr().ogDescription} />
+          <meta property="og:site_name" content={seoAttr().ogTitle} />
+          <meta property="og:url" content={seoAttr().url} />
+          <meta property="og:type" content="website" />
           <meta property="og:image" content="/og-diby.png" />
+          <meta property="og:locale" content="ko_KR" />
+          <meta property="og:image:width" content="2420" />
+          <meta property="og:image:height" content="1210" />
+          <meta property="author" content="DBDLAB" />
         </Head>
 
         <body>
