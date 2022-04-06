@@ -1,10 +1,9 @@
-import React, { useCallback, useState, useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 // Redux
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../store/reducers';
 // Components
-import Header from './Header';
 import AuthToast from '../../components/organisms/AuthToast';
 import AppBar from '../../../diby-client-landing/components/AppBar';
 // Styles
@@ -13,7 +12,6 @@ import AOS from 'aos';
 import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // import BackGroundImg2 from '../../assets/background_img2.png';
 import BackGroundImg from '../../assets/background_img.png';
-import Seo from './Seo';
 
 // Types
 interface PropsType {
