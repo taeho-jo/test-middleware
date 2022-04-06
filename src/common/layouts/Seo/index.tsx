@@ -91,12 +91,6 @@ const Seo = ({ path, title, description, ogTitle, ogDescription, url, props }: P
       <meta property="og:description" content={seoAttr().ogDescription} />
       <meta property="og:site_name" content={seoAttr().ogTitle} />
       <meta property="og:url" content={seoAttr().url} />
-      <meta property="og:type" content="website" />
-      <meta property="og:image" content="/og-diby.png" />
-      <meta property="og:locale" content="ko_KR" />
-      <meta property="og:image:width" content="2420" />
-      <meta property="og:image:height" content="1210" />
-      <meta property="author" content="DBDLAB" />
     </Head>
   );
 };
