@@ -23,6 +23,8 @@ class MyDocument extends Document {
           <meta httpEquiv="pragma" content="no-cache" />
 
           <link rel="icon" href="/favicon.png" />
+
+          <meta property="og:image" content="/og-diby.png" />
         </Head>
 
         <body>
