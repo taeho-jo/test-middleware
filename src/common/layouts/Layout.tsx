@@ -62,11 +62,11 @@ const Layout = ({ children }: PropsType) => {
   useEffect(() => {
     console.log(showGradient, 'SHOW');
   }, [showGradient]);
-  console.log(router);
-  console.log(`https://${window.location.host}${router.pathname}`);
+  // console.log(router);
+  // console.log(`https://${window.location.host}${router.pathname}`);
   return (
     <>
-      <Seo path={router.pathname} />
+      {/*<Seo path={router.pathname} />*/}
       <div css={mainContainer}>
         <main css={contentsContainer}>
           <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
