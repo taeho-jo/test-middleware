@@ -14,7 +14,6 @@ import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // import BackGroundImg2 from '../../assets/background_img2.png';
 import BackGroundImg from '../../assets/background_img.png';
 import Seo from './Seo';
-import { NextSeo } from 'next-seo';
 
 // Types
 interface PropsType {
@@ -64,20 +63,36 @@ const Layout = ({ children }: PropsType) => {
     console.log(showGradient, 'SHOW');
   }, [showGradient]);
 
+  const seoAttr = () => {
+    if (router.pathname === '/') {
+      return {
+        title: '루트임',
+        description: 'ABC',
+        ogTitle: '마바사',
+        ogDescription: 'DEF',
+      };
+    }
+    if (router.pathname === '/pricing') {
+      return {
+        title: '가격안내',
+        description: '가격안내',
+        ogTitle: 'ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁ',
+        ogDescription: 'DE12312312312F',
+      };
+    }
+    if (router.pathname === '/feature') {
+      return {
+        title: '솔루션 안내',
+        description: '가격안내',
+        ogTitle: 'ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁ',
+        ogDescription: 'DE12312312312F',
+      };
+    }
+  };
+
   return (
     <>
-      {/*<Seo title={'가나다'} description={'ABC'} ogTitle={'마바사'} ogDescription={'우와우'} />*/}
-      <NextSeo
-        title="Diby | 일잘하는 당신을 위한 CX 리서치 솔루션"
-        description="유저테스트로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 UX 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요."
-        openGraph={{
-          type: 'website',
-          locale: 'ko_KR',
-          title: 'Diby | 일잘하는 당신을 위한 CX 리서치 솔루션',
-          description:
-            '유저테스트로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 UX 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요.',
-        }}
-      />
+      <Seo {...seoAttr()} />
       <div css={mainContainer}>
         <main css={contentsContainer}>
           <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
