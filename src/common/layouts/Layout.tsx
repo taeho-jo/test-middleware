@@ -13,6 +13,7 @@ import AOS from 'aos';
 import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // import BackGroundImg2 from '../../assets/background_img2.png';
 import BackGroundImg from '../../assets/background_img.png';
+import Seo from './Seo';
 
 // Types
 interface PropsType {
@@ -64,6 +65,7 @@ const Layout = ({ children }: PropsType) => {
 
   return (
     <>
+      <Seo title={'가나다'} description={'ABC'} ogTitle={'마바사'} ogDescription={'우와우'} />
       <div css={mainContainer}>
         <main css={contentsContainer}>
           <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
@@ -78,38 +80,6 @@ const Layout = ({ children }: PropsType) => {
         </main>
       </div>
       <AuthToast position={'top-center'} />
-      {/*{!token ? (*/}
-      {/*  <>*/}
-      {/*    /!*<Header />*!/*/}
-      {/*    <div css={mainContainer}>*/}
-      {/*      <main css={contentsContainer(showSidebar)}>*/}
-      {/*        <canvas css={gradientCanvas} id="gradient-canvas" ref={canvasRef}></canvas>*/}
-      {/*        <div css={gradientDiv}></div>*/}
-
-      {/*        <div css={backgroundStyle}>{children}</div>*/}
-      {/*      </main>*/}
-      {/*    </div>*/}
-      {/*    <AuthToast position={'top-center'} />*/}
-      {/*  </>*/}
-      {/*) : (*/}
-      {/*  <>*/}
-      {/*    /!*<Header />*!/*/}
-      {/*    <div css={mainContainer}>*/}
-      {/*      <main css={fullMainContainer}>*/}
-      {/*        /!*<div style={{ width: '100%' }}>*!/*/}
-      {/*        /!*  <AppBar dark />*!/*/}
-      {/*        /!*</div>*!/*/}
-
-      {/*        <canvas css={gradientCanvas} id="gradient-canvas" ref={canvasRef}></canvas>*/}
-      {/*        <div css={gradientDiv}></div>*/}
-      {/*        /!*<div css={backgroundStyle(BackGroundImg2)}>*!/*/}
-      {/*        <div css={backgroundStyle}>{children}</div>*/}
-      {/*        /!*</div>*!/*/}
-      {/*      </main>*/}
-      {/*    </div>*/}
-      {/*    <AuthToast position={'top-center'} />*/}
-      {/*  </>*/}
-      {/*)}*/}
     </>
   );
 };
