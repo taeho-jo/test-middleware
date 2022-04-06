@@ -62,37 +62,11 @@ const Layout = ({ children }: PropsType) => {
   useEffect(() => {
     console.log(showGradient, 'SHOW');
   }, [showGradient]);
-
-  const seoAttr = () => {
-    if (router.pathname === '/') {
-      return {
-        title: '루트임',
-        description: 'ABC',
-        ogTitle: '마바사',
-        ogDescription: 'DEF',
-      };
-    }
-    if (router.pathname === '/pricing') {
-      return {
-        title: '가격안내',
-        description: '가격안내',
-        ogTitle: 'ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁ',
-        ogDescription: 'DE12312312312F',
-      };
-    }
-    if (router.pathname === '/feature') {
-      return {
-        title: '솔루션 안내',
-        description: '가격안내',
-        ogTitle: 'ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁ',
-        ogDescription: 'DE12312312312F',
-      };
-    }
-  };
-
+  // console.log(router);
+  // console.log(`https://${window.location.host}${router.pathname}`);
   return (
     <>
-      <Seo {...seoAttr()} />
+      {/*<Seo path={router.pathname} />*/}
       <div css={mainContainer}>
         <main css={contentsContainer}>
           <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>

@@ -19,6 +19,8 @@ import 'slick-carousel/slick/slick-theme.css';
 // Types
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next';
+import Seo from '../common/layouts/Seo';
+import { useRouter } from 'next/router';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -30,6 +32,7 @@ type AppPropsWithLayout = AppProps & {
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const store = createStore(persistedReducer);
   const persistor = persistStore(store);
+  const router = useRouter();
   const [queryClient] = React.useState(
     () =>
       new QueryClient({
@@ -49,6 +52,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <Hydrate state={pageProps.dehydratedState}>
           <ThemeProvider theme={theme}>
             <GlobalStyles />
+            <Seo path={router.pathname} />
             <Layout>
               {/*<AppAnimation>*/}
               <Component {...pageProps} />
