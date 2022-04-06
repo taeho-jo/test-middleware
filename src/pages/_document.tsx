@@ -1,8 +1,6 @@
 // _document.js
 import React from 'react';
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
-import { useRouter } from 'next/router';
-import Feature from './feature';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
