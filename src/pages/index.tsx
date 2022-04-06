@@ -13,7 +13,7 @@ import CustomFooter from '../../diby-client-landing/pages/Home/CustomFooter';
 // Libraries
 import { css } from '@emotion/react';
 import { caption1_bold } from '../styles/FontStyles';
-import Seo from '../common/layouts/Seo';
+// import Seo from '../common/layouts/Seo';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const Home = () => {
 
   return (
     <>
-      <Seo />
+      {/*<Seo />*/}
       <div>
         <Section1 />
         <Section2 />
