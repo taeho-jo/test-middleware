@@ -21,6 +21,7 @@ import type { AppProps } from 'next/app';
 import type { NextPage } from 'next';
 import Seo from '../common/layouts/Seo';
 import { useRouter } from 'next/router';
+// import { GetServerSideProps } from 'next';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -29,10 +30,11 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+function MyApp({ Component, pageProps }: AppPropsWithLayout, props) {
   const store = createStore(persistedReducer);
   const persistor = persistStore(store);
   const router = useRouter();
+  console.log(props, 'Props');
   const [queryClient] = React.useState(
     () =>
       new QueryClient({
@@ -47,22 +49,24 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       }),
   );
   return (
-    <PersistGate persistor={persistor} loading={<div></div>}>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <ThemeProvider theme={theme}>
-            <GlobalStyles />
-            <Seo path={router.pathname} />
-            <Layout>
-              {/*<AppAnimation>*/}
-              <Component {...pageProps} />
-              {/*</AppAnimation>*/}
-            </Layout>
-          </ThemeProvider>
-        </Hydrate>
-        <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} />
-      </QueryClientProvider>
-    </PersistGate>
+    <>
+      <Seo path={router.pathname} />
+      <PersistGate persistor={persistor} loading={<div></div>}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <ThemeProvider theme={theme}>
+              <GlobalStyles />
+              <Layout>
+                {/*<AppAnimation>*/}
+                <Component {...pageProps} />
+                {/*</AppAnimation>*/}
+              </Layout>
+            </ThemeProvider>
+          </Hydrate>
+          <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} />
+        </QueryClientProvider>
+      </PersistGate>
+    </>
   );
 }
 

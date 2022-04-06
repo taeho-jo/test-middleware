@@ -12,7 +12,7 @@ interface PropsType {
 const AuthToast = ({ position }: PropsType) => {
   const arr = useSelector((state: ReducerType) => state.toast.toastArr);
 
-  console.log(arr, 'ARRRRRRR');
+  // console.log(arr, 'ARRRRRRR');
 
   const toastPosition = position => {
     let located;
