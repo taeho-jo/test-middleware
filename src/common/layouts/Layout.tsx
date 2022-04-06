@@ -50,7 +50,6 @@ const Layout = ({ children }: PropsType) => {
       router.pathname === '/addInfo/2' ||
       router.pathname === '/addInfo/3'
     ) {
-      console.log('바뀐?');
       setShowGradient(true);
     } else {
       setShowGradient(false);
@@ -58,7 +57,7 @@ const Layout = ({ children }: PropsType) => {
   }, [router]);
 
   useEffect(() => {
-    console.log(showGradient, 'SHOW');
+    // console.log(showGradient, 'SHOW');
   }, [showGradient]);
   // console.log(router);
   // console.log(`https://${window.location.host}${router.pathname}`);
