@@ -49,22 +49,24 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout, props) {
       }),
   );
   return (
-    <PersistGate persistor={persistor} loading={<div></div>}>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <ThemeProvider theme={theme}>
-            <GlobalStyles />
-            {/*<Seo path={router.pathname} />*/}
-            <Layout>
-              {/*<AppAnimation>*/}
-              <Component {...pageProps} />
-              {/*</AppAnimation>*/}
-            </Layout>
-          </ThemeProvider>
-        </Hydrate>
-        <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} />
-      </QueryClientProvider>
-    </PersistGate>
+    <>
+      <Seo path={router.pathname} />
+      <PersistGate persistor={persistor} loading={<div></div>}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <ThemeProvider theme={theme}>
+              <GlobalStyles />
+              <Layout>
+                {/*<AppAnimation>*/}
+                <Component {...pageProps} />
+                {/*</AppAnimation>*/}
+              </Layout>
+            </ThemeProvider>
+          </Hydrate>
+          <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} />
+        </QueryClientProvider>
+      </PersistGate>
+    </>
   );
 }
 
