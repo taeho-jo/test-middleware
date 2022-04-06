@@ -70,6 +70,7 @@ const Layout = ({ children }: PropsType) => {
         description: 'ABC',
         ogTitle: '마바사',
         ogDescription: 'DEF',
+        url: 'https://dev.diby.io/',
       };
     }
     if (router.pathname === '/pricing') {
@@ -78,6 +79,7 @@ const Layout = ({ children }: PropsType) => {
         description: '가격안내',
         ogTitle: 'ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁ',
         ogDescription: 'DE12312312312F',
+        url: 'https://dev.diby.io/pricing',
       };
     }
     if (router.pathname === '/feature') {
@@ -86,6 +88,7 @@ const Layout = ({ children }: PropsType) => {
         description: '가격안내',
         ogTitle: 'ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇㄹㅁ',
         ogDescription: 'DE12312312312F',
+        url: 'https://dev.diby.io/feature',
       };
     }
   };
