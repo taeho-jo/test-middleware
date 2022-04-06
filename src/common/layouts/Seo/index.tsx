@@ -8,12 +8,20 @@ interface PropsType {
   ogDescription?: string;
   url?: string;
   props?: any;
-  path: string;
+  path?: string;
 }
 
-const Seo = ({ path, title, description, ogTitle, ogDescription, url, props }: PropsType) => {
+const Seo = ({
+  path,
+  title = 'Diby | 일 잘하는 당신을 위한 CX 리서치 솔루션',
+  description = '유저테스트로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 UX 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요.',
+  ogTitle = '일 잘하는 당신을 위한 CX 리서치 솔루션, Diby',
+  ogDescription = '유저테스트로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 UX 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요.',
+  url = 'https://dev.diby.io',
+  props,
+}: PropsType) => {
   const seoAttr = () => {
-    const url = `https://${window.location.host}${path}`;
+    // const url = `https://${window.location.host}${path}`;
     switch (path) {
       case '/usecases/ui':
         return {
@@ -21,7 +29,7 @@ const Seo = ({ path, title, description, ogTitle, ogDescription, url, props }: P
           description: '사용성 테스트 (usabiltiy test)로 서비스내 문제점 파악',
           ogTitle: 'UI 진단 테스트, Diby',
           ogDescription: '사용성 테스트 (usabiltiy test)로 서비스내 문제점 파악',
-          url,
+          // url,
         };
       case '/usecases/ux':
         return {
@@ -29,7 +37,7 @@ const Seo = ({ path, title, description, ogTitle, ogDescription, url, props }: P
           description: '실사용자 대상 UX 평가 및 전략 수립',
           ogTitle: 'UX 포지션 테스트, Diby',
           ogDescription: '실사용자 대상 UX 평가 및 전략 수립',
-          url,
+          // url,
         };
       case '/usecases/scenario':
         return {
@@ -37,7 +45,7 @@ const Seo = ({ path, title, description, ogTitle, ogDescription, url, props }: P
           description: 'UX UI 가설 수립 및 검증',
           ogTitle: '시나리오 테스트, Diby',
           ogDescription: 'UX UI 가설 수립 및 검증',
-          url,
+          // url,
         };
       case '/usecases/customer':
         return {
@@ -45,7 +53,7 @@ const Seo = ({ path, title, description, ogTitle, ogDescription, url, props }: P
           description: '시장조사, 핵심 고객 정의',
           ogTitle: '퍼소나 테스트, Diby',
           ogDescription: '시장조사, 핵심 고객 정의',
-          url,
+          // url,
         };
       case '/feature':
         return {
@@ -53,7 +61,7 @@ const Seo = ({ path, title, description, ogTitle, ogDescription, url, props }: P
           description: 'UX/CX 리서치에서 단순반복 작업을 80% 단축하세요.',
           ogTitle: '솔루션소개, Diby',
           ogDescription: 'UX/CX 리서치에서 단순반복 작업을 80% 단축하세요.',
-          url,
+          // url,
         };
       case '/pricing':
         return {
@@ -61,7 +69,7 @@ const Seo = ({ path, title, description, ogTitle, ogDescription, url, props }: P
           description: '',
           ogTitle: '가격안내, Diby',
           ogDescription: '',
-          url,
+          // url,
         };
       case '/tri':
         return {
@@ -73,10 +81,10 @@ const Seo = ({ path, title, description, ogTitle, ogDescription, url, props }: P
         };
       default:
         return {
-          title: 'Diby | 일잘하는 당신을 위한 CX 리서치 솔루션',
+          title: 'Diby | 일 잘하는 당신을 위한 CX 리서치 솔루션',
           description:
             '유저테스트로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 UX 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요.',
-          ogTitle: '일잘하는 당신을 위한 CX 리서치 솔루션, Diby',
+          ogTitle: '일 잘하는 당신을 위한 CX 리서치 솔루션, Diby',
           ogDescription:
             '유저테스트로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 UX 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요.',
           url,
@@ -90,13 +98,7 @@ const Seo = ({ path, title, description, ogTitle, ogDescription, url, props }: P
       <meta property="og:title" content={seoAttr().ogTitle} />
       <meta property="og:description" content={seoAttr().ogDescription} />
       <meta property="og:site_name" content={seoAttr().ogTitle} />
-      <meta property="og:url" content={seoAttr().url} />
-      <meta property="og:type" content="website" />
-      <meta property="og:image" content="/og-diby.png" />
-      <meta property="og:locale" content="ko_KR" />
-      <meta property="og:image:width" content="2420" />
-      <meta property="og:image:height" content="1210" />
-      <meta property="author" content="DBDLAB" />
+      {/*<meta property="og:url" content={seoAttr().url} />*/}
     </Head>
   );
 };

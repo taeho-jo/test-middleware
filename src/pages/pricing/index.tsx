@@ -1,22 +1,28 @@
 import React from 'react';
 import PricingComponent from '../../../diby-client-landing/pages/Pricing';
+import { GetServerSideProps } from 'next';
+// import Seo from '../../common/layouts/Seo';
 // import Head from 'next/head';
 
-const Pricing = () => {
+const Pricing = ({ title, description, ogTitle, ogDescription, url }) => {
   return (
     <>
-      {/*<Head>*/}
-      {/*  <title>Diby | 가격안내</title>*/}
-      {/*  /!*<meta name="description" content="시장조사, 핵심 고객 정의" />*!/*/}
-
-      {/*  <meta property="og:title" content="가격 안내, Diby" />*/}
-      {/*  <meta property="og:description" content="가격 안내" />*/}
-      {/*  <meta property="og:url" content="https://diby.io/pricing" />*/}
-      {/*  <meta property="og:site_name" content="가격 안내, Diby" />*/}
-      {/*</Head>*/}
+      {/*<Seo title={title} description={description} ogTitle={ogTitle} ogDescription={ogDescription} url={url} />*/}
       <PricingComponent />
     </>
   );
 };
 
 export default Pricing;
+
+// export const getServerSideProps: GetServerSideProps = async context => {
+//   return {
+//     props: {
+//       title: 'Diby | 가격안내',
+//       description: '',
+//       ogTitle: '가격안내, Diby',
+//       ogDescription: '',
+//       url: 'https://dev.diby.io/pricing',
+//     },
+//   };
+// };
