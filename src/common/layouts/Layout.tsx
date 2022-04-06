@@ -14,6 +14,7 @@ import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // import BackGroundImg2 from '../../assets/background_img2.png';
 import BackGroundImg from '../../assets/background_img.png';
 import Seo from './Seo';
+import { NextSeo } from 'next-seo';
 
 // Types
 interface PropsType {
@@ -65,7 +66,16 @@ const Layout = ({ children }: PropsType) => {
 
   return (
     <>
-      <Seo title={'가나다'} description={'ABC'} ogTitle={'마바사'} ogDescription={'우와우'} />
+      {/*<Seo title={'가나다'} description={'ABC'} ogTitle={'마바사'} ogDescription={'우와우'} />*/}
+      <NextSeo
+        title="Titleasdfasdfasdf"
+        description="Description"
+        openGraph={{
+          title: 'OG Title!!!',
+          description: 'OG Description~~',
+          images: [{ url: '/og-diby.png' }],
+        }}
+      />
       <div css={mainContainer}>
         <main css={contentsContainer}>
           <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
