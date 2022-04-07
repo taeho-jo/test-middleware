@@ -15,6 +15,7 @@ import CompanyLogo7 from '../../assets/images/company/companylogo_main7.png';
 import CompanyLogo8 from '../../assets/images/company/companylogo_main8.png';
 import { GridContainer } from '../../components/Grid';
 import { breakpoints } from '../../Theme';
+import Image from 'next/image';
 
 const Section = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
@@ -160,12 +161,18 @@ function Section1() {
           <RightGrid item xs={0} md={5} lg={6}>
             <div style={{ height: '488px', overflowX: 'visible' }}>
               <div style={{ height: '488px', overflowY: 'hidden' }}>
-                <img
-                  data-aos="fade-up"
-                  src={ImgHomeDashboard.src}
-                  alt="dashboard"
-                  style={{ objectFit: 'contain', height: '488px', borderRadius: '10px' }}
-                />
+                <div data-aos="fade-up" style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}>
+                  <Image
+                    style={{ borderRadius: '10px' }}
+                    width={840}
+                    height={488}
+                    priority={true}
+                    loading="eager"
+                    quality={100}
+                    src={ImgHomeDashboard}
+                    alt="dashboard"
+                  />
+                </div>
               </div>
             </div>
           </RightGrid>
@@ -176,7 +183,17 @@ function Section1() {
           <Grid data-aos="fade-up" key={`lab_${index}`} item xs={6} md={3} lg={3}>
             <div style={{ display: 'flex', height: '80px', alignItems: 'center', background: 'white' }}>
               <div style={{ flex: 1 }} />
-              <img src={lab.image.src} alt={lab.name} style={{ objectFit: 'contain', maxWidth: '100%', maxHeight: '100%' }} />
+              <div style={{ objectFit: 'contain', maxWidth: '100%', maxHeight: '100%' }}>
+                <Image
+                  style={{ borderRadius: '10px' }}
+                  layout={'fill'}
+                  priority={true}
+                  loading="eager"
+                  quality={100}
+                  src={lab.image}
+                  alt={lab.name}
+                />
+              </div>
               <div style={{ flex: 1 }} />
             </div>
           </Grid>

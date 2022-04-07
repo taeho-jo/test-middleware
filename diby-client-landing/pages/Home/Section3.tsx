@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import { GridContainer } from '../../components/Grid';
 import LottieIcon from '../../components/LottieIcon';
 import ImgSmartPhone from '../../assets/images/home/img_smartphone.png';
+import Image from 'next/image';
 
 const Section = styled('div')(({ theme }) => ({
   width: '100%',
