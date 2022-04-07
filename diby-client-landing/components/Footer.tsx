@@ -47,6 +47,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
       container
       style={Object.assign({}, { paddingTop: '88px', paddingBottom: '88px', background: darkMode ? '#3C3C46' : '#F8F8F8' }, style)}
     >
+      <div style={{ width: '100%', maxWidth: '1920px', background: 'red', padding: '0 396px', boxSizing: 'border-box' }}>asdfasd</div>
       <Grid item xs={12} md={6} lg={5}>
         <img src={ImgLogo.src} alt="diby" style={{ width: '56px', height: '24px', padding: '6px 0px' }} />
         <p style={{ fontSize: '14px', margin: '24px 0', lineHeight: '20px', color: color }}>

@@ -49,7 +49,7 @@ const Section3 = ({ data }) => {
   const marginBottom = isMobile ? '150px' : '200px';
 
   return (
-    <Section>
+    <Section style={{ width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
       <GridContainer container>
         <Grid item xs={12} md={12} lg={12}>
           <Header>{title}</Header>
