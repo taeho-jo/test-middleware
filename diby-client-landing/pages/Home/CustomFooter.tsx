@@ -188,7 +188,7 @@ function Section5() {
         <Stack direction="column" spacing={24} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
           <Title data-aos="fade-up">
             초기 스타트업부터 {isMobile && <br />}
-            CX Research 팀이 있는 {isTablet && <br />}
+            CX 리서치 팀이 있는 {isTablet && <br />}
             혁신 기업까지,
             <br />
             Diby를 사용합니다.

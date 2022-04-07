@@ -17,11 +17,11 @@ const Seo = ({
   description = '유저테스트로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 UX 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요.',
   ogTitle = '일 잘하는 당신을 위한 CX 리서치 솔루션, Diby',
   ogDescription = '유저테스트로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 UX 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요.',
-  url = 'https://dev.diby.io',
+  url = 'https://diby.io/',
   props,
 }: PropsType) => {
   const seoAttr = () => {
-    // const url = `https://${window.location.host}${path}`;
+    const url = `https://diby.io${path}`;
     switch (path) {
       case '/usecases/ui':
         return {
@@ -29,7 +29,7 @@ const Seo = ({
           description: '사용성 테스트 (usabiltiy test)로 서비스내 문제점 파악',
           ogTitle: 'UI 진단 테스트, Diby',
           ogDescription: '사용성 테스트 (usabiltiy test)로 서비스내 문제점 파악',
-          // url,
+          url,
         };
       case '/usecases/ux':
         return {
@@ -37,7 +37,7 @@ const Seo = ({
           description: '실사용자 대상 UX 평가 및 전략 수립',
           ogTitle: 'UX 포지션 테스트, Diby',
           ogDescription: '실사용자 대상 UX 평가 및 전략 수립',
-          // url,
+          url,
         };
       case '/usecases/scenario':
         return {
@@ -45,7 +45,7 @@ const Seo = ({
           description: 'UX UI 가설 수립 및 검증',
           ogTitle: '시나리오 테스트, Diby',
           ogDescription: 'UX UI 가설 수립 및 검증',
-          // url,
+          url,
         };
       case '/usecases/customer':
         return {
@@ -53,7 +53,7 @@ const Seo = ({
           description: '시장조사, 핵심 고객 정의',
           ogTitle: '퍼소나 테스트, Diby',
           ogDescription: '시장조사, 핵심 고객 정의',
-          // url,
+          url,
         };
       case '/feature':
         return {
@@ -61,7 +61,7 @@ const Seo = ({
           description: 'UX/CX 리서치에서 단순반복 작업을 80% 단축하세요.',
           ogTitle: '솔루션소개, Diby',
           ogDescription: 'UX/CX 리서치에서 단순반복 작업을 80% 단축하세요.',
-          // url,
+          url,
         };
       case '/pricing':
         return {
@@ -69,7 +69,7 @@ const Seo = ({
           description: '',
           ogTitle: '가격안내, Diby',
           ogDescription: '',
-          // url,
+          url,
         };
       case '/tri':
         return {
@@ -98,7 +98,7 @@ const Seo = ({
       <meta property="og:title" content={seoAttr().ogTitle} />
       <meta property="og:description" content={seoAttr().ogDescription} />
       <meta property="og:site_name" content={seoAttr().ogTitle} />
-      {/*<meta property="og:url" content={seoAttr().url} />*/}
+      <meta property="og:url" content={seoAttr().url} />
     </Head>
   );
 };
