@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Sitemap = () => {};
+const Sitemap = () => {
+  return;
+};
 
 export const getServerSideProps = ({ res }) => {
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
