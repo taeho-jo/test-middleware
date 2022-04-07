@@ -50,7 +50,7 @@ const Header = styled('p')(({ theme }) => ({
 function Section1() {
   return (
     <Section>
-      <GridContainer container spacing={16}>
+      <GridContainer container spacing={16} style={{ width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
         <Grid item sm={12} md={12} lg={12} style={{ paddingBottom: '60px' }}>
           <Header data-aos="fade-up">
             스타트업 지원기관을 통해

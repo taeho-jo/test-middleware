@@ -107,7 +107,7 @@ function Section3() {
   };
 
   return (
-    <Section>
+    <Section style={{ width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
       <GridContainer container spacing={16}>
         <Grid item sm={12} md={12} lg={12}>
           <Header data-aos="fade-up">

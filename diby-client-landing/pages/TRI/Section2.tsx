@@ -14,7 +14,7 @@ const Desc = styled('p')(({ theme }) => ({
 function Section4() {
   return (
     <div style={{ width: '100%' }}>
-      <GridContainer container spacing={16}>
+      <GridContainer container spacing={16} style={{ paddingBottom: '60px', width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
         <Grid item xs={10} md={3} lg={3} style={{ paddingTop: '40px', paddingBottom: '40px' }}>
           <Stack direction="column" spacing={24} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
             <LottieIcon name="tri_icon_1" />

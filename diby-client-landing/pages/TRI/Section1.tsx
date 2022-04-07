@@ -110,7 +110,7 @@ function Section1() {
 
   return (
     <div style={{ width: '100%', marginBottom: '150px' }}>
-      <Section>
+      <Section style={{ paddingBottom: '60px', width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
         <GridContainer container spacing={0} style={{ paddingTop: '90px', overflowX: 'hidden' }}>
           <LeftGrid item xs={12} md={7} lg={6}>
             <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>

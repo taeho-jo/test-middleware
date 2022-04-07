@@ -34,6 +34,8 @@ class MyDocument extends Document {
           <meta property="og:image:width" content="2420" />
           <meta property="og:image:height" content="1210" />
           <meta property="author" content="DBDLAB" />
+          <meta name="google-site-verification" content="VOhtSYTyB99y881SKWMXBlOpPgmSFRKA7-8W7AlzlrY" />
+          <meta name="naver-site-verification" content="4cb24b7cbfcbd02dd6230263b6358c44b114b844" />
         </Head>
 
         <body>
