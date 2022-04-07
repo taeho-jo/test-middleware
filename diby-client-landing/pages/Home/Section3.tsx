@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import { GridContainer } from '../../components/Grid';
 import LottieIcon from '../../components/LottieIcon';
 import ImgSmartPhone from '../../assets/images/home/img_smartphone.png';
+import Image from 'next/image';
 
 const Section = styled('div')(({ theme }) => ({
   width: '100%',
@@ -107,7 +108,7 @@ const WhiteBackground = styled('div')(({ theme }) => ({
 function Section3() {
   return (
     <Section>
-      <GridContainer container spacing={16} style={{ position: 'relative', zIndex: 2, overflow: 'hidden', maxWidth: '1920px', margin: '0 auto' }}>
+      <GridContainer container style={{ position: 'relative', zIndex: 2, overflow: 'hidden', maxWidth: '1920px', margin: '0 auto' }}>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '60px' }}>
           <Header data-aos="fade-up">On-demand Customer Feedback</Header>
         </Grid>
