@@ -36,7 +36,7 @@ const Desc = styled('p')(({ theme }) => ({
 function Section2() {
   return (
     <div style={{ width: '100%', marginBottom: '60px', backgroundColor: '#F8F8F8' }}>
-      <GridContainer container spacing={16} style={{ maxWidth: '1920px', margin: '0 auto' }}>
+      <GridContainer container style={{ maxWidth: '1920px', margin: '0 auto' }}>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '112px' }}>
           <Header data-aos="fade-up" style={{ fontSize: '20px' }}>
             Untact CX Research

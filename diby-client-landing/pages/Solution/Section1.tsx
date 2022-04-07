@@ -155,7 +155,7 @@ const Section1 = ({ data }) => {
       <div style={{ width: '100%', background: '#F8F8F8' }}>
         <GridContainer
           container
-          columnSpacing={16}
+          // columnSpacing={16}
           rowSpacing={8}
           justifyContent="center"
           style={{
@@ -168,7 +168,7 @@ const Section1 = ({ data }) => {
         >
           {data.labs.map((lab, index) => (
             <Grid data-aos="fade-up" key={`lab_${index}`} item xs={6} md={3} lg={3}>
-              <div style={{ display: 'flex', height: '80px', alignItems: 'center', background: 'white' }}>
+              <div style={{ display: 'flex', width: '97%', height: '80px', alignItems: 'center', background: 'white' }}>
                 <div style={{ flex: 1 }} />
                 <img src={lab.image.src} alt={lab.name} style={{ objectFit: 'contain', maxWidth: '100%', maxHeight: '100%' }} />
                 <div style={{ flex: 1 }} />
