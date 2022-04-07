@@ -34,7 +34,7 @@ const Desc = styled('p')(({ theme }) => ({
 
 function Section4() {
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
       <GridContainer container spacing={16}>
         <Grid item xs={12} md={12} lg={12}>
           <Header data-aos="fade-up">Why Diby?</Header>

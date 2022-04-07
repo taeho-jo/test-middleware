@@ -129,7 +129,7 @@ function Section1() {
   }, []);
 
   return (
-    <div style={{ width: '100%', marginBottom: '150px' }}>
+    <div style={{ width: '100%', marginBottom: '150px', maxWidth: '1920px', margin: '0 auto' }}>
       <Section>
         <GridContainer container spacing={0} style={{ marginTop: '80px', overflowX: 'hidden' }}>
           <LeftGrid item xs={12} md={7} lg={6}>

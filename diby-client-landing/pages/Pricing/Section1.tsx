@@ -148,7 +148,11 @@ function Section1() {
   // 지정된 날짜에 인터렉티브${newlineForMobile}리포트가 제공됩니다.
   return (
     <Section>
-      <GridContainer container spacing={16} style={{ paddingTop: '90px', paddingBottom: '90px' }}>
+      <GridContainer
+        container
+        spacing={16}
+        style={{ paddingTop: '90px', paddingBottom: '90px', width: '100%', maxWidth: '1920px', margin: '0 auto' }}
+      >
         <Grid item sm={12} md={12} lg={12}>
           <Header>
             커피한잔 주문하듯이,

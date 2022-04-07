@@ -53,7 +53,7 @@ function Section3() {
 
   return (
     <Section>
-      <GridContainer container spacing={16}>
+      <GridContainer container spacing={16} style={{ width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
         <Grid item sm={12} md={12} lg={12}>
           <Header data-aos="fade-up">설계안은 즉시 메일로 전송됩니다.</Header>
           <Title data-aos="fade-up">

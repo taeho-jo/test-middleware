@@ -77,7 +77,7 @@ function Section4() {
 
   return (
     <Section>
-      <GridContainer container spacing={16}>
+      <GridContainer container spacing={16} style={{ width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
         <Grid item sm={12} md={12} lg={12}>
           <Header data-aos="fade-up">CX 팀을 위한 핵심 기능</Header>
         </Grid>
