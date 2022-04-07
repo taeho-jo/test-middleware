@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
     "lint": "next lint",
     "storybook": "NODE_PATH=src start-storybook -p 6006 -c .storybook -s ./public",
