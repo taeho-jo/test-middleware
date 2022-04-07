@@ -93,7 +93,7 @@ const Section2 = ({ data }) => {
   }, []);
 
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
       <Section>
         <GridContainer container spacing={0}>
           <Grid item xs={12} sm={12} md={12} lg={12} style={{ marginBottom: '30px' }}>

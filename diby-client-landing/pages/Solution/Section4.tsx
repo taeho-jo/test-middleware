@@ -120,7 +120,7 @@ const Section4 = ({ data }) => {
   return (
     <div style={{ width: '100%' }}>
       <Section>
-        <GridContainer container spacing={0}>
+        <GridContainer container spacing={0} style={{ maxWidth: '1920px', margin: '0 auto' }}>
           <Grid item xs={12} sm={12} md={12} lg={12} style={{ marginBottom: '30px' }}>
             <Header data-aos="fade-up">
               커피한잔 주문하듯이,

@@ -107,7 +107,7 @@ const WhiteBackground = styled('div')(({ theme }) => ({
 function Section3() {
   return (
     <Section>
-      <GridContainer container spacing={16} style={{ position: 'relative', zIndex: 2, overflow: 'hidden' }}>
+      <GridContainer container spacing={16} style={{ position: 'relative', zIndex: 2, overflow: 'hidden', maxWidth: '1920px', margin: '0 auto' }}>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '60px' }}>
           <Header data-aos="fade-up">On-demand Customer Feedback</Header>
         </Grid>

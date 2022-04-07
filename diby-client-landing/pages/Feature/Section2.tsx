@@ -83,7 +83,7 @@ function Section2() {
   const marginBottom = isMobile ? '150px' : '200px';
 
   return (
-    <Section>
+    <Section style={{ width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
       {featureCards.map((card, index) => (
         <FeatureCard {...card} key={`fc${index}`} style={{ marginBottom: index === featureCards.length - 1 ? '100px' : marginBottom }} />
       ))}
