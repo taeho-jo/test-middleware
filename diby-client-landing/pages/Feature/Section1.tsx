@@ -160,7 +160,11 @@ function Section1() {
   return (
     <Section>
       <AppBar />
-      <GridContainer container spacing={16} style={{ paddingTop: '90px', paddingBottom: '50px' }}>
+      <GridContainer
+        container
+        spacing={16}
+        style={{ paddingTop: '90px', paddingBottom: '50px', width: '100%', maxWidth: '1920px', margin: '0 auto' }}
+      >
         <Grid item xs={12} md={6} lg={6}>
           <Title>
             CX 리서치에서
@@ -187,7 +191,7 @@ function Section1() {
         )}
       </GridContainer>
 
-      <GridContainer container spacing={16} style={{ paddingTop: '46px' }}>
+      <GridContainer container spacing={16} style={{ paddingTop: '46px', width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
         {processes.map((process, index) => (
           <Grid item xs={6} md={3} lg={3} key={`pr_${index}`}>
             <Process style={{ marginTop: index % 2 === 1 ? (isTablet ? '32px' : '48px') : '0' }}>
