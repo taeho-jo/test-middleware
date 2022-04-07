@@ -6,6 +6,7 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 // Components
 import Layout from '../common/layouts/Layout';
+import AppAnimation from '../common/layouts/AppAnimation';
 // Libraries
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';

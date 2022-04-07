@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import { GridContainer } from '../../components/Grid';
@@ -34,31 +34,9 @@ const Desc = styled('p')(({ theme }) => ({
 }));
 
 function Section2() {
-  // const divRef = useRef<HTMLDivElement>(null);
-
-  // const setLottie = (ref: HTMLDivElement) => {
-  //   // 로띠
-  //   // ref.innerHTML = ""
-  //   // lottie.loadAnimation({
-  //   //   container: ref,
-  //   //   renderer: 'svg',
-  //   //   loop: true,
-  //   //   autoplay: true,
-  //   //   animationData: require("assets/lottie/sample.json")
-  //   // })
-  // };
-  //
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     if (divRef.current) {
-  //       setLottie(divRef.current);
-  //     }
-  //   }
-  // }, []);
-
   return (
     <div style={{ width: '100%', marginBottom: '60px', backgroundColor: '#F8F8F8' }}>
-      <GridContainer container spacing={16} style={{ maxWidth: '1920px', margin: '0 auto' }}>
+      <GridContainer container style={{ maxWidth: '1920px', margin: '0 auto' }}>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '112px' }}>
           <Header data-aos="fade-up" style={{ fontSize: '20px' }}>
             Untact CX Research
