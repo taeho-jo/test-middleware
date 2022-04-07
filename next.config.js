@@ -15,3 +15,9 @@ module.exports = {
     return config;
   },
 };
+
+module.exports = {
+  images: {
+    formats: ['image/webp'],
+  },
+};

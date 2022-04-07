@@ -89,7 +89,17 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 padding: `${isMobile ? '10px' : '6px'} 0 0 0`,
               }}
             >
-              <Image src={darkMode ? LogoWhite : LogoBlack} alt={'Logo'} width={56} height={30} priority={true} loading="eager" quality={100} />
+              <Image
+                src={darkMode ? LogoWhite : LogoBlack}
+                alt={'Logo'}
+                width={56}
+                height={30}
+                priority={true}
+                loading="eager"
+                quality={100}
+                placeholder={'blur'}
+                blurDataURL={'red'}
+              />
             </div>
           </Link>
 
