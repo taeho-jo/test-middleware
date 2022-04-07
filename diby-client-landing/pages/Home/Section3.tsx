@@ -71,7 +71,6 @@ const Thumb = styled('img')(({ theme }) => ({
     paddingLeft: '0px',
   },
 }));
-const Thumb_test = ({ theme }) => css``;
 
 const GradientBackground = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
