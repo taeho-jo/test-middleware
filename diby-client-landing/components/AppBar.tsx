@@ -106,7 +106,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
           {!isMobile && (
             <Stack className="hide-on-md" direction="row" justifyContent="center" alignItems="center" spacing={16} style={{ marginRight: '30px' }}>
               <AppBarButton color={darkMode ? 'white' : 'primary'} variant="text" onClick={handleClickUseCases}>
-                테스트 서비스
+                테스트 종류
               </AppBarButton>
               <AppBarButton
                 color={darkMode ? 'white' : 'primary'}
@@ -171,7 +171,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
         }}
       >
         <div style={{ padding: '32px 24px' }}>
-          <p style={{ margin: '0 0 10px 0', textAlign: 'left', fontSize: '16px', fontWeight: 'bold' }}>테스트 서비스</p>
+          <p style={{ margin: '0 0 10px 0', textAlign: 'left', fontSize: '16px', fontWeight: 'bold' }}>테스트 종류</p>
           <div style={{ width: '280px', height: '60px', display: 'flex' }}>
             <Button
               style={{ flex: 1, padding: '0', margin: '0 auto 0 0', width: '110px', justifyContent: 'flex-start' }}
