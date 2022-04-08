@@ -126,9 +126,9 @@ function Section1() {
   const [count, setCount] = useState(0);
 
   const cards = [
-    { title: '테스트 방법 추천', img: IconAlert },
-    { title: '피드백 수집 및 품질 보장', img: IconFeedback2 },
-    { title: '정성데이터 정량화', img: IconTesting },
+    { title: '응답자 모집', img: IconAlert },
+    { title: '불량 응답 검수', img: IconFeedback2 },
+    { title: '키워드 분석', img: IconTesting },
   ];
 
   const processes = [
@@ -170,7 +170,7 @@ function Section1() {
       >
         <Grid item xs={12} md={6} lg={6}>
           <Title>
-            CX 리서치에서
+            유저리서치에서
             <br />
             단순 반복작업 시간을
             <br />

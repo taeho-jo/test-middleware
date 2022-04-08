@@ -60,7 +60,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
               <br />
               일 잘하는 기획자, 디자이너, 마케터, 리서처를 위한
               <br />
-              유저 리서치 솔루션입니다.
+              유저리서치 솔루션입니다.
             </p>
             <p style={{ fontSize: '12px', color: color }}>Ⓒ DBDLAB Corp.</p>
             <FooterButton color={darkMode ? 'white' : 'primary'} style={{ fontSize: '14px', fontWeight: 'bold' }}>
