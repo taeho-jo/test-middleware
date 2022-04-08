@@ -111,7 +111,7 @@ function Section3() {
       <GridContainer container spacing={16}>
         <Grid item sm={12} md={12} lg={12}>
           <Header data-aos="fade-up">
-            Diby에서 CX 리서치를 시작하세요.
+            Diby에서 유저리서치를 시작하세요.
             {/*<br />*/}
             {/*CX Research 프로세스를 모두 경험하세요.*/}
           </Header>
