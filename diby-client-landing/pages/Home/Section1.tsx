@@ -169,7 +169,7 @@ function Section1() {
                     height={488}
                     priority
                     quality={100}
-                    placeholder={'blur'}
+                    // placeholder={'blur'}
                     src={ImgHomeDashboard}
                     alt="dashboard_img"
                   />
