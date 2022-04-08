@@ -171,7 +171,7 @@ function Section1() {
                     quality={100}
                     placeholder={'blur'}
                     src={ImgHomeDashboard}
-                    alt="dashboard"
+                    alt="dashboard_img"
                   />
                 </div>
               </div>
