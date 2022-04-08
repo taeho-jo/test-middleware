@@ -37,10 +37,10 @@ function Section4() {
     <div style={{ width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
       <GridContainer container spacing={16}>
         <Grid item xs={12} md={12} lg={12}>
-          <Header data-aos="fade-up">Why Diby?</Header>
+          <Header data-aos="fade-up" style={{ fontSize: '20px' }}>Why Diby?</Header>
         </Grid>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '32px' }}>
-          <Title data-aos="fade-up">Diby로 체계적인 CX 리서치 문화를 도입하세요. </Title>
+          <Title data-aos="fade-up">Diby로 체계적인 유저 리서치 문화를 도입하세요. </Title>
         </Grid>
         <Grid item xs={10} md={3} lg={3} style={{ paddingTop: '40px', paddingBottom: '40px' }}>
           <Stack direction="column" spacing={24} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
@@ -48,7 +48,7 @@ function Section4() {
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold', color: '#2878F0' }}>
               기술 우선
             </Desc>
-            <Desc data-aos="fade-up">Diby는 인력기반의 CX 리서치 시장을 기술 중심으로 혁신합니다.</Desc>
+            <Desc data-aos="fade-up">Diby는 인력기반의 유저 리서치 시장을 기술 중심으로 혁신합니다.</Desc>
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold' }}>
               챗봇, 인공지능, 표정 분석등을 활용하여 새로운 리서치 방법을 제공합니다.
             </Desc>
