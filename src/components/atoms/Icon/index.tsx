@@ -36,12 +36,12 @@ const IconTypes = {
 };
 
 interface PropsType {
-  name: IconType | any;
+  name: string;
   // name: string;
   size?: number;
 }
 
-const Icon = ({ name, size = 16 }: PropsType) => {
+const Icon = ({name, size = 16} ) => {
   const IconComponent = IconTypes[name];
   const viewBox = `0 0 ${size} ${size}`;
 

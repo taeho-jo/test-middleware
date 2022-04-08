@@ -3,12 +3,15 @@ import { styled } from '@mui/material/styles';
 import { Grid, Stack } from '@mui/material';
 import { GridContainer } from '../../components/Grid';
 import { breakpoints } from '../../Theme';
+import Image from 'next/image'
 import FeatureLine from '../../assets/images/feature/feature_line.png';
 import FeatureCircle from '../../assets/images/feature/feature_circle.png';
 import IconCustomer from '../../assets/images/feature/icon_customer.png';
 import IconRelease from '../../assets/images/feature/icon_release.png';
-import IconTesting from '../../assets/images/feature/icon_testing.png';
 import IconProcess from '../../assets/images/feature/icon_process.png';
+import IconAlert from '../../../public/assets/svg/icon_alert.svg';
+import IconFeedback2 from '../../../public/assets/svg/icon_feedback2.svg';
+import IconTesting from '../../../public/assets/svg/icon_testing.svg';
 
 import Icon from '../../../src/components/atoms/Icon';
 
@@ -123,9 +126,9 @@ function Section1() {
   const [count, setCount] = useState(0);
 
   const cards = [
-    { title: '테스트 방법 추천', img: 'ICON_ALERT' },
-    { title: '피드백 수집 및 품질 보장', img: 'ICON_FEEDBACK2' },
-    { title: '정성데이터 정량화', img: 'ICON_TESTING' },
+    { title: '테스트 방법 추천', img: IconAlert },
+    { title: '피드백 수집 및 품질 보장', img: IconFeedback2 },
+    { title: '정성데이터 정량화', img: IconTesting },
   ];
 
   const processes = [
@@ -180,8 +183,9 @@ function Section1() {
               {cards.map((card, index) => (
                 <CardWrapper data-aos="fade-up" key={`card_${index}`}>
                   <Card className={index === count % cards.length ? 'box-shadow-active' : ''}>
-                    <Icon name={card.img} size={40} />
-                    {/*<img src={card.img} alt="feature_icon" style={{ width: '40px', height: '40px' }} />*/}
+                    {/*<Icon name={card.img} size={40} />*/}
+                    {/*<img src={card.img.src} alt="feature_icon" style={{ width: '40px', height: '40px' }} />*/}
+                    <Image src={card.img} alt="feature_icon" width={40} height={40} quality={100} />
                     <p>{card.title}</p>
                   </Card>
                 </CardWrapper>

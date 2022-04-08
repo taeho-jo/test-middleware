@@ -84,7 +84,8 @@ const NextButton = styled(Button)({
   color: 'white',
 });
 
-const titles = ['CX Research', 'Segmentation', 'Indepth Interview', 'Usability Test'];
+// const titles = ['CX Research', 'Segmentation', 'Indepth Interview', 'Usability Test'];
+const titles = ['사용성 테스트', '퍼소나 정의', '유저리서치', '1:1 인터뷰', '그룹인터뷰'];
 
 const labs = [
   { name: 'CompanyLogo1', image: CompanyLogo1 },
@@ -182,11 +183,10 @@ function Section1() {
         {labs.map((lab, index) => (
           <Grid data-aos="fade-up" key={`lab_${index}`} item xs={6} md={3} lg={3}>
             <div style={{ display: 'flex', height: '80px', alignItems: 'center', background: 'white' }}>
-              <div style={{ flex: 1 }} />
+              {/*<div style={{ flex: 1 }} />*/}
               <div style={{ objectFit: 'contain', maxWidth: '100%', maxHeight: '100%' }}>
                 <Image
                   style={{ borderRadius: '10px' }}
-                  layout={'fill'}
                   priority={true}
                   loading="eager"
                   quality={100}
@@ -194,7 +194,7 @@ function Section1() {
                   alt={lab.name}
                 />
               </div>
-              <div style={{ flex: 1 }} />
+              {/*<div style={{ flex: 1 }} />*/}
             </div>
           </Grid>
         ))}
