@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { styled } from '@mui/material/styles';
 import { Button, Grid, Stack } from '@mui/material';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import ImgHomeDashboard from '../../assets/images/home/home_dashboard.png';
+import ImgHomeDashboard from '../../assets/images/home/img_dashboard-1.webp';
 import CompanyLogo1 from '../../assets/images/company/companylogo_main1.png';
 import CompanyLogo2 from '../../assets/images/company/companylogo_main2.png';
 import CompanyLogo3 from '../../assets/images/company/companylogo_main3.png';
