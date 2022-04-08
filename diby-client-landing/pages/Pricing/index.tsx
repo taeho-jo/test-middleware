@@ -10,7 +10,7 @@ function PricingComponent() {
     <Page>
       <AppBar />
       <Section1 />
-      <Section2 />
+      {/*<Section2 />*/}
       <Footer dark />
     </Page>
   );
