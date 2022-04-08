@@ -39,12 +39,12 @@ function Section2() {
       <GridContainer container style={{ maxWidth: '1920px', margin: '0 auto' }}>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '112px' }}>
           <Header data-aos="fade-up" style={{ fontSize: '20px' }}>
-            Untact CX Research
+            Untact User Research
           </Header>
         </Grid>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '32px' }}>
           <Title data-aos="fade-up">
-            CX 리서치에 드는 시간과 비용을 줄이고,
+            유저 리서치에 드는 시간과 비용을 줄이고,
             <br />더 많은 피드백을 더 빠르게 정리하세요.
           </Title>
         </Grid>
@@ -55,21 +55,7 @@ function Section2() {
             Diby 의 고객 피드백에 특화된 분석 템플릿으로 문장형 데이터를 읽고 분류하는 시간을 절약하세요.
           </Desc>
         </Grid>
-        {/*<Grid item xs={12} md={6} lg={4} style={{ paddingTop: '40px' }}>*/}
-        {/*  <Desc data-aos="fade-up">*/}
-        {/*    실시간 사용자 행동 데이터로 문제를 발견하고,*/}
-        {/*    <br />*/}
-        {/*    다양한 피드백 모듈로 원인을 파악하세요.*/}
-        {/*  </Desc>*/}
-        {/*</Grid>*/}
-        {/*<Grid item xs={12} md={6} lg={4} style={{ paddingTop: '40px' }}>*/}
-        {/*  <Desc data-aos="fade-up">Diby를 사용하는 기획자/디자이너/리서처/마케터는</Desc>*/}
-        {/*  <Desc data-aos="fade-up" style={{ color: '#24E1D5' }}>*/}
-        {/*    시간을 절약하고, 전략 수립과 의사결정에*/}
-        {/*    <br />*/}
-        {/*    집중할 수 있습니다.*/}
-        {/*  </Desc>*/}
-        {/*</Grid>*/}
+
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '40px' }}>
           <LottieCard name="home_solution" />
         </Grid>

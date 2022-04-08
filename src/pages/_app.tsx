@@ -67,6 +67,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout, props) {
           <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} />
         </QueryClientProvider>
       </PersistGate>
+
     </>
   );
 }
