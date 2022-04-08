@@ -44,7 +44,7 @@ function Section2() {
         </Grid>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '32px' }}>
           <Title data-aos="fade-up">
-            유저 리서치에 드는 시간과 비용을 줄이고,
+            유저리서치에 드는 시간과 비용을 줄이고,
             <br />더 많은 피드백을 더 빠르게 정리하세요.
           </Title>
         </Grid>
