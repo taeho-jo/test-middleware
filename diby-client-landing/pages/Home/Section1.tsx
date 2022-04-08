@@ -167,11 +167,11 @@ function Section1() {
                     style={{ borderRadius: '10px' }}
                     width={840}
                     height={488}
-                    priority={true}
-                    loading="eager"
+                    priority
                     quality={100}
+                    placeholder={'blur'}
                     src={ImgHomeDashboard}
-                    alt="dashboard"
+                    alt="dashboard_img"
                   />
                 </div>
               </div>
