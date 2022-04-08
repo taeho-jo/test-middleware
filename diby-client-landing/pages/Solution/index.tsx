@@ -13,15 +13,15 @@ import SolutionImage1_3 from '../../assets/images/company/companylogo_ui3.png';
 import SolutionImage1_4 from '../../assets/images/company/companylogo_ui4.png';
 import SolutionChart1 from '../../assets/images/usecase_UI/img_ui_top_chart.png';
 import SolutionChartBG1 from '../../assets/images/usecase_UI/img_ui_top_bg.png';
-import SolutionThumb1_1 from '../../assets/images/usecase_UI/img_ui_ratio.png';
+import SolutionThumb1_1 from '../../assets/images/usecase_UI/img_ui_ratio2.png';
 import SolutionThumb1_2 from '../../assets/images/usecase_UI/img_ui_cause.png';
-import SolutionThumb1_3 from '../../assets/images/usecase_UI/img_ui_align.png';
+import SolutionThumb1_3 from '../../assets/images/usecase_UI/img_ui_align2.png';
 import SolutionTopSlide1_1 from '../../assets/images/usecase_UI/img_usecase_mision.png';
 import SolutionTopSlide1_2 from '../../assets/images/usecase_UI/img_usecase_qs.png';
 import SolutionTopSlide1_3 from '../../assets/images/usecase_UI/img_usecase_addq.png';
 import SolutionBottomSlide1_1 from '../../assets/images/usecase_UI/img_usecase_bottom_panelset.png';
 import SolutionBottomSlide1_2 from '../../assets/images/usecase_UI/img_usecase_bottom_mission.png';
-import SolutionBottomSlide1_3 from '../../assets/images/usecase_UI/img_usecase_bottom_addq.png';
+import SolutionBottomSlide1_3 from '../../assets/images/usecase_UI/img_usecase_bottom_addq2.png';
 
 import SolutionImage2_1 from '../../assets/images/company/companylogo_ux1.png';
 import SolutionImage2_2 from '../../assets/images/company/companylogo_ux2.png';
