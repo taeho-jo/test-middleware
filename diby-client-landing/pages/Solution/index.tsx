@@ -33,6 +33,7 @@ import SolutionThumb2_2 from '../../assets/images/usecase_UX/img_ux_usecase.png'
 import SolutionThumb2_3 from '../../assets/images/usecase_UX/img_ux_cognition.png';
 import SolutionTopSlide2_1 from '../../assets/images/usecase_UX/img_ux_recruit.png';
 import SolutionTopSlide2_2 from '../../assets/images/usecase_UX/img_usecase_qs.png';
+import SolutionBottomSlide2_0 from '../../assets/images/usecase_UX/img_ui_bottom_addq.png';
 import SolutionBottomSlide2_1 from '../../assets/images/usecase_UX/img_ux_bottom_purpose.png';
 import SolutionBottomSlide2_2 from '../../assets/images/usecase_UX/img_usecase_bottom_panelset.png';
 
@@ -50,7 +51,7 @@ import SolutionTopSlide3_2 from '../../assets/images/usecase_scenario/img_usecas
 import SolutionTopSlide3_3 from '../../assets/images/usecase_scenario/img_usecase_addq.png';
 import SolutionBottomSlide3_1 from '../../assets/images/usecase_scenario/img_usecase_bottom_panelset.png';
 import SolutionBottomSlide3_2 from '../../assets/images/usecase_scenario/img_usecase_bottom_mission.png';
-import SolutionBottomSlide3_3 from '../../assets/images/usecase_scenario/img_usecase_bottom_addq.png';
+import SolutionBottomSlide3_3 from '../../assets/images/usecase_scenario/img_scenario_bottom_addq.png';
 
 import SolutionImage4_1 from '../../assets/images/company/companylogo_customer1.png';
 import SolutionImage4_2 from '../../assets/images/company/companylogo_customer2.png';
@@ -64,8 +65,9 @@ import SolutionThumb4_3 from '../../assets/images/usecase_customer/img_usecase_a
 import SolutionTopSlide4_1 from '../../assets/images/usecase_customer/img_customer_recruit.png';
 import SolutionTopSlide4_2 from '../../assets/images/usecase_customer/img_customer_stq.png';
 import SolutionTopSlide4_3 from '../../assets/images/usecase_customer/img_usecase_addq.png';
-import SolutionBottomSlide4_1 from '../../assets/images/usecase_customer/img_usecase_bottom_panelset.png';
-import SolutionBottomSlide4_2 from '../../assets/images/usecase_customer/img_usecase_bottom_addq.png';
+import SolutionBottomSlide4_1 from '../../assets/images/usecase_customer/img_persona_bottom_addq.png';
+import SolutionBottomSlide4_2 from '../../assets/images/usecase_customer/img_persona_bottom_panelset.png';
+import SolutionBottomSlide4_3 from '../../assets/images/usecase_customer/img_persona_bottom_qs.png';
 
 function Solution1() {
   const data = {
@@ -236,7 +238,7 @@ function Solution2() {
             '어떻게 리서치를 시작하지?\n' +
             '이제 고민하지 마세요. \n' +
             'Diby에서 리서치를 통해 달성하고 싶은 목적별로 테스트를 제공하고 있습니다.\n테스트에서 제공하는 공통질문 이외에도 원하시는 질문을 추가하거나, Diby의 추천 질문을 선택하실 수 있습니다.',
-          image: SolutionBottomSlide2_1,
+          image: SolutionBottomSlide2_0,
         },
         {
           title: '2. 내부 설계의도 확인',
@@ -449,7 +451,7 @@ function Solution4() {
         {
           title: '3. 문항선택 / 직접입력',
           desc: '리서치의 목적에 맞게 Diby 가 추천한 문항을\n선택하고 커스텀하세요.\n혹은 원하시는 문항을 직접 제작할 수 있습니다.',
-          image: SolutionBottomSlide4_2,
+          image: SolutionBottomSlide4_3,
         },
       ],
     },
