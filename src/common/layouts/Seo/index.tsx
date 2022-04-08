@@ -58,9 +58,9 @@ const Seo = ({
       case '/feature':
         return {
           title: 'Diby | 솔루션소개',
-          description: 'UX/CX 리서치에서 단순반복 작업을 80% 단축하세요.',
+          description: '유저리서치에서 단순반복 작업을 80% 단축하세요.',
           ogTitle: '솔루션소개 | Diby',
-          ogDescription: 'UX/CX 리서치에서 단순반복 작업을 80% 단축하세요.',
+          ogDescription: '유저리서치에서 단순반복 작업을 80% 단축하세요.',
           url,
         };
       case '/pricing':
@@ -81,7 +81,7 @@ const Seo = ({
         };
       default:
         return {
-          title: 'Diby | 일 잘하는 당신을 위한 CX 리서치 솔루션',
+          title: 'Diby | 일 잘하는 당신을 위한 유저리서치 솔루션',
           description:
               '유저리서치로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요.',
           ogTitle: '유저리서치 솔루션, Diby',
