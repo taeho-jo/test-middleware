@@ -15,10 +15,6 @@ import { css } from '@emotion/react';
 import { caption1_bold } from '../styles/FontStyles';
 // import Seo from '../common/layouts/Seo';
 
-export const config = {
-  unstable_runtimeJS: false
-}
-
 const Home = () => {
   const dispatch = useDispatch();
   const router = useRouter();
