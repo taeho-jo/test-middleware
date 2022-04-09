@@ -1,4 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
+import Script from 'next/script'
 // Redux
 import { persistedReducer, wrapper } from '../store';
 import { createStore } from 'redux';
@@ -59,9 +60,13 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout, props) {
               <GlobalStyles />
               <Layout>
                 {/*<AppAnimation>*/}
+
                 <Component {...pageProps} />
+
                 {/*</AppAnimation>*/}
               </Layout>
+              <Script type='text/javascript' src='/lib/beusableHeatmap.js'/>
+
             </ThemeProvider>
           </Hydrate>
           <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} />
