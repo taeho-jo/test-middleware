@@ -1,4 +1,5 @@
 (function(w, d, a){
+    console.log('code 삽입 완료.')
     w.__beusablerumclient__ = {
         load : function(src){
             var b = d.createElement("script");

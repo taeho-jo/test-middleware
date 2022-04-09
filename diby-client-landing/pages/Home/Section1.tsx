@@ -163,7 +163,9 @@ function Section1() {
           <RightGrid item xs={0} md={5} lg={6}>
             <div style={{ height: '488px', overflowX: 'visible' }}>
               <div style={{ height: '488px', overflowY: 'hidden' }}>
-                <div data-aos="fade-up" style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}>
+                <div
+                    // data-aos="fade-up"
+                    style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}>
                   <Image
                     style={{ borderRadius: '10px' }}
                     width={840}
