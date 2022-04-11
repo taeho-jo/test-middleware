@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 // Components
-import { Grid, Stack, Button, IconButton, Popover } from '@mui/material';
+import { Grid, Stack, Button, IconButton, Popover, Icon } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { GridContainer } from './Grid';
 import { breakpoints } from '../Theme';
@@ -89,7 +89,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 padding: `${isMobile ? '10px' : '6px'} 0 0 0`,
               }}
             >
-              <Image src={darkMode ? LogoWhite : LogoBlack} alt={'Logo'} width={56} height={30} priority={true} quality={100} />
+              {/*<Image src={darkMode ? LogoWhite : LogoBlack} alt={'Logo'} width={56} height={30} priority={true} quality={100} />*/}
+              <img src={darkMode ? LogoWhite.src : LogoBlack.src} alt={'Logo'} style={{ width: '56px', height: '30px' }} />
             </div>
           </Link>
 
@@ -171,7 +172,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <div style={{ width: '24px', height: '24px', margin: 'auto 0' }}>
-                  <Image src={icon1} alt={'diby1'} width={24} height={24} priority={true} quality={100} />
+                  {/*<Image src={icon1} alt={'diby1'} width={24} height={24} priority={true} quality={100} />*/}
+                  <img src={icon1.src} alt={'diby1'} style={{ width: '24px', height: '24px' }} />
                 </div>
                 <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UI 진단 테스트</p>
               </div>
@@ -184,7 +186,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <div style={{ width: '24px', height: '24px', margin: 'auto 0' }}>
-                  <Image src={icon2} alt={'diby2'} width={24} height={24} priority={true} quality={100} />
+                  {/*<Image src={icon2} alt={'diby2'} width={24} height={24} priority={true} quality={100} />*/}
+                  <img src={icon2.src} alt={'diby2'} style={{ width: '24px', height: '24px' }} />
                 </div>
                 <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UX 포지션 테스트</p>
               </div>
@@ -199,7 +202,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <div style={{ width: '24px', height: '24px', margin: 'auto 0' }}>
-                  <Image src={icon3} alt={'diby3'} width={24} height={24} priority={true} quality={100} />
+                  {/*<Image src={icon3} alt={'diby3'} width={24} height={24} priority={true} quality={100} />*/}
+                  <img src={icon3.src} alt={'diby3'} style={{ width: '24px', height: '24px' }} />
                 </div>
                 <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>시나리오 테스트</p>
               </div>
@@ -212,7 +216,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <div style={{ width: '24px', height: '24px', margin: 'auto 0' }}>
-                  <Image src={icon4} alt={'diby4'} width={24} height={24} priority={true} quality={100} />
+                  {/*<Image src={icon4} alt={'diby4'} width={24} height={24} priority={true} quality={100} />*/}
+                  <img src={icon4.src} alt={'diby4'} style={{ width: '24px', height: '24px' }} />
                 </div>
                 <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>퍼소나 테스트</p>
               </div>
@@ -274,7 +279,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <div style={{ width: '40px', height: '40px', margin: 'auto 0 auto 40px' }}>
-                  <Image src={icon1} alt={'icon1'} width={40} height={40} priority={true} quality={100} />
+                  {/*<Image src={icon1} alt={'icon1'} width={40} height={40} priority={true} quality={100} />*/}
+                  <img src={icon1.src} alt={'diby1'} style={{ width: '40px', height: '40px' }} />
                 </div>
                 <div style={{ paddingLeft: '16px' }}>
                   <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UI 진단 테스트</p>
@@ -290,7 +296,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <div style={{ width: '40px', height: '40px', margin: 'auto 0 auto 40px' }}>
-                  <Image src={icon2} alt={'icon2'} width={40} height={40} priority={true} quality={100} />
+                  {/*<Image src={icon2} alt={'icon2'} width={40} height={40} priority={true} quality={100} />*/}
+                  <img src={icon2.src} alt={'diby2'} style={{ width: '40px', height: '40px' }} />
                 </div>
                 <div style={{ paddingLeft: '16px' }}>
                   <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UX 포지션 테스트</p>
@@ -308,7 +315,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <div style={{ width: '40px', height: '40px', margin: 'auto 0 auto 40px' }}>
-                  <Image src={icon3} alt={'icon3'} width={40} height={40} priority={true} quality={100} />
+                  {/*<Image src={icon3} alt={'icon3'} width={40} height={40} priority={true} quality={100} />*/}
+                  <img src={icon3.src} alt={'diby3'} style={{ width: '40px', height: '40px' }} />
                 </div>
                 <div style={{ paddingLeft: '16px' }}>
                   <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>시나리오 테스트</p>
@@ -324,7 +332,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             >
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <div style={{ width: '40px', height: '40px', margin: 'auto 0 auto 40px' }}>
-                  <Image src={icon4} alt={'icon4'} width={40} height={40} priority={true} quality={100} />
+                  {/*<Image src={icon4} alt={'icon4'} width={40} height={40} priority={true} quality={100} />*/}
+                  <img src={icon4.src} alt={'diby4'} style={{ width: '40px', height: '40px' }} />
                 </div>
                 <div style={{ paddingLeft: '16px' }}>
                   <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>퍼소나 테스트</p>
