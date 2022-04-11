@@ -42,7 +42,7 @@ function LottieIcon(props: { name: string; delay?: number; dataAos?: string; dat
           loop: false,
           autoplay: false,
           // animationData: require(`assets/lottie/${props.name}.json`),
-          animationData: require(`../assets/lottie/${props.name}.json`),
+          animationData: require(`../../public/assets/lottie/${props.name}.json`),
           name: props.name,
         });
 

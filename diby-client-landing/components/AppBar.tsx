@@ -9,12 +9,12 @@ import { GridContainer } from './Grid';
 import { breakpoints } from '../Theme';
 // Images
 import MenuIcon from '@mui/icons-material/Menu';
-import LogoWhite from '../assets/images/diby_white1.png';
-import LogoBlack from '../assets/images/diby_black1.png';
-import icon1 from '../assets/images/icon_uitest1.png';
-import icon2 from '../assets/images/icon_uxposition1.png';
-import icon3 from '../assets/images/icon_scenario1.png';
-import icon4 from '../assets/images/icon_customer1.png';
+import LogoWhite from '../../public/assets/images/diby_white1.png';
+import LogoBlack from '../../public/assets/images/diby_black1.png';
+import icon1 from '../../public/assets/images/icon_uitest1.png';
+import icon2 from '../../public/assets/images/icon_uxposition1.png';
+import icon3 from '../../public/assets/images/icon_scenario1.png';
+import icon4 from '../../public/assets/images/icon_customer1.png';
 
 const AppBarButton = styled(Button)({
   fontWeight: '700',

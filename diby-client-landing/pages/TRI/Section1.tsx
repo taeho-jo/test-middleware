@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import { Button, Grid, Stack } from '@mui/material';
 import { GridContainer } from '../../components/Grid';
 import { breakpoints } from '../../Theme';
-import ImgTRI from '../../assets/images/img_tri.png';
+import ImgTRI from '../../../public/assets/images/img_tri.png';
 
 const Section = styled('div')(({ theme }) => ({
   width: '100%',

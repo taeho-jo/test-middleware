@@ -5,15 +5,15 @@ import { styled } from '@mui/material/styles';
 import { Button, Grid, Stack } from '@mui/material';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 // import ImgHomeDashboard from '../../assets/images/home/img_dashboard_2_1_.webp';
-import ImgHomeDashboard from '../../../public/assets/img_dashboard_2_1_.webp';
-import CompanyLogo1 from '../../assets/images/company/companylogo_main1.png';
-import CompanyLogo2 from '../../assets/images/company/companylogo_main2.png';
-import CompanyLogo3 from '../../assets/images/company/companylogo_main3.png';
-import CompanyLogo4 from '../../assets/images/company/companylogo_main4.png';
-import CompanyLogo5 from '../../assets/images/company/companylogo_main5.png';
-import CompanyLogo6 from '../../assets/images/company/companylogo_main6.png';
-import CompanyLogo7 from '../../assets/images/company/companylogo_main7.png';
-import CompanyLogo8 from '../../assets/images/company/companylogo_main8.png';
+import ImgHomeDashboard from '../../../public/assets/images/img_dashboard_2_1_.webp';
+import CompanyLogo1 from '../../../public/assets/images/company/companylogo_main1.png';
+import CompanyLogo2 from '../../../public/assets/images/company/companylogo_main2.png';
+import CompanyLogo3 from '../../../public/assets/images/company/companylogo_main3.png';
+import CompanyLogo4 from '../../../public/assets/images/company/companylogo_main4.png';
+import CompanyLogo5 from '../../../public/assets/images/company/companylogo_main5.png';
+import CompanyLogo6 from '../../../public/assets/images/company/companylogo_main6.png';
+import CompanyLogo7 from '../../../public/assets/images/company/companylogo_main7.png';
+import CompanyLogo8 from '../../../public/assets/images/company/companylogo_main8.png';
 import { GridContainer } from '../../components/Grid';
 import { breakpoints } from '../../Theme';
 import Image from 'next/image';
@@ -164,8 +164,9 @@ function Section1() {
             <div style={{ height: '488px', overflowX: 'visible' }}>
               <div style={{ height: '488px', overflowY: 'hidden' }}>
                 <div
-                    // data-aos="fade-up"
-                    style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}>
+                  // data-aos="fade-up"
+                  style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}
+                >
                   <Image
                     style={{ borderRadius: '10px' }}
                     width={840}
@@ -188,14 +189,7 @@ function Section1() {
             <div style={{ display: 'flex', height: '80px', alignItems: 'center', background: 'white' }}>
               {/*<div style={{ flex: 1 }} />*/}
               <div style={{ objectFit: 'contain', maxWidth: '100%', maxHeight: '100%' }}>
-                <Image
-                  style={{ borderRadius: '10px' }}
-                  priority={true}
-                  loading="eager"
-                  quality={100}
-                  src={lab.image}
-                  alt={lab.name}
-                />
+                <Image style={{ borderRadius: '10px' }} priority={true} loading="eager" quality={100} src={lab.image} alt={lab.name} />
               </div>
               {/*<div style={{ flex: 1 }} />*/}
             </div>
