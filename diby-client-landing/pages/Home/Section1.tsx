@@ -177,7 +177,11 @@ function Section1() {
                   {/*  src={ImgHomeDashboard}*/}
                   {/*  alt="dashboard_img"*/}
                   {/*/>*/}
-                  <img style={{ width: '840px', height: '488px', borderRadius: '10px' }} src={ImgHomeDashboard.src} alt="dashboard_img" />
+                  <img
+                    style={{ width: '840px', height: '488px', borderRadius: '10px' }}
+                    src={'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/img_dashboard_2_1_.webp'}
+                    alt="dashboard_img"
+                  />
                 </div>
               </div>
             </div>
