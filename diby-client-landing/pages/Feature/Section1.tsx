@@ -9,6 +9,7 @@ import FeatureCircle from '../../../public/assets/images/feature/feature_circle.
 import IconCustomer from '../../../public/assets/images/feature/icon_customer.png';
 import IconRelease from '../../../public/assets/images/feature/icon_release.png';
 import IconProcess from '../../../public/assets/images/feature/icon_process.png';
+import IconTest from '../../../public/assets/images/feature/icon_testing.png';
 import IconAlert from '../../../public/assets/svg/icon_alert.svg';
 import IconFeedback2 from '../../../public/assets/svg/icon_feedback2.svg';
 import IconTesting from '../../../public/assets/svg/icon_testing.svg';
@@ -134,7 +135,7 @@ function Section1() {
   const processes = [
     { title: '원하는 조건으로\nDiby 패널에서\n응답자 리쿠르팅', image: IconCustomer },
     { title: '시각화된 데이터로\n리서치 결과 정리 및\n원본 데이터 확인 ', image: IconRelease },
-    { title: '팀 구성원간\n리서치 결과 리포트\n자유롭게 공유', image: IconTesting },
+    { title: '팀 구성원간\n리서치 결과 리포트\n자유롭게 공유', image: IconTest },
     { title: '전담 연구원의\n리서치 결과 요약과\n코멘트 제공', image: IconProcess },
   ];
 
