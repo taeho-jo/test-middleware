@@ -189,7 +189,7 @@ function Section1() {
             <div style={{ display: 'flex', height: '80px', alignItems: 'center', background: 'white' }}>
               {/*<div style={{ flex: 1 }} />*/}
               <div style={{ objectFit: 'contain', maxWidth: '100%', maxHeight: '100%' }}>
-                <Image style={{ borderRadius: '10px' }} priority={true} loading="eager" quality={100} src={lab.image} alt={lab.name} />
+                <Image style={{ borderRadius: '10px' }} priority={true} quality={100} src={lab.image} alt={lab.name} />
               </div>
               {/*<div style={{ flex: 1 }} />*/}
             </div>
