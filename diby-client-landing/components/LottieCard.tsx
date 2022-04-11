@@ -21,7 +21,7 @@ function LottieCard(props: { name: string; delay?: number }) {
           renderer: 'svg',
           loop: false,
           autoplay: false,
-          animationData: require(`../assets/lottie/${props.name}.json`),
+          animationData: require(`../../public/assets/lottie/${props.name}.json`),
           name: props.name,
         });
 

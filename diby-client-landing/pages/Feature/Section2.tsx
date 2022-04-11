@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import Thumb1 from '../../assets/images/feature/img_segment.png';
-import Thumb2 from '../../assets/images/feature/img_scenario.png';
-import Thumb3 from '../../assets/images/feature/img_testing.png';
+import Thumb1 from '../../../public/assets/images/feature/img_segment.png';
+import Thumb2 from '../../../public/assets/images/feature/img_scenario.png';
+import Thumb3 from '../../../public/assets/images/feature/img_testing.png';
 import FeatureCard from '../../components/FeatureCard';
 import { breakpoints } from '../../Theme';
 
