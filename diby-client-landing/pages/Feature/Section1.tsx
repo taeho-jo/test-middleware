@@ -3,12 +3,12 @@ import { styled } from '@mui/material/styles';
 import { Grid, Stack } from '@mui/material';
 import { GridContainer } from '../../components/Grid';
 import { breakpoints } from '../../Theme';
-import Image from 'next/image'
-import FeatureLine from '../../assets/images/feature/feature_line.png';
-import FeatureCircle from '../../assets/images/feature/feature_circle.png';
-import IconCustomer from '../../assets/images/feature/icon_customer.png';
-import IconRelease from '../../assets/images/feature/icon_release.png';
-import IconProcess from '../../assets/images/feature/icon_process.png';
+import Image from 'next/image';
+import FeatureLine from '../../../public/assets/images/feature/feature_line.png';
+import FeatureCircle from '../../../public/assets/images/feature/feature_circle.png';
+import IconCustomer from '../../../public/assets/images/feature/icon_customer.png';
+import IconRelease from '../../../public/assets/images/feature/icon_release.png';
+import IconProcess from '../../../public/assets/images/feature/icon_process.png';
 import IconAlert from '../../../public/assets/svg/icon_alert.svg';
 import IconFeedback2 from '../../../public/assets/svg/icon_feedback2.svg';
 import IconTesting from '../../../public/assets/svg/icon_testing.svg';

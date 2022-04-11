@@ -3,10 +3,10 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import { breakpoints } from '../../Theme';
 import { GridContainer } from '../../components/Grid';
-import FeatureSlide1 from '../../assets/images/feature/img_monitoring.png';
-import FeatureSlide2 from '../../assets/images/feature/img_design.png';
-import FeatureSlide3 from '../../assets/images/feature/img_history.png';
-import FeatureSlide4 from '../../assets/images/feature/img_feedback.png';
+import FeatureSlide1 from '../../../public/assets/images/feature/img_monitoring.png';
+import FeatureSlide2 from '../../../public/assets/images/feature/img_design.png';
+import FeatureSlide3 from '../../../public/assets/images/feature/img_history.png';
+import FeatureSlide4 from '../../../public/assets/images/feature/img_feedback.png';
 import Slider from 'react-slick';
 
 const Section = styled('div')(({ theme }) => ({
