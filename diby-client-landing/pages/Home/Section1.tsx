@@ -167,16 +167,17 @@ function Section1() {
                   // data-aos="fade-up"
                   style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}
                 >
-                  <Image
-                    style={{ borderRadius: '10px' }}
-                    width={840}
-                    height={488}
-                    priority
-                    quality={100}
-                    // placeholder={'blur'}
-                    src={ImgHomeDashboard}
-                    alt="dashboard_img"
-                  />
+                  {/*<Image*/}
+                  {/*  style={{ borderRadius: '10px' }}*/}
+                  {/*  width={840}*/}
+                  {/*  height={488}*/}
+                  {/*  priority*/}
+                  {/*  quality={100}*/}
+                  {/*  // placeholder={'blur'}*/}
+                  {/*  src={ImgHomeDashboard}*/}
+                  {/*  alt="dashboard_img"*/}
+                  {/*/>*/}
+                  <img style={{ width: '840px', height: '488px', borderRadius: '10px' }} src={ImgHomeDashboard.src} alt="dashboard_img" />
                 </div>
               </div>
             </div>
