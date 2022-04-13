@@ -1,0 +1,17 @@
+{
+  "name": "ympff3-db69v2",
+  "hash": "sCJ980TLiTfxKE7QVRs4I68x6FuGtQ+jYuldGhOrux8=",
+  "description": "Image Lambda@Edge for Next CloudFront distribution",
+  "memory": 512,
+  "timeout": 10,
+  "code": "/Users/jotaeho/Desktop/project/workSpace/diby-client/.serverless_nextjs/image-lambda",
+  "shims": [],
+  "handler": "index.handler",
+  "runtime": "nodejs14.x",
+  "env": {},
+  "role": {
+    "arn": "arn:aws:iam::183697223334:role/ympff3-rchupag"
+  },
+  "arn": "arn:aws:lambda:us-east-1:183697223334:function:ympff3-db69v2",
+  "region": "us-east-1"
+}

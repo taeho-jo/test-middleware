@@ -98,7 +98,6 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 loading="eager"
                 quality={100}
                 placeholder={'blur'}
-                blurDataURL={'red'}
               />
             </div>
           </Link>

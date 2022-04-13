@@ -163,20 +163,19 @@ function Section1() {
           <RightGrid item xs={0} md={5} lg={6}>
             <div style={{ height: '488px', overflowX: 'visible' }}>
               <div style={{ height: '488px', overflowY: 'hidden' }}>
-                <div
-                    // data-aos="fade-up"
-                    style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}>
-                  <Image
-                    style={{ borderRadius: '10px' }}
-                    width={840}
-                    height={488}
-                    priority
-                    quality={100}
-                    // placeholder={'blur'}
-                    src={ImgHomeDashboard}
-                    alt="dashboard_img"
-                  />
+                <div data-aos="fade-up" style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}>
+                  {/*<Image*/}
+                  {/*  style={{ borderRadius: '10px' }}*/}
+                  {/*  width={840}*/}
+                  {/*  height={488}*/}
+                  {/*  priority*/}
+                  {/*  quality={100}*/}
+                  {/*  // placeholder={'blur'}*/}
+                  {/*  src={ImgHomeDashboard}*/}
+                  {/*  alt="dashboard_img"*/}
+                  {/*/>*/}
                 </div>
+                <img src={ImgHomeDashboard.src} alt="dashboard_img" style={{ width: '840px', height: '488px' }} />
               </div>
             </div>
           </RightGrid>
@@ -188,14 +187,7 @@ function Section1() {
             <div style={{ display: 'flex', height: '80px', alignItems: 'center', background: 'white' }}>
               {/*<div style={{ flex: 1 }} />*/}
               <div style={{ objectFit: 'contain', maxWidth: '100%', maxHeight: '100%' }}>
-                <Image
-                  style={{ borderRadius: '10px' }}
-                  priority={true}
-                  loading="eager"
-                  quality={100}
-                  src={lab.image}
-                  alt={lab.name}
-                />
+                <Image style={{ borderRadius: '10px' }} priority={true} loading="eager" quality={100} src={lab.image} alt={lab.name} />
               </div>
               {/*<div style={{ flex: 1 }} />*/}
             </div>
