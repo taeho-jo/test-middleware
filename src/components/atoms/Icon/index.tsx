@@ -41,7 +41,7 @@ interface PropsType {
   size?: number;
 }
 
-const Icon = ({name, size = 16} ) => {
+const Icon = ({ name, size = 16 }: any) => {
   const IconComponent = IconTypes[name];
   const viewBox = `0 0 ${size} ${size}`;
 

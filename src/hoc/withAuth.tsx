@@ -10,12 +10,12 @@ export default function withAuth(SpecificComponent: any) {
     const token = useSelector<ReducerType, string>(state => state.auth.token);
 
     useEffect(() => {
-      if (token) {
+      if (!token) {
         router.push('/login');
       }
     }, []);
 
-    return <>{!token ? <SpecificComponent /> : <div>Redirect....</div>}</>;
+    return <>{token ? <SpecificComponent /> : <div></div>}</>;
   };
   return AuthenticateCheck;
 }

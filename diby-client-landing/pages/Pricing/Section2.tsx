@@ -2,12 +2,12 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import { GridContainer } from '../../components/Grid';
-import CompanyLogo1 from '../../assets/images/company/companylogo_main1.png';
-import CompanyLogo2 from '../../assets/images/company/companylogo_main2.png';
-import CompanyLogo3 from '../../assets/images/company/companylogo_main3.png';
-import CompanyLogo4 from '../../assets/images/company/companylogo_main4.png';
-import CompanyLogo5 from '../../assets/images/company/companylogo_main5.png';
-import CompanyLogo8 from '../../assets/images/company/companylogo_main8.png';
+import CompanyLogo1 from '../../../public/assets/images/company/companylogo_main1.png';
+import CompanyLogo2 from '../../../public/assets/images/company/companylogo_main2.png';
+import CompanyLogo3 from '../../../public/assets/images/company/companylogo_main3.png';
+import CompanyLogo4 from '../../../public/assets/images/company/companylogo_main4.png';
+import CompanyLogo5 from '../../../public/assets/images/company/companylogo_main5.png';
+import CompanyLogo8 from '../../../public/assets/images/company/companylogo_main8.png';
 
 const labs = [
   { name: 'CompanyLogo1', image: CompanyLogo1 },

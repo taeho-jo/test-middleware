@@ -4,16 +4,15 @@ import { useRouter } from 'next/router';
 import { styled } from '@mui/material/styles';
 import { Button, Grid, Stack } from '@mui/material';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
-// import ImgHomeDashboard from '../../assets/images/home/img_dashboard_2_1_.webp';
 import ImgHomeDashboard from '../../../public/assets/img_dashboard_2_1_.webp';
-import CompanyLogo1 from '../../assets/images/company/companylogo_main1.png';
-import CompanyLogo2 from '../../assets/images/company/companylogo_main2.png';
-import CompanyLogo3 from '../../assets/images/company/companylogo_main3.png';
-import CompanyLogo4 from '../../assets/images/company/companylogo_main4.png';
-import CompanyLogo5 from '../../assets/images/company/companylogo_main5.png';
-import CompanyLogo6 from '../../assets/images/company/companylogo_main6.png';
-import CompanyLogo7 from '../../assets/images/company/companylogo_main7.png';
-import CompanyLogo8 from '../../assets/images/company/companylogo_main8.png';
+import CompanyLogo1 from '../../../public/assets/images/company/companylogo_main1.png';
+import CompanyLogo2 from '../../../public/assets/images/company/companylogo_main2.png';
+import CompanyLogo3 from '../../../public/assets/images/company/companylogo_main3.png';
+import CompanyLogo4 from '../../../public/assets/images/company/companylogo_main4.png';
+import CompanyLogo5 from '../../../public/assets/images/company/companylogo_main5.png';
+import CompanyLogo6 from '../../../public/assets/images/company/companylogo_main6.png';
+import CompanyLogo7 from '../../../public/assets/images/company/companylogo_main7.png';
+import CompanyLogo8 from '../../../public/assets/images/company/companylogo_main8.png';
 import { GridContainer } from '../../components/Grid';
 import { breakpoints } from '../../Theme';
 import Image from 'next/image';
@@ -174,8 +173,8 @@ function Section1() {
                   {/*  src={ImgHomeDashboard}*/}
                   {/*  alt="dashboard_img"*/}
                   {/*/>*/}
+                  <img src={ImgHomeDashboard.src} alt="dashboard_img" style={{ width: '840px', height: '488px', borderRadius: '10px' }} />
                 </div>
-                <img src={ImgHomeDashboard.src} alt="dashboard_img" style={{ width: '840px', height: '488px' }} />
               </div>
             </div>
           </RightGrid>
