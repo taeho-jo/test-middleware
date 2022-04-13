@@ -1,0 +1,20 @@
+image: node:latest
+stages:
+  - deploy
+
+stag-deploy:
+  stage: deploy
+  script:
+    - yarn install
+    - yarn deploy:dev
+  only:
+    - dev
+
+prod-deploy:
+  stage: deploy
+  script:
+    - yarn install
+    - yarn deploy:prod
+  only:
+    - main
+

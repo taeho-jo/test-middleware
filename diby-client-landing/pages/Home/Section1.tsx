@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { styled } from '@mui/material/styles';
 import { Button, Grid, Stack } from '@mui/material';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
-// import ImgHomeDashboard from '../../assets/images/home/img_dashboard_2_1_.webp';
 import ImgHomeDashboard from '../../../public/assets/images/img_dashboard_2_1_.webp';
 import CompanyLogo1 from '../../../public/assets/images/company/companylogo_main1.png';
 import CompanyLogo2 from '../../../public/assets/images/company/companylogo_main2.png';
@@ -163,10 +162,7 @@ function Section1() {
           <RightGrid item xs={0} md={5} lg={6}>
             <div style={{ height: '488px', overflowX: 'visible' }}>
               <div style={{ height: '488px', overflowY: 'hidden' }}>
-                <div
-                  // data-aos="fade-up"
-                  style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}
-                >
+                <div data-aos="fade-up" style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}>
                   {/*<Image*/}
                   {/*  style={{ borderRadius: '10px' }}*/}
                   {/*  width={840}*/}
@@ -177,11 +173,7 @@ function Section1() {
                   {/*  src={ImgHomeDashboard}*/}
                   {/*  alt="dashboard_img"*/}
                   {/*/>*/}
-                  <img
-                    style={{ width: '840px', height: '488px', borderRadius: '10px' }}
-                    src={'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/img_dashboard_2_1_.webp'}
-                    alt="dashboard_img"
-                  />
+                  <img src={ImgHomeDashboard.src} alt="dashboard_img" style={{ width: '840px', height: '488px', borderRadius: '10px' }} />
                 </div>
               </div>
             </div>

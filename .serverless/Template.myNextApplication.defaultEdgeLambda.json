@@ -1,0 +1,17 @@
+{
+  "name": "ympff3-hirc2so",
+  "hash": "ELKHv0QBIeoy+In3xo9SO1hFiRjtRu/ndqige6bq6HI=",
+  "description": "Default Lambda@Edge for Next CloudFront distribution",
+  "memory": 512,
+  "timeout": 10,
+  "code": "/Users/jotaeho/Desktop/project/workSpace/diby-client/.serverless_nextjs/default-lambda",
+  "shims": [],
+  "handler": "index.handler",
+  "runtime": "nodejs14.x",
+  "env": {},
+  "role": {
+    "arn": "arn:aws:iam::183697223334:role/ympff3-1zb6ngo"
+  },
+  "arn": "arn:aws:lambda:us-east-1:183697223334:function:ympff3-hirc2so",
+  "region": "us-east-1"
+}
