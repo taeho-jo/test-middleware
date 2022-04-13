@@ -1,0 +1,6 @@
+{
+  "name": "diby-prod",
+  "region": "ap-northeast-2",
+  "accelerated": true,
+  "url": "https://diby-prod.s3.amazonaws.com"
+}

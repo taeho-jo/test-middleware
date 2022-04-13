@@ -41,8 +41,8 @@ interface PropsType {
   size?: number;
 }
 
-const Icon = ({name, size = 16} ) => {
-  const IconComponent = IconTypes[name];
+const Icon = ({ name, size = 16 }: any) => {
+  const IconComponent: any = IconTypes[name];
   const viewBox = `0 0 ${size} ${size}`;
 
   return <IconComponent style={{ boxSizing: 'border-box' }} width={size} height={size} viewBox={viewBox} />;

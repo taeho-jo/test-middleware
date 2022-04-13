@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Grid, Stack } from '@mui/material';
 import { GridContainer } from '../../components/Grid';
@@ -13,8 +13,6 @@ import IconTest from '../../../public/assets/images/feature/icon_testing.png';
 import IconAlert from '../../../public/assets/svg/icon_alert.svg';
 import IconFeedback2 from '../../../public/assets/svg/icon_feedback2.svg';
 import IconTesting from '../../../public/assets/svg/icon_testing.svg';
-
-import Icon from '../../../src/components/atoms/Icon';
 
 import AppBar from '../../components/AppBar';
 

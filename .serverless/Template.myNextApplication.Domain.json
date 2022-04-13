@@ -1,0 +1,14 @@
+{
+  "region": "us-east-1",
+  "privateZone": false,
+  "domain": "diby.io",
+  "subdomains": [
+    {
+      "domain": "www.diby.io",
+      "distributionId": "E3CDK65OFH2LJ7",
+      "url": "https://d1utcwdkb92tjh.cloudfront.net",
+      "type": "awsCloudFront"
+    }
+  ],
+  "domainMinimumProtocolVersion": "TLSv1.2_2018"
+}

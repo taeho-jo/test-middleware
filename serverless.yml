@@ -1,0 +1,9 @@
+# serverless.yml
+myNextApplication:
+  component: "@sls-next/serverless-component@latest"
+  inputs:
+    bucketRegion: 'ap-northeast-2'    # S3 Bucket 지역 설정
+    bucketName: '${env.BUCKET_NAME}'    # S3 Bucket 이름
+    cloudfront:
+      distributionId: '${env.DISTRIBUTION_ID}'
+    domain : ["${env.SUB_DOMAIN}", "${env.DOMAIN}"]
