@@ -38,7 +38,7 @@ const Desc = styled('p')(({ theme }) => ({
 
 function Section2() {
   return (
-    <div style={{ width: '100%', marginBottom: '60px', backgroundColor: '#F8F8F8' }}>
+    <div style={{ width: '100%', paddingBottom: '60px', backgroundColor: '#F8F8F8', boxSizing: 'border-box' }}>
       <GridContainer container style={{ maxWidth: '1920px', margin: '0 auto' }}>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '112px' }}>
           <Header data-aos="fade-up" style={{ fontSize: '20px' }}>
