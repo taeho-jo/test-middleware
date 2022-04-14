@@ -29,8 +29,8 @@ const Section = styled('div')(({ theme }) => ({
     backgroundPositionY: 'calc(100% + 10px), calc(100% + 10px)',
   },
   width: '100%',
-  height: '1080px',
-  paddingTop: '100px',
+  height: '1010px',
+  paddingTop: '170px',
   backgroundImage: `url(${ImgFooter2.src}), url(${ImgFooter1.src})`,
   backgroundRepeat: 'no-repeat, no-repeat',
 }));
@@ -41,7 +41,7 @@ const TitleWrapper = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     marginTop: '-180px',
     paddingBottom: '180px',
-    paddingTop: '240px',
+    paddingTop: '170px',
     paddingLeft: '32px',
   },
   [theme.breakpoints.up('md')]: {

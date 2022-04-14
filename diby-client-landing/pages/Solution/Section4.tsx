@@ -8,7 +8,7 @@ const Section = styled('div')(({ theme }) => ({
   width: '100%',
   background: '#3C3C46',
   paddingTop: '96px',
-  paddingBottom: '64px',
+  paddingBottom: '128px',
 }));
 
 const LeftGrid = styled(Grid)(({ theme }) => ({
@@ -57,7 +57,7 @@ const Title = styled('p')(({ theme }) => ({
 
 const Desc1 = styled('p')(({ theme }) => ({
   whiteSpace: 'pre-wrap',
-  fontSize: '16px',
+  fontSize: '26px',
   lineHeight: '24px',
   fontWeight: 'bold',
   paddingTop: '6px',
@@ -66,7 +66,7 @@ const Desc1 = styled('p')(({ theme }) => ({
 
 const Desc2 = styled('p')(({ theme }) => ({
   whiteSpace: 'pre-wrap',
-  fontSize: '16px',
+  fontSize: '18px',
   lineHeight: '24px',
   margin: '0',
   color: 'white',

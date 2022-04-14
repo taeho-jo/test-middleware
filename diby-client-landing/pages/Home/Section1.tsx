@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
+// Components
+import { GridContainer } from '../../components/Grid';
+import { breakpoints } from '../../Theme';
+// Styles
 import { styled } from '@mui/material/styles';
 import { Button, Grid, Stack } from '@mui/material';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
+// Images
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import ImgHomeDashboard from '../../../public/assets/images/img_dashboard_2_1_.webp';
 import CompanyLogo1 from '../../../public/assets/images/company/companylogo_main1.png';
 import CompanyLogo2 from '../../../public/assets/images/company/companylogo_main2.png';
@@ -13,9 +19,6 @@ import CompanyLogo5 from '../../../public/assets/images/company/companylogo_main
 import CompanyLogo6 from '../../../public/assets/images/company/companylogo_main6.png';
 import CompanyLogo7 from '../../../public/assets/images/company/companylogo_main7.png';
 import CompanyLogo8 from '../../../public/assets/images/company/companylogo_main8.png';
-import { GridContainer } from '../../components/Grid';
-import { breakpoints } from '../../Theme';
-import Image from 'next/image';
 
 const Section = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
@@ -163,30 +166,29 @@ function Section1() {
             <div style={{ height: '488px', overflowX: 'visible' }}>
               <div style={{ height: '488px', overflowY: 'hidden' }}>
                 <div data-aos="fade-up" style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}>
-                  {/*<Image*/}
-                  {/*  style={{ borderRadius: '10px' }}*/}
-                  {/*  width={840}*/}
-                  {/*  height={488}*/}
-                  {/*  priority*/}
-                  {/*  quality={100}*/}
-                  {/*  // placeholder={'blur'}*/}
-                  {/*  src={ImgHomeDashboard}*/}
-                  {/*  alt="dashboard_img"*/}
-                  {/*/>*/}
-                  <img src={ImgHomeDashboard.src} alt="dashboard_img" style={{ width: '840px', height: '488px', borderRadius: '10px' }} />
+                  <Image
+                    style={{ borderRadius: '10px' }}
+                    width={840}
+                    height={488}
+                    priority={true}
+                    quality={100}
+                    src={ImgHomeDashboard}
+                    alt="dashboard_img"
+                  />
+                  {/*<img src={ImgHomeDashboard.src} alt="dashboard_img" style={{ width: '840px', height: '488px', borderRadius: '10px' }} />*/}
                 </div>
               </div>
             </div>
           </RightGrid>
         </GridContainer>
       </Section>
-      <GridContainer container columnSpacing={16} rowSpacing={8}>
+      <GridContainer container columnSpacing={16} rowSpacing={8} style={{ marginBottom: '112px' }}>
         {labs.map((lab, index) => (
           <Grid data-aos="fade-up" key={`lab_${index}`} item xs={6} md={3} lg={3}>
             <div style={{ display: 'flex', height: '80px', alignItems: 'center', background: 'white' }}>
               {/*<div style={{ flex: 1 }} />*/}
               <div style={{ objectFit: 'contain', maxWidth: '100%', maxHeight: '100%' }}>
-                <Image style={{ borderRadius: '10px' }} priority={true} quality={100} src={lab.image} alt={lab.name} />
+                <Image style={{ borderRadius: '10px' }} quality={100} src={lab.image} alt={lab.name} />
               </div>
               {/*<div style={{ flex: 1 }} />*/}
             </div>

@@ -21,6 +21,8 @@ const LeftGrid = styled(Grid)(({ theme }) => ({
 
 const Title = styled('p')(({ theme }) => ({
   whiteSpace: 'pre-wrap',
+  marginTop: '100px',
+  marginBottom: '50px',
   [theme.breakpoints.down('md')]: {
     fontSize: '24px',
     lineHeight: '32px',
