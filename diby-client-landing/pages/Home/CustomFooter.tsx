@@ -47,7 +47,7 @@ const TitleWrapper = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     marginTop: '-80px',
     paddingBottom: '80px',
-    paddingTop: '240px',
+    paddingTop: '170px',
     paddingLeft: '56px',
   },
   [theme.breakpoints.up('lg')]: {
