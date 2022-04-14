@@ -1,8 +1,11 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
-import { GridContainer } from '../../components/Grid';
+import Image from 'next/image';
+// Components
 import LottieCard from '../../components/LottieCard';
+// Styles
+import { styled } from '@mui/material/styles';
+import Grid from '@mui/material/Grid';
+import { GridContainer } from '../../components/Grid';
 
 const Header = styled('p')(({ theme }) => ({
   fontSize: '16px',
@@ -35,7 +38,7 @@ const Desc = styled('p')(({ theme }) => ({
 
 function Section2() {
   return (
-    <div style={{ width: '100%', marginBottom: '60px', backgroundColor: '#F8F8F8' }}>
+    <div style={{ width: '100%', paddingBottom: '60px', backgroundColor: '#F8F8F8', boxSizing: 'border-box' }}>
       <GridContainer container style={{ maxWidth: '1920px', margin: '0 auto' }}>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '112px' }}>
           <Header data-aos="fade-up" style={{ fontSize: '20px' }}>
@@ -49,7 +52,7 @@ function Section2() {
           </Title>
         </Grid>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '32px' }}>
-          <Desc data-aos="fade-up" style={{ fontWeight: 'bold' }}>
+          <Desc data-aos="fade-up">
             리서치 방법 선정, 문항 설계, 응답자 모집까지 Diby 에서 빠르게 수행할 수 있습니다.
             <br />
             Diby 의 고객 피드백에 특화된 분석 템플릿으로 문장형 데이터를 읽고 분류하는 시간을 절약하세요.

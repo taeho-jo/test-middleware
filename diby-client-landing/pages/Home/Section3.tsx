@@ -1,10 +1,14 @@
 import React from 'react';
+import Image from 'next/image';
+// Components
+import LottieIcon from '../../components/LottieIcon';
+// Styles
+import { css } from '@emotion/react';
 import { Grid, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { GridContainer } from '../../components/Grid';
-import LottieIcon from '../../components/LottieIcon';
+// Images
 import ImgSmartPhone from '../../../public/assets/images/home/img_smartphone.png';
-import Image from 'next/image';
 
 const Section = styled('div')(({ theme }) => ({
   width: '100%',
@@ -72,6 +76,13 @@ const Thumb = styled('img')(({ theme }) => ({
   },
 }));
 
+const thumbStyle2 = css`
+  padding-left: 80px;
+  @media (min-width: 1536px) {
+    //background: red;
+  }
+`;
+
 const GradientBackground = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     height: '950px',
@@ -119,12 +130,12 @@ function Section3() {
           </Title>
         </Grid>
         <Grid item xs={10} md={12} lg={12} style={{ paddingTop: '32px' }}>
-          <Desc data-aos="fade-up" style={{ fontWeight: 'bold' }}>
-            리서치 응답자를 어디서 모으고, 어떤 보상을 줘야할지 고민하지마세요.
+          <Desc data-aos="fade-up">
+            리서치 응답자를 어디서 모으고, 어떤 보상을 줘야할지 고민하지 마세요.
             <br />
             2만명의 Diby 패널에서 응답자를 찾거나, 보유하고 계신 고객에게 리서치 참여 링크를 보낼 수 있습니다.
             <br />
-            참여자 표집 조건과 리서치 난이도에 따라 보상금액을 자동 계산해드립니다.
+            참여자 표집 조건과 리서치 난이도에 따라 보상 금액을 자동 계산해드립니다.
           </Desc>
         </Grid>
         <Grid item xs={12} md={3} lg={3} style={{ paddingTop: '40px' }}>
@@ -134,11 +145,15 @@ function Section3() {
               섬세한 응답자 선별
             </Desc>
             <Desc data-aos="fade-up">
+              Diby 패널 중
+              <br />
               성별, 취미, 직업 등
               <br />
-              원하시는 조건을 충족하는 응답자만을
+              원하시는 조건을 충족하는
               <br />
-              Diby 패널 중 선별하여 리서치를 수행합니다.
+              응답자만을 선별하여
+              <br />
+              리서치를 수행합니다.
             </Desc>
           </Stack>
         </Grid>
@@ -161,6 +176,7 @@ function Section3() {
         </Grid>
         <ThumbGrid item xs={0} md={6} lg={6}>
           <Thumb data-aos="fade-up" src={ImgSmartPhone.src} alt="thumb" />
+          {/*<Image css={thumbStyle2} data-aos="fade-up" width={584} height={592} quality={100} src={ImgSmartPhone} alt="thumb2" />*/}
         </ThumbGrid>
       </GridContainer>
       <GradientBackground />

@@ -86,7 +86,18 @@ const Section1 = ({ data }) => {
   const navigate = useRouter();
 
   const handleClick = (path: string) => {
-    navigate.push(path);
+    if (path === '/usecases/ui') {
+      window.open('https://dbdlab.notion.site/UI-5a3e44a7bcb2439097e311fd62ad5e5d');
+    }
+    if (path === '/usecases/ux') {
+      window.open('https://dbdlab.notion.site/UX-205652e102c3439b9bcb44a7383f5bb3');
+    }
+    if (path === '/usecases/scenario') {
+      window.open('https://dbdlab.notion.site/e431cc58286c4b1b9113f45f1ce88f57');
+    }
+    if (path === '/usecases/customer') {
+      window.open('https://dbdlab.notion.site/34d243dc532d462b84468a710a63c3e8');
+    }
   };
 
   const handleResize = () => {
@@ -112,7 +123,7 @@ const Section1 = ({ data }) => {
                 <Title>{data.title}</Title>
                 <NextButton
                   onClick={() => {
-                    handleClick('/tri');
+                    handleClick(navigate.pathname);
                   }}
                   color="blue"
                   variant="contained"

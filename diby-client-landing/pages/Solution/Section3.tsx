@@ -56,7 +56,12 @@ const Section3 = ({ data }) => {
         </Grid>
       </GridContainer>
       {cards.map((card, index) => (
-        <SolutionCard data-aos="fade-up" {...card} key={`sc${index}`} style={{ marginBottom: index === cards.length - 1 ? '100px' : marginBottom }} />
+        <SolutionCard
+          data-aos="fade-up"
+          {...card}
+          key={`sc${index}`}
+          style={{ marginTop: '100px', marginBottom: index === cards.length - 1 ? '100px' : marginBottom }}
+        />
       ))}
     </Section>
   );
