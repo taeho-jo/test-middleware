@@ -51,11 +51,11 @@ const TitleWrapper = styled('div')(({ theme }) => ({
     paddingLeft: '56px',
   },
   [theme.breakpoints.up('lg')]: {
-    paddingTop: '280px',
+    paddingTop: '210px',
     display: 'flex',
   },
   [theme.breakpoints.up('xl')]: {
-    paddingTop: '260px',
+    paddingTop: '210px',
     display: 'flex',
   },
 }));
