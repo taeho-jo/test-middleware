@@ -89,7 +89,28 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 padding: `${isMobile ? '10px' : '6px'} 0 0 0`,
               }}
             >
-              <Image src={darkMode ? LogoWhite : LogoBlack} alt={'Logo'} width={56} height={30} priority={true} quality={100} />
+              {/*<Image src={darkMode ? LogoWhite : LogoBlack} alt={'Logo'} width={56} height={30} priority={true} quality={100} />*/}
+              {/*<Image*/}
+              {/*  src={*/}
+              {/*    darkMode*/}
+              {/*      ? 'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/diby_white1.png'*/}
+              {/*      : 'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/diby_black1.png'*/}
+              {/*  }*/}
+              {/*  alt={'Logo'}*/}
+              {/*  width={56}*/}
+              {/*  height={30}*/}
+              {/*  priority={true}*/}
+              {/*  quality={100}*/}
+              {/*/>*/}
+              <img
+                src={
+                  darkMode
+                    ? 'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/diby_white1.png'
+                    : 'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/diby_black1.png'
+                }
+                alt={'Logo'}
+                style={{ width: '56px', height: '30px' }}
+              />
             </div>
           </Link>
 
