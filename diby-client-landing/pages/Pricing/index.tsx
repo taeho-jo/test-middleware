@@ -16,5 +16,4 @@ function PricingComponent() {
   );
 }
 
-
 export default PricingComponent;

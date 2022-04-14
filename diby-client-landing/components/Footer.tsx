@@ -16,7 +16,6 @@ const FooterButton = styled(Button)(({ theme }) => ({
   justifyContent: 'flex-start',
   textTransform: 'none',
 }));
-
 function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
   const darkMode = props.dark ?? false;
   const ImgLogo = darkMode ? LogoWhite : LogoBlack;
@@ -58,18 +57,18 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
             <p style={{ fontSize: '14px', margin: '24px 0', lineHeight: '20px', color: color }}>
               사용자 피드백이 필요한
               <br />
-              일 잘하는 기획자, 디자이너, 마케터, 리서처를 위한
+              기획자, 디자이너, 마케터, 리서처를 위한
               <br />
               유저리서치 솔루션입니다.
             </p>
             <p style={{ fontSize: '12px', color: color }}>Ⓒ DBDLAB Corp.</p>
             <FooterButton color={darkMode ? 'white' : 'primary'} style={{ fontSize: '14px', fontWeight: 'bold' }}>
-              이용약관 및 개인정보보호
+              이용 약관 및 개인 정보 보호
             </FooterButton>
             <p style={{ fontSize: '12px', color: '#CCCCCC' }}>
               해당 웹사이트는
               <br />
-              CHROME에 최적화되어 있습니다.
+              Chrome에 최적화되어 있습니다.
             </p>
           </Grid>
 
@@ -128,7 +127,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
                   handleClick('/pricing');
                 }}
               >
-                가격안내
+                가격 안내
               </FooterButton>
 
               {isTablet && (
