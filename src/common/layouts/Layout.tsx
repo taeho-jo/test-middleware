@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 // Redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { ReducerType } from '../../store/reducers';
 // Components
 import AuthToast from '../../components/organisms/AuthToast';
@@ -11,7 +11,10 @@ import { css } from '@emotion/react';
 import AOS from 'aos';
 import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // import BackGroundImg2 from '../../assets/background_img2.png';
-import BackGroundImg from '../../assets/background_img.png';
+import CommonModal from '../../components/organisms/CommonModal';
+import CommonHeader from '../../components/molecules/CommonHeader';
+import { AuthType, setToken } from '../../store/reducers/authReducer';
+import AdminLayout from './AdminLayout';
 
 // Types
 interface PropsType {
@@ -19,7 +22,8 @@ interface PropsType {
 }
 
 const Layout = ({ children }: PropsType) => {
-  const token = useSelector<ReducerType, string>(state => state.auth.token);
+  const dispatch = useDispatch();
+  const token = useSelector((state: any) => state.auth.token);
   const [showGradient, setShowGradient] = useState<boolean>(false);
 
   const router = useRouter();
@@ -31,6 +35,15 @@ const Layout = ({ children }: PropsType) => {
     }
   }, []);
 
+  console.log(router.query, 'QUERY');
+  useEffect(() => {
+    // if (router.query) {
+    //   const accessToken = router.query.token;
+    //   console.log(accessToken);
+    //   dispatch(setToken(accessToken));
+    // }
+  }, []);
+
   useEffect(() => {
     AOS.init({
       once: true,
@@ -39,39 +52,42 @@ const Layout = ({ children }: PropsType) => {
   }, []);
 
   useEffect(() => {
-    if (
-      router.pathname === '/' ||
-      router.pathname === '/login' ||
-      router.pathname === '/signup' ||
-      router.pathname === '/signup/confirm' ||
-      router.pathname === '/pwInquiry' ||
-      router.pathname === '/pwInquiry/confirm' ||
-      router.pathname === '/addInfo/1' ||
-      router.pathname === '/addInfo/2' ||
-      router.pathname === '/addInfo/3'
-    ) {
+    if (router.pathname === '/') {
       setShowGradient(true);
     } else {
       setShowGradient(false);
     }
-  }, [router]);
+  }, [router.pathname]);
 
   return (
     <>
-      <div css={mainContainer}>
-        <main css={contentsContainer}>
-          <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
-          {showGradient ? (
-            <>
-              <div css={gradientDiv}></div>
-              <AppBar dark />
-            </>
-          ) : null}
+      {token ? (
+        <>
+          <div css={mainContainer}>
+            <main css={contentsContainer}>
+              <CommonHeader />
+              <AdminLayout>{children}</AdminLayout>
+            </main>
+          </div>
+        </>
+      ) : (
+        <div css={mainContainer}>
+          <main css={contentsContainer}>
+            <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
+            {showGradient ? (
+              <>
+                <div css={gradientDiv}></div>
+                <AppBar dark />
+              </>
+            ) : null}
 
-          <div css={backgroundStyle}>{children}</div>
-        </main>
-      </div>
+            <div>{children}</div>
+          </main>
+        </div>
+      )}
+
       <AuthToast position={'top-center'} />
+      <CommonModal />
     </>
   );
 };
@@ -81,27 +97,11 @@ export default Layout;
 const mainContainer = css`
   position: relative;
   width: 100%;
-  //height: calc(100vh - 68px);
-  //height: 100vh;
-  //overflow: hidden;
-  //background-color: transparent;
 `;
 const contentsContainer = css`
   width: 100%;
   min-height: 100vh;
-  // padding: 30px 30px 30px 100px;
   transition: 0.6s ease;
-`;
-const fullMainContainer = css`
-  width: 100%;
-  transition: 0.6s ease;
-`;
-const backgroundStyle = css`
-  //background-color: rgba(0, 0, 0, 0.2);
-  //height: 100vh;
-  //overflow: hidden;
-  //background-image: url(${BackGroundImg.src});
-  //background-repeat: no-repeat;
 `;
 
 const gradientCanvas = showGradient => css`

@@ -29,7 +29,7 @@ const InputFormBox = ({ handleSignUp, inputArr, btnText, padding = '0' }: PropsT
     handleSubmit,
     // setFocus,
     formState: { errors },
-  } = useForm({});
+  } = useForm<InputType>({});
   const onSubmit = data => handleSignUp(data);
   const onError = errors => handleSignUp(errors);
 

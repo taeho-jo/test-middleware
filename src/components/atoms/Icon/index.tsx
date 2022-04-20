@@ -36,16 +36,17 @@ const IconTypes = {
 };
 
 interface PropsType {
-  name: string;
+  name: IconType;
   // name: string;
   size?: number;
+  style?: any;
 }
 
-const Icon = ({ name, size = 16 }: any) => {
+const Icon: any = ({ name, size = 16, style }: PropsType) => {
   const IconComponent: any = IconTypes[name];
   const viewBox = `0 0 ${size} ${size}`;
 
-  return <IconComponent style={{ boxSizing: 'border-box' }} width={size} height={size} viewBox={viewBox} />;
+  return <IconComponent style={{ boxSizing: 'border-box', ...style }} width={size} height={size} viewBox={viewBox} />;
 };
 
 export default Icon;

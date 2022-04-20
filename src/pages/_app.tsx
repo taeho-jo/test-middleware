@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
-import Script from 'next/script'
+import Script from 'next/script';
 // Redux
 import { persistedReducer, wrapper } from '../store';
 import { createStore } from 'redux';
@@ -36,7 +36,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout, props) {
   const store = createStore(persistedReducer);
   const persistor = persistStore(store);
   const router = useRouter();
-  console.log(props, 'Props');
+
   const [queryClient] = React.useState(
     () =>
       new QueryClient({
@@ -65,14 +65,12 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout, props) {
 
                 {/*</AppAnimation>*/}
               </Layout>
-              <Script type='text/javascript' src='/lib/beusableHeatmap.js'/>
-
+              <Script type="text/javascript" src="/lib/beusableHeatmap.js" />
             </ThemeProvider>
           </Hydrate>
           <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} />
         </QueryClientProvider>
       </PersistGate>
-
     </>
   );
 }

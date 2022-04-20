@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Grid, Stack } from '@mui/material';
 import { GridContainer } from '../../components/Grid';
 import { breakpoints } from '../../Theme';
-import Image from 'next/image';
+import Icon from '../../../src/components/atoms/Icon';
 import FeatureLine from '../../../public/assets/images/feature/feature_line.png';
 import FeatureCircle from '../../../public/assets/images/feature/feature_circle.png';
 import IconCustomer from '../../../public/assets/images/feature/icon_customer.png';
@@ -11,8 +11,6 @@ import IconRelease from '../../../public/assets/images/feature/icon_release.png'
 import IconProcess from '../../../public/assets/images/feature/icon_process.png';
 import IconTest from '../../../public/assets/images/feature/icon_testing.png';
 import IconAlert from '../../../public/assets/svg/icon_alert.svg';
-import IconFeedback2 from '../../../public/assets/svg/icon_feedback2.svg';
-import IconTesting from '../../../public/assets/svg/icon_testing.svg';
 
 import AppBar from '../../components/AppBar';
 
@@ -125,9 +123,9 @@ function Section1() {
   const [count, setCount] = useState(0);
 
   const cards = [
-    { title: '응답자 모집', img: IconAlert },
-    { title: '불량 응답 검수', img: IconFeedback2 },
-    { title: '키워드 분석', img: IconTesting },
+    { title: '응답자 모집', img: 'ICON_ALERT' },
+    { title: '불량 응답 검수', img: 'ICON_FEEDBACK2' },
+    { title: '키워드 분석', img: 'ICON_TESTING' },
   ];
 
   const processes = [
@@ -158,6 +156,7 @@ function Section1() {
       clearInterval(timerId);
     };
   }, [count]);
+  console.log(IconAlert, 'asd');
 
   return (
     <Section>
@@ -182,9 +181,7 @@ function Section1() {
               {cards.map((card, index) => (
                 <CardWrapper data-aos="fade-up" key={`card_${index}`}>
                   <Card className={index === count % cards.length ? 'box-shadow-active' : ''}>
-                    {/*<Icon name={card.img} size={40} />*/}
-                    {/*<img src={card.img.src} alt="feature_icon" style={{ width: '40px', height: '40px' }} />*/}
-                    <Image src={card.img} alt="feature_icon" width={40} height={40} quality={100} />
+                    <Icon name={card.img} size={40} />
                     <p>{card.title}</p>
                   </Card>
                 </CardWrapper>

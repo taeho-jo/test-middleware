@@ -28,4 +28,7 @@ const popupBoxStyle = (width, height, radius, padding) => css`
   //transform: translate(-50%);
   background: ${colors.white};
   position: relative;
+  @media (max-width: 390px) {
+    width: 100%;
+  }
 `;

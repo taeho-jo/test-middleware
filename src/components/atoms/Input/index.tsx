@@ -64,6 +64,7 @@ const Input = ({
 export default Input;
 
 const inputStyle = (line, validation, status, disabled, width, marginBottom) => css`
+  box-sizing: border-box;
   width: ${width};
   margin-bottom: ${marginBottom};
   outline: none;

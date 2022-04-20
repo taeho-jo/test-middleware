@@ -2,7 +2,6 @@
 import React from 'react';
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
 
-
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
@@ -37,12 +36,12 @@ class MyDocument extends Document {
           <meta property="author" content="DBDLAB" />
           <meta name="google-site-verification" content="VOhtSYTyB99y881SKWMXBlOpPgmSFRKA7-8W7AlzlrY" />
           <meta name="naver-site-verification" content="4cb24b7cbfcbd02dd6230263b6358c44b114b844" />
-
         </Head>
 
         <body>
           <Main />
           <div id="toast-root"></div>
+          <div id="modal-root"></div>
           {/*Below we add the modal wrapper*/}
         </body>
         <NextScript />
