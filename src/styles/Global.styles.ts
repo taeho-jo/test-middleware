@@ -7,6 +7,9 @@ const reset = css`
   :root {
     --gradient: linear-gradient(93.75deg, #a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);
   }
+  ::-webkit-scrollbar {
+    display: none;
+  }
   * {
     //box-sizing: border-box;
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
