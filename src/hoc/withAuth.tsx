@@ -10,10 +10,11 @@ export default function withAuth(SpecificComponent: any) {
     const token = useSelector<ReducerType, string>(state => state.auth.token);
 
     useEffect(() => {
+      console.log('token :: ', token);
       if (!token) {
-        router.push('/');
+        router.replace('/');
       }
-    }, []);
+    }, [token, router]);
 
     return <>{token ? <SpecificComponent /> : <div></div>}</>;
   };

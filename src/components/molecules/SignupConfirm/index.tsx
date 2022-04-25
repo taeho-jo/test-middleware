@@ -8,6 +8,7 @@ import ConfirmPopupNextStepBtn from '../../../components/molecules/ConfirmPopupN
 import FlexBox from '../../../components/atoms/FlexBox';
 // style
 import { css } from '@emotion/react';
+import ModalTitle from '../ModalTitle';
 
 const mail = 'jotang@gmail.com';
 
@@ -19,10 +20,10 @@ const SignupConfirm = () => {
   }, []);
 
   return (
-    <FlexBox style={{ marginTop: '112px' }} direction={'column'}>
+    <FlexBox style={{ marginTop: '160px' }} direction={'column'}>
       <PopupBox padding={'56px 64px'} width={'424px'} height={'auto'}>
         <div css={iconBoxStyle}>
-          <Icon name={'NAVIGATION_CLOSE_LG'} />
+          <Icon name={'NAVIGATION_CLOSE_LG'} size={24} />
         </div>
 
         <ConfirmPopupContents

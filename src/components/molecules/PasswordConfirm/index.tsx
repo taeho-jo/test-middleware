@@ -17,7 +17,7 @@ const PwInquiryConfirm = () => {
   }, []);
 
   return (
-    <FlexBox style={{ marginTop: '112px' }} direction={'column'}>
+    <FlexBox style={{ marginTop: '160px' }} direction={'column'}>
       <PopupBox padding={'56px 64px'} width={'424px'} height={'auto'}>
         <div css={iconBoxStyle}>
           <Icon name={'NAVIGATION_CLOSE_LG'} />

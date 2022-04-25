@@ -1,6 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
+import { caption1_regular } from '../../../styles/FontStyles';
+import { ReducerType } from '../../../store/reducers';
 
 interface PropsType {
   line?: boolean;
@@ -42,7 +45,7 @@ const Input = ({
   marginBottom,
   ...props
 }: PropsType) => {
-  console.log(errors[label], 'input component');
+  const modalType = useSelector<ReducerType, string>(state => state.modal.type);
   return (
     <>
       <input
@@ -57,6 +60,12 @@ const Input = ({
         {...props}
         {...register(label, registerOptions)}
       />
+      {modalType === 'signup' && label === 'password1' ? (
+        <span css={[caption1_regular, { color: colors.grey._99, margin: '9px 0 50px 0', display: 'inline-block' }]}>
+          * 비밀번호는 문자+숫자 6자 이상 조합해주세요.
+        </span>
+      ) : null}
+
       {/*{errors[label] && <p css={errorStyle}>{errorMsg}</p>}*/}
     </>
   );
@@ -76,12 +85,16 @@ const inputStyle = (line, validation, status, disabled, width, marginBottom) => 
     `
     : `
   border: ${!validation ? `2px solid ${colors.red}` : status ? `2px solid ${colors.grey._3c}` : `1px solid ${colors.grey._3c}`};
-  padding: 10px 24px;
+  padding: 11px 16px;
   border-radius: 4px;
   `}
   font-weight: 700;
+  font-size: 18px;
   color: ${!validation ? colors.red : colors.grey._3c};
   ::placeholder {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
     color: ${!validation ? colors.red : colors.grey._cc};
   }
   :disabled {

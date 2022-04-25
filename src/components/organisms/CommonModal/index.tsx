@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import { css } from '@emotion/react';
 import AuthModal from '../AuthModal';
-import SignupConfirm from '../../molecules/SignupConfirm';
+import ConfirmModal from '../ConfirmModal';
 
 const CommonModal = () => {
   const show = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -13,9 +13,7 @@ const CommonModal = () => {
     <>
       {show ? (
         <Portal selector={'modal-root'}>
-          <div css={backgroundStyle}>
-            {modalType === 'confirmSignup' ? <SignupConfirm /> : modalType === 'confirmPassword' ? <></> : <AuthModal />}
-          </div>
+          <div css={backgroundStyle}>{modalType === 'confirmSignup' || modalType === 'confirmPassword' ? <ConfirmModal /> : <AuthModal />}</div>
         </Portal>
       ) : null}
     </>
@@ -32,13 +30,5 @@ const backgroundStyle = css`
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: 10;
 `;
-// const positionStyle = css`
-//   position: fixed;
-//   top: 20%;
-//   left: 50%;
-//   z-index: 99999;
-//   background: #006666;
-//   color: sandybrown;
-// `;

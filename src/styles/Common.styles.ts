@@ -26,6 +26,7 @@ export const colors = {
     _99: '#999999',
     _cc: '#cccccc',
     _ec: '#ececec',
+    _f7: '#f7f7f7',
     _fa: '#fafafa',
   },
   black: '#282828',

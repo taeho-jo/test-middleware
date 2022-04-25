@@ -40,13 +40,14 @@ interface PropsType {
   // name: string;
   size?: number;
   style?: any;
+  onClick?: () => void;
 }
 
-const Icon: any = ({ name, size = 16, style }: PropsType) => {
+const Icon: any = ({ name, size = 16, style, onClick }: PropsType) => {
   const IconComponent: any = IconTypes[name];
   const viewBox = `0 0 ${size} ${size}`;
 
-  return <IconComponent style={{ boxSizing: 'border-box', ...style }} width={size} height={size} viewBox={viewBox} />;
+  return <IconComponent onClick={onClick} style={{ boxSizing: 'border-box', ...style }} width={size} height={size} viewBox={viewBox} />;
 };
 
 export default Icon;

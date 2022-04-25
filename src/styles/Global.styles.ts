@@ -25,7 +25,7 @@ const reset = (popupShow, isAdmin) => css`
     }
     /* 공통셋팅 */
     a {
-      text-decoration: none;
+      //text-decoration: none;
       color: #000000;
     }
     ul,
@@ -63,6 +63,23 @@ const reset = (popupShow, isAdmin) => css`
     p,
     span {
       // color: ${isAdmin ? '#3c3c46' : ''};
+      //cursor: default;
+    }
+
+    input[type='checkbox'] + label {
+      cursor: pointer;
+      padding-left: 30px;
+      height: auto;
+      background: url('/assets/images/common/toggle_check_box_off_24px.svg') left/22px no-repeat;
+      line-height: 22px;
+    }
+
+    input[type='checkbox']:checked + label {
+      background: url('/assets/images/common/toggle_check_box_24px.svg') left/22px no-repeat;
+    }
+
+    input[type='checkbox'] {
+      display: none;
     }
 
     #gradient-canvas {

@@ -1,25 +1,33 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { MakeStore, createWrapper } from 'next-redux-wrapper';
 import logger from 'redux-logger';
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, createMigrate } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+import { applyMiddleware, createStore, compose } from 'redux';
+import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
 
 import reducer from './reducers';
+// import { persistReducer, persistStore } from 'redux-persist';
+
+const migrations = {
+  0: state => {
+    // migration clear out device state
+    return {
+      ...state,
+      token: '',
+    };
+  },
+};
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'],
-  blacklist: ['counter'],
+  // stateReconciler: autoMergeLevel2,
+  // whitelist: ,
+  blacklist: ['counter', 'modal'],
+  // stateReconciler: hardSet,
+  // migrate: createMigrate(migrations, { debug: true }),
 };
 
 export const persistedReducer = persistReducer(persistConfig, reducer);
@@ -39,4 +47,6 @@ const makeStore: MakeStore<any> = () => {
   return { ...persistor, ...store };
 };
 
-export const wrapper = createWrapper<any>(makeStore, {});
+export const wrapper = createWrapper(makeStore, {
+  debug: process.env.NODE_ENV !== 'production',
+});

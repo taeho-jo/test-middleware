@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import FlexBox from '../../atoms/FlexBox';
 import Icon from '../../atoms/Icon';
 import { colors } from '../../../styles/Common.styles';
@@ -6,13 +6,18 @@ import Image from 'next/image';
 import { css } from '@emotion/react';
 import ProfileIcon from '../../atoms/ProfileIcon';
 import ProfilePopover from '../../atoms/ProfilePopover';
+import { useSelector } from 'react-redux';
 
 const CommonHeader = () => {
   const [focusProfile, setFocusProfile] = useState<boolean>(false);
-
+  // const token = useSelector(state => state.auth.token);
   const test = useCallback(() => {
     setFocusProfile(prev => !prev);
   }, [focusProfile]);
+
+  // useEffect(() => {
+  //   console.log('TOKEN---------------------', token, '-----------------------------TOKEN');
+  // }, [token]);
 
   return (
     <FlexBox

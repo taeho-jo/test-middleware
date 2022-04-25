@@ -15,6 +15,7 @@ import CommonModal from '../../components/organisms/CommonModal';
 import CommonHeader from '../../components/molecules/CommonHeader';
 import { AuthType, setToken } from '../../store/reducers/authReducer';
 import AdminLayout from './AdminLayout';
+import AlertToast from '../../components/organisms/AlertToast';
 
 // Types
 interface PropsType {
@@ -24,25 +25,17 @@ interface PropsType {
 const Layout = ({ children }: PropsType) => {
   const dispatch = useDispatch();
   const token = useSelector((state: any) => state.auth.token);
-  const [showGradient, setShowGradient] = useState<boolean>(false);
+  const [showGradient, setShowGradient] = useState<boolean>(true);
 
   const router = useRouter();
 
   const canvasRef = useRef(null);
+
   useEffect(() => {
-    if (canvasRef.current) {
+    if (router.pathname === '/' && canvasRef.current) {
       setGradient(canvasRef.current);
     }
-  }, []);
-
-  console.log(router.query, 'QUERY');
-  useEffect(() => {
-    // if (router.query) {
-    //   const accessToken = router.query.token;
-    //   console.log(accessToken);
-    //   dispatch(setToken(accessToken));
-    // }
-  }, []);
+  }, [token, router.pathname]);
 
   useEffect(() => {
     AOS.init({
@@ -86,7 +79,7 @@ const Layout = ({ children }: PropsType) => {
         </div>
       )}
 
-      <AuthToast position={'top-center'} />
+      <AlertToast position={'top-center'} />
       <CommonModal />
     </>
   );

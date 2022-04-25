@@ -1,15 +1,26 @@
 import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
 import { body3_regular } from '../../../styles/FontStyles';
+import { setToken } from '../../../store/reducers/authReducer';
+import { persistor } from '../../../pages/_app';
 
 const ProfilePopover = ({ display }) => {
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const handleLogout = useCallback(() => {
-    window.localStorage.clear();
-    router.push('/');
+    persistor
+      .flush()
+      .then(() => {
+        persistor.purge();
+        dispatch(setToken(''));
+      })
+      .then(() => {
+        router.push('/');
+      });
   }, []);
 
   return (
@@ -17,7 +28,7 @@ const ProfilePopover = ({ display }) => {
       <span css={[body3_regular, emailTextStyle]}>taeho.jo@dbdlab.io</span>
       <span css={[body3_regular, cursorBtnStyle]}>프로필 설정</span>
       <div css={borderStyle}></div>
-      <span onClick={() => handleLogout()} css={[body3_regular, cursorBtnStyle]}>
+      <span onClick={handleLogout} css={[body3_regular, cursorBtnStyle]}>
         로그아웃
       </span>
     </div>

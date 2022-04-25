@@ -1,10 +1,12 @@
 import React from 'react';
+// Components
+import Icon from '../Icon';
+import ClipLoader from 'react-spinners/ClipLoader';
 // Styles
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
-import Icon from '../Icon';
 import { body2_bold, caption1_regular } from '../../../styles/FontStyles';
-import ClipLoader from 'react-spinners/ClipLoader';
+// Types
 import { ColorsType, IconType } from '../../../common/types/commonTypes';
 
 interface PropsType {
@@ -19,6 +21,7 @@ interface PropsType {
   padding?: string;
   start?: string;
   size?: number;
+  btnTextColor?: string;
 }
 
 const Button = ({
@@ -33,6 +36,7 @@ const Button = ({
   padding,
   start = '',
   size,
+  btnTextColor,
 }: PropsType) => {
   return (
     <>
@@ -41,7 +45,7 @@ const Button = ({
           <div css={isLoading ? loadingStyle : ''}>
             <ClipLoader color={'white'} loading={isLoading} size={16} />
           </div>
-          <span css={isLoading ? textStyle : body2_bold}>{btnText}</span>
+          <span css={isLoading ? textStyle : [body2_bold, { color: btnTextColor }]}>{btnText}</span>
         </button>
       ) : buttonType === 'action' ? (
         <button type={type} onClick={onClick} css={actionButtonStyle(full, padding)}>

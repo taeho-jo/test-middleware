@@ -58,7 +58,6 @@ const FlexBox = ({
   row,
   style,
 }: PropsType) => {
-  console.log(style, 'CSS');
   return (
     <div
       onClick={onClick}

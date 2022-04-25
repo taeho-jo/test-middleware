@@ -11,9 +11,9 @@ export default function withNoAuth(SpecificComponent: any) {
 
     useEffect(() => {
       if (token) {
-        router.push('/admin/main');
+        router.replace('/admin/team');
       }
-    }, []);
+    }, [token, router]);
 
     return <>{!token ? <SpecificComponent /> : <div></div>}</>;
   };

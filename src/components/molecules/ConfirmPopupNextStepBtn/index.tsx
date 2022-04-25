@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Button from '../../atoms/Button';
 import { heading4_bold } from '../../../styles/FontStyles';
 import { css } from '@emotion/react';
 
 interface PropsType {
+  modalType: string;
   title: string;
   btnText: string;
   style?: any;
@@ -11,7 +12,7 @@ interface PropsType {
   onClick?: (path) => void;
 }
 
-const ConfirmPopupNextStepBtn = ({ title, btnText, onClick, style, pathname }: PropsType) => {
+const ConfirmPopupNextStepBtn = ({ modalType, title, btnText, onClick, style, pathname }: PropsType) => {
   return (
     <div css={[mainBoxStyle, style]}>
       <h4 css={[heading4_bold, titleBoxStyle]}>{title}</h4>
@@ -23,9 +24,9 @@ const ConfirmPopupNextStepBtn = ({ title, btnText, onClick, style, pathname }: P
 export default ConfirmPopupNextStepBtn;
 
 const mainBoxStyle = css`
-  margin-top: 40px;
+  padding: 0 40px 40px;
 `;
 
 const titleBoxStyle = css`
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 `;
