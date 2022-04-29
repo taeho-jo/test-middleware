@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 // Redux
-import { useSelector, useDispatch } from 'react-redux';
-import { ReducerType } from '../../store/reducers';
+import { useDispatch, useSelector } from 'react-redux';
 // Components
-import AuthToast from '../../components/organisms/AuthToast';
 import AppBar from '../../../diby-client-landing/components/AppBar';
 // Styles
 import { css } from '@emotion/react';
@@ -13,9 +11,9 @@ import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // import BackGroundImg2 from '../../assets/background_img2.png';
 import CommonModal from '../../components/organisms/CommonModal';
 import CommonHeader from '../../components/molecules/CommonHeader';
-import { AuthType, setToken } from '../../store/reducers/authReducer';
 import AdminLayout from './AdminLayout';
 import AlertToast from '../../components/organisms/AlertToast';
+import FlexBox from '../../components/atoms/FlexBox';
 
 // Types
 interface PropsType {
@@ -52,17 +50,47 @@ const Layout = ({ children }: PropsType) => {
     }
   }, [router.pathname]);
 
-  return (
-    <>
-      {token ? (
-        <>
+  const separateDomain = useCallback(() => {
+    switch (router.pathname) {
+      case '/admin/reset-password':
+      case '/admin/reset-password-success':
+      case '/admin/re-login':
+        return (
+          <div css={mainContainer}>
+            <main css={contentsContainer}>
+              <CommonHeader />
+              <FlexBox height={'calc(100vh - 48px)'} justify={'center'} align={'center'}>
+                {children}
+              </FlexBox>
+            </main>
+          </div>
+        );
+      case '/admin/team':
+      case '/admin/main':
+        return (
           <div css={mainContainer}>
             <main css={contentsContainer}>
               <CommonHeader />
               <AdminLayout>{children}</AdminLayout>
             </main>
           </div>
-        </>
+        );
+      default:
+        return (
+          <div css={mainContainer}>
+            <main css={contentsContainer}>
+              <CommonHeader />
+              <AdminLayout>{children}</AdminLayout>
+            </main>
+          </div>
+        );
+    }
+  }, [router.pathname]);
+
+  return (
+    <>
+      {token ? (
+        separateDomain()
       ) : (
         <div css={mainContainer}>
           <main css={contentsContainer}>
@@ -73,7 +101,6 @@ const Layout = ({ children }: PropsType) => {
                 <AppBar dark />
               </>
             ) : null}
-
             <div>{children}</div>
           </main>
         </div>

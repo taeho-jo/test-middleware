@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { isShow } from '../../src/store/reducers/modalReducer';
+import { isShow } from '../../src/store/reducers/modalReducer2';
 // Components
 import { Grid, Stack, Button, IconButton, Popover, Icon } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -140,7 +140,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 //   handleClick('/tri');
                 // }}
                 onClick={() => {
-                  dispatch(isShow({ isShow: true, type: 'login' }));
+                  // dispatch(isShow({ isShow: true, type: 'login' }));
+                  dispatch(isShow({ isShow: true }));
                 }}
               >
                 로그인
@@ -149,7 +150,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 color={darkMode ? 'green' : 'white'}
                 style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}
                 onClick={() => {
-                  dispatch(isShow({ isShow: true, type: 'signup' }));
+                  // dispatch(isShow({ isShow: true, type: 'signup' }));
                 }}
               >
                 회원가입

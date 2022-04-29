@@ -12,21 +12,24 @@ const teamList = [
     teamName: 'DBDLAB의 팀',
     memberList: ['A', 'K', 'J'],
   },
-  {
-    teamName: '태호님의 팀',
-    memberList: ['조', '최'],
-  },
+  // {
+  //   teamName: '태호님의 팀',
+  //   memberList: ['조', '최'],
+  // },
 ];
 
 const AdminSideBar = () => {
+  const propsStyle = {
+    backgroundColor: 'yellow',
+  };
   return (
     <div css={adminSideBarStyle}>
       <FlexBox style={teamCreateAreaStyle} justify={'space-between'} align={'center'}>
-        <span css={heading5_bold}>Teams</span>
+        <span css={heading5_bold}>팀</span>
         <Icon name={'ACTION_CREATE'} size={24} />
       </FlexBox>
       {teamList.map((item, index) => {
-        return <AdminSideTeamListItem key={index} teamName={item.teamName} memberList={item.memberList} />;
+        return <AdminSideTeamListItem style={propsStyle} key={index} teamName={item.teamName} memberList={item.memberList} />;
       })}
     </div>
   );
@@ -36,6 +39,7 @@ export default AdminSideBar;
 
 const adminSideBarStyle = css`
   width: 240px;
+  min-width: 240px;
   height: 100vh;
   border-right: 1px solid ${colors.grey._ec};
 `;

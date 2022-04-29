@@ -9,12 +9,12 @@ const AdminHeader = () => {
   return (
     <FlexBox style={headerStyle} justify={'flex-start'} align={'center'}>
       <span onClick={() => router.push('/admin/team')} css={[heading5_bold, itemsStyle]}>
-        Diby
+        DBDLAB의 팀
       </span>
       <span onClick={() => router.push('/admin/main')} css={[heading5_bold, itemsStyle]}>
-        Members
+        팀원
       </span>
-      <span css={[heading5_bold, itemsStyle]}>Settings</span>
+      <span css={[heading5_bold, itemsStyle]}>설정</span>
     </FlexBox>
   );
 };

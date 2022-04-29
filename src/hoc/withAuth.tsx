@@ -12,6 +12,7 @@ export default function withAuth(SpecificComponent: any) {
     useEffect(() => {
       console.log('token :: ', token);
       if (!token) {
+        console.log('~!@~!@~!@~!@~!');
         router.replace('/');
       }
     }, [token, router]);

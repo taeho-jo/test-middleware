@@ -38,7 +38,7 @@ const ConfirmModal = () => {
           pathname={'/'}
           title={'혹시 이메일을 받지 못했나요?'}
           btnText={'이메일을 다시 보내주세요.'}
-          style={{ padding: '0 40px' }}
+          style={{ padding: modalType === 'confirmSignup' ? '0 40px' : '0 40px 40px' }}
         />
         {modalType === 'confirmSignup' ? (
           <ConfirmPopupNextStepBtn

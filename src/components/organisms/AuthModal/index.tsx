@@ -65,6 +65,7 @@ const pwInquirySubTitleArr = ['비밀번호 재설정을 위해', 'Diby에서 �
 const AuthModal = () => {
   const dispatch = useDispatch();
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
+  const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
 
   const { push, pathname } = useRouter();
 
@@ -72,7 +73,15 @@ const AuthModal = () => {
     (status, data) => {
       if (status === 'fail') {
         alert(status);
-        dispatch(showToast({ message: '가입된 계정이 없습니다. 다시 확인해주세요!', isShow: true, status: 'warning', duration: 5000 }));
+        if (modalType === 'signup') {
+          dispatch(showToast({ message: '입력정보를 확인해주세요.', isShow: true, status: 'warning', duration: 5000 }));
+        }
+        if (modalType === 'pwInquiry') {
+          dispatch(showToast({ message: '이메일 정보를 확인해주세요.', isShow: true, status: 'warning', duration: 5000 }));
+        }
+        if (modalType === 'login') {
+          dispatch(showToast({ message: '가입된 계정이 없습니다. 다시 확인해주세요!', isShow: true, status: 'warning', duration: 5000 }));
+        }
       } else {
         if (modalType === 'signup') {
           dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
@@ -88,6 +97,17 @@ const AuthModal = () => {
           });
         }
       }
+    },
+    [modalType],
+  );
+
+  const handleReLogin = useCallback(
+    (status, data) => {
+      persistor.flush().then(() => {
+        persistor.purge();
+        dispatch(setToken('로그인 토큰 저장'));
+        dispatch(isShow({ isShow: false, type: '' }));
+      });
     },
     [modalType],
   );
@@ -108,22 +128,22 @@ const AuthModal = () => {
   }, [pathname]);
 
   return (
-    <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
+    <FlexBox style={{ marginTop: modalShow ? '160px' : 0 }} justify={'center'} direction={'column'}>
       <PopupBox padding={'0px'} width={'392px'} height={'auto'}>
-        <ModalTitle modalType={modalType} />
+        <ModalTitle modalType={modalType} modalShow={modalShow} />
 
         {modalType === 'pwInquiry' ? <ModalSubTitle subTitle={pwInquirySubTitleArr} /> : null}
 
         <InputFormBox
           btnTextColor={`${colors.white}`}
-          handleSignUp={handleSignUp}
+          handleSignUp={!modalShow ? handleReLogin : handleSignUp}
           inputArr={modalType === 'pwInquiry' ? pwInquiryInputArr : modalType === 'login' ? loginInputArr : signupInputArr}
           btnText={modalType === 'login' ? '로그인하기' : modalType === 'signup' ? '간편하게 시작하기' : '간편하게 시작하기'}
           padding={modalType === 'pwInquiry' ? '0 36px 32px' : '0 36px 0'}
           modalType={modalType}
         />
 
-        {modalType === 'pwInquiry' ? null : (
+        {modalType === 'pwInquiry' || !modalShow ? null : (
           <FlexBox justify={'center'} padding={'16px 0 24px 0'}>
             <Button
               onClick={loginWithGoogle}
@@ -139,11 +159,16 @@ const AuthModal = () => {
 
         <FlexBox
           padding={'19px 24px'}
-          style={{ boxSizing: 'border-box', background: `${colors.grey._f7}`, borderRadius: '0 0 16px 16px' }}
-          justify={modalType === 'login' ? 'space-between' : 'center'}
+          style={{
+            boxSizing: 'border-box',
+            background: `${colors.grey._f7}`,
+            borderRadius: modalType === 'login' && !modalShow ? 0 : '0 0 16px 16px',
+            marginTop: modalType === 'login' && !modalShow ? '40px' : 0,
+          }}
+          justify={modalType === 'login' && modalShow ? 'space-between' : 'center'}
           align={'center'}
         >
-          {modalType === 'login' ? (
+          {modalType === 'login' && modalShow && (
             <>
               <div css={bottomTextStyle} onClick={() => dispatch(isShow({ isShow: true, type: 'pwInquiry' }))}>
                 <span css={[body3_bold]}>비밀번호</span>
@@ -155,17 +180,55 @@ const AuthModal = () => {
                 <span css={[body3_regular]}>이 없으신가요?</span>
               </div>
             </>
-          ) : modalType === 'signup' ? (
+          )}
+
+          {modalType === 'login' && !modalShow && (
+            <div
+              css={[bottomTextStyle]}
+              // onClick={() => dispatch(isShow({ isShow: true, type: 'pwInquiry' }))}
+            >
+              <span css={[body3_bold]}>비밀번호</span>
+              <span css={[body3_regular]}>를 설정하길 원하시나요?</span>
+            </div>
+          )}
+
+          {modalType === 'signup' && (
             <div css={bottomTextStyle} onClick={() => dispatch(isShow({ isShow: true, type: 'login' }))}>
               <span css={body3_bold}>계정</span>
               <span css={[body3_regular]}>이 있어요!</span>
             </div>
-          ) : (
+          )}
+
+          {modalType === 'pwInquiry' && (
             <div css={bottomTextStyle} onClick={() => dispatch(isShow({ isShow: true, type: 'login' }))}>
               <span css={body3_bold}>비밀번호</span>
               <span css={[body3_regular]}>가 생각났어요!</span>
             </div>
           )}
+
+          {/*{modalType === 'login' ? (*/}
+          {/*  <>*/}
+          {/*    <div css={bottomTextStyle} onClick={() => dispatch(isShow({ isShow: true, type: 'pwInquiry' }))}>*/}
+          {/*      <span css={[body3_bold]}>비밀번호</span>*/}
+          {/*      <span css={[body3_regular]}>를 잊어버리셨나요?</span>*/}
+          {/*    </div>*/}
+
+          {/*    <div css={bottomTextStyle} onClick={() => dispatch(isShow({ isShow: true, type: 'signup' }))}>*/}
+          {/*      <span css={body3_bold}>계정</span>*/}
+          {/*      <span css={[body3_regular]}>이 없으신가요?</span>*/}
+          {/*    </div>*/}
+          {/*  </>*/}
+          {/*) : modalType === 'signup' ? (*/}
+          {/*  <div css={bottomTextStyle} onClick={() => dispatch(isShow({ isShow: true, type: 'login' }))}>*/}
+          {/*    <span css={body3_bold}>계정</span>*/}
+          {/*    <span css={[body3_regular]}>이 있어요!</span>*/}
+          {/*  </div>*/}
+          {/*) : (*/}
+          {/*  <div css={bottomTextStyle} onClick={() => dispatch(isShow({ isShow: true, type: 'login' }))}>*/}
+          {/*    <span css={body3_bold}>비밀번호</span>*/}
+          {/*    <span css={[body3_regular]}>가 생각났어요!</span>*/}
+          {/*  </div>*/}
+          {/*)}*/}
         </FlexBox>
       </PopupBox>
     </FlexBox>

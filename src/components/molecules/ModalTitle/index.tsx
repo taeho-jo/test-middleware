@@ -7,10 +7,11 @@ import { heading1_bold } from '../../../styles/FontStyles';
 import { isShow } from '../../../store/reducers/modalReducer';
 
 interface PropsType {
-  modalType: string;
+  modalType?: string;
+  modalShow?: boolean;
 }
 
-const ModalTitle = ({ modalType }: PropsType) => {
+const ModalTitle = ({ modalType, modalShow }: PropsType) => {
   const dispatch = useDispatch();
   const closeModal = useCallback(() => {
     dispatch(isShow({ isShow: false, type: '' }));
@@ -32,14 +33,33 @@ const ModalTitle = ({ modalType }: PropsType) => {
         return '이메일을 인증해주세요!';
       case 'confirmPassword':
         return '메일을 확인해주세요!';
+      case 'reset-password':
+        return '새로운 비밀번호를 입력해주세요.';
+      case 'reset-password-success':
+        return '비밀번호가 성공적으로 변경되었습니다!';
+      case 'create-team':
+        return '반가워요!';
+      case 'invite-team-member':
+        return '함께해요!';
       default:
         return 'Title';
     }
   }, [modalType]);
 
   return (
-    <FlexBox justify={'space-between'} align={'center'} padding={'29px 32px 45px'} style={{ boxSizing: 'border-box' }}>
-      <FlexBox justify={'flex-start'} align={'center'}>
+    <FlexBox
+      justify={
+        !modalShow && (modalType === 'create-team' || modalType === 'invite-team-member')
+          ? 'flex-start'
+          : !modalShow && modalType === ''
+          ? 'center'
+          : 'space-between'
+      }
+      align={'center'}
+      padding={'29px 32px 45px'}
+      style={{ boxSizing: 'border-box' }}
+    >
+      <FlexBox justify={!modalShow ? 'center' : 'flex-start'} align={'center'}>
         {modalType === 'pwInquiry' ? (
           <Icon onClick={goBackLogin} name={'NAVIGATION_ARROW_LEFT'} size={24} style={{ cursor: 'pointer', marginRight: '10px' }} />
         ) : null}
@@ -47,7 +67,7 @@ const ModalTitle = ({ modalType }: PropsType) => {
         <span css={[heading1_bold, { cursor: 'default' }]}>{modalTitle()}</span>
       </FlexBox>
 
-      <Icon onClick={closeModal} name={'NAVIGATION_CLOSE_LG'} size={24} style={{ cursor: 'pointer' }} />
+      {modalShow && <Icon onClick={closeModal} name={'NAVIGATION_CLOSE_LG'} size={24} style={{ cursor: 'pointer' }} />}
     </FlexBox>
   );
 };

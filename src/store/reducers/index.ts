@@ -6,6 +6,8 @@ import counter from './counterReducer';
 import auth from './authReducer';
 import toast from './toastReducer';
 import modal from './modalReducer';
+import team from './teamReducer';
+import modal2 from './modalReducer2';
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
@@ -19,6 +21,8 @@ const reducer = (state, action) => {
     auth,
     toast,
     modal,
+    team,
+    modal2,
   })(state, action);
 };
 

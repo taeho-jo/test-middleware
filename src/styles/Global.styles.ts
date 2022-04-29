@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-const reset = (popupShow, isAdmin) => css`
+const reset = (popupShow, isAdmin, story) => css`
   @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
   $aos-distance: 30px;
 
@@ -9,7 +9,7 @@ const reset = (popupShow, isAdmin) => css`
   }
   * {
     //box-sizing: border-box;
-    box-sizing: ${isAdmin ? 'border-box' : 'unset'};
+    box-sizing: ${story ? 'auto' : isAdmin ? 'border-box' : 'unset'};
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
       'Malgun Gothic', sans-serif;
   }
@@ -19,8 +19,8 @@ const reset = (popupShow, isAdmin) => css`
       padding: 0;
       margin: 0;
       width: 100%;
-      overflow: ${popupShow || isAdmin ? 'hidden' : 'auto'};
-      //min-width: 1440px;
+      overflow: ${story ? 'auto' : popupShow || isAdmin ? 'hidden' : 'auto'};
+      min-width: ${isAdmin ? '1440px' : 'unset'};
       //height: 100%;
     }
     /* 공통셋팅 */

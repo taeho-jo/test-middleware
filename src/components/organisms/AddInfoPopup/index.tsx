@@ -10,8 +10,8 @@ export interface InputType {
   label: string;
   placeholder: string;
   type: string;
-  pattern: RegExp;
-  errorMsg: string;
+  pattern?: RegExp;
+  errorMsg?: string;
   line?: boolean;
 }
 

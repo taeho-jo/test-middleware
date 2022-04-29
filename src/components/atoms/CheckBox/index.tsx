@@ -15,8 +15,6 @@ interface PropsType {
 }
 
 const CheckBox = ({ inputName, label, register, style, registerOptions, errors }: PropsType) => {
-  console.log(errors, 'asdfasdfasdfasd');
-
   const vaildation = errors ? (errors[inputName] ? false : true) : true;
 
   return (

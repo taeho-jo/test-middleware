@@ -5,6 +5,7 @@ import Button from '../../atoms/Button';
 import Form from '../../atoms/Form';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../organisms/AddInfoPopup';
+import { ColorsType } from '../../../common/types/commonTypes';
 
 interface PropsType {
   inputArr: InputType[];
@@ -13,9 +14,10 @@ interface PropsType {
   handleSignUp?: (status, data) => void;
   btnTextColor?: string;
   modalType?: string;
+  btnBackColor?: ColorsType;
 }
 
-const InputFormBox = ({ handleSignUp, inputArr, btnText, padding = '0', btnTextColor, modalType = 'login' }: PropsType) => {
+const InputFormBox = ({ handleSignUp, inputArr, btnText, padding = '0', btnTextColor, modalType = 'login', btnBackColor }: PropsType) => {
   const [inputFocus, setInputFocus] = useState(null);
 
   const {
@@ -85,11 +87,12 @@ const InputFormBox = ({ handleSignUp, inputArr, btnText, padding = '0', btnTextC
                 pattern: el.pattern,
                 onBlur: () => setInputFocus(null),
               }}
+              data={'asdfasdfasdfasdfasdf'}
             />
           );
         })}
 
-        {modalType === 'signup' ? (
+        {modalType === 'signup' && (
           <>
             <CheckBox register={register} inputName={'term'} label={firstCheckboxLabel} errors={errors} registerOptions={{ required: true }} />
             <CheckBox
@@ -101,9 +104,9 @@ const InputFormBox = ({ handleSignUp, inputArr, btnText, padding = '0', btnTextC
               registerOptions={{ required: true }}
             />
           </>
-        ) : null}
+        )}
 
-        <Button btnTextColor={btnTextColor} full={true} btnText={btnText} type={'submit'} />
+        <Button btnTextColor={btnTextColor} backgroundColor={btnBackColor} full={true} btnText={btnText} type={'submit'} />
       </div>
     </Form>
   );

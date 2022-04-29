@@ -4,7 +4,7 @@ import { heading4_bold } from '../../../styles/FontStyles';
 import { css } from '@emotion/react';
 
 interface PropsType {
-  modalType: string;
+  modalType?: string;
   title: string;
   btnText: string;
   style?: any;

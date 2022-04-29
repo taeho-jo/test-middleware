@@ -7,6 +7,7 @@ import NavigationArrowLeft from '../../../../public/assets/svg/navigation_arrow_
 import NavigationArrowRight from '../../../../public/assets/svg/navigation_arrow_right.svg';
 import NavigationChevronDown from '../../../../public/assets/svg/navigation_chevron_down_s.svg';
 import NavigationChevronRight from '../../../../public/assets/svg/navigation_chevron_right.svg';
+import NavigationChevronRightDisabled from '../../../../public/assets/svg/navigation_chevron_right_disabled.svg';
 import NavigationCloseLg from '../../../../public/assets/svg/navigation_close_l.svg';
 import NavigationCloseSm from '../../../../public/assets/svg/navigation_close_s.svg';
 import LogoIcon from '../../../../public/assets/svg/logoDiby.svg';
@@ -26,6 +27,7 @@ const IconTypes = {
   NAVIGATION_ARROW_RIGHT: NavigationArrowRight,
   NAVIGATION_CHEVRON_DOWN: NavigationChevronDown,
   NAVIGATION_CHEVRON_RIGHT: NavigationChevronRight,
+  NAVIGATION_CHEVRON_RIGHT_DISABLED: NavigationChevronRightDisabled,
   NAVIGATION_CLOSE_LG: NavigationCloseLg,
   NAVIGATION_CLOSE_SM: NavigationCloseSm,
   LOGO_ICON: LogoIcon,
@@ -37,7 +39,6 @@ const IconTypes = {
 
 interface PropsType {
   name: IconType;
-  // name: string;
   size?: number;
   style?: any;
   onClick?: () => void;

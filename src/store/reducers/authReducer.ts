@@ -21,7 +21,7 @@ export const authSlice = createSlice({
       state.token = '';
     },
     test1: (state, action) => {
-      console.log(action, 'asdfasdfasdfasdfasdfasdfasd');
+      // console.log(action, 'asdfasdfasdfasdfasdfasdfasd');
     },
   },
 });

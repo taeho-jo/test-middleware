@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import { useSelector } from 'react-redux';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
 import { caption1_regular } from '../../../styles/FontStyles';
 import { ReducerType } from '../../../store/reducers';
 
-interface PropsType {
+interface PropsType extends InputHTMLAttributes<HTMLInputElement> {
   line?: boolean;
   validation?: boolean;
   type?: string;
@@ -60,7 +60,7 @@ const Input = ({
         {...props}
         {...register(label, registerOptions)}
       />
-      {modalType === 'signup' && label === 'password1' ? (
+      {(modalType === 'signup' && label === 'password1') || (!modalType && label === 'password1') ? (
         <span css={[caption1_regular, { color: colors.grey._99, margin: '9px 0 50px 0', display: 'inline-block' }]}>
           * 비밀번호는 문자+숫자 6자 이상 조합해주세요.
         </span>
