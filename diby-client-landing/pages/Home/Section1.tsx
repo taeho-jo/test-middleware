@@ -166,25 +166,6 @@ function Section1() {
             <div style={{ height: '488px', overflowX: 'visible' }}>
               <div style={{ height: '488px', overflowY: 'hidden' }}>
                 <div data-aos="fade-up" style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}>
-                  {/*<Image*/}
-                  {/*  style={{ borderRadius: '10px' }}*/}
-                  {/*  width={840}*/}
-                  {/*  height={488}*/}
-                  {/*  priority={true}*/}
-                  {/*  quality={100}*/}
-                  {/*  src={ImgHomeDashboard}*/}
-                  {/*  alt="dashboard_img"*/}
-                  {/*/>*/}
-                  {/*<Image*/}
-                  {/*  style={{ borderRadius: '10px' }}*/}
-                  {/*  width={840}*/}
-                  {/*  height={488}*/}
-                  {/*  priority={true}*/}
-                  {/*  quality={100}*/}
-                  {/*  src="https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/img_dashboard_2_1_.webp"*/}
-                  {/*  alt="dashboard_img"*/}
-                  {/*/>*/}
-                  {/*<img src={ImgHomeDashboard.src} alt="dashboard_img" style={{ width: '840px', height: '488px', borderRadius: '10px' }} />*/}
                   <img
                     src={'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/img_dashboard_2_1_.webp'}
                     alt="dashboard_img2"
