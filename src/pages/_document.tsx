@@ -2,7 +2,6 @@
 import React from 'react';
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
 
-
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
@@ -23,12 +22,6 @@ class MyDocument extends Document {
 
           <link rel="icon" href="/favicon.png" />
 
-          {/*<meta property="og:title" content="일잘하는 당신을 위한 CX 리서치 솔루션, Diby" />*/}
-          {/*<meta*/}
-          {/*  property="og:description"*/}
-          {/*  content="유저테스트로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 UX 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요."*/}
-          {/*/>*/}
-          {/*<meta property="og:url" content={'https://diby.io'} />*/}
           <meta property="og:type" content="website" />
           <meta property="og:image" content="/og-diby.png" />
           <meta property="og:locale" content="ko_KR" />
@@ -37,7 +30,36 @@ class MyDocument extends Document {
           <meta property="author" content="DBDLAB" />
           <meta name="google-site-verification" content="VOhtSYTyB99y881SKWMXBlOpPgmSFRKA7-8W7AlzlrY" />
           <meta name="naver-site-verification" content="4cb24b7cbfcbd02dd6230263b6358c44b114b844" />
-
+          <script async src="https://www.googletagmanager.com/gtag/js?id=AW-667012930" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                
+                gtag('config', 'AW-667012930');
+              `,
+            }}
+          />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              window.addEventListener('load', function(event) {
+      if (window.location.href == 'https://diby.io/tri') {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-667012930/UzsQCN24pbgDEMKeh74C'
+        });
+      }
+      if (window.location.href == 'https://diby.io/pricing') {
+        gtag('event', 'conversion', {
+          'send_to': 'AW-667012930/RJrHCOC4pbgDEMKeh74C'
+        });
+      }
+    });
+            `,
+            }}
+          />
         </Head>
 
         <body>
