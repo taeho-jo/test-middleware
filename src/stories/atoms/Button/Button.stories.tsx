@@ -28,7 +28,7 @@ export const AllButton = () => {
     body2_regular,
     css`
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 30px;
     `,
   ];
 
@@ -137,13 +137,51 @@ export const AllButton = () => {
 
         <FlexBox justify={'flex-start'} align={'flex-start'}>
           <div css={{ flex: 1, padding: '10px' }}>
-            <h3 css={subTitleStyle}>📍Border Right Button</h3>
+            <h3 css={subTitleStyle}>📍Border & Right Icon Button</h3>
             <IconTextButton disabled={false} name={'NAVIGATION_CHEVRON_RIGHT'} textStyle={heading5_medium} />
+          </div>
+
+          <div css={{ flex: 1, padding: '10px' }}>
+            <h3 css={subTitleStyle}>📍Disabled Border & Right Icon Button</h3>
+            <IconTextButton disabled={true} name={'NAVIGATION_CHEVRON_RIGHT'} textStyle={heading5_medium} />
           </div>
 
           <div css={{ flex: 1, padding: '10px' }}>
             <h3 css={subTitleStyle}>📍No Border Right Button</h3>
             <IconTextButton disabled={false} name={'NAVIGATION_CHEVRON_RIGHT'} textStyle={heading5_medium} roundBorder={false} />
+          </div>
+
+          <div css={{ flex: 1, padding: '10px' }}>
+            <h3 css={subTitleStyle}>📍Disabled No Border & Right Icon Button</h3>
+            <IconTextButton disabled={true} name={'NAVIGATION_CHEVRON_RIGHT'} textStyle={heading5_medium} roundBorder={false} />
+          </div>
+        </FlexBox>
+
+        <FlexBox justify={'flex-start'} align={'flex-start'}>
+          <div css={{ flex: 1, padding: '10px' }}>
+            <h3 css={subTitleStyle}>📍Border & Right Icon Button</h3>
+            <IconTextButton iconPosition={'left'} disabled={false} name={'NAVIGATION_CHEVRON_RIGHT'} textStyle={heading5_medium} />
+          </div>
+
+          <div css={{ flex: 1, padding: '10px' }}>
+            <h3 css={subTitleStyle}>📍Disabled Border & Right Icon Button</h3>
+            <IconTextButton iconPosition={'left'} disabled={true} name={'NAVIGATION_CHEVRON_RIGHT'} textStyle={heading5_medium} />
+          </div>
+
+          <div css={{ flex: 1, padding: '10px' }}>
+            <h3 css={subTitleStyle}>📍No Border Right Button</h3>
+            <IconTextButton
+              iconPosition={'left'}
+              disabled={false}
+              name={'NAVIGATION_CHEVRON_RIGHT'}
+              textStyle={heading5_medium}
+              roundBorder={false}
+            />
+          </div>
+
+          <div css={{ flex: 1, padding: '10px' }}>
+            <h3 css={subTitleStyle}>📍Disabled No Border & Right Icon Button</h3>
+            <IconTextButton iconPosition={'left'} disabled={true} name={'NAVIGATION_CHEVRON_RIGHT'} textStyle={heading5_medium} roundBorder={false} />
           </div>
         </FlexBox>
       </FlexBox>

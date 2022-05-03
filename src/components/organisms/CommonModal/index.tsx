@@ -15,7 +15,7 @@ const CommonModal = () => {
       {show ? (
         <Portal selector={'modal-root'}>
           <Modal>asdfasdfasdfasdf</Modal>
-          {/*<div css={backgroundStyle}>{modalfiType === 'confirmSignup' || modalType === 'confirmPassword' ? <ConfirmModal /> : <AuthModal />}</div>*/}
+          {/*<div css={backgroundStyle}>{modalType === 'confirmSignup' || modalType === 'confirmPassword' ? <ConfirmModal /> : <AuthModal />}</div>*/}
         </Portal>
       ) : null}
     </>

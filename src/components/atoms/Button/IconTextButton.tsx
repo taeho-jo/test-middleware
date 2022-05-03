@@ -84,31 +84,6 @@ const iconTextButtonStyle = (roundBorder, iconPosition, status) => css`
   }
 `;
 
-// ${roundBorder
-//     ? `
-//     border: 1px solid ${colors.grey._3c};
-// border-radius: 36px;
-// `
-//     : `
-// border: none;
-// `};
-//   ${roundBorder
-//   ? `
-//     ${
-//     status === 'disabled'
-//       ? `
-//         border: 1px solid ${colors.grey._cc};
-//         background: ${colors.grey._f7};`
-//       : `
-//       background: ${colors.white};
-//       &:hover {
-//         background: ${colors.grey._ec}
-//       }
-//     `
-//   }
-//   `
-//   : `background: ${colors.white}`}
-
 const noBorderTextStyle = (roundBorder, disabled) => css`
   ${!roundBorder
     ? `
@@ -128,31 +103,3 @@ const noBorderTextStyle = (roundBorder, disabled) => css`
   `
     : ``}
 `;
-// ${roundBorder
-//     ? `
-//     ${
-//       status === 'normal'
-//         ? `
-//       background: ${colors.white};
-// &:hover {
-//   background: ${colors.grey._ec};
-// }
-// `
-//         : `
-// background: ${colors.grey._cc};
-// `
-//     };
-//   `
-// : `
-//     ${
-//   status === 'normal'
-//     ? `
-//       &:hover {
-//         font-weight: 700;
-//       }
-//     `
-//     : `
-//         font-weight: 700;
-//         `
-// }
-//   `}
