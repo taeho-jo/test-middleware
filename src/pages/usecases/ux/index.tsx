@@ -6,4 +6,4 @@ const Ux = () => {
   return <Solution2 />;
 };
 
-export default withNoAuth(Ux);
+export default Ux;

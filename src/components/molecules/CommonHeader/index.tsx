@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import FlexBox from '../../atoms/FlexBox';
+// import Icon from '../../atoms/Icon';
 import Icon from '../../atoms/Icon';
 import { colors } from '../../../styles/Common.styles';
 import Image from 'next/image';
@@ -30,7 +31,7 @@ const CommonHeader = () => {
       backgroundColor={colors.grey._3c}
     >
       <FlexBox justify={'flex-start'} align={'center'}>
-        {/*<Icon name={'LOGO_ICON'} size={40} />*/}
+        <Icon name={'LOGO_ICON'} size={40} />
         <div
           style={{
             background: 'rgba(255, 255, 255, 0.5)',
@@ -58,6 +59,7 @@ const CommonHeader = () => {
         <FlexBox justify={'flex-end'} align={'center'} onClick={test} style={{ cursor: 'pointer' }}>
           <ProfileIcon name={'J'} backgroundColor={profileCircle[4]} />
           <Icon name={'NAVIGATION_CHEVRON_DOWN'} style={{ marginLeft: '8px' }} size={24} />
+          {/*<Icon name={'NAVIGATION_CHEVRON_DOWN'} size={24} />*/}
         </FlexBox>
 
         <ProfilePopover display={focusProfile} />

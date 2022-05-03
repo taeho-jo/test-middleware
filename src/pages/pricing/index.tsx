@@ -5,4 +5,4 @@ const Pricing = () => {
   return <PricingComponent />;
 };
 
-export default withNoAuth(Pricing);
+export default Pricing;

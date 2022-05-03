@@ -5,4 +5,4 @@ const Ui = () => {
   return <Solution1 />;
 };
 
-export default withNoAuth(Ui);
+export default Ui;

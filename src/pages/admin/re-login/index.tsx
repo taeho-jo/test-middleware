@@ -15,4 +15,4 @@ const ReLogin = () => {
   return <AuthModal />;
 };
 
-export default withAuth(ReLogin);
+export default ReLogin;

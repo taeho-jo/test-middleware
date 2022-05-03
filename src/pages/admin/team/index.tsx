@@ -8,4 +8,4 @@ const Team = () => {
   return <TeamDashboard />;
 };
 
-export default withAuth(Team);
+export default Team;

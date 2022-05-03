@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { isShow } from '../../src/store/reducers/modalReducer2';
+import { isShow } from '../../src/store/reducers/modalReducer';
 // Components
 import { Grid, Stack, Button, IconButton, Popover, Icon } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -140,8 +140,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 //   handleClick('/tri');
                 // }}
                 onClick={() => {
-                  // dispatch(isShow({ isShow: true, type: 'login' }));
-                  dispatch(isShow({ isShow: true }));
+                  dispatch(isShow({ isShow: true, type: 'login' }));
+                  // dispatch(isShow({ isShow: true }));
                 }}
               >
                 로그인

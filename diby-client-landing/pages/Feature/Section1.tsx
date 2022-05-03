@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Grid, Stack } from '@mui/material';
 import { GridContainer } from '../../components/Grid';
 import { breakpoints } from '../../Theme';
+// import Icon from '../../../src/components/atoms/Icon';
 import Icon from '../../../src/components/atoms/Icon';
 import FeatureLine from '../../../public/assets/images/feature/feature_line.png';
 import FeatureCircle from '../../../public/assets/images/feature/feature_circle.png';
@@ -156,7 +157,6 @@ function Section1() {
       clearInterval(timerId);
     };
   }, [count]);
-  console.log(IconAlert, 'asd');
 
   return (
     <Section>
@@ -178,14 +178,17 @@ function Section1() {
         {!isMobile && (
           <Grid item xs={0} md={6} lg={6}>
             <Stack direction="column" spacing={24} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
-              {cards.map((card, index) => (
-                <CardWrapper data-aos="fade-up" key={`card_${index}`}>
-                  <Card className={index === count % cards.length ? 'box-shadow-active' : ''}>
-                    <Icon name={card.img} size={40} />
-                    <p>{card.title}</p>
-                  </Card>
-                </CardWrapper>
-              ))}
+              {cards.map((card, index) => {
+                console.log(card.img);
+                return (
+                  <CardWrapper data-aos="fade-up" key={`card_${index}`}>
+                    <Card className={index === count % cards.length ? 'box-shadow-active' : ''}>
+                      <Icon name={'GOOGLE'} size={40} />
+                      <p>{card.title}</p>
+                    </Card>
+                  </CardWrapper>
+                );
+              })}
             </Stack>
           </Grid>
         )}

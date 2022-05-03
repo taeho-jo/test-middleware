@@ -19,4 +19,4 @@ const Home = () => {
   );
 };
 
-export default withNoAuth(Home);
+export default Home;

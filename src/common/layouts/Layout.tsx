@@ -85,7 +85,7 @@ const Layout = ({ children }: PropsType) => {
           </div>
         );
     }
-  }, [router.pathname]);
+  }, [router.pathname, token]);
 
   return (
     <>

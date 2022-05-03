@@ -205,30 +205,6 @@ const AuthModal = () => {
               <span css={[body3_regular]}>가 생각났어요!</span>
             </div>
           )}
-
-          {/*{modalType === 'login' ? (*/}
-          {/*  <>*/}
-          {/*    <div css={bottomTextStyle} onClick={() => dispatch(isShow({ isShow: true, type: 'pwInquiry' }))}>*/}
-          {/*      <span css={[body3_bold]}>비밀번호</span>*/}
-          {/*      <span css={[body3_regular]}>를 잊어버리셨나요?</span>*/}
-          {/*    </div>*/}
-
-          {/*    <div css={bottomTextStyle} onClick={() => dispatch(isShow({ isShow: true, type: 'signup' }))}>*/}
-          {/*      <span css={body3_bold}>계정</span>*/}
-          {/*      <span css={[body3_regular]}>이 없으신가요?</span>*/}
-          {/*    </div>*/}
-          {/*  </>*/}
-          {/*) : modalType === 'signup' ? (*/}
-          {/*  <div css={bottomTextStyle} onClick={() => dispatch(isShow({ isShow: true, type: 'login' }))}>*/}
-          {/*    <span css={body3_bold}>계정</span>*/}
-          {/*    <span css={[body3_regular]}>이 있어요!</span>*/}
-          {/*  </div>*/}
-          {/*) : (*/}
-          {/*  <div css={bottomTextStyle} onClick={() => dispatch(isShow({ isShow: true, type: 'login' }))}>*/}
-          {/*    <span css={body3_bold}>비밀번호</span>*/}
-          {/*    <span css={[body3_regular]}>가 생각났어요!</span>*/}
-          {/*  </div>*/}
-          {/*)}*/}
         </FlexBox>
       </PopupBox>
     </FlexBox>

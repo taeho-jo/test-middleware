@@ -15,7 +15,7 @@ export default function withAuth(SpecificComponent: any) {
         console.log('~!@~!@~!@~!@~!');
         router.replace('/');
       }
-    }, [token, router]);
+    }, [token]);
 
     return <>{token ? <SpecificComponent /> : <div></div>}</>;
   };

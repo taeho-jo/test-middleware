@@ -7,4 +7,4 @@ const Form = () => {
   return <TestFormOrganisms />;
 };
 
-export default withAuth(Form);
+export default Form;

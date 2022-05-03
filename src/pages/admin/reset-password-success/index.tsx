@@ -6,4 +6,4 @@ const ResetPasswordSuccess = () => {
   return <ResetPwSuccess />;
 };
 
-export default withAuth(ResetPasswordSuccess);
+export default ResetPasswordSuccess;

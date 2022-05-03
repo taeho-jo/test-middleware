@@ -34,6 +34,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, style }
       <FlexBox style={{ marginBottom: '15px' }} justify={'space-between'} align={'center'}>
         <span css={[heading5_bold]}>{teamName}</span>
         <Icon name={'ACTION_SETTING'} size={24} onClick={handleChangeTeamName} />
+        {/*<Icon name={'ACTION_SETTING'} size={24} />*/}
       </FlexBox>
 
       <FlexBox justify={'flex-start'}>
@@ -44,7 +45,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, style }
             </Fragment>
           );
         })}
-        <Button onClick={handToggleInviteModal} buttonType={'icon'} icon={'ACTION_CREATE'} size={24} />
+        {/*<Button onClick={handToggleInviteModal} buttonType={'icon'} icon={'ACTION_CREATE'} size={24} />*/}
       </FlexBox>
     </FlexBox>
   );
