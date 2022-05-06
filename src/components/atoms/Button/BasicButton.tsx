@@ -10,13 +10,15 @@ interface PropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
   type?: 'submit' | 'button' | 'reset';
   status?: 'normal' | 'disabled';
   theme?: 'light' | 'dark';
+  style?: any;
   onClick?: () => void;
+  [key: string]: any;
 }
 
-const BasicButton = ({ designBgColor, text, type = 'button', status = 'normal', theme = 'light', onClick }: PropsType) => {
+const BasicButton = ({ style, designBgColor, text, type = 'button', status = 'normal', theme = 'light', onClick }: PropsType) => {
   const buttonTextStyle = heading4_bold;
   return (
-    <button onClick={onClick} type={type} css={[buttonStyle(status, theme), { background: designBgColor ? designBgColor : '' }]}>
+    <button onClick={onClick} type={type} css={[buttonStyle(status, theme), { ...style }, { background: designBgColor ? designBgColor : '' }]}>
       <span css={[buttonTextStyle, textStyle]}>{text ? text : 'button'}</span>
     </button>
   );
@@ -29,6 +31,7 @@ const buttonStyle = (status, theme) => css`
   padding: 16px 56px;
   border-radius: 8px;
   border: none;
+  box-sizing: border-box;
   cursor: ${status === 'disabled' ? 'not-allowed' : 'pointer'};
   ${theme === 'light'
     ? `

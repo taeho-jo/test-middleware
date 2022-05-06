@@ -150,7 +150,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 color={darkMode ? 'green' : 'white'}
                 style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}
                 onClick={() => {
-                  // dispatch(isShow({ isShow: true, type: 'signup' }));
+                  dispatch(isShow({ isShow: true, type: 'signup' }));
                 }}
               >
                 회원가입

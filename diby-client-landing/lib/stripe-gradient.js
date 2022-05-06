@@ -148,7 +148,6 @@ class MiniGl {
               const uniform = this;
               if (uniform.excludeFrom !== type) {
                 if ('array' === uniform.type) {
-                  console.log(uniform, ')____________(');
                   return uniform?.value[0].getDeclaration(name, type, uniform.value.length) + `\nconst int ${name}_length = ${uniform.value.length};`;
                 }
 

@@ -81,7 +81,6 @@ const NextButton = styled(Button)({
 });
 
 const Section1 = ({ data }) => {
-  console.log(data);
   const [isMobile, setIsMobile] = useState(window.innerWidth < breakpoints.md);
   const navigate = useRouter();
 

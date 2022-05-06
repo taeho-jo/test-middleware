@@ -17,11 +17,9 @@ import IconFeedback2 from '/public/assets/svg/icon_feedback2.svg';
 import IconTesting from '/public/assets/svg/icon_testing.svg';
 import IconAlert from '/public/assets/svg/icon_alert.svg';
 import { IconType } from '../../../common/types/commonTypes';
-// import { IconType } from '../../../common/types/commonTypes';
-import Modal from '../../atoms/Modal';
 
 interface PropsType {
-  name: IconType;
+  name: any;
   size?: number;
   style?: any;
   onClick?: () => void;
@@ -51,11 +49,7 @@ const Icon = ({ name, size = 16, style, onClick }: PropsType) => {
   const IconComponent = IconTypes[name];
   const viewBox = `0 0 ${size} ${size}`;
 
-  console.log(IconComponent, 'ICON COMPONENT');
-  console.log(Google, 'GOOGLE');
-
   return <IconComponent onClick={onClick} style={{ boxSizing: 'border-box', ...style }} width={size} height={size} viewBox={viewBox} />;
-  // return <div>{name}</div>;
 };
 
 export default Icon;

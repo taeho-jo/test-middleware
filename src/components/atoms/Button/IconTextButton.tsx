@@ -1,7 +1,6 @@
 import React from 'react';
 import Icon from '../Icon';
-import TextButton from './TextButton';
-import { heading5_bold, heading5_medium } from '../../../styles/FontStyles';
+import { heading5_regular } from '../../../styles/FontStyles';
 import { IconType } from '../../../common/types/commonTypes';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
@@ -21,7 +20,7 @@ interface PropsType {
 
 const IconTextButton = ({
   // status = 'disabled',
-  textStyle = heading5_medium,
+  textStyle = heading5_regular,
   text = 'Button',
   type = 'button',
   name,

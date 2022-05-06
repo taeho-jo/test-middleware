@@ -18,19 +18,27 @@ const CheckBox = ({ inputName, label, register, style, registerOptions, errors }
   const vaildation = errors ? (errors[inputName] ? false : true) : true;
 
   return (
-    <div css={{ ...style }}>
-      <FlexBox justify={'flex-start'} align={'center'}>
-        <input id={inputName} type={'checkbox'} {...register(inputName, registerOptions)} />
-        <label htmlFor={inputName} css={[caption1_regular, labelTextStyle(vaildation)]} dangerouslySetInnerHTML={{ __html: label }} />
-      </FlexBox>
+    <div css={[checkBoxContainerStyle, { ...style }]}>
+      <input id={inputName} type={'checkbox'} {...register(inputName, registerOptions)} />
+      <label htmlFor={inputName} css={[caption1_regular, labelTextStyle(vaildation)]} dangerouslySetInnerHTML={{ __html: label }} />
     </div>
   );
 };
 
 export default CheckBox;
 
+const checkBoxContainerStyle = css`
+  display: flex;
+`;
+
 const labelTextStyle = vaildation => css`
-  color: ${vaildation ? 'black' : 'red'};
+  ${!vaildation &&
+  css`
+    color: red;
+    label > a {
+      color: red;
+    }
+  `}
 `;
 
 // { color: errors[inputName] ? 'red' : 'black' }

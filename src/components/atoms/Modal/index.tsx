@@ -1,20 +1,11 @@
-import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { css } from '@emotion/react';
 import Portal from '../Portal';
-import { isShow } from '../../../store/reducers/modalReducer2';
 
 const Modal = ({ children }) => {
-  const dispatch = useDispatch();
-  const handleOffModal = useCallback(() => {
-    dispatch(isShow({ isShow: false }));
-  }, []);
-
   return (
     <Portal selector={'modal-root'}>
-      <div onClick={handleOffModal} css={darkBackgroundStyle}>
-        {children}
-      </div>
+      <div css={darkBackgroundStyle}>{children}</div>
       {/*<div css={backgroundStyle}>{modalType === 'confirmSignup' || modalType === 'confirmPassword' ? <ConfirmModal /> : <AuthModal />}</div>*/}
     </Portal>
   );

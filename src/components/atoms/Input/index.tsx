@@ -1,9 +1,7 @@
-import React, { InputHTMLAttributes, useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { InputHTMLAttributes } from 'react';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
-import { caption1_regular } from '../../../styles/FontStyles';
-import { ReducerType } from '../../../store/reducers';
+import { caption1_bold } from '../../../styles/FontStyles';
 
 interface PropsType extends InputHTMLAttributes<HTMLInputElement> {
   register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
@@ -15,10 +13,10 @@ interface PropsType extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   width?: string;
   label: string;
-  onChangeStatus?: (name, status) => void;
-  status?: boolean;
   disabled?: boolean;
-  defaultValue?: string;
+  style?: any;
+  title?: string;
+  // defaultValue?: string;
   registerOptions?: {
     [key: string]: any;
   };
@@ -35,30 +33,23 @@ const Input = ({
   errors,
   watch,
   registerOptions,
-  defaultValue = '',
   disabled = false,
+  style,
+  title,
+  // defaultValue,
   ...props
 }: PropsType) => {
-  // const modalType = useSelector<ReducerType, string>(state => state.modal.type);
-
-  const [inputFocus, setInputFocus] = useState(false);
-
-  const handleChangeFocusStatus = useCallback(
-    status => {
-      setInputFocus(status);
-    },
-    [inputFocus],
-  );
-
   return (
     <>
+      {title ? <label css={[caption1_bold, labelTextStyle(errors[label])]}>{title}</label> : null}
+
       <input
-        css={inputStyle(disabled, width)}
+        css={[inputStyle(disabled, width, errors[label]), { ...style }]}
         type={type}
         autoComplete={'off'}
         placeholder={errors[label] ? errorMsg : placeholder}
         disabled={disabled}
-        defaultValue={defaultValue}
+        id={label}
         name={label}
         {...props}
         {...register(label, registerOptions)}
@@ -68,28 +59,27 @@ const Input = ({
 };
 export default Input;
 
-const inputStyle = (disabled, width) => css`
+const inputStyle = (disabled, width, error) => css`
   box-sizing: border-box;
   outline: none;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 18px;
   color: ${colors.grey._3c};
   border-radius: 4px;
-  border: 1px solid #3c3c46;
   padding: 10px 16px;
   width: ${width};
   ::placeholder {
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
-    color: ${colors.grey._cc};
   }
   :focus {
-    border: 2px solid #3c3c46;
-    padding: 9px 16px;
+    font-weight: 700;
+    border: 2px solid ${colors.grey._3c};
+    padding: 9px 14px;
   }
   :hover {
-    border: 2px solid #24e1d5;
+    border: 2px solid ${colors.cyan._500};
     padding: 9px 16px;
   }
   :invalid {
@@ -99,6 +89,9 @@ const inputStyle = (disabled, width) => css`
       border: 1px solid ${colors.red};
       padding: 10px 16px;
     }
+    :focus {
+      padding: 10px 16px;
+    }
     ::placeholder {
       color: ${colors.red};
     }
@@ -106,9 +99,41 @@ const inputStyle = (disabled, width) => css`
   :disabled {
     background: ${colors.grey._ec};
     cursor: not-allowed;
+    color: ${colors.grey._99};
     :hover {
       border: 1px solid #3c3c46;
       padding: 10px 16px;
     }
   }
+  ${!error &&
+  css`
+    border: 1px solid #3c3c46;
+    ::placeholder {
+      color: ${colors.grey._cc};
+    }
+  `}
+  ${error &&
+  css`
+    border: 1px solid ${colors.red};
+    color: red;
+    :focus {
+      border: 2px solid ${colors.red};
+    }
+    ::placeholder {
+      color: ${colors.red};
+    }
+  `}
+`;
+
+const labelTextStyle = error => css`
+  margin-bottom: 8px;
+  display: inline-block;
+  ${!error &&
+  css`
+    color: ${colors.grey._99};
+  `}
+  ${error &&
+  css`
+    color: ${colors.red};
+  `}
 `;

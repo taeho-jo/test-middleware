@@ -26,7 +26,7 @@ const reset = (popupShow, isAdmin, story) => css`
     /* 공통셋팅 */
     a {
       //text-decoration: none;
-      color: #000000;
+      //color: #000000;
     }
     ul,
     ol {
@@ -69,7 +69,7 @@ const reset = (popupShow, isAdmin, story) => css`
     input[type='checkbox'] + label {
       cursor: pointer;
       padding-left: 30px;
-      height: auto;
+      height: 22px;
       background: url('/assets/images/common/toggle_check_box_off_24px.svg') left/22px no-repeat;
       line-height: 22px;
     }
@@ -81,6 +81,10 @@ const reset = (popupShow, isAdmin, story) => css`
     input[type='checkbox'] {
       display: none;
     }
+
+    //input:focus + label {
+    //  color: red;
+    //}
 
     #gradient-canvas {
       --gradient-color-1: #3c3c46;

@@ -55,6 +55,7 @@ const horizontal = keyframes`
 `;
 
 const alertBox = (position, status) => css`
+  box-sizing: border-box;
   background-color: ${status === 'success' ? colors.blue._500 : status === 'warning' ? colors.red : colors.cyan._500};
   border-radius: 8px;
   padding: 15px;

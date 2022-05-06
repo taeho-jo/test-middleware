@@ -1,22 +1,20 @@
-import React, { useCallback } from 'react';
-import Button from '../../atoms/Button';
+import React from 'react';
 import { heading4_bold } from '../../../styles/FontStyles';
 import { css } from '@emotion/react';
+import IconTextButton from '../../atoms/Button/IconTextButton';
 
 interface PropsType {
-  modalType?: string;
   title: string;
   btnText: string;
   style?: any;
-  pathname: string;
-  onClick?: (path) => void;
+  onClick?: () => void;
 }
 
-const ConfirmPopupNextStepBtn = ({ modalType, title, btnText, onClick, style, pathname }: PropsType) => {
+const ConfirmPopupNextStepBtn = ({ title, onClick, style, btnText }: PropsType) => {
   return (
-    <div css={[mainBoxStyle, style]}>
+    <div css={[mainBoxStyle, style]} onClick={onClick}>
       <h4 css={[heading4_bold, titleBoxStyle]}>{title}</h4>
-      <Button buttonType={'action'} btnText={btnText} onClick={() => onClick(pathname)} />
+      <IconTextButton text={btnText} name={'NAVIGATION_CHEVRON_RIGHT'} />
     </div>
   );
 };
@@ -28,5 +26,6 @@ const mainBoxStyle = css`
 `;
 
 const titleBoxStyle = css`
-  margin-bottom: 10px;
+  //margin-bottom: 10px;
+  margin: 16px 0;
 `;

@@ -112,6 +112,7 @@ const flexBox = (
   column,
   row,
 ) => css`
+  box-sizing: border-box;
   height: ${height};
   justify-content: ${justify};
   align-items: ${align};

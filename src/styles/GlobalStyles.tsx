@@ -11,7 +11,7 @@ const GlobalStyles = () => {
   const router = useRouter();
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
   const isAdmin = router.pathname.includes('admin');
-  return <Global styles={reset(modalShow, isAdmin)} />;
+  return <Global styles={reset(modalShow, isAdmin, false)} />;
 };
 
 export default GlobalStyles;

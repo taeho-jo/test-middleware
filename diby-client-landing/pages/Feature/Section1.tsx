@@ -179,7 +179,6 @@ function Section1() {
           <Grid item xs={0} md={6} lg={6}>
             <Stack direction="column" spacing={24} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
               {cards.map((card, index) => {
-                console.log(card.img);
                 return (
                   <CardWrapper data-aos="fade-up" key={`card_${index}`}>
                     <Card className={index === count % cards.length ? 'box-shadow-active' : ''}>
