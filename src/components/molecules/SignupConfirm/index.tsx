@@ -15,8 +15,8 @@ const mail = 'jotang@gmail.com';
 const SignupConfirm = () => {
   const router = useRouter();
 
-  const handleMovePage = useCallback(path => {
-    router.push(path);
+  const handleMovePage = useCallback(() => {
+    router.push('/');
   }, []);
 
   return (
@@ -34,13 +34,13 @@ const SignupConfirm = () => {
         />
         <ConfirmPopupNextStepBtn
           onClick={handleMovePage}
-          pathname={'/'}
+          // pathname={'/'}
           title={'혹시 이메일을 받지 못했나요?'}
           btnText={'이메일을 다시 보내주세요.'}
         />
         <ConfirmPopupNextStepBtn
           onClick={handleMovePage}
-          pathname={'/signup'}
+          // pathname={'/signup'}
           title={'이메일 주소를 잘못 입력하셨나요?'}
           btnText={'회원가입을 다시 할게요.'}
           style={{ marginTop: '24px' }}
