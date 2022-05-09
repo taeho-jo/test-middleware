@@ -30,7 +30,7 @@ const Header = () => {
             <img src={LogoText.src} alt="diby" />
           </FlexBox>
           <FlexBox align={'center'} justify={'flex-end'}>
-            <ProfileIcon width={'32px'} margin={'0 7.5px 0 0'} />
+            <ProfileIcon size={'32px'} margin={'0 7.5px 0 0'} />
             <Icon name={'NAVIGATION_CHEVRON_DOWN'} size={24} />
           </FlexBox>
         </FlexBox>

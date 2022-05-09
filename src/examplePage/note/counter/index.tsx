@@ -7,4 +7,4 @@ const Counter = () => {
   return <TestCounterOrganisms />;
 };
 
-export default withAuth(Counter);
+export default Counter;

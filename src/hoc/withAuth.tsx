@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // Redux
 import { ReducerType } from '../store/reducers';
 import { useSelector } from 'react-redux';
@@ -9,13 +9,15 @@ export default function withAuth(SpecificComponent: any) {
     const router = useRouter();
     const token = useSelector<ReducerType, string>(state => state.auth.token);
 
-    // useEffect(() => {
-    //   if (!token) {
-    //     router.push('/login');
-    //   }
-    // }, []);
+    useEffect(() => {
+      console.log('token :: ', token);
+      if (!token) {
+        console.log('~!@~!@~!@~!@~!');
+        router.replace('/');
+      }
+    }, [token]);
 
-    return <>{!token ? <SpecificComponent /> : <div></div>}</>;
+    return <>{token ? <SpecificComponent /> : <div></div>}</>;
   };
   return AuthenticateCheck;
 }

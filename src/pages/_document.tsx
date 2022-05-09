@@ -5,7 +5,7 @@ import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/do
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx);
-    console.log(initialProps, 'asdfasdfasdfasdf');
+    // console.log(initialProps, 'asdfasdfasdfasdf');
     // console.log(ctx.req.url);
     return { ...initialProps };
   }
@@ -65,6 +65,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <div id="toast-root"></div>
+          <div id="modal-root"></div>
           {/*Below we add the modal wrapper*/}
         </body>
         <NextScript />

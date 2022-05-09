@@ -5,6 +5,8 @@ import { HYDRATE } from 'next-redux-wrapper';
 import counter from './counterReducer';
 import auth from './authReducer';
 import toast from './toastReducer';
+import modal from './modalReducer';
+import team from './teamReducer';
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
@@ -17,6 +19,8 @@ const reducer = (state, action) => {
     counter,
     auth,
     toast,
+    modal,
+    team,
   })(state, action);
 };
 

@@ -10,8 +10,8 @@ export interface InputType {
   label: string;
   placeholder: string;
   type: string;
-  pattern: RegExp;
-  errorMsg: string;
+  pattern?: RegExp;
+  errorMsg?: string;
   line?: boolean;
 }
 
@@ -42,7 +42,7 @@ const AddInfoPopup = ({ id }: PropsType) => {
   }, []);
 
   return (
-    <FlexBox style={{ marginTop: '112px' }} justify={'center'} direction={'column'}>
+    <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
       <PopupBox padding={'0'} width={'392px'} height={'auto'}>
         <div css={iconBoxStyle}>
           <Icon name={'NAVIGATION_CLOSE_LG'} />

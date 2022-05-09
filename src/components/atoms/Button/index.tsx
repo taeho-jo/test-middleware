@@ -1,10 +1,12 @@
 import React from 'react';
+// Components
+import Icon from '../Icon';
+import ClipLoader from 'react-spinners/ClipLoader';
 // Styles
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
-import Icon from '../Icon';
 import { body2_bold, caption1_regular } from '../../../styles/FontStyles';
-import ClipLoader from 'react-spinners/ClipLoader';
+// Types
 import { ColorsType, IconType } from '../../../common/types/commonTypes';
 
 interface PropsType {
@@ -19,6 +21,7 @@ interface PropsType {
   padding?: string;
   start?: string;
   size?: number;
+  btnTextColor?: string;
 }
 
 const Button = ({
@@ -33,6 +36,7 @@ const Button = ({
   padding,
   start = '',
   size,
+  btnTextColor,
 }: PropsType) => {
   return (
     <>
@@ -41,7 +45,7 @@ const Button = ({
           <div css={isLoading ? loadingStyle : ''}>
             <ClipLoader color={'white'} loading={isLoading} size={16} />
           </div>
-          <span css={isLoading ? textStyle : body2_bold}>{btnText}</span>
+          <span css={isLoading ? textStyle : [body2_bold, { color: btnTextColor }]}>{btnText}</span>
         </button>
       ) : buttonType === 'action' ? (
         <button type={type} onClick={onClick} css={actionButtonStyle(full, padding)}>
@@ -79,6 +83,7 @@ const buttonStyle = (backgroundColor, full, padding) => css`
   width: ${full ? '100%' : 'auto'};
   cursor: pointer;
   position: relative;
+  box-sizing: border-box;
 `;
 
 // action button
@@ -92,6 +97,7 @@ const actionButtonStyle = (full, padding) => css`
   justify-content: space-between;
   cursor: pointer;
   width: ${full ? '100%' : 'auto'};
+  box-sizing: border-box;
 }
 `;
 
@@ -108,6 +114,7 @@ const iconButtonStyle = css`
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 `;
 
 // loading style
@@ -118,6 +125,7 @@ const loadingStyle = css`
   transform: translate(-50%, -50%);
   //z-index: 10;
   padding: 14px 53.5px;
+  box-sizing: border-box;
 `;
 
 const textStyle = [

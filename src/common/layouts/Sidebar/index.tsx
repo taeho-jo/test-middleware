@@ -5,10 +5,7 @@ import Button from '../../../components/atoms/Button';
 import FlexBox from '../../../components/atoms/FlexBox';
 import ShortText from '../../../components/atoms/ShortText';
 // Libraries
-import {
-  MdOutlineKeyboardArrowDown,
-  MdOutlineKeyboardArrowUp,
-} from 'react-icons/md';
+import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from 'react-icons/md';
 // Styles
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
@@ -78,7 +75,6 @@ const Sidebar = ({ showSidebar, onClick }: PropsTyps) => {
   // 페이지 이동 함수
   const handleClickMenu = useCallback(
     (label: string, path: string, isChildren?: boolean) => {
-      console.log(label, path, isChildren);
       if (isChildren) {
         router.push(path);
       }
@@ -118,70 +114,30 @@ const Sidebar = ({ showSidebar, onClick }: PropsTyps) => {
   return (
     <aside css={sidebarStyle(showSidebar)}>
       <FlexBox justify={'flex-end'} padding={'0'}>
-        <Button
-          buttonType={'basic'}
-          onClick={onClick}
-          backgroundColor={`${colors.blue._300}`}
-          btnText={showSidebar ? '닫기' : '열기'}
-        />
+        <Button buttonType={'basic'} onClick={onClick} backgroundColor={`${colors.blue._300}`} btnText={showSidebar ? '닫기' : '열기'} />
       </FlexBox>
       {MENU_LIST.map((el, index) => {
         return (
           <Fragment key={index}>
-            <FlexBox
-              padding={'10px 30px'}
-              justify={'space-between'}
-              width={'80%'}
-              onClick={() => handleClickMenu(el.label, el.path, false)}
-            >
+            <FlexBox padding={'10px 30px'} justify={'space-between'} width={'80%'} onClick={() => handleClickMenu(el.label, el.path, false)}>
               {/*<Link href={el.path}>{el.label}</Link>*/}
               {/*<ShortText>{el.label}</ShortText>*/}
-              <ShortText
-                text={el.label}
-                color={'white'}
-                fontWeight={'bold'}
-                cursor={'pointer'}
-              />
+              <ShortText text={el.label} color={'white'} fontWeight={'bold'} cursor={'pointer'} />
 
-              {el.child.length === 0 ? null : el.child.length > 0 &&
-                showSubMenu &&
-                subMenuName === el.label ? (
-                <MdOutlineKeyboardArrowDown
-                  color={'white'}
-                  size={28}
-                  cursor={'pointer'}
-                  onClick={() => handleClickMenu(el.label, el.path, false)}
-                />
+              {el.child.length === 0 ? null : el.child.length > 0 && showSubMenu && subMenuName === el.label ? (
+                <MdOutlineKeyboardArrowDown color={'white'} size={28} cursor={'pointer'} onClick={() => handleClickMenu(el.label, el.path, false)} />
               ) : (
-                <MdOutlineKeyboardArrowUp
-                  color={'white'}
-                  size={28}
-                  cursor={'pointer'}
-                  onClick={() => handleClickMenu(el.label, el.path, false)}
-                />
+                <MdOutlineKeyboardArrowUp color={'white'} size={28} cursor={'pointer'} onClick={() => handleClickMenu(el.label, el.path, false)} />
               )}
             </FlexBox>
 
             {/*Sub Menu*/}
             {el.child.length > 0 && showSubMenu && subMenuName === el.label
               ? el?.child?.map((item, index) => {
-                  console.log(el.label);
-                  console.log(item);
                   return (
                     <div css={subMenuStyle} key={index}>
-                      <FlexBox
-                        justify={'flex-start'}
-                        padding={'10px 30px 10px 45px'}
-                        onClick={() =>
-                          handleClickMenu(item.label, item.path, true)
-                        }
-                      >
-                        <ShortText
-                          text={item.label}
-                          color={'white'}
-                          fontWeight={'bold'}
-                          cursor={'pointer'}
-                        />
+                      <FlexBox justify={'flex-start'} padding={'10px 30px 10px 45px'} onClick={() => handleClickMenu(item.label, item.path, true)}>
+                        <ShortText text={item.label} color={'white'} fontWeight={'bold'} cursor={'pointer'} />
                       </FlexBox>
                     </div>
                   );

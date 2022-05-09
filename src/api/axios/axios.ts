@@ -2,7 +2,9 @@ import axios from 'axios';
 const URL = process.env.NEXT_PUBLIC_TEST_API;
 const AXIOS = axios.create({
   baseURL: URL,
-  headers: { 'X-Custom-Header': 'foobar', 'Access-Control-Allow-Origin': '*' },
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+  },
   withCredentials: false,
   timeout: 5000,
 });

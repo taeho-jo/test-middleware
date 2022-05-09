@@ -1,0 +1,15 @@
+export const profileColor = [
+  '#cfffac',
+  '#95efe9',
+  '#94bbf5',
+  '#ba9dee',
+  '#a8ff69',
+  '#24e1d5',
+  '#2878f0',
+  '#7b3ce9',
+  '#8bce5b',
+  '#1db5ab',
+  '#2262c1',
+  '#6431bc',
+  '#fe4e56',
+];

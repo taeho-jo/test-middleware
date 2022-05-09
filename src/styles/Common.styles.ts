@@ -21,11 +21,13 @@ export const colors = {
   },
   red: '#fe4e56',
   grey: {
+    _2c: '#2c2c36',
     _3c: '#3c3c46',
     _66: '#666666',
     _99: '#999999',
     _cc: '#cccccc',
     _ec: '#ececec',
+    _f7: '#f7f7f7',
     _fa: '#fafafa',
   },
   black: '#282828',

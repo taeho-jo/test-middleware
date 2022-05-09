@@ -58,7 +58,6 @@ const FlexBox = ({
   row,
   style,
 }: PropsType) => {
-  console.log(style, 'CSS');
   return (
     <div
       onClick={onClick}
@@ -113,6 +112,7 @@ const flexBox = (
   column,
   row,
 ) => css`
+  box-sizing: border-box;
   height: ${height};
   justify-content: ${justify};
   align-items: ${align};
