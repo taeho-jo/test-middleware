@@ -40,5 +40,3 @@ const labelTextStyle = vaildation => css`
     }
   `}
 `;
-
-// { color: errors[inputName] ? 'red' : 'black' }

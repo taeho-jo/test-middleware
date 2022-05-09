@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import FlexBox from '../../atoms/FlexBox';
 import PopupBox from '../../atoms/PopupBox';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +20,7 @@ import { css } from '@emotion/react';
 import TextButton from '../../atoms/Button/TextButton';
 import { useRouter } from 'next/router';
 import { showToast } from '../../../store/reducers/toastReducer';
+import { useLogin } from '../../../api/authApi';
 
 const loginInputArr = [
   {
@@ -52,14 +53,25 @@ const LoginModal = () => {
   const onSubmit = data => handleLogin('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const handleLogin = useCallback((status, data) => {
-    console.log(status, data);
-    const sendObject = {
-      email: data.email,
-      password: data.password,
-    };
-    console.log(sendObject, 'SEND OBJECT');
-  }, []);
+  const [loginField, setLoginField] = useState({
+    userId: '',
+    password: '',
+  });
+
+  const { mutate } = useLogin(loginField);
+
+  const handleLogin = useCallback(
+    (status, data) => {
+      console.log(status, data);
+      // const sendObject = {
+      //   userId: data.userId,
+      //   password: data.password,
+      // };
+      console.log(loginField, 'SEND OBJECT');
+      mutate();
+    },
+    [loginField],
+  );
 
   // 로그인 실패 로직
   const handleProcessingError = useCallback((status, errors) => {
@@ -82,6 +94,16 @@ const LoginModal = () => {
     router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=http://localhost:3000/`);
   }, []);
 
+  const updateLoginField = useCallback(
+    (label, value) => {
+      setLoginField({
+        ...loginField,
+        [label]: value,
+      });
+    },
+    [loginField],
+  );
+
   return (
     <FlexBox style={{ marginTop: modalShow ? '160px' : 0 }} justify={'center'} direction={'column'}>
       <PopupBox padding={'0'} width={'400px'} height={'auto'}>
@@ -89,15 +111,15 @@ const LoginModal = () => {
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
           <Input
             title={'이메일'}
-            // pattern="[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}"
             register={register}
-            label={'email'}
+            label={'userId'}
             errors={errors}
             errorMsg={'필수 항목입니다.'}
             placeholder={'이메일을 입력해주세요.'}
             style={{ marginBottom: '16px' }}
             registerOptions={{
               required: true,
+              onChange: e => updateLoginField('userId', e.target.value),
               pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
             }}
           />
@@ -115,6 +137,7 @@ const LoginModal = () => {
             // disabled={true}
             registerOptions={{
               required: true,
+              onChange: e => updateLoginField('password', e.target.value),
               pattern: /^(?=.*[A-Za-z])(?=.*[0-9]).{6,10}$/,
             }}
           />

@@ -7,7 +7,7 @@ interface PropsType extends InputHTMLAttributes<HTMLInputElement> {
   register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
   errorMsg?: string;
   errors?: object;
-  watch?: any;
+  // watch?: any;
   validation?: boolean;
   type?: string;
   placeholder?: string;
@@ -31,7 +31,7 @@ const Input = ({
   register,
   errorMsg,
   errors,
-  watch,
+  // watch,
   registerOptions,
   disabled = false,
   style,
