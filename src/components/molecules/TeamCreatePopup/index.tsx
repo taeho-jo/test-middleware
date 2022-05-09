@@ -32,7 +32,7 @@ const TeamCreatePopup = () => {
     <>
       <div css={firstTeamCreateBoxStyle} />
       <div css={modalBoxStyle}>
-        <ModalTitle modalType={'create-team'} />
+        {/*<ModalTitle modalType={'create-team'} />*/}
         <ModalSubTitle subTitle={[`DBDLAB님의 팀을 생성할게요.`]} />
         <div css={paddingbox}>
           <InputFormBox inputArr={inputArr} btnText={'완료했어요!'} btnTextColor={'white'} btnBackColor={colors.grey._3c} />
