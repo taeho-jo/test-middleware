@@ -14,7 +14,7 @@ const ResetPwSuccess = () => {
 
   return (
     <div css={mainBox}>
-      <ModalTitle modalType={'reset-password-success'} modalShow={false} />
+      {/*<ModalTitle modalType={'reset-password-success'} modalShow={false} />*/}
       <span css={[heading4_regular, { marginBottom: '34px' }]}>로그인을 원하시면 아래 버튼을 클릭해주세요.</span>
       <div css={paddingBox}>
         <Button onClick={handleMoveLogin} btnTextColor={'white'} buttonType={'basic'} backgroundColor={colors.grey._3c} btnText={'로그인하기'} />

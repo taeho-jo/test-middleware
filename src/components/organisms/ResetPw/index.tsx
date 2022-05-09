@@ -30,14 +30,14 @@ const ResetPw = () => {
 
   return (
     <div css={mainBox}>
-      <ModalTitle modalType={'reset-password'} modalShow={false} />
+      {/*<ModalTitle modalType={'reset-password'} modalShow={false} />*/}
       <span css={[heading4_bold, { marginBottom: '34px' }]}>{email}</span>
       <div css={paddingBox}>
         <InputFormBox
           handleSignUp={handleResetPassword}
           btnTextColor={'white'}
           inputArr={pwInquiryInputArr}
-          modalType={'reset-password'}
+          // modalType={'reset-password'}
           btnText={'비밀번호 재설정하기'}
           btnBackColor={colors.grey._3c}
         />

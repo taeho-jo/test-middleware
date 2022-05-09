@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import AuthModal from '../../../components/organisms/AuthModal';
+// import AuthModal from '../../../components/organisms/AuthModal';
 import { isShow } from '../../../store/reducers/modalReducer';
-import withNoAuth from '../../../hoc/withNoAuth';
-import withAuth from '../../../hoc/withAuth';
+// import withNoAuth from '../../../hoc/withNoAuth';
+// import withAuth from '../../../hoc/withAuth';
 
 const ReLogin = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const ReLogin = () => {
     dispatch(isShow({ isShow: false, type: 'login' }));
   }, []);
 
-  return <AuthModal />;
+  return <div>Re-login</div>;
 };
 
 export default ReLogin;

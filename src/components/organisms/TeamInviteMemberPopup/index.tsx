@@ -34,7 +34,7 @@ const TeamInviteMemberPopup = () => {
     <>
       <div css={firstTeamCreateBoxStyle} />
       <div css={modalBoxStyle}>
-        <ModalTitle modalType={'invite-team-member'} />
+        {/*<ModalTitle modalType={'invite-team-member'} />*/}
         <ModalSubTitle subTitle={[`디비디랩 팀에 팀원을 초대할 수 있어요.`, '링크 또는 이메일로 팀원을 초대해보세요!']} />
         <div css={paddingbox}>
           <InputFormBox inputArr={inputArr} btnText={'완료했어요!'} btnTextColor={'white'} btnBackColor={colors.grey._3c} />
