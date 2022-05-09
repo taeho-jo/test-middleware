@@ -12,8 +12,8 @@ const mail = 'jotang@gmail.com';
 const PwInquiryConfirm = () => {
   const router = useRouter();
 
-  const handleMovePage = useCallback(path => {
-    router.push(path);
+  const handleMovePage = useCallback(() => {
+    router.push('/');
   }, []);
 
   return (
@@ -31,7 +31,7 @@ const PwInquiryConfirm = () => {
         />
         <ConfirmPopupNextStepBtn
           onClick={handleMovePage}
-          pathname={'/'}
+          // pathname={'/'}
           title={'혹시 이메일을 받지 못했나요?'}
           btnText={'이메일을 다시 보내주세요.'}
         />
