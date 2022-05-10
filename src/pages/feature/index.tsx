@@ -1,6 +1,6 @@
 import React from 'react';
 import FeatureComponent from '../../../diby-client-landing/pages/Feature';
-import withNoAuth from '../../hoc/withNoAuth';
+import withoutTokenAuth from '../../hoc/withoutTokenAuth';
 const Feature = () => {
   return <FeatureComponent />;
 };

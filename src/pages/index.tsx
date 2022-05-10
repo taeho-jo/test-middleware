@@ -5,7 +5,7 @@ import Section2 from '../../diby-client-landing/pages/Home/Section2';
 import Section3 from '../../diby-client-landing/pages/Home/Section3';
 import Section4 from '../../diby-client-landing/pages/Home/Section4';
 import CustomFooter from '../../diby-client-landing/pages/Home/CustomFooter';
-import withNoAuth from '../hoc/withNoAuth';
+import withoutTokenAuth from '../hoc/withoutTokenAuth';
 
 const Home = () => {
   return (

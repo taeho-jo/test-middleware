@@ -1,7 +1,7 @@
 import React from 'react';
 // Components
 import TestCounterOrganisms from '../../../components/organisms/testCounterOrganisms';
-import withAuth from '../../../hoc/withAuth';
+import withTokenAuth from '../../../hoc/withTokenAuth';
 
 const Counter = () => {
   return <TestCounterOrganisms />;

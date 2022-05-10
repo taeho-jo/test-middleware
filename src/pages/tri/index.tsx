@@ -1,6 +1,6 @@
 import React from 'react';
 import TRIComponent from '../../../diby-client-landing/pages/TRI';
-import withNoAuth from '../../hoc/withNoAuth';
+import withoutTokenAuth from '../../hoc/withoutTokenAuth';
 const Tri = () => {
   return <TRIComponent />;
 };

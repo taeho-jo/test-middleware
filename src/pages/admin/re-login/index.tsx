@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // import AuthModal from '../../../components/organisms/AuthModal';
 import { isShow } from '../../../store/reducers/modalReducer';
-// import withNoAuth from '../../../hoc/withNoAuth';
-// import withAuth from '../../../hoc/withAuth';
+import withTokenAuth from '../../../hoc/withTokenAuth';
+// import withoutTokenAuth from '../../../hoc/withoutTokenAuth';
+// import withTokenAuth from '../../../hoc/withTokenAuth';
 
 const ReLogin = () => {
   const dispatch = useDispatch();
@@ -15,4 +16,4 @@ const ReLogin = () => {
   return <div>Re-login</div>;
 };
 
-export default ReLogin;
+export default withTokenAuth(ReLogin);

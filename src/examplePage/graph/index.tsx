@@ -1,10 +1,10 @@
 import React from 'react';
 // Components
 import TestGraphOrganisms from '../../components/organisms/testGraphOrganisms';
-import withAuth from '../../hoc/withAuth';
+import withTokenAuth from '../../hoc/withTokenAuth';
 
 const Graph = () => {
   return <TestGraphOrganisms />;
 };
 
-export default withAuth(Graph);
+export default withTokenAuth(Graph);

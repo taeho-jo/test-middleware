@@ -4,18 +4,19 @@ import { ReducerType } from '../store/reducers';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
-export default function withNoAuth(SpecificComponent: any) {
+export default function withTokenAuth(SpecificComponent: any) {
   const AuthenticateCheck = () => {
     const router = useRouter();
     const token = useSelector<ReducerType, string>(state => state.auth.token);
 
     useEffect(() => {
-      if (token) {
-        router.replace('/admin/team');
+      console.log('token :: ', token);
+      if (!token) {
+        router.replace('/');
       }
-    }, [token, router]);
+    }, [token]);
 
-    return <>{!token ? <SpecificComponent /> : <div></div>}</>;
+    return <>{token ? <SpecificComponent /> : <div>No Auth, redirect...</div>}</>;
   };
   return AuthenticateCheck;
 }

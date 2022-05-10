@@ -1,6 +1,6 @@
 import React from 'react';
 import { Solution1 } from '../../../../diby-client-landing/pages/Solution';
-import withNoAuth from '../../../hoc/withNoAuth';
+import withoutTokenAuth from '../../../hoc/withoutTokenAuth';
 const Ui = () => {
   return <Solution1 />;
 };
