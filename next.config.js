@@ -12,14 +12,14 @@ module.exports = {
       return [
         {
           source: '/:path*',
-          destination: `https://stag-backend.diby.io/api/v1/:path*`,
+          destination: process.env.DESTINATION_URL,
         },
       ];
     } else {
       return [
         {
           source: '/:path*',
-          destination: `https://prod-backend.diby.io/api/v1/:path*`,
+          destination: process.env.DESTINATION_URL,
         },
       ];
     }
