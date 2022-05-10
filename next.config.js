@@ -15,6 +15,13 @@ module.exports = {
           destination: `https://stag-backend.diby.io/api/v1/:path*`,
         },
       ];
+    } else {
+      return [
+        {
+          source: '/:path*',
+          destination: `https://prod-backend.diby.io/api/v1/:path*`,
+        },
+      ];
     }
   },
   webpack: config => {
