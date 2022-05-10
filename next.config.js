@@ -1,12 +1,20 @@
 /** @type {import('next').NextConfig} */
+const withPlugins = require('next-compose-plugins');
+
 const nextConfig = {
   reactStrictMode: true,
 };
 
-// module.exports = nextConfig;
-
 module.exports = {
   nextConfig,
+  async rewrites() {
+    return [
+      {
+        source: '/:path*',
+        destination: `https://stag-backend.diby.io/api/v1/:path*`,
+      },
+    ];
+  },
   webpack: config => {
     config.module.rules.push({
       test: /\.svg$/,
@@ -19,9 +27,3 @@ module.exports = {
     return config;
   },
 };
-
-// module.exports = {
-//   images: {
-//     formats: ['image/webp'],
-//   },
-// };
