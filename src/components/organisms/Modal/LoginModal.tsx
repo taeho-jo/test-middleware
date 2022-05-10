@@ -1,81 +1,60 @@
-import React, { useCallback, useState } from 'react';
-import FlexBox from '../../atoms/FlexBox';
-import PopupBox from '../../atoms/PopupBox';
+import React, { useCallback, useEffect } from 'react';
+import { useRouter } from 'next/router';
+// Redux
+import { showToast } from '../../../store/reducers/toastReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
-import { colors } from '../../../styles/Common.styles';
-import InputFormBox from '../../molecules/InputFormBox';
+// API
+import { useLogin } from '../../../api/authApi';
+// Libraries
+import { useForm } from 'react-hook-form';
+// Components
+import FlexBox from '../../atoms/FlexBox';
+import PopupBox from '../../atoms/PopupBox';
 import Form from '../../atoms/Form';
 import Input from '../../atoms/Input';
-import CheckBox from '../../atoms/CheckBox';
-import Button from '../../atoms/Button';
-import { useForm } from 'react-hook-form';
-import { InputType } from '../AddInfoPopup';
+import TextButton from '../../atoms/Button/TextButton';
 import ModalTitle from '../../molecules/ModalTitle';
 import BasicButton from '../../atoms/Button/BasicButton';
 import IconTextButton from '../../atoms/Button/IconTextButton';
+// Styles
 import { isShow } from '../../../store/reducers/modalReducer';
-import { body3_bold, body3_medium, body3_regular } from '../../../styles/FontStyles';
 import { css } from '@emotion/react';
-import TextButton from '../../atoms/Button/TextButton';
-import { useRouter } from 'next/router';
-import { showToast } from '../../../store/reducers/toastReducer';
-import { useLogin } from '../../../api/authApi';
-
-const loginInputArr = [
-  {
-    label: 'email',
-    placeholder: 'E-mail을 입력해주세요.',
-    errorMsg: 'E-mail양식이 아닙니다.',
-    pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-    type: 'text',
-  },
-  {
-    label: 'password',
-    placeholder: '비밀번호를 입력해주세요.',
-    errorMsg: '6자리 이상 입력해주세요.',
-    pattern: /^(?=.*[A-Za-z])(?=.*[0-9]).{6,10}$/,
-    type: 'password',
-  },
-];
+import { colors } from '../../../styles/Common.styles';
+import { body3_medium } from '../../../styles/FontStyles';
+// Types
+import { InputType } from '../AddInfoPopup';
 
 const LoginModal = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const modalType = useSelector<ReducerType, string>(state => state.modal.type);
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
 
+  // hook form
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<InputType>({});
   const onSubmit = data => handleLogin('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const [loginField, setLoginField] = useState({
-    userId: '',
-    password: '',
-  });
+  // react query
+  const loginResponse = useLogin();
 
-  const { mutate } = useLogin(loginField);
+  // 이메일 로그인
+  const handleLogin = useCallback((status, data) => {
+    loginResponse.mutate(data);
+  }, []);
 
-  const handleLogin = useCallback(
-    (status, data) => {
-      console.log(status, data);
-      // const sendObject = {
-      //   userId: data.userId,
-      //   password: data.password,
-      // };
-      console.log(loginField, 'SEND OBJECT');
-      mutate();
-    },
-    [loginField],
-  );
+  // 구글 로그인
+  const loginWithGoogle = useCallback(() => {
+    router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=http://localhost:3000/`);
+  }, []);
 
-  // 로그인 실패 로직
+  // 로그인 시도 실패
   const handleProcessingError = useCallback((status, errors) => {
-    console.log(status, errors);
     dispatch(showToast({ message: '가입된 계정이 없습니다. 다시 확인해주세요!', isShow: true, status: 'warning', duration: 5000 }));
   }, []);
 
@@ -89,20 +68,15 @@ const LoginModal = () => {
     dispatch(isShow({ isShow: true, type: 'signup' }));
   }, []);
 
-  // 구글 로그인
-  const loginWithGoogle = useCallback(() => {
-    router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=http://localhost:3000/`);
-  }, []);
-
-  const updateLoginField = useCallback(
-    (label, value) => {
-      setLoginField({
-        ...loginField,
-        [label]: value,
-      });
-    },
-    [loginField],
-  );
+  useEffect(() => {
+    const { data } = loginResponse;
+    if (data) {
+      if (data.header.status !== 201) {
+        reset();
+        loginResponse.data = undefined;
+      }
+    }
+  }, [loginResponse.data]);
 
   return (
     <FlexBox style={{ marginTop: modalShow ? '160px' : 0 }} justify={'center'} direction={'column'}>
@@ -119,7 +93,7 @@ const LoginModal = () => {
             style={{ marginBottom: '16px' }}
             registerOptions={{
               required: true,
-              onChange: e => updateLoginField('userId', e.target.value),
+              // onChange: e => updateLoginField('userId', e.target.value),
               pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
             }}
           />
@@ -137,7 +111,7 @@ const LoginModal = () => {
             // disabled={true}
             registerOptions={{
               required: true,
-              onChange: e => updateLoginField('password', e.target.value),
+              // onChange: e => updateLoginField('password', e.target.value),
               pattern: /^(?=.*[A-Za-z])(?=.*[0-9]).{6,10}$/,
             }}
           />

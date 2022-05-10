@@ -5,4 +5,4 @@ const Pricing = () => {
   return <PricingComponent />;
 };
 
-export default Pricing;
+export default withoutTokenAuth(Pricing);

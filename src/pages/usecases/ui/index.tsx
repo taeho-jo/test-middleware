@@ -5,4 +5,4 @@ const Ui = () => {
   return <Solution1 />;
 };
 
-export default Ui;
+export default withoutTokenAuth(Ui);
