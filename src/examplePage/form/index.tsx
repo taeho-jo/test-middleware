@@ -1,7 +1,7 @@
 import React from 'react';
 // Components
 import TestFormOrganisms from '../../components/organisms/testFormOrganisms';
-import withAuth from '../../hoc/withAuth';
+import withTokenAuth from '../../hoc/withTokenAuth';
 
 const Form = () => {
   return <TestFormOrganisms />;

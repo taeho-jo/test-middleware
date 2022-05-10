@@ -3,21 +3,20 @@ import React, { useEffect } from 'react';
 import { ReducerType } from '../store/reducers';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import withTokenAuth from './withTokenAuth';
 
-export default function withAuth(SpecificComponent: any) {
+export default function withoutTokenAuth(SpecificComponent: any) {
   const AuthenticateCheck = () => {
     const router = useRouter();
     const token = useSelector<ReducerType, string>(state => state.auth.token);
 
     useEffect(() => {
-      console.log('token :: ', token);
-      if (!token) {
-        console.log('~!@~!@~!@~!@~!');
-        router.replace('/');
+      if (token) {
+        router.replace('/admin/team');
       }
     }, [token]);
 
-    return <>{token ? <SpecificComponent /> : <div></div>}</>;
+    return <>{!token ? <SpecificComponent /> : <div>You're already our Member. Redirect Main...</div>}</>;
   };
   return AuthenticateCheck;
 }

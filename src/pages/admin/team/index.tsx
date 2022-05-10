@@ -1,11 +1,11 @@
 import React from 'react';
 
 // import icon1 from '../../public/assets/images/icon_uitest1.png';
-import withAuth from '../../../hoc/withAuth';
+import withTokenAuth from '../../../hoc/withTokenAuth';
 import TeamDashboard from '../../../components/organisms/TeamDashboard';
 
 const Team = () => {
   return <TeamDashboard />;
 };
 
-export default Team;
+export default withTokenAuth(Team);

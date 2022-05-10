@@ -1,9 +1,9 @@
 import React from 'react';
 import TestReactQueryOrganisms from '../../../components/organisms/testReactQueryOrganisms';
-import withAuth from '../../../hoc/withAuth';
+import withTokenAuth from '../../../hoc/withTokenAuth';
 
 const QueryTest = () => {
   return <TestReactQueryOrganisms />;
 };
 
-export default withAuth(QueryTest);
+export default withTokenAuth(QueryTest);

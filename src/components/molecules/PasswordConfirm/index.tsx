@@ -26,7 +26,7 @@ const PwInquiryConfirm = () => {
         <ConfirmPopupContents
           title={'메일을 확인해주세요!'}
           contents={`${mail}로 
-새 비밀번호를 설정할 수 있는 메일을 보냈어요. 
+새 비밀번호를 설정할 수 있는 메일을 보냈어요. ㄱ
 새로운 비밀번호를 설정해주세요.`}
         />
         <ConfirmPopupNextStepBtn
