@@ -37,6 +37,7 @@ export const persistor = persistStore(store);
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout, props) {
   const router = useRouter();
+  console.log(process.env.NODE_ENV, 'NODE_ENV');
 
   const [queryClient] = React.useState(
     () =>
