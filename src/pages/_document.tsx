@@ -30,34 +30,14 @@ class MyDocument extends Document {
           <meta property="author" content="DBDLAB" />
           <meta name="google-site-verification" content="VOhtSYTyB99y881SKWMXBlOpPgmSFRKA7-8W7AlzlrY" />
           <meta name="naver-site-verification" content="4cb24b7cbfcbd02dd6230263b6358c44b114b844" />
-          <script async src="https://www.googletagmanager.com/gtag/js?id=AW-667012930" />
+
           <script
             dangerouslySetInnerHTML={{
-              __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                
-                gtag('config', 'AW-667012930');
-              `,
-            }}
-          />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-              window.addEventListener('load', function(event) {
-      if (window.location.href == 'https://diby.io/tri') {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-667012930/UzsQCN24pbgDEMKeh74C'
-        });
-      }
-      if (window.location.href == 'https://diby.io/pricing') {
-        gtag('event', 'conversion', {
-          'send_to': 'AW-667012930/RJrHCOC4pbgDEMKeh74C'
-        });
-      }
-    });
-            `,
+              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5VNRNVV');`,
             }}
           />
         </Head>
