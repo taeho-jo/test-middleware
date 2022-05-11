@@ -8,34 +8,25 @@ const nextConfig = {
 module.exports = {
   nextConfig,
   async rewrites() {
-    if (process.env.NODE_ENV === 'development') {
-      return [
-        {
-          source: '/:path*',
-          destination: process.env.DESTINATION_URL,
-        },
-      ];
-    } else {
-      return [
-        {
-          source: '/:path*',
-          destination: process.env.DESTINATION_URL,
-        },
-      ];
-    }
+    return [
+      {
+        source: '/:path*',
+        destination: process.env.DESTINATION_URL,
+      },
+    ];
   },
   webpack: config => {
-    const prod = process.env.NODE_ENV === 'production';
+    // const prod = process.env.NODE_ENV === 'production';
 
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
     });
 
-    config = {
-      ...config,
-      mode: prod ? 'production' : 'development',
-    };
+    // config = {
+    //   ...config,
+    //   mode: prod ? 'production' : 'development',
+    // };
 
     return config;
   },
