@@ -14,6 +14,8 @@ import CommonHeader from '../../components/molecules/CommonHeader';
 import AdminLayout from './AdminLayout';
 import AlertToast from '../../components/organisms/AlertToast';
 import FlexBox from '../../components/atoms/FlexBox';
+import { useGoogleLogin } from '../../api/authApi';
+import { setToken } from '../../store/reducers/authReducer';
 
 // Types
 interface PropsType {
@@ -49,6 +51,14 @@ const Layout = ({ children }: PropsType) => {
       setShowGradient(false);
     }
   }, [router.pathname]);
+
+  useEffect(() => {
+    if (router?.query) {
+      if (router.query?.token) {
+        dispatch(setToken(`${router.query.token}`));
+      }
+    }
+  }, [router.query]);
 
   const separateDomain = useCallback(() => {
     switch (router.pathname) {

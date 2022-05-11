@@ -5,4 +5,4 @@ const Tri = () => {
   return <TRIComponent />;
 };
 
-export default Tri;
+export default withoutTokenAuth(Tri);

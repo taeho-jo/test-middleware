@@ -11,8 +11,10 @@ export default function withTokenAuth(SpecificComponent: any) {
 
     useEffect(() => {
       console.log('token :: ', token);
+      console.log(localStorage.getItem('auth'), 'ssss');
       if (!token) {
-        router.replace('/');
+        console.log('이걸타는거지??');
+        router.push('/');
       }
     }, [token]);
 

@@ -64,7 +64,7 @@ const ResearchType = [
 const TeamDashboard = () => {
   const isFirstCreateTeam = useSelector<ReducerType, boolean>(state => state.team.isFirstCreate);
   const isInviteModal = useSelector<ReducerType, boolean>(state => state.team.isInviteModal);
-  console.log(isFirstCreateTeam, 'is First');
+  // console.log(isFirstCreateTeam, 'is First');
   return (
     <>
       {/*<div css={firtTeamCreateBoxStyle} />*/}

@@ -5,4 +5,4 @@ const Feature = () => {
   return <FeatureComponent />;
 };
 
-export default Feature;
+export default withoutTokenAuth(Feature);

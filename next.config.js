@@ -25,13 +25,17 @@ module.exports = {
     }
   },
   webpack: config => {
+    const prod = process.env.NODE_ENV === 'production';
+
     config.module.rules.push({
       test: /\.svg$/,
-      // issuer: {
-      //   test: /\.(js|ts)x?$/,
-      // },
       use: ['@svgr/webpack'],
     });
+
+    config = {
+      ...config,
+      mode: prod ? 'production' : 'development',
+    };
 
     return config;
   },

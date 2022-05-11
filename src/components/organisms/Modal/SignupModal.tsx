@@ -1,24 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { showToast } from '../../../store/reducers/toastReducer';
+import { isShow } from '../../../store/reducers/modalReducer';
+// API
+import { useSignup } from '../../../api/authApi';
+// Libraries
+import { useForm } from 'react-hook-form';
+// Components
 import FlexBox from '../../atoms/FlexBox';
 import PopupBox from '../../atoms/PopupBox';
-import { useDispatch, useSelector } from 'react-redux';
-import { ReducerType } from '../../../store/reducers';
-import { colors } from '../../../styles/Common.styles';
 import Form from '../../atoms/Form';
 import Input from '../../atoms/Input';
-import { useForm } from 'react-hook-form';
-import { InputType } from '../AddInfoPopup';
+import TextButton from '../../atoms/Button/TextButton';
+import CheckBox from '../../atoms/CheckBox';
 import ModalTitle from '../../molecules/ModalTitle';
 import BasicButton from '../../atoms/Button/BasicButton';
 import IconTextButton from '../../atoms/Button/IconTextButton';
-import { isShow } from '../../../store/reducers/modalReducer';
+// Styles
 import { body3_medium } from '../../../styles/FontStyles';
-import TextButton from '../../atoms/Button/TextButton';
-import { useRouter } from 'next/router';
-import { showToast } from '../../../store/reducers/toastReducer';
-import CheckBox from '../../atoms/CheckBox';
-import { useSignup } from '../../../api/authApi';
-import { usePutUpdateProductApi } from '../../../api/productsApi';
+import { colors } from '../../../styles/Common.styles';
+// Types
+import { InputType } from '../AddInfoPopup';
+import { ReducerType } from '../../../store/reducers';
 
 const SignupModal = () => {
   const dispatch = useDispatch();
@@ -28,6 +33,7 @@ const SignupModal = () => {
   const {
     register,
     handleSubmit,
+    reset,
     watch,
     // setFocus,
     formState: { errors },
@@ -36,54 +42,49 @@ const SignupModal = () => {
   const onSubmit = data => handleSignup('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const [signupField, setSignupField] = useState({
-    userId: '',
-    password: '',
-    userName: '',
-    funnelsCd: '',
-    cpPosition: '',
-    cpSize: '',
-    cxResearch: '',
-    purposeOfUse: '',
-    privacyConsentYn: '',
-    consentToUseMarketingYn: 'N',
-  });
+  // 이메일 가입
+  const signupResponse = useSignup();
 
-  const handleGoBackLogin = useCallback(() => {
-    dispatch(isShow({ isShow: true, type: 'login' }));
+  const handleSignup = useCallback((status, data) => {
+    console.log(data);
+
+    const { consentToUseMarketingYn, password, privacyConsentYn, userId, username } = data;
+
+    const sendObject = {
+      userId,
+      password,
+      username: userId.split('@')[0],
+      privacyConsentYn: privacyConsentYn ? 'Y' : 'N',
+      consentToUseMarketingYn: consentToUseMarketingYn ? 'Y' : 'N',
+    };
+    console.log(sendObject, 'SEND OBJECT');
+    signupResponse.mutate(sendObject);
   }, []);
 
-  const { mutate } = useSignup(signupField);
-
-  const handleSignup = useCallback(
-    (status, data) => {
-      // console.log(data);
-      console.log(signupField, 'SIGN UP FIELD');
-      mutate();
-      // dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-    },
-    [signupField],
-  );
-
-  const handleProcessingError = useCallback((status, errors) => {
-    console.log(status, errors);
-    dispatch(showToast({ message: '정보를 입력해주세요.', isShow: true, status: 'warning', duration: 5000 }));
-  }, []);
-
+  // 구글 로그인
   const loginWithGoogle = useCallback(() => {
     router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=http://localhost:3000/`);
   }, []);
 
-  const updateSignupField = useCallback(
-    (label, value) => {
-      console.log(value, 'VALUE');
-      setSignupField({
-        ...signupField,
-        [label]: value,
-      });
-    },
-    [signupField],
-  );
+  // 회원가입 시도 실패
+  const handleProcessingError = useCallback((status, errors) => {
+    dispatch(showToast({ message: '정보를 입력해주세요.', isShow: true, status: 'warning', duration: 5000 }));
+  }, []);
+
+  // 로그인 돌아가기
+  const handleGoBackLogin = useCallback(() => {
+    dispatch(isShow({ isShow: true, type: 'login' }));
+  }, []);
+
+  useEffect(() => {
+    const { data } = signupResponse;
+    if (data) {
+      if (data.header.status !== 201) {
+        reset();
+        signupResponse.data = undefined;
+      }
+    }
+  }, [signupResponse.data]);
 
   return (
     <FlexBox style={{ marginTop: modalShow ? '160px' : 0 }} justify={'center'} direction={'column'}>
@@ -101,7 +102,7 @@ const SignupModal = () => {
             style={{ marginBottom: '16px' }}
             registerOptions={{
               required: true,
-              onChange: e => updateSignupField('userId', e.target.value),
+              // onChange: e => updateSignupField('userId', e.target.value),
               pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
             }}
           />
@@ -117,7 +118,7 @@ const SignupModal = () => {
             placeholder={'비밀번호를 입력해주세요.'}
             registerOptions={{
               required: true,
-              onChange: e => updateSignupField('password', e.target.value),
+              // onChange: e => updateSignupField('password', e.target.value),
               pattern: /^(?=.*[A-Za-z])(?=.*[0-9]).{6,10}$/,
             }}
           />
@@ -131,7 +132,7 @@ const SignupModal = () => {
             register={register}
             errors={errors}
             registerOptions={{
-              onChange: e => updateSignupField('privacyConsentYn', e.target.checked ? 'Y' : 'N'),
+              // onChange: e => updateSignupField('privacyConsentYn', e.target.checked ? 'Y' : 'N'),
               required: true,
             }}
           />
@@ -140,9 +141,11 @@ const SignupModal = () => {
             inputName={'consentToUseMarketingYn'}
             label={'Diby에서 발행하는 UX / CX 아티클과 연구자료를<br> 받아볼게요. (선택)'}
             register={register}
-            registerOptions={{
-              onChange: e => updateSignupField('consentToUseMarketingYn', e.target.checked ? 'Y' : 'N'),
-            }}
+            registerOptions={
+              {
+                // onChange: e => updateSignupField('consentToUseMarketingYn', e.target.checked ? 'Y' : 'N'),
+              }
+            }
             errors={errors}
           />
 
