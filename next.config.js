@@ -34,7 +34,7 @@ module.exports = {
 
     config = {
       ...config,
-      mode: 'production',
+      mode: prod ? 'production' : 'development',
     };
 
     return config;
