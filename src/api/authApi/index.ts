@@ -6,9 +6,13 @@ import { useRouter } from 'next/router';
 import { LoginInputType, SignupInputType } from './types';
 import { showToast } from '../../store/reducers/toastReducer';
 
+export const useGoogleLogin = () => {
+  // const router = useRouter();
+  // console.log(router.query, 'QUERY');
+};
+
 export const useLogin = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const handleLogin = async (sendObject: LoginInputType) => {
     return await AXIOS_POST('/user/login', sendObject);
@@ -17,7 +21,6 @@ export const useLogin = () => {
   return useMutation(handleLogin, {
     onError: error => console.log(error),
     onSuccess: data => {
-      console.log(data, 'DATA, !');
       const { body, header } = data;
       if (header.status !== 201) {
         dispatch(showToast({ message: header.message, isShow: true, status: 'warning', duration: 5000 }));

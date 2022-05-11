@@ -12,7 +12,7 @@ export default function withTokenAuth(SpecificComponent: any) {
     useEffect(() => {
       console.log('token :: ', token);
       if (!token) {
-        router.replace('/');
+        router.push('/');
       }
     }, [token]);
 
