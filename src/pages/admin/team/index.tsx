@@ -8,4 +8,4 @@ const Team = () => {
   return <TeamDashboard />;
 };
 
-export default withTokenAuth(Team);
+export default withTokenAuth(Team, false);

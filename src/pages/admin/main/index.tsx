@@ -5,4 +5,4 @@ const Main = () => {
   return <div>가다나달마바사</div>;
 };
 
-export default withTokenAuth(Main);
+export default withTokenAuth(Main, false);

@@ -6401,9 +6401,9 @@ exports.modules = {
       if (currentV[0] === currentO[0] && currentV[1] === currentO[1] && currentV[0] === currentI[0] && currentV[1] === currentI[1]) {
         if ((i === 0 || i === len - 1) && !path.c) {
           clonedPath.setTripleAt(currentV[0], currentV[1], currentO[0], currentO[1], currentI[0], currentI[1], index);
-          /* clonedPath.v[index] = currentV;
-                  clonedPath.o[index] = currentO;
-                  clonedPath.i[index] = currentI; */
+          /* clonedPath.v[landing] = currentV;
+                  clonedPath.o[landing] = currentO;
+                  clonedPath.i[landing] = currentI; */
 
           index += 1;
         } else {
@@ -6822,7 +6822,7 @@ exports.modules = {
 
       if (!fontData.cache[index + 1]) {
         var tHelper = fontData.helper; // Canvas version
-        // fontData.cache[index] = tHelper.measureText(char).width / 100;
+        // fontData.cache[landing] = tHelper.measureText(char).width / 100;
         // SVG version
         // console.log(tHelper.getBBox().width)
 
@@ -11665,7 +11665,7 @@ exports.modules = {
     var finalValue = _finalValue || this.data.d.k[this.keysIndex].s;
 
     for (i = 0; i < len; i += 1) {
-      // Checking if index changed to prevent creating a new object every time the expression updates.
+      // Checking if landing changed to prevent creating a new object every time the expression updates.
       if (currentIndex !== this.keysIndex) {
         finalValue = this.effectsSequence[i](finalValue, finalValue.t);
       } else {
@@ -17726,7 +17726,7 @@ exports.modules = {
         var lenKey;
 
         if (!data.k.length || typeof data.k[0] === 'number') {
-          throw new Error('The property has no keyframe at index ' + ind);
+          throw new Error('The property has no keyframe at landing ' + ind);
         }
 
         ind -= 1;

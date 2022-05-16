@@ -24,19 +24,36 @@ interface PropsType {
 
 const Layout = ({ children }: PropsType) => {
   const dispatch = useDispatch();
-  const token = useSelector((state: any) => state.auth.token);
+  // const token = useSelector((state: any) => state.auth.token);
+  const token = localStorage.getItem('accessToken');
+
   const [showGradient, setShowGradient] = useState<boolean>(true);
 
   const router = useRouter();
 
   const canvasRef = useRef(null);
 
-  useEffect(() => {
-    if (router.pathname === '/' && canvasRef.current) {
-      setGradient(canvasRef.current);
-    }
-  }, [token, router.pathname]);
+  // useEffect(() => {
+  //   if (router.pathname === '/') {
+  //     if (token) {
+  //       router.replace('/admin/team');
+  //     } else {
+  //       router.replace('/');
+  //     }
+  //   }
+  // }, [router.pathname, token]);
 
+  useEffect(() => {
+    if (router?.query) {
+      if (router.query?.token) {
+        localStorage.setItem('accessToken', `${router.query.token}`);
+        dispatch(setToken(`${router.query.token}`));
+        router.push('/admin/team');
+      }
+    }
+  }, [router.query]);
+
+  // <------------- LandingPage css 및 animation 을 위한 useEffect -------------> //
   useEffect(() => {
     AOS.init({
       once: true,
@@ -45,20 +62,18 @@ const Layout = ({ children }: PropsType) => {
   }, []);
 
   useEffect(() => {
-    if (router.pathname === '/') {
+    if ((router.pathname === '/' || router.pathname === '/index') && canvasRef.current) {
+      setGradient(canvasRef.current);
+    }
+  }, [token, router.pathname]);
+  useEffect(() => {
+    if (router.pathname === '/' || router.pathname === '/index') {
       setShowGradient(true);
     } else {
       setShowGradient(false);
     }
   }, [router.pathname]);
-
-  useEffect(() => {
-    if (router?.query) {
-      if (router.query?.token) {
-        dispatch(setToken(`${router.query.token}`));
-      }
-    }
-  }, [router.query]);
+  // <------------- LandingPage css 및 animation 을 위한 useEffect -------------> //
 
   const separateDomain = useCallback(() => {
     switch (router.pathname) {
@@ -85,6 +100,33 @@ const Layout = ({ children }: PropsType) => {
             </main>
           </div>
         );
+      case '/':
+      case '/index':
+      case '/usecases/ui':
+      case '/usecases/ux':
+      case '/usecases/scenario':
+      case '/usecases/customer':
+      case '/feature':
+      case '/tri':
+      case '/pricing':
+        return (
+          <>
+            <div css={mainContainer}>
+              <main css={contentsContainer}>
+                <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
+                {showGradient ? (
+                  <>
+                    <div css={gradientDiv}></div>
+                    <AppBar dark={showGradient} />
+                  </>
+                ) : null}
+                <div>{children}</div>
+              </main>
+            </div>
+            <AlertToast position={'top-center'} />
+            <CommonModal />
+          </>
+        );
       default:
         return (
           <div css={mainContainer}>
@@ -95,31 +137,63 @@ const Layout = ({ children }: PropsType) => {
           </div>
         );
     }
-  }, [router.pathname, token]);
+  }, [router.pathname, token, showGradient]);
 
-  return (
-    <>
-      {token ? (
-        separateDomain()
-      ) : (
+  // ===================================== 살릴 부분 ===================================== //
+  if (token) {
+    return (
+      <>
+        {separateDomain()}
+        <AlertToast position={'top-center'} />
+        <CommonModal />
+      </>
+    );
+  }
+  if (!token) {
+    return (
+      <>
         <div css={mainContainer}>
           <main css={contentsContainer}>
             <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
             {showGradient ? (
               <>
                 <div css={gradientDiv}></div>
-                <AppBar dark />
+                <AppBar dark={showGradient} />
               </>
             ) : null}
             <div>{children}</div>
           </main>
         </div>
-      )}
+        <AlertToast position={'top-center'} />
+        <CommonModal />
+      </>
+    );
+  }
+  // ===================================== 살릴 부분 ===================================== //
 
-      <AlertToast position={'top-center'} />
-      <CommonModal />
-    </>
-  );
+  // return (
+  //   <>
+  //     {token ? (
+  //       separateDomain()
+  //     ) : (
+  //       <div css={mainContainer}>
+  //         <main css={contentsContainer}>
+  //           <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
+  //           {showGradient ? (
+  //             <>
+  //               <div css={gradientDiv}></div>
+  //               <AppBar dark={showGradient} />
+  //             </>
+  //           ) : null}
+  //           <div>{children}</div>
+  //         </main>
+  //       </div>
+  //     )}
+  //
+  //     <AlertToast position={'top-center'} />
+  //     <CommonModal />
+  //   </>
+  // );
 };
 
 export default Layout;

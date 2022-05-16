@@ -15,7 +15,7 @@ export const useLogin = () => {
   const dispatch = useDispatch();
 
   const handleLogin = async (sendObject: LoginInputType) => {
-    return await AXIOS_POST('/user/login', sendObject);
+    return await AXIOS_POST('/login', sendObject);
   };
 
   return useMutation(handleLogin, {
@@ -35,7 +35,7 @@ export const useSignup = () => {
   const dispatch = useDispatch();
 
   const handleSignup = async (sendObject: SignupInputType) => {
-    return await AXIOS_POST('/user/register', sendObject);
+    return await AXIOS_POST('/register', sendObject);
   };
 
   return useMutation(handleSignup, {

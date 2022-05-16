@@ -65,7 +65,7 @@ __webpack_require__.d(__webpack_exports__, {
   "Z": () => (/* binding */ components_AppBar)
 });
 
-// EXTERNAL MODULE: ./node_modules/react/index.js
+// EXTERNAL MODULE: ./node_modules/react/landing.js
 var react = __webpack_require__(67294);
 // EXTERNAL MODULE: ./node_modules/next/router.js
 var router = __webpack_require__(11163);
@@ -73,9 +73,9 @@ var router = __webpack_require__(11163);
 var next_link = __webpack_require__(41664);
 // EXTERNAL MODULE: ./node_modules/next/image.js
 var next_image = __webpack_require__(25675);
-// EXTERNAL MODULE: ./node_modules/@mui/material/node/index.js
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/landing.js
 var node = __webpack_require__(7772);
-// EXTERNAL MODULE: ./node_modules/@mui/material/node/styles/index.js
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/styles/landing.js
 var styles = __webpack_require__(59006);
 // EXTERNAL MODULE: ./diby-client-landing/components/Grid.tsx
 var Grid = __webpack_require__(53532);
@@ -798,20 +798,20 @@ __webpack_require__.d(__webpack_exports__, {
   "default": () => (/* binding */ _app)
 });
 
-// EXTERNAL MODULE: ./node_modules/react/index.js
+// EXTERNAL MODULE: ./node_modules/react/landing.js
 var react = __webpack_require__(67294);
 // EXTERNAL MODULE: ./node_modules/next/script.js
 var script = __webpack_require__(4298);
 // EXTERNAL MODULE: ./node_modules/@reduxjs/toolkit/dist/redux-toolkit.cjs.production.min.js
 var redux_toolkit_cjs_production_min = __webpack_require__(47389);
-// EXTERNAL MODULE: ./node_modules/next-redux-wrapper/lib/index.js
+// EXTERNAL MODULE: ./node_modules/next-redux-wrapper/lib/landing.js
 var lib = __webpack_require__(30876);
 // EXTERNAL MODULE: ./node_modules/redux-logger/dist/redux-logger.js
 var redux_logger = __webpack_require__(94500);
 var redux_logger_default = /*#__PURE__*/__webpack_require__.n(redux_logger);
-// EXTERNAL MODULE: ./node_modules/redux-persist/lib/index.js
+// EXTERNAL MODULE: ./node_modules/redux-persist/lib/landing.js
 var redux_persist_lib = __webpack_require__(64280);
-// EXTERNAL MODULE: ./node_modules/redux-persist/lib/storage/index.js
+// EXTERNAL MODULE: ./node_modules/redux-persist/lib/storage/landing.js
 var storage = __webpack_require__(76734);
 ;// CONCATENATED MODULE: ./src/store/reducers/counterReducer.ts
 
@@ -847,7 +847,7 @@ const {
 var authReducer = __webpack_require__(13252);
 // EXTERNAL MODULE: ./src/store/reducers/toastReducer.ts
 var toastReducer = __webpack_require__(12061);
-;// CONCATENATED MODULE: ./src/store/reducers/index.ts
+;// CONCATENATED MODULE: ./src/store/reducers/landing.ts
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -874,7 +874,7 @@ const reducer = (state, action) => {
 };
 
 /* harmony default export */ const reducers = (reducer);
-;// CONCATENATED MODULE: ./src/store/index.ts
+;// CONCATENATED MODULE: ./src/store/landing.ts
 function store_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function store_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { store_ownKeys(Object(source), true).forEach(function (key) { store_defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { store_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -915,7 +915,7 @@ var redux = __webpack_require__(35281);
 var integration_react = __webpack_require__(79144);
 // EXTERNAL MODULE: ./node_modules/next/router.js
 var next_router = __webpack_require__(11163);
-// EXTERNAL MODULE: ./node_modules/react-redux/lib/index.js
+// EXTERNAL MODULE: ./node_modules/react-redux/lib/landing.js
 var react_redux_lib = __webpack_require__(37424);
 // EXTERNAL MODULE: ./node_modules/@emotion/react/dist/emotion-react.cjs.prod.js
 var emotion_react_cjs_prod = __webpack_require__(11334);
@@ -923,7 +923,7 @@ var emotion_react_cjs_prod = __webpack_require__(11334);
 var Common_styles = __webpack_require__(7526);
 // EXTERNAL MODULE: ./src/styles/FontStyles.ts
 var FontStyles = __webpack_require__(11936);
-;// CONCATENATED MODULE: ./src/components/atoms/Toast/index.tsx
+;// CONCATENATED MODULE: ./src/components/atoms/Toast/landing.tsx
 
 
 
@@ -979,9 +979,9 @@ const horizontal = emotion_react_cjs_prod.keyframes`
 const alertBox = (position, status) => /*#__PURE__*/(0,emotion_react_cjs_prod.css)("background-color:", status === 'success' ? Common_styles/* colors.blue._500 */.O.blue._500 : status === 'warning' ? Common_styles/* colors.red */.O.red : Common_styles/* colors.cyan._500 */.O.cyan._500, ";border-radius:8px;padding:15px;margin-top:10px;display:flex;cursor:pointer;animation:", position.includes('left') || position.includes('right') ? horizontal : vertical, " 0.7s;" + ( true ? "" : 0),  true ? "" : 0);
 
 const alertTextStyle = /*#__PURE__*/(0,emotion_react_cjs_prod.css)("color:", Common_styles/* colors.white */.O.white, ";text-align:center;display:flex;justify-content:center;align-items:center;" + ( true ? "" : 0),  true ? "" : 0);
-// EXTERNAL MODULE: ./node_modules/react-dom/index.js
+// EXTERNAL MODULE: ./node_modules/react-dom/landing.js
 var react_dom = __webpack_require__(73935);
-;// CONCATENATED MODULE: ./src/components/atoms/Portal/index.tsx
+;// CONCATENATED MODULE: ./src/components/atoms/Portal/landing.tsx
 
 
 
@@ -1005,7 +1005,7 @@ const Portal = ({
 };
 
 /* harmony default export */ const atoms_Portal = (Portal);
-;// CONCATENATED MODULE: ./src/components/organisms/AuthToast/index.tsx
+;// CONCATENATED MODULE: ./src/components/organisms/AuthToast/landing.tsx
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _EMOTION_STRINGIFIED_CSS_ERROR__() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -1097,7 +1097,7 @@ const AuthToast = ({
 /* harmony default export */ const organisms_AuthToast = (AuthToast);
 const positionStyle =  true ? {
   name: "13qw4bt",
-  styles: "position:fixed;z-index:100"
+  styles: "position:fixed;z-landing:100"
 } : 0;
 // EXTERNAL MODULE: ./diby-client-landing/components/AppBar.tsx + 6 modules
 var AppBar = __webpack_require__(17250);
@@ -1721,15 +1721,15 @@ const fullMainContainer =  true ? {
 } : 0;
 const backgroundStyle = /*#__PURE__*/(0,emotion_react_cjs_prod.css)( true ? "" : 0,  true ? "" : 0);
 
-const gradientCanvas = showGradient => /*#__PURE__*/(0,emotion_react_cjs_prod.css)("display:", showGradient ? 'unset' : 'none', ";width:100%;position:absolute;top:0;z-index:-1;height:792px;--gradient-color-1:#3c3c46;--gradient-color-2:#3d2f4d;--gradient-color-3:#2d2d3f;--gradient-color-4:#1f3c3f;transform:skewY(-9deg);transform-origin:top left;border-image:linear-gradient(93.75deg, a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);" + ( true ? "" : 0),  true ? "" : 0);
+const gradientCanvas = showGradient => /*#__PURE__*/(0,emotion_react_cjs_prod.css)("display:", showGradient ? 'unset' : 'none', ";width:100%;position:absolute;top:0;z-landing:-1;height:792px;--gradient-color-1:#3c3c46;--gradient-color-2:#3d2f4d;--gradient-color-3:#2d2d3f;--gradient-color-4:#1f3c3f;transform:skewY(-9deg);transform-origin:top left;border-image:linear-gradient(93.75deg, a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);" + ( true ? "" : 0),  true ? "" : 0);
 
 const gradientDiv =  true ? {
   name: "1srv3u4",
-  styles: "height:800px;position:absolute;top:0px;z-index:-1;border-top:0px;border-left:0px;border-right:0px;border-bottom:10px solid;box-sizing:border-box;background:transparent;width:100%;border-image:linear-gradient(93.75deg, #a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);border-image-slice:1;transform:skewY(-9deg);transform-origin:top left"
+  styles: "height:800px;position:absolute;top:0px;z-landing:-1;border-top:0px;border-left:0px;border-right:0px;border-bottom:10px solid;box-sizing:border-box;background:transparent;width:100%;border-image:linear-gradient(93.75deg, #a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);border-image-slice:1;transform:skewY(-9deg);transform-origin:top left"
 } : 0;
-// EXTERNAL MODULE: ./node_modules/react-query/lib/index.js
+// EXTERNAL MODULE: ./node_modules/react-query/lib/landing.js
 var react_query_lib = __webpack_require__(23724);
-// EXTERNAL MODULE: ./node_modules/react-query/devtools/index.js
+// EXTERNAL MODULE: ./node_modules/react-query/devtools/landing.js
 var devtools = __webpack_require__(20938);
 ;// CONCATENATED MODULE: ./src/styles/Global.styles.ts
 function Global_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
@@ -1737,7 +1737,7 @@ function Global_styles_EMOTION_STRINGIFIED_CSS_ERROR_() { return "You have tried
 
 const Global_styles_reset =  true ? {
   name: "1spggud",
-  styles: "@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');{}$aos-distance:30px;:root{--gradient:linear-gradient(93.75deg, #a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);}*{font-family:Pretendard,-apple-system,BlinkMacSystemFont,system-ui,Roboto,'Helvetica Neue','Segoe UI','Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;}*{html,body{padding:0;margin:0;width:100%;}a{text-decoration:none;color:#000000;}ul,ol{margin:0;padding:0;list-style:none;}img{border:none;}h1,h2,h3{margin:0;padding:0;font-size:100%;},.supah-scroll{position:fixed;z-index:1;top:0;left:0;width:100%;height:auto;will-change:transform;overflow:hidden;}img{object-fit:contain;}p,span{color:#3c3c46;}#gradient-canvas{--gradient-color-1:#3c3c46;--gradient-color-2:#3d2f4d;--gradient-color-3:#2d2d3f;--gradient-color-4:#1f3c3f;}.gradient-title{background:var(--gradient);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;}.gradient-title::after{content:'\\00a0';background-image:var(--gradient);background-size:100% 12px;background-repeat:no-repeat;float:left;width:100%;height:3px;margin-top:0px;margin-bottom:6px;}.fade-enter{opacity:0;}.fade-enter-active{opacity:1;transition:all 300ms ease;}.fade-exit{opacity:1;}.fade-exit-active{opacity:0;transition:all 200ms ease;}.box-shadow-active{border-radius:8px;box-shadow:0px 4px 20px rgba(0, 0, 0, 0.25);transition:all 500ms ease;}.slick-box{height:308px;box-shadow:0px 4px 30px rgba(0, 0, 0, 0.15);border-radius:8px;}.slick-dots{bottom:15px!important;}.slick-dots li,.slick-dots li button{width:24px!important;padding:0px;background-color:#7b3ce9;opacity:0.5;}.slick-active{opacity:1!important;}.slick-dots li button::before{display:none;}@media only screen and (min-width: 360px){.slick-box,.slick-slide div{height:calc(100vw - 64px + 250px);}.slick-dots li,.slick-dots li button{height:2px!important;}}@media only screen and (min-width: 768px){.slick-box,.slick-slide div{height:308px;}.slick-dots li,.slick-dots li button{height:4px!important;}}@media only screen and (min-width: 1280px){}@media only screen and (min-width: 1920px){}}"
+  styles: "@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');{}$aos-distance:30px;:root{--gradient:linear-gradient(93.75deg, #a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);}*{font-family:Pretendard,-apple-system,BlinkMacSystemFont,system-ui,Roboto,'Helvetica Neue','Segoe UI','Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;}*{html,body{padding:0;margin:0;width:100%;}a{text-decoration:none;color:#000000;}ul,ol{margin:0;padding:0;list-style:none;}img{border:none;}h1,h2,h3{margin:0;padding:0;font-size:100%;},.supah-scroll{position:fixed;z-landing:1;top:0;left:0;width:100%;height:auto;will-change:transform;overflow:hidden;}img{object-fit:contain;}p,span{color:#3c3c46;}#gradient-canvas{--gradient-color-1:#3c3c46;--gradient-color-2:#3d2f4d;--gradient-color-3:#2d2d3f;--gradient-color-4:#1f3c3f;}.gradient-title{background:var(--gradient);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;}.gradient-title::after{content:'\\00a0';background-image:var(--gradient);background-size:100% 12px;background-repeat:no-repeat;float:left;width:100%;height:3px;margin-top:0px;margin-bottom:6px;}.fade-enter{opacity:0;}.fade-enter-active{opacity:1;transition:all 300ms ease;}.fade-exit{opacity:1;}.fade-exit-active{opacity:0;transition:all 200ms ease;}.box-shadow-active{border-radius:8px;box-shadow:0px 4px 20px rgba(0, 0, 0, 0.25);transition:all 500ms ease;}.slick-box{height:308px;box-shadow:0px 4px 30px rgba(0, 0, 0, 0.15);border-radius:8px;}.slick-dots{bottom:15px!important;}.slick-dots li,.slick-dots li button{width:24px!important;padding:0px;background-color:#7b3ce9;opacity:0.5;}.slick-active{opacity:1!important;}.slick-dots li button::before{display:none;}@media only screen and (min-width: 360px){.slick-box,.slick-slide div{height:calc(100vw - 64px + 250px);}.slick-dots li,.slick-dots li button{height:2px!important;}}@media only screen and (min-width: 768px){.slick-box,.slick-slide div{height:308px;}.slick-dots li,.slick-dots li button{height:4px!important;}}@media only screen and (min-width: 1280px){}@media only screen and (min-width: 1920px){}}"
 } : 0;
 /* harmony default export */ const Global_styles = (Global_styles_reset);
 ;// CONCATENATED MODULE: ./src/styles/GlobalStyles.tsx
@@ -1755,13 +1755,13 @@ const GlobalStyles = () => {
 };
 
 /* harmony default export */ const styles_GlobalStyles = (GlobalStyles);
-// EXTERNAL MODULE: ./node_modules/@mui/material/node/styles/index.js
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/styles/landing.js
 var styles = __webpack_require__(59006);
 // EXTERNAL MODULE: ./diby-client-landing/Theme.tsx
 var Theme = __webpack_require__(70778);
 // EXTERNAL MODULE: ./node_modules/next/head.js
 var head = __webpack_require__(9008);
-;// CONCATENATED MODULE: ./src/common/layouts/Seo/index.tsx
+;// CONCATENATED MODULE: ./src/common/layouts/Seo/landing.tsx
 
 
 
@@ -2282,14 +2282,14 @@ const caption2_regular = [font10, fontRegular, height12];
 /***/ 97020:
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"polyfillFiles":["static/chunks/polyfills-5cd94c89d3acac5f.js"],"devFiles":[],"ampDevFiles":[],"lowPriorityFiles":["static/ke1gnoDHWflMm-7M80q1l/_buildManifest.js","static/ke1gnoDHWflMm-7M80q1l/_ssgManifest.js","static/ke1gnoDHWflMm-7M80q1l/_middlewareManifest.js"],"pages":{"/":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/ea88be26-4785f7f12099037b.js","static/chunks/813-ccba27e70809adb2.js","static/chunks/151-3594cf940d575430.js","static/chunks/pages/index-9f022b9e581d8c9b.js"],"/_app":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/css/b43a96246c8cc14d.css","static/chunks/pages/_app-b2babd000f20bbfb.js"],"/_error":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/pages/_error-350d9d86556f6d87.js"],"/addinfo/[id]":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/947-5d850c1a6267813a.js","static/chunks/868-c72f1f5a5b6f4b9c.js","static/chunks/pages/addinfo/[id]-db31a76fddbac1ea.js"],"/error":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/pages/error-54a8183c0a003fbf.js"],"/feature":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/ea88be26-4785f7f12099037b.js","static/chunks/66-bda1e0cf53111cdf.js","static/chunks/151-3594cf940d575430.js","static/chunks/pages/feature-4ba9c470e436dd49.js"],"/login":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/947-5d850c1a6267813a.js","static/chunks/868-c72f1f5a5b6f4b9c.js","static/chunks/306-aa0337ddd7aa5b5a.js","static/chunks/pages/login-9554560d74745ec7.js"],"/pricing":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/pages/pricing-3520d7fbb2751a4e.js"],"/pwInquiry":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/947-5d850c1a6267813a.js","static/chunks/868-c72f1f5a5b6f4b9c.js","static/chunks/pages/pwInquiry-03623e4f2f82d2a4.js"],"/pwInquiry/confirm":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/868-c72f1f5a5b6f4b9c.js","static/chunks/394-5e46d64a739ca211.js","static/chunks/pages/pwInquiry/confirm-0b26a69584a2aa82.js"],"/signup":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/947-5d850c1a6267813a.js","static/chunks/868-c72f1f5a5b6f4b9c.js","static/chunks/306-aa0337ddd7aa5b5a.js","static/chunks/pages/signup-2873b2f5278dda4b.js"],"/signup/confirm":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/868-c72f1f5a5b6f4b9c.js","static/chunks/394-5e46d64a739ca211.js","static/chunks/pages/signup/confirm-6f409f290867e156.js"],"/sitemap.xml":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/pages/sitemap.xml-92728765eafe6a8f.js"],"/tri":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/ea88be26-4785f7f12099037b.js","static/chunks/606-17fb28be2dff4643.js","static/chunks/151-3594cf940d575430.js","static/chunks/pages/tri-0935061dfc4b0304.js"],"/usecases/customer":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/788-03888c51933d2da2.js","static/chunks/pages/usecases/customer-1c3b722078864036.js"],"/usecases/scenario":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/788-03888c51933d2da2.js","static/chunks/pages/usecases/scenario-38872b9260ea8e91.js"],"/usecases/ui":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/788-03888c51933d2da2.js","static/chunks/pages/usecases/ui-4966616dc9170640.js"],"/usecases/ux":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/788-03888c51933d2da2.js","static/chunks/pages/usecases/ux-06573c73a96c3983.js"]},"ampFirstPages":[]}');
+module.exports = JSON.parse('{"polyfillFiles":["static/chunks/polyfills-5cd94c89d3acac5f.js"],"devFiles":[],"ampDevFiles":[],"lowPriorityFiles":["static/ke1gnoDHWflMm-7M80q1l/_buildManifest.js","static/ke1gnoDHWflMm-7M80q1l/_ssgManifest.js","static/ke1gnoDHWflMm-7M80q1l/_middlewareManifest.js"],"pages":{"/":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/ea88be26-4785f7f12099037b.js","static/chunks/813-ccba27e70809adb2.js","static/chunks/151-3594cf940d575430.js","static/chunks/pages/landing-9f022b9e581d8c9b.js"],"/_app":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/css/b43a96246c8cc14d.css","static/chunks/pages/_app-b2babd000f20bbfb.js"],"/_error":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/pages/_error-350d9d86556f6d87.js"],"/addinfo/[id]":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/947-5d850c1a6267813a.js","static/chunks/868-c72f1f5a5b6f4b9c.js","static/chunks/pages/addinfo/[id]-db31a76fddbac1ea.js"],"/error":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/pages/error-54a8183c0a003fbf.js"],"/feature":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/ea88be26-4785f7f12099037b.js","static/chunks/66-bda1e0cf53111cdf.js","static/chunks/151-3594cf940d575430.js","static/chunks/pages/feature-4ba9c470e436dd49.js"],"/login":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/947-5d850c1a6267813a.js","static/chunks/868-c72f1f5a5b6f4b9c.js","static/chunks/306-aa0337ddd7aa5b5a.js","static/chunks/pages/login-9554560d74745ec7.js"],"/pricing":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/pages/pricing-3520d7fbb2751a4e.js"],"/pwInquiry":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/947-5d850c1a6267813a.js","static/chunks/868-c72f1f5a5b6f4b9c.js","static/chunks/pages/pwInquiry-03623e4f2f82d2a4.js"],"/pwInquiry/confirm":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/868-c72f1f5a5b6f4b9c.js","static/chunks/394-5e46d64a739ca211.js","static/chunks/pages/pwInquiry/confirm-0b26a69584a2aa82.js"],"/signup":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/947-5d850c1a6267813a.js","static/chunks/868-c72f1f5a5b6f4b9c.js","static/chunks/306-aa0337ddd7aa5b5a.js","static/chunks/pages/signup-2873b2f5278dda4b.js"],"/signup/confirm":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/868-c72f1f5a5b6f4b9c.js","static/chunks/394-5e46d64a739ca211.js","static/chunks/pages/signup/confirm-6f409f290867e156.js"],"/sitemap.xml":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/pages/sitemap.xml-92728765eafe6a8f.js"],"/tri":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/ea88be26-4785f7f12099037b.js","static/chunks/606-17fb28be2dff4643.js","static/chunks/151-3594cf940d575430.js","static/chunks/pages/tri-0935061dfc4b0304.js"],"/usecases/customer":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/788-03888c51933d2da2.js","static/chunks/pages/usecases/customer-1c3b722078864036.js"],"/usecases/scenario":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/788-03888c51933d2da2.js","static/chunks/pages/usecases/scenario-38872b9260ea8e91.js"],"/usecases/ui":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/788-03888c51933d2da2.js","static/chunks/pages/usecases/ui-4966616dc9170640.js"],"/usecases/ux":["static/chunks/webpack-f8a0cece4b531f5c.js","static/chunks/framework-5f4595e5518b5600.js","static/chunks/main-90eda134c7fd1b80.js","static/chunks/788-03888c51933d2da2.js","static/chunks/pages/usecases/ux-06573c73a96c3983.js"]},"ampFirstPages":[]}');
 
 /***/ }),
 
 /***/ 73978:
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"../../diby-client-landing/components/LottieCard.tsx -> scrollreveal":{"id":1247,"files":["static/chunks/247.1134825ecb398e7c.js"]},"../../diby-client-landing/components/LottieIcon.tsx -> scrollreveal":{"id":1247,"files":["static/chunks/247.1134825ecb398e7c.js"]},"../../node_modules/next/dist/client/index.js -> ../pages/_error":{"id":9894,"files":["static/chunks/894.9047cda612e8fce0.js"]}}');
+module.exports = JSON.parse('{"../../diby-client-landing/components/LottieCard.tsx -> scrollreveal":{"id":1247,"files":["static/chunks/247.1134825ecb398e7c.js"]},"../../diby-client-landing/components/LottieIcon.tsx -> scrollreveal":{"id":1247,"files":["static/chunks/247.1134825ecb398e7c.js"]},"../../node_modules/next/dist/client/landing.js -> ../pages/_error":{"id":9894,"files":["static/chunks/894.9047cda612e8fce0.js"]}}');
 
 /***/ }),
 

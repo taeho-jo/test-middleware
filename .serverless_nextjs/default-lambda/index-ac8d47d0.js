@@ -709,7 +709,7 @@ internals$4.isDeepEqualObj = function (instanceType, obj, ref, options, seen) {
     if (instanceType === types.array) {
         if (options.part) {
 
-            // Check if any index match any other index
+            // Check if any landing match any other landing
 
             for (const objValue of obj) {
                 for (const refValue of ref) {

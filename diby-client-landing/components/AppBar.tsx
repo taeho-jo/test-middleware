@@ -50,6 +50,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
   const [mobileMenuAnchor, setMobileMenuAnchor] = useState<HTMLButtonElement | null>(null);
   const isUseCaseOpen = Boolean(useCasesMenuAnchor);
   const isMobileMenuOpen = Boolean(mobileMenuAnchor);
+  const token = localStorage.getItem('accessToken');
 
   const handleResize = () => {
     setIsMobile(window.innerWidth < breakpoints.md);
@@ -81,12 +82,13 @@ function AppBar({ dark = false }: { dark?: boolean }) {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+  console.log(navigate, 'N');
 
   return (
     <GridContainer container style={{ margin: '0 auto', height: '68px', width: '100%', maxWidth: '1920px' }}>
       <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '16px' }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
-          <Link href="/">
+          <Link href="/index">
             <div
               style={{
                 cursor: 'pointer',
@@ -133,28 +135,48 @@ function AppBar({ dark = false }: { dark?: boolean }) {
 
           {!isMobile && (
             <div>
-              <DesignButton
-                // color={darkMode ? 'white' : }
-                style={{ color: darkMode ? 'white' : '#3c3c46' }}
-                // onClick={() => {
-                //   handleClick('/tri');
-                // }}
-                onClick={() => {
-                  dispatch(isShow({ isShow: true, type: 'login' }));
-                  // dispatch(isShow({ isShow: true }));
-                }}
-              >
-                로그인
-              </DesignButton>
-              <DesignButton
-                color={darkMode ? 'green' : 'white'}
-                style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}
-                onClick={() => {
-                  dispatch(isShow({ isShow: true, type: 'signup' }));
-                }}
-              >
-                회원가입
-              </DesignButton>
+              {token ? (
+                <>
+                  <DesignButton
+                    style={{ color: darkMode ? 'white' : '#3c3c46' }}
+                    onClick={() => {
+                      localStorage.clear();
+                      navigate.push(navigate.asPath);
+                    }}
+                  >
+                    로그아웃
+                  </DesignButton>
+                  <DesignButton
+                    color={darkMode ? 'green' : 'white'}
+                    style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}
+                    onClick={() => {
+                      navigate.push('/admin/team');
+                    }}
+                  >
+                    대시보드
+                  </DesignButton>
+                </>
+              ) : (
+                <>
+                  <DesignButton
+                    style={{ color: darkMode ? 'white' : '#3c3c46' }}
+                    onClick={() => {
+                      dispatch(isShow({ isShow: true, type: 'login' }));
+                    }}
+                  >
+                    로그인
+                  </DesignButton>
+                  <DesignButton
+                    color={darkMode ? 'green' : 'white'}
+                    style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}
+                    onClick={() => {
+                      dispatch(isShow({ isShow: true, type: 'signup' }));
+                    }}
+                  >
+                    회원가입
+                  </DesignButton>
+                </>
+              )}
             </div>
           )}
 

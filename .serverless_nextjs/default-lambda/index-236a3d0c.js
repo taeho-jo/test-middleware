@@ -2919,9 +2919,9 @@ function arrayMap(array, iteratee) {
  * @private
  * @param {Array} array The array to inspect.
  * @param {Function} predicate The function invoked per iteration.
- * @param {number} fromIndex The index to search from.
+ * @param {number} fromIndex The landing to search from.
  * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {number} Returns the index of the matched value, else `-1`.
+ * @returns {number} Returns the landing of the matched value, else `-1`.
  */
 function baseFindIndex(array, predicate, fromIndex, fromRight) {
   var length = array.length,
@@ -2941,8 +2941,8 @@ function baseFindIndex(array, predicate, fromIndex, fromRight) {
  * @private
  * @param {Array} array The array to inspect.
  * @param {*} value The value to search for.
- * @param {number} fromIndex The index to search from.
- * @returns {number} Returns the index of the matched value, else `-1`.
+ * @param {number} fromIndex The landing to search from.
+ * @returns {number} Returns the landing of the matched value, else `-1`.
  */
 function baseIndexOf(array, value, fromIndex) {
   if (value !== value) {
@@ -3087,12 +3087,12 @@ function baseKeys(object) {
 }
 
 /**
- * Checks if `value` is a valid array-like index.
+ * Checks if `value` is a valid array-like landing.
  *
  * @private
  * @param {*} value The value to check.
- * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
- * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+ * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid landing.
+ * @returns {boolean} Returns `true` if `value` is a valid landing, else `false`.
  */
 function isIndex(value, length) {
   length = length == null ? MAX_SAFE_INTEGER : length;
@@ -3128,7 +3128,7 @@ function isPrototype(value) {
  * @category Collection
  * @param {Array|Object|string} collection The collection to inspect.
  * @param {*} value The value to search for.
- * @param {number} [fromIndex=0] The index to search from.
+ * @param {number} [fromIndex=0] The landing to search from.
  * @param- {Object} [guard] Enables use as an iteratee for methods like `_.reduce`.
  * @returns {boolean} Returns `true` if `value` is found, else `false`.
  * @example

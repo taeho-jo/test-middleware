@@ -25,6 +25,8 @@ import { body3_medium } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../AddInfoPopup';
 
+const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
+
 const LoginModal = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -50,7 +52,7 @@ const LoginModal = () => {
 
   // 구글 로그인
   const loginWithGoogle = useCallback(() => {
-    router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=http://localhost:3000/`);
+    router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}/${router.asPath}`);
   }, []);
 
   // 로그인 시도 실패

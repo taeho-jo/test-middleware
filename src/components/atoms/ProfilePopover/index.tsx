@@ -12,15 +12,17 @@ const ProfilePopover = ({ display }) => {
   const router = useRouter();
 
   const handleLogout = useCallback(() => {
-    persistor
-      .flush()
-      .then(() => {
-        persistor.purge();
-        dispatch(setToken(''));
-      })
-      .then(() => {
-        router.push('/');
-      });
+    // persistor
+    //   .flush()
+    //   .then(() => {
+    //     persistor.purge();
+    //     dispatch(setToken(''));
+    //   })
+    //   .then(() => {
+    //     router.push('/');
+    //   });
+    localStorage.clear();
+    router.push('/');
   }, []);
 
   return (

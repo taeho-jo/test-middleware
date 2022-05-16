@@ -3,14 +3,16 @@ import React, { useEffect } from 'react';
 import { ReducerType } from '../store/reducers';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import withTokenAuth from './withTokenAuth';
 
-export default function withoutTokenAuth(SpecificComponent: any) {
+export default function withoutTokenAuth(SpecificComponent: any, path: string) {
   const AuthenticateCheck = () => {
     const router = useRouter();
     const token = useSelector<ReducerType, string>(state => state.auth.token);
 
     useEffect(() => {
+      // if (token) {
+      //   router.replace('/admin/team');
+      // }
       if (token) {
         router.replace('/admin/team');
       }

@@ -17,21 +17,21 @@ __webpack_require__.d(__webpack_exports__, {
   "getServerSideProps": () => (/* binding */ getServerSideProps)
 });
 
-// EXTERNAL MODULE: ./node_modules/react/index.js
+// EXTERNAL MODULE: ./node_modules/react/landing.js
 var react = __webpack_require__(67294);
-// EXTERNAL MODULE: ./src/components/atoms/PopupBox/index.tsx
+// EXTERNAL MODULE: ./src/components/atoms/PopupBox/landing.tsx
 var PopupBox = __webpack_require__(37533);
-// EXTERNAL MODULE: ./src/components/atoms/Icon/index.tsx + 13 modules
+// EXTERNAL MODULE: ./src/components/atoms/Icon/landing.tsx + 13 modules
 var Icon = __webpack_require__(40671);
-// EXTERNAL MODULE: ./src/components/molecules/InputFormBox/index.tsx + 2 modules
+// EXTERNAL MODULE: ./src/components/molecules/InputFormBox/landing.tsx + 2 modules
 var InputFormBox = __webpack_require__(46212);
-// EXTERNAL MODULE: ./src/components/atoms/FlexBox/index.tsx
+// EXTERNAL MODULE: ./src/components/atoms/FlexBox/landing.tsx
 var FlexBox = __webpack_require__(88976);
 // EXTERNAL MODULE: ./node_modules/next/router.js
 var next_router = __webpack_require__(11163);
 // EXTERNAL MODULE: ./node_modules/@emotion/react/dist/emotion-react.cjs.prod.js
 var emotion_react_cjs_prod = __webpack_require__(11334);
-;// CONCATENATED MODULE: ./src/components/organisms/AddInfoPopup/index.tsx
+;// CONCATENATED MODULE: ./src/components/organisms/AddInfoPopup/landing.tsx
 function _EMOTION_STRINGIFIED_CSS_ERROR__() { return "You have tried to stringify object returned from `css` function. It isn't supposed to be used directly (e.g. as value of the `className` prop), but rather handed to emotion so it can handle it (e.g. as value of `css` prop)."; }
 
 

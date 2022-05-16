@@ -31,7 +31,7 @@ const CommonHeader = () => {
       backgroundColor={colors.grey._3c}
     >
       <FlexBox justify={'flex-start'} align={'center'}>
-        <Icon name={'LOGO_ICON'} size={40} />
+        {/*<Icon name={'LOGO_ICON'} size={40} />*/}
         <div
           style={{
             background: 'rgba(255, 255, 255, 0.5)',

@@ -8234,7 +8234,7 @@ var validate$1 = function (xmlData, options) {
           } else {
             //the result from the nested function returns the position of the error within the attribute
             //in order to get the 'true' error line, we need to calculate the position where the attribute begins (i - attrStr.length) and then add the position within the attribute
-            //this gives us the absolute index in the entire xml, which we can use to find the line at last
+            //this gives us the absolute landing in the entire xml, which we can use to find the line at last
             return getErrorObject(isValid.err.code, isValid.err.msg, getLineNumberForPosition(xmlData, i - attrStr.length + isValid.err.line));
           }
         } else if (closingTag) {
@@ -8258,7 +8258,7 @@ var validate$1 = function (xmlData, options) {
           if (isValid !== true) {
             //the result from the nested function returns the position of the error within the attribute
             //in order to get the 'true' error line, we need to calculate the position where the attribute begins (i - attrStr.length) and then add the position within the attribute
-            //this gives us the absolute index in the entire xml, which we can use to find the line at last
+            //this gives us the absolute landing in the entire xml, which we can use to find the line at last
             return getErrorObject(isValid.err.code, isValid.err.msg, getLineNumberForPosition(xmlData, i - attrStr.length + isValid.err.line));
           }
 
@@ -8527,7 +8527,7 @@ function validateTagName(tagname) {
   return util.isName(tagname) /* && !tagname.match(startsWithXML) */;
 }
 
-//this function returns the line number for the character at the given index
+//this function returns the line number for the character at the given landing
 function getLineNumberForPosition(xmlData, index) {
   var lines = xmlData.substring(0, index).split(/\r?\n/);
   return lines.length;
@@ -12593,9 +12593,9 @@ var scripts$2 = {
 	"test:e2e": "ts-mocha test/**/*.ispec.ts && karma start karma.conf.js",
 	"test:unit": "ts-mocha test/**/*.spec.ts"
 };
-var main$2 = "./dist-cjs/index.js";
-var types$2 = "./dist-types/index.d.ts";
-var module$3 = "./dist-es/index.js";
+var main$2 = "./dist-cjs/landing.js";
+var types$2 = "./dist-types/landing.d.ts";
+var module$3 = "./dist-es/landing.js";
 var sideEffects$2 = false;
 var dependencies$2 = {
 	"@aws-crypto/sha1-browser": "2.0.0",
@@ -13613,9 +13613,9 @@ var scripts$1 = {
 	"build:types:downlevel": "downlevel-dts dist-types dist-types/ts3.4",
 	clean: "rimraf ./dist-* && rimraf *.tsbuildinfo"
 };
-var main$1 = "./dist-cjs/index.js";
-var types$1 = "./dist-types/index.d.ts";
-var module$2 = "./dist-es/index.js";
+var main$1 = "./dist-cjs/landing.js";
+var types$1 = "./dist-types/landing.d.ts";
+var module$2 = "./dist-es/landing.js";
 var sideEffects$1 = false;
 var dependencies$1 = {
 	"@aws-crypto/sha256-browser": "2.0.0",
@@ -14900,9 +14900,9 @@ var scripts = {
 	"build:types:downlevel": "downlevel-dts dist-types dist-types/ts3.4",
 	clean: "rimraf ./dist-* && rimraf *.tsbuildinfo"
 };
-var main = "./dist-cjs/index.js";
-var types = "./dist-types/index.d.ts";
-var module$1 = "./dist-es/index.js";
+var main = "./dist-cjs/landing.js";
+var types = "./dist-types/landing.d.ts";
+var module$1 = "./dist-es/landing.js";
 var sideEffects = false;
 var dependencies = {
 	"@aws-crypto/sha256-browser": "2.0.0",
