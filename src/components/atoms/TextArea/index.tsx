@@ -1,10 +1,9 @@
-import React, { InputHTMLAttributes, useEffect, useRef } from 'react';
+import React, { InputHTMLAttributes } from 'react';
+import { caption1_bold } from '../../../styles/FontStyles';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
-import { caption1_bold } from '../../../styles/FontStyles';
-import { text } from 'stream/consumers';
 
-interface PropsType extends InputHTMLAttributes<HTMLInputElement> {
+interface PropsType extends InputHTMLAttributes<HTMLTextAreaElement> {
   register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
   errorMsg?: string;
   errors?: object;
@@ -25,7 +24,7 @@ interface PropsType extends InputHTMLAttributes<HTMLInputElement> {
   [key: string]: any;
 }
 
-const Input = ({
+const TextArea = ({
   type = 'text',
   placeholder,
   width = '100%',
@@ -45,9 +44,8 @@ const Input = ({
     <>
       {title ? <label css={[caption1_bold, labelTextStyle(errors[label])]}>{title}</label> : null}
 
-      <input
+      <textarea
         css={[inputStyle(disabled, width, errors[label]), { ...style }]}
-        type={type}
         autoComplete={'off'}
         placeholder={errors[label] ? errorMsg : placeholder}
         disabled={disabled}
@@ -59,17 +57,20 @@ const Input = ({
     </>
   );
 };
-export default Input;
+
+export default TextArea;
 
 const inputStyle = (disabled, width, error) => css`
   box-sizing: border-box;
   outline: none;
   font-weight: 500;
   font-size: 18px;
-  color: ${colors.grey._3c};
   border-radius: 4px;
   padding: 10px 16px;
+  resize: none;
+  color: ${colors.grey._3c};
   width: ${width};
+  height: 88px;
   ::placeholder {
     font-weight: 400;
     font-size: 18px;

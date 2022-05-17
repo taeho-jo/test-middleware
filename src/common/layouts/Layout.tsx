@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 // Components
 import AppBar from '../../../diby-client-landing/components/AppBar';
 // Styles
@@ -14,7 +14,6 @@ import CommonHeader from '../../components/molecules/CommonHeader';
 import AdminLayout from './AdminLayout';
 import AlertToast from '../../components/organisms/AlertToast';
 import FlexBox from '../../components/atoms/FlexBox';
-import { useGoogleLogin } from '../../api/authApi';
 import { setToken } from '../../store/reducers/authReducer';
 
 // Types
@@ -24,7 +23,6 @@ interface PropsType {
 
 const Layout = ({ children }: PropsType) => {
   const dispatch = useDispatch();
-  // const token = useSelector((state: any) => state.auth.token);
   const token = localStorage.getItem('accessToken');
 
   const [showGradient, setShowGradient] = useState<boolean>(true);
@@ -33,19 +31,10 @@ const Layout = ({ children }: PropsType) => {
 
   const canvasRef = useRef(null);
 
-  // useEffect(() => {
-  //   if (router.pathname === '/') {
-  //     if (token) {
-  //       router.replace('/admin/team');
-  //     } else {
-  //       router.replace('/');
-  //     }
-  //   }
-  // }, [router.pathname, token]);
-
   useEffect(() => {
     if (router?.query) {
       if (router.query?.token) {
+        // TODO: /api/v1/auth/confirm API 호출 ( 이메일 인증 완료 후, localStorage 저장 )
         localStorage.setItem('accessToken', `${router.query.token}`);
         dispatch(setToken(`${router.query.token}`));
         router.push('/admin/team');
@@ -110,22 +99,18 @@ const Layout = ({ children }: PropsType) => {
       case '/tri':
       case '/pricing':
         return (
-          <>
-            <div css={mainContainer}>
-              <main css={contentsContainer}>
-                <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
-                {showGradient ? (
-                  <>
-                    <div css={gradientDiv}></div>
-                    <AppBar dark={showGradient} />
-                  </>
-                ) : null}
-                <div>{children}</div>
-              </main>
-            </div>
-            <AlertToast position={'top-center'} />
-            <CommonModal />
-          </>
+          <div css={mainContainer}>
+            <main css={contentsContainer}>
+              <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
+              {showGradient ? (
+                <>
+                  <div css={gradientDiv}></div>
+                  <AppBar dark={showGradient} />
+                </>
+              ) : null}
+              <div>{children}</div>
+            </main>
+          </div>
         );
       default:
         return (
@@ -139,7 +124,6 @@ const Layout = ({ children }: PropsType) => {
     }
   }, [router.pathname, token, showGradient]);
 
-  // ===================================== 살릴 부분 ===================================== //
   if (token) {
     return (
       <>
@@ -169,31 +153,6 @@ const Layout = ({ children }: PropsType) => {
       </>
     );
   }
-  // ===================================== 살릴 부분 ===================================== //
-
-  // return (
-  //   <>
-  //     {token ? (
-  //       separateDomain()
-  //     ) : (
-  //       <div css={mainContainer}>
-  //         <main css={contentsContainer}>
-  //           <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
-  //           {showGradient ? (
-  //             <>
-  //               <div css={gradientDiv}></div>
-  //               <AppBar dark={showGradient} />
-  //             </>
-  //           ) : null}
-  //           <div>{children}</div>
-  //         </main>
-  //       </div>
-  //     )}
-  //
-  //     <AlertToast position={'top-center'} />
-  //     <CommonModal />
-  //   </>
-  // );
 };
 
 export default Layout;
@@ -209,15 +168,11 @@ const contentsContainer = css`
 `;
 
 const gradientCanvas = showGradient => css`
-  display: ${showGradient ? 'unset' : 'none'};
   width: 100%;
-  /*height: 632px;*/
   position: absolute;
   top: 0;
   z-index: -1;
   height: 792px;
-  /* Adjust the colors below to get a different gradient */
-  /* You can use https://whatamesh.vercel.app/ to generate them */
   --gradient-color-1: #3c3c46;
   --gradient-color-2: #3d2f4d;
   --gradient-color-3: #2d2d3f;
@@ -225,12 +180,12 @@ const gradientCanvas = showGradient => css`
   transform: skewY(-9deg);
   transform-origin: top left;
   border-image: linear-gradient(93.75deg, a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);
+  display: ${showGradient ? 'unset' : 'none'};
 `;
 
 const gradientDiv = css`
-  /*height: 640px;*/
+  width: 100%;
   height: 800px;
-
   position: absolute;
   top: 0px;
   z-index: -1;
@@ -240,11 +195,8 @@ const gradientDiv = css`
   border-bottom: 10px solid;
   box-sizing: border-box;
   background: transparent;
-
-  width: 100%;
   border-image: linear-gradient(93.75deg, #a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);
   border-image-slice: 1;
-
   transform: skewY(-9deg);
   transform-origin: top left;
 `;

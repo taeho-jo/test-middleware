@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 // Redux
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
@@ -10,10 +9,15 @@ import SignupModal from '../Modal/SignupModal';
 import ResetPasswordModal from '../Modal/ResetPasswordModal';
 import ConfirmResetPasswordModal from '../Modal/ConfirmResetPasswordModal';
 import ConfirmSignupModal from '../Modal/ConfirmSignupModal';
+import TeamCreateModal from '../Modal/TeamCreateModal';
+import InviteTeamMemberModal from '../Modal/InviteTeamMemberModal';
+import UiResearchModuleModal from '../Modal/UiResearchModuleModal';
+import UxResearchModuleModal from '../Modal/UxResearchModuleModal';
+import ScenarioResearchModuleModal from '../Modal/ScenarioResearchModuleModal';
+import CustomerResearchModuleModal from '../Modal/CustomerResearchModuleModal';
 
 const CommonModal = () => {
   const show = useSelector<ReducerType, boolean>(state => state.modal.isShow);
-  const router = useRouter();
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
 
   return (
@@ -23,8 +27,14 @@ const CommonModal = () => {
           {modalType === 'login' && <LoginModal />}
           {modalType === 'signup' && <SignupModal />}
           {modalType === 'resetPassword' && <ResetPasswordModal />}
-          {modalType === 'confirm-reset-password' && <ConfirmResetPasswordModal />}
+          {modalType === 'confirmResetPassword' && <ConfirmResetPasswordModal />}
           {modalType === 'confirmSignup' && <ConfirmSignupModal />}
+          {modalType === 'firstCreateTeam' && <TeamCreateModal />}
+          {modalType === 'inviteTeamMember' && <InviteTeamMemberModal />}
+          {modalType === 'uiResearchModule' && <UiResearchModuleModal />}
+          {modalType === 'uxResearchModule' && <UxResearchModuleModal />}
+          {modalType === 'scenarioResearchModule' && <ScenarioResearchModuleModal />}
+          {modalType === 'customerResearchModule' && <CustomerResearchModuleModal />}
         </Modal>
       ) : null}
     </>

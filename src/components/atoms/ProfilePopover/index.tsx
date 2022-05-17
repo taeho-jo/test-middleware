@@ -54,7 +54,7 @@ const popupContainer = display => css`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  //z-index: 10000;
+  z-index: 10000;
 `;
 const emailTextStyle = css`
   color: ${colors.grey._99};

@@ -7,13 +7,14 @@ interface PropsType {
   type?: 'submit' | 'button' | 'reset';
   name: IconType;
   size?: number;
+  style?: any;
   onClick?: () => void;
 }
 
-const IconButton = ({ type = 'button', name, size = 24, onClick }: PropsType) => {
+const IconButton = ({ type = 'button', name, size = 24, onClick, style }: PropsType) => {
   return (
     <button type={type} css={iconButtonStyle}>
-      <Icon onClick={onClick} name={name} size={size} />
+      <Icon onClick={onClick} name={name} size={size} style={style} />
     </button>
   );
 };

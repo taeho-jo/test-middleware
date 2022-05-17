@@ -1,36 +1,47 @@
-import React from 'react';
-import { css } from '@emotion/react';
-import { colors } from '../../../styles/Common.styles';
-import AdminSideTeamListItem from '../AdminSideTeamListItem';
+import React, { useCallback } from 'react';
+import { useSelector } from 'react-redux';
+// Components
 import FlexBox from '../../atoms/FlexBox';
 import Icon from '../../atoms/Icon';
+import AdminSideTeamListItem from '../AdminSideTeamListItem';
+// Styles
+import { css } from '@emotion/react';
+import { colors } from '../../../styles/Common.styles';
 import { heading5_bold } from '../../../styles/FontStyles';
+// Types
+import { ReducerType } from '../../../store/reducers';
+import { TeamListType } from '../../../store/reducers/teamReducer';
 
 // Dummy
-const teamList = [
+const DummyTeamList = [
   {
-    teamName: 'DBDLAB의 팀',
-    memberList: ['A', 'K', 'J'],
+    teamName: '아무개님의 팀',
+    memberList: ['J'],
   },
-  // {
-  //   teamName: '태호님의 팀',
-  //   memberList: ['조', '최'],
-  // },
 ];
 
 const AdminSideBar = () => {
-  const propsStyle = {
-    backgroundColor: 'yellow',
-  };
+  const teamList = useSelector<ReducerType, TeamListType[]>(state => state.team.teamList);
+
+  const sideTeamList = useCallback(() => {
+    if (teamList !== null) {
+      return teamList?.map((item, index) => {
+        return <AdminSideTeamListItem parentsIndex={index} key={index} teamName={item.teamName} memberList={item.memberList} />;
+      });
+    } else {
+      return DummyTeamList.map((item, index) => {
+        return <AdminSideTeamListItem parentsIndex={index} key={index} teamName={item.teamName} memberList={item.memberList} />;
+      });
+    }
+  }, [teamList, DummyTeamList]);
+
   return (
     <div css={adminSideBarStyle}>
       <FlexBox style={teamCreateAreaStyle} justify={'space-between'} align={'center'}>
         <span css={heading5_bold}>팀</span>
         <Icon name={'ACTION_CREATE'} size={24} />
       </FlexBox>
-      {teamList.map((item, index) => {
-        return <AdminSideTeamListItem style={propsStyle} key={index} teamName={item.teamName} memberList={item.memberList} />;
-      })}
+      {sideTeamList()}
     </div>
   );
 };

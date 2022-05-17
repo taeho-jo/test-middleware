@@ -3,6 +3,7 @@ import TestIcon from '/public/assets/svg/folder_icon_217583.svg';
 import ActionCreate from '/public/assets/svg/action_create.svg';
 import ActionMore from '/public/assets/svg/action_more_v.svg';
 import ActionSetting from '/public/assets/svg/action_settings.svg';
+import ActionAddCircle from '/public/assets/svg/action_add_circle.svg';
 import NavigationArrowLeft from '/public/assets/svg/navigation_arrow_left.svg';
 import NavigationArrowRight from '/public/assets/svg/navigation_arrow_right.svg';
 import NavigationChevronDown from '/public/assets/svg/navigation_chevron_down_s.svg';
@@ -12,16 +13,26 @@ import NavigationCloseLg from '/public/assets/svg/navigation_close_l.svg';
 import NavigationCloseSm from '/public/assets/svg/navigation_close_s.svg';
 import LogoIcon from '/public/assets/svg/logoDiby.svg';
 import LogoText from '/public/assets/svg/logoText.svg';
-// import IconAlert from '../../../../public/assets/svg/icon_alert.svg';
+import AlertNormal from '/public/assets/svg/alert_normal.svg';
 import IconFeedback2 from '/public/assets/svg/icon_feedback2.svg';
 import IconTesting from '/public/assets/svg/icon_testing.svg';
 import IconAlert from '/public/assets/svg/icon_alert.svg';
-import { IconType } from '../../../common/types/commonTypes';
+import CustomerHover from '/public/assets/svg/customer_hover.svg';
+import CustomerInactive from '/public/assets/svg/customer_inactive.svg';
+import ScenarioHover from '/public/assets/svg/scenario_hover.svg';
+import ScenarioInactive from '/public/assets/svg/scenario_inactive.svg';
+import UiTestHover from '/public/assets/svg/uitest_hover.svg';
+import UiTestInactive from '/public/assets/svg/uitest_inactive.svg';
+import UxPositionHover from '/public/assets/svg/uxposition_hover.svg';
+import UxPositionInactive from '/public/assets/svg/uxposition_inactive.svg';
+
+import { css } from '@emotion/react';
 
 interface PropsType {
   name: any;
   size?: number;
   style?: any;
+  iconColor?: string;
   onClick?: () => void;
 }
 
@@ -30,6 +41,7 @@ const IconTypes = {
   TEST: TestIcon,
   ACTION_CREATE: ActionCreate,
   ACTION_SETTING: ActionSetting,
+  ACTION_ADD_CIRCLE: ActionAddCircle,
   ACTION_MORE: ActionMore,
   NAVIGATION_ARROW_LEFT: NavigationArrowLeft,
   NAVIGATION_ARROW_RIGHT: NavigationArrowRight,
@@ -43,13 +55,46 @@ const IconTypes = {
   ICON_ALERT: IconAlert,
   ICON_FEEDBACK2: IconFeedback2,
   ICON_TESTING: IconTesting,
+  ALERT_NORMAL: AlertNormal,
+  CUSTOMER_HOVER: CustomerHover,
+  CUSTOMER_INACTIVE: CustomerInactive,
+  SCENARIO_HOVER: ScenarioHover,
+  SCENARIO_INACTIVE: ScenarioInactive,
+  UITEST_HOVER: UiTestHover,
+  UITEST_INACTIVE: UiTestInactive,
+  UXPOSITION_HOVER: UxPositionHover,
+  UXPOSITION_INACTIVE: UxPositionInactive,
 };
 
-const Icon = ({ name, size = 16, style, onClick }: PropsType) => {
+const Icon = ({ name, size = 24, style, iconColor, onClick }: PropsType) => {
   const IconComponent = IconTypes[name];
   const viewBox = `0 0 ${size} ${size}`;
 
-  return <IconComponent onClick={onClick} style={{ boxSizing: 'border-box', ...style }} width={size} height={size} viewBox={viewBox} />;
+  return (
+    <IconComponent
+      css={iconStyle(iconColor)}
+      onClick={onClick}
+      style={{ boxSizing: 'border-box', ...style }}
+      width={size}
+      height={size}
+      viewBox={viewBox}
+    />
+  );
 };
 
 export default Icon;
+
+const iconStyle = iconColor => css`
+  ${
+    iconColor
+      ? `
+    color: ${iconColor};
+    &:hover {
+      color: ${iconColor};
+    }
+  `
+      : ``
+  }
+  
+  }
+`;

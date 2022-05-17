@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface AuthType {
   token: string;
+  email: string;
 }
 
 const initialState: AuthType = {
   token: '',
+  email: '',
 };
 
 export const authSlice = createSlice({
@@ -15,6 +17,7 @@ export const authSlice = createSlice({
     setToken: (state, action: PayloadAction<string>) => {
       console.log(action, 'ACTION');
       state.token = action.payload;
+      // state.email = action.payload;
     },
     resetToken: state => {
       console.log('RESET RESET');

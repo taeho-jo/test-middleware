@@ -17,10 +17,6 @@ const CommonHeader = () => {
     setFocusProfile(prev => !prev);
   }, [focusProfile]);
 
-  // useEffect(() => {
-  //   console.log('TOKEN---------------------', token, '-----------------------------TOKEN');
-  // }, [token]);
-
   return (
     <FlexBox
       style={{ boxSizing: 'border-box' }}
@@ -54,12 +50,10 @@ const CommonHeader = () => {
         />
       </FlexBox>
 
-      {/*<div css={profileCircle}>J</div>*/}
       <FlexBox justify={'flex-end'} align={'center'}>
         <FlexBox justify={'flex-end'} align={'center'} onClick={test} style={{ cursor: 'pointer' }}>
           <ProfileIcon name={'J'} backgroundColor={profileCircle[4]} />
           <Icon name={'NAVIGATION_CHEVRON_DOWN'} style={{ marginLeft: '8px' }} size={24} />
-          {/*<Icon name={'NAVIGATION_CHEVRON_DOWN'} size={24} />*/}
         </FlexBox>
 
         <ProfilePopover display={focusProfile} />

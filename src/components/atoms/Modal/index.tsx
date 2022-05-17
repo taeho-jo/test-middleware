@@ -6,7 +6,6 @@ const Modal = ({ children }) => {
   return (
     <Portal selector={'modal-root'}>
       <div css={darkBackgroundStyle}>{children}</div>
-      {/*<div css={backgroundStyle}>{modalType === 'confirmSignup' || modalType === 'confirmPassword' ? <ConfirmModal /> : <AuthModal />}</div>*/}
     </Portal>
   );
 };

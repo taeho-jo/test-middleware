@@ -8,7 +8,6 @@ import { colors } from '../../../styles/Common.styles';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { body3_bold, body3_regular } from '../../../styles/FontStyles';
 import FlexBox from '../../atoms/FlexBox';
-import { created } from '../../../store/reducers/teamReducer';
 
 // const subTitle = []
 
@@ -25,7 +24,7 @@ const inputArr = [
 const TeamCreatePopup = () => {
   const dispatch = useDispatch();
   const handleCompleteCreate = useCallback(() => {
-    dispatch(created(false));
+    dispatch(isShow({ isShow: false, type: '' }));
   }, []);
 
   return (
