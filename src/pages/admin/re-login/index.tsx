@@ -5,8 +5,6 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import withTokenAuth from '../../../hoc/withTokenAuth';
 import LoginModal from '../../../components/organisms/Modal/LoginModal';
 import ReLoginComponent from '../../../components/organisms/ReLoginComponent';
-// import withoutTokenAuth from '../../../hoc/withoutTokenAuth';
-// import withTokenAuth from '../../../hoc/withTokenAuth';
 
 const ReLogin = () => {
   const dispatch = useDispatch();

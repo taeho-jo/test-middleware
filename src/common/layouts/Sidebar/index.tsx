@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 // Components
 import Button from '../../../components/atoms/Button';
 import FlexBox from '../../../components/atoms/FlexBox';
-import ShortText from '../../../components/atoms/ShortText';
 // Libraries
 import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from 'react-icons/md';
 // Styles
@@ -122,7 +121,7 @@ const Sidebar = ({ showSidebar, onClick }: PropsTyps) => {
             <FlexBox padding={'10px 30px'} justify={'space-between'} width={'80%'} onClick={() => handleClickMenu(el.label, el.path, false)}>
               {/*<Link href={el.path}>{el.label}</Link>*/}
               {/*<ShortText>{el.label}</ShortText>*/}
-              <ShortText text={el.label} color={'white'} fontWeight={'bold'} cursor={'pointer'} />
+              {/*<ShortText text={el.label} color={'white'} fontWeight={'bold'} cursor={'pointer'} />*/}
 
               {el.child.length === 0 ? null : el.child.length > 0 && showSubMenu && subMenuName === el.label ? (
                 <MdOutlineKeyboardArrowDown color={'white'} size={28} cursor={'pointer'} onClick={() => handleClickMenu(el.label, el.path, false)} />
@@ -137,7 +136,7 @@ const Sidebar = ({ showSidebar, onClick }: PropsTyps) => {
                   return (
                     <div css={subMenuStyle} key={index}>
                       <FlexBox justify={'flex-start'} padding={'10px 30px 10px 45px'} onClick={() => handleClickMenu(item.label, item.path, true)}>
-                        <ShortText text={item.label} color={'white'} fontWeight={'bold'} cursor={'pointer'} />
+                        {/*<ShortText text={item.label} color={'white'} fontWeight={'bold'} cursor={'pointer'} />*/}
                       </FlexBox>
                     </div>
                   );

@@ -6,7 +6,7 @@ import { heading4_bold } from '../../../styles/FontStyles';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 interface PropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
-  isLoading: boolean;
+  isLoading?: boolean;
   designBgColor?: string;
   text?: string;
   type?: 'submit' | 'button' | 'reset';
