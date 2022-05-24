@@ -77,7 +77,7 @@ const ResetPasswordModal = () => {
   return (
     <FlexBox style={{ marginTop: modalShow ? '160px' : 0 }} justify={'center'} direction={'column'}>
       <PopupBox padding={'0'} width={'400px'} height={'auto'}>
-        <ModalTitle title={'비밀번호 재설정'} titlePosition={'space-between'} />
+        <ModalTitle title={'비밀번호 재설정'} titlePosition={'flex-start'} />
         <ModalSubTitle subTitle={subTitleArr} />
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 26px', boxSizing: 'border-box' }}>
           <Input

@@ -7,10 +7,13 @@ import { isShow } from '../../store/reducers/modalReducer';
 import { setToken } from '../../store/reducers/authReducer';
 import { useRouter } from 'next/router';
 import { setEmailConfirm, setSetting } from '../../store/reducers/userReducer';
+import { dispatch } from 'jest-circus/build/state';
 
 export const useGoogleLogin = () => {
-  // const router = useRouter();
-  // console.log(router.query, 'QUERY');
+  const dispatch = useDispatch();
+  const router = useRouter();
+  dispatch(setSetting(false));
+  router.push('/admin/team');
 };
 
 // 로그인 API
@@ -34,6 +37,7 @@ export const useLoginApi = () => {
       dispatch(showToast({ message: '로그인에 성공하였습니다.', isShow: true, status: 'success', duration: 5000 }));
       dispatch(isShow({ isShow: false, type: '' }));
       dispatch(setSetting(true));
+      localStorage.removeItem('userId');
     },
   });
 };
@@ -82,14 +86,22 @@ export const useConfirmEmailApi = () => {
 
 // 비밀번호 재설정 API
 export const useChangePasswordApi = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const handleChangePassword = async (sendObject: ChangePasswordType) => {
     console.log(sendObject);
     return await AXIOS_PATCH('/user/password', sendObject);
   };
 
   return useMutation(handleChangePassword, {
-    onError: e => console.log(e),
-    onSuccess: data => console.log(data),
+    onError: e => {
+      console.log(e);
+      dispatch(showToast({ message: '비밀번호 변경에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
+    },
+    onSuccess: data => {
+      dispatch(showToast({ message: '비밀번호가 변경되었습니다!', isShow: true, status: 'success', duration: 5000 }));
+      router.push('/admin/reset-password-success');
+    },
   });
 };
 

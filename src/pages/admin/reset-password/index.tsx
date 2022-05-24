@@ -1,9 +1,9 @@
 import React from 'react';
 import ResetPw from '../../../components/organisms/ResetPw';
-import withTokenAuth from '../../../hoc/withTokenAuth';
+import changePasswordAuth from '../../../hoc/changePasswordAuth';
 
 const ResetPassword = () => {
   return <ResetPw />;
 };
 
-export default withTokenAuth(ResetPassword, false);
+export default changePasswordAuth(ResetPassword, false);

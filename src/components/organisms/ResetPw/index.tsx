@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import ModalTitle from '../../molecules/ModalTitle';
 import { heading5_bold, heading4_bold } from '../../../styles/FontStyles';
 import { css } from '@emotion/react';
@@ -44,12 +44,12 @@ const ResetPw = () => {
   const { isLoading, mutate, data } = useChangePasswordApi();
 
   const handleResetPassword = useCallback((status, data) => {
-    // console.log(data);
-    // const sendObject = {
-    //   password: data.password,
-    // };
-    // mutate(sendObject);
-    router.push('/admin/reset-password-success');
+    console.log(data);
+    const sendObject = {
+      password: data.password,
+    };
+    mutate(sendObject);
+    // router.push('/admin/reset-password-success');
   }, []);
   const handleProcessingError = useCallback((status, errors) => {
     // dispatch(showToast({ message: '가입된 계정이 없습니다. 다시 확인해주세요!', isShow: true, status: 'warning', duration: 5000 }));

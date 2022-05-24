@@ -17,7 +17,8 @@ import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // API
 import { useConfirmEmailApi } from '../../api/authApi';
 import { useGetUserInfo } from '../../api/userApi';
-import { setEmailConfirm } from '../../store/reducers/userReducer';
+import { setEmailConfirm, setSetting } from '../../store/reducers/userReducer';
+import { isShow } from '../../store/reducers/modalReducer';
 
 // Types
 interface PropsType {
@@ -27,7 +28,7 @@ interface PropsType {
 const Layout = ({ children }: PropsType) => {
   const dispatch = useDispatch();
   const token = localStorage.getItem('accessToken');
-  const resetToken = localStorage.getItem('resetToken');
+  const resetToken = sessionStorage.getItem('accessToken');
   const emailConfirm = useSelector<ReducerType, boolean>(state => state.user.emailConfirm);
   const userInfoSettingValue = useSelector<ReducerType, boolean>(state => state.user.setting);
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
@@ -41,12 +42,25 @@ const Layout = ({ children }: PropsType) => {
   const confirmEmail = useConfirmEmailApi();
 
   useEffect(() => {
-    if (router.query.token) {
-      console.log('몇 번 실행????');
+    if (router.query) {
+      dispatch(setSetting(false));
+      dispatch(isShow({ isShow: false, type: '' }));
       const query = router?.query;
-      localStorage.setItem('accessToken', `${query.token}`);
-      // dispatch(setEmailConfirm(true));
-      confirmEmail.mutate();
+      const { token, userId, type } = query;
+
+      if (token && !userId && type === 'google') {
+        localStorage.setItem('accessToken', `${token}`);
+        dispatch(setSetting(true));
+      }
+      if (token && !userId && !type) {
+        localStorage.setItem('accessToken', `${token}`);
+        confirmEmail.mutate();
+      }
+      if (token && userId && !type) {
+        sessionStorage.setItem('accessToken', `${token}`);
+        sessionStorage.setItem('userId', `${userId}`);
+        router.push('/admin/reset-password');
+      }
     }
   }, [router.query]);
 
@@ -68,11 +82,7 @@ const Layout = ({ children }: PropsType) => {
     if ((router.pathname === '/' || router.pathname === '/index') && canvasRef.current) {
       setGradient(canvasRef.current);
     }
-  }, [token, router.pathname]);
-
-  useEffect(() => {
-    console.log('userInfo::::::::::::::', userInfo, '::::::::::::::userInfo');
-  }, [userInfo]);
+  }, [token, router.pathname, resetToken]);
 
   useEffect(() => {
     if (router.pathname === '/' || router.pathname === '/index') {
@@ -80,7 +90,7 @@ const Layout = ({ children }: PropsType) => {
     } else {
       setShowGradient(false);
     }
-  }, [router.pathname]);
+  }, [router.pathname, resetToken]);
   // <------------- LandingPage css 및 animation 을 위한 useEffect -------------> //
 
   const separateDomain = useCallback(() => {
@@ -145,6 +155,18 @@ const Layout = ({ children }: PropsType) => {
     }
   }, [router.pathname, token, showGradient]);
 
+  if (resetToken) {
+    return (
+      <div css={mainContainer}>
+        <main css={contentsContainer}>
+          <CommonHeader />
+          <FlexBox height={'calc(100vh - 48px)'} justify={'center'} align={'center'}>
+            {children}
+          </FlexBox>
+        </main>
+      </div>
+    );
+  }
   if (token && userInfo.emailVerifiedYn === 'Y') {
     return (
       <>
