@@ -66,17 +66,15 @@ export const useSignupApi = () => {
 // 이메일 확인 API
 export const useConfirmEmailApi = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
+
   const handleConfirmEmail = async () => {
-    console.log('Confirm이 몇번 실행?????');
     return await AXIOS_POST('/auth/confirm', {});
   };
 
   return useMutation(handleConfirmEmail, {
     onError: e => console.log('useConfirmEmailApi::: ', e),
     onSuccess: data => {
-      console.log(data, 'Confirm Email Success');
-      dispatch(setEmailConfirm(false));
+      console.log('useConfirmEmailApi::: ', data);
       dispatch(setSetting(true));
     },
   });

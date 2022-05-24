@@ -56,7 +56,8 @@ const SignupModal = () => {
       userName: userId.split('@')[0],
       privacyConsentYn: privacyConsentYn ? 'Y' : 'N',
       consentToUseMarketingYn: consentToUseMarketingYn ? 'Y' : 'N',
-      emailTemplateName: 'local_confirm_email_template',
+      // emailTemplateName: 'local_confirm_email_template',
+      emailTemplateName: 'stag_confirm_email_template',
     };
     mutate(sendObject);
   }, []);
@@ -117,6 +118,14 @@ const SignupModal = () => {
               text={'이용약관'}
             />
             과&nbsp;
+            <TextButton
+              onClick={() =>
+                dispatch(showToast({ message: '개인정보처리방침으로 이동 할겁니다. 링크주세욤', isShow: true, status: 'warning', duration: 5000 }))
+              }
+              textStyle={caption1_regular}
+              text={'개인정보처리방침'}
+            />
+            ,&nbsp;
             <TextButton
               onClick={() => dispatch(showToast({ message: '정보수신으로 이동 할겁니다. 링크주세욤', isShow: true, status: '', duration: 5000 }))}
               textStyle={caption1_regular}
