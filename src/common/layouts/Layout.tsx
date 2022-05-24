@@ -45,16 +45,16 @@ const Layout = ({ children }: PropsType) => {
       console.log('몇 번 실행????');
       const query = router?.query;
       localStorage.setItem('accessToken', `${query.token}`);
-      dispatch(setEmailConfirm(true));
-      // confirmEmail.mutate();
+      // dispatch(setEmailConfirm(true));
+      confirmEmail.mutate();
     }
   }, [router.query]);
 
-  useEffect(() => {
-    if (emailConfirm) {
-      confirmEmail.mutate();
-    }
-  }, [emailConfirm]);
+  // useEffect(() => {
+  //   if (emailConfirm) {
+  //     confirmEmail.mutate();
+  //   }
+  // }, [emailConfirm]);
 
   // <------------- LandingPage css 및 animation 을 위한 useEffect -------------> //
   useEffect(() => {
@@ -69,6 +69,10 @@ const Layout = ({ children }: PropsType) => {
       setGradient(canvasRef.current);
     }
   }, [token, router.pathname]);
+
+  useEffect(() => {
+    console.log('userInfo::::::::::::::', userInfo, '::::::::::::::userInfo');
+  }, [userInfo]);
 
   useEffect(() => {
     if (router.pathname === '/' || router.pathname === '/index') {

@@ -9,7 +9,7 @@ export const useGetUserInfo = userInfoSettingValue => {
   const dispatch = useDispatch();
   const router = useRouter();
   return useQuery(['getUserInfo'], () => AXIOS_GET('/user/info'), {
-    // cacheTime: 0,
+    cacheTime: 0,
     // staleTime: 10000,
     enabled: userInfoSettingValue,
     onSuccess: data => {
