@@ -6,14 +6,6 @@ const nextConfig = {
 
 module.exports = {
   nextConfig,
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: '/:path*',
-  //       destination: process.env.DESTINATION_URL,
-  //     },
-  //   ];
-  // },
   webpack: config => {
     config.module.rules.push({
       test: /\.svg$/,

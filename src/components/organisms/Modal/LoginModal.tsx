@@ -5,7 +5,7 @@ import { showToast } from '../../../store/reducers/toastReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 // API
-import { useLogin } from '../../../api/authApi';
+import { useLoginApi } from '../../../api/authApi';
 // Libraries
 import { useForm } from 'react-hook-form';
 // Components
@@ -24,6 +24,7 @@ import { colors } from '../../../styles/Common.styles';
 import { body3_medium } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../AddInfoPopup';
+import { useGetUserInfo } from '../../../api/userApi';
 
 const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
 
@@ -31,6 +32,7 @@ const LoginModal = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
 
   // hook form
   const {
@@ -43,7 +45,8 @@ const LoginModal = () => {
   const onError = errors => handleProcessingError('fail', errors);
 
   // react query
-  const loginResponse = useLogin();
+  // const { refetch } = useGetUserInfo();
+  const loginResponse = useLoginApi();
 
   // 이메일 로그인
   const handleLogin = useCallback((status, data) => {
@@ -70,15 +73,13 @@ const LoginModal = () => {
     dispatch(isShow({ isShow: true, type: 'signup' }));
   }, []);
 
-  useEffect(() => {
-    const { data } = loginResponse;
-    if (data) {
-      if (data.header.status !== 201) {
-        reset();
-        loginResponse.data = undefined;
-      }
-    }
-  }, [loginResponse.data]);
+  // useEffect(() => {
+  //   if (userInfo.emailVerifiedYn === 'Y') {
+  //     router.push('/admin/team');
+  //   } else {
+  //     dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+  //   }
+  // }, [userInfo.emailVerifiedYn]);
 
   return (
     <FlexBox style={{ marginTop: modalShow ? '160px' : 0 }} justify={'center'} direction={'column'}>
@@ -119,7 +120,7 @@ const LoginModal = () => {
           />
 
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton type={'submit'} text={'로그인하기'} style={{ marginBottom: '18px' }} />
+            <BasicButton isLoading={loginResponse.isLoading} type={'submit'} text={'로그인하기'} style={{ marginBottom: '18px' }} />
             <IconTextButton onClick={loginWithGoogle} name={'GOOGLE'} iconPosition={'left'} text={'구글로 시작하기'} />
           </FlexBox>
         </Form>

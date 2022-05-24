@@ -1,20 +1,23 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 // Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReducerType } from '../../store/reducers';
 // Components
 import AppBar from '../../../diby-client-landing/components/AppBar';
-// Styles
-import { css } from '@emotion/react';
-import AOS from 'aos';
-import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
-// import BackGroundImg2 from '../../assets/background_img2.png';
 import CommonModal from '../../components/organisms/CommonModal';
 import CommonHeader from '../../components/molecules/CommonHeader';
 import AdminLayout from './AdminLayout';
 import AlertToast from '../../components/organisms/AlertToast';
 import FlexBox from '../../components/atoms/FlexBox';
-import { setToken } from '../../store/reducers/authReducer';
+// Styles
+import { css } from '@emotion/react';
+import AOS from 'aos';
+import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
+// API
+import { useConfirmEmailApi } from '../../api/authApi';
+import { useGetUserInfo } from '../../api/userApi';
+import { setEmailConfirm } from '../../store/reducers/userReducer';
 
 // Types
 interface PropsType {
@@ -24,23 +27,34 @@ interface PropsType {
 const Layout = ({ children }: PropsType) => {
   const dispatch = useDispatch();
   const token = localStorage.getItem('accessToken');
+  const resetToken = localStorage.getItem('resetToken');
+  const emailConfirm = useSelector<ReducerType, boolean>(state => state.user.emailConfirm);
+  const userInfoSettingValue = useSelector<ReducerType, boolean>(state => state.user.setting);
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
 
   const [showGradient, setShowGradient] = useState<boolean>(true);
 
   const router = useRouter();
 
   const canvasRef = useRef(null);
+  const { isLoading, data, isError, error, refetch } = useGetUserInfo(userInfoSettingValue);
+  const confirmEmail = useConfirmEmailApi();
 
   useEffect(() => {
-    if (router?.query) {
-      if (router.query?.token) {
-        // TODO: /api/v1/auth/confirm API 호출 ( 이메일 인증 완료 후, localStorage 저장 )
-        localStorage.setItem('accessToken', `${router.query.token}`);
-        dispatch(setToken(`${router.query.token}`));
-        router.push('/admin/team');
-      }
+    if (router.query.token) {
+      console.log('몇 번 실행????');
+      const query = router?.query;
+      localStorage.setItem('accessToken', `${query.token}`);
+      dispatch(setEmailConfirm(true));
+      // confirmEmail.mutate();
     }
   }, [router.query]);
+
+  useEffect(() => {
+    if (emailConfirm) {
+      confirmEmail.mutate();
+    }
+  }, [emailConfirm]);
 
   // <------------- LandingPage css 및 animation 을 위한 useEffect -------------> //
   useEffect(() => {
@@ -55,6 +69,7 @@ const Layout = ({ children }: PropsType) => {
       setGradient(canvasRef.current);
     }
   }, [token, router.pathname]);
+
   useEffect(() => {
     if (router.pathname === '/' || router.pathname === '/index') {
       setShowGradient(true);
@@ -80,7 +95,8 @@ const Layout = ({ children }: PropsType) => {
           </div>
         );
       case '/admin/team':
-      case '/admin/main':
+      case '/admin/member':
+      case '/admin/setting':
         return (
           <div css={mainContainer}>
             <main css={contentsContainer}>
@@ -108,6 +124,7 @@ const Layout = ({ children }: PropsType) => {
                   <AppBar dark={showGradient} />
                 </>
               ) : null}
+
               <div>{children}</div>
             </main>
           </div>
@@ -124,7 +141,7 @@ const Layout = ({ children }: PropsType) => {
     }
   }, [router.pathname, token, showGradient]);
 
-  if (token) {
+  if (token && userInfo.emailVerifiedYn === 'Y') {
     return (
       <>
         {separateDomain()}
@@ -133,7 +150,7 @@ const Layout = ({ children }: PropsType) => {
       </>
     );
   }
-  if (!token) {
+  if (!token || userInfo.emailVerifiedYn !== 'Y') {
     return (
       <>
         <div css={mainContainer}>

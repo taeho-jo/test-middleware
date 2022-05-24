@@ -65,16 +65,15 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
       style={{ ...itemBox(modalType, isFirstCreateTeam, isInviteModal, parentsIndex, focusItem) }}
     >
       <FlexBox style={{ marginBottom: '15px' }} justify={'space-between'} align={'center'}>
-        <span css={[heading5_bold]}>{teamName}</span>
+        <span css={[heading5_bold, textStyle]}>{teamName}</span>
         <Icon name={'ACTION_SETTING'} size={24} onClick={() => handleChangeTeamName(parentsIndex)} />
-        {/*<Icon name={'ACTION_SETTING'} size={24} />*/}
       </FlexBox>
 
-      <FlexBox justify={'flex-start'} align={'center'}>
+      <FlexBox justify={'flex-start'} align={'center'} wrap={'wrap'}>
         {memberList.map((item, index) => {
           return (
             <Fragment key={index}>
-              <ProfileIcon name={item} backgroundColor={profileColor[index]} size={'20px'} fontStyle={caption2_bold} margin={'0 4px 0 0'} />
+              <ProfileIcon name={item} backgroundColor={profileColor[index]} size={'20px'} fontStyle={caption2_bold} margin={'0 6px 0 0'} />
               {index + 1 === memberList.length ? (
                 <IconButton onClick={() => handToggleInviteModal(parentsIndex)} name={'ACTION_ADD_CIRCLE'} style={{ marginTop: '3px' }} />
               ) : null}
@@ -107,4 +106,9 @@ const itemBox = (modalType, isFirstCreateTeam, isInviteModal, parentsIndex, focu
     : `
     z-index: -1;
   `}
+`;
+const textStyle = css`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

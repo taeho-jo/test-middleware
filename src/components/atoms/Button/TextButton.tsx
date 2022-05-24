@@ -23,4 +23,5 @@ const textButtonStyle = css`
   border: none;
   background: none;
   cursor: pointer;
+  padding: 1px 0;
 `;

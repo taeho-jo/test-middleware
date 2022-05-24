@@ -10,7 +10,7 @@ const persistConfig = {
   key: 'root',
   storage,
   // stateReconciler: autoMergeLevel2,
-  whitelist: ['auth'],
+  whitelist: ['auth', 'user'],
   // blacklist: ['counter', 'modal'],
   // stateReconciler: hardSet,
   // migrate: createMigrate(migrations, { debug: true }),

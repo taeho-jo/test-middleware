@@ -73,21 +73,24 @@ const reset = (popupShow, isAdmin, story) => css`
       cursor: pointer;
       padding-left: 30px;
       height: 22px;
-      background: url('/assets/images/common/toggle_check_box_off_24px.svg') left/22px no-repeat;
+      background: url('/assets/images/common/toggle_check_box_off_24px.png') left/22px no-repeat;
       line-height: 22px;
     }
 
+    input[type='checkbox']:hover + label {
+      background: url('/assets/images/common/toggle_check_box_off_hover_24px.png') left/22px no-repeat;
+    }
+    input[type='checkbox']:disabled + label {
+      background: url('/assets/images/common/toggle_check_box_off_disabled_24px.png') left/22px no-repeat;
+    }
+
     input[type='checkbox']:checked + label {
-      background: url('/assets/images/common/toggle_check_box_24px.svg') left/22px no-repeat;
+      background: url('/assets/images/common/toggle_check_box_24px.png') left/22px no-repeat;
     }
 
     input[type='checkbox'] {
       display: none;
     }
-
-    //input:focus + label {
-    //  color: red;
-    //}
 
     #gradient-canvas {
       --gradient-color-1: #3c3c46;

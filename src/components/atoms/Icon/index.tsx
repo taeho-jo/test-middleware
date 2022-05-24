@@ -4,9 +4,11 @@ import ActionCreate from '/public/assets/svg/action_create.svg';
 import ActionMore from '/public/assets/svg/action_more_v.svg';
 import ActionSetting from '/public/assets/svg/action_settings.svg';
 import ActionAddCircle from '/public/assets/svg/action_add_circle.svg';
+import ActionSearch from '/public/assets/svg/action_search.svg';
 import NavigationArrowLeft from '/public/assets/svg/navigation_arrow_left.svg';
 import NavigationArrowRight from '/public/assets/svg/navigation_arrow_right.svg';
 import NavigationChevronDown from '/public/assets/svg/navigation_chevron_down_s.svg';
+import ChevronDownThin from '/public/assets/svg/chevron_down_thin.svg';
 import NavigationChevronRight from '/public/assets/svg/navigation_chevron_right.svg';
 import NavigationChevronRightDisabled from '/public/assets/svg/navigation_chevron_right_disabled.svg';
 import NavigationCloseLg from '/public/assets/svg/navigation_close_l.svg';
@@ -43,6 +45,7 @@ const IconTypes = {
   ACTION_SETTING: ActionSetting,
   ACTION_ADD_CIRCLE: ActionAddCircle,
   ACTION_MORE: ActionMore,
+  ACTION_SEARCH: ActionSearch,
   NAVIGATION_ARROW_LEFT: NavigationArrowLeft,
   NAVIGATION_ARROW_RIGHT: NavigationArrowRight,
   NAVIGATION_CHEVRON_DOWN: NavigationChevronDown,
@@ -64,6 +67,7 @@ const IconTypes = {
   UITEST_INACTIVE: UiTestInactive,
   UXPOSITION_HOVER: UxPositionHover,
   UXPOSITION_INACTIVE: UxPositionInactive,
+  CHEVRON_DOWN_THIN: ChevronDownThin,
 };
 
 const Icon = ({ name, size = 24, style, iconColor, onClick }: PropsType) => {
@@ -72,9 +76,9 @@ const Icon = ({ name, size = 24, style, iconColor, onClick }: PropsType) => {
 
   return (
     <IconComponent
-      css={iconStyle(iconColor)}
+      css={[iconStyle(iconColor), style]}
       onClick={onClick}
-      style={{ boxSizing: 'border-box', ...style }}
+      style={{ boxSizing: 'border-box' }}
       width={size}
       height={size}
       viewBox={viewBox}

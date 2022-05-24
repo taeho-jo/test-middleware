@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 // import AuthModal from '../../../components/organisms/AuthModal';
 import { isShow } from '../../../store/reducers/modalReducer';
 import withTokenAuth from '../../../hoc/withTokenAuth';
+import LoginModal from '../../../components/organisms/Modal/LoginModal';
+import ReLoginComponent from '../../../components/organisms/ReLoginComponent';
 // import withoutTokenAuth from '../../../hoc/withoutTokenAuth';
 // import withTokenAuth from '../../../hoc/withTokenAuth';
 
@@ -13,7 +15,7 @@ const ReLogin = () => {
     dispatch(isShow({ isShow: false, type: 'login' }));
   }, []);
 
-  return <div>Re-login</div>;
+  return <ReLoginComponent />;
 };
 
-export default withTokenAuth(ReLogin);
+export default withTokenAuth(ReLogin, false);

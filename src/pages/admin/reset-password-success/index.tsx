@@ -6,4 +6,4 @@ const ResetPasswordSuccess = () => {
   return <ResetPwSuccess />;
 };
 
-export default withTokenAuth(ResetPasswordSuccess);
+export default withTokenAuth(ResetPasswordSuccess, false);

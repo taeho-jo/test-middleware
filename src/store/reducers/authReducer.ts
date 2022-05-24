@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface AuthType {
-  token: string;
+  accessToken: string;
   email: string;
+  // userInfo: {};
 }
 
 const initialState: AuthType = {
-  token: '',
+  accessToken: '',
   email: '',
 };
 
@@ -14,14 +15,14 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setToken: (state, action: PayloadAction<string>) => {
+    setToken: (state, action: PayloadAction<any>) => {
       console.log(action, 'ACTION');
-      state.token = action.payload;
+      state.accessToken = action.payload;
       // state.email = action.payload;
     },
     resetToken: state => {
       console.log('RESET RESET');
-      state.token = '';
+      state.accessToken = '';
     },
     test1: (state, action) => {
       // console.log(action, 'asdfasdfasdfasdfasdfasdfasd');

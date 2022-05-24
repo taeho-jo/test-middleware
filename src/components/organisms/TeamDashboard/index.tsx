@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { css } from '@emotion/react';
 import FlexBox from '../../../components/atoms/FlexBox';
 import { colors } from '../../../styles/Common.styles';
-import { heading5_bold } from '../../../styles/FontStyles';
+import { body2_bold } from '../../../styles/FontStyles';
 
 import icon1_inActive from '../../../../public/assets/images/admin/team/uitest_inactive.png';
 import icon2_inActive from '../../../../public/assets/images/admin/team/scenario_inactive.png';
@@ -13,10 +13,11 @@ import icon1 from '../../../../public/assets/images/admin/team/uitest_hover.png'
 import icon2 from '../../../../public/assets/images/admin/team/scenario_hover.png';
 import icon3 from '../../../../public/assets/images/admin/team/uxposition_hover.png';
 import icon4 from '../../../../public/assets/images/admin/team/customer_hover.png';
-import GridBox from '../../atoms/GridBox';
+import backgroundImg1 from '../../../../public/assets/images/admin/reportList/uiTestReport.png';
 import { updateTeamInfo } from '../../../store/reducers/teamReducer';
 import ResearchModuleButton from '../../atoms/ResearchModuleButton';
 import { isShow } from '../../../store/reducers/modalReducer';
+import ResearchList from '../ResearchList';
 
 const ResearchType = [
   {
@@ -65,8 +66,34 @@ const ResearchType = [
   },
 ];
 
+const selectBoxArr = [
+  { value: '옵션 A', label: '옵션 A' },
+  { value: '옵션 B', label: '옵션 B' },
+  { value: '옵션 C', label: '옵션 C' },
+  { value: '옵션 D', label: '옵션 D' },
+  { value: '옵션 E', label: '옵션 E' },
+];
+const DummyListData = [
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+];
+
 const TeamDashboard = () => {
   const dispatch = useDispatch();
+
+  const [selectedValue, setSelectedValue] = useState('');
 
   useEffect(() => {
     // 최초로그인
@@ -77,7 +104,7 @@ const TeamDashboard = () => {
       updateTeamInfo([
         {
           teamName: 'DBDLAB의 팀',
-          memberList: ['A', 'K', 'P'],
+          memberList: ['A', 'K', 'P', 'A', 'K', 'P', 'A', 'K', 'P'],
         },
         {
           teamName: 'DBDLAB의 팀2',
@@ -99,7 +126,7 @@ const TeamDashboard = () => {
     <>
       <div css={teamMainContainer}>
         <FlexBox direction={'column'} justify={'flex-start'} align={'flex-start'} style={researchKinds}>
-          <span css={[heading5_bold, titleStyle]}>리서치 종류 (모듈)</span>
+          <span css={[body2_bold, titleStyle]}>리서치 종류 (모듈)</span>
           <FlexBox justify={'flex-start'} align={'flex-start'}>
             {ResearchType.map((item, index) => {
               return (
@@ -119,32 +146,10 @@ const TeamDashboard = () => {
             })}
           </FlexBox>
         </FlexBox>
-        <GridBox gridType={'list'} cardBoxSize={256} gutter={16}>
-          {/*<ListReport*/}
-          {/*  img={reportCardImage.src}*/}
-          {/*  testType={'UI 진단 테스트'}*/}
-          {/*  testTitle={'둠칫 둠칫 뚜루뚜두 UI 진단 테스트테스트 테에에에스트'}*/}
-          {/*  testDate={'2022.02.10'}*/}
-          {/*/>*/}
-          {/*<ListReport*/}
-          {/*  img={reportCardImage.src}*/}
-          {/*  testType={'UI 진단 테스트'}*/}
-          {/*  testTitle={'둠칫 둠칫 뚜루뚜두 UI 진단 테스트테스트 테에에에스트'}*/}
-          {/*  testDate={'2022.02.10'}*/}
-          {/*/>*/}
-          {/*<ListReport*/}
-          {/*  img={reportCardImage.src}*/}
-          {/*  testType={'UI 진단 테스트'}*/}
-          {/*  testTitle={'둠칫 둠칫 뚜루뚜두 UI 진단 테스트테스트 테에에에스트'}*/}
-          {/*  testDate={'2022.02.10'}*/}
-          {/*/>*/}
-          {/*<ListReport*/}
-          {/*  img={reportCardImage.src}*/}
-          {/*  testType={'UI 진단 테스트'}*/}
-          {/*  testTitle={'둠칫 둠칫 뚜루뚜두 UI 진단 테스트테스트 테에에에스트'}*/}
-          {/*  testDate={'2022.02.10'}*/}
-          {/*/>*/}
-        </GridBox>
+        <FlexBox style={{ padding: '24px 32px 32px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
+          <span css={[body2_bold, titleStyle]}>모든 리서치</span>
+          <ResearchList listData={DummyListData} />
+        </FlexBox>
       </div>
     </>
   );
@@ -160,6 +165,6 @@ const researchKinds = css`
   margin-right: 16px;
 `;
 const titleStyle = css`
-  margin-bottom: 26px;
+  margin-bottom: 24px;
   display: block;
 `;

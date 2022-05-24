@@ -105,7 +105,7 @@ const InviteTeamMemberModal = () => {
           <AnnouncementBox content={'연속 추가 시, 엔터키(줄바꿈)로 구분해요.'} />
 
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton theme={'dark'} type={'submit'} text={'초대하기'} />
+            <BasicButton isLoading={false} theme={'dark'} type={'submit'} text={'초대하기'} />
           </FlexBox>
         </Form>
 
