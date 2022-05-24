@@ -1039,7 +1039,7 @@ exports.modules = {
 
 			/**
 			 * If our element isn’t resetting, we check the
-			 * element sequence index against the head, and
+			 * element sequence landing against the head, and
 			 * then the foot of the sequence.
 			 */
 			if (

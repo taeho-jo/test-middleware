@@ -197,7 +197,7 @@ var icon_feedback2 = __webpack_require__(88715);
 var icon_testing = __webpack_require__(27030);
 // EXTERNAL MODULE: ./node_modules/@emotion/react/dist/emotion-react.cjs.prod.js
 var emotion_react_cjs_prod = __webpack_require__(11334);
-;// CONCATENATED MODULE: ./src/components/atoms/Icon/index.tsx
+;// CONCATENATED MODULE: ./src/components/atoms/Icon/landing.tsx
 
 
 

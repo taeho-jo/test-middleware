@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface ModalType {
   isShow: boolean;
-  type: string;
+  type?: string;
 }
 
 const initialState = {
@@ -16,7 +16,7 @@ export const modalSlice = createSlice({
   reducers: {
     isShow: (state, action: PayloadAction<ModalType>) => {
       state.isShow = action.payload.isShow;
-      state.type = action.payload.type;
+      state.type = action.payload.type ? action.payload.type : '';
     },
   },
 });

@@ -4,6 +4,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 // Reducers
 import counter from './counterReducer';
 import auth from './authReducer';
+import user from './userReducer';
 import toast from './toastReducer';
 import modal from './modalReducer';
 import team from './teamReducer';
@@ -15,9 +16,11 @@ const reducer = (state, action) => {
       ...action.payload,
     };
   }
+
   return combineReducers({
     counter,
     auth,
+    user,
     toast,
     modal,
     team,

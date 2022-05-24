@@ -642,8 +642,8 @@ var updateAt = (fieldValues, index, value) => {
  *
  *   return (
  *     <form onSubmit={handleSubmit(data => console.log(data))}>
- *       {fields.map((item, index) => (
- *          <input key={item.id} {...register(`test.${index}.firstName`)}  />
+ *       {fields.map((item, landing) => (
+ *          <input key={item.id} {...register(`test.${landing}.firstName`)}  />
  *       ))}
  *       <button type="button" onClick={() => append({ firstName: "bill" })}>
  *         append
@@ -2130,7 +2130,7 @@ function useForm(props = {}) {
 }
 
 
-//# sourceMappingURL=index.esm.mjs.map
+//# sourceMappingURL=landing.esm.mjs.map
 
 
 /***/ })

@@ -7,13 +7,12 @@ interface PropsType {
   testType: string;
   testTitle: string;
   testDate: string;
-  img: string;
-  width?: string;
+  img: string | null;
 }
 
-const ListReport = ({ testType, testTitle, testDate, img, width }: PropsType) => {
+const ListReport = ({ testType, testTitle, testDate, img }: PropsType) => {
   return (
-    <div css={mainContainer(img, width)}>
+    <div css={mainContainer(img)}>
       <span css={[caption1_regular, blockStyle]}>{testType}</span>
       <span css={[heading5_bold, titleStyle]}>{testTitle}</span>
       <span css={[caption1_regular, dateStyle]}>{testDate}</span>
@@ -44,10 +43,9 @@ const dateStyle = [
   `,
 ];
 
-const mainContainer = (img, width) => css`
-  width: ${width ? width : '100%'};
+const mainContainer = img => css`
+  width: 256px;
   height: 184px;
-  //background: hotpink;
   border-radius: 8px;
   border: 1px solid ${colors.grey._ec};
   padding: 25px 20px 0 20px;
@@ -55,4 +53,6 @@ const mainContainer = (img, width) => css`
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: contain;
+  margin-bottom: 20px;
+  margin-right: 16px;
 `;

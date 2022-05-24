@@ -6,7 +6,16 @@ export interface LoginInputType {
 export interface SignupInputType {
   userId: string;
   password: string;
-  username: string;
+  userName: string;
   privacyConsentYn: string;
   consentToUseMarketingYn: string;
+  emailTemplateName: string;
+}
+
+export interface ResetPasswordType {
+  userId: string;
+  emailTemplateName: string;
+}
+export interface ChangePasswordType {
+  password: string;
 }

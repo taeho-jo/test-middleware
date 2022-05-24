@@ -6,14 +6,19 @@ import { useDispatch } from 'react-redux';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
 import ConfirmPopupNextStepBtn from '../../molecules/ConfirmPopupNextStepBtn';
 import { showToast } from '../../../store/reducers/toastReducer';
+import { useResendEmail } from '../../../api/authApi';
 
 const ConfirmResetPasswordModal = () => {
   const dispatch = useDispatch();
-  const userEmail = 'taeho.jo@dbdlab.io';
+  const userEmail = sessionStorage.getItem('userId');
+
+  // const resendResponse = useResendEmail();
 
   const resetPasswordSubTitleArr = [`${userEmail} 로`, '새 비밀번호를 설정할 수 있는 메일을 보냈어요.', '새로운 비밀번호를 설정해주세요.'];
 
   const resendEmail = useCallback(() => {
+    // const sendObject;
+    // resendResponse.mutate(sendObject);
     dispatch(showToast({ message: '비밀번호 재설정 메일이 발송되었습니다.', isShow: true, status: '', duration: 5000 }));
   }, []);
 

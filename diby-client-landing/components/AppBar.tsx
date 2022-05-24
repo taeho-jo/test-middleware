@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -6,18 +6,18 @@ import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { isShow } from '../../src/store/reducers/modalReducer';
 // Components
-import { Grid, Stack, Button, IconButton, Popover, Icon } from '@mui/material';
+import { Button, Grid, IconButton, Popover, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { GridContainer } from './Grid';
-import { breakpoints, theme } from '../Theme';
+import { breakpoints } from '../Theme';
 // Images
 import MenuIcon from '@mui/icons-material/Menu';
-import LogoWhite from '../../public/assets/images/diby_white1.png';
-import LogoBlack from '../../public/assets/images/diby_black1.png';
 import icon1 from '../../public/assets/images/icon_uitest1.png';
 import icon2 from '../../public/assets/images/icon_uxposition1.png';
 import icon3 from '../../public/assets/images/icon_scenario1.png';
 import icon4 from '../../public/assets/images/icon_customer1.png';
+import { ReducerType } from '../../src/store/reducers';
+import { setSetting } from '../../src/store/reducers/userReducer';
 
 const AppBarButton = styled(Button)({
   fontWeight: '700',
@@ -50,6 +50,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
   const [mobileMenuAnchor, setMobileMenuAnchor] = useState<HTMLButtonElement | null>(null);
   const isUseCaseOpen = Boolean(useCasesMenuAnchor);
   const isMobileMenuOpen = Boolean(mobileMenuAnchor);
+  const token = localStorage.getItem('accessToken');
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth < breakpoints.md);
@@ -74,6 +76,16 @@ function AppBar({ dark = false }: { dark?: boolean }) {
   const handleClick = (path: string) => {
     navigate.push(path);
   };
+  const handleMoveAdmin = useCallback(
+    (path: string) => {
+      if (token && userInfo.emailVerifiedYn === 'Y') {
+        navigate.push(path);
+      } else {
+        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+      }
+    },
+    [token, userInfo.emailVerifiedYn],
+  );
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -86,7 +98,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
     <GridContainer container style={{ margin: '0 auto', height: '68px', width: '100%', maxWidth: '1920px' }}>
       <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '16px' }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
-          <Link href="/">
+          <Link href="/index">
             <div
               style={{
                 cursor: 'pointer',
@@ -133,28 +145,47 @@ function AppBar({ dark = false }: { dark?: boolean }) {
 
           {!isMobile && (
             <div>
-              <DesignButton
-                // color={darkMode ? 'white' : }
-                style={{ color: darkMode ? 'white' : '#3c3c46' }}
-                // onClick={() => {
-                //   handleClick('/tri');
-                // }}
-                onClick={() => {
-                  dispatch(isShow({ isShow: true, type: 'login' }));
-                  // dispatch(isShow({ isShow: true }));
-                }}
-              >
-                로그인
-              </DesignButton>
-              <DesignButton
-                color={darkMode ? 'green' : 'white'}
-                style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}
-                onClick={() => {
-                  dispatch(isShow({ isShow: true, type: 'signup' }));
-                }}
-              >
-                회원가입
-              </DesignButton>
+              {token ? (
+                <>
+                  <DesignButton
+                    style={{ color: darkMode ? 'white' : '#3c3c46' }}
+                    onClick={() => {
+                      localStorage.clear();
+                      dispatch(setSetting(false));
+                      navigate.push(navigate.asPath);
+                    }}
+                  >
+                    로그아웃
+                  </DesignButton>
+                  <DesignButton
+                    color={darkMode ? 'green' : 'white'}
+                    style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}
+                    onClick={() => handleMoveAdmin('/admin/path')}
+                  >
+                    대시보드
+                  </DesignButton>
+                </>
+              ) : (
+                <>
+                  <DesignButton
+                    style={{ color: darkMode ? 'white' : '#3c3c46' }}
+                    onClick={() => {
+                      dispatch(isShow({ isShow: true, type: 'login' }));
+                    }}
+                  >
+                    로그인
+                  </DesignButton>
+                  <DesignButton
+                    color={darkMode ? 'green' : 'white'}
+                    style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}
+                    onClick={() => {
+                      dispatch(isShow({ isShow: true, type: 'signup' }));
+                    }}
+                  >
+                    회원가입
+                  </DesignButton>
+                </>
+              )}
             </div>
           )}
 

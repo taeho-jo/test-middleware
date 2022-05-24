@@ -8,11 +8,12 @@ interface PropsType {
   height?: string;
   radius?: string;
   padding?: string;
+  style?: any;
   children: React.ReactNode;
 }
 
-const PopupBox = ({ width = 'auto', height = 'auto', radius = '16px', padding = '0', children }: PropsType) => {
-  return <div css={popupBoxStyle(width, height, radius, padding)}>{children}</div>;
+const PopupBox = ({ width = 'auto', height = 'auto', radius = '16px', padding = '0', style, children }: PropsType) => {
+  return <div css={[popupBoxStyle(width, height, radius, padding), style]}>{children}</div>;
 };
 
 export default PopupBox;

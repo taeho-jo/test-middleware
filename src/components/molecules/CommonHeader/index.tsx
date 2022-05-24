@@ -6,20 +6,26 @@ import { colors } from '../../../styles/Common.styles';
 import Image from 'next/image';
 import { css } from '@emotion/react';
 import ProfileIcon from '../../atoms/ProfileIcon';
-import ProfilePopover from '../../atoms/ProfilePopover';
 import ImageLogo from '../../../../public/assets/images/Diby-Logo.png';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import LayerPopup from '../../atoms/LayerPopup';
+import { useRouter } from 'next/router';
+import { setSetting } from '../../../store/reducers/userReducer';
 
 const CommonHeader = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [focusProfile, setFocusProfile] = useState<boolean>(false);
   // const token = useSelector(state => state.auth.token);
   const test = useCallback(() => {
     setFocusProfile(prev => !prev);
   }, [focusProfile]);
 
-  // useEffect(() => {
-  //   console.log('TOKEN---------------------', token, '-----------------------------TOKEN');
-  // }, [token]);
+  const handleLogout = useCallback(() => {
+    localStorage.clear();
+    dispatch(setSetting(false));
+    router.push('/');
+  }, []);
 
   return (
     <FlexBox
@@ -31,7 +37,7 @@ const CommonHeader = () => {
       backgroundColor={colors.grey._3c}
     >
       <FlexBox justify={'flex-start'} align={'center'}>
-        <Icon name={'LOGO_ICON'} size={40} />
+        {/*<Icon name={'LOGO_ICON'} size={40} />*/}
         <div
           style={{
             background: 'rgba(255, 255, 255, 0.5)',
@@ -54,15 +60,21 @@ const CommonHeader = () => {
         />
       </FlexBox>
 
-      {/*<div css={profileCircle}>J</div>*/}
       <FlexBox justify={'flex-end'} align={'center'}>
         <FlexBox justify={'flex-end'} align={'center'} onClick={test} style={{ cursor: 'pointer' }}>
           <ProfileIcon name={'J'} backgroundColor={profileCircle[4]} />
-          <Icon name={'NAVIGATION_CHEVRON_DOWN'} style={{ marginLeft: '8px' }} size={24} />
-          {/*<Icon name={'NAVIGATION_CHEVRON_DOWN'} size={24} />*/}
+          <Icon name={'NAVIGATION_CHEVRON_DOWN'} style={{ marginLeft: '8px', cursor: 'pointer' }} size={24} />
         </FlexBox>
 
-        <ProfilePopover display={focusProfile} />
+        <LayerPopup
+          display={focusProfile}
+          topText={'taeho.jo@dbdlab.io'}
+          normalText={[
+            { text: '프로필 설정', onClick: null },
+            { text: '로그아웃', onClick: handleLogout },
+          ]}
+        />
+        {/*<ProfilePopover display={focusProfile} />*/}
       </FlexBox>
     </FlexBox>
   );

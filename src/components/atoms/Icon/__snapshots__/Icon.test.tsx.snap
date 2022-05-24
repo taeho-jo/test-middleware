@@ -3,10 +3,11 @@
 exports[`ICON test Icon 1`] = `
 <div>
   <span
-    height="16"
+    class="css-hihpxz-iconStyle-Icon"
+    height="24"
     style="box-sizing: border-box;"
-    viewbox="0 0 16 16"
-    width="16"
+    viewbox="0 0 24 24"
+    width="24"
   />
 </div>
 `;
@@ -14,6 +15,7 @@ exports[`ICON test Icon 1`] = `
 exports[`ICON test Icon 2`] = `
 <div>
   <span
+    class="css-hihpxz-iconStyle-Icon"
     height="22"
     style="box-sizing: border-box;"
     viewbox="0 0 22 22"

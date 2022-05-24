@@ -1,7 +1,8 @@
-import React, { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
 import { caption1_bold } from '../../../styles/FontStyles';
+import { text } from 'stream/consumers';
 
 interface PropsType extends InputHTMLAttributes<HTMLInputElement> {
   register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
@@ -16,6 +17,7 @@ interface PropsType extends InputHTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
   style?: any;
   title?: string;
+  onClick?: () => void;
   // defaultValue?: string;
   registerOptions?: {
     [key: string]: any;

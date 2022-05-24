@@ -9,10 +9,11 @@ import { ReducerType } from '../../../store/reducers';
 
 interface PropsType {
   title?: string;
+  closed?: boolean;
   titlePosition?: 'flex-start' | 'center' | 'space-between';
 }
 
-const ModalTitle = ({ title = 'Modal', titlePosition }: PropsType) => {
+const ModalTitle = ({ title = 'Modal', titlePosition = 'flex-start', closed = true }: PropsType) => {
   const dispatch = useDispatch();
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -26,7 +27,7 @@ const ModalTitle = ({ title = 'Modal', titlePosition }: PropsType) => {
 
   return (
     <FlexBox align={'center'} padding={'24px 32px'} style={{ boxSizing: 'border-box' }}>
-      <FlexBox justify={'flex-start'} align={'center'}>
+      <FlexBox justify={titlePosition} align={'center'}>
         {modalType === 'resetPassword' ? (
           <Icon onClick={goBackLogin} name={'NAVIGATION_ARROW_LEFT'} size={24} style={{ cursor: 'pointer', marginRight: '10px' }} />
         ) : null}
@@ -34,7 +35,7 @@ const ModalTitle = ({ title = 'Modal', titlePosition }: PropsType) => {
         <span css={[heading1_bold, { cursor: 'default' }]}>{title}</span>
       </FlexBox>
 
-      <Icon onClick={closeModal} name={'NAVIGATION_CLOSE_LG'} size={24} style={{ cursor: 'pointer' }} />
+      {closed ? <Icon onClick={closeModal} name={'NAVIGATION_CLOSE_LG'} size={24} style={{ cursor: 'pointer' }} /> : null}
     </FlexBox>
   );
 };

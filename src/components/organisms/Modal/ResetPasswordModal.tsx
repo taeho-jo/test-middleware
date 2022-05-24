@@ -17,6 +17,7 @@ import TextButton from '../../atoms/Button/TextButton';
 import { useRouter } from 'next/router';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
 import { showToast } from '../../../store/reducers/toastReducer';
+import { useResetPassword } from '../../../api/authApi';
 
 const loginInputArr = [
   {
@@ -48,18 +49,11 @@ const ResetPasswordModal = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<InputType>({});
-  const onSubmit = data => handleSendEmail('success', data);
+  const onSubmit = data => handleResetPassword('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const handleSendEmail = useCallback((status, data) => {
-    const sendObject = {
-      email: data.email,
-      password: data.password,
-    };
-    console.log(sendObject, 'SEND OBJECT');
-  }, []);
+  const { data, isLoading, mutate } = useResetPassword();
 
-  // 로그인 실패 로직
   const handleProcessingError = useCallback((status, errors) => {
     console.log(status, errors);
   }, []);
@@ -68,9 +62,15 @@ const ResetPasswordModal = () => {
     dispatch(isShow({ isShow: true, type: 'login' }));
   }, []);
 
-  const handleResetPassword = useCallback(() => {
-    dispatch(showToast({ message: '비밀번호 재설정 메일이 발송되었습니다.', isShow: true, status: '', duration: 5000 }));
-    dispatch(isShow({ isShow: true, type: 'confirm-reset-password' }));
+  const handleResetPassword = useCallback((status, data) => {
+    // console.log(data);
+    const sendObject = {
+      userId: data.email,
+      emailTemplateName: 'local_password_reset_template',
+    };
+    console.log(sendObject);
+    sessionStorage.setItem('userId', data.email);
+    mutate(sendObject);
   }, []);
 
   return (
@@ -91,7 +91,7 @@ const ResetPasswordModal = () => {
               pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
             }}
           />
-          <BasicButton onClick={handleResetPassword} type={'submit'} text={'비밀번호 재설정 메일 보내기'} style={{ marginTop: '32px' }} />
+          <BasicButton isLoading={isLoading} type={'submit'} text={'비밀번호 재설정 메일 보내기'} style={{ marginTop: '32px' }} />
         </Form>
 
         <FlexBox
@@ -107,7 +107,3 @@ const ResetPasswordModal = () => {
 };
 
 export default ResetPasswordModal;
-
-const bottomTextStyle = css`
-  cursor: pointer;
-`;

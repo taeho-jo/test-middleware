@@ -3,13 +3,13 @@
 exports[`PageTitle page title 1`] = `
 <div>
   <div
-    class="css-h3i60b-flexBox-FlexBox"
+    class="css-1n3bfos-flexBox-FlexBox"
   >
-    <h1
-      class="css-2ongq2-mainTitleStyle"
+    <span
+      class="css-1yv372v-font24-fontBold-height30-PageTitle"
     >
       page title
-    </h1>
+    </span>
   </div>
 </div>
 `;
