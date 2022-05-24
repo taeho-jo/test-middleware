@@ -14,12 +14,10 @@ export const useGetUserInfo = userInfoSettingValue => {
     enabled: userInfoSettingValue,
     onSuccess: data => {
       dispatch(setUserInfo(data.data));
-      console.log('~~~~~~~~~~~~~~~~~~~', data.data);
       if (data.data.emailVerifiedYn === 'N') {
         dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
       }
       if (data.data.emailVerifiedYn === 'Y') {
-        console.log('~~~~~~~~~~~~~~~~~~~');
         dispatch(setSetting(false));
         router.push('/admin/team');
       }

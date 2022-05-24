@@ -51,6 +51,8 @@ function AppBar({ dark = false }: { dark?: boolean }) {
   const isUseCaseOpen = Boolean(useCasesMenuAnchor);
   const isMobileMenuOpen = Boolean(mobileMenuAnchor);
   const token = localStorage.getItem('accessToken');
+  const userId = sessionStorage.getItem('userId');
+  const resetToken = sessionStorage.getItem('accessToken');
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
 
   const handleResize = () => {
@@ -145,7 +147,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
 
           {!isMobile && (
             <div>
-              {token ? (
+              {token && !userId ? (
                 <>
                   <DesignButton
                     style={{ color: darkMode ? 'white' : '#3c3c46' }}
