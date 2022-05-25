@@ -20,7 +20,7 @@ const ConfirmResetPasswordModal = () => {
   const resendEmail = useCallback(() => {
     const sendObject = {
       // emailTemplateName: 'local_confirm_email_template',
-      emailTemplateName: 'stag_confirm_email_template',
+      emailTemplateName: process.env.NODE_ENV === 'development' ? 'local_confirm_email_template' : process.env.CONFIRM_EMAIL_TEMPLATE,
     };
     resendResponse.mutate(sendObject);
   }, []);
