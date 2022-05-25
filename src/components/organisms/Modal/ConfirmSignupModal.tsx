@@ -10,6 +10,7 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import { useResendEmail } from '../../../api/authApi';
 import { ReducerType } from '../../../store/reducers';
 
+const EMAIL_TEMPLATE = process.env.NODE_ENV === 'development' ? 'local_confirm_email_template' : process.env.CONFIRM_EMAIL_TEMPLATE;
 const ConfirmResetPasswordModal = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
@@ -20,7 +21,7 @@ const ConfirmResetPasswordModal = () => {
   const resendEmail = useCallback(() => {
     const sendObject = {
       // emailTemplateName: 'local_confirm_email_template',
-      emailTemplateName: process.env.NODE_ENV === 'development' ? 'local_confirm_email_template' : process.env.CONFIRM_EMAIL_TEMPLATE,
+      emailTemplateName: EMAIL_TEMPLATE,
     };
     resendResponse.mutate(sendObject);
   }, []);

@@ -6,10 +6,12 @@ import Form from '../../../components/atoms/Form';
 import SelectBox from '../../../components/atoms/SelectBox';
 import RedirectLoading from '../../../components/atoms/RedirectLoading';
 import FlexBox from '../../../components/atoms/FlexBox';
-import { body2_bold } from '../../../styles/FontStyles';
+import { body2_bold, heading1_bold } from '../../../styles/FontStyles';
 import ResearchList from '../../../components/organisms/ResearchList';
 import { css } from '@emotion/react';
 import IconTextButton from '../../../components/atoms/Button/IconTextButton';
+import { colors } from '../../../styles/Common.styles';
+import PageTitle from '../../../components/atoms/PageTitle';
 
 interface IFormInput {
   iceCreamType: { label: string; value: string };
@@ -57,20 +59,26 @@ const Member = () => {
 
   return (
     <>
-      <FlexBox style={{ padding: '24px 32px 32px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
-        <span css={[body2_bold, titleStyle]}>팀원</span>
-        {/*<ResearchList listData={DummyListData} />*/}
-        <FlexBox justify={'space-between'} style={{ maxWidth: '800px' }}>
-          <Form width={'240px'} onSubmit={handleSubmit(onSubmit, onError)}>
-            <SearchInput style={'240px'} placeholder={'팀원을 검색해주세요.'} register={register} label={'search'} errors={errors} />
-          </Form>
-          <IconTextButton name={'ACTION_ADD_SMALL'} iconPosition={'left'} textStyle={'custom'} text={'팀원 초대하기'} />
-        </FlexBox>
-
-        <FlexBox justify={'flex-start'} style={{ maxWidth: '800px' }}>
-          asdfasdfasdfasdf
-        </FlexBox>
+      <PageTitle title={'팀원'} />
+      <FlexBox justify={'space-between'} style={{ maxWidth: '800px', padding: '32px 40px 16px' }}>
+        <Form width={'240px'} onSubmit={handleSubmit(onSubmit, onError)}>
+          <SearchInput style={'240px'} placeholder={'팀원을 검색해주세요.'} register={register} label={'search'} errors={errors} />
+        </Form>
+        <IconTextButton name={'ACTION_ADD_SMALL'} iconPosition={'left'} textStyle={'custom'} text={'팀원 초대하기'} />
       </FlexBox>
+
+      <FlexBox justify={'flex-start'} direction={'column'} align={'flex-start'} style={{ maxWidth: '800px', padding: '0px 40px 24px 40px' }}>
+        <div css={{ width: '100%', borderTop: '1px solid #DCDCDC', padding: '4px 8px' }}>리스트 제목 칸</div>
+        <div css={{ width: '100%', borderTop: '1px solid #DCDCDC', borderBottom: '1px solid #DCDCDC' }}>
+          <div css={{ padding: '8px 16px' }}>리스트 내용 칸</div>
+          <div css={{ padding: '8px 16px' }}>리스트 내용 칸</div>
+          <div css={{ padding: '8px 16px' }}>리스트 내용 칸</div>
+          <div css={{ padding: '8px 16px' }}>리스트 내용 칸</div>
+          <div css={{ padding: '8px 16px' }}>리스트 내용 칸</div>
+          <div css={{ padding: '8px 16px' }}>리스트 내용 칸</div>
+        </div>
+      </FlexBox>
+      {/*</FlexBox>*/}
 
       {/*<Form onSubmit={handleSubmit(onSubmit, onError)}>*/}
       {/*  <SearchInput register={register} label={'search'} errors={errors} />*/}

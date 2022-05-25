@@ -27,6 +27,7 @@ import { ReducerType } from '../../../store/reducers';
 import { useGetUserInfo } from '../../../api/userApi';
 
 const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
+const EMAIL_TEMPLATE = process.env.NODE_ENV === 'development' ? 'local_confirm_email_template' : process.env.CONFIRM_EMAIL_TEMPLATE;
 
 const SignupModal = () => {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ const SignupModal = () => {
       privacyConsentYn: privacyConsentYn ? 'Y' : 'N',
       consentToUseMarketingYn: consentToUseMarketingYn ? 'Y' : 'N',
       // emailTemplateName: 'local_confirm_email_template',
-      emailTemplateName: process.env.NODE_ENV === 'development' ? 'local_confirm_email_template' : process.env.CONFIRM_EMAIL_TEMPLATE,
+      emailTemplateName: EMAIL_TEMPLATE,
     };
     mutate(sendObject);
   }, []);
