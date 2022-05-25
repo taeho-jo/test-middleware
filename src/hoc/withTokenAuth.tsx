@@ -48,12 +48,10 @@ export default function withTokenAuth(SpecificComponent: any, option: boolean) {
           if (userInfo.emailVerifiedYn === 'Y') {
             if (userInfo.firstTimeYn === 'Y') {
               router.replace('/admin/profile');
-            } else {
-              return;
             }
           }
           if (userInfo.emailVerifiedYn !== 'Y') {
-            router.replace('/admin/team');
+            return;
           }
         }
 

@@ -12,29 +12,10 @@ import ModalTitle from '../../molecules/ModalTitle';
 import BasicButton from '../../atoms/Button/BasicButton';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { body3_medium } from '../../../styles/FontStyles';
-import { css } from '@emotion/react';
 import TextButton from '../../atoms/Button/TextButton';
 import { useRouter } from 'next/router';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
-import { showToast } from '../../../store/reducers/toastReducer';
 import { useResetPassword } from '../../../api/authApi';
-
-const loginInputArr = [
-  {
-    label: 'email',
-    placeholder: 'E-mail을 입력해주세요.',
-    errorMsg: 'E-mail양식이 아닙니다.',
-    pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-    type: 'text',
-  },
-  {
-    label: 'password',
-    placeholder: '비밀번호를 입력해주세요.',
-    errorMsg: '6자리 이상 입력해주세요.',
-    pattern: /^(?=.*[A-Za-z])(?=.*[0-9]).{6,10}$/,
-    type: 'password',
-  },
-];
 
 const subTitleArr = ['비밀번호 재설정을 위해', 'Diby 에서 사용한 이메일을 입력해주세요.'];
 
@@ -67,7 +48,7 @@ const ResetPasswordModal = () => {
     const sendObject = {
       userId: data.email,
       // emailTemplateName: 'local_password_reset_template',
-      emailTemplateName: 'stag_password_reset_template',
+      emailTemplateName: process.env.NODE_ENV === 'development' ? 'local_password_reset_template' : process.env.PASSWORD_RESET_TEMPLATE,
     };
     console.log(sendObject);
     sessionStorage.setItem('userId', data.email);
