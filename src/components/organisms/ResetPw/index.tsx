@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import ModalTitle from '../../molecules/ModalTitle';
-import { heading5_bold, heading4_bold } from '../../../styles/FontStyles';
+import { heading5_bold, heading4_bold, body3_medium } from '../../../styles/FontStyles';
 import { css } from '@emotion/react';
 import InputFormBox from '../../molecules/InputFormBox';
 import { colors } from '../../../styles/Common.styles';
@@ -17,6 +17,7 @@ import AnnouncementBox from '../../molecules/AnnouncementBox';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
 import { useChangePasswordApi } from '../../../api/authApi';
 import { useRouter } from 'next/router';
+import TextButton from '../../atoms/Button/TextButton';
 
 const pwInquiryInputArr = [
   {
@@ -55,6 +56,11 @@ const ResetPw = () => {
     // dispatch(showToast({ message: '가입된 계정이 없습니다. 다시 확인해주세요!', isShow: true, status: 'warning', duration: 5000 }));
   }, []);
 
+  const removeSesstionStorage = useCallback(() => {
+    sessionStorage.clear();
+    router.replace('/');
+  }, []);
+
   return (
     <div css={mainBox}>
       <div css={contentsBox}>
@@ -87,6 +93,10 @@ const ResetPw = () => {
 
           <FlexBox style={{ margin: '32px 0 40px' }} direction={'column'} align={'center'} justify={'space-between'}>
             <BasicButton theme={'dark'} isLoading={false} type={'submit'} text={'비밀번호 재설정하기'} />
+          </FlexBox>
+
+          <FlexBox justify={'center'} align={'center'}>
+            <TextButton onClick={removeSesstionStorage} textStyle={body3_medium} text={'비밀번호가 기억났어요!'} />
           </FlexBox>
         </Form>
       </div>

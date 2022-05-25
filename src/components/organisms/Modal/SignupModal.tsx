@@ -58,8 +58,8 @@ const SignupModal = () => {
       userName: userId.split('@')[0],
       privacyConsentYn: privacyConsentYn ? 'Y' : 'N',
       consentToUseMarketingYn: consentToUseMarketingYn ? 'Y' : 'N',
-      // emailTemplateName: 'local_confirm_email_template',
-      emailTemplateName: 'stag_confirm_email_template',
+      emailTemplateName: 'local_confirm_email_template',
+      // emailTemplateName: 'stag_confirm_email_template',
     };
     mutate(sendObject);
   }, []);
