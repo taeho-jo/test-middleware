@@ -37,7 +37,7 @@ export const useLoginApi = () => {
       dispatch(showToast({ message: '로그인에 성공하였습니다.', isShow: true, status: 'success', duration: 5000 }));
       dispatch(isShow({ isShow: false, type: '' }));
       dispatch(setSetting(true));
-      localStorage.removeItem('userId');
+      sessionStorage.clear();
     },
   });
 };
