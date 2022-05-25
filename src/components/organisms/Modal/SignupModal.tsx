@@ -66,7 +66,7 @@ const SignupModal = () => {
 
   // 구글 로그인
   const loginWithGoogle = useCallback(() => {
-    router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}/${router.asPath}?type=google`);
+    router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
   }, []);
 
   // 회원가입 시도 실패
