@@ -39,7 +39,10 @@ export default function withTokenAuth(SpecificComponent: any, option: boolean) {
         router.replace('/index');
       }
       if (router.pathname === '/') {
-        if (option && token && userInfo.emailVerifiedYn === 'Y') {
+        if (option && token && userInfo.emailVerifiedYn === 'Y' && userInfo.firstTimeYn === 'Y') {
+          router.replace('/admin/profile');
+        }
+        if (option && token && userInfo.emailVerifiedYn === 'Y' && userInfo.firstTimeYn === 'N') {
           router.replace('/admin/team');
         }
       }
