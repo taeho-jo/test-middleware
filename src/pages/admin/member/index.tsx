@@ -5,6 +5,11 @@ import { useForm } from 'react-hook-form';
 import Form from '../../../components/atoms/Form';
 import SelectBox from '../../../components/atoms/SelectBox';
 import RedirectLoading from '../../../components/atoms/RedirectLoading';
+import FlexBox from '../../../components/atoms/FlexBox';
+import { body2_bold } from '../../../styles/FontStyles';
+import ResearchList from '../../../components/organisms/ResearchList';
+import { css } from '@emotion/react';
+import IconTextButton from '../../../components/atoms/Button/IconTextButton';
 
 interface IFormInput {
   iceCreamType: { label: string; value: string };
@@ -52,16 +57,33 @@ const Member = () => {
 
   return (
     <>
-      <div>가다나달마바사</div>
+      <FlexBox style={{ padding: '24px 32px 32px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
+        <span css={[body2_bold, titleStyle]}>팀원</span>
+        {/*<ResearchList listData={DummyListData} />*/}
+        <FlexBox justify={'space-between'} style={{ maxWidth: '800px' }}>
+          <Form width={'240px'} onSubmit={handleSubmit(onSubmit, onError)}>
+            <SearchInput style={'240px'} placeholder={'팀원을 검색해주세요.'} register={register} label={'search'} errors={errors} />
+          </Form>
+          <IconTextButton name={'ACTION_ADD_SMALL'} iconPosition={'left'} textStyle={'custom'} text={'팀원 초대하기'} />
+        </FlexBox>
 
-      <Form onSubmit={handleSubmit(onSubmit, onError)}>
-        <SearchInput register={register} label={'search'} errors={errors} />
-        <SelectBox arr={selectBoxArr} selectedValue={selectedValue} onClick={onClickValue} />
-        <button type={'submit'}>xxx</button>
-      </Form>
+        <FlexBox justify={'flex-start'} style={{ maxWidth: '800px' }}>
+          asdfasdfasdfasdf
+        </FlexBox>
+      </FlexBox>
+
+      {/*<Form onSubmit={handleSubmit(onSubmit, onError)}>*/}
+      {/*  <SearchInput register={register} label={'search'} errors={errors} />*/}
+      {/*  <SelectBox arr={selectBoxArr} selectedValue={selectedValue} onClick={onClickValue} />*/}
+      {/*  <button type={'submit'}>xxx</button>*/}
+      {/*</Form>*/}
       {/*<RedirectLoading />*/}
     </>
   );
 };
 
 export default withTokenAuth(Member, false);
+const titleStyle = css`
+  margin-bottom: 24px;
+  display: block;
+`;

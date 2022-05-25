@@ -9,7 +9,7 @@ export default function withTokenAuth(SpecificComponent: any, option: boolean) {
     const router = useRouter();
     const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
     const token = localStorage.getItem('accessToken');
-    const userId = sessionStorage.getItem('userId');
+    const test = true;
     const resetToken = sessionStorage.getItem('accessToken');
     // option
     // true : 권한 상관없이 접근가능
@@ -19,8 +19,15 @@ export default function withTokenAuth(SpecificComponent: any, option: boolean) {
       router.replace('/');
     };
     useEffect(() => {
+      console.log(userInfo);
       if (resetToken) {
         removeSesstionStorage();
+      }
+      if (!option && userInfo.emailVerifiedYn === 'Y' && userInfo.firstTimeYn === 'Y') {
+        router.replace('/admin/profile');
+      }
+      if (!option && userInfo.emailVerifiedYn === 'Y' && userInfo.firstTimeYn === 'N') {
+        router.replace('/admin/team');
       }
       if ((!option && !token) || userInfo.emailVerifiedYn === 'N') {
         router.replace('/index');

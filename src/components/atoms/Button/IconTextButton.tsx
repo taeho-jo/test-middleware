@@ -35,7 +35,8 @@ const IconTextButton = ({
       {iconPosition === 'left' ? <Icon name={disabled ? `${name}_DISABLED` : name} size={24} /> : null}
       <span
         css={[
-          [textStyle, noBorderTextStyle(roundBorder, disabled)],
+          textStyle === 'custom' ? { fontSize: '14px', fontWeight: '400' } : textStyle,
+          noBorderTextStyle(roundBorder, disabled),
           { padding: '5px 0', margin: iconPosition === 'right' ? '0 8px 0 0' : '0 0 0 8px' },
         ]}
       >

@@ -32,7 +32,6 @@ const LoginModal = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
-  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
 
   // hook form
   const {

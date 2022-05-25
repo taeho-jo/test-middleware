@@ -1,9 +1,10 @@
-import { useQuery } from 'react-query';
-import { AXIOS_GET } from '../../hooks/useAxios';
+import { useMutation, useQuery } from 'react-query';
+import { AXIOS_GET, AXIOS_PATCH } from '../../hooks/useAxios';
 import { useDispatch } from 'react-redux';
 import { setSetting, setUserInfo } from '../../store/reducers/userReducer';
 import { useRouter } from 'next/router';
 import { isShow } from '../../store/reducers/modalReducer';
+import { UpdateUserInfoType } from './types';
 
 export const useGetUserInfo = userInfoSettingValue => {
   const dispatch = useDispatch();
@@ -21,6 +22,25 @@ export const useGetUserInfo = userInfoSettingValue => {
         dispatch(setSetting(false));
         router.push('/admin/team');
       }
+    },
+  });
+};
+
+export const useUpdateUserInfo = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const handleUpdate = async (sendObject: UpdateUserInfoType) => {
+    console.log(sendObject, '!');
+    return await AXIOS_PATCH('/user/update', sendObject);
+  };
+
+  return useMutation(handleUpdate, {
+    onError: e => console.log(e),
+    onSuccess: data => {
+      console.log(data.data);
+      console.log(data);
+      dispatch(setUserInfo(data.data));
+      router.push('/admin/team');
     },
   });
 };

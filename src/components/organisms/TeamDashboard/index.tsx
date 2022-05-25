@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { css } from '@emotion/react';
 import FlexBox from '../../../components/atoms/FlexBox';
 import { colors } from '../../../styles/Common.styles';
@@ -18,6 +18,8 @@ import { updateTeamInfo } from '../../../store/reducers/teamReducer';
 import ResearchModuleButton from '../../atoms/ResearchModuleButton';
 import { isShow } from '../../../store/reducers/modalReducer';
 import ResearchList from '../ResearchList';
+import { ReducerType } from '../../../store/reducers';
+import { useRouter } from 'next/router';
 
 const ResearchType = [
   {
@@ -92,6 +94,8 @@ const DummyListData = [
 
 const TeamDashboard = () => {
   const dispatch = useDispatch();
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const router = useRouter();
 
   const [selectedValue, setSelectedValue] = useState('');
 
@@ -121,6 +125,12 @@ const TeamDashboard = () => {
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));
   }, []);
+
+  // useEffect(() => {
+  //   if (userInfo.firstTimeYn === 'Y') {
+  //     router.push('/admin/profile');
+  //   }
+  // }, [userInfo]);
 
   return (
     <>

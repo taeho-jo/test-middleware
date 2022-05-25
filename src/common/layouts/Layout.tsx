@@ -42,7 +42,8 @@ const Layout = ({ children }: PropsType) => {
   const confirmEmail = useConfirmEmailApi();
 
   useEffect(() => {
-    if (router.query) {
+    if (router.query.token) {
+      console.log('-------------------------------------------------------실행됌????');
       dispatch(setSetting(false));
       dispatch(isShow({ isShow: false, type: '' }));
       const query = router?.query;
@@ -98,6 +99,7 @@ const Layout = ({ children }: PropsType) => {
       case '/admin/reset-password':
       case '/admin/reset-password-success':
       case '/admin/re-login':
+      case '/admin/profile':
         return (
           <div css={mainContainer}>
             <main css={contentsContainer}>
@@ -157,14 +159,18 @@ const Layout = ({ children }: PropsType) => {
 
   if (resetToken) {
     return (
-      <div css={mainContainer}>
-        <main css={contentsContainer}>
-          <CommonHeader />
-          <FlexBox height={'calc(100vh - 48px)'} justify={'center'} align={'center'}>
-            {children}
-          </FlexBox>
-        </main>
-      </div>
+      <>
+        <div css={mainContainer}>
+          <main css={contentsContainer}>
+            <CommonHeader />
+            <FlexBox height={'calc(100vh - 48px)'} justify={'center'} align={'center'}>
+              {children}
+            </FlexBox>
+          </main>
+        </div>
+        <AlertToast position={'top-center'} />
+        <CommonModal />
+      </>
     );
   }
   if (token && userInfo.emailVerifiedYn === 'Y') {

@@ -9,6 +9,7 @@ export interface UserType {
     cpSize: string | null;
     cxResearch: string | null;
     emailVerifiedYn: string | null;
+    firstTimeYn: string | null;
     funnelsCd: string | null;
     privacyConsentYn: string | null;
     purposeOfUse: string | null;
@@ -29,6 +30,7 @@ const initialState: UserType = {
     cpSize: '',
     cxResearch: '',
     emailVerifiedYn: '',
+    firstTimeYn: '',
     funnelsCd: '',
     privacyConsentYn: '',
     purposeOfUse: '',

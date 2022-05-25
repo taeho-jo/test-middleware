@@ -72,7 +72,7 @@ export const useConfirmEmailApi = () => {
   const dispatch = useDispatch();
 
   const handleConfirmEmail = async () => {
-    return await AXIOS_POST('/auth/confirm', {});
+    return await AXIOS_POST('/user/confirm', {});
   };
 
   return useMutation(handleConfirmEmail, {

@@ -1,5 +1,6 @@
 import Google from '/public/assets/svg/google.svg';
 import TestIcon from '/public/assets/svg/folder_icon_217583.svg';
+import ActionAddSmall from '/public/assets/svg/action_add_small.svg';
 import ActionCreate from '/public/assets/svg/action_create.svg';
 import ActionMore from '/public/assets/svg/action_more_v.svg';
 import ActionSetting from '/public/assets/svg/action_settings.svg';
@@ -41,6 +42,7 @@ interface PropsType {
 const IconTypes = {
   GOOGLE: Google,
   TEST: TestIcon,
+  ACTION_ADD_SMALL: ActionAddSmall,
   ACTION_CREATE: ActionCreate,
   ACTION_SETTING: ActionSetting,
   ACTION_ADD_CIRCLE: ActionAddCircle,

@@ -162,7 +162,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                   <DesignButton
                     color={darkMode ? 'green' : 'white'}
                     style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}
-                    onClick={() => handleMoveAdmin('/admin/path')}
+                    onClick={() => handleMoveAdmin('/admin/team')}
                   >
                     대시보드
                   </DesignButton>

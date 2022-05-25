@@ -28,6 +28,7 @@ export type ColorsType =
 
 export type IconType =
   | 'GOOGLE'
+  | 'ACTION_ADD_SMALL'
   | 'ACTION_CREATE'
   | 'ACTION_SETTING'
   | 'ACTION_MORE'
