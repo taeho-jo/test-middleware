@@ -11,9 +11,10 @@ interface PropsType {
   title?: string;
   closed?: boolean;
   titlePosition?: 'flex-start' | 'center' | 'space-between';
+  style?: any;
 }
 
-const ModalTitle = ({ title = 'Modal', titlePosition = 'flex-start', closed = true }: PropsType) => {
+const ModalTitle = ({ title = 'Modal', titlePosition = 'flex-start', closed = true, style = { padding: '24px 32px' } }: PropsType) => {
   const dispatch = useDispatch();
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -26,7 +27,7 @@ const ModalTitle = ({ title = 'Modal', titlePosition = 'flex-start', closed = tr
   }, []);
 
   return (
-    <FlexBox align={'center'} padding={'24px 32px'} style={{ boxSizing: 'border-box' }}>
+    <FlexBox align={'center'} style={{ boxSizing: 'border-box', ...style }}>
       <FlexBox justify={titlePosition} align={'center'}>
         {modalType === 'resetPassword' ? (
           <Icon onClick={goBackLogin} name={'NAVIGATION_ARROW_LEFT'} size={24} style={{ cursor: 'pointer', marginRight: '10px' }} />

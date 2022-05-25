@@ -44,8 +44,8 @@ class MyDocument extends Document {
 
         <body>
           <Main />
-          <div id="toast-root"></div>
-          <div id="modal-root"></div>
+          <div id="toast-root" />
+          <div id="modal-root" />
           {/*Below we add the modal wrapper*/}
         </body>
         <NextScript />

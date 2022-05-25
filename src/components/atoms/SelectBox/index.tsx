@@ -4,17 +4,19 @@ import Icon from '../Icon';
 // Styles
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
-import { heading3_regular } from '../../../styles/FontStyles';
+import { caption1_bold, heading3_regular } from '../../../styles/FontStyles';
 // Types
 interface PropsType {
   arr: { value: string; label: string }[];
   size?: string;
-  selectedValue: string;
-  onClick: (value) => void;
+  selectedValue: any;
+  label: string;
+  title?: string;
+  onClick: (value, label) => void;
   [key: string]: any;
 }
 
-const SelectBox = forwardRef(({ arr, size = '100%', selectedValue, onClick }: PropsType, ref) => {
+const SelectBox = forwardRef(({ arr, size = '100%', selectedValue, label, title, onClick }: PropsType, ref) => {
   const [onFocus, setOnFocus] = useState(false);
 
   const onClickSelectBox = useCallback(() => {
@@ -22,25 +24,32 @@ const SelectBox = forwardRef(({ arr, size = '100%', selectedValue, onClick }: Pr
   }, [onFocus]);
 
   return (
-    <div style={{ position: 'relative', width: size, height: '50px' }}>
-      <div css={selectBoxWrapper(onFocus)} onClick={onClickSelectBox}>
-        <div css={selectBoxPlaceholder(onFocus)}>
-          <span css={[heading3_regular, { color: selectedValue ? colors.grey._3c : colors.grey._cc }]}>
-            {selectedValue ? selectedValue : '옵션을 선택해주세요.'}
-          </span>
-          <Icon name={'CHEVRON_DOWN_THIN'} size={24} />
+    <div css={{ marginTop: '16px' }}>
+      {title ? <label css={[caption1_bold, labelTextStyle]}>{title}</label> : null}
+      <div style={{ position: 'relative', width: size, height: '50px' }}>
+        <div css={[selectBoxWrapper(onFocus), { padding: onFocus ? '0' : '10px 16px' }]} onClick={onClickSelectBox}>
+          <div css={[selectBoxPlaceholder(onFocus), { padding: onFocus ? '10px 16px' : '0' }]}>
+            <span css={[heading3_regular, { padding: 0, color: selectedValue[label] ? colors.grey._3c : colors.grey._cc }]}>
+              {selectedValue[label] ? selectedValue[label] : '옵션을 선택해주세요.'}
+            </span>
+            <Icon name={'CHEVRON_DOWN_THIN'} size={24} />
+          </div>
+          <ul css={optionStyle(onFocus)}>
+            {arr.map((el, index) => {
+              return (
+                <Fragment key={index}>
+                  <li
+                    onClick={() => onClick(el.value, label)}
+                    value={el.value}
+                    css={[heading3_regular, liContainer(el.value, selectedValue), { padding: '10px 16px' }]}
+                  >
+                    {el.label}
+                  </li>
+                </Fragment>
+              );
+            })}
+          </ul>
         </div>
-        <ul css={optionStyle(onFocus)}>
-          {arr.map((el, index) => {
-            return (
-              <Fragment key={index}>
-                <li onClick={() => onClick(el.value)} value={el.value} css={[heading3_regular, liContainer(el.value, selectedValue)]}>
-                  {el.label}
-                </li>
-              </Fragment>
-            );
-          })}
-        </ul>
       </div>
     </div>
   );
@@ -77,9 +86,14 @@ const selectBoxPlaceholder = onFocus => css`
   align-items: center;
   justify-content: space-between;
   margin-bottom: ${onFocus ? '16px' : '0'};
+  //z-index: 10;
+  position: relative;
 `;
 const optionStyle = onFocus => css`
   display: ${onFocus ? '' : 'none'};
+  position: relative;
+  z-index: 9999;
+  background: white;
 `;
 
 const liContainer = (value, selectedValue) => css`
@@ -96,4 +110,10 @@ const liContainer = (value, selectedValue) => css`
     background: ${colors.grey._ec};
     border-radius: 4px;
   }
+`;
+
+const labelTextStyle = css`
+  margin-bottom: 8px;
+  display: inline-block;
+  color: ${colors.grey._99};
 `;

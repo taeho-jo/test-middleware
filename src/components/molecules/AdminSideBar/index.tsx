@@ -11,6 +11,7 @@ import { heading5_bold } from '../../../styles/FontStyles';
 // Types
 import { ReducerType } from '../../../store/reducers';
 import { TeamListType } from '../../../store/reducers/teamReducer';
+import MoreTeamInfoPopup from '../MoreTeamInfoPopup';
 
 // Dummy
 const DummyTeamList = [
@@ -42,6 +43,9 @@ const AdminSideBar = () => {
         <Icon name={'ACTION_CREATE'} size={24} />
       </FlexBox>
       {sideTeamList()}
+      <FlexBox justify={'center'} style={{ marginTop: '24px' }}>
+        <MoreTeamInfoPopup textArr={['리서치에 필요한 응답자를', '정확하고 빠르게 모집할 수 있어요!']} />
+      </FlexBox>
     </div>
   );
 };

@@ -6,10 +6,11 @@ const searchParam = key => {
 
 export const getAuthHeader = () => {
   const token = localStorage.getItem('accessToken');
+  const resetToken = sessionStorage.getItem('accessToken');
   const queryToken = searchParam('token');
 
   const header = {
-    Authorization: token ? `Bearer ${token}` : queryToken ? `Bearer ${queryToken}` : '',
+    Authorization: token ? `Bearer ${token}` : queryToken ? `Bearer ${queryToken}` : resetToken ? `Bearer ${resetToken}` : '',
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': false,
