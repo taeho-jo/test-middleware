@@ -60,7 +60,8 @@ const SignupModal = () => {
       privacyConsentYn: privacyConsentYn ? 'Y' : 'N',
       consentToUseMarketingYn: consentToUseMarketingYn ? 'Y' : 'N',
       // emailTemplateName: 'local_confirm_email_template',
-      emailTemplateName: EMAIL_TEMPLATE,
+      emailTemplateName: 'stag_confirm_email_template',
+      // emailTemplateName: EMAIL_TEMPLATE,
     };
     mutate(sendObject);
   }, []);

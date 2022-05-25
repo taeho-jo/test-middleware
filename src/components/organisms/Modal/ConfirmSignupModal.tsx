@@ -21,7 +21,8 @@ const ConfirmResetPasswordModal = () => {
   const resendEmail = useCallback(() => {
     const sendObject = {
       // emailTemplateName: 'local_confirm_email_template',
-      emailTemplateName: EMAIL_TEMPLATE,
+      emailTemplateName: 'stag_confirm_email_template',
+      // emailTemplateName: EMAIL_TEMPLATE,
     };
     resendResponse.mutate(sendObject);
   }, []);
