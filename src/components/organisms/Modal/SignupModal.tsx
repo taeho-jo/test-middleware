@@ -26,6 +26,8 @@ import { InputType } from '../AddInfoPopup';
 import { ReducerType } from '../../../store/reducers';
 import { useGetUserInfo } from '../../../api/userApi';
 
+const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
+
 const SignupModal = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -64,7 +66,7 @@ const SignupModal = () => {
 
   // 구글 로그인
   const loginWithGoogle = useCallback(() => {
-    router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=http://localhost:3000/`);
+    router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}/${router.asPath}?type=google`);
   }, []);
 
   // 회원가입 시도 실패
