@@ -2,9 +2,11 @@ import React from 'react';
 import withTokenAuth from '../../../hoc/withTokenAuth';
 import FlexBox from '../../../components/atoms/FlexBox';
 import PageTitle from '../../../components/atoms/PageTitle';
-import { heading3_bold } from '../../../styles/FontStyles';
+import { heading1_bold, heading3_bold } from '../../../styles/FontStyles';
 import IconTextButton from '../../../components/atoms/Button/IconTextButton';
 import BasicButton from '../../../components/atoms/Button/BasicButton';
+import Form from '../../../components/atoms/Form';
+import SearchInput from '../../../components/atoms/SearchInput';
 
 const Setting = () => {
   return (
