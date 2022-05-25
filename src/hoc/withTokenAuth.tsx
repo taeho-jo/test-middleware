@@ -68,8 +68,6 @@ export default function withTokenAuth(SpecificComponent: any, option: boolean) {
       if (option) {
         if (resetToken) {
           router.replace('/admin/reset-password');
-        } else {
-          removeSesstionStorage();
         }
       }
       if (router.pathname === '/') {
@@ -98,16 +96,16 @@ export default function withTokenAuth(SpecificComponent: any, option: boolean) {
       //   router.replace('/admin/team');
       // }
       // if ((!option && !token) || userInfo.emailVerifiedYn === 'N') {
-      //   router.replace('/index');
+      //   router.replace('/main');
       // }
       // if (!option && token && userInfo.emailVerifiedYn === 'Y') {
       //   return;
       // }
       // if (!option && token && userInfo.emailVerifiedYn !== 'Y') {
-      //   router.replace('/index');
+      //   router.replace('/main');
       // }
       // if (option && token && userInfo.emailVerifiedYn === 'Y' && userInfo.firstTimeYn === 'Y') {
-      //   router.replace('/index');
+      //   router.replace('/main');
       // }
       // if (router.pathname === '/') {
       //   if (option && token && userInfo.emailVerifiedYn === 'Y' && userInfo.firstTimeYn === 'Y') {
