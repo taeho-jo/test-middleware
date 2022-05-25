@@ -100,7 +100,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
     <GridContainer container style={{ margin: '0 auto', height: '68px', width: '100%', maxWidth: '1920px' }}>
       <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '16px' }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
-          <Link href="/index">
+          <Link href="/">
             <div
               style={{
                 cursor: 'pointer',

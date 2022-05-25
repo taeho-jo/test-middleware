@@ -79,13 +79,13 @@ const Layout = ({ children }: PropsType) => {
   }, []);
 
   useEffect(() => {
-    if ((router.pathname === '/' || router.pathname === '/index') && canvasRef.current) {
+    if ((router.pathname === '/' || router.pathname === '/main') && canvasRef.current) {
       setGradient(canvasRef.current);
     }
   }, [token, router.pathname, resetToken]);
 
   useEffect(() => {
-    if (router.pathname === '/' || router.pathname === '/index') {
+    if (router.pathname === '/' || router.pathname === '/main') {
       setShowGradient(true);
     } else {
       setShowGradient(false);
@@ -121,7 +121,7 @@ const Layout = ({ children }: PropsType) => {
           </div>
         );
       case '/':
-      case '/index':
+      case '/main':
       case '/usecases/ui':
       case '/usecases/ux':
       case '/usecases/scenario':
