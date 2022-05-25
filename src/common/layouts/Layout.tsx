@@ -43,7 +43,6 @@ const Layout = ({ children }: PropsType) => {
 
   useEffect(() => {
     if (router.query.token) {
-      console.log('-------------------------------------------------------실행됌????');
       dispatch(setSetting(false));
       dispatch(isShow({ isShow: false, type: '' }));
       const query = router?.query;
