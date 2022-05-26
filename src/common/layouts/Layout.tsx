@@ -44,7 +44,7 @@ const Layout = ({ children }: PropsType) => {
   useEffect(() => {
     if (Object.keys(router.query).length !== 0) {
       console.log('탐');
-      dispatch(setSetting(false));
+      // dispatch(setSetting(false));
       dispatch(isShow({ isShow: false, type: '' }));
       const query = router?.query;
       const { token, userId, type } = query;
