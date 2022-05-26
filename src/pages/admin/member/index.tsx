@@ -6,16 +6,52 @@ import Form from '../../../components/atoms/Form';
 import SelectBox from '../../../components/atoms/SelectBox';
 import RedirectLoading from '../../../components/atoms/RedirectLoading';
 import FlexBox from '../../../components/atoms/FlexBox';
-import { body2_bold, heading1_bold } from '../../../styles/FontStyles';
+import { body2_bold, heading1_bold, heading5_bold, heading5_regular } from '../../../styles/FontStyles';
 import ResearchList from '../../../components/organisms/ResearchList';
 import { css } from '@emotion/react';
 import IconTextButton from '../../../components/atoms/Button/IconTextButton';
 import { colors } from '../../../styles/Common.styles';
 import PageTitle from '../../../components/atoms/PageTitle';
+import ProfileIcon from '../../../components/atoms/ProfileIcon';
+import Icon from '../../../components/atoms/Icon';
+import MemberList from '../../../components/template/MemberList';
 
 interface IFormInput {
   iceCreamType: { label: string; value: string };
 }
+
+const DummyData = [
+  {
+    userId: '#taeho.jo@dbdlab.io',
+    userName: '조태호',
+    joinDate: '#2022.05.31',
+    authority: '관리자',
+  },
+  {
+    userId: '#jotang@gmail.com',
+    userName: '누구?',
+    joinDate: '#2022.12.31',
+    authority: '멤버',
+  },
+  {
+    userId: '#jotang3726@gmail.com',
+    userName: 'Jotang',
+    joinDate: '#2022.10.31',
+    authority: '멤버',
+  },
+  {
+    userId: '#dbdlab@dbdlab.io',
+    userName: 'DBDLAB',
+    joinDate: '#2022.07.31',
+    authority: '멤버',
+  },
+  {
+    userId: '#test00001@gmail.com',
+    userName: 'tester',
+    joinDate: '#2022.08.31',
+    authority: '멤버',
+  },
+];
 
 const Member = () => {
   const {
@@ -29,33 +65,9 @@ const Member = () => {
   const onSubmit = data => submitData('success', data);
   const onError = errors => console.log('fail', errors);
 
-  const [selectedValue, setSelectedValue] = useState('');
-
-  const onClickValue = useCallback(
-    value => {
-      setSelectedValue(value);
-    },
-    [selectedValue],
-  );
-
-  const submitData = useCallback(
-    (status, data) => {
-      const sendObject = {
-        ...data,
-        selectValue: selectedValue,
-      };
-      console.log(sendObject);
-    },
-    [selectedValue],
-  );
-
-  const selectBoxArr = [
-    { value: '옵션 A', label: '옵션 A' },
-    { value: '옵션 B', label: '옵션 B' },
-    { value: '옵션 C', label: '옵션 C' },
-    { value: '옵션 D', label: '옵션 D' },
-    { value: '옵션 E', label: '옵션 E' },
-  ];
+  const submitData = useCallback((status, data) => {
+    console.log(data);
+  }, []);
 
   return (
     <>
@@ -67,25 +79,7 @@ const Member = () => {
         <IconTextButton name={'ACTION_ADD_SMALL'} iconPosition={'left'} textStyle={'custom'} text={'팀원 초대하기'} />
       </FlexBox>
 
-      <FlexBox justify={'flex-start'} direction={'column'} align={'flex-start'} style={{ maxWidth: '800px', padding: '0px 40px 24px 40px' }}>
-        <div css={{ width: '100%', borderTop: '1px solid #DCDCDC', padding: '4px 8px' }}>리스트 제목 칸</div>
-        <div css={{ width: '100%', borderTop: '1px solid #DCDCDC', borderBottom: '1px solid #DCDCDC' }}>
-          <div css={{ padding: '8px 16px' }}>리스트 내용 칸</div>
-          <div css={{ padding: '8px 16px' }}>리스트 내용 칸</div>
-          <div css={{ padding: '8px 16px' }}>리스트 내용 칸</div>
-          <div css={{ padding: '8px 16px' }}>리스트 내용 칸</div>
-          <div css={{ padding: '8px 16px' }}>리스트 내용 칸</div>
-          <div css={{ padding: '8px 16px' }}>리스트 내용 칸</div>
-        </div>
-      </FlexBox>
-      {/*</FlexBox>*/}
-
-      {/*<Form onSubmit={handleSubmit(onSubmit, onError)}>*/}
-      {/*  <SearchInput register={register} label={'search'} errors={errors} />*/}
-      {/*  <SelectBox arr={selectBoxArr} selectedValue={selectedValue} onClick={onClickValue} />*/}
-      {/*  <button type={'submit'}>xxx</button>*/}
-      {/*</Form>*/}
-      {/*<RedirectLoading />*/}
+      <MemberList listData={DummyData} />
     </>
   );
 };

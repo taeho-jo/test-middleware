@@ -12,7 +12,7 @@ import TextButton from '../../atoms/Button/TextButton';
 import { body3_medium } from '../../../styles/FontStyles';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { InputType } from '../AddInfoPopup';
+import { InputType } from '../../../common/types/commonTypes';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { showToast } from '../../../store/reducers/toastReducer';
 import TextArea from '../../atoms/TextArea';

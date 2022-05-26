@@ -28,6 +28,7 @@ import UiTestHover from '/public/assets/svg/uitest_hover.svg';
 import UiTestInactive from '/public/assets/svg/uitest_inactive.svg';
 import UxPositionHover from '/public/assets/svg/uxposition_hover.svg';
 import UxPositionInactive from '/public/assets/svg/uxposition_inactive.svg';
+import MoreHorizon from '/public/assets/svg/more_horizon.svg';
 
 import { css } from '@emotion/react';
 
@@ -70,6 +71,7 @@ const IconTypes = {
   UXPOSITION_HOVER: UxPositionHover,
   UXPOSITION_INACTIVE: UxPositionInactive,
   CHEVRON_DOWN_THIN: ChevronDownThin,
+  MORE_HORIZON: MoreHorizon,
 };
 
 const Icon = ({ name, size = 24, style, iconColor, onClick }: PropsType) => {

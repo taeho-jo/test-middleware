@@ -17,7 +17,7 @@ import { useForm } from 'react-hook-form';
 import { colors } from '../../../styles/Common.styles';
 import { body3_medium } from '../../../styles/FontStyles';
 // Types
-import { InputType } from '../AddInfoPopup';
+import { InputType } from '../../../common/types/commonTypes';
 import { isShow } from '../../../store/reducers/modalReducer';
 const TeamCreateModal = () => {
   const dispatch = useDispatch();

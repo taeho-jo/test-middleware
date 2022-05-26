@@ -23,7 +23,7 @@ import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
 import { body3_medium } from '../../../styles/FontStyles';
 // Types
-import { InputType } from '../AddInfoPopup';
+import { InputType } from '../../../common/types/commonTypes';
 import { useGetUserInfo } from '../../../api/userApi';
 
 const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;

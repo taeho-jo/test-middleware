@@ -20,7 +20,7 @@ import BasicButton from '../../atoms/Button/BasicButton';
 import { css } from '@emotion/react';
 import { body3_medium } from '../../../styles/FontStyles';
 // Types
-import { InputType } from '../AddInfoPopup';
+import { InputType } from '../../../common/types/commonTypes';
 
 const ReLoginComponent = () => {
   const router = useRouter();

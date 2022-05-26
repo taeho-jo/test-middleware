@@ -12,7 +12,6 @@ import { body3_medium } from '../../../styles/FontStyles';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { useForm } from 'react-hook-form';
-import { InputType } from '../AddInfoPopup';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
@@ -20,6 +19,7 @@ import AnnouncementBox from '../../molecules/AnnouncementBox';
 import SelectBox from '../../atoms/SelectBox';
 import { useUpdateUserInfo } from '../../../api/userApi';
 import withTokenAuth from '../../../hoc/withTokenAuth';
+import { InputType } from '../../../common/types/commonTypes';
 
 const selectBoxArr = [
   { value: '디자인', label: '디자인' },

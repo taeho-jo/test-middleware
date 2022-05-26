@@ -7,7 +7,7 @@ import { colors } from '../../../styles/Common.styles';
 import Form from '../../atoms/Form';
 import Input from '../../atoms/Input';
 import { useForm } from 'react-hook-form';
-import { InputType } from '../AddInfoPopup';
+import { InputType } from '../../../common/types/commonTypes';
 import ModalTitle from '../../molecules/ModalTitle';
 import BasicButton from '../../atoms/Button/BasicButton';
 import { isShow } from '../../../store/reducers/modalReducer';
@@ -48,8 +48,8 @@ const ResetPasswordModal = () => {
     // console.log(data);
     const sendObject = {
       userId: data.email,
-      emailTemplateName: 'local_password_reset_template',
-      // emailTemplateName: 'stag_password_reset_template',
+      // emailTemplateName: 'local_password_reset_template',
+      emailTemplateName: 'stag_password_reset_template',
     };
     console.log(sendObject);
     sessionStorage.setItem('userId', data.email);

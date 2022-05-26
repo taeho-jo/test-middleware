@@ -22,7 +22,8 @@ import IconTextButton from '../../atoms/Button/IconTextButton';
 import { body3_medium, caption1_regular } from '../../../styles/FontStyles';
 import { colors } from '../../../styles/Common.styles';
 // Types
-import { InputType } from '../AddInfoPopup';
+// import { InputType } from '../AddInfoPopup';
+import { InputType } from '../../../common/types/commonTypes';
 import { ReducerType } from '../../../store/reducers';
 import { useGetUserInfo } from '../../../api/userApi';
 
@@ -59,8 +60,8 @@ const SignupModal = () => {
       userName: userId.split('@')[0],
       privacyConsentYn: privacyConsentYn ? 'Y' : 'N',
       consentToUseMarketingYn: consentToUseMarketingYn ? 'Y' : 'N',
-      emailTemplateName: 'local_confirm_email_template',
-      // emailTemplateName: 'stag_confirm_email_template',
+      // emailTemplateName: 'local_confirm_email_template',
+      emailTemplateName: 'stag_confirm_email_template',
     };
     mutate(sendObject);
   }, []);
