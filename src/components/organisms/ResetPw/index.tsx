@@ -30,7 +30,7 @@ const pwInquiryInputArr = [
 ];
 
 const ResetPw = () => {
-  const email = 'taeho.jo@gmail.com';
+  const email = sessionStorage.getItem('userId');
   const router = useRouter();
 
   const {

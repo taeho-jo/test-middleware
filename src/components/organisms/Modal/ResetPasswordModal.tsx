@@ -48,9 +48,8 @@ const ResetPasswordModal = () => {
     // console.log(data);
     const sendObject = {
       userId: data.email,
-      // emailTemplateName: 'local_password_reset_template',
-      emailTemplateName: 'stag_password_reset_template',
-      // emailTemplateName: EMAIL_TEMPLATE,
+      emailTemplateName: 'local_password_reset_template',
+      // emailTemplateName: 'stag_password_reset_template',
     };
     console.log(sendObject);
     sessionStorage.setItem('userId', data.email);

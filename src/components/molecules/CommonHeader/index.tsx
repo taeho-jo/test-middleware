@@ -15,6 +15,7 @@ import { setSetting } from '../../../store/reducers/userReducer';
 const CommonHeader = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const isSessionStorage = sessionStorage.getItem('accessToken');
   const [focusProfile, setFocusProfile] = useState<boolean>(false);
   // const token = useSelector(state => state.auth.token);
   const test = useCallback(() => {
@@ -60,22 +61,24 @@ const CommonHeader = () => {
         />
       </FlexBox>
 
-      <FlexBox justify={'flex-end'} align={'center'}>
-        <FlexBox justify={'flex-end'} align={'center'} onClick={test} style={{ cursor: 'pointer' }}>
-          <ProfileIcon name={'J'} backgroundColor={profileCircle[4]} />
-          <Icon name={'NAVIGATION_CHEVRON_DOWN'} style={{ marginLeft: '8px', cursor: 'pointer' }} size={24} />
-        </FlexBox>
+      {isSessionStorage ? null : (
+        <FlexBox justify={'flex-end'} align={'center'}>
+          <FlexBox justify={'flex-end'} align={'center'} onClick={test} style={{ cursor: 'pointer' }}>
+            <ProfileIcon name={'J'} backgroundColor={profileCircle[4]} />
+            <Icon name={'NAVIGATION_CHEVRON_DOWN'} style={{ marginLeft: '8px', cursor: 'pointer' }} size={24} />
+          </FlexBox>
 
-        <LayerPopup
-          display={focusProfile}
-          topText={'taeho.jo@dbdlab.io'}
-          normalText={[
-            { text: '프로필 설정', onClick: null },
-            { text: '로그아웃', onClick: handleLogout },
-          ]}
-        />
-        {/*<ProfilePopover display={focusProfile} />*/}
-      </FlexBox>
+          <LayerPopup
+            display={focusProfile}
+            topText={'taeho.jo@dbdlab.io'}
+            normalText={[
+              { text: '프로필 설정', onClick: null },
+              { text: '로그아웃', onClick: handleLogout },
+            ]}
+          />
+          {/*<ProfilePopover display={focusProfile} />*/}
+        </FlexBox>
+      )}
     </FlexBox>
   );
 };
