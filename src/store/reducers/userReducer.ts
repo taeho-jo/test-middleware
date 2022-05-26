@@ -57,8 +57,26 @@ export const userSlice = createSlice({
     setUserInfo: (state, action: PayloadAction<any>) => {
       state.userInfo = action.payload;
     },
+    removeUserInfo: state => {
+      state.userInfo = {
+        authTokenProvider: '',
+        authTypeCd: '',
+        consentToUseMarketingYn: '',
+        cpPostion: '',
+        cpSize: '',
+        cxResearch: '',
+        emailVerifiedYn: '',
+        firstTimeYn: '',
+        funnelsCd: '',
+        privacyConsentYn: '',
+        purposeOfUse: '',
+        userId: '',
+        userName: '',
+        userSeq: '',
+      };
+    },
   },
 });
 
-export const { setUserInfo, setSetting, setEmailConfirm } = userSlice.actions;
+export const { setUserInfo, setSetting, setEmailConfirm, removeUserInfo } = userSlice.actions;
 export default userSlice.reducer;

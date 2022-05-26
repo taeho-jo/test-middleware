@@ -16,9 +16,9 @@ import TextButton from '../../atoms/Button/TextButton';
 import { useRouter } from 'next/router';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
 import { useResetPassword } from '../../../api/authApi';
+import { PASSWORD_RESET_TEMPLATE } from '../../../common/util/commonVar';
 
 const subTitleArr = ['비밀번호 재설정을 위해', 'Diby 에서 사용한 이메일을 입력해주세요.'];
-const EMAIL_TEMPLATE = process.env.NODE_ENV === 'development' ? 'local_password_reset_template' : process.env.PASSWORD_RESET_TEMPLATE;
 
 const ResetPasswordModal = () => {
   const router = useRouter();
@@ -49,7 +49,8 @@ const ResetPasswordModal = () => {
     const sendObject = {
       userId: data.email,
       // emailTemplateName: 'local_password_reset_template',
-      emailTemplateName: 'stag_password_reset_template',
+      // emailTemplateName: 'stag_password_reset_template',
+      emailTemplateName: PASSWORD_RESET_TEMPLATE,
     };
     console.log(sendObject);
     sessionStorage.setItem('userId', data.email);

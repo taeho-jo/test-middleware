@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { AXIOS_PATCH, AXIOS_POST } from '../../hooks/useAxios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ChangePasswordType, LoginInputType, ResetPasswordType, SignupInputType } from './types';
 import { showToast } from '../../store/reducers/toastReducer';
 import { isShow } from '../../store/reducers/modalReducer';
@@ -8,6 +8,7 @@ import { setToken } from '../../store/reducers/authReducer';
 import { useRouter } from 'next/router';
 import { setEmailConfirm, setSetting } from '../../store/reducers/userReducer';
 import { dispatch } from 'jest-circus/build/state';
+import { ReducerType } from '../../store/reducers';
 
 export const useGoogleLogin = () => {
   const dispatch = useDispatch();
@@ -43,9 +44,10 @@ export const useLoginApi = () => {
 };
 
 // 회원가입 API
-export const useSignupApi = () => {
+export const useSignupApi = refetch => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
+  const isUserInfo = useSelector<ReducerType, boolean>(state => state.user.setting);
 
   const handleSignup = async (sendObject: SignupInputType) => {
     return await AXIOS_POST('/register', sendObject);
@@ -62,7 +64,9 @@ export const useSignupApi = () => {
       dispatch(setToken(res.data.token));
       dispatch(showToast({ message: res.message, isShow: true, status: 'success', duration: 5000 }));
       dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+
       dispatch(setSetting(true));
+      refetch();
     },
   });
 };
