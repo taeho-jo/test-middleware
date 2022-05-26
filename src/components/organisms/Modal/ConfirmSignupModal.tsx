@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PopupBox from '../../atoms/PopupBox';
 import ModalTitle from '../../molecules/ModalTitle';
 import FlexBox from '../../atoms/FlexBox';
@@ -9,8 +9,9 @@ import { showToast } from '../../../store/reducers/toastReducer';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { useResendEmail } from '../../../api/authApi';
 import { ReducerType } from '../../../store/reducers';
+import { EMAIL_CONFIRM_TEMPLATE } from '../../../common/util/commonVar';
+import { removeUserInfo } from '../../../store/reducers/userReducer';
 
-const EMAIL_TEMPLATE = process.env.NODE_ENV === 'development' ? 'local_confirm_email_template' : process.env.CONFIRM_EMAIL_TEMPLATE;
 const ConfirmResetPasswordModal = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
@@ -21,13 +22,15 @@ const ConfirmResetPasswordModal = () => {
   const resendEmail = useCallback(() => {
     const sendObject = {
       // emailTemplateName: 'local_confirm_email_template',
-      emailTemplateName: 'stag_confirm_email_template',
+      // emailTemplateName: 'stag_confirm_email_template',
+      emailTemplateName: EMAIL_CONFIRM_TEMPLATE,
     };
     resendResponse.mutate(sendObject);
   }, []);
 
   const reSignup = useCallback(() => {
     localStorage.clear();
+    // dispatch(removeUserInfo());
     dispatch(isShow({ isShow: true, type: 'signup' }));
   }, []);
 

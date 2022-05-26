@@ -42,7 +42,8 @@ const Layout = ({ children }: PropsType) => {
   const confirmEmail = useConfirmEmailApi();
 
   useEffect(() => {
-    if (router.query.token) {
+    if (Object.keys(router.query).length !== 0) {
+      console.log('탐');
       dispatch(setSetting(false));
       dispatch(isShow({ isShow: false, type: '' }));
       const query = router?.query;
@@ -63,6 +64,12 @@ const Layout = ({ children }: PropsType) => {
       }
     }
   }, [router.query]);
+
+  useEffect(() => {
+    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++');
+    console.log(userInfo);
+    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++');
+  }, [userInfo]);
 
   // useEffect(() => {
   //   if (emailConfirm) {

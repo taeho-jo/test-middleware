@@ -35,6 +35,7 @@ const InviteTeamMemberModal = () => {
     const sendObject = {
       email: mailArr,
     };
+    console.log(sendObject);
   }, []);
 
   const handleProcessingError = useCallback((status, errors) => {

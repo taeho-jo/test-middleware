@@ -26,9 +26,9 @@ import { colors } from '../../../styles/Common.styles';
 import { InputType } from '../../../common/types/commonTypes';
 import { ReducerType } from '../../../store/reducers';
 import { useGetUserInfo } from '../../../api/userApi';
+import { CURRENT_DOMAIN, EMAIL_CONFIRM_TEMPLATE } from '../../../common/util/commonVar';
 
-const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
-const EMAIL_TEMPLATE = process.env.NODE_ENV === 'development' ? 'local_confirm_email_template' : process.env.CONFIRM_EMAIL_TEMPLATE;
+// const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
 
 const SignupModal = () => {
   const dispatch = useDispatch();
@@ -48,7 +48,8 @@ const SignupModal = () => {
   const onError = errors => handleProcessingError('fail', errors);
 
   // 이메일 가입
-  const { data, isLoading, mutate } = useSignupApi();
+  const { refetch } = useGetUserInfo(false);
+  const { data, isLoading, mutate } = useSignupApi(refetch);
 
   const handleSignup = useCallback((status, signupData) => {
     const { consentToUseMarketingYn, password, privacyConsentYn, userId } = signupData;
@@ -58,10 +59,11 @@ const SignupModal = () => {
       userId,
       password,
       userName: userId.split('@')[0],
-      privacyConsentYn: privacyConsentYn ? 'Y' : 'N',
-      consentToUseMarketingYn: consentToUseMarketingYn ? 'Y' : 'N',
+      privacyConsentYn: 'Y',
+      consentToUseMarketingYn: 'Y',
       // emailTemplateName: 'local_confirm_email_template',
-      emailTemplateName: 'stag_confirm_email_template',
+      // emailTemplateName: 'stag_confirm_email_template',
+      emailTemplateName: EMAIL_CONFIRM_TEMPLATE,
     };
     mutate(sendObject);
   }, []);

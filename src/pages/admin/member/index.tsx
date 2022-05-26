@@ -51,6 +51,36 @@ const DummyData = [
     joinDate: '#2022.08.31',
     authority: '멤버',
   },
+  {
+    userId: '#taeho.jo@dbdlab.io',
+    userName: '조태호',
+    joinDate: '#2022.05.31',
+    authority: '관리자',
+  },
+  {
+    userId: '#jotang@gmail.com',
+    userName: '누구?',
+    joinDate: '#2022.12.31',
+    authority: '멤버',
+  },
+  {
+    userId: '#jotang3726@gmail.com',
+    userName: 'Jotang',
+    joinDate: '#2022.10.31',
+    authority: '멤버',
+  },
+  {
+    userId: '#dbdlab@dbdlab.io',
+    userName: 'DBDLAB',
+    joinDate: '#2022.07.31',
+    authority: '멤버',
+  },
+  {
+    userId: '#test00001@gmail.com',
+    userName: 'tester',
+    joinDate: '#2022.08.31',
+    authority: '멤버',
+  },
 ];
 
 const Member = () => {
@@ -70,7 +100,7 @@ const Member = () => {
   }, []);
 
   return (
-    <>
+    <div css={{ overflow: 'scroll' }}>
       <PageTitle title={'팀원'} />
       <FlexBox justify={'space-between'} style={{ maxWidth: '800px', padding: '32px 40px 16px' }}>
         <Form width={'240px'} onSubmit={handleSubmit(onSubmit, onError)}>
@@ -80,7 +110,7 @@ const Member = () => {
       </FlexBox>
 
       <MemberList listData={DummyData} />
-    </>
+    </div>
   );
 };
 
