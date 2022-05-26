@@ -39,7 +39,7 @@ const Layout = ({ children }: PropsType) => {
 
   const canvasRef = useRef(null);
   const { isLoading, data, isError, error, refetch } = useGetUserInfo(userInfoSettingValue);
-  const confirmEmail = useConfirmEmailApi();
+  const confirmEmail = useConfirmEmailApi(refetch);
 
   useEffect(() => {
     if (Object.keys(router.query).length !== 0) {
