@@ -72,7 +72,7 @@ export const useSignupApi = refetch => {
 };
 
 // 이메일 확인 API
-export const useConfirmEmailApi = () => {
+export const useConfirmEmailApi = refetch => {
   const dispatch = useDispatch();
 
   const handleConfirmEmail = async () => {
@@ -84,6 +84,7 @@ export const useConfirmEmailApi = () => {
     onSuccess: data => {
       console.log('useConfirmEmailApi::: ', data);
       dispatch(setSetting(true));
+      refetch();
     },
   });
 };
