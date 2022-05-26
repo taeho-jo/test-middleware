@@ -24,4 +24,5 @@ const adminHeaderStyle = css`
   width: 100%;
   border: 1px solid ${colors.grey._ec};
   border-left: none;
+  //color: red;
 `;

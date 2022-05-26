@@ -100,7 +100,7 @@ const Member = () => {
   }, []);
 
   return (
-    <div css={{ overflow: 'scroll' }}>
+    <div>
       <PageTitle title={'팀원'} />
       <FlexBox justify={'space-between'} style={{ maxWidth: '800px', padding: '32px 40px 16px' }}>
         <Form width={'240px'} onSubmit={handleSubmit(onSubmit, onError)}>

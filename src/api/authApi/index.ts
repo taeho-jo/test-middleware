@@ -66,7 +66,7 @@ export const useSignupApi = refetch => {
       dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
 
       dispatch(setSetting(true));
-      refetch();
+      refetch('getUserInfo');
     },
   });
 };
@@ -84,7 +84,8 @@ export const useConfirmEmailApi = refetch => {
     onSuccess: data => {
       console.log('useConfirmEmailApi::: ', data);
       dispatch(setSetting(true));
-      refetch();
+      dispatch(isShow({ isShow: false, type: '' }));
+      refetch('getUserInfo');
     },
   });
 };
