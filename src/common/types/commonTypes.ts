@@ -67,4 +67,14 @@ export type IconType =
   | 'UITEST_HOVER'
   | 'UITEST_INACTIVE'
   | 'UXPOSITION_HOVER'
-  | 'UXPOSITION_INACTIVE';
+  | 'UXPOSITION_INACTIVE'
+  | 'MORE_HORIZON';
+
+export interface InputType {
+  label: string;
+  placeholder: string;
+  type: string;
+  pattern?: RegExp;
+  errorMsg?: string;
+  line?: boolean;
+}

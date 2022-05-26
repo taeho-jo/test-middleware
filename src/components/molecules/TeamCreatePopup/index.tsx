@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { css } from '@emotion/react';
 import ModalTitle from '../ModalTitle';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
-import InputFormBox from '../InputFormBox';
 import { colors } from '../../../styles/Common.styles';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { body3_bold, body3_regular } from '../../../styles/FontStyles';
@@ -33,9 +32,9 @@ const TeamCreatePopup = () => {
       <div css={modalBoxStyle}>
         {/*<ModalTitle modalType={'create-team'} />*/}
         <ModalSubTitle subTitle={[`DBDLAB님의 팀을 생성할게요.`]} />
-        <div css={paddingbox}>
-          <InputFormBox inputArr={inputArr} btnText={'완료했어요!'} btnTextColor={'white'} btnBackColor={colors.grey._3c} />
-        </div>
+        {/*<div css={paddingbox}>*/}
+        {/*  <InputFormBox inputArr={inputArr} btnText={'완료했어요!'} btnTextColor={'white'} btnBackColor={colors.grey._3c} />*/}
+        {/*</div>*/}
 
         <FlexBox
           padding={'19px 24px'}

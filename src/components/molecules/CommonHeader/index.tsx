@@ -64,7 +64,7 @@ const CommonHeader = () => {
       {isSessionStorage ? null : (
         <FlexBox justify={'flex-end'} align={'center'}>
           <FlexBox justify={'flex-end'} align={'center'} onClick={test} style={{ cursor: 'pointer' }}>
-            <ProfileIcon name={'J'} backgroundColor={profileCircle[4]} />
+            <ProfileIcon />
             <Icon name={'NAVIGATION_CHEVRON_DOWN'} style={{ marginLeft: '8px', cursor: 'pointer' }} size={24} />
           </FlexBox>
 
