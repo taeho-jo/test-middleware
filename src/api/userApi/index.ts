@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { isShow } from '../../store/reducers/modalReducer';
 import { UpdateUserInfoType } from './types';
 
+// 사용자 정보 API
 export const useGetUserInfo = userInfoSettingValue => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -26,6 +27,7 @@ export const useGetUserInfo = userInfoSettingValue => {
   });
 };
 
+// 사용자 정보 업데이트 API
 export const useUpdateUserInfo = () => {
   const dispatch = useDispatch();
   const router = useRouter();

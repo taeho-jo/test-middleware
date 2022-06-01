@@ -10,6 +10,7 @@ import NavigationArrowLeft from '/public/assets/svg/navigation_arrow_left.svg';
 import NavigationArrowRight from '/public/assets/svg/navigation_arrow_right.svg';
 import NavigationChevronDown from '/public/assets/svg/navigation_chevron_down_s.svg';
 import ChevronDownThin from '/public/assets/svg/chevron_down_thin.svg';
+import ChevronRightThin from '/public/assets/svg/chevron_right_thin.svg';
 import NavigationChevronRight from '/public/assets/svg/navigation_chevron_right.svg';
 import NavigationChevronRightDisabled from '/public/assets/svg/navigation_chevron_right_disabled.svg';
 import NavigationCloseLg from '/public/assets/svg/navigation_close_l.svg';
@@ -71,6 +72,7 @@ const IconTypes = {
   UXPOSITION_HOVER: UxPositionHover,
   UXPOSITION_INACTIVE: UxPositionInactive,
   CHEVRON_DOWN_THIN: ChevronDownThin,
+  CHEVRON_RIGHT_THIN: ChevronRightThin,
   MORE_HORIZON: MoreHorizon,
 };
 

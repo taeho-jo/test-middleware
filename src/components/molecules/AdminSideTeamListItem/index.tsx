@@ -13,14 +13,17 @@ import { caption2_bold, heading5_bold } from '../../../styles/FontStyles';
 import { profileColor } from '../../../common/util/commonVar';
 
 import { ReducerType } from '../../../store/reducers';
+import { memberListType, updateTeamSeq } from '../../../store/reducers/teamReducer';
+import { useRouter } from 'next/router';
 interface PropsType {
   teamName?: string;
-  memberList?: string[];
+  memberList?: memberListType[];
   parentsIndex: number;
 }
 
 const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parentsIndex }: PropsType) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const isFirstCreateTeam = useSelector<ReducerType, boolean>(state => state.team.isFirstCreate);
   const isInviteModal = useSelector<ReducerType, boolean>(state => state.team.isInviteModal);
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
@@ -29,10 +32,8 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
 
   const handleChangeTeamName = useCallback(
     num => {
-      // console.log('=============================', num, '=============================');
-      setFocusItem(num);
-      dispatch(isShow({ isShow: true, type: 'firstCreateTeam' }));
-      // dispatch(createdTeam(true));
+      setFocusItem(num - 1);
+      router.push('/admin/setting');
     },
     [focusItem],
   );
@@ -40,6 +41,8 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
   const handToggleInviteModal = useCallback(
     num => {
       setFocusItem(num);
+      console.log(num);
+      dispatch(updateTeamSeq(num));
       dispatch(isShow({ isShow: true, type: 'inviteTeamMember' }));
     },
     [focusItem],
@@ -49,12 +52,9 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
     if (modalType === '') {
       setFocusItem(null);
     }
-
-    // TODO: 최초로그인 시 로직
-    // TODO: Team API 호출 후 리스트가 없을 경우, 최초 로그인 일 경우 focustItme에 'first' 업데이트
-    // if (modalType !== '') {
-    //   setFocusItem('first');
-    // }
+    if (modalType == 'firstCreateTeam') {
+      setFocusItem('first');
+    }
   }, [modalType]);
 
   return (
@@ -66,16 +66,22 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
     >
       <FlexBox style={{ marginBottom: '15px' }} justify={'space-between'} align={'center'}>
         <span css={[heading5_bold, textStyle]}>{teamName}</span>
-        <Icon name={'ACTION_SETTING'} size={24} onClick={() => handleChangeTeamName(parentsIndex)} />
+        <Icon name={'ACTION_SETTING'} size={24} onClick={() => handleChangeTeamName(parentsIndex)} style={{ cursor: 'pointer' }} />
       </FlexBox>
 
       <FlexBox justify={'flex-start'} align={'center'} wrap={'wrap'}>
-        {memberList.map((item, index) => {
+        {memberList?.map((item, index) => {
           return (
             <Fragment key={index}>
-              <ProfileIcon name={item} backgroundColor={profileColor[index]} size={'20px'} fontStyle={caption2_bold} margin={'0 6px 0 0'} />
+              <ProfileIcon
+                name={item.userName.slice(0, 1)}
+                backgroundColor={profileColor[index]}
+                size={'20px'}
+                fontStyle={caption2_bold}
+                margin={'0 6px 0 0'}
+              />
               {index + 1 === memberList.length ? (
-                <IconButton onClick={() => handToggleInviteModal(parentsIndex)} name={'ACTION_ADD_CIRCLE'} style={{ marginTop: '3px' }} />
+                <IconButton onClick={() => handToggleInviteModal(item.teamSeq)} name={'ACTION_ADD_CIRCLE'} style={{ marginTop: '3px' }} />
               ) : null}
             </Fragment>
           );

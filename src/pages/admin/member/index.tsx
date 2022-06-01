@@ -100,7 +100,7 @@ const Member = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <PageTitle title={'팀원'} />
       <FlexBox justify={'space-between'} style={{ maxWidth: '800px', padding: '32px 40px 16px' }}>
         <Form width={'240px'} onSubmit={handleSubmit(onSubmit, onError)}>
@@ -109,8 +109,10 @@ const Member = () => {
         <IconTextButton name={'ACTION_ADD_SMALL'} iconPosition={'left'} textStyle={'custom'} text={'팀원 초대하기'} />
       </FlexBox>
 
-      <MemberList listData={DummyData} />
-    </div>
+      <div>
+        <MemberList listData={DummyData} />
+      </div>
+    </>
   );
 };
 

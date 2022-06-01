@@ -1,5 +1,5 @@
-import { useMutation, useQueryClient } from 'react-query';
-import { AXIOS_PATCH, AXIOS_POST } from '../../hooks/useAxios';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { AXIOS_GET, AXIOS_PATCH, AXIOS_POST } from '../../hooks/useAxios';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChangePasswordType, LoginInputType, ResetPasswordType, SignupInputType } from './types';
 import { showToast } from '../../store/reducers/toastReducer';
@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { setEmailConfirm, setSetting } from '../../store/reducers/userReducer';
 import { dispatch } from 'jest-circus/build/state';
 import { ReducerType } from '../../store/reducers';
+import { updateTeamInfo } from '../../store/reducers/teamReducer';
 
 export const useGoogleLogin = () => {
   const dispatch = useDispatch();
@@ -149,6 +150,18 @@ export const useResendEmail = () => {
     onSuccess: data => {
       console.log(data);
       dispatch(showToast({ message: '인증메일이 재전송 되었습니다.', isShow: true, status: 'sucess', duration: 5000 }));
+    },
+  });
+};
+
+// 토큰 refresh API
+export const useTokenRefreshApi = () => {
+  const dispatch = useDispatch();
+
+  return useQuery(['refreshToken'], () => AXIOS_GET('/refreshToken'), {
+    cacheTime: 0,
+    onSuccess: data => {
+      console.log(data);
     },
   });
 };

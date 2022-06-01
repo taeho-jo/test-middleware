@@ -20,6 +20,7 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import ResearchList from '../ResearchList';
 import { ReducerType } from '../../../store/reducers';
 import { useRouter } from 'next/router';
+import { useGetTeamList } from '../../../api/teamApi';
 
 const ResearchType = [
   {
@@ -99,28 +100,32 @@ const TeamDashboard = () => {
 
   const [selectedValue, setSelectedValue] = useState('');
 
-  useEffect(() => {
-    // 최초로그인
-    // dispatch(isShow({ isShow: true, type: 'firstCreateTeam' }));
+  const { data } = useGetTeamList();
 
-    // 걍 로그인
-    dispatch(
-      updateTeamInfo([
-        {
-          teamName: 'DBDLAB의 팀',
-          memberList: ['A', 'K', 'P', 'A', 'K', 'P', 'A', 'K', 'P'],
-        },
-        {
-          teamName: 'DBDLAB의 팀2',
-          memberList: ['B', 'D', 'J'],
-        },
-        {
-          teamName: 'DBDLAB의 팀2',
-          memberList: ['Y', 'M', 'O'],
-        },
-      ]),
-    );
-  }, []);
+  console.log(data, 'data');
+
+  // useEffect(() => {
+  // 최초로그인
+  // dispatch(isShow({ isShow: true, type: 'firstCreateTeam' }));
+
+  // 걍 로그인
+  //   dispatch(
+  //     updateTeamInfo([
+  //       {
+  //         teamName: 'DBDLAB의 팀',
+  //         memberList: ['A', 'K', 'P', 'A', 'K', 'P', 'A', 'K', 'P'],
+  //       },
+  //       {
+  //         teamName: 'DBDLAB의 팀2',
+  //         memberList: ['B', 'D', 'J'],
+  //       },
+  //       {
+  //         teamName: 'DBDLAB의 팀2',
+  //         memberList: ['Y', 'M', 'O'],
+  //       },
+  //     ]),
+  //   );
+  // }, []);
 
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));

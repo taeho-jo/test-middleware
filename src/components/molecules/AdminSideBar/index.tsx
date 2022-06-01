@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // Components
 import FlexBox from '../../atoms/FlexBox';
 import Icon from '../../atoms/Icon';
@@ -12,35 +12,33 @@ import { heading5_bold } from '../../../styles/FontStyles';
 import { ReducerType } from '../../../store/reducers';
 import { TeamListType } from '../../../store/reducers/teamReducer';
 import MoreTeamInfoPopup from '../MoreTeamInfoPopup';
+import { UserType } from '../../../store/reducers/userReducer';
+import { isShow } from '../../../store/reducers/modalReducer';
 
 // Dummy
-const DummyTeamList = [
-  {
-    teamName: '아무개님의 팀',
-    memberList: ['J'],
-  },
-];
 
 const AdminSideBar = () => {
+  const dispatch = useDispatch();
   const teamList = useSelector<ReducerType, TeamListType[]>(state => state.team.teamList);
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
 
   const sideTeamList = useCallback(() => {
     if (teamList !== null) {
       return teamList?.map((item, index) => {
         return <AdminSideTeamListItem parentsIndex={index} key={index} teamName={item.teamName} memberList={item.memberList} />;
       });
-    } else {
-      return DummyTeamList.map((item, index) => {
-        return <AdminSideTeamListItem parentsIndex={index} key={index} teamName={item.teamName} memberList={item.memberList} />;
-      });
     }
-  }, [teamList, DummyTeamList]);
+  }, [teamList]);
+
+  const handleCreateTeam = useCallback(() => {
+    dispatch(isShow({ isShow: true, type: 'firstCreateTeam' }));
+  }, []);
 
   return (
     <div css={adminSideBarStyle}>
       <FlexBox style={teamCreateAreaStyle} justify={'space-between'} align={'center'}>
         <span css={heading5_bold}>팀</span>
-        <Icon name={'ACTION_CREATE'} size={24} />
+        <Icon name={'ACTION_CREATE'} size={24} style={{ cursor: 'pointer' }} />
       </FlexBox>
       {sideTeamList()}
       <FlexBox justify={'center'} style={{ marginTop: '24px' }}>

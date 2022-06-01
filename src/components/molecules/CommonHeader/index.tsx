@@ -37,7 +37,7 @@ const CommonHeader = () => {
       height={'48px'}
       backgroundColor={colors.grey._3c}
     >
-      <FlexBox justify={'flex-start'} align={'center'}>
+      <FlexBox justify={'flex-start'} align={'center'} onClick={() => router.push('/admin/team')} style={{ cursor: 'pointer' }}>
         {/*<Icon name={'LOGO_ICON'} size={40} />*/}
         <div
           style={{
@@ -84,13 +84,3 @@ const CommonHeader = () => {
 };
 
 export default CommonHeader;
-
-const profileCircle = css`
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;

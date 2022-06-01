@@ -11,7 +11,7 @@ interface PropsType {
 
 const PageTitle = ({ title }: PropsType) => {
   return (
-    <FlexBox justify={'flex-start'} padding={'21px 32px'}>
+    <FlexBox justify={'flex-start'} padding={'24px 32px'}>
       <span css={[heading1_bold, { display: 'inline-block' }]}>{title}</span>
     </FlexBox>
   );

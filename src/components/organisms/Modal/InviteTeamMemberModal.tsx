@@ -10,15 +10,20 @@ import BasicButton from '../../atoms/Button/BasicButton';
 import { colors } from '../../../styles/Common.styles';
 import TextButton from '../../atoms/Button/TextButton';
 import { body3_medium } from '../../../styles/FontStyles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { showToast } from '../../../store/reducers/toastReducer';
 import TextArea from '../../atoms/TextArea';
+import { emailRex } from '../../../common/regex';
+import { useInviteTeamMemberEmailApi } from '../../../api/teamApi';
+import { ReducerType } from '../../../store/reducers';
+import { INVITE_EMAIL_TEMPLATE } from '../../../common/util/commonVar';
 
 const InviteTeamMemberModal = () => {
   const dispatch = useDispatch();
+  const selectTeamSeq = useSelector<ReducerType, number | null>(state => state.team.selectTeamSeq);
   // hook form
   const {
     register,
@@ -30,12 +35,23 @@ const InviteTeamMemberModal = () => {
   const onSubmit = data => handleInvite('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
+  const inviteMutaion = useInviteTeamMemberEmailApi();
+
   const handleInvite = useCallback((status, data) => {
     const mailArr = data.email?.trim().split(/[, ]+/).join('\n').split('\n');
+    const newMailArr = mailArr.filter(el => el.match(emailRex));
+
     const sendObject = {
-      email: mailArr,
+      teamSeq: selectTeamSeq,
+      inviteMembers: newMailArr,
+      emailTemplateName: INVITE_EMAIL_TEMPLATE,
     };
-    console.log(sendObject);
+
+    if (newMailArr.length === 0) {
+      dispatch(showToast({ message: '메일 주소 형식을 확인 바랍니다.', isShow: true, status: 'warning', duration: 5000 }));
+    } else {
+      inviteMutaion.mutate(sendObject);
+    }
   }, []);
 
   const handleProcessingError = useCallback((status, errors) => {
@@ -73,21 +89,6 @@ const InviteTeamMemberModal = () => {
             style={{ marginBottom: '16px' }}
           />
           <AnnouncementBox style={{ marginBottom: '16px' }} content={<div>링크를 클릭하면 복사가 돼요.</div>} />
-          {/*<Input*/}
-          {/*  title={'이메일'}*/}
-          {/*  register={register}*/}
-          {/*  label={'email'}*/}
-          {/*  errors={errors}*/}
-          {/*  errorMsg={'필수 항목입니다.'}*/}
-          {/*  placeholder={'이메일을 입력해주세요.'}*/}
-          {/*  style={{ marginBottom: '16px' }}*/}
-          {/*  registerOptions={{*/}
-          {/*    required: true,*/}
-          {/*    // onChange: e => updateLoginField('userId', e.target.value),*/}
-          {/*    pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,*/}
-          {/*  }}*/}
-          {/*/>*/}
-
           <TextArea
             title={'이메일'}
             register={register}
@@ -98,8 +99,6 @@ const InviteTeamMemberModal = () => {
             style={{ marginBottom: '16px' }}
             registerOptions={{
               required: true,
-              // onChange: e => updateLoginField('userId', e.target.value),
-              // pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
             }}
           />
 

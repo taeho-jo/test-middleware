@@ -15,7 +15,7 @@ import { css } from '@emotion/react';
 import AOS from 'aos';
 import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // API
-import { useConfirmEmailApi } from '../../api/authApi';
+import { useConfirmEmailApi, useTokenRefreshApi } from '../../api/authApi';
 import { useGetUserInfo } from '../../api/userApi';
 import { setEmailConfirm, setSetting } from '../../store/reducers/userReducer';
 import { isShow } from '../../store/reducers/modalReducer';
@@ -39,7 +39,9 @@ const Layout = ({ children }: PropsType) => {
 
   const canvasRef = useRef(null);
   const { isLoading, data, isError, error, refetch } = useGetUserInfo(userInfoSettingValue);
+  // const refreshToken = useTokenRefreshApi();
   const confirmEmail = useConfirmEmailApi(refetch);
+  // console.log(refreshToken.data, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 
   useEffect(() => {
     if (Object.keys(router.query).length !== 0) {
@@ -64,18 +66,6 @@ const Layout = ({ children }: PropsType) => {
       }
     }
   }, [router.query]);
-
-  useEffect(() => {
-    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++');
-    console.log(userInfo);
-    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++');
-  }, [userInfo]);
-
-  // useEffect(() => {
-  //   if (emailConfirm) {
-  //     confirmEmail.mutate();
-  //   }
-  // }, [emailConfirm]);
 
   // <------------- LandingPage css 및 animation 을 위한 useEffect -------------> //
   useEffect(() => {
@@ -106,6 +96,7 @@ const Layout = ({ children }: PropsType) => {
       case '/admin/reset-password-success':
       case '/admin/re-login':
       case '/admin/profile':
+      case '/admin/welcome':
         return (
           <div css={mainContainer}>
             <main css={contentsContainer}>

@@ -5,6 +5,7 @@ import { heading5_bold, heading5_regular } from '../../../styles/FontStyles';
 import ProfileIcon from '../../atoms/ProfileIcon';
 import Icon from '../../atoms/Icon';
 import { profileColor } from '../../../common/util/commonVar';
+import { css } from '@emotion/react';
 
 interface PropsType {
   listData: {
@@ -15,8 +16,6 @@ interface PropsType {
   }[];
 }
 const MemberList = ({ listData }: PropsType) => {
-  console.log(listData, 'asd');
-
   const getList = useCallback(() => {
     if (listData === null || listData.length === 0) {
       return <div>팀원이 없습니다</div>;
@@ -70,33 +69,15 @@ const MemberList = ({ listData }: PropsType) => {
       </FlexBox>
 
       {/*테이블 리스트*/}
-      {getList()}
-      {/*<FlexBox style={{ borderTop: '1px solid #DCDCDC', borderBottom: '1px solid #DCDCDC' }}>*/}
-      {/*  <FlexBox justify={'flex-start'} style={{ padding: '17px 16px', width: '50%' }}>*/}
-      {/*    <div css={{ flex: 1 }}>*/}
-      {/*      <ProfileIcon />*/}
-      {/*    </div>*/}
-
-      {/*    <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={{ marginLeft: '24px' }}>*/}
-      {/*      <span css={[heading5_regular, { marginBottom: '7px' }]}>#amykim</span>*/}
-      {/*      <span css={[heading5_regular, { color: colors.grey._99 }]}>#amykim@dbdlab.io</span>*/}
-      {/*    </FlexBox>*/}
-      {/*  </FlexBox>*/}
-
-      {/*  <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>*/}
-      {/*    <span css={heading5_regular}>#2022.05.31</span>*/}
-      {/*  </FlexBox>*/}
-
-      {/*  <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>*/}
-      {/*    <span css={heading5_regular}>#관리자</span>*/}
-      {/*  </FlexBox>*/}
-
-      {/*  <FlexBox justify={'center'} align={'center'} style={{ padding: '17px 0', flex: 1 }}>*/}
-      {/*    <Icon name={'MORE_HORIZON'} size={24} style={{ cursor: 'pointer' }} />*/}
-      {/*  </FlexBox>*/}
-      {/*</FlexBox>*/}
+      <div css={listBoxStyle}>{getList()}</div>
     </FlexBox>
   );
 };
 
 export default MemberList;
+
+const listBoxStyle = css`
+  width: 100%;
+  height: 720px;
+  overflow: scroll;
+`;
