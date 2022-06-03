@@ -3,9 +3,25 @@ import { useRouter } from 'next/router';
 import { AXIOS_GET, AXIOS_POST } from '../../hooks/useAxios';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { isShow } from '../../store/reducers/modalReducer';
-import { updateTeamInfo } from '../../store/reducers/teamReducer';
+import { updateSelectTeamList, updateTeamInfo } from '../../store/reducers/teamReducer';
 import { ReducerType } from '../../store/reducers';
 import { showToast } from '../../store/reducers/toastReducer';
+import { setToken, updateIsRefreshTokenStatus } from '../../store/reducers/authReducer';
+
+// test refreshToken
+// export const useRefreshToken = (updateIsRefreshTokenStatus) => {
+//   const dispatch = useDispatch();
+//   return useQuery(['refreshToken'], () => AXIOS_GET('/refreshToken'), {
+//     cacheTime: 0,
+//     enabled: updateIsRefreshTokenStatus,
+//     onSuccess: data => {
+//       const response = data.data;
+//       console.log(response, '~~~~~~~~~~~~~~~~~');
+//       localStorage.setItem('accessToken', response.token);
+//       dispatch(setToken(response.token));
+//     },
+//   });
+// };
 
 // 팀 리스트 API
 export const useGetTeamList = () => {
@@ -14,6 +30,14 @@ export const useGetTeamList = () => {
 
   return useQuery(['getTeamList'], () => AXIOS_GET('/team/'), {
     cacheTime: 0,
+    onError: error => {
+      const errorData: any = error.response.data;
+      const { code, message } = errorData;
+      if (code === 'E0008') {
+        console.log('이거 리플레쉬 토큰 실행됌??');
+        dispatch(updateIsRefreshTokenStatus(true));
+      }
+    },
     onSuccess: data => {
       const response = data.data;
       if (response.count === 0) {
@@ -32,7 +56,11 @@ export const useGetTeamList = () => {
             }),
           [],
         );
+        console.log(newTeamArr, 'new Team');
+
+        // dispatch(updateIsRefreshTokenStatus(true));
         dispatch(updateTeamInfo(newTeamArr));
+        dispatch(updateSelectTeamList(newTeamArr[0].teamSeq));
       }
     },
   });
@@ -60,11 +88,23 @@ export const useCreateTeamApi = () => {
   });
 };
 
+// 팀원 리스트 API
+export const useTeamMemberListApi = () => {
+  const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
+  const teamSeq = teamList ? teamList[0].teamSeq : '';
+  return useQuery(['getTeamMemberList'], () => AXIOS_GET(`/team/${teamSeq}/member/`), {
+    cacheTime: 0,
+    onSuccess: data => {
+      console.log(data, 'DATA');
+    },
+  });
+};
+
 // 팀원 초대 API
 export const useInviteTeamMemberEmailApi = () => {
   const dispatch = useDispatch();
   const handleInviteTeam = async sendObject => {
-    return await AXIOS_POST('/team/member/invite', sendObject);
+    return await AXIOS_POST('/team/member/invite/', sendObject);
   };
 
   return useMutation(handleInviteTeam, {

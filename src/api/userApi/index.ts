@@ -10,10 +10,13 @@ import { UpdateUserInfoType } from './types';
 export const useGetUserInfo = userInfoSettingValue => {
   const dispatch = useDispatch();
   const router = useRouter();
-  return useQuery(['getUserInfo'], () => AXIOS_GET('/user/info'), {
+  return useQuery(['getUserInfo'], () => AXIOS_GET('/user/info/'), {
     cacheTime: 0,
     // staleTime: 10000,
     enabled: userInfoSettingValue,
+    onError: e => {
+      console.log(123);
+    },
     onSuccess: data => {
       dispatch(setUserInfo(data.data));
       if (data.data.emailVerifiedYn === 'N') {
@@ -33,7 +36,7 @@ export const useUpdateUserInfo = () => {
   const router = useRouter();
   const handleUpdate = async (sendObject: UpdateUserInfoType) => {
     console.log(sendObject, '!');
-    return await AXIOS_PATCH('/user/update', sendObject);
+    return await AXIOS_PATCH('/user/update/', sendObject);
   };
 
   return useMutation(handleUpdate, {

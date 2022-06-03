@@ -6,18 +6,26 @@ import ProfileIcon from '../../atoms/ProfileIcon';
 import Icon from '../../atoms/Icon';
 import { profileColor } from '../../../common/util/commonVar';
 import { css } from '@emotion/react';
+import moment from 'moment';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 interface PropsType {
+  isLoading: boolean;
   listData: {
+    joinDate: string;
+    teamSeq: string;
     userId: string;
     userName: string;
-    joinDate: string;
-    authority: string;
+    authority?: string;
   }[];
 }
-const MemberList = ({ listData }: PropsType) => {
+
+const MemberList = ({ listData, isLoading }: PropsType) => {
   const getList = useCallback(() => {
-    if (listData === null || listData.length === 0) {
+    if (isLoading) {
+      return <ClipLoader />;
+    }
+    if (listData === null || listData === undefined) {
       return <div>팀원이 없습니다</div>;
     } else {
       return listData.map((el, index) => {
@@ -36,7 +44,7 @@ const MemberList = ({ listData }: PropsType) => {
             </FlexBox>
 
             <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>
-              <span css={heading5_regular}>{joinDate}</span>
+              <span css={heading5_regular}>{moment(joinDate).format('YYYY-MM-DD')}</span>
             </FlexBox>
 
             <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>
@@ -50,7 +58,7 @@ const MemberList = ({ listData }: PropsType) => {
         );
       });
     }
-  }, [listData]);
+  }, [listData, isLoading]);
 
   return (
     <FlexBox justify={'flex-start'} direction={'column'} align={'flex-start'} style={{ maxWidth: '800px', padding: '0px 40px 24px 40px' }}>

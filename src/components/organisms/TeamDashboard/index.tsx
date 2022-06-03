@@ -96,13 +96,12 @@ const DummyListData = [
 const TeamDashboard = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
   const router = useRouter();
 
   const [selectedValue, setSelectedValue] = useState('');
 
-  const { data } = useGetTeamList();
-
-  console.log(data, 'data');
+  const { data, error } = useGetTeamList();
 
   // useEffect(() => {
   // 최초로그인

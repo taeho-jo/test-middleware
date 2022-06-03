@@ -16,6 +16,7 @@ export interface TeamType {
   isFirstCreate: boolean;
   isInviteModal: boolean;
   teamList: TeamListType[] | null;
+  selectTeamList: TeamListType[] | null;
   selectTeamSeq: number | null;
 }
 
@@ -23,6 +24,7 @@ const initialState: TeamType = {
   isFirstCreate: false,
   isInviteModal: false,
   teamList: null,
+  selectTeamList: null,
   selectTeamSeq: null,
 };
 
@@ -30,6 +32,10 @@ export const teamSlice = createSlice({
   name: 'team',
   initialState,
   reducers: {
+    updateSelectTeamList: (state, action) => {
+      const selectedArr = state.teamList.filter(el => el.teamSeq === action.payload);
+      state.selectTeamList = selectedArr;
+    },
     updateTeamCreateModal: (state, action) => {
       state.isFirstCreate = action.payload;
     },
@@ -46,5 +52,5 @@ export const teamSlice = createSlice({
   },
 });
 
-export const { updateTeamInfo, updateTeamCreateModal, updateTeamSeq } = teamSlice.actions;
+export const { updateTeamInfo, updateTeamCreateModal, updateTeamSeq, updateSelectTeamList } = teamSlice.actions;
 export default teamSlice.reducer;

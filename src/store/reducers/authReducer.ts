@@ -3,12 +3,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface AuthType {
   accessToken: string;
   email: string;
+  isRefreshToken: boolean;
   // userInfo: {};
 }
 
 const initialState: AuthType = {
   accessToken: '',
   email: '',
+  isRefreshToken: false,
 };
 
 export const authSlice = createSlice({
@@ -24,11 +26,11 @@ export const authSlice = createSlice({
       console.log('RESET RESET');
       state.accessToken = '';
     },
-    test1: (state, action) => {
-      // console.log(action, 'asdfasdfasdfasdfasdfasdfasd');
+    updateIsRefreshTokenStatus: (state, action) => {
+      state.isRefreshToken = action.payload;
     },
   },
 });
 
-export const { setToken, resetToken, test1 } = authSlice.actions;
+export const { setToken, resetToken, updateIsRefreshTokenStatus } = authSlice.actions;
 export default authSlice.reducer;

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ChangePasswordType, LoginInputType, ResetPasswordType, SignupInputType } from './types';
 import { showToast } from '../../store/reducers/toastReducer';
 import { isShow } from '../../store/reducers/modalReducer';
-import { setToken } from '../../store/reducers/authReducer';
+import { setToken, updateIsRefreshTokenStatus } from '../../store/reducers/authReducer';
 import { useRouter } from 'next/router';
 import { setEmailConfirm, setSetting } from '../../store/reducers/userReducer';
 import { dispatch } from 'jest-circus/build/state';
@@ -23,7 +23,7 @@ export const useLoginApi = () => {
   const dispatch = useDispatch();
 
   const handleLogin = async (sendObject: LoginInputType) => {
-    return await AXIOS_POST('/login', sendObject);
+    return await AXIOS_POST('/login/', sendObject);
   };
 
   return useMutation(handleLogin, {
@@ -51,7 +51,7 @@ export const useSignupApi = refetch => {
   const isUserInfo = useSelector<ReducerType, boolean>(state => state.user.setting);
 
   const handleSignup = async (sendObject: SignupInputType) => {
-    return await AXIOS_POST('/register', sendObject);
+    return await AXIOS_POST('/register/', sendObject);
   };
 
   return useMutation(handleSignup, {
@@ -77,7 +77,7 @@ export const useConfirmEmailApi = refetch => {
   const dispatch = useDispatch();
 
   const handleConfirmEmail = async () => {
-    return await AXIOS_POST('/user/confirm', {});
+    return await AXIOS_POST('/user/confirm/', {});
   };
 
   return useMutation(handleConfirmEmail, {
@@ -97,7 +97,7 @@ export const useChangePasswordApi = () => {
   const router = useRouter();
   const handleChangePassword = async (sendObject: ChangePasswordType) => {
     console.log(sendObject);
-    return await AXIOS_PATCH('/user/password', sendObject);
+    return await AXIOS_PATCH('/user/password/', sendObject);
   };
 
   return useMutation(handleChangePassword, {
@@ -117,7 +117,7 @@ export const useResetPassword = () => {
   const dispatch = useDispatch();
 
   const handleResetPassword = async (sendObject: ResetPasswordType) => {
-    return await AXIOS_POST('/reset', sendObject);
+    return await AXIOS_POST('/reset/', sendObject);
   };
 
   return useMutation(handleResetPassword, {
@@ -139,7 +139,7 @@ export const useResendEmail = () => {
   const dispatch = useDispatch();
 
   const handleResendEmail = async sendObject => {
-    return await AXIOS_POST('/resend', sendObject);
+    return await AXIOS_POST('/resend/', sendObject);
   };
 
   return useMutation(handleResendEmail, {
@@ -155,13 +155,20 @@ export const useResendEmail = () => {
 };
 
 // 토큰 refresh API
-export const useTokenRefreshApi = () => {
+export const useRefreshTokenApi = isRefreshToken => {
   const dispatch = useDispatch();
-
-  return useQuery(['refreshToken'], () => AXIOS_GET('/refreshToken'), {
+  return useQuery(['refreshToken'], () => AXIOS_GET('/refreshToken/'), {
     cacheTime: 0,
+    enabled: isRefreshToken,
+    onError: e => {
+      dispatch(updateIsRefreshTokenStatus(false));
+    },
     onSuccess: data => {
-      console.log(data);
+      dispatch(updateIsRefreshTokenStatus(false));
+      const response = data.data;
+      console.log(response, '~~~~~~~~~~~~~~~~~');
+      localStorage.setItem('accessToken', response.token);
+      dispatch(setToken(response.token));
     },
   });
 };

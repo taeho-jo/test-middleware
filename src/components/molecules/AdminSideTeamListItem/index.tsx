@@ -29,6 +29,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
 
   const [focusItem, setFocusItem] = useState(null);
+  console.log(memberList, 'memberList');
 
   const handleChangeTeamName = useCallback(
     num => {
@@ -74,7 +75,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
           return (
             <Fragment key={index}>
               <ProfileIcon
-                name={item.userName.slice(0, 1)}
+                name={item.userName?.slice(0, 1)}
                 backgroundColor={profileColor[index]}
                 size={'20px'}
                 fontStyle={caption2_bold}

@@ -29,13 +29,10 @@ const Select = ({ options, selectProps, title, value, error = false, name, selec
 
   useEffect(() => {
     const element = document.getElementById(name);
-    console.log('element', element);
     if (element) {
       (element as HTMLInputElement).value = selected as string;
     }
   }, [selected]);
-
-  console.log(selected, 'SELE');
 
   return (
     <>
