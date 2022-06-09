@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import PageTitle from '../../atoms/PageTitle';
 import FlexBox from '../../atoms/FlexBox';
@@ -8,72 +8,10 @@ import IconTextButton from '../../atoms/Button/IconTextButton';
 import MemberList from '../../template/MemberList';
 import { css } from '@emotion/react';
 import { useTeamMemberListApi } from '../../../api/teamApi';
-
-interface IFormInput {
-  iceCreamType: { label: string; value: string };
-}
-const DummyData = [
-  {
-    userId: '#taeho.jo@dbdlab.io',
-    userName: '조태호',
-    joinDate: '#2022.05.31',
-    authority: '관리자',
-  },
-  {
-    userId: '#jotang@gmail.com',
-    userName: '누구?',
-    joinDate: '#2022.12.31',
-    authority: '멤버',
-  },
-  {
-    userId: '#jotang3726@gmail.com',
-    userName: 'Jotang',
-    joinDate: '#2022.10.31',
-    authority: '멤버',
-  },
-  {
-    userId: '#dbdlab@dbdlab.io',
-    userName: 'DBDLAB',
-    joinDate: '#2022.07.31',
-    authority: '멤버',
-  },
-  {
-    userId: '#test00001@gmail.com',
-    userName: 'tester',
-    joinDate: '#2022.08.31',
-    authority: '멤버',
-  },
-  {
-    userId: '#taeho.jo@dbdlab.io',
-    userName: '조태호',
-    joinDate: '#2022.05.31',
-    authority: '관리자',
-  },
-  {
-    userId: '#jotang@gmail.com',
-    userName: '누구?',
-    joinDate: '#2022.12.31',
-    authority: '멤버',
-  },
-  {
-    userId: '#jotang3726@gmail.com',
-    userName: 'Jotang',
-    joinDate: '#2022.10.31',
-    authority: '멤버',
-  },
-  {
-    userId: '#dbdlab@dbdlab.io',
-    userName: 'DBDLAB',
-    joinDate: '#2022.07.31',
-    authority: '멤버',
-  },
-  {
-    userId: '#test00001@gmail.com',
-    userName: 'tester',
-    joinDate: '#2022.08.31',
-    authority: '멤버',
-  },
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { isShow } from '../../../store/reducers/modalReducer';
+import { ReducerType } from '../../../store/reducers';
+import LayerPopup from '../../atoms/LayerPopup';
 
 const TeamMember = () => {
   const {
@@ -87,12 +25,19 @@ const TeamMember = () => {
   const onSubmit = data => submitData('success', data);
   const onError = errors => console.log('fail', errors);
 
-  const { data, isLoading, error } = useTeamMemberListApi();
-  console.log(data, 'adfads');
+  const [searchText, setSearchText] = useState<string>('');
 
-  const submitData = useCallback((status, data) => {
-    console.log(data);
-  }, []);
+  const dispatch = useDispatch();
+
+  const { data, isLoading, error } = useTeamMemberListApi();
+
+  const submitData = useCallback(
+    (status, data) => {
+      console.log(data);
+      setSearchText(data.search);
+    },
+    [searchText],
+  );
 
   return (
     <>
@@ -101,11 +46,17 @@ const TeamMember = () => {
         <Form width={'240px'} onSubmit={handleSubmit(onSubmit, onError)}>
           <SearchInput style={'240px'} placeholder={'팀원을 검색해주세요.'} register={register} label={'search'} errors={errors} />
         </Form>
-        <IconTextButton name={'ACTION_ADD_SMALL'} iconPosition={'left'} textStyle={'custom'} text={'팀원 초대하기'} />
+        <IconTextButton
+          onClick={() => dispatch(isShow({ isShow: true, type: 'teamMember' }))}
+          name={'ACTION_ADD_SMALL'}
+          iconPosition={'left'}
+          textStyle={'custom'}
+          text={'팀원 초대하기'}
+        />
       </FlexBox>
 
-      <div>
-        <MemberList isLoading={isLoading} listData={data?.data.list} />
+      <div css={{ position: 'relative' }}>
+        <MemberList isLoading={isLoading} listData={data?.data?.list} searchText={searchText} />
       </div>
     </>
   );

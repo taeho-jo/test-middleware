@@ -34,6 +34,7 @@ import MoreHorizon from '/public/assets/svg/more_horizon.svg';
 import { css } from '@emotion/react';
 
 interface PropsType {
+  forwardref?: any;
   name: any;
   size?: number;
   style?: any;
@@ -76,19 +77,21 @@ const IconTypes = {
   MORE_HORIZON: MoreHorizon,
 };
 
-const Icon = ({ name, size = 24, style, iconColor, onClick }: PropsType) => {
+const Icon = ({ name, size = 24, style, iconColor, onClick, forwardref }: PropsType) => {
   const IconComponent = IconTypes[name];
   const viewBox = `0 0 ${size} ${size}`;
 
   return (
-    <IconComponent
-      css={[iconStyle(iconColor), style]}
-      onClick={onClick}
-      style={{ boxSizing: 'border-box' }}
-      width={size}
-      height={size}
-      viewBox={viewBox}
-    />
+    <div ref={forwardref} onClick={onClick}>
+      <IconComponent
+        css={[iconStyle(iconColor), style]}
+        // onClick={onClick}
+        style={{ boxSizing: 'border-box' }}
+        width={size}
+        height={size}
+        viewBox={viewBox}
+      />
+    </div>
   );
 };
 

@@ -21,6 +21,8 @@ import ResearchList from '../ResearchList';
 import { ReducerType } from '../../../store/reducers';
 import { useRouter } from 'next/router';
 import { useGetTeamList } from '../../../api/teamApi';
+import { setSetting } from '../../../store/reducers/userReducer';
+import { useQueryClient } from 'react-query';
 
 const ResearchType = [
   {
@@ -69,13 +71,6 @@ const ResearchType = [
   },
 ];
 
-const selectBoxArr = [
-  { value: '옵션 A', label: '옵션 A' },
-  { value: '옵션 B', label: '옵션 B' },
-  { value: '옵션 C', label: '옵션 C' },
-  { value: '옵션 D', label: '옵션 D' },
-  { value: '옵션 E', label: '옵션 E' },
-];
 const DummyListData = [
   { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
   { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
@@ -95,47 +90,24 @@ const DummyListData = [
 
 const TeamDashboard = () => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
   const router = useRouter();
 
   const [selectedValue, setSelectedValue] = useState('');
 
-  const { data, error } = useGetTeamList();
-
-  // useEffect(() => {
-  // 최초로그인
-  // dispatch(isShow({ isShow: true, type: 'firstCreateTeam' }));
-
-  // 걍 로그인
-  //   dispatch(
-  //     updateTeamInfo([
-  //       {
-  //         teamName: 'DBDLAB의 팀',
-  //         memberList: ['A', 'K', 'P', 'A', 'K', 'P', 'A', 'K', 'P'],
-  //       },
-  //       {
-  //         teamName: 'DBDLAB의 팀2',
-  //         memberList: ['B', 'D', 'J'],
-  //       },
-  //       {
-  //         teamName: 'DBDLAB의 팀2',
-  //         memberList: ['Y', 'M', 'O'],
-  //       },
-  //     ]),
-  //   );
-  // }, []);
+  // 팀 리스트 API
+  const { data, error, isError } = useGetTeamList();
 
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));
   }, []);
 
-  // useEffect(() => {
-  //   if (userInfo.firstTimeYn === 'Y') {
-  //     router.push('/admin/profile');
-  //   }
-  // }, [userInfo]);
-
+  useEffect(() => {
+    dispatch(setSetting(true));
+    // queryClient.invalidateQueries(['getUserInfo']);
+  }, []);
   return (
     <>
       <div css={teamMainContainer}>

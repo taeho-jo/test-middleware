@@ -21,7 +21,7 @@ import IconTextButton from '../../atoms/Button/IconTextButton';
 // Styles
 import { body3_medium, caption1_regular } from '../../../styles/FontStyles';
 import { colors } from '../../../styles/Common.styles';
-// Types
+// Typesz
 // import { InputType } from '../AddInfoPopup';
 import { InputType } from '../../../common/types/commonTypes';
 import { ReducerType } from '../../../store/reducers';

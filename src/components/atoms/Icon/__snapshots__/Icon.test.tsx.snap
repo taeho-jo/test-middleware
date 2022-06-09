@@ -2,24 +2,28 @@
 
 exports[`ICON test Icon 1`] = `
 <div>
-  <span
-    class="css-hihpxz-iconStyle-Icon"
-    height="24"
-    style="box-sizing: border-box;"
-    viewbox="0 0 24 24"
-    width="24"
-  />
+  <div>
+    <span
+      class="css-hihpxz-iconStyle-Icon"
+      height="24"
+      style="box-sizing: border-box;"
+      viewbox="0 0 24 24"
+      width="24"
+    />
+  </div>
 </div>
 `;
 
 exports[`ICON test Icon 2`] = `
 <div>
-  <span
-    class="css-hihpxz-iconStyle-Icon"
-    height="22"
-    style="box-sizing: border-box;"
-    viewbox="0 0 22 22"
-    width="22"
-  />
+  <div>
+    <span
+      class="css-hihpxz-iconStyle-Icon"
+      height="22"
+      style="box-sizing: border-box;"
+      viewbox="0 0 22 22"
+      width="22"
+    />
+  </div>
 </div>
 `;

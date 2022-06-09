@@ -1,3 +1,38 @@
+export const groupTestData = [
+  { name: 'Group A', value: 400 },
+  { name: 'Group B', value: 300 },
+  { name: 'Group C', value: 300 },
+  { name: 'Group D', value: 200 },
+  { name: 'Group E', value: 400 },
+];
+export const genderTestData = [
+  { name: '남', value: 80 },
+  { name: '여', value: 20 },
+];
+export const ageTestData = [
+  { name: '20-24세', value: 20 },
+  { name: '25-29세', value: 60 },
+  { name: '30-34세', value: 100 },
+  { name: '35-39세', value: 120 },
+  { name: '40-44세', value: 80 },
+];
+
+export const successTestData = [
+  { name: '성공', value: 70 },
+  { name: '실패', value: 30 },
+];
+export const straightRateTestData = [
+  { name: '매우 낮음', value: 4.5 },
+  { name: '낮음', value: 2 },
+  { name: '높음', value: 3 },
+  { name: '매우 높음', value: 1.5 },
+];
+export const basicBarTestData = [{ name: 'bing', value: 0.5 }];
+export const stackedBarTestData = [{ name: 'bing', value: 0.2, value1: 0.1, value2: 0.3, value3: 0.2 }];
+export const tableBarChartTestData = ['다소 (0~15%)', '꽤나 (15~30%)', '많이 (31~45%)', '매우 (45%이상)'];
+export const tableBarChartTestData2 = ['0~20', '21~40', '41~60', '61~80', '81~100'];
+export const tableBarChartTestData3 = ['0~20', '21~40'];
+
 export const verticalData = [
   {
     name: '가나다라마바사 아자차카 타파하 ABCD EFG',

@@ -29,7 +29,6 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
 
   const [focusItem, setFocusItem] = useState(null);
-  console.log(memberList, 'memberList');
 
   const handleChangeTeamName = useCallback(
     num => {

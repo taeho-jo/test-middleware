@@ -33,3 +33,8 @@ export const colors = {
   black: '#282828',
   white: '#ffffff',
 } as const;
+
+export const chart_color = ['#68A0f4', '#a286d0', '#7CC08E', '#EDE06A', '#E3B268', '#E87490'];
+export const gery_chart_color = '#dcdcdc';
+export const negative_chart_color = '#E87490';
+export const positive_chart_color = '#7CC08E';

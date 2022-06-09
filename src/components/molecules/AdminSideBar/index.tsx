@@ -25,7 +25,7 @@ const AdminSideBar = () => {
   const sideTeamList = useCallback(() => {
     if (teamList !== null) {
       return teamList?.map((item, index) => {
-        return <AdminSideTeamListItem parentsIndex={index} key={index} teamName={item.teamName} memberList={item.memberList} />;
+        return <AdminSideTeamListItem parentsIndex={item.teamSeq} key={index} teamName={item.teamName} memberList={item.memberList} />;
       });
     }
   }, [teamList]);
@@ -38,7 +38,7 @@ const AdminSideBar = () => {
     <div css={adminSideBarStyle}>
       <FlexBox style={teamCreateAreaStyle} justify={'space-between'} align={'center'}>
         <span css={heading5_bold}>팀</span>
-        <Icon name={'ACTION_CREATE'} size={24} style={{ cursor: 'pointer' }} />
+        <Icon onClick={() => dispatch(isShow({ isShow: true, type: 'createTeam' }))} name={'ACTION_CREATE'} size={24} style={{ cursor: 'pointer' }} />
       </FlexBox>
       {sideTeamList()}
       <FlexBox justify={'center'} style={{ marginTop: '24px' }}>

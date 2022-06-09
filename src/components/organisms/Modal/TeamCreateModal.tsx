@@ -18,10 +18,13 @@ import { colors } from '../../../styles/Common.styles';
 import { body3_medium } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../../../common/types/commonTypes';
-import { isShow } from '../../../store/reducers/modalReducer';
 import { ReducerType } from '../../../store/reducers';
 import { useCreateTeamApi } from '../../../api/teamApi';
-const TeamCreateModal = () => {
+import { isShow } from '../../../store/reducers/modalReducer';
+interface PropsType {
+  first?: boolean;
+}
+const TeamCreateModal = ({ first = false }: PropsType) => {
   const dispatch = useDispatch();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   // hook form
@@ -57,9 +60,9 @@ const TeamCreateModal = () => {
 
   return (
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
-      <PopupBox style={{ position: 'absolute', top: '96px', left: '264px' }} padding={'0px'} width={'392px'} height={'auto'}>
-        <ModalTitle title={'반가워요!'} closed={false} />
-        <ModalSubTitle subTitle={[`${userInfo.userName} 님의 팀 이름을 입력해주세요`]} />
+      <PopupBox style={{ position: 'absolute', top: '96px', left: first ? '264px' : '40%' }} padding={'0px'} width={'392px'} height={'auto'}>
+        <ModalTitle title={'반가워요!'} closed={!first} />
+        <ModalSubTitle subTitle={[`${first ? userInfo.userName : '새로 만드실'} 님의 팀 이름을 입력해주세요`]} />
 
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
           <Input
@@ -75,14 +78,16 @@ const TeamCreateModal = () => {
             }}
           />
 
-          <AnnouncementBox
-            content={
-              <div>
-                별도로 팀 이름을 입력하지 않을 경우, <br />
-                회원님의 닉네임으로 팀이 생성돼요.
-              </div>
-            }
-          />
+          {first ? (
+            <AnnouncementBox
+              content={
+                <div>
+                  별도로 팀 이름을 입력하지 않을 경우, <br />
+                  회원님의 닉네임으로 팀이 생성돼요.
+                </div>
+              }
+            />
+          ) : null}
 
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
             <BasicButton theme={'dark'} type={'submit'} text={'적용하기'} />
@@ -94,7 +99,11 @@ const TeamCreateModal = () => {
           justify={'center'}
           align={'center'}
         >
-          <TextButton onClick={handleClickSkip} textStyle={body3_medium} text={'다음에 할게요.'} />
+          <TextButton
+            onClick={first ? handleClickSkip : () => dispatch(isShow({ isShow: false, type: '' }))}
+            textStyle={body3_medium}
+            text={'다음에 할게요.'}
+          />
         </FlexBox>
       </PopupBox>
     </FlexBox>
