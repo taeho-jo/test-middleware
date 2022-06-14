@@ -8,4 +8,19 @@ import StackedBarChart from './BarChart/StackedBarChart';
 import TableBarChart from './BarChart/TableBarChart';
 import UsabilityTableChart from './BarChart/UsabilityTableChart';
 import BasicHorizontalBarChart from './BarChart/BasicHorizontalBarChart';
-export { BasicPieChart, RatePieChart, StraightPieChart, BasicBarChart, StackedBarChart, TableBarChart, UsabilityTableChart, BasicHorizontalBarChart };
+import HistogramBarChart from './BarChart/HistogramBarChart';
+// Line
+import BasicLineChart from './LineChart/BasicLineChart';
+
+export {
+  BasicPieChart,
+  RatePieChart,
+  StraightPieChart,
+  BasicBarChart,
+  StackedBarChart,
+  TableBarChart,
+  UsabilityTableChart,
+  BasicHorizontalBarChart,
+  HistogramBarChart,
+  BasicLineChart,
+};

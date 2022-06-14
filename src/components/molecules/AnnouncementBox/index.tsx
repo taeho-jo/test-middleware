@@ -8,11 +8,12 @@ interface PropsType {
   content: any;
   style?: any;
   icon?: string;
+  color?: string;
 }
 
-const AnnouncementBox = ({ style, content, icon = 'ALERT_NORMAL' }: PropsType) => {
+const AnnouncementBox = ({ style, content, icon = 'ALERT_NORMAL', color = colors.grey._99 }: PropsType) => {
   return (
-    <div css={[caption1_regular, notificationBox, style]}>
+    <div css={[caption1_regular, notificationBox(color), style]}>
       <Icon name={icon} size={24} iconColor={colors.grey._cc} style={{ marginRight: '8px' }} />
       {content}
     </div>
@@ -21,9 +22,9 @@ const AnnouncementBox = ({ style, content, icon = 'ALERT_NORMAL' }: PropsType) =
 
 export default AnnouncementBox;
 
-const notificationBox = css`
+const notificationBox = color => css`
   background: ${colors.grey._f7};
-  color: ${colors.grey._99};
+  color: ${color};
   border-radius: 8px;
   height: auto;
   display: flex;

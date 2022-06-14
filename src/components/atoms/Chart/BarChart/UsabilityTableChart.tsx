@@ -4,7 +4,7 @@ import { BasicBarChart } from '../index';
 import { basicBarTestData } from '../../../../assets/dummy/dummyData';
 import { css } from '@emotion/react';
 interface PropsType {
-  dataList: string[];
+  dataList: { name: string; value: number; fatality: number; mention: number }[];
   negative?: boolean;
 }
 const UsabilityTableChart = ({ dataList, negative = false }: PropsType) => {
@@ -12,19 +12,34 @@ const UsabilityTableChart = ({ dataList, negative = false }: PropsType) => {
     <div css={containerStyle}>
       <ul css={ulStyle}>
         <li css={[caption2_regular, liStyle, liWidthStyle]}>사용성 점수</li>
-        <li css={[caption2_regular, liStyle, { width: '120px' }]}>치명도</li>
-        <li css={[caption2_regular, liStyle, { width: '120px' }]}>언급 비율</li>
+        <li css={[caption2_regular, liStyle, { width: '110px' }]}>치명도</li>
+        <li css={[caption2_regular, liStyle, { width: '110px' }]}>언급 비율</li>
       </ul>
-      <ul css={[ulStyle, emptyUlStyle]}>
-        <li css={[caption2_regular, liStyle, emptyLiStyle, liWidthStyle]}>
-          <span>사용성 점수</span>
-        </li>
-        <li css={[caption2_regular, liStyle, emptyLiStyle, { width: '120px' }]}>4.35</li>
-        <li css={[caption2_regular, liStyle, emptyLiStyle, { borderRight: 'none', width: '120px' }]}>4.35</li>
-        <div css={chartBox}>
-          <BasicBarChart negative={negative} dataList={basicBarTestData} label={[<>기능 A</>]} rate={'49.5%'} />
-        </div>
-      </ul>
+
+      {dataList.map((el, index) => {
+        return (
+          <ul css={[ulStyle, emptyUlStyle]}>
+            <li css={[caption2_regular, liStyle, emptyLiStyle, liWidthStyle]}>
+              <span>사용성 점수</span>
+            </li>
+            <li css={[caption2_regular, liStyle, emptyLiStyle, { width: '110px' }]}>{el.fatality}</li>
+            <li css={[caption2_regular, liStyle, emptyLiStyle, { borderRight: 'none', width: '110px' }]}>{el.mention}%</li>
+            <div css={chartBox}>
+              <BasicBarChart negative={negative} dataList={[el]} label={[<>{el.name}</>]} rate={`${el.value}%`} />
+            </div>
+          </ul>
+        );
+      })}
+      {/*<ul css={[ulStyle, emptyUlStyle]}>*/}
+      {/*  <li css={[caption2_regular, liStyle, emptyLiStyle, liWidthStyle]}>*/}
+      {/*    <span>사용성 점수</span>*/}
+      {/*  </li>*/}
+      {/*  <li css={[caption2_regular, liStyle, emptyLiStyle, { width: '110px' }]}>4.35</li>*/}
+      {/*  <li css={[caption2_regular, liStyle, emptyLiStyle, { borderRight: 'none', width: '110px' }]}>4.35</li>*/}
+      {/*  <div css={chartBox}>*/}
+      {/*    <BasicBarChart negative={negative} dataList={basicBarTestData} label={[<>기능 A</>]} rate={'49.5%'} />*/}
+      {/*  </div>*/}
+      {/*</ul>*/}
     </div>
   );
 };

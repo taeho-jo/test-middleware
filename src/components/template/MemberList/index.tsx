@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import FlexBox from '../../atoms/FlexBox';
 import { colors } from '../../../styles/Common.styles';
 import { heading5_bold, heading5_regular } from '../../../styles/FontStyles';
@@ -8,7 +8,6 @@ import { profileColor } from '../../../common/util/commonVar';
 import { css } from '@emotion/react';
 import moment from 'moment';
 import ClipLoader from 'react-spinners/ClipLoader';
-import LayerPopup from '../../atoms/LayerPopup';
 
 interface PropsType {
   isLoading: boolean;
@@ -23,15 +22,10 @@ interface PropsType {
 }
 
 const MemberList = ({ listData, isLoading, searchText }: PropsType) => {
-  const [focusProfile, setFocusProfile] = useState<boolean>(false);
-  const [focustIndex, setFocusIndex] = useState<number | null>(null);
-
   const cellsRef = useRef([]);
   const cellRef = useRef(null);
 
   const test = index => {
-    console.log(index);
-    console.log(cellsRef, '@@@@@@@@@');
     // setSelected(index + 1);
     // cellRef.current = cellsRef.current[index];
     // const option = {

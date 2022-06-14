@@ -1,112 +1,85 @@
 import React from 'react';
 import withTokenAuth from '../../../hoc/withTokenAuth';
-import {
-  BasicBarChart,
-  BasicPieChart,
-  RatePieChart,
-  StraightPieChart,
-  StackedBarChart,
-  TableBarChart,
-  UsabilityTableChart,
-  BasicHorizontalBarChart,
-} from '../../../components/atoms/Chart';
 import { css } from '@emotion/react';
-import FlexBox from '../../../components/atoms/FlexBox';
 import {
-  ageTestData,
-  basicBarTestData,
-  genderTestData,
-  groupTestData,
-  stackedBarTestData,
-  straightRateTestData,
-  successTestData,
-  tableBarChartTestData,
-  tableBarChartTestData2,
-  tableBarChartTestData3,
-} from '../../../assets/dummy/dummyData';
+  AddOnFeature,
+  FeatureSpecificDetailTemplate,
+  GeneralScaleTypeTemplate,
+  NpsTemplate,
+  PriceEvaluationTemplate,
+  RespondentAttributesTemplate,
+  ServiceOverallUsabilityTemplate,
+  TroublesShootingTemplate,
+  UiOverallSummaryTemplate,
+  UsabilityByFeatureTemplate,
+} from '../../../components/molecules/ReportTemplate';
+import { colors } from '../../../styles/Common.styles';
+import BrandEvaluationTemplate from '../../../components/molecules/ReportTemplate/BrandEvaluationTemplate';
 
 const Report = () => {
   return (
-    <div css={{ overflow: 'scroll', height: 'calc(100vh - 72px)' }}>
-      <FlexBox align={'flex-start'} style={{ width: 'calc(100vw - 296px)', padding: '16px' }}>
-        <BasicHorizontalBarChart />
-      </FlexBox>
-      <FlexBox align={'flex-start'} style={{ width: 'calc(100vw - 296px)', padding: '16px' }}>
-        <UsabilityTableChart dataList={tableBarChartTestData} />
-      </FlexBox>
-      <FlexBox align={'flex-start'} style={{ width: 'calc(100vw - 296px)', padding: '16px' }}>
-        <TableBarChart dataList={tableBarChartTestData} />
-      </FlexBox>
-      <FlexBox align={'flex-start'} style={{ width: 'calc(100vw - 296px)', padding: '16px' }}>
-        <TableBarChart dataList={tableBarChartTestData2} negative={true} />
-      </FlexBox>
+    <div css={originTestBox}>
+      <div css={testBox}>
+        {/* 응답자 특성 템플릿 */}
+        <RespondentAttributesTemplate />
+        <div css={sortationArea} />
 
-      <FlexBox align={'flex-start'} style={{ width: 'calc(100vw - 296px)', padding: '16px' }}>
-        <BasicBarChart
-          dataList={basicBarTestData}
-          label={[
-            <>
-              미션 1 <strong>회원가입하기</strong>
-            </>,
-          ]}
-          rate={'49.5%'}
-        />
-      </FlexBox>
-      <FlexBox align={'flex-start'} style={{ width: 'calc(100vw - 296px)', padding: '16px' }}>
-        <BasicBarChart
-          dataList={basicBarTestData}
-          label={[
-            <>
-              미션 1 <strong>회원가입하기</strong>
-            </>,
-          ]}
-          rate={'49.5%'}
-          negative={true}
-        />
-      </FlexBox>
+        {/* UI 진단 전체 요약 */}
+        <UiOverallSummaryTemplate />
+        <div css={sortationArea} />
 
-      <FlexBox align={'flex-start'} style={{ width: 'calc(100vw - 296px)', padding: '16px' }}>
-        <StackedBarChart
-          dataList={stackedBarTestData}
-          label={[
-            <>
-              미션 1 <strong>회원가입하기</strong>
-            </>,
-          ]}
-          rate={'49.5%'}
-        />
-      </FlexBox>
-      <FlexBox align={'flex-start'} style={{ width: 'calc(100vw - 296px)', padding: '16px' }}>
-        <StackedBarChart
-          dataList={stackedBarTestData}
-          label={[
-            <>
-              미션 1 <strong>회원가입하기</strong>
-            </>,
-          ]}
-          rate={'49.5%'}
-          negative={true}
-        />
-      </FlexBox>
+        {/* 기능별 사용성 비교 */}
+        <UsabilityByFeatureTemplate />
+        <div css={sortationArea} />
 
-      <FlexBox align={'flex-start'}>
-        <BasicPieChart dataList={groupTestData} />
-        <BasicPieChart dataList={genderTestData} />
-        <BasicPieChart dataList={ageTestData} />
-      </FlexBox>
-      <FlexBox align={'flex-start'}>
-        <RatePieChart dataList={successTestData} />
-      </FlexBox>
-      <FlexBox align={'flex-start'}>
-        <StraightPieChart dataList={straightRateTestData} />
-        <StraightPieChart dataList={straightRateTestData} rate={true} />
-      </FlexBox>
+        {/* 기능별 상세 내용 */}
+        <FeatureSpecificDetailTemplate />
+        <div css={sortationArea} />
+
+        {/* 서비스 전체 사용성 평가*/}
+        <ServiceOverallUsabilityTemplate />
+        <div css={sortationArea} />
+
+        {/* 순 추천 고객 지수(NPS) */}
+        <NpsTemplate />
+        <div css={sortationArea} />
+
+        {/*일반 척도형 그래프*/}
+        <GeneralScaleTypeTemplate />
+        <div css={sortationArea} />
+
+        {/*적정 가격 평가*/}
+        <PriceEvaluationTemplate />
+        <div css={sortationArea} />
+
+        {/*브랜드 평가*/}
+        <BrandEvaluationTemplate />
+        <div css={sortationArea} />
+
+        {/*문제 해결(동기 부여)*/}
+        <TroublesShootingTemplate />
+        <div css={sortationArea} />
+
+        {/*추가 기능 언급*/}
+        <AddOnFeature />
+        <div css={sortationArea} />
+      </div>
     </div>
   );
 };
 
 export default withTokenAuth(Report, false);
-
-const pieChartBox = css`
-  width: 220px;
+const originTestBox = css`
+  height: calc(100vh - 72px);
+  overflow: scroll;
+  position: relative;
+`;
+const testBox = css`
+  //position: sticky;
+  //top: 0;
+`;
+const sortationArea = css`
+  width: 100%;
+  height: 16px;
+  background: #dcdcdc;
 `;

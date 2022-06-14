@@ -8,11 +8,12 @@ interface PropsType {
   testTitle: string;
   testDate: string;
   img: string | null;
+  onClick?: (id) => void;
 }
 
-const ListReport = ({ testType, testTitle, testDate, img }: PropsType) => {
+const ListReport = ({ testType, testTitle, testDate, img, onClick }: PropsType) => {
   return (
-    <div css={mainContainer(img)}>
+    <div css={mainContainer(img)} onClick={() => onClick(12)}>
       <span css={[caption1_regular, blockStyle]}>{testType}</span>
       <span css={[heading5_bold, titleStyle]}>{testTitle}</span>
       <span css={[caption1_regular, dateStyle]}>{testDate}</span>
@@ -55,4 +56,5 @@ const mainContainer = img => css`
   background-size: contain;
   margin-bottom: 20px;
   margin-right: 16px;
+  cursor: pointer;
 `;

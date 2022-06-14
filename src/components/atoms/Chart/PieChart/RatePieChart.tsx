@@ -7,9 +7,10 @@ import { gery_chart_color, positive_chart_color } from '../../../../styles/Commo
 
 interface PropsType {
   dataList: { name: string; value: number }[];
+  color?: string;
 }
 
-const RatePieChart = ({ dataList }: PropsType) => {
+const RatePieChart = ({ dataList, color = '#7CC08E' }: PropsType) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const renderActiveShape = useCallback(props => {
@@ -50,7 +51,7 @@ const RatePieChart = ({ dataList }: PropsType) => {
               dataKey="value"
             >
               {dataList.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={index === 0 ? positive_chart_color : gery_chart_color} />
+                <Cell key={`cell-${index}`} fill={index === 0 ? color : gery_chart_color} />
               ))}
             </Pie>
           </PieChart>
@@ -61,7 +62,7 @@ const RatePieChart = ({ dataList }: PropsType) => {
         {dataList.map((el, index) => {
           return (
             <FlexBox key={index} align={'center'} justify={'center'} style={{ width: '50%', marginBottom: '10px' }}>
-              <div css={labelStyle(index === 0 ? positive_chart_color : gery_chart_color)} />
+              <div css={labelStyle(index === 0 ? color : gery_chart_color)} />
               <span css={heading5_regular}>{el.name}</span>
             </FlexBox>
           );

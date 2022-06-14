@@ -7,9 +7,10 @@ import { chart_color } from '../../../../styles/Common.styles';
 
 interface PropsType {
   dataList: { name: string; value: number }[];
+  labelPadding?: string;
 }
 
-const BasicPieChart = ({ dataList }: PropsType) => {
+const BasicPieChart = ({ dataList, labelPadding }: PropsType) => {
   return (
     <div css={pieChartBox}>
       <div css={{ padding: '32px 62px 32px 62px' }}>
@@ -24,7 +25,7 @@ const BasicPieChart = ({ dataList }: PropsType) => {
         </ResponsiveContainer>
       </div>
 
-      <FlexBox justify={'space-between'} wrap={'wrap'} style={{ width: '100%', padding: '24px' }}>
+      <FlexBox justify={'space-between'} wrap={'wrap'} style={{ width: '100%', padding: labelPadding ? labelPadding : '24px' }}>
         {dataList.map((el, index) => {
           return (
             <FlexBox key={index} align={'center'} justify={'center'} style={{ width: '50%', marginBottom: '10px' }}>

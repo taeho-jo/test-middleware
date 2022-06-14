@@ -5,6 +5,10 @@ export const groupTestData = [
   { name: 'Group D', value: 200 },
   { name: 'Group E', value: 400 },
 ];
+export const buyTestData = [
+  { name: '구매의향 있음', value: 80 },
+  { name: '구매의향 없음', value: 20 },
+];
 export const genderTestData = [
   { name: '남', value: 80 },
   { name: '여', value: 20 },
@@ -27,11 +31,89 @@ export const straightRateTestData = [
   { name: '높음', value: 3 },
   { name: '매우 높음', value: 1.5 },
 ];
-export const basicBarTestData = [{ name: 'bing', value: 0.5 }];
+export const basicBarTestData = [{ name: 'bing', value: 80 }];
+export const basicBarTestData3 = [{ name: '0', value: 75, data: 75 }];
 export const stackedBarTestData = [{ name: 'bing', value: 0.2, value1: 0.1, value2: 0.3, value3: 0.2 }];
+export const tableBarChartBrandData = ['상위 33% 이내 브랜드', '상위 9% 이내 브랜드', '상위 5% 이내 브랜드'];
+export const brandBarChartData = [
+  { name: '의뢰기업', value: 94, fatality: 4.3 },
+  { name: '경쟁사 A', value: 38.8, fatality: 2.3 },
+  { name: '경쟁사 B', value: 50, fatality: 5.3 },
+];
+
 export const tableBarChartTestData = ['다소 (0~15%)', '꽤나 (15~30%)', '많이 (31~45%)', '매우 (45%이상)'];
+export const tableBarTestData = [
+  { name: '기능 1', value: 94, fatality: 4.3 },
+  { name: '기능 2', value: 38.8, fatality: 2.3 },
+  { name: '기능 3', value: 50, fatality: 5.3 },
+];
+export const featureSpecificDetailData = [{ name: '기능 3', value: 50, fatality: 5.3 }];
+
+export const featureUseData = [
+  { name: '유저가 에러를 인지/판단/복구하도록 돕기', value: 46, fatality: 4.35, mention: 43.5 },
+  { name: '유저의 선택권 및 자유도', value: 18, fatality: 2.3, mention: 23 },
+  { name: '시스템과 살제 세상의 매칭', value: 58, fatality: 5.3, mention: 53 },
+];
+export const featureUseData3 = [{ name: '유저가 에러를 인지/판단/복구하도록 돕기', value: 46, fatality: 4.35, mention: 43.5 }];
+
+export const featureUseData2 = [
+  { name: '유저가 에러를 인지/판단/복구하도록 돕기', value: 46, fatality: 4.35, mention: 43.5 },
+  { name: '유저의 선택권 및 자유도', value: 18, fatality: 2.3, mention: 23 },
+  { name: '시스템과 살제 세상의 매칭', value: 58, fatality: 5.3, mention: 53 },
+  { name: '유저가 에러를 인지/판단/복구하도록 돕기', value: 46, fatality: 4.35, mention: 43.5 },
+  { name: '유저의 선택권 및 자유도', value: 18, fatality: 2.3, mention: 23 },
+  { name: '시스템과 살제 세상의 매칭', value: 58, fatality: 5.3, mention: 53 },
+  { name: '유저가 에러를 인지/판단/복구하도록 돕기', value: 46, fatality: 4.35, mention: 43.5 },
+  { name: '유저의 선택권 및 자유도', value: 18, fatality: 2.3, mention: 23 },
+  { name: '시스템과 살제 세상의 매칭', value: 58, fatality: 5.3, mention: 53 },
+  { name: '유저가 에러를 인지/판단/복구하도록 돕기', value: 46, fatality: 4.35, mention: 43.5 },
+  { name: '유저의 선택권 및 자유도', value: 18, fatality: 2.3, mention: 23 },
+  { name: '시스템과 살제 세상의 매칭', value: 58, fatality: 5.3, mention: 53 },
+  { name: '유저가 에러를 인지/판단/복구하도록 돕기', value: 46, fatality: 4.35, mention: 43.5 },
+  { name: '유저의 선택권 및 자유도', value: 18, fatality: 2.3, mention: 23 },
+  { name: '시스템과 살제 세상의 매칭', value: 58, fatality: 5.3, mention: 53 },
+];
+
 export const tableBarChartTestData2 = ['0~20', '21~40', '41~60', '61~80', '81~100'];
 export const tableBarChartTestData3 = ['0~20', '21~40'];
+export const histogramBarTestData = [
+  { name: '0', value: 20, data: 81 },
+  {
+    name: '10000',
+    value: 40,
+    data: 31,
+  },
+  {
+    name: '20000',
+    value: 60,
+    data: 21,
+  },
+  {
+    name: '30000',
+    value: 90,
+    data: 79,
+  },
+  {
+    name: '40000',
+    value: 70,
+    data: 90,
+  },
+  {
+    name: '50000',
+    value: 30,
+    data: 40,
+  },
+  {
+    name: '60000',
+    value: 0,
+    data: 0,
+  },
+  // {
+  //   name: '80000',
+  //   value: 0,
+  //   data: 0,
+  // },
+];
 
 export const verticalData = [
   {
