@@ -13,14 +13,18 @@ import icon1 from '../../../../public/assets/images/admin/team/uitest_hover.png'
 import icon2 from '../../../../public/assets/images/admin/team/scenario_hover.png';
 import icon3 from '../../../../public/assets/images/admin/team/uxposition_hover.png';
 import icon4 from '../../../../public/assets/images/admin/team/customer_hover.png';
-import backgroundImg1 from '../../../../public/assets/images/admin/reportList/uiTestReport.png';
-import { updateTeamInfo } from '../../../store/reducers/teamReducer';
+import uiBackground from '/public/assets/png/image_thumbnail_uitest.png';
+import customerBackground from '/public/assets/png/image_thumbnail_customer.png';
+import scenarioBackground from '/public/assets/png/image_thumbnail_scenario.png';
+import uxBackground from '/public/assets/png/image_thumbnail_uxposition.png';
 import ResearchModuleButton from '../../atoms/ResearchModuleButton';
 import { isShow } from '../../../store/reducers/modalReducer';
 import ResearchList from '../ResearchList';
 import { ReducerType } from '../../../store/reducers';
 import { useRouter } from 'next/router';
 import { useGetTeamList } from '../../../api/teamApi';
+import { setSetting } from '../../../store/reducers/userReducer';
+import { useQueryClient } from 'react-query';
 
 const ResearchType = [
   {
@@ -69,73 +73,37 @@ const ResearchType = [
   },
 ];
 
-const selectBoxArr = [
-  { value: '옵션 A', label: '옵션 A' },
-  { value: '옵션 B', label: '옵션 B' },
-  { value: '옵션 C', label: '옵션 C' },
-  { value: '옵션 D', label: '옵션 D' },
-  { value: '옵션 E', label: '옵션 E' },
-];
 const DummyListData = [
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: backgroundImg1.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: uiBackground.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
+  { img: customerBackground.src, testTitle: '우쥬테스트 잠재 고객 조사', testType: '잠재 고객 조사', testDate: '2022. 03. 15' },
+  { img: scenarioBackground.src, testTitle: '우쥬테스트 시나리오 검증', testType: '시나리오 검증', testDate: '2022. 03. 15' },
+  { img: uxBackground.src, testTitle: '우쥬테스트 UX 포지션 분석', testType: 'UX 포지션 분석', testDate: '2022. 03. 15' },
 ];
 
 const TeamDashboard = () => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
   const router = useRouter();
 
   const [selectedValue, setSelectedValue] = useState('');
 
-  const { data, error } = useGetTeamList();
-
-  // useEffect(() => {
-  // 최초로그인
-  // dispatch(isShow({ isShow: true, type: 'firstCreateTeam' }));
-
-  // 걍 로그인
-  //   dispatch(
-  //     updateTeamInfo([
-  //       {
-  //         teamName: 'DBDLAB의 팀',
-  //         memberList: ['A', 'K', 'P', 'A', 'K', 'P', 'A', 'K', 'P'],
-  //       },
-  //       {
-  //         teamName: 'DBDLAB의 팀2',
-  //         memberList: ['B', 'D', 'J'],
-  //       },
-  //       {
-  //         teamName: 'DBDLAB의 팀2',
-  //         memberList: ['Y', 'M', 'O'],
-  //       },
-  //     ]),
-  //   );
-  // }, []);
+  // 팀 리스트 API
+  const { data, error, isError } = useGetTeamList();
 
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));
   }, []);
 
-  // useEffect(() => {
-  //   if (userInfo.firstTimeYn === 'Y') {
-  //     router.push('/admin/profile');
-  //   }
-  // }, [userInfo]);
+  const handleMoveDetail = useCallback(id => {
+    router.push(`/admin/report/${id}`);
+  }, []);
 
+  useEffect(() => {
+    dispatch(setSetting(true));
+    // queryClient.invalidateQueries(['getUserInfo']);
+  }, []);
   return (
     <>
       <div css={teamMainContainer}>
@@ -162,7 +130,9 @@ const TeamDashboard = () => {
         </FlexBox>
         <FlexBox style={{ padding: '24px 32px 32px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
           <span css={[body2_bold, titleStyle]}>모든 리서치</span>
-          <ResearchList listData={DummyListData} />
+          {/*<div css={{ height: '620px', background: 'pink', overflow: 'scroll' }}>*/}
+          <ResearchList handleMoveDetail={handleMoveDetail} listData={DummyListData} />
+          {/*</div>*/}
         </FlexBox>
       </div>
     </>
@@ -171,7 +141,10 @@ const TeamDashboard = () => {
 
 export default TeamDashboard;
 
-const teamMainContainer = css``;
+const teamMainContainer = css`
+  overflow: scroll;
+  height: calc(100vh - 95px);
+`;
 
 const researchKinds = css`
   background-color: ${colors.grey._ec};

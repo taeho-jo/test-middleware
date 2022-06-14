@@ -19,10 +19,14 @@ import TextArea from '../../atoms/TextArea';
 import { emailRex } from '../../../common/regex';
 import { useInviteTeamMemberEmailApi } from '../../../api/teamApi';
 import { ReducerType } from '../../../store/reducers';
-import { INVITE_EMAIL_TEMPLATE } from '../../../common/util/commonVar';
+import { CURRENT_DOMAIN, INVITE_EMAIL_TEMPLATE } from '../../../common/util/commonVar';
 
-const InviteTeamMemberModal = () => {
+interface PropsType {
+  first?: boolean;
+}
+const InviteTeamMemberModal = ({ first = false }: PropsType) => {
   const dispatch = useDispatch();
+  const selectTeam = useSelector<ReducerType, any>(state => state.team.selectTeamList);
   const selectTeamSeq = useSelector<ReducerType, number | null>(state => state.team.selectTeamSeq);
   // hook form
   const {
@@ -73,17 +77,17 @@ const InviteTeamMemberModal = () => {
 
   return (
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
-      <PopupBox style={{ position: 'absolute', top: '96px', left: '264px' }} padding={'0px'} width={'392px'} height={'auto'}>
+      <PopupBox style={{ position: 'absolute', top: '96px', left: first ? '264px' : '40%' }} padding={'0px'} width={'392px'} height={'auto'}>
         <ModalTitle title={'팀원 초대하기'} />
         <ModalSubTitle subTitle={['링크 또는 이메일로 팀원을 초대하세요!']} />
 
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
           <Input
-            onClick={() => handleCopyClipBoard('가나다라')}
+            onClick={() => handleCopyClipBoard(`${CURRENT_DOMAIN}/admin/welcome?teamseq=${selectTeam[0]?.teamSeq}`)}
             title={'링크 복사'}
             register={register}
             label={'link'}
-            defaultValue={'https://www.diby.io/team/ganada...'}
+            defaultValue={`${CURRENT_DOMAIN}/admin/welcome?teamseq=${selectTeam[0]?.teamSeq}`}
             errors={errors}
             readOnly={true}
             style={{ marginBottom: '16px' }}

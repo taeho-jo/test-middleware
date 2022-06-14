@@ -7,6 +7,7 @@ import { updateSelectTeamList, updateTeamInfo } from '../../store/reducers/teamR
 import { ReducerType } from '../../store/reducers';
 import { showToast } from '../../store/reducers/toastReducer';
 import { setToken, updateIsRefreshTokenStatus } from '../../store/reducers/authReducer';
+import { useRefreshTokenApi } from '../authApi';
 
 // test refreshToken
 // export const useRefreshToken = (updateIsRefreshTokenStatus) => {
@@ -30,9 +31,10 @@ export const useGetTeamList = () => {
 
   return useQuery(['getTeamList'], () => AXIOS_GET('/team/'), {
     cacheTime: 0,
-    onError: error => {
+    onError: (error: any) => {
       const errorData: any = error.response.data;
       const { code, message } = errorData;
+      console.log(error.response, 'ERROR');
       if (code === 'E0008') {
         console.log('이거 리플레쉬 토큰 실행됌??');
         dispatch(updateIsRefreshTokenStatus(true));
@@ -56,7 +58,6 @@ export const useGetTeamList = () => {
             }),
           [],
         );
-        console.log(newTeamArr, 'new Team');
 
         // dispatch(updateIsRefreshTokenStatus(true));
         dispatch(updateTeamInfo(newTeamArr));
@@ -90,7 +91,7 @@ export const useCreateTeamApi = () => {
 
 // 팀원 리스트 API
 export const useTeamMemberListApi = () => {
-  const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
+  const teamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
   const teamSeq = teamList ? teamList[0].teamSeq : '';
   return useQuery(['getTeamMemberList'], () => AXIOS_GET(`/team/${teamSeq}/member/`), {
     cacheTime: 0,
@@ -108,9 +109,13 @@ export const useInviteTeamMemberEmailApi = () => {
   };
 
   return useMutation(handleInviteTeam, {
-    onError: e => {
+    onError: (e: any) => {
       console.log(e);
       dispatch(showToast({ message: '팀원 초대에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
+      // if (e.response.data.code === 'E0008') {
+      //   const { data } = useRefreshTokenApi(true);
+      //   console.log(data);
+      // }
     },
   });
 };

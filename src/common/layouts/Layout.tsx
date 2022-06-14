@@ -17,8 +17,12 @@ import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // API
 import { useConfirmEmailApi, useRefreshTokenApi } from '../../api/authApi';
 import { useGetUserInfo } from '../../api/userApi';
-import { setEmailConfirm, setSetting } from '../../store/reducers/userReducer';
+import { setEmailConfirm, setSetting, UserInfoType } from '../../store/reducers/userReducer';
 import { isShow } from '../../store/reducers/modalReducer';
+import { QueryCache, QueryClient } from 'react-query';
+import ReportHeader from '../../components/molecules/ReportHeader';
+import ReportSideBar from '../../components/molecules/ReportSideBar';
+import ReportLayout from './ReportLayout';
 
 // Types
 interface PropsType {
@@ -32,7 +36,7 @@ const Layout = ({ children }: PropsType) => {
   const emailConfirm = useSelector<ReducerType, boolean>(state => state.user.emailConfirm);
   const userInfoSettingValue = useSelector<ReducerType, boolean>(state => state.user.setting);
   const isRefreshToken = useSelector<ReducerType, boolean>(state => state.auth.isRefreshToken);
-  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const userInfo = useSelector<ReducerType, UserInfoType>(state => state.user.userInfo);
 
   const [showGradient, setShowGradient] = useState<boolean>(true);
 
@@ -42,7 +46,6 @@ const Layout = ({ children }: PropsType) => {
   const { isLoading, data, isError, error, refetch } = useGetUserInfo(userInfoSettingValue);
   const refreshToken = useRefreshTokenApi(isRefreshToken);
   const confirmEmail = useConfirmEmailApi(refetch);
-  // console.log(refreshToken.data, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
 
   useEffect(() => {
     if (Object.keys(router.query).length !== 0) {
@@ -50,7 +53,7 @@ const Layout = ({ children }: PropsType) => {
       // dispatch(setSetting(false));
       dispatch(isShow({ isShow: false, type: '' }));
       const query = router?.query;
-      const { token, userId, type } = query;
+      const { token, userId, type, teamseq } = query;
 
       if (token && !userId && type === 'google') {
         localStorage.setItem('accessToken', `${token}`);
@@ -93,6 +96,14 @@ const Layout = ({ children }: PropsType) => {
 
   const separateDomain = useCallback(() => {
     switch (router.pathname) {
+      case '/admin/report/[id]':
+        return (
+          <div css={mainContainer}>
+            <main css={contentsContainer}>
+              <ReportLayout>{children}</ReportLayout>
+            </main>
+          </div>
+        );
       case '/admin/reset-password':
       case '/admin/reset-password-success':
       case '/admin/re-login':

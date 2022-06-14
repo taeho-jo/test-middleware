@@ -9,15 +9,16 @@ interface PropsType {
     testType: string;
     testDate: string;
   }[];
+  handleMoveDetail?: (id) => void;
 }
 
-const ResearchList = ({ listData = [] }: PropsType) => {
+const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
   return (
     <FlexBox justify={'flex-start'} align={'flex-start'} wrap={'wrap'}>
       {listData?.map((el, index) => {
         return (
           <Fragment key={index}>
-            <ListReport testType={el.testType} testTitle={el.testTitle} testDate={el.testDate} img={el.img} />
+            <ListReport onClick={handleMoveDetail} testType={el.testType} testTitle={el.testTitle} testDate={el.testDate} img={el.img} />
           </Fragment>
         );
       })}

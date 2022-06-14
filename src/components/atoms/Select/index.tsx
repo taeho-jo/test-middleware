@@ -18,8 +18,28 @@ type PropsType = {
   selected?: any;
   setSelected?: any;
   onClick?: any;
+  placeholder?: string;
+  padding?: string;
+  fontSize?: any;
+  selectBoxHeight?: string;
+  selectBoxMargin?: string;
 };
-const Select = ({ options, selectProps, title, value, error = false, name, selected, setSelected, onClick }: PropsType) => {
+const Select = ({
+  options,
+  selectProps,
+  title,
+  value,
+  error = false,
+  name,
+  selected,
+  setSelected,
+  onClick,
+  placeholder,
+  padding,
+  fontSize,
+  selectBoxHeight,
+  selectBoxMargin,
+}: PropsType) => {
   const [isOpen, setOpen] = useState(false);
   // const [selected, setSelected] = useState<string>();
   const selectRef = useRef(null);
@@ -45,25 +65,28 @@ const Select = ({ options, selectProps, title, value, error = false, name, selec
       </select>
 
       <div
-        css={selectBoxWrapper}
+        css={selectBoxWrapper(selectBoxHeight, selectBoxMargin)}
         ref={selectRef}
         onClick={() => {
           setOpen(prev => !prev);
         }}
       >
-        <label css={[caption1_bold, labelTextStyle]}>{title}</label>
-        <div css={isOpen ? customSelectOpen('100%') : customSelect('100%')}>
+        {title && <label css={[caption1_bold, labelTextStyle]}>{title}</label>}
+        <div css={isOpen ? customSelectOpen('100%', padding) : customSelect(padding)}>
           <div css={customSelectTrigger}>
-            <span css={[heading3_regular, { padding: 0, color: selected[name] ? colors.grey._3c : colors.grey._cc }]}>
+            <span css={[fontSize ? fontSize : heading3_regular, { padding: 0, color: selected[name] ? colors.grey._3c : colors.grey._cc }]}>
               {/*{options.find(item => item.value === selected)?.label || '옵션을 선택해주세요.'}*/}
-              {selected[name] ? selected[name] : '옵션을 선택해주세요.'}
+              {selected[name] ? selected[name] : placeholder ? placeholder : '옵션을 선택해주세요.'}
             </span>
             <Icon name={'CHEVRON_DOWN_THIN'} size={24} />
           </div>
           <div css={isOpen ? customOptionOpen('100%') : customOptions}>
             {options.map(item => (
               <div key={item.value} onClick={() => onClick(item.value, name)} css={optionContainer}>
-                <span css={selected[name] === item.value ? [customOptionSelected, customOption] : customOption} data-value={item.value}>
+                <span
+                  css={selected[name] === item.value ? [customOptionSelected, customOption, fontSize] : [customOption, fontSize]}
+                  data-value={item.value}
+                >
                   {item.label}
                 </span>
               </div>
@@ -80,28 +103,28 @@ export default Select;
 const selectBoxStyle = css`
   display: none;
 `;
-const selectBoxWrapper = css`
-  margin-top: 16px;
+const selectBoxWrapper = (selectBoxHeight, selectBoxMargin) => css`
+  margin-top: ${selectBoxMargin ? selectBoxMargin : '16px'};
   position: relative;
   user-select: none;
   width: 100%;
-  height: 70px;
+  height: ${selectBoxHeight ? selectBoxHeight : '70px'};
 `;
-const customSelect = size => css`
+const customSelect = padding => css`
   //padding-right: 8px;
   position: relative;
   cursor: pointer;
   width: 100%;
   border-radius: 4px;
   border: 1px solid ${colors.grey._3c};
-  padding: 10px 16px;
+  padding: ${padding ? padding : '10px 16px'};
   background: white;
   :hover {
     border: 2px solid ${colors.cyan._500};
-    padding: 9px 15px;
+    padding: ${padding ? padding : '9px 15px'};
   }
 `;
-const customSelectOpen = size => css`
+const customSelectOpen = (size, padding) => css`
   width: ${size};
   opacity: 1;
   visibility: visible;
@@ -110,12 +133,14 @@ const customSelectOpen = size => css`
   box-shadow: -1px 1px 2px rgba(67, 70, 74, 0.0001), -2px 2px 5px rgba(67, 86, 100, 0.123689);
   border-radius: 4px;
   border: 2px solid ${colors.grey._3c};
-  padding: 9px 16px;
+  padding: ${padding ? padding : '9px 16px'};
   background: white;
   position: absolute;
   z-index: 10;
   height: 258px;
   overflow: scroll;
+  // TODO: 이건 지워야 될 수 있음
+  top: ${padding ? '-20px' : 'unset'};
 `;
 const customOptionOpen = size => css`
   width: ${size};

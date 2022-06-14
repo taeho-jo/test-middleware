@@ -157,6 +157,7 @@ export const useResendEmail = () => {
 // 토큰 refresh API
 export const useRefreshTokenApi = isRefreshToken => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   return useQuery(['refreshToken'], () => AXIOS_GET('/refreshToken/'), {
     cacheTime: 0,
     enabled: isRefreshToken,
@@ -166,9 +167,9 @@ export const useRefreshTokenApi = isRefreshToken => {
     onSuccess: data => {
       dispatch(updateIsRefreshTokenStatus(false));
       const response = data.data;
-      console.log(response, '~~~~~~~~~~~~~~~~~');
       localStorage.setItem('accessToken', response.token);
       dispatch(setToken(response.token));
+      queryClient.invalidateQueries();
     },
   });
 };
