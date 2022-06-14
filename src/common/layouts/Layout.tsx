@@ -15,10 +15,14 @@ import { css } from '@emotion/react';
 import AOS from 'aos';
 import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // API
-import { useConfirmEmailApi } from '../../api/authApi';
+import { useConfirmEmailApi, useRefreshTokenApi } from '../../api/authApi';
 import { useGetUserInfo } from '../../api/userApi';
-import { setEmailConfirm, setSetting } from '../../store/reducers/userReducer';
+import { setEmailConfirm, setSetting, UserInfoType } from '../../store/reducers/userReducer';
 import { isShow } from '../../store/reducers/modalReducer';
+import { QueryCache, QueryClient } from 'react-query';
+import ReportHeader from '../../components/molecules/ReportHeader';
+import ReportSideBar from '../../components/molecules/ReportSideBar';
+import ReportLayout from './ReportLayout';
 
 // Types
 interface PropsType {
@@ -31,7 +35,8 @@ const Layout = ({ children }: PropsType) => {
   const resetToken = sessionStorage.getItem('accessToken');
   const emailConfirm = useSelector<ReducerType, boolean>(state => state.user.emailConfirm);
   const userInfoSettingValue = useSelector<ReducerType, boolean>(state => state.user.setting);
-  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const isRefreshToken = useSelector<ReducerType, boolean>(state => state.auth.isRefreshToken);
+  const userInfo = useSelector<ReducerType, UserInfoType>(state => state.user.userInfo);
 
   const [showGradient, setShowGradient] = useState<boolean>(true);
 
@@ -39,6 +44,7 @@ const Layout = ({ children }: PropsType) => {
 
   const canvasRef = useRef(null);
   const { isLoading, data, isError, error, refetch } = useGetUserInfo(userInfoSettingValue);
+  const refreshToken = useRefreshTokenApi(isRefreshToken);
   const confirmEmail = useConfirmEmailApi(refetch);
 
   useEffect(() => {
@@ -47,7 +53,7 @@ const Layout = ({ children }: PropsType) => {
       // dispatch(setSetting(false));
       dispatch(isShow({ isShow: false, type: '' }));
       const query = router?.query;
-      const { token, userId, type } = query;
+      const { token, userId, type, teamseq } = query;
 
       if (token && !userId && type === 'google') {
         localStorage.setItem('accessToken', `${token}`);
@@ -64,18 +70,6 @@ const Layout = ({ children }: PropsType) => {
       }
     }
   }, [router.query]);
-
-  useEffect(() => {
-    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++');
-    console.log(userInfo);
-    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++');
-  }, [userInfo]);
-
-  // useEffect(() => {
-  //   if (emailConfirm) {
-  //     confirmEmail.mutate();
-  //   }
-  // }, [emailConfirm]);
 
   // <------------- LandingPage css 및 animation 을 위한 useEffect -------------> //
   useEffect(() => {
@@ -102,10 +96,19 @@ const Layout = ({ children }: PropsType) => {
 
   const separateDomain = useCallback(() => {
     switch (router.pathname) {
+      case '/admin/report/[id]':
+        return (
+          <div css={mainContainer}>
+            <main css={contentsContainer}>
+              <ReportLayout>{children}</ReportLayout>
+            </main>
+          </div>
+        );
       case '/admin/reset-password':
       case '/admin/reset-password-success':
       case '/admin/re-login':
       case '/admin/profile':
+      case '/admin/welcome':
         return (
           <div css={mainContainer}>
             <main css={contentsContainer}>

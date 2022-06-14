@@ -1,6 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { useRouter } from 'next/router';
-import Script from 'next/script';
 // Redux
 import { persistedReducer, wrapper } from '../store';
 import { createStore } from 'redux';
@@ -22,6 +21,7 @@ import 'slick-carousel/slick/slick-theme.css';
 // Types
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next';
+
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
@@ -32,7 +32,7 @@ type AppPropsWithLayout = AppProps & {
 export const store = createStore(persistedReducer);
 export const persistor = persistStore(store);
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout, props) {
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
 
   const [queryClient] = React.useState(
@@ -61,7 +61,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout, props) {
                 <Component {...pageProps} />
                 {/*</AppAnimation>*/}
               </Layout>
-              <Script type="text/javascript" src="/lib/beusableHeatmap.js" />
+              {/*<Script type="text/javascript" src="/lib/beusableHeatmap.js" />*/}
             </ThemeProvider>
           </Hydrate>
           <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} />

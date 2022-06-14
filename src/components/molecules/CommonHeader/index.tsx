@@ -11,13 +11,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import LayerPopup from '../../atoms/LayerPopup';
 import { useRouter } from 'next/router';
 import { setSetting } from '../../../store/reducers/userReducer';
+import { ReducerType } from '../../../store/reducers';
 
 const CommonHeader = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const isSessionStorage = sessionStorage.getItem('accessToken');
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const [focusProfile, setFocusProfile] = useState<boolean>(false);
-  // const token = useSelector(state => state.auth.token);
+
   const test = useCallback(() => {
     setFocusProfile(prev => !prev);
   }, [focusProfile]);
@@ -37,7 +39,7 @@ const CommonHeader = () => {
       height={'48px'}
       backgroundColor={colors.grey._3c}
     >
-      <FlexBox justify={'flex-start'} align={'center'}>
+      <FlexBox justify={'flex-start'} align={'center'} onClick={() => router.push('/admin/team')} style={{ cursor: 'pointer' }}>
         {/*<Icon name={'LOGO_ICON'} size={40} />*/}
         <div
           style={{
@@ -70,13 +72,12 @@ const CommonHeader = () => {
 
           <LayerPopup
             display={focusProfile}
-            topText={'taeho.jo@dbdlab.io'}
+            topText={userInfo.userId}
             normalText={[
               { text: '프로필 설정', onClick: null },
               { text: '로그아웃', onClick: handleLogout },
             ]}
           />
-          {/*<ProfilePopover display={focusProfile} />*/}
         </FlexBox>
       )}
     </FlexBox>
@@ -84,13 +85,3 @@ const CommonHeader = () => {
 };
 
 export default CommonHeader;
-
-const profileCircle = css`
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;

@@ -1,22 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+export interface UserInfoType {
+  authTokenProvider: string | null;
+  authTypeCd: string | null;
+  consentToUseMarketingYn: string | null;
+  cpPostion: string | null;
+  cpSize: string | null;
+  cxResearch: string | null;
+  emailVerifiedYn: string | null;
+  firstTimeYn: string | null;
+  funnelsCd: string | null;
+  privacyConsentYn: string | null;
+  purposeOfUse: string | null;
+  userId: string | null;
+  userName: string | null;
+  userSeq: string | null;
+}
+
 export interface UserType {
-  userInfo: {
-    authTokenProvider: string | null;
-    authTypeCd: string | null;
-    consentToUseMarketingYn: string | null;
-    cpPostion: string | null;
-    cpSize: string | null;
-    cxResearch: string | null;
-    emailVerifiedYn: string | null;
-    firstTimeYn: string | null;
-    funnelsCd: string | null;
-    privacyConsentYn: string | null;
-    purposeOfUse: string | null;
-    userId: string | null;
-    userName: string | null;
-    userSeq: string | null;
-  };
+  userInfo: UserInfoType;
   setting: boolean;
   emailConfirm: boolean;
 }

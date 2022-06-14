@@ -25,4 +25,7 @@ export const EMAIL_CONFIRM_TEMPLATE =
 // <-------------------- 비밀번호 재설정 이메일 템플릿 변수 --------------------> //
 export const PASSWORD_RESET_TEMPLATE =
   process.env.NODE_ENV === 'development' ? 'local_password_reset_template' : process.env.NEXT_PUBLIC_PASSWORD_RESET_TEMPLATE;
-// 'local_password_reset_template';
+
+// <-------------------- 팀원 초대 이메일 템플릿 변수 --------------------> //
+export const INVITE_EMAIL_TEMPLATE =
+  process.env.NODE_ENV === 'development' ? 'local_invite_email_template' : process.env.NEXT_PUBLIC_INVITE_EMAIL_TEMPLATE;

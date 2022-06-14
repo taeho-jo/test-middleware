@@ -11,7 +11,7 @@ const AdminLayout = ({ children }) => {
       <AdminSideBar />
       <div css={adminHeaderStyle}>
         <AdminHeader />
-        {children}
+        <div css={contentsArea}>{children}</div>
       </div>
     </FlexBox>
   );
@@ -25,4 +25,7 @@ const adminHeaderStyle = css`
   border: 1px solid ${colors.grey._ec};
   border-left: none;
   //color: red;
+`;
+const contentsArea = css`
+  height: calc(100vh - 95px);
 `;

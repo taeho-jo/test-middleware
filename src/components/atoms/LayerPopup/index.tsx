@@ -10,6 +10,8 @@ import { persistor } from '../../../pages/_app';
 interface PropsType {
   display: boolean;
   topText?: string;
+  top?: number;
+  right?: number;
   normalText: {
     text: string;
     onClick: () => void;
@@ -17,11 +19,11 @@ interface PropsType {
   [key: string]: any;
 }
 
-const LayerPopup = ({ display, topText, normalText, ...props }: PropsType) => {
+const LayerPopup = ({ display, topText, normalText, top = 16, right = 16, ...props }: PropsType) => {
   const dispatch = useDispatch();
   const router = useRouter();
   return (
-    <div css={popupContainer(display)}>
+    <div css={popupContainer(display, top, right)}>
       {topText && <div css={[body3_regular, emailTextStyle]}>{topText}</div>}
 
       {normalText.map((el, index) => {
@@ -39,7 +41,7 @@ const LayerPopup = ({ display, topText, normalText, ...props }: PropsType) => {
 
 export default LayerPopup;
 
-const popupContainer = display => css`
+const popupContainer = (display, top, right) => css`
   opacity: ${display ? '100%' : 0};
   //width: 220px;
   border-radius: 16px;
@@ -47,10 +49,10 @@ const popupContainer = display => css`
   background-color: ${colors.white};
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: ${top}px;
+  right: ${right}px;
   transition: all 0.2s ease-in;
-  display: flex;
+  display: ${display ? 'flex' : 'none'};
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;

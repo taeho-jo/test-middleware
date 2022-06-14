@@ -10,15 +10,24 @@ import BasicButton from '../../atoms/Button/BasicButton';
 import { colors } from '../../../styles/Common.styles';
 import TextButton from '../../atoms/Button/TextButton';
 import { body3_medium } from '../../../styles/FontStyles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { showToast } from '../../../store/reducers/toastReducer';
 import TextArea from '../../atoms/TextArea';
+import { emailRex } from '../../../common/regex';
+import { useInviteTeamMemberEmailApi } from '../../../api/teamApi';
+import { ReducerType } from '../../../store/reducers';
+import { CURRENT_DOMAIN, INVITE_EMAIL_TEMPLATE } from '../../../common/util/commonVar';
 
-const InviteTeamMemberModal = () => {
+interface PropsType {
+  first?: boolean;
+}
+const InviteTeamMemberModal = ({ first = false }: PropsType) => {
   const dispatch = useDispatch();
+  const selectTeam = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+  const selectTeamSeq = useSelector<ReducerType, number | null>(state => state.team.selectTeamSeq);
   // hook form
   const {
     register,
@@ -30,12 +39,23 @@ const InviteTeamMemberModal = () => {
   const onSubmit = data => handleInvite('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
+  const inviteMutaion = useInviteTeamMemberEmailApi();
+
   const handleInvite = useCallback((status, data) => {
     const mailArr = data.email?.trim().split(/[, ]+/).join('\n').split('\n');
+    const newMailArr = mailArr.filter(el => el.match(emailRex));
+
     const sendObject = {
-      email: mailArr,
+      teamSeq: selectTeamSeq,
+      inviteMembers: newMailArr,
+      emailTemplateName: INVITE_EMAIL_TEMPLATE,
     };
-    console.log(sendObject);
+
+    if (newMailArr.length === 0) {
+      dispatch(showToast({ message: '메일 주소 형식을 확인 바랍니다.', isShow: true, status: 'warning', duration: 5000 }));
+    } else {
+      inviteMutaion.mutate(sendObject);
+    }
   }, []);
 
   const handleProcessingError = useCallback((status, errors) => {
@@ -57,37 +77,22 @@ const InviteTeamMemberModal = () => {
 
   return (
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
-      <PopupBox style={{ position: 'absolute', top: '96px', left: '264px' }} padding={'0px'} width={'392px'} height={'auto'}>
+      <PopupBox style={{ position: 'absolute', top: '96px', left: first ? '264px' : '40%' }} padding={'0px'} width={'392px'} height={'auto'}>
         <ModalTitle title={'팀원 초대하기'} />
         <ModalSubTitle subTitle={['링크 또는 이메일로 팀원을 초대하세요!']} />
 
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
           <Input
-            onClick={() => handleCopyClipBoard('가나다라')}
+            onClick={() => handleCopyClipBoard(`${CURRENT_DOMAIN}/admin/welcome?teamseq=${selectTeam[0]?.teamSeq}`)}
             title={'링크 복사'}
             register={register}
             label={'link'}
-            defaultValue={'https://www.diby.io/team/ganada...'}
+            defaultValue={`${CURRENT_DOMAIN}/admin/welcome?teamseq=${selectTeam[0]?.teamSeq}`}
             errors={errors}
             readOnly={true}
             style={{ marginBottom: '16px' }}
           />
           <AnnouncementBox style={{ marginBottom: '16px' }} content={<div>링크를 클릭하면 복사가 돼요.</div>} />
-          {/*<Input*/}
-          {/*  title={'이메일'}*/}
-          {/*  register={register}*/}
-          {/*  label={'email'}*/}
-          {/*  errors={errors}*/}
-          {/*  errorMsg={'필수 항목입니다.'}*/}
-          {/*  placeholder={'이메일을 입력해주세요.'}*/}
-          {/*  style={{ marginBottom: '16px' }}*/}
-          {/*  registerOptions={{*/}
-          {/*    required: true,*/}
-          {/*    // onChange: e => updateLoginField('userId', e.target.value),*/}
-          {/*    pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,*/}
-          {/*  }}*/}
-          {/*/>*/}
-
           <TextArea
             title={'이메일'}
             register={register}
@@ -98,8 +103,6 @@ const InviteTeamMemberModal = () => {
             style={{ marginBottom: '16px' }}
             registerOptions={{
               required: true,
-              // onChange: e => updateLoginField('userId', e.target.value),
-              // pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
             }}
           />
 

@@ -29,8 +29,10 @@ const CommonModal = () => {
           {modalType === 'resetPassword' && <ResetPasswordModal />}
           {modalType === 'confirmResetPassword' && <ConfirmResetPasswordModal />}
           {modalType === 'confirmSignup' && <ConfirmSignupModal />}
-          {modalType === 'firstCreateTeam' && <TeamCreateModal />}
-          {modalType === 'inviteTeamMember' && <InviteTeamMemberModal />}
+          {modalType === 'firstCreateTeam' && <TeamCreateModal first={true} />}
+          {modalType === 'createTeam' && <TeamCreateModal />}
+          {modalType === 'inviteTeamMember' && <InviteTeamMemberModal first={true} />}
+          {modalType === 'teamMember' && <InviteTeamMemberModal />}
           {modalType === 'uiResearchModule' && <UiResearchModuleModal />}
           {modalType === 'uxResearchModule' && <UxResearchModuleModal />}
           {modalType === 'scenarioResearchModule' && <ScenarioResearchModuleModal />}

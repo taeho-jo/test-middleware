@@ -22,6 +22,7 @@ export const toastSlice = createSlice({
   initialState,
   reducers: {
     showToast: (state, action: PayloadAction<ToastType>) => {
+      state.toastArr = [];
       state.toastArr.push({ ...action.payload, id: uuid_v4() });
     },
     removeToast: (state, action: PayloadAction<string>) => {

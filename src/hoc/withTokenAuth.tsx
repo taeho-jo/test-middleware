@@ -49,10 +49,16 @@ export default function withTokenAuth(SpecificComponent: any, option: boolean) {
             if (userInfo.firstTimeYn === 'Y') {
               router.replace('/admin/profile');
             }
+            if (userInfo.firstTimeYn === 'N') {
+              return;
+            }
           }
-          if (userInfo.emailVerifiedYn !== 'Y') {
-            return;
+          if (userInfo.emailVerifiedYn === 'N') {
+            router.replace('/');
           }
+          // if (userInfo.emailVerifiedYn !== 'Y') {
+          //   return;
+          // }
         }
 
         if (!token) {

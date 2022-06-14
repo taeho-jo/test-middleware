@@ -6,10 +6,12 @@ import ActionMore from '/public/assets/svg/action_more_v.svg';
 import ActionSetting from '/public/assets/svg/action_settings.svg';
 import ActionAddCircle from '/public/assets/svg/action_add_circle.svg';
 import ActionSearch from '/public/assets/svg/action_search.svg';
+import ActionShare from '/public/assets/svg/action_share.svg';
 import NavigationArrowLeft from '/public/assets/svg/navigation_arrow_left.svg';
 import NavigationArrowRight from '/public/assets/svg/navigation_arrow_right.svg';
 import NavigationChevronDown from '/public/assets/svg/navigation_chevron_down_s.svg';
 import ChevronDownThin from '/public/assets/svg/chevron_down_thin.svg';
+import ChevronRightThin from '/public/assets/svg/chevron_right_thin.svg';
 import NavigationChevronRight from '/public/assets/svg/navigation_chevron_right.svg';
 import NavigationChevronRightDisabled from '/public/assets/svg/navigation_chevron_right_disabled.svg';
 import NavigationCloseLg from '/public/assets/svg/navigation_close_l.svg';
@@ -29,10 +31,13 @@ import UiTestInactive from '/public/assets/svg/uitest_inactive.svg';
 import UxPositionHover from '/public/assets/svg/uxposition_hover.svg';
 import UxPositionInactive from '/public/assets/svg/uxposition_inactive.svg';
 import MoreHorizon from '/public/assets/svg/more_horizon.svg';
+import Member from '/public/assets/svg/member.svg';
+import Noti from '/public/assets/svg/noti.svg';
 
 import { css } from '@emotion/react';
 
 interface PropsType {
+  forwardref?: any;
   name: any;
   size?: number;
   style?: any;
@@ -49,6 +54,7 @@ const IconTypes = {
   ACTION_ADD_CIRCLE: ActionAddCircle,
   ACTION_MORE: ActionMore,
   ACTION_SEARCH: ActionSearch,
+  ACTION_SHARE: ActionShare,
   NAVIGATION_ARROW_LEFT: NavigationArrowLeft,
   NAVIGATION_ARROW_RIGHT: NavigationArrowRight,
   NAVIGATION_CHEVRON_DOWN: NavigationChevronDown,
@@ -71,22 +77,27 @@ const IconTypes = {
   UXPOSITION_HOVER: UxPositionHover,
   UXPOSITION_INACTIVE: UxPositionInactive,
   CHEVRON_DOWN_THIN: ChevronDownThin,
+  CHEVRON_RIGHT_THIN: ChevronRightThin,
   MORE_HORIZON: MoreHorizon,
+  MEMBER: Member,
+  NOTI: Noti,
 };
 
-const Icon = ({ name, size = 24, style, iconColor, onClick }: PropsType) => {
+const Icon = ({ name, size = 24, style, iconColor, onClick, forwardref }: PropsType) => {
   const IconComponent = IconTypes[name];
-  const viewBox = `0 0 ${size} ${size}`;
+  const viewBox = `0 0 24 24`;
 
   return (
-    <IconComponent
-      css={[iconStyle(iconColor), style]}
-      onClick={onClick}
-      style={{ boxSizing: 'border-box' }}
-      width={size}
-      height={size}
-      viewBox={viewBox}
-    />
+    <div ref={forwardref} onClick={onClick}>
+      <IconComponent
+        css={[iconStyle(iconColor), style]}
+        // onClick={onClick}
+        style={{ boxSizing: 'border-box' }}
+        width={size}
+        height={size}
+        viewBox={viewBox}
+      />
+    </div>
   );
 };
 

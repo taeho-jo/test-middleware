@@ -21,7 +21,7 @@ import IconTextButton from '../../atoms/Button/IconTextButton';
 // Styles
 import { body3_medium, caption1_regular } from '../../../styles/FontStyles';
 import { colors } from '../../../styles/Common.styles';
-// Types
+// Typesz
 // import { InputType } from '../AddInfoPopup';
 import { InputType } from '../../../common/types/commonTypes';
 import { ReducerType } from '../../../store/reducers';
@@ -98,7 +98,8 @@ const SignupModal = () => {
             style={{ marginBottom: '16px' }}
             registerOptions={{
               required: true,
-              pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+              // pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+              pattern: /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
             }}
           />
           <Input

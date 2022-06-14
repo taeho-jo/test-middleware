@@ -7,7 +7,7 @@ interface PropsType {
 }
 
 const AddInfo = ({ id }: PropsType) => {
-  return <div>asdf</div>;
+  return <div>{id}</div>;
 };
 
 export default AddInfo;

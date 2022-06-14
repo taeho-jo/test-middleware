@@ -5,14 +5,17 @@ import { heading5_bold } from '../../../styles/FontStyles';
 import { useRouter } from 'next/router';
 import { fontWeight } from '@mui/system';
 import { colors } from '../../../styles/Common.styles';
+import { useSelector } from 'react-redux';
+import { ReducerType } from '../../../store/reducers';
 
 const AdminHeader = () => {
   const router = useRouter();
+  const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
 
   return (
     <FlexBox style={headerStyle} justify={'flex-start'} align={'center'}>
       <span onClick={() => router.push('/admin/team')} css={[heading5_bold, itemsStyle, teamTextStyle(router.pathname)]}>
-        현재 팀 이름
+        {teamList ? teamList[0].teamName : ''}
       </span>
       <span onClick={() => router.push('/admin/member')} css={[heading5_bold, itemsStyle, memberTextStyle(router.pathname)]}>
         팀원

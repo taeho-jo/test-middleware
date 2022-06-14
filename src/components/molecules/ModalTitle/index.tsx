@@ -6,6 +6,7 @@ import { css } from '@emotion/react';
 import { heading1_bold } from '../../../styles/FontStyles';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { ReducerType } from '../../../store/reducers';
+import { updateTeamSeq } from '../../../store/reducers/teamReducer';
 
 interface PropsType {
   title?: string;
@@ -19,6 +20,7 @@ const ModalTitle = ({ title = 'Modal', titlePosition = 'flex-start', closed = tr
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
   const closeModal = useCallback(() => {
+    dispatch(updateTeamSeq(null));
     dispatch(isShow({ isShow: false, type: '' }));
   }, []);
 

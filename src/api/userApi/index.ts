@@ -6,13 +6,17 @@ import { useRouter } from 'next/router';
 import { isShow } from '../../store/reducers/modalReducer';
 import { UpdateUserInfoType } from './types';
 
+// 사용자 정보 API
 export const useGetUserInfo = userInfoSettingValue => {
   const dispatch = useDispatch();
   const router = useRouter();
-  return useQuery(['getUserInfo'], () => AXIOS_GET('/user/info'), {
+  return useQuery(['getUserInfo'], () => AXIOS_GET('/user/info/'), {
     cacheTime: 0,
     // staleTime: 10000,
     enabled: userInfoSettingValue,
+    onError: e => {
+      console.log(e);
+    },
     onSuccess: data => {
       dispatch(setUserInfo(data.data));
       if (data.data.emailVerifiedYn === 'N') {
@@ -26,12 +30,31 @@ export const useGetUserInfo = userInfoSettingValue => {
   });
 };
 
+// 팀 초대 사용자 정보 API
+export const useGetInviteTeamUserInfo = (seq, isSend) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  return useQuery(['getInviteTeamUserInfo'], () => AXIOS_GET(`/user/info/team/${seq}/`), {
+    cacheTime: 0,
+    // staleTime: 10000,
+    enabled: isSend,
+    onError: e => {
+      console.log(e);
+    },
+    onSuccess: data => {
+      router.push('/admin/team');
+      console.log(data, '성공했음???');
+    },
+  });
+};
+
+// 사용자 정보 업데이트 API
 export const useUpdateUserInfo = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const handleUpdate = async (sendObject: UpdateUserInfoType) => {
     console.log(sendObject, '!');
-    return await AXIOS_PATCH('/user/update', sendObject);
+    return await AXIOS_PATCH('/user/update/', sendObject);
   };
 
   return useMutation(handleUpdate, {

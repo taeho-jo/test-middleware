@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 // Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // Components
 import PopupBox from '../../atoms/PopupBox';
 import ModalTitle from '../../molecules/ModalTitle';
@@ -18,9 +18,15 @@ import { colors } from '../../../styles/Common.styles';
 import { body3_medium } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../../../common/types/commonTypes';
+import { ReducerType } from '../../../store/reducers';
+import { useCreateTeamApi } from '../../../api/teamApi';
 import { isShow } from '../../../store/reducers/modalReducer';
-const TeamCreateModal = () => {
+interface PropsType {
+  first?: boolean;
+}
+const TeamCreateModal = ({ first = false }: PropsType) => {
   const dispatch = useDispatch();
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   // hook form
   const {
     register,
@@ -29,11 +35,16 @@ const TeamCreateModal = () => {
     formState: { errors },
   } = useForm<InputType>({});
 
-  const onSubmit = data => handleLogin('success', data);
+  const onSubmit = data => handleCreateTeam('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const handleLogin = useCallback((status, data) => {
-    // loginResponse.mutate(data);
+  const createTeamMutation = useCreateTeamApi();
+
+  const handleCreateTeam = useCallback((status, data) => {
+    const sendObject = {
+      teamNm: data.team,
+    };
+    createTeamMutation.mutate(sendObject);
   }, []);
 
   const handleProcessingError = useCallback((status, errors) => {
@@ -41,14 +52,17 @@ const TeamCreateModal = () => {
   }, []);
 
   const handleClickSkip = useCallback(() => {
-    dispatch(isShow({ isShow: true, type: 'inviteTeamMember' }));
+    const sendObject = {
+      teamNm: userInfo.userName,
+    };
+    createTeamMutation.mutate(sendObject);
   }, []);
 
   return (
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
-      <PopupBox style={{ position: 'absolute', top: '96px', left: '264px' }} padding={'0px'} width={'392px'} height={'auto'}>
-        <ModalTitle title={'반가워요!'} />
-        <ModalSubTitle subTitle={['가나다라마바사 님의 팀 이름을 입력해주세요']} />
+      <PopupBox style={{ position: 'absolute', top: '96px', left: first ? '264px' : '40%' }} padding={'0px'} width={'392px'} height={'auto'}>
+        <ModalTitle title={'반가워요!'} closed={!first} />
+        <ModalSubTitle subTitle={[`${first ? userInfo.userName : '새로 만드실'} 님의 팀 이름을 입력해주세요`]} />
 
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
           <Input
@@ -57,18 +71,23 @@ const TeamCreateModal = () => {
             label={'team'}
             errors={errors}
             errorMsg={'필수 항목입니다.'}
-            placeholder={'DBDLAB의 팀'}
+            placeholder={`${userInfo.userName}의 팀`}
             style={{ marginBottom: '16px' }}
+            registerOptions={{
+              required: true,
+            }}
           />
 
-          <AnnouncementBox
-            content={
-              <div>
-                별도로 팀 이름을 입력하지 않을 경우, <br />
-                회원님의 닉네임으로 팀이 생성돼요.
-              </div>
-            }
-          />
+          {first ? (
+            <AnnouncementBox
+              content={
+                <div>
+                  별도로 팀 이름을 입력하지 않을 경우, <br />
+                  회원님의 닉네임으로 팀이 생성돼요.
+                </div>
+              }
+            />
+          ) : null}
 
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
             <BasicButton theme={'dark'} type={'submit'} text={'적용하기'} />
@@ -80,7 +99,11 @@ const TeamCreateModal = () => {
           justify={'center'}
           align={'center'}
         >
-          <TextButton onClick={handleClickSkip} textStyle={body3_medium} text={'다음에 할게요.'} />
+          <TextButton
+            onClick={first ? handleClickSkip : () => dispatch(isShow({ isShow: false, type: '' }))}
+            textStyle={body3_medium}
+            text={'다음에 할게요.'}
+          />
         </FlexBox>
       </PopupBox>
     </FlexBox>

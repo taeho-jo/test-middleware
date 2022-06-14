@@ -20,6 +20,7 @@ import SelectBox from '../../atoms/SelectBox';
 import { useUpdateUserInfo } from '../../../api/userApi';
 import withTokenAuth from '../../../hoc/withTokenAuth';
 import { InputType } from '../../../common/types/commonTypes';
+import Select from '../../atoms/Select';
 
 const selectBoxArr = [
   { value: '디자인', label: '디자인' },
@@ -51,21 +52,7 @@ const ProfileSettingFirst = () => {
   const dispatch = useDispatch();
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
-  const [selectedValue, setSelectedValue] = useState({
-    funnelsCd: '',
-    cpPosition: '',
-    cpSize: '',
-  });
 
-  const onClickValue = useCallback(
-    (value, label) => {
-      setSelectedValue({
-        ...selectedValue,
-        [label]: value,
-      });
-    },
-    [selectedValue],
-  );
   // hook form
   const {
     register,
@@ -75,31 +62,35 @@ const ProfileSettingFirst = () => {
   } = useForm<InputType>({});
   const onSubmit = data => handleUpdateUserInfo('success', data);
   const onError = errors => handleProcessingError('fail', errors);
-
+  const [selected, setSelected] = useState({
+    funnelsCd: '',
+    cpPosition: '',
+    cpSize: '',
+  });
   const updateUserInfo = useUpdateUserInfo();
 
   const handleUpdateUserInfo = useCallback(
     (status, data) => {
       // loginResponse.mutate(data);
       const sendObject = {
-        ...selectedValue,
+        ...selected,
         userName: data.userName ? data.userName : userInfo.userName,
         firstTimeYn: 'N',
       };
+      // console.log(sendObject);
       updateUserInfo.mutate(sendObject);
     },
-    [selectedValue],
+    [selected],
   );
-  const handleSkip = useCallback(() => {
-    const sendObject = {
-      cpPosition: '',
-      cpSize: '',
-      firstTimeYn: 'N',
-      funnelsCd: '',
-      userName: userInfo.userName,
-    };
-    updateUserInfo.mutate(sendObject);
-  }, [userInfo]);
+  const onClickValue = useCallback(
+    (value, label) => {
+      setSelected({
+        ...selected,
+        [label]: value,
+      });
+    },
+    [selected],
+  );
 
   // 로그인 시도 실패
   const handleProcessingError = useCallback((status, errors) => {
@@ -118,6 +109,7 @@ const ProfileSettingFirst = () => {
             label={'userName'}
             errors={errors}
             // errorMsg={'필수 항목입니다.'}
+            defaultValue={userInfo.userName}
             placeholder={userInfo.userName}
             style={{ marginBottom: '16px' }}
           />
@@ -131,31 +123,41 @@ const ProfileSettingFirst = () => {
             }
           />
 
-          <SelectBox
+          <Select
             title={'[닉네임]님이 맡고 계신 직무'}
-            label={'cpPosition'}
-            arr={selectBoxArr}
-            selectedValue={selectedValue}
+            options={selectBoxArr}
+            // value={selected.funnelsCd}
+            selected={selected}
+            setSelected={setSelected}
+            name="cpPosition"
             onClick={onClickValue}
           />
-
-          <SelectBox
+          <Select
             title={'[닉네임]님의 회사 규모'}
-            label={'cpSize'}
-            arr={selectBoxCompanyArr}
-            selectedValue={selectedValue}
+            options={selectBoxCompanyArr}
+            // value={selected.funnelsCd}
+            selected={selected}
+            setSelected={setSelected}
+            name="cpSize"
             onClick={onClickValue}
           />
-
-          <SelectBox title={'유입 경로'} label={'funnelsCd'} arr={selectBoxInflowPathArr} selectedValue={selectedValue} onClick={onClickValue} />
+          <Select
+            title={'유입 경로'}
+            options={selectBoxInflowPathArr}
+            // value={selected.funnelsCd}
+            selected={selected}
+            setSelected={setSelected}
+            name="funnelsCd"
+            onClick={onClickValue}
+          />
 
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton theme={'dark'} type={'submit'} text={'적용하기'} style={{ marginBottom: '18px' }} />
+            <BasicButton theme={'dark'} type={'submit'} text={'완료하기'} style={{ marginBottom: '18px' }} />
           </FlexBox>
         </Form>
-        <FlexBox justify={'center'} align={'center'}>
-          <TextButton onClick={handleSkip} textStyle={body3_medium} text={'다음에 할게요.'} />
-        </FlexBox>
+        {/*<FlexBox justify={'center'} align={'center'}>*/}
+        {/*  <TextButton onClick={handleSkip} textStyle={body3_medium} text={'다음에 할게요.'} />*/}
+        {/*</FlexBox>*/}
       </PopupBox>
     </FlexBox>
   );
