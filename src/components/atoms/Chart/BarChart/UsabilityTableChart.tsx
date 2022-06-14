@@ -18,7 +18,7 @@ const UsabilityTableChart = ({ dataList, negative = false }: PropsType) => {
 
       {dataList.map((el, index) => {
         return (
-          <ul css={[ulStyle, emptyUlStyle]}>
+          <ul key={index} css={[ulStyle, emptyUlStyle]}>
             <li css={[caption2_regular, liStyle, emptyLiStyle, liWidthStyle]}>
               <span>사용성 점수</span>
             </li>

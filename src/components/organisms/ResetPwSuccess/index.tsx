@@ -15,7 +15,7 @@ const ResetPwSuccess = () => {
   const router = useRouter();
   const handleMoveLogin = useCallback(() => {
     router.push('/admin/re-login');
-  }, []);
+  }, [router]);
 
   return (
     <div css={mainBox}>
@@ -27,7 +27,7 @@ const ResetPwSuccess = () => {
         </div>
 
         <FlexBox style={{ margin: '32px 0 40px', padding: '0 12.5px' }} direction={'column'} align={'center'} justify={'space-between'}>
-          <BasicButton onClick={() => router.push('/admin/re-login')} theme={'dark'} isLoading={false} type={'submit'} text={'로그인 다시하기'} />
+          <BasicButton onClick={handleMoveLogin} theme={'dark'} isLoading={false} type={'submit'} text={'로그인 다시하기'} />
         </FlexBox>
       </div>
     </div>
