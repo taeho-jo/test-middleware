@@ -1,33 +1,43 @@
 import { useMutation, useQuery } from 'react-query';
 import { AXIOS_GET, AXIOS_PATCH } from '../../hooks/useAxios';
-import { useDispatch } from 'react-redux';
-import { setSetting, setUserInfo } from '../../store/reducers/userReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserInfo } from '../../store/reducers/userReducer';
 import { useRouter } from 'next/router';
 import { isShow } from '../../store/reducers/modalReducer';
 import { UpdateUserInfoType } from './types';
+import { updateQueryStatus } from '../../store/reducers/useQueryControlReducer';
+import { ReducerType } from '../../store/reducers';
 
 // 사용자 정보 API
-export const useGetUserInfo = userInfoSettingValue => {
+export const useGetUserInfo = (status?: boolean) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  // const userInfoQuery = useSelector<ReducerType, boolean>(state => state.userInfoQuery);
   return useQuery(['getUserInfo'], () => AXIOS_GET('/user/info/'), {
     cacheTime: 0,
     // staleTime: 10000,
-    enabled: userInfoSettingValue,
+    enabled: status === false ? false : true,
     onError: e => {
       console.log(e);
     },
     onSuccess: data => {
       dispatch(setUserInfo(data.data));
       if (data.data.emailVerifiedYn === 'N') {
+        console.log('NNNNNNNNNN');
+        dispatch(setUserInfo(data.data));
         dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
       }
       if (data.data.emailVerifiedYn === 'Y') {
-        dispatch(setSetting(false));
+        console.log('YYYYYYYYY');
+        // dispatch(updateQueryStatus({ name: 'userInfoQuery', status: false }));
+        // dispatch(updateQueryStatus({ name: 'teamListQuery', status: true }));
         router.push('/admin/team');
       }
     },
   });
+};
+export const useRefetchGetUserInfoApi = queryClient => {
+  return queryClient.fetchQuery(['getUserInfo']);
 };
 
 // 팀 초대 사용자 정보 API

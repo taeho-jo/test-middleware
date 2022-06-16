@@ -4,6 +4,7 @@ import FlexBox from '../FlexBox';
 import { caption1_regular, heading5_bold, heading5_regular } from '../../../styles/FontStyles';
 import Icon from '../Icon';
 import { css } from '@emotion/react';
+import { TeamProductType } from '../../../store/reducers/teamReducer';
 
 interface PropsType {
   title: string;
@@ -11,9 +12,11 @@ interface PropsType {
   btnText?: string;
   showBtn?: boolean;
   style?: any;
+  onClick?: (name) => void;
+  name?: string;
 }
 
-const SettingCard = ({ title, content, btnText, showBtn = false, style }: PropsType) => {
+const SettingCard = ({ title, content, btnText, showBtn = false, style, onClick, name }: PropsType) => {
   console.log(style);
   return (
     <FlexBox
@@ -26,7 +29,7 @@ const SettingCard = ({ title, content, btnText, showBtn = false, style }: PropsT
         <span css={[heading5_bold]}>{content}</span>
       </FlexBox>
       {showBtn ? (
-        <FlexBox style={{ flex: 1 }} justify={'flex-end'} align={'center'}>
+        <FlexBox onClick={() => onClick(name)} style={{ flex: 1, cursor: 'pointer' }} justify={'flex-end'} align={'center'}>
           <span css={caption1_regular}>{btnText}</span>
           <Icon name={'CHEVRON_RIGHT_THIN'} />
         </FlexBox>

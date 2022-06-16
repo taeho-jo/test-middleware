@@ -6,22 +6,23 @@ import { showToast } from '../../store/reducers/toastReducer';
 import { isShow } from '../../store/reducers/modalReducer';
 import { setToken, updateIsRefreshTokenStatus } from '../../store/reducers/authReducer';
 import { useRouter } from 'next/router';
-import { setEmailConfirm, setSetting } from '../../store/reducers/userReducer';
-import { dispatch } from 'jest-circus/build/state';
 import { ReducerType } from '../../store/reducers';
-import { updateTeamInfo } from '../../store/reducers/teamReducer';
+import { updateCommonCode } from '../../store/reducers/commonReducer';
+import { updateQueryStatus } from '../../store/reducers/useQueryControlReducer';
+import { useGetUserInfo, useRefetchGetUserInfoApi } from '../userApi';
 
 export const useGoogleLogin = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  dispatch(setSetting(false));
+  // dispatch(setSetting(false));
   router.push('/admin/team');
 };
 
 // 로그인 API
-export const useLoginApi = () => {
+export const useLoginApi = refetch => {
   const dispatch = useDispatch();
-
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const handleLogin = async (sendObject: LoginInputType) => {
     return await AXIOS_POST('/login/', sendObject);
   };
@@ -32,23 +33,21 @@ export const useLoginApi = () => {
       dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
     },
     onSuccess: res => {
-      console.log(res);
       localStorage.setItem('accessToken', res.data.token);
 
       dispatch(setToken(res.data.token));
       dispatch(showToast({ message: '로그인에 성공하였습니다.', isShow: true, status: 'success', duration: 5000 }));
       dispatch(isShow({ isShow: false, type: '' }));
-      dispatch(setSetting(true));
+
       sessionStorage.clear();
+      refetch();
     },
   });
 };
 
 // 회원가입 API
-export const useSignupApi = refetch => {
-  const queryClient = useQueryClient();
+export const useSignupApi = () => {
   const dispatch = useDispatch();
-  const isUserInfo = useSelector<ReducerType, boolean>(state => state.user.setting);
 
   const handleSignup = async (sendObject: SignupInputType) => {
     return await AXIOS_POST('/register/', sendObject);
@@ -60,14 +59,10 @@ export const useSignupApi = refetch => {
       dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
     },
     onSuccess: async res => {
-      const { data, status } = res;
       localStorage.setItem('accessToken', res.data.token);
       dispatch(setToken(res.data.token));
       dispatch(showToast({ message: res.message, isShow: true, status: 'success', duration: 5000 }));
       dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-
-      dispatch(setSetting(true));
-      refetch('getUserInfo');
     },
   });
 };
@@ -75,6 +70,7 @@ export const useSignupApi = refetch => {
 // 이메일 확인 API
 export const useConfirmEmailApi = refetch => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleConfirmEmail = async () => {
     return await AXIOS_POST('/user/confirm/', {});
@@ -84,9 +80,8 @@ export const useConfirmEmailApi = refetch => {
     onError: e => console.log('useConfirmEmailApi::: ', e),
     onSuccess: data => {
       console.log('useConfirmEmailApi::: ', data);
-      dispatch(setSetting(true));
       dispatch(isShow({ isShow: false, type: '' }));
-      refetch('getUserInfo');
+      refetch();
     },
   });
 };
@@ -170,6 +165,20 @@ export const useRefreshTokenApi = isRefreshToken => {
       localStorage.setItem('accessToken', response.token);
       dispatch(setToken(response.token));
       queryClient.invalidateQueries();
+    },
+  });
+};
+
+// 공통 code API
+export const useGetCommonCodeApi = () => {
+  const dispatch = useDispatch();
+  return useQuery(['getCommonCode'], () => AXIOS_GET('/admin/code/'), {
+    cacheTime: 0,
+    staleTime: 3600000,
+    onSuccess: data => {
+      const response = data.data;
+      dispatch(updateCommonCode(response));
+      localStorage.setItem('commonCode', JSON.stringify(response));
     },
   });
 };

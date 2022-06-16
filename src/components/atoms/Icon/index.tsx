@@ -10,6 +10,7 @@ import ActionShare from '/public/assets/svg/action_share.svg';
 import NavigationArrowLeft from '/public/assets/svg/navigation_arrow_left.svg';
 import NavigationArrowRight from '/public/assets/svg/navigation_arrow_right.svg';
 import NavigationChevronDown from '/public/assets/svg/navigation_chevron_down_s.svg';
+import CloseSmall from '/public/assets/svg/close_small.svg';
 import ChevronDownThin from '/public/assets/svg/chevron_down_thin.svg';
 import ChevronRightThin from '/public/assets/svg/chevron_right_thin.svg';
 import NavigationChevronRight from '/public/assets/svg/navigation_chevron_right.svg';
@@ -85,10 +86,11 @@ const IconTypes = {
 
 const Icon = ({ name, size = 24, style, iconColor, onClick, forwardref }: PropsType) => {
   const IconComponent = IconTypes[name];
-  const viewBox = `0 0 24 24`;
+  // const viewBox = `0 0 24 24`;
+  const viewBox = `0 0 ${size} ${size}`;
 
   return (
-    <div ref={forwardref} onClick={onClick}>
+    <div css={{ width: '24px', height: '24px' }} ref={forwardref} onClick={onClick}>
       <IconComponent
         css={[iconStyle(iconColor), style]}
         // onClick={onClick}

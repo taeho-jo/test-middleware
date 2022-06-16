@@ -8,6 +8,8 @@ import user from './userReducer';
 import toast from './toastReducer';
 import modal from './modalReducer';
 import team from './teamReducer';
+import common from './commonReducer';
+import queryStatus from './useQueryControlReducer';
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
@@ -24,6 +26,8 @@ const reducer = (state, action) => {
     toast,
     modal,
     team,
+    common,
+    queryStatus,
   })(state, action);
 };
 

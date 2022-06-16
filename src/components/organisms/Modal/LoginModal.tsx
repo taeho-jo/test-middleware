@@ -44,8 +44,8 @@ const LoginModal = () => {
   const onError = errors => handleProcessingError('fail', errors);
 
   // react query
-  // const { refetch } = useGetUserInfo();
-  const loginResponse = useLoginApi();
+  const { refetch } = useGetUserInfo();
+  const loginResponse = useLoginApi(refetch);
 
   // 이메일 로그인
   const handleLogin = useCallback((status, data) => {

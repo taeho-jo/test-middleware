@@ -26,8 +26,10 @@ interface PropsType {
 }
 const InviteTeamMemberModal = ({ first = false }: PropsType) => {
   const dispatch = useDispatch();
-  const selectTeam = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+  const selectTeam = localStorage.getItem('selectTeamList');
+  const teamSeq = JSON.parse(selectTeam)?.teamSeq;
   const selectTeamSeq = useSelector<ReducerType, number | null>(state => state.team.selectTeamSeq);
+
   // hook form
   const {
     register,
@@ -83,11 +85,11 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
 
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
           <Input
-            onClick={() => handleCopyClipBoard(`${CURRENT_DOMAIN}/admin/welcome?teamseq=${selectTeam[0]?.teamSeq}`)}
+            onClick={() => handleCopyClipBoard(`${CURRENT_DOMAIN}/admin/welcome?teamseq=${teamSeq}`)}
             title={'링크 복사'}
             register={register}
             label={'link'}
-            defaultValue={`${CURRENT_DOMAIN}/admin/welcome?teamseq=${selectTeam[0]?.teamSeq}`}
+            defaultValue={`${CURRENT_DOMAIN}/admin/welcome?teamseq=${teamSeq}`}
             errors={errors}
             readOnly={true}
             style={{ marginBottom: '16px' }}

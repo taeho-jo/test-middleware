@@ -22,9 +22,10 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import ResearchList from '../ResearchList';
 import { ReducerType } from '../../../store/reducers';
 import { useRouter } from 'next/router';
-import { useGetTeamList } from '../../../api/teamApi';
-import { setSetting } from '../../../store/reducers/userReducer';
 import { useQueryClient } from 'react-query';
+import { useGetUserInfo } from '../../../api/userApi';
+import { useGetTeamList } from '../../../api/teamApi';
+import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
 
 const ResearchType = [
   {
@@ -82,15 +83,11 @@ const DummyListData = [
 
 const TeamDashboard = () => {
   const dispatch = useDispatch();
-  const queryClient = useQueryClient();
-  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
-  const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
   const router = useRouter();
-
-  const [selectedValue, setSelectedValue] = useState('');
-
+  const queryClient = useQueryClient();
+  const userInfoQuery = useSelector<ReducerType, boolean>(state => state.userInfoQuery);
   // 팀 리스트 API
-  const { data, error, isError } = useGetTeamList();
+  // const { data, error, isError } = useGetTeamList();
 
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));
@@ -101,9 +98,9 @@ const TeamDashboard = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(setSetting(true));
-    // queryClient.invalidateQueries(['getUserInfo']);
+    dispatch(updateQueryStatus({ name: 'teamListQuery', status: true }));
   }, []);
+
   return (
     <>
       <div css={teamMainContainer}>

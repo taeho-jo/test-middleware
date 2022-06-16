@@ -89,7 +89,7 @@ const FeatureSpecificDetailTemplate = () => {
               ]}
               value={'49명'}
               valueStyle={{ color: colors.grey._3c, fontWeight: 500 }}
-              rate={'49.5%'}
+              rate={'46%'}
             />
             <StackedBarChart
               dataList={stackedBarTestData}

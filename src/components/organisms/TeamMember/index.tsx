@@ -27,9 +27,12 @@ const TeamMember = () => {
 
   const [searchText, setSearchText] = useState<string>('');
 
-  const dispatch = useDispatch();
+  const [getApi, setGetApi] = useState(false);
 
-  const { data, isLoading, error } = useTeamMemberListApi();
+  const dispatch = useDispatch();
+  const selectTeamList = useSelector<ReducerType>(state => state.team.selectTeamList);
+
+  const { data, isLoading, error, refetch } = useTeamMemberListApi(getApi);
 
   const submitData = useCallback(
     (status, data) => {
@@ -38,6 +41,17 @@ const TeamMember = () => {
     },
     [searchText],
   );
+
+  useEffect(() => {
+    setGetApi(true);
+    return () => {
+      setGetApi(false);
+    };
+  }, []);
+
+  useEffect(() => {
+    refetch();
+  }, [selectTeamList]);
 
   return (
     <>

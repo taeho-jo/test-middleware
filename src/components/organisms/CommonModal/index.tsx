@@ -15,6 +15,9 @@ import UiResearchModuleModal from '../Modal/UiResearchModuleModal';
 import UxResearchModuleModal from '../Modal/UxResearchModuleModal';
 import ScenarioResearchModuleModal from '../Modal/ScenarioResearchModuleModal';
 import CustomerResearchModuleModal from '../Modal/CustomerResearchModuleModal';
+import TeamNameModifyModal from '../Modal/TeamNameModifyModal';
+import TeamProductCreateModal from '../Modal/TeamProductCreateModal';
+import TeamProductModifyModal from '../Modal/TeamProductModifyModal';
 
 const CommonModal = () => {
   const show = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -33,6 +36,9 @@ const CommonModal = () => {
           {modalType === 'createTeam' && <TeamCreateModal />}
           {modalType === 'inviteTeamMember' && <InviteTeamMemberModal first={true} />}
           {modalType === 'teamMember' && <InviteTeamMemberModal />}
+          {modalType === 'teamNameModify' && <TeamNameModifyModal />}
+          {modalType === 'createTeamProduct' && <TeamProductCreateModal />}
+          {modalType === 'modifyTeamProduct' && <TeamProductModifyModal />}
           {modalType === 'uiResearchModule' && <UiResearchModuleModal />}
           {modalType === 'uxResearchModule' && <UxResearchModuleModal />}
           {modalType === 'scenarioResearchModule' && <ScenarioResearchModuleModal />}

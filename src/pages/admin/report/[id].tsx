@@ -68,7 +68,8 @@ const Report = () => {
   );
 };
 
-export default withTokenAuth(Report, false);
+// export default withTokenAuth(Report, false);
+export default Report;
 const originTestBox = css`
   height: calc(100vh - 72px);
   overflow: scroll;

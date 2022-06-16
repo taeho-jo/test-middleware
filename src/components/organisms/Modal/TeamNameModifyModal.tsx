@@ -19,14 +19,16 @@ import { body3_medium } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../../../common/types/commonTypes';
 import { ReducerType } from '../../../store/reducers';
-import { useCreateTeamApi } from '../../../api/teamApi';
+import { useCreateTeamApi, useGetTeamList, useReFetchTeamList, useUpdateTeamInfoApi } from '../../../api/teamApi';
 import { isShow } from '../../../store/reducers/modalReducer';
+import { useQueryClient } from 'react-query';
 interface PropsType {
   first?: boolean;
 }
-const TeamCreateModal = ({ first = false }: PropsType) => {
+const TeamNameModifyModal = ({ first = false }: PropsType) => {
   const dispatch = useDispatch();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const queryClient = useQueryClient();
   // hook form
   const {
     register,
@@ -35,24 +37,19 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
     formState: { errors },
   } = useForm<InputType>({});
 
-  const onSubmit = data => handleCreateTeam('success', data);
+  const onSubmit = data => handleUpdateTeam('success', data);
   const onError = errors => handleProcessingError('fail', errors);
+  const selectTeamList = JSON.parse(localStorage.getItem('selectTeamList'));
 
-  const createTeamMutation = useCreateTeamApi();
+  // API //
+  const updateTeam = useUpdateTeamInfoApi();
 
-  const handleCreateTeam = useCallback((status, data) => {
+  const handleUpdateTeam = useCallback((status, data) => {
     const sendObject = {
       teamNm: data.team,
     };
-    createTeamMutation.mutate(sendObject);
+    updateTeam.mutate(sendObject);
   }, []);
-
-  const handleClickSkip = useCallback(() => {
-    const sendObject = {
-      teamNm: userInfo?.userName,
-    };
-    createTeamMutation.mutate(sendObject);
-  }, [userInfo]);
 
   const handleProcessingError = useCallback((status, errors) => {
     // dispatch(showToast({ message: '가입된 계정이 없습니다. 다시 확인해주세요!', isShow: true, status: 'warning', duration: 5000 }));
@@ -61,8 +58,8 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
   return (
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
       <PopupBox style={{ position: 'absolute', top: '96px', left: first ? '264px' : '40%' }} padding={'0px'} width={'392px'} height={'auto'}>
-        <ModalTitle title={'반가워요!'} closed={!first} />
-        <ModalSubTitle subTitle={[`${first ? userInfo.userName : '새로 만드실'} 님의 팀 이름을 입력해주세요`]} />
+        <ModalTitle title={'팀 이름을 수정해요.'} closed={!first} />
+        <ModalSubTitle subTitle={[`현재 팀 이름 : ${selectTeamList ? selectTeamList.teamNm : ''} `]} />
 
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
           <Input
@@ -71,43 +68,21 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
             label={'team'}
             errors={errors}
             errorMsg={'필수 항목입니다.'}
-            placeholder={`${userInfo.userName}의 팀`}
+            placeholder={'새로운 팀 이름을 입력해주세요.'}
+            defaultValue={selectTeamList ? selectTeamList.teamNm : ''}
             style={{ marginBottom: '16px' }}
             registerOptions={{
               required: true,
             }}
           />
 
-          {first ? (
-            <AnnouncementBox
-              content={
-                <div>
-                  별도로 팀 이름을 입력하지 않을 경우, <br />
-                  회원님의 닉네임으로 팀이 생성돼요.
-                </div>
-              }
-            />
-          ) : null}
-
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton theme={'dark'} type={'submit'} text={'적용하기'} />
+            <BasicButton theme={'dark'} type={'submit'} text={'팀 이름 수정하기'} />
           </FlexBox>
         </Form>
-
-        <FlexBox
-          style={{ padding: '16px 24px', background: `${colors.grey._f7}`, borderRadius: '0 0 16px 16px' }}
-          justify={'center'}
-          align={'center'}
-        >
-          <TextButton
-            onClick={first ? handleClickSkip : () => dispatch(isShow({ isShow: false, type: '' }))}
-            textStyle={body3_medium}
-            text={'다음에 할게요.'}
-          />
-        </FlexBox>
       </PopupBox>
     </FlexBox>
   );
 };
 
-export default TeamCreateModal;
+export default TeamNameModifyModal;

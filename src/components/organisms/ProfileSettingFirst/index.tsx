@@ -52,6 +52,7 @@ const ProfileSettingFirst = () => {
   const dispatch = useDispatch();
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const commonCode = useSelector<ReducerType, any>(state => state.common.commonCode);
 
   // hook form
   const {
@@ -124,8 +125,8 @@ const ProfileSettingFirst = () => {
           />
 
           <Select
-            title={'[닉네임]님이 맡고 계신 직무'}
-            options={selectBoxArr}
+            title={'[닉네임]님이 맡고 계신 직무 (선택)'}
+            options={commonCode?.CpPositionType}
             // value={selected.funnelsCd}
             selected={selected}
             setSelected={setSelected}
@@ -133,8 +134,8 @@ const ProfileSettingFirst = () => {
             onClick={onClickValue}
           />
           <Select
-            title={'[닉네임]님의 회사 규모'}
-            options={selectBoxCompanyArr}
+            title={'[닉네임]님의 회사 규모 (선택)'}
+            options={commonCode?.CpSizeType}
             // value={selected.funnelsCd}
             selected={selected}
             setSelected={setSelected}
@@ -142,8 +143,8 @@ const ProfileSettingFirst = () => {
             onClick={onClickValue}
           />
           <Select
-            title={'유입 경로'}
-            options={selectBoxInflowPathArr}
+            title={'유입 경로 (선택)'}
+            options={commonCode?.FunnelsType}
             // value={selected.funnelsCd}
             selected={selected}
             setSelected={setSelected}

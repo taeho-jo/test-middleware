@@ -48,12 +48,11 @@ const SignupModal = () => {
   const onError = errors => handleProcessingError('fail', errors);
 
   // 이메일 가입
-  const { refetch } = useGetUserInfo(false);
-  const { data, isLoading, mutate } = useSignupApi(refetch);
+  const userInfo = useGetUserInfo(false);
+  const { data, isLoading, mutate } = useSignupApi(userInfo.refetch);
 
   const handleSignup = useCallback((status, signupData) => {
     const { consentToUseMarketingYn, password, privacyConsentYn, userId } = signupData;
-    console.log(signupData, 'signupdata');
 
     const sendObject = {
       userId,

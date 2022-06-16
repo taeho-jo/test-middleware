@@ -42,7 +42,7 @@ const WelcomeComponent = () => {
 
   const { refetch } = useGetInviteTeamUserInfo(teamSeq, false);
 
-  const { data, isLoading, mutate } = useSignupApi(refetch);
+  const { data, isLoading, mutate } = useSignupApi();
 
   const handleSignup = useCallback((status, signupData) => {
     const { consentToUseMarketingYn, password, privacyConsentYn, userId } = signupData;

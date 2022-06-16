@@ -26,7 +26,7 @@ const StackedBarChart = ({ dataList, label, rate, negative = false, value, ...pr
       </FlexBox>
       <ResponsiveContainer width={'100%'} height={50}>
         <BarChart data={dataList} layout="vertical" barCategoryGap={1} barSize={16}>
-          <XAxis type="number" hide domain={[0, 1]} />
+          <XAxis type="number" hide domain={[0, 100]} />
           <YAxis type="category" hide />
           {objectKey.map((el, index) => {
             if (el.includes('value')) {

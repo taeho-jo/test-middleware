@@ -15,14 +15,15 @@ import { css } from '@emotion/react';
 import AOS from 'aos';
 import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // API
-import { useConfirmEmailApi, useRefreshTokenApi } from '../../api/authApi';
+import { useConfirmEmailApi, useGetCommonCodeApi, useRefreshTokenApi } from '../../api/authApi';
 import { useGetUserInfo } from '../../api/userApi';
-import { setEmailConfirm, setSetting, UserInfoType } from '../../store/reducers/userReducer';
+import { setEmailConfirm, UserInfoType } from '../../store/reducers/userReducer';
 import { isShow } from '../../store/reducers/modalReducer';
 import { QueryCache, QueryClient } from 'react-query';
 import ReportHeader from '../../components/molecules/ReportHeader';
 import ReportSideBar from '../../components/molecules/ReportSideBar';
 import ReportLayout from './ReportLayout';
+import { useGetTeamList } from '../../api/teamApi';
 
 // Types
 interface PropsType {
@@ -34,22 +35,31 @@ const Layout = ({ children }: PropsType) => {
   const token = localStorage.getItem('accessToken');
   const resetToken = sessionStorage.getItem('accessToken');
   const emailConfirm = useSelector<ReducerType, boolean>(state => state.user.emailConfirm);
-  const userInfoSettingValue = useSelector<ReducerType, boolean>(state => state.user.setting);
+  // const userInfoSettingValue = useSelector<ReducerType, boolean>(state => state.user.setting);
   const isRefreshToken = useSelector<ReducerType, boolean>(state => state.auth.isRefreshToken);
   const userInfo = useSelector<ReducerType, UserInfoType>(state => state.user.userInfo);
+
+  const userInfoQuery = useSelector<ReducerType, boolean>(state => state.userInfoQuery);
 
   const [showGradient, setShowGradient] = useState<boolean>(true);
 
   const router = useRouter();
 
   const canvasRef = useRef(null);
-  const { isLoading, data, isError, error, refetch } = useGetUserInfo(userInfoSettingValue);
+
+  // ============ React Query ============ //
+  const getCommonCode = useGetCommonCodeApi();
+  const getUserInfo = useGetUserInfo(userInfoQuery);
   const refreshToken = useRefreshTokenApi(isRefreshToken);
-  const confirmEmail = useConfirmEmailApi(refetch);
+  const confirmEmail = useConfirmEmailApi(getUserInfo.refetch);
+  const teamListQuery = useSelector<ReducerType, boolean>(state => state.queryStatus.teamListQuery);
+
+  // ============ API 호출 ============ //
+  const teamList = useGetTeamList(teamListQuery);
+  // ============ React Query ============ //
 
   useEffect(() => {
     if (Object.keys(router.query).length !== 0) {
-      console.log('탐');
       // dispatch(setSetting(false));
       dispatch(isShow({ isShow: false, type: '' }));
       const query = router?.query;
@@ -57,7 +67,7 @@ const Layout = ({ children }: PropsType) => {
 
       if (token && !userId && type === 'google') {
         localStorage.setItem('accessToken', `${token}`);
-        dispatch(setSetting(true));
+        // dispatch(setSetting(true));
       }
       if (token && !userId && !type) {
         localStorage.setItem('accessToken', `${token}`);
