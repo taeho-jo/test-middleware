@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PopupBox from '../../atoms/PopupBox';
 import ModalTitle from '../../molecules/ModalTitle';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
@@ -17,17 +17,20 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import { showToast } from '../../../store/reducers/toastReducer';
 import TextArea from '../../atoms/TextArea';
 import { emailRex } from '../../../common/regex';
-import { useInviteTeamMemberEmailApi } from '../../../api/teamApi';
+import { fetchInviteMemberApi } from '../../../api/teamApi';
 import { ReducerType } from '../../../store/reducers';
 import { CURRENT_DOMAIN, INVITE_EMAIL_TEMPLATE } from '../../../common/util/commonVar';
+import { useMutation, useQueryClient } from 'react-query';
 
 interface PropsType {
   first?: boolean;
 }
 const InviteTeamMemberModal = ({ first = false }: PropsType) => {
+  const [copyUrl, setCopyUrl] = useState<string | null>(null);
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const selectTeam = localStorage.getItem('selectTeamList');
-  const teamSeq = JSON.parse(selectTeam)?.teamSeq;
+  const teamSeq = JSON.parse(localStorage.getItem('teamSeq'));
   const selectTeamSeq = useSelector<ReducerType, number | null>(state => state.team.selectTeamSeq);
 
   // hook form
@@ -41,7 +44,12 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
   const onSubmit = data => handleInvite('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const inviteMutaion = useInviteTeamMemberEmailApi();
+  const { mutate } = useMutation(['fetchInviteMember'], fetchInviteMemberApi, {
+    onSuccess: data => {
+      queryClient.invalidateQueries(['fetchMemberList', selectTeamSeq]);
+      dispatch(isShow({ isShow: false, type: '' }));
+    },
+  });
 
   const handleInvite = useCallback((status, data) => {
     const mailArr = data.email?.trim().split(/[, ]+/).join('\n').split('\n');
@@ -56,7 +64,7 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
     if (newMailArr.length === 0) {
       dispatch(showToast({ message: '메일 주소 형식을 확인 바랍니다.', isShow: true, status: 'warning', duration: 5000 }));
     } else {
-      inviteMutaion.mutate(sendObject);
+      mutate(sendObject);
     }
   }, []);
 
@@ -77,6 +85,12 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
     }
   };
 
+  useEffect(() => {
+    if (selectTeamSeq) {
+      setCopyUrl(`${CURRENT_DOMAIN}/admin/welcome?teamseq=${selectTeamSeq}`);
+    }
+  }, [selectTeamSeq]);
+
   return (
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
       <PopupBox style={{ position: 'absolute', top: '96px', left: first ? '264px' : '40%' }} padding={'0px'} width={'392px'} height={'auto'}>
@@ -85,11 +99,11 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
 
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
           <Input
-            onClick={() => handleCopyClipBoard(`${CURRENT_DOMAIN}/admin/welcome?teamseq=${teamSeq}`)}
+            onClick={() => handleCopyClipBoard(copyUrl)}
             title={'링크 복사'}
             register={register}
             label={'link'}
-            defaultValue={`${CURRENT_DOMAIN}/admin/welcome?teamseq=${teamSeq}`}
+            defaultValue={copyUrl}
             errors={errors}
             readOnly={true}
             style={{ marginBottom: '16px' }}

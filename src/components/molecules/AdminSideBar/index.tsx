@@ -13,27 +13,21 @@ import { ReducerType } from '../../../store/reducers';
 import { TeamListType, updateSelectTeamList, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import MoreTeamInfoPopup from '../MoreTeamInfoPopup';
 import { isShow } from '../../../store/reducers/modalReducer';
-import { useQueryClient } from 'react-query';
-import { useReFetchProductsListApi } from '../../../api/teamApi';
 
 // Dummy
 
 const AdminSideBar = () => {
   const dispatch = useDispatch();
-  const queryClient = useQueryClient();
   const teamList = useSelector<ReducerType, TeamListType[]>(state => state.team.teamList);
-  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
-
-  // const productList = useGetProductsListApi();
 
   const handleSelectTeam = useCallback(
     item => {
       console.log(item);
       dispatch(updateSelectTeamList(item));
       dispatch(updateTeamSeq(item.teamSeq));
+
       localStorage.setItem('selectTeamList', JSON.stringify(item));
       localStorage.setItem('teamSeq', item.teamSeq);
-      // useReFetchProductsListApi(queryClient, item.teamSeq);
     },
     [teamList],
   );
@@ -54,10 +48,6 @@ const AdminSideBar = () => {
       });
     }
   }, [teamList]);
-
-  const handleCreateTeam = useCallback(() => {
-    dispatch(isShow({ isShow: true, type: 'firstCreateTeam' }));
-  }, []);
 
   return (
     <div css={adminSideBarStyle}>

@@ -19,13 +19,17 @@ import { body3_medium, caption1_regular } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../../../common/types/commonTypes';
 import { ReducerType } from '../../../store/reducers';
-import { useCreateProductApi, useCreateTeamApi } from '../../../api/teamApi';
+import { fetchCreateProductApi } from '../../../api/teamApi';
 import { isShow } from '../../../store/reducers/modalReducer';
 import Select from '../../atoms/Select';
 import Icon from '../../atoms/Icon';
+import { useMutation, useQueryClient } from 'react-query';
 
 const TeamProductCreateModal = () => {
+  const queryClient = useQueryClient();
+  const dispatch = useDispatch();
   const commonCode = useSelector<ReducerType, any>(state => state.common.commonCode);
+  const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
   // hook form
   const {
     register,
@@ -37,7 +41,12 @@ const TeamProductCreateModal = () => {
   const onSubmit = data => handleCreateProduct('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const createProduct = useCreateProductApi();
+  const { mutate } = useMutation(['fetchCreateProduct'], fetchCreateProductApi, {
+    onSuccess: data => {
+      queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
+      dispatch(isShow({ isShow: false, type: '' }));
+    },
+  });
 
   const [selected, setSelected] = useState({
     planetType: '',
@@ -51,9 +60,8 @@ const TeamProductCreateModal = () => {
         productNm: data.productNm,
         ...selected,
       };
-      console.log(sendObject, 'DATA');
-      console.log(sendObject, 'STATE');
-      createProduct.mutate(sendObject);
+      const sendArr = [selectTeamSeq, sendObject];
+      mutate(sendArr);
     },
     [selected],
   );

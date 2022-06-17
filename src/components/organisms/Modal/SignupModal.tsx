@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { isShow } from '../../../store/reducers/modalReducer';
 // API
-import { useSignupApi } from '../../../api/authApi';
+import { fetchSignupApi } from '../../../api/authApi';
 // Libraries
 import { useForm } from 'react-hook-form';
 // Components
@@ -25,12 +25,16 @@ import { colors } from '../../../styles/Common.styles';
 // import { InputType } from '../AddInfoPopup';
 import { InputType } from '../../../common/types/commonTypes';
 import { ReducerType } from '../../../store/reducers';
-import { useGetUserInfo } from '../../../api/userApi';
+import { fetchUserInfoApi } from '../../../api/userApi';
 import { CURRENT_DOMAIN, EMAIL_CONFIRM_TEMPLATE } from '../../../common/util/commonVar';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { setToken } from '../../../store/reducers/authReducer';
+import { setUserInfo } from '../../../store/reducers/userReducer';
 
 // const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
 
 const SignupModal = () => {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -47,9 +51,29 @@ const SignupModal = () => {
   const onSubmit = data => handleSignup('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  // 이메일 가입
-  const userInfo = useGetUserInfo(false);
-  const { data, isLoading, mutate } = useSignupApi(userInfo.refetch);
+  const {
+    mutate: signupMutate,
+    isLoading,
+    data: signupData,
+  } = useMutation(['signup'], fetchSignupApi, {
+    onError: (e: any) => {
+      const { data } = e.response;
+      dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
+    },
+  });
+
+  const { data: usersInfo } = useQuery(['fetchUserInfo', `signup/${signupData?.code}`], () => fetchUserInfoApi(signupData?.data.token), {
+    enabled: !!signupData?.code,
+    onSuccess: data => {
+      dispatch(setUserInfo(data.data));
+      if (data.data.emailVerifiedYn === 'N') {
+        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+      }
+      if (data.data.emailVerifiedYn === 'Y') {
+        router.push('/admin/team');
+      }
+    },
+  });
 
   const handleSignup = useCallback((status, signupData) => {
     const { consentToUseMarketingYn, password, privacyConsentYn, userId } = signupData;
@@ -60,11 +84,9 @@ const SignupModal = () => {
       userName: userId.split('@')[0],
       privacyConsentYn: 'Y',
       consentToUseMarketingYn: 'Y',
-      // emailTemplateName: 'local_confirm_email_template',
-      // emailTemplateName: 'stag_confirm_email_template',
       emailTemplateName: EMAIL_CONFIRM_TEMPLATE,
     };
-    mutate(sendObject);
+    signupMutate(sendObject);
   }, []);
 
   // 구글 로그인
@@ -81,6 +103,14 @@ const SignupModal = () => {
   const handleGoBackLogin = useCallback(() => {
     dispatch(isShow({ isShow: true, type: 'login' }));
   }, []);
+
+  useEffect(() => {
+    if (signupData?.code === '201') {
+      localStorage.setItem('accessToken', signupData.data.token);
+      dispatch(setToken(signupData.data.token));
+      dispatch(showToast({ message: signupData.message, isShow: true, status: 'success', duration: 5000 }));
+    }
+  }, [signupData]);
 
   return (
     <FlexBox style={{ marginTop: modalShow ? '160px' : 0 }} justify={'center'} direction={'column'}>

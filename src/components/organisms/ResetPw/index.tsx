@@ -9,9 +9,10 @@ import Input from '../../atoms/Input';
 import BasicButton from '../../atoms/Button/BasicButton';
 import FlexBox from '../../atoms/FlexBox';
 import AnnouncementBox from '../../molecules/AnnouncementBox';
-import { useChangePasswordApi } from '../../../api/authApi';
+import { fetchChangePasswordApi } from '../../../api/authApi';
 import { useRouter } from 'next/router';
 import TextButton from '../../atoms/Button/TextButton';
+import { useMutation } from 'react-query';
 
 const pwInquiryInputArr = [
   {
@@ -36,7 +37,7 @@ const ResetPw = () => {
   const onSubmit = data => handleResetPassword('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const { isLoading, mutate, data } = useChangePasswordApi();
+  const { mutate, isLoading, data } = useMutation(['fetchChangePassword'], fetchChangePasswordApi);
 
   const handleResetPassword = useCallback((status, data) => {
     console.log(data);
@@ -44,7 +45,6 @@ const ResetPw = () => {
       password: data.password,
     };
     mutate(sendObject);
-    // router.push('/admin/reset-password-success');
   }, []);
   const handleProcessingError = useCallback((status, errors) => {
     // dispatch(showToast({ message: '가입된 계정이 없습니다. 다시 확인해주세요!', isShow: true, status: 'warning', duration: 5000 }));

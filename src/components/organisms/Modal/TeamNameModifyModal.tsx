@@ -9,26 +9,23 @@ import FlexBox from '../../atoms/FlexBox';
 import Input from '../../atoms/Input';
 import BasicButton from '../../atoms/Button/BasicButton';
 import Form from '../../atoms/Form';
-import AnnouncementBox from '../../molecules/AnnouncementBox';
-import TextButton from '../../atoms/Button/TextButton';
 // libraries
 import { useForm } from 'react-hook-form';
 // Styles
-import { colors } from '../../../styles/Common.styles';
-import { body3_medium } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../../../common/types/commonTypes';
 import { ReducerType } from '../../../store/reducers';
-import { useCreateTeamApi, useGetTeamList, useReFetchTeamList, useUpdateTeamInfoApi } from '../../../api/teamApi';
+import { fetchTeamListApi, fetchUpdateTeamApi } from '../../../api/teamApi';
 import { isShow } from '../../../store/reducers/modalReducer';
-import { useQueryClient } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
+import { updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
+import { showToast } from '../../../store/reducers/toastReducer';
+
 interface PropsType {
   first?: boolean;
 }
 const TeamNameModifyModal = ({ first = false }: PropsType) => {
   const dispatch = useDispatch();
-  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
-  const queryClient = useQueryClient();
   // hook form
   const {
     register,
@@ -39,16 +36,33 @@ const TeamNameModifyModal = ({ first = false }: PropsType) => {
 
   const onSubmit = data => handleUpdateTeam('success', data);
   const onError = errors => handleProcessingError('fail', errors);
-  const selectTeamList = JSON.parse(localStorage.getItem('selectTeamList'));
+  const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+  const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
 
-  // API //
-  const updateTeam = useUpdateTeamInfoApi();
+  // ============ React Query ============ //
+  const { mutate, data: updateData } = useMutation(['fetchUpdateTeam'], fetchUpdateTeamApi);
+
+  const { data: teamListData, isLoading } = useQuery(['fetchTeamList', updateData?.code], fetchTeamListApi, {
+    enabled: !!updateData?.code,
+    onSuccess: data => {
+      const list = data?.data?.list;
+      const currentTeam = list.find(item => item.teamSeq === selectTeamSeq);
+
+      dispatch(updateTeamInfo(list));
+      dispatch(updateSelectTeamList(currentTeam));
+      dispatch(updateTeamSeq(currentTeam?.teamSeq));
+      dispatch(showToast({ message: '팀 명이 수정되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+      dispatch(isShow({ isShow: false, type: '' }));
+    },
+  });
+  // ============ React Query ============ //
 
   const handleUpdateTeam = useCallback((status, data) => {
     const sendObject = {
       teamNm: data.team,
     };
-    updateTeam.mutate(sendObject);
+    const sendArr = [selectTeamSeq, sendObject];
+    mutate(sendArr);
   }, []);
 
   const handleProcessingError = useCallback((status, errors) => {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import PageTitle from '../../atoms/PageTitle';
 import FlexBox from '../../atoms/FlexBox';
@@ -7,11 +7,11 @@ import SearchInput from '../../atoms/SearchInput';
 import IconTextButton from '../../atoms/Button/IconTextButton';
 import MemberList from '../../template/MemberList';
 import { css } from '@emotion/react';
-import { useTeamMemberListApi } from '../../../api/teamApi';
+import { fetchMemberListApi } from '../../../api/teamApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { ReducerType } from '../../../store/reducers';
-import LayerPopup from '../../atoms/LayerPopup';
+import { useQuery } from 'react-query';
 
 const TeamMember = () => {
   const {
@@ -27,12 +27,12 @@ const TeamMember = () => {
 
   const [searchText, setSearchText] = useState<string>('');
 
-  const [getApi, setGetApi] = useState(false);
-
   const dispatch = useDispatch();
-  const selectTeamList = useSelector<ReducerType>(state => state.team.selectTeamList);
+  const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
 
-  const { data, isLoading, error, refetch } = useTeamMemberListApi(getApi);
+  const { data, isLoading } = useQuery(['fetchMemberList', selectTeamSeq], () => fetchMemberListApi(selectTeamSeq), {
+    enabled: !!selectTeamSeq,
+  });
 
   const submitData = useCallback(
     (status, data) => {
@@ -41,17 +41,6 @@ const TeamMember = () => {
     },
     [searchText],
   );
-
-  useEffect(() => {
-    setGetApi(true);
-    return () => {
-      setGetApi(false);
-    };
-  }, []);
-
-  useEffect(() => {
-    refetch();
-  }, [selectTeamList]);
 
   return (
     <>

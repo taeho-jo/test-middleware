@@ -20,7 +20,6 @@ const ModalTitle = ({ title = 'Modal', titlePosition = 'flex-start', closed = tr
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
   const closeModal = useCallback(() => {
-    dispatch(updateTeamSeq(null));
     dispatch(isShow({ isShow: false, type: '' }));
   }, []);
 

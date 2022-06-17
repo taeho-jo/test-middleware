@@ -7,15 +7,24 @@ import ModalSubTitle from '../../atoms/ModalSubTitle';
 import ConfirmPopupNextStepBtn from '../../molecules/ConfirmPopupNextStepBtn';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { isShow } from '../../../store/reducers/modalReducer';
-import { useResendEmail } from '../../../api/authApi';
+import { fetchEmailResendApi } from '../../../api/authApi';
 import { ReducerType } from '../../../store/reducers';
 import { EMAIL_CONFIRM_TEMPLATE } from '../../../common/util/commonVar';
 import { removeUserInfo } from '../../../store/reducers/userReducer';
+import { useMutation } from 'react-query';
 
 const ConfirmResetPasswordModal = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
-  const resendResponse = useResendEmail();
+
+  const { mutate } = useMutation('fetchResendEmail', fetchEmailResendApi, {
+    onError: error => {
+      dispatch(showToast({ message: '인증메일 재전송에 실패하였습니다.', isShow: true, status: 'waring', duration: 5000 }));
+    },
+    onSuccess: data => {
+      dispatch(showToast({ message: '인증메일이 재전송 되었습니다.', isShow: true, status: 'sucess', duration: 5000 }));
+    },
+  });
 
   const SubTitleArr = [`${userInfo.userId} 로`, '인증 메일을 보내드렸습니다.', '메일을 확인하시고, 확인 버튼을 클릭해주세요.'];
 
@@ -23,12 +32,11 @@ const ConfirmResetPasswordModal = () => {
     const sendObject = {
       emailTemplateName: EMAIL_CONFIRM_TEMPLATE,
     };
-    resendResponse.mutate(sendObject);
+    mutate(sendObject);
   }, []);
 
   const reSignup = useCallback(() => {
     localStorage.clear();
-    // dispatch(removeUserInfo());
     dispatch(isShow({ isShow: true, type: 'signup' }));
   }, []);
 

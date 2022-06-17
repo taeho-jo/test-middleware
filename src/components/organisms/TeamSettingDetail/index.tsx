@@ -7,13 +7,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { css } from '@emotion/react';
-import { useGetProductsListApi } from '../../../api/teamApi';
+import { fetchProductListApi } from '../../../api/teamApi';
 import Icon from '../../atoms/Icon';
 import { useRouter } from 'next/router';
 import { updateSelectProductList } from '../../../store/reducers/teamReducer';
+import { useMutation, useQuery } from 'react-query';
 
 const TeamSettingDetail = () => {
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+  const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -25,7 +27,9 @@ const TeamSettingDetail = () => {
   }, []);
 
   // ============ API 호출 ============ //
-  const productList = useGetProductsListApi();
+  const { data: productData, refetch } = useQuery(['fetchProductList', selectTeamSeq], () => fetchProductListApi(selectTeamSeq), {
+    enabled: !!selectTeamSeq,
+  });
   // ============ API 호출 ============ //
 
   return (
@@ -34,9 +38,9 @@ const TeamSettingDetail = () => {
       <FlexBox direction={'column'} justify={'flex-start'} align={'flex-start'} style={{ maxWidth: '800px', padding: '0 40px 20px 40px' }}>
         <FlexBox style={teamNameBoxStyle} justify={'flex-start'} align={'center'}>
           <Icon name={'NAVIGATION_ARROW_LEFT'} onClick={() => router.push('/admin/setting')} style={{ cursor: 'pointer' }} />
-          <span css={[heading3_bold, { marginLeft: '10px' }]}>{selectTeamList ? selectTeamList[0]?.teamName : ''}</span>
+          <span css={[heading3_bold, { marginLeft: '10px' }]}>{selectTeamList ? selectTeamList?.teamNm : ''}</span>
         </FlexBox>
-        {productList?.data?.data.map((el, index) => {
+        {productData?.data.map((el, index) => {
           const { planetType, productNm, productSeq, revenueModelType, serviceType, teamSeq } = el;
           return (
             <Fragment key={index}>

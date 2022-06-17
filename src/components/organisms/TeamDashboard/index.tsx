@@ -22,10 +22,10 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import ResearchList from '../ResearchList';
 import { ReducerType } from '../../../store/reducers';
 import { useRouter } from 'next/router';
-import { useQueryClient } from 'react-query';
-import { useGetUserInfo } from '../../../api/userApi';
-import { useGetTeamList } from '../../../api/teamApi';
+import { useQuery, useQueryClient } from 'react-query';
+import { fetchTeamListApi } from '../../../api/teamApi';
 import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
+import { updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
 
 const ResearchType = [
   {
@@ -86,8 +86,13 @@ const TeamDashboard = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const userInfoQuery = useSelector<ReducerType, boolean>(state => state.userInfoQuery);
-  // 팀 리스트 API
-  // const { data, error, isError } = useGetTeamList();
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+  const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
+
+  // ============ React Query ============ //
+  const { data: teamListData, isLoading } = useQuery('fetchTeamList', fetchTeamListApi);
+  // ============ React Query ============ //
 
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));
@@ -98,8 +103,36 @@ const TeamDashboard = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(updateQueryStatus({ name: 'teamListQuery', status: true }));
-  }, []);
+    if (teamListData?.code === '200') {
+      const count = teamListData?.data?.count;
+      const list = teamListData?.data?.list;
+      if (count === 0) {
+        dispatch(
+          updateTeamInfo([
+            {
+              teamSeq: null,
+              teamRoleType: null,
+              teamNm: `${userInfo.userName}`,
+              teamMember: [userInfo.userName.slice(0, 1)],
+              createDt: null,
+            },
+          ]),
+        );
+        dispatch(isShow({ isShow: true, type: 'firstCreateTeam' }));
+      } else {
+        dispatch(updateTeamInfo(list));
+        if (selectTeamList === null) {
+          dispatch(updateSelectTeamList(list[0]));
+        }
+        if (selectTeamSeq === null) {
+          dispatch(updateTeamSeq(list[0]?.teamSeq));
+        }
+
+        localStorage.setItem('teamSeq', list[0]?.teamSeq);
+        localStorage.setItem('selectTeamList', JSON.stringify(list[0]));
+      }
+    }
+  }, [teamListData]);
 
   return (
     <>

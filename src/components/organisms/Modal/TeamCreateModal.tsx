@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 // Components
@@ -19,12 +19,17 @@ import { body3_medium } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../../../common/types/commonTypes';
 import { ReducerType } from '../../../store/reducers';
-import { useCreateTeamApi } from '../../../api/teamApi';
+import { fetchCreateTeamApi, fetchTeamListApi } from '../../../api/teamApi';
 import { isShow } from '../../../store/reducers/modalReducer';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { showToast } from '../../../store/reducers/toastReducer';
+import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
+import { updateTeamInfo } from '../../../store/reducers/teamReducer';
 interface PropsType {
   first?: boolean;
 }
 const TeamCreateModal = ({ first = false }: PropsType) => {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   // hook form
@@ -38,20 +43,32 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
   const onSubmit = data => handleCreateTeam('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const createTeamMutation = useCreateTeamApi();
+  // ============ React Query ============ //
+  const { mutate, data: createTeamData } = useMutation('fetchCreateTeam', fetchCreateTeamApi, {
+    onError: e => {
+      dispatch(showToast({ message: '팀 생성에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
+    },
+    onSuccess: data => {
+      dispatch(showToast({ message: '팀 생성이 완료되었습니다.', isShow: true, status: '', duration: 5000 }));
+      first ? dispatch(isShow({ isShow: true, type: 'inviteTeamMember' })) : dispatch(isShow({ isShow: false, type: '' }));
+
+      queryClient.invalidateQueries('fetchTeamList');
+    },
+  });
+  // ============ React Query ============ //
 
   const handleCreateTeam = useCallback((status, data) => {
     const sendObject = {
       teamNm: data.team,
     };
-    createTeamMutation.mutate(sendObject);
+    mutate(sendObject);
   }, []);
 
   const handleClickSkip = useCallback(() => {
     const sendObject = {
       teamNm: userInfo?.userName,
     };
-    createTeamMutation.mutate(sendObject);
+    mutate(sendObject);
   }, [userInfo]);
 
   const handleProcessingError = useCallback((status, errors) => {
