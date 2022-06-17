@@ -6,21 +6,37 @@ import { useDispatch } from 'react-redux';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
 import ConfirmPopupNextStepBtn from '../../molecules/ConfirmPopupNextStepBtn';
 import { showToast } from '../../../store/reducers/toastReducer';
-import { useResendEmail } from '../../../api/authApi';
+import { useMutation } from 'react-query';
+import { fetchResetPasswordEmailApi } from '../../../api/authApi';
+import { isShow } from '../../../store/reducers/modalReducer';
+import { PASSWORD_RESET_TEMPLATE } from '../../../common/util/commonVar';
 
 const ConfirmResetPasswordModal = () => {
   const dispatch = useDispatch();
   const userEmail = sessionStorage.getItem('userId');
 
-  // const resendResponse = useResendEmail();
-
   const resetPasswordSubTitleArr = [`${userEmail} 로`, '새 비밀번호를 설정할 수 있는 메일을 보냈어요.', '새로운 비밀번호를 설정해주세요.'];
 
+  const { mutate, data, isLoading } = useMutation(['fetchResetPassword'], fetchResetPasswordEmailApi, {
+    onError: e => {
+      dispatch(showToast({ message: '비밀번호 재설정 메일 재발송에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
+    },
+    onSuccess: data => {
+      dispatch(showToast({ message: '비밀번호 재설정 메일이 재발송되었습니다.', isShow: true, status: '', duration: 5000 }));
+      dispatch(isShow({ isShow: true, type: 'confirmResetPassword' }));
+    },
+  });
+
   const resendEmail = useCallback(() => {
+    const sendObject = {
+      userId: userEmail,
+      emailTemplateName: PASSWORD_RESET_TEMPLATE,
+    };
+    mutate(sendObject);
     // const sendObject;
     // resendResponse.mutate(sendObject);
     dispatch(showToast({ message: '비밀번호 재설정 메일이 발송되었습니다.', isShow: true, status: '', duration: 5000 }));
-  }, []);
+  }, [sessionStorage]);
 
   return (
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>

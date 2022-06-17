@@ -19,15 +19,19 @@ import { body3_medium, caption1_regular } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../../../common/types/commonTypes';
 import { ReducerType } from '../../../store/reducers';
-import { useCreateProductApi, useCreateTeamApi, useUpdateProductApi } from '../../../api/teamApi';
+import { fetchDeleteProductAi, fetchUpdateProductApi } from '../../../api/teamApi';
 import { isShow } from '../../../store/reducers/modalReducer';
 import Select from '../../atoms/Select';
 import Icon from '../../atoms/Icon';
 import { TeamProductType } from '../../../store/reducers/teamReducer';
+import { useMutation, useQueryClient } from 'react-query';
 
 const TeamProductModifyModal = () => {
+  const queryClient = useQueryClient();
+  const dispatch = useDispatch();
   const commonCode = useSelector<ReducerType, any>(state => state.common.commonCode);
   const selectProduct = useSelector<ReducerType, TeamProductType>(state => state.team.selectProduct);
+  const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
   // hook form
   const {
     register,
@@ -39,7 +43,19 @@ const TeamProductModifyModal = () => {
   const onSubmit = data => handleUpdateProduct('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const updateProduct = useUpdateProductApi(selectProduct.productSeq);
+  const { mutate } = useMutation(['fetchUpdateProduct', selectTeamSeq, selectProduct.productSeq], fetchUpdateProductApi, {
+    onSuccess: data => {
+      queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
+      dispatch(isShow({ isShow: false, type: '' }));
+    },
+  });
+
+  const { mutate: deleteMutate } = useMutation(['fetchDeleteProduct', selectTeamSeq, selectProduct.productSeq], fetchDeleteProductAi, {
+    onSuccess: data => {
+      queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
+      dispatch(isShow({ isShow: false, type: '' }));
+    },
+  });
 
   const [selected, setSelected] = useState({
     planetType: '',
@@ -53,12 +69,20 @@ const TeamProductModifyModal = () => {
         productNm: data.productNm,
         ...selected,
       };
-      console.log(sendObject, 'DATA');
-      console.log(sendObject, 'STATE');
-      updateProduct.mutate(sendObject);
+
+      const sendArr = [selectTeamSeq, selectProduct.productSeq, sendObject];
+      mutate(sendArr);
     },
     [selected],
   );
+
+  const deleteProduct = useCallback(() => {
+    const sendObject = {
+      teamSeq: selectTeamSeq,
+      productSeq: selectProduct.productSeq,
+    };
+    deleteMutate(sendObject);
+  }, [selectTeamSeq, selectProduct]);
 
   const onClickValue = useCallback(
     (value, label) => {
@@ -135,7 +159,9 @@ const TeamProductModifyModal = () => {
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
             <BasicButton theme={'dark'} type={'submit'} text={'정보 저장하기'} />
             <FlexBox justify={'center'} align={'center'} style={{ marginTop: '22px' }}>
-              <span css={[caption1_regular, { color: colors.red }]}>프로덕트 삭제하기</span>
+              <span onClick={deleteProduct} css={[caption1_regular, { color: colors.red, cursor: 'pointer' }]}>
+                프로덕트 삭제하기
+              </span>
               <Icon name={'NAVIGATION_CLOSE_SM'} iconColor={colors.red} />
             </FlexBox>
           </FlexBox>

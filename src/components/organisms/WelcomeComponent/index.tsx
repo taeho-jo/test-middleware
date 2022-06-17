@@ -10,7 +10,7 @@ import FlexBox from '../../atoms/FlexBox';
 import BasicButton from '../../atoms/Button/BasicButton';
 import IconTextButton from '../../atoms/Button/IconTextButton';
 import { colors } from '../../../styles/Common.styles';
-import { useGetInviteTeamUserInfo, useGetUserInfo } from '../../../api/userApi';
+import { useGetInviteTeamUserInfo } from '../../../api/userApi';
 import { useSignupApi } from '../../../api/authApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -40,9 +40,9 @@ const WelcomeComponent = () => {
   const onSubmit = data => handleSignup('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const { refetch } = useGetInviteTeamUserInfo(teamSeq, false);
-
-  const { data, isLoading, mutate } = useSignupApi();
+  // const { refetch } = useGetInviteTeamUserInfo(teamSeq, false);
+  //
+  // const { data, isLoading, mutate } = useSignupApi();
 
   const handleSignup = useCallback((status, signupData) => {
     const { consentToUseMarketingYn, password, privacyConsentYn, userId } = signupData;
@@ -56,7 +56,7 @@ const WelcomeComponent = () => {
       consentToUseMarketingYn: 'Y',
       emailTemplateName: EMAIL_CONFIRM_TEMPLATE,
     };
-    mutate(sendObject);
+    // mutate(sendObject);
   }, []);
 
   // 구글 로그인
@@ -71,7 +71,7 @@ const WelcomeComponent = () => {
 
   useEffect(() => {
     if (token && teamSeq) {
-      refetch();
+      // refetch();
     } else {
       return;
     }
@@ -82,6 +82,8 @@ const WelcomeComponent = () => {
       setTeamSeq(router.query.teamseq);
     }
   }, [router.query]);
+
+  console.log(teamSeq, 'TEAM SEQ');
 
   return (
     <FlexBox style={{ marginTop: '160px', height: '100%' }} justify={'flex-start'} direction={'column'}>
@@ -116,7 +118,7 @@ const WelcomeComponent = () => {
           />
 
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton isLoading={isLoading} type={'submit'} text={'간편하게 시작하기'} style={{ marginBottom: '34px' }} />
+            <BasicButton type={'submit'} text={'간편하게 시작하기'} style={{ marginBottom: '34px' }} />
             <IconTextButton onClick={loginWithGoogle} name={'GOOGLE'} iconPosition={'left'} text={'구글로 시작하기'} textStyle={'custom'} />
           </FlexBox>
         </Form>

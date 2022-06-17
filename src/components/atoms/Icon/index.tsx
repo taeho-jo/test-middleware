@@ -44,6 +44,8 @@ interface PropsType {
   style?: any;
   iconColor?: string;
   onClick?: () => void;
+  width?: string;
+  height?: string;
 }
 
 const IconTypes = {
@@ -84,13 +86,13 @@ const IconTypes = {
   NOTI: Noti,
 };
 
-const Icon = ({ name, size = 24, style, iconColor, onClick, forwardref }: PropsType) => {
+const Icon = ({ name, size = 24, style, iconColor, onClick, forwardref, width = '24px', height = '24px' }: PropsType) => {
   const IconComponent = IconTypes[name];
   // const viewBox = `0 0 24 24`;
   const viewBox = `0 0 ${size} ${size}`;
 
   return (
-    <div css={{ width: '24px', height: '24px' }} ref={forwardref} onClick={onClick}>
+    <div css={{ width: width, height: height }} ref={forwardref} onClick={onClick}>
       <IconComponent
         css={[iconStyle(iconColor), style]}
         // onClick={onClick}

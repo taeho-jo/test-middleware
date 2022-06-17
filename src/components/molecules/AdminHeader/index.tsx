@@ -10,14 +10,13 @@ import { ReducerType } from '../../../store/reducers';
 
 const AdminHeader = () => {
   const router = useRouter();
-  const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
-  const selectTeam = JSON.parse(localStorage.getItem('selectTeamList'));
-  const selectTeamName = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+
+  const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
 
   return (
     <FlexBox style={headerStyle} justify={'flex-start'} align={'center'}>
       <span onClick={() => router.push('/admin/team')} css={[heading5_bold, itemsStyle, teamTextStyle(router.pathname)]}>
-        {selectTeamName ? selectTeamName.teamNm : ''}
+        {selectTeamList ? selectTeamList.teamNm : ''}
       </span>
       <span onClick={() => router.push('/admin/member')} css={[heading5_bold, itemsStyle, memberTextStyle(router.pathname)]}>
         팀원

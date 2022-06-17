@@ -35,7 +35,7 @@ const SearchInput = ({
 }: PropsType) => {
   return (
     <FlexBox style={{ position: 'relative', ...style }}>
-      <Icon iconColor={disabled ? colors.grey._cc : ''} style={searchInputIcon} name={'ACTION_SEARCH'} size={24} />
+      <Icon width={'0px'} height={'0px'} iconColor={disabled ? colors.grey._cc : ''} style={searchInputIcon} name={'ACTION_SEARCH'} size={24} />
       <input
         disabled={disabled}
         css={[heading5_regular, searchInputBox(width)]}
