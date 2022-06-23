@@ -78,9 +78,11 @@ const Select = ({
         <div css={isOpen ? customSelectOpen('100%', padding) : customSelect(padding)}>
           <div css={customSelectTrigger}>
             <span css={[fontSize ? fontSize : heading3_regular, { padding: 0, color: selected[name] ? colors.grey._3c : colors.grey._cc }]}>
-              {options?.find(item => item.value === selected[name])?.displayName || '옵션을 선택해주세요.'}
-              {/*{selected[name] ? selected[name] : placeholder ? placeholder : '옵션을 선택해주세요.'}*/}
-              {/*{options.find(item => item.value === selected[name])}*/}
+              {options?.find(item => item.value === selected[name])?.displayName
+                ? options?.find(item => item.value === selected[name])?.displayName
+                : placeholder
+                ? placeholder
+                : '옵션을 선택해주세요.'}
             </span>
             <Icon name={'CHEVRON_DOWN_THIN'} size={24} />
           </div>

@@ -21,26 +21,7 @@ const AdminHeader = () => {
       setTeamNm(localSelectTeamList?.teamNm);
     }
   }, [localSelectTeamList]);
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
-  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+
   return (
     <FlexBox style={headerStyle} justify={'flex-start'} align={'center'}>
       <span onClick={() => router.push('/admin/team')} css={[heading5_bold, itemsStyle, teamTextStyle(router.pathname)]}>

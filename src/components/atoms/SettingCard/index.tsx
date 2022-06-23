@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { colors } from '../../../styles/Common.styles';
 import FlexBox from '../FlexBox';
 import { caption1_regular, heading5_bold, heading5_regular } from '../../../styles/FontStyles';
@@ -14,10 +14,17 @@ interface PropsType {
   style?: any;
   onClick?: (name) => void;
   name?: string;
+  [key: string]: any;
 }
 
-const SettingCard = ({ title, content, btnText, showBtn = false, style, onClick, name }: PropsType) => {
-  console.log(style);
+const SettingCard = ({ title, content, btnText, showBtn = false, style, onClick, name, ...props }: PropsType) => {
+  const handleWithdrawal = useCallback(() => {
+    if (props.contentEvent) {
+      props.contentEvent();
+    } else {
+      return;
+    }
+  }, [props.contentEvent]);
   return (
     <FlexBox
       justify={showBtn ? 'space-around' : 'flex-start'}
@@ -26,7 +33,9 @@ const SettingCard = ({ title, content, btnText, showBtn = false, style, onClick,
     >
       <FlexBox style={{ flex: 1 }} justify={'flex-start'} direction={'column'} align={'flex-start'}>
         <span css={[heading5_regular, { marginBottom: '10px', color: colors.grey._99 }]}>{title}</span>
-        <span css={[heading5_bold]}>{content}</span>
+        <span onClick={handleWithdrawal} css={[heading5_bold, { color: props.contentColor ? props.contentColor : '' }]}>
+          {content}
+        </span>
       </FlexBox>
       {showBtn ? (
         <FlexBox onClick={() => onClick(name)} style={{ flex: 1, cursor: 'pointer' }} justify={'flex-end'} align={'center'}>
