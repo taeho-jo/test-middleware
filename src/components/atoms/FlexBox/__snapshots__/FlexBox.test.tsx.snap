@@ -3,7 +3,7 @@
 exports[`Flex Box flex width grid 1`] = `
 <div>
   <div
-    class="css-p7i2td-flexBox-FlexBox"
+    class="css-1rzsxx4-flexBox-FlexBox"
   >
     테스트
   </div>
@@ -13,7 +13,7 @@ exports[`Flex Box flex width grid 1`] = `
 exports[`Flex Box flex width grid 2`] = `
 <div>
   <div
-    class="css-ur6trp-flexBox-FlexBox"
+    class="css-8a04ui-flexBox-FlexBox"
   >
     테스트
   </div>
@@ -23,7 +23,7 @@ exports[`Flex Box flex width grid 2`] = `
 exports[`Flex Box flex width grid 3`] = `
 <div>
   <div
-    class="css-p7i2td-flexBox-FlexBox"
+    class="css-1rzsxx4-flexBox-FlexBox"
   >
     테스트
   </div>
