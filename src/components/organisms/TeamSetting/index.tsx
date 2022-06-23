@@ -21,16 +21,20 @@ const TeamSetting = () => {
   }, []);
 
   const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
+  const localSelectTeamSeq = localStorage.getItem('teamSeq');
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+  const localSelectTeamList = JSON.parse(localStorage.getItem('selectTeamList'));
 
+  const teamSeq = selectTeamSeq ? selectTeamSeq : localSelectTeamSeq;
+  const teamList = selectTeamList ? selectTeamList : localSelectTeamList;
   // ============ React Query ============ //
-  const { data: productData, refetch } = useQuery(['fetchProductList', selectTeamSeq], () => fetchProductListApi(selectTeamSeq), {
-    enabled: !!selectTeamSeq,
+  const { data: productData, refetch } = useQuery(['fetchProductList', teamSeq], () => fetchProductListApi(teamSeq), {
+    enabled: !!teamSeq,
     onError: (e: any) => {
       const errorData = e.response.data;
       if (errorData.code === 'E0008') {
         queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
+        queryClient.invalidateQueries(['fetchProductList', teamSeq]);
       }
       if (errorData.code === 'E0007') {
         localStorage.clear();
@@ -51,13 +55,13 @@ const TeamSetting = () => {
       <PageTitle title={'설정'} />
       <FlexBox direction={'column'} justify={'flex-start'} align={'flex-start'} style={{ maxWidth: '800px', padding: '0 40px 20px 40px' }}>
         <div css={teamNameBoxStyle}>
-          <span css={heading3_bold}>{selectTeamList ? selectTeamList?.teamNm : ''}</span>
+          <span css={heading3_bold}>{teamList ? teamList?.teamNm : ''}</span>
         </div>
         <SettingCard
           onClick={showModalFun}
           name={'teamNameModify'}
           title={'팀 이름'}
-          content={selectTeamList ? selectTeamList?.teamNm : ''}
+          content={teamList ? teamList?.teamNm : ''}
           btnText={'팀 명 수정하기'}
           showBtn={true}
         />
@@ -76,7 +80,7 @@ const TeamSetting = () => {
           onClick={productData?.data?.length === 0 ? showModalFun : () => router.push('/admin/setting/detail')}
           name={'createTeamProduct'}
         />
-        <SettingCard title={'팀 생성일'} content={selectTeamList ? selectTeamList?.createDt : '----.--.--'} />
+        <SettingCard title={'팀 생성일'} content={teamList ? teamList?.createDt : '----.--.--'} />
       </FlexBox>
     </>
   );
