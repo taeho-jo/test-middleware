@@ -76,27 +76,27 @@ const Report = () => {
       </FlexBox>
 
       <FlexBox align={'flex-start'} style={{ width: 'calc(100vw - 296px)', padding: '16px' }}>
-        <StackedBarChart
-          dataList={stackedBarTestData}
-          label={[
-            <>
-              미션 1 <strong>회원가입하기</strong>
-            </>,
-          ]}
-          rate={'49.5%'}
-        />
+        {/*<StackedBarChart*/}
+        {/*  dataList={stackedBarTestData}*/}
+        {/*  label={[*/}
+        {/*    <>*/}
+        {/*      미션 1 <strong>회원가입하기</strong>*/}
+        {/*    </>,*/}
+        {/*  ]}*/}
+        {/*  rate={'49.5%'}*/}
+        {/*/>*/}
       </FlexBox>
       <FlexBox align={'flex-start'} style={{ width: 'calc(100vw - 296px)', padding: '16px' }}>
-        <StackedBarChart
-          dataList={stackedBarTestData}
-          label={[
-            <>
-              미션 1 <strong>회원가입하기</strong>
-            </>,
-          ]}
-          rate={'49.5%'}
-          negative={true}
-        />
+        {/*<StackedBarChart*/}
+        {/*  dataList={stackedBarTestData}*/}
+        {/*  label={[*/}
+        {/*    <>*/}
+        {/*      미션 1 <strong>회원가입하기</strong>*/}
+        {/*    </>,*/}
+        {/*  ]}*/}
+        {/*  rate={'49.5%'}*/}
+        {/*  negative={true}*/}
+        {/*/>*/}
       </FlexBox>
 
       <FlexBox align={'flex-start'}>

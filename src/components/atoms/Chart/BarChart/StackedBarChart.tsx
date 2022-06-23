@@ -5,7 +5,7 @@ import { heading5_bold, heading5_regular } from '../../../../styles/FontStyles';
 import ReportShortAnswerQuestionLayerPopup from '../../ReportShortAnswerQuestionLayerPopup';
 
 interface PropsType {
-  dataList: { [key: string]: any }[];
+  dataList: any;
   name?: string;
   label?: any;
   rate?: string;

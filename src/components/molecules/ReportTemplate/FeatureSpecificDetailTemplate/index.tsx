@@ -80,28 +80,28 @@ const FeatureSpecificDetailTemplate = () => {
               <AnnouncementBox icon={'NOTI'} content={'클릭하면 주관식 응답을 확인할 수 있어요.'} />
             </FlexBox>
 
-            <StackedBarChart
-              dataList={stackedBarTestData}
-              label={[
-                <>
-                  <strong>불편 대상 1위 :</strong> 조회 콘텐츠 (뉴스, 블로그 글 등 )
-                </>,
-              ]}
-              value={'49명'}
-              valueStyle={{ color: colors.grey._3c, fontWeight: 500 }}
-              rate={'46%'}
-            />
-            <StackedBarChart
-              dataList={stackedBarTestData}
-              label={[
-                <>
-                  <strong>불편 대상 2위 :</strong> 메뉴(구조, 이름)
-                </>,
-              ]}
-              value={'49명'}
-              valueStyle={{ color: colors.grey._3c, fontWeight: 500 }}
-              rate={'49.5%'}
-            />
+            {/*<StackedBarChart*/}
+            {/*  dataList={stackedBarTestData}*/}
+            {/*  label={[*/}
+            {/*    <>*/}
+            {/*      <strong>불편 대상 1위 :</strong> 조회 콘텐츠 (뉴스, 블로그 글 등 )*/}
+            {/*    </>,*/}
+            {/*  ]}*/}
+            {/*  value={'49명'}*/}
+            {/*  valueStyle={{ color: colors.grey._3c, fontWeight: 500 }}*/}
+            {/*  rate={'46%'}*/}
+            {/*/>*/}
+            {/*<StackedBarChart*/}
+            {/*  dataList={stackedBarTestData}*/}
+            {/*  label={[*/}
+            {/*    <>*/}
+            {/*      <strong>불편 대상 2위 :</strong> 메뉴(구조, 이름)*/}
+            {/*    </>,*/}
+            {/*  ]}*/}
+            {/*  value={'49명'}*/}
+            {/*  valueStyle={{ color: colors.grey._3c, fontWeight: 500 }}*/}
+            {/*  rate={'49.5%'}*/}
+            {/*/>*/}
 
             <AnnouncementBox
               style={{ width: '100%', marginTop: '32px', padding: '12px 16px' }}
