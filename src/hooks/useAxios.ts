@@ -54,7 +54,7 @@ export const AXIOS_PUT = async (url: string, sendObject: any) => {
 };
 
 // PATCH
-export const AXIOS_PATCH = async (url: string, sendObject: any) => {
+export const AXIOS_PATCH = async (url: string, sendObject?: any) => {
   const headers = getAuthHeader();
   const { data } = await AXIOS.patch(url, sendObject, { headers });
   return data;

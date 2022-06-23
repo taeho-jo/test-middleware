@@ -39,6 +39,11 @@ export const fetchMemberListApi = async teamSeq => {
   return await AXIOS_GET(`/team/${teamSeq}/member/`);
 };
 
+// 팀원 권한 변경 API
+export const fetchMemberAuthChangeApi = async (teamSeq, userId) => {
+  return await AXIOS_PATCH(`/team/${teamSeq}/member/${userId}/`, {});
+};
+
 // 팀원 이메일 초대 API
 export const fetchInviteMemberApi = async sendObject => {
   return await AXIOS_POST('/team/member/invite/', sendObject);

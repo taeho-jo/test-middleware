@@ -44,7 +44,7 @@ const TeamMember = () => {
   const [teamRoleType, setTeamRoleType] = useState(null);
   const [dropDownList, setDropDownList] = useState({
     manager: [
-      { text: '멤버로 변경하기', onClick: () => console.log('asdfasdafsd') },
+      { text: '멤버로 변경하기', onClick: null },
       { text: '우리 팀에서 내보내기', onClick: null },
     ],
     member: [
@@ -80,7 +80,7 @@ const TeamMember = () => {
 
   const handleChangeMemberStatus = useCallback(name => {
     console.log(name);
-    if (name === '관리자로 변경하기') {
+    if (name === '관리자로 변경하기' || name === '멤버로 변경하기') {
       dispatch(isShow({ isShow: true, type: 'changeMemberAuth' }));
     }
   }, []);
