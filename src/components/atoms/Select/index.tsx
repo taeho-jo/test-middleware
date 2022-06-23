@@ -25,6 +25,7 @@ type PropsType = {
   fontSize?: any;
   selectBoxHeight?: string;
   selectBoxMargin?: string;
+  [key: string]: any;
 };
 const Select = ({
   options,
@@ -41,6 +42,7 @@ const Select = ({
   fontSize,
   selectBoxHeight,
   selectBoxMargin,
+  ...props
 }: PropsType) => {
   const [isOpen, setOpen] = useState(false);
   // const [selected, setSelected] = useState<string>();

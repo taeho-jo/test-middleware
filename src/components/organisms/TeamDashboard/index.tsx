@@ -23,9 +23,10 @@ import ResearchList from '../ResearchList';
 import { ReducerType } from '../../../store/reducers';
 import { useRouter } from 'next/router';
 import { useQuery, useQueryClient } from 'react-query';
-import { fetchTeamListApi } from '../../../api/teamApi';
+import { fetchTeamListApi, fetchTeamReportListApi } from '../../../api/teamApi';
 import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
 import { updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
+import { fetchRefreshToken } from '../../../api/authApi';
 
 const ResearchType = [
   {
@@ -91,8 +92,39 @@ const TeamDashboard = () => {
   const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
 
   // ============ React Query ============ //
-  const { data: teamListData, isLoading } = useQuery('fetchTeamList', fetchTeamListApi);
+  const { data: teamListData, isLoading } = useQuery(['fetchTeamList'], fetchTeamListApi, {
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        queryClient.invalidateQueries(['fetchTeamList']);
+      }
+      if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      }
+    },
+  });
+  const { data: teamReportList, refetch } = useQuery(['fetchTeamReportList', selectTeamSeq], () => fetchTeamReportListApi(selectTeamSeq), {
+    enabled: !!selectTeamSeq,
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        refetch();
+      }
+      if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      }
+    },
+    select: data => {
+      return data.data;
+    },
+  });
   // ============ React Query ============ //
+
+  console.log(teamReportList, '!@#!@#!#!@#!@#');
 
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));
@@ -121,10 +153,10 @@ const TeamDashboard = () => {
         dispatch(isShow({ isShow: true, type: 'firstCreateTeam' }));
       } else {
         dispatch(updateTeamInfo(list));
-        if (selectTeamList === null) {
+        if (selectTeamList !== null) {
           dispatch(updateSelectTeamList(list[0]));
         }
-        if (selectTeamSeq === null) {
+        if (selectTeamSeq !== null) {
           dispatch(updateTeamSeq(list[0]?.teamSeq));
         }
 
@@ -161,7 +193,7 @@ const TeamDashboard = () => {
         <FlexBox style={{ padding: '24px 32px 32px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
           <span css={[body2_bold, titleStyle]}>모든 리서치</span>
           {/*<div css={{ height: '620px', background: 'pink', overflow: 'scroll' }}>*/}
-          <ResearchList handleMoveDetail={handleMoveDetail} listData={DummyListData} />
+          <ResearchList handleMoveDetail={handleMoveDetail} listData={teamReportList} />
           {/*</div>*/}
         </FlexBox>
       </div>

@@ -43,3 +43,8 @@ export const fetchMemberListApi = async teamSeq => {
 export const fetchInviteMemberApi = async sendObject => {
   return await AXIOS_POST('/team/member/invite/', sendObject);
 };
+
+// 팀 리포트 목록 조회 API
+export const fetchTeamReportListApi = async teamSeq => {
+  return await AXIOS_GET(`/team/${teamSeq}/project/report/`);
+};

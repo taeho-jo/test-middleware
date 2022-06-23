@@ -37,7 +37,7 @@ const IconTextButton = ({
         css={[
           textStyle === 'custom' ? { fontSize: '14px', fontWeight: '400' } : textStyle,
           noBorderTextStyle(roundBorder, disabled),
-          { padding: '5px 0', margin: iconPosition === 'right' ? '0 8px 0 0' : '0 0 0 8px' },
+          { margin: iconPosition === 'right' ? '0 8px 0 0' : '0 0 0 8px' },
         ]}
       >
         {text}

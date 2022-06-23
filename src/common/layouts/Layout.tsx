@@ -15,13 +15,11 @@ import { css } from '@emotion/react';
 import AOS from 'aos';
 import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // API
-import { fetchCommonCodeApi, fetchEmailConfirmApi, useRefreshTokenApi } from '../../api/authApi';
+import { fetchCommonCodeApi, fetchEmailConfirmApi } from '../../api/authApi';
 import { fetchUserInfoApi } from '../../api/userApi';
-import { setEmailConfirm, setUserInfo, UserInfoType } from '../../store/reducers/userReducer';
+import { setUserInfo, UserInfoType } from '../../store/reducers/userReducer';
 import { isShow } from '../../store/reducers/modalReducer';
-import { QueryCache, QueryClient, useMutation, useQuery, useQueryClient } from 'react-query';
-import ReportHeader from '../../components/molecules/ReportHeader';
-import ReportSideBar from '../../components/molecules/ReportSideBar';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import ReportLayout from './ReportLayout';
 import { updateCommonCode } from '../../store/reducers/commonReducer';
 
@@ -41,6 +39,7 @@ const Layout = ({ children }: PropsType) => {
   const userInfo = useSelector<ReducerType, UserInfoType>(state => state.user.userInfo);
   const teamListQuery = useSelector<ReducerType, boolean>(state => state.queryStatus.teamListQuery);
   const userInfoQuery = useSelector<ReducerType, boolean>(state => state.userInfoQuery);
+  const getRefreshToken = useSelector<ReducerType, boolean>(state => state.queryStatus.tokenRefresh);
 
   const [showGradient, setShowGradient] = useState<boolean>(true);
 
@@ -72,7 +71,16 @@ const Layout = ({ children }: PropsType) => {
       refetch();
     },
   });
-  const refreshToken = useRefreshTokenApi(isRefreshToken);
+
+  // const { data: refreshTokenData, refetch: refreshTokenRefecthData } = useQuery(['fetchRefreshToken'], fetchRefreshToken, {
+  //   enabled: false,
+  //   onSuccess: data => {
+  //     console.log(data?.data, 'DA');
+  //     // localStorage.setItem('accessToken', data?.data.token);
+  //     dispatch(updateQueryStatus({ name: 'tokenRefresh', status: false }));
+  //     // queryClient.invalidateQueries();
+  //   },
+  // });
   // ============ React Query ============ //
 
   useEffect(() => {

@@ -11,13 +11,15 @@ import { fetchProductListApi } from '../../../api/teamApi';
 import Icon from '../../atoms/Icon';
 import { useRouter } from 'next/router';
 import { updateSelectProductList } from '../../../store/reducers/teamReducer';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { fetchRefreshToken } from '../../../api/authApi';
 
 const TeamSettingDetail = () => {
-  const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
-  const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
+  const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+  const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
 
   const showModalFun = useCallback((name, item) => {
     dispatch(isShow({ isShow: true, type: name }));
@@ -26,11 +28,22 @@ const TeamSettingDetail = () => {
     }
   }, []);
 
-  // ============ API 호출 ============ //
+  // ============ React Query ============ //
   const { data: productData, refetch } = useQuery(['fetchProductList', selectTeamSeq], () => fetchProductListApi(selectTeamSeq), {
     enabled: !!selectTeamSeq,
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
+      }
+      if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      }
+    },
   });
-  // ============ API 호출 ============ //
+  // ============ React Query ============ //
 
   return (
     <>

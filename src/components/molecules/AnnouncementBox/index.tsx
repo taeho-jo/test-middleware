@@ -15,7 +15,7 @@ const AnnouncementBox = ({ style, content, icon = 'ALERT_NORMAL', color = colors
   return (
     <div css={[caption1_regular, notificationBox(color), style]}>
       <Icon name={icon} size={24} iconColor={colors.grey._cc} style={{ marginRight: '8px' }} />
-      {content}
+      <span css={{ marginLeft: '8px' }}>{content}</span>
     </div>
   );
 };

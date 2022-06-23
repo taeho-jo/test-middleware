@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { isShow } from '../../store/reducers/modalReducer';
+import { fetchRefreshToken } from '../../api/authApi';
 
 export const isLandingPage = path => {
   switch (path) {
@@ -14,7 +15,6 @@ export const isLandingPage = path => {
   }
 };
 
-export const showModal = name => {};
 export const closeModal = () => {
   const dispatch = useDispatch();
   dispatch(isShow({ isShow: false, type: '' }));

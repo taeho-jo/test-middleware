@@ -21,6 +21,8 @@ import { fetchInviteMemberApi } from '../../../api/teamApi';
 import { ReducerType } from '../../../store/reducers';
 import { CURRENT_DOMAIN, INVITE_EMAIL_TEMPLATE } from '../../../common/util/commonVar';
 import { useMutation, useQueryClient } from 'react-query';
+import { fetchRefreshToken } from '../../../api/authApi';
+import { useRouter } from 'next/router';
 
 interface PropsType {
   first?: boolean;
@@ -29,9 +31,9 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
   const [copyUrl, setCopyUrl] = useState<string | null>(null);
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
-  const selectTeam = localStorage.getItem('selectTeamList');
-  const teamSeq = JSON.parse(localStorage.getItem('teamSeq'));
+  const router = useRouter();
   const selectTeamSeq = useSelector<ReducerType, number | null>(state => state.team.selectTeamSeq);
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
 
   // hook form
   const {
@@ -44,7 +46,22 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
   const onSubmit = data => handleInvite('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
+  const [sendObject, setSendObject] = useState(null);
+
   const { mutate } = useMutation(['fetchInviteMember'], fetchInviteMemberApi, {
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        mutate(sendObject);
+        queryClient.invalidateQueries(['fetchInviteMember']);
+      } else if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      } else {
+        dispatch(showToast({ message: '인증메일 재전송에 실패하였습니다.', isShow: true, status: 'waring', duration: 5000 }));
+      }
+    },
     onSuccess: data => {
       queryClient.invalidateQueries(['fetchMemberList', selectTeamSeq]);
       dispatch(isShow({ isShow: false, type: '' }));
@@ -58,12 +75,14 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
     const sendObject = {
       teamSeq: selectTeamSeq,
       inviteMembers: newMailArr,
+      inviteUserName: userInfo?.userName,
       emailTemplateName: INVITE_EMAIL_TEMPLATE,
     };
 
     if (newMailArr.length === 0) {
       dispatch(showToast({ message: '메일 주소 형식을 확인 바랍니다.', isShow: true, status: 'warning', duration: 5000 }));
     } else {
+      setSendObject(sendObject);
       mutate(sendObject);
     }
   }, []);

@@ -25,10 +25,14 @@ import Select from '../../atoms/Select';
 import Icon from '../../atoms/Icon';
 import { TeamProductType } from '../../../store/reducers/teamReducer';
 import { useMutation, useQueryClient } from 'react-query';
+import { fetchRefreshToken } from '../../../api/authApi';
+import { showToast } from '../../../store/reducers/toastReducer';
+import { useRouter } from 'next/router';
 
 const TeamProductModifyModal = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
+  const router = useRouter();
   const commonCode = useSelector<ReducerType, any>(state => state.common.commonCode);
   const selectProduct = useSelector<ReducerType, TeamProductType>(state => state.team.selectProduct);
   const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
@@ -43,7 +47,24 @@ const TeamProductModifyModal = () => {
   const onSubmit = data => handleUpdateProduct('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
+  const [sendArr, setSendArr] = useState(null);
+
   const { mutate } = useMutation(['fetchUpdateProduct', selectTeamSeq, selectProduct.productSeq], fetchUpdateProductApi, {
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+
+        mutate(sendArr);
+
+        queryClient.invalidateQueries(['fetchUpdateProduct', selectTeamSeq, selectProduct.productSeq]);
+      } else if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      } else {
+        dispatch(showToast({ message: '팀 생성에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
+      }
+    },
     onSuccess: data => {
       queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
       dispatch(isShow({ isShow: false, type: '' }));
@@ -71,6 +92,7 @@ const TeamProductModifyModal = () => {
       };
 
       const sendArr = [selectTeamSeq, selectProduct.productSeq, sendObject];
+      setSendArr(sendArr);
       mutate(sendArr);
     },
     [selected],

@@ -4,26 +4,27 @@ import { css } from '@emotion/react';
 import { body3_bold, caption1_bold, caption1_regular, heading5_bold } from '../../../../styles/FontStyles';
 import { colors } from '../../../../styles/Common.styles';
 
-const TestInfoBox = () => {
+const TestInfoBox = ({ reportData }) => {
+  console.log(reportData, 'S');
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>테스트정보</span>
       <FlexBox style={infoBox} direction={'column'} align={'flex-start'} justify={'flex-start'}>
         <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'}>
           <span css={[caption1_bold, { marginBottom: '8px', color: colors.grey._66 }]}>응답수</span>
-          <span css={body3_bold}>150건</span>
+          <span css={body3_bold}>{reportData?.answerTotalCount}건</span>
         </FlexBox>
 
         <FlexBox style={{ marginTop: '24px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
           <span css={[caption1_bold, { marginBottom: '8px' }]}>표본오차</span>
           <FlexBox justify={'flex-start'} align={'center'}>
             <div css={{ marginRight: '32px' }}>
-              <span css={body3_bold}>±8.00%p</span>
+              <span css={body3_bold}>{reportData?.ninetySamplingError}</span>
               <br />
               <span css={caption1_regular}>(95% 신뢰수준)</span>
             </div>
             <div>
-              <span css={body3_bold}>±5.25%p</span>
+              <span css={body3_bold}>{reportData?.eightySamplingError}</span>
               <br />
               <span css={caption1_regular}>(80% 신뢰수준)</span>
             </div>

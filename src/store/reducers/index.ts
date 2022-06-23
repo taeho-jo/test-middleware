@@ -10,6 +10,7 @@ import modal from './modalReducer';
 import team from './teamReducer';
 import common from './commonReducer';
 import queryStatus from './useQueryControlReducer';
+import report from './reportReducer';
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
@@ -28,6 +29,7 @@ const reducer = (state, action) => {
     team,
     common,
     queryStatus,
+    report,
   })(state, action);
 };
 

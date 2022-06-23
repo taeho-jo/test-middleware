@@ -10,8 +10,8 @@ export const fetchUserInfoApi = async (token?: string) => {
 };
 
 // 초대 사용자 정보 API
-export const fetchInviteUserInfoApi = async seq => {
-  return await AXIOS_GET(`/user/info/team/${seq}/`);
+export const fetchInviteUserInfoApi = async (seq, token) => {
+  return await AXIOS_GET(`/user/info/team/${seq}/`, token);
 };
 
 // 사용자 정보 업데이트 API

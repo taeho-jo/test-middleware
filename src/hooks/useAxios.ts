@@ -1,4 +1,7 @@
 import AXIOS from '../api/axios/axios';
+import { useRouter } from 'next/router';
+import { fetchRefreshToken } from '../api/authApi';
+import { useQueryClient } from 'react-query';
 
 const searchParam = key => {
   return new URLSearchParams(location.search).get(key);
@@ -38,9 +41,7 @@ export const AXIOS_GET = async (url: string, token?: string) => {
 // READ POST 요청 ( 단순 DATA Fetching )
 export const AXIOS_POST = async (url: string, sendObject: any) => {
   const headers = getAuthHeader();
-
   const { data } = await AXIOS.post(url, sendObject, { headers });
-
   return data;
 };
 

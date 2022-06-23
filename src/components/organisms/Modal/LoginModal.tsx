@@ -61,15 +61,6 @@ const LoginModal = () => {
 
   const { data: usersInfo } = useQuery(['fetchUserInfo', `signup/${loginData?.code}`], () => fetchUserInfoApi(loginData?.data.token), {
     enabled: !!loginData?.code,
-    onSuccess: data => {
-      dispatch(setUserInfo(data.data));
-      if (data.data.emailVerifiedYn === 'N') {
-        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-      }
-      if (data.data.emailVerifiedYn === 'Y') {
-        router.push('/admin/team');
-      }
-    },
   });
 
   // 이메일 로그인
@@ -104,7 +95,15 @@ const LoginModal = () => {
       dispatch(showToast({ message: '로그인에 성공하였습니다.', isShow: true, status: 'success', duration: 5000 }));
       dispatch(isShow({ isShow: false, type: '' }));
       sessionStorage.clear();
-      router.push('/admin/team');
+      dispatch(setUserInfo(loginData.data));
+      if (loginData.data.emailVerifiedYn === 'N') {
+        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+      }
+      if (loginData.data.emailVerifiedYn === 'Y') {
+        router.push('/admin/team');
+      }
+
+      // router.push('/admin/team');
     }
   }, [loginData]);
 

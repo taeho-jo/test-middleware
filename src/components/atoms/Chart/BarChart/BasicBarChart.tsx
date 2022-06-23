@@ -11,9 +11,10 @@ interface PropsType {
   rate?: string;
   negative?: boolean;
   barColor?: string;
+  max?: number;
   [key: string]: any;
 }
-const BasicBarChart = ({ dataList, label, value, rate, negative = false, barColor, ...props }: PropsType) => {
+const BasicBarChart = ({ dataList, label, value, rate, negative = false, barColor, max = 100, ...props }: PropsType) => {
   return (
     <FlexBox justify={'center'} align={'center'} direction={'column'} style={{ width: '100%' }}>
       <FlexBox justify={'space-between'}>
@@ -31,7 +32,7 @@ const BasicBarChart = ({ dataList, label, value, rate, negative = false, barColo
       </FlexBox>
       <ResponsiveContainer width={'100%'} height={50}>
         <BarChart data={dataList} layout="vertical" barSize={16}>
-          <XAxis type="number" hide domain={[0, 100]} />
+          <XAxis type="number" hide domain={[0, max]} />
           <YAxis type="category" hide />
           <Bar dataKey="value" fill={barColor ? barColor : negative ? '#E87490' : '#68A0F4'} background={{ fill: '#dcdcdc' }} />
         </BarChart>

@@ -17,7 +17,6 @@ import icon2 from '../../public/assets/images/icon_uxposition1.png';
 import icon3 from '../../public/assets/images/icon_scenario1.png';
 import icon4 from '../../public/assets/images/icon_customer1.png';
 import { ReducerType } from '../../src/store/reducers';
-import { setSetting } from '../../src/store/reducers/userReducer';
 
 const AppBarButton = styled(Button)({
   fontWeight: '700',
@@ -153,8 +152,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                     style={{ color: darkMode ? 'white' : '#3c3c46' }}
                     onClick={() => {
                       localStorage.clear();
-                      dispatch(setSetting(false));
-                      navigate.push(navigate.asPath);
+                      navigate.push('/');
                     }}
                   >
                     로그아웃

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 // Components
@@ -25,12 +25,15 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
 import { updateTeamInfo } from '../../../store/reducers/teamReducer';
+import { fetchRefreshToken } from '../../../api/authApi';
+import { useRouter } from 'next/router';
 interface PropsType {
   first?: boolean;
 }
 const TeamCreateModal = ({ first = false }: PropsType) => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
+  const router = useRouter();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   // hook form
   const {
@@ -43,10 +46,22 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
   const onSubmit = data => handleCreateTeam('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
+  const [sendObject, setSendObject] = useState(null);
+
   // ============ React Query ============ //
   const { mutate, data: createTeamData } = useMutation('fetchCreateTeam', fetchCreateTeamApi, {
-    onError: e => {
-      dispatch(showToast({ message: '팀 생성에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        mutate(sendObject);
+        queryClient.invalidateQueries(['fetchRefreshToken']);
+      } else if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      } else {
+        dispatch(showToast({ message: '팀 생성에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
+      }
     },
     onSuccess: data => {
       dispatch(showToast({ message: '팀 생성이 완료되었습니다.', isShow: true, status: '', duration: 5000 }));
@@ -61,6 +76,7 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
     const sendObject = {
       teamNm: data.team,
     };
+    setSendObject(sendObject);
     mutate(sendObject);
   }, []);
 

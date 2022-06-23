@@ -1,10 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import FlexBox from '../../atoms/FlexBox';
 // import Icon from '../../atoms/Icon';
 import Icon from '../../atoms/Icon';
 import { colors } from '../../../styles/Common.styles';
-import Image from 'next/image';
-import { css } from '@emotion/react';
 import ProfileIcon from '../../atoms/ProfileIcon';
 import ImageLogo from '../../../../public/assets/images/Diby-Logo.png';
 import { useDispatch, useSelector } from 'react-redux';

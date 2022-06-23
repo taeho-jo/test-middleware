@@ -6,14 +6,14 @@ import SettingCard from '../../atoms/SettingCard';
 import { css } from '@emotion/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
-import { showModal } from '../../../common/util/commonFunc';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { fetchProductListApi } from '../../../api/teamApi';
 import { useRouter } from 'next/router';
-import queryStatus, { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
 import { useQuery, useQueryClient } from 'react-query';
+import { fetchRefreshToken } from '../../../api/authApi';
 
 const TeamSetting = () => {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const showModalFun = useCallback(name => {
@@ -26,6 +26,17 @@ const TeamSetting = () => {
   // ============ React Query ============ //
   const { data: productData, refetch } = useQuery(['fetchProductList', selectTeamSeq], () => fetchProductListApi(selectTeamSeq), {
     enabled: !!selectTeamSeq,
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
+      }
+      if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      }
+    },
   });
   // ============ React Query ============ //
 

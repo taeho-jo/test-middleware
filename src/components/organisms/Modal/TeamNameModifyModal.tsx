@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 // Components
@@ -17,15 +17,28 @@ import { InputType } from '../../../common/types/commonTypes';
 import { ReducerType } from '../../../store/reducers';
 import { fetchTeamListApi, fetchUpdateTeamApi } from '../../../api/teamApi';
 import { isShow } from '../../../store/reducers/modalReducer';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import { showToast } from '../../../store/reducers/toastReducer';
+import { fetchRefreshToken } from '../../../api/authApi';
+import { QueryCache } from 'react-query';
+import { useRouter } from 'next/router';
 
 interface PropsType {
   first?: boolean;
 }
+
 const TeamNameModifyModal = ({ first = false }: PropsType) => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+  const queryCache = new QueryCache({
+    onError: error => {
+      console.log(error);
+    },
+    onSuccess: data => {
+      console.log(data);
+    },
+  });
   // hook form
   const {
     register,
@@ -38,9 +51,25 @@ const TeamNameModifyModal = ({ first = false }: PropsType) => {
   const onError = errors => handleProcessingError('fail', errors);
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
   const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
+  const router = useRouter();
+
+  const [sendObject, setSendObject] = useState(null);
 
   // ============ React Query ============ //
-  const { mutate, data: updateData } = useMutation(['fetchUpdateTeam'], fetchUpdateTeamApi);
+  const { mutate, data: updateData } = useMutation(['fetchUpdateTeam'], fetchUpdateTeamApi, {
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        queryClient.invalidateQueries(['fetchUpdateTeam']);
+        mutate([selectTeamSeq, sendObject]);
+      }
+      if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      }
+    },
+  });
 
   const { data: teamListData, isLoading } = useQuery(['fetchTeamList', updateData?.code], fetchTeamListApi, {
     enabled: !!updateData?.code,
@@ -61,6 +90,7 @@ const TeamNameModifyModal = ({ first = false }: PropsType) => {
     const sendObject = {
       teamNm: data.team,
     };
+    setSendObject(sendObject);
     const sendArr = [selectTeamSeq, sendObject];
     mutate(sendArr);
   }, []);

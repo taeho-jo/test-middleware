@@ -89,6 +89,17 @@ export const fetchChangePasswordApi = async sendObject => {
   return await AXIOS_PATCH('/user/password/', sendObject);
 };
 
+// 토큰 refresh API
+export const fetchRefreshToken = async () => {
+  try {
+    const response = await AXIOS_GET('/refresh/');
+    const token = response.data.token;
+    localStorage.setItem('accessToken', token);
+  } catch (e) {
+    console.log('fetchRefreshTokenApi::::  ', e);
+  }
+};
+
 // 공통 code API
 export const fetchCommonCodeApi = async () => {
   return await AXIOS_GET('/admin/code/');

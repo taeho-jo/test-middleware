@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
@@ -7,27 +7,33 @@ import { body3_regular } from '../../../styles/FontStyles';
 
 interface PropsType {
   display: boolean;
-  topText?: string;
   top?: number;
-  right?: number;
+  left?: number;
   normalText: {
     text: string;
     onClick: () => void;
   }[];
+  handleChangeMemberStatus: (name) => void;
   [key: string]: any;
 }
 
-const LayerPopup = ({ display, topText, normalText, top = 16, right = 16, ...props }: PropsType) => {
+const TableDropDown = ({ display, topText, normalText, top = 16, left = 16, handleChangeMemberStatus, ...props }: PropsType) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  return (
-    <div css={popupContainer(display, top, right)}>
-      {topText && <div css={[body3_regular, emailTextStyle]}>{topText}</div>}
 
+  const handleChange = useCallback(
+    name => {
+      handleChangeMemberStatus(name);
+    },
+    [handleChangeMemberStatus],
+  );
+
+  return (
+    <div css={popupContainer(display, top, left)}>
       {normalText.map((el, index) => {
         return (
           <Fragment key={index}>
-            <div onClick={el.onClick ? el.onClick : null} css={[body3_regular, cursorBtnStyle]}>
+            <div onClick={() => handleChange(el.text)} css={[body3_regular, cursorBtnStyle]}>
               {el.text}
             </div>
           </Fragment>
@@ -37,9 +43,9 @@ const LayerPopup = ({ display, topText, normalText, top = 16, right = 16, ...pro
   );
 };
 
-export default LayerPopup;
+export default TableDropDown;
 
-const popupContainer = (display, top, right) => css`
+const popupContainer = (display, top, left) => css`
   opacity: ${display ? '100%' : 0};
   //width: 220px;
   border-radius: 16px;
@@ -48,7 +54,7 @@ const popupContainer = (display, top, right) => css`
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
   position: absolute;
   top: ${top}px;
-  right: ${right}px;
+  left: ${left}px;
   transition: all 0.2s ease-in;
   display: ${display ? 'flex' : 'none'};
   flex-direction: column;

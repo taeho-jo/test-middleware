@@ -24,10 +24,14 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import Select from '../../atoms/Select';
 import Icon from '../../atoms/Icon';
 import { useMutation, useQueryClient } from 'react-query';
+import { fetchRefreshToken } from '../../../api/authApi';
+import { showToast } from '../../../store/reducers/toastReducer';
+import { useRouter } from 'next/router';
 
 const TeamProductCreateModal = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
+  const router = useRouter();
   const commonCode = useSelector<ReducerType, any>(state => state.common.commonCode);
   const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
   // hook form
@@ -41,7 +45,24 @@ const TeamProductCreateModal = () => {
   const onSubmit = data => handleCreateProduct('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
+  const [sendObject, setSendObject] = useState(null);
+
   const { mutate } = useMutation(['fetchCreateProduct'], fetchCreateProductApi, {
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+
+        mutate([selectTeamSeq, sendObject]);
+
+        queryClient.invalidateQueries(['fetchCreateProduct']);
+      } else if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      } else {
+        dispatch(showToast({ message: '팀 생성에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
+      }
+    },
     onSuccess: data => {
       queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
       dispatch(isShow({ isShow: false, type: '' }));
@@ -61,6 +82,7 @@ const TeamProductCreateModal = () => {
         ...selected,
       };
       const sendArr = [selectTeamSeq, sendObject];
+      setSendObject(sendObject);
       mutate(sendArr);
     },
     [selected],

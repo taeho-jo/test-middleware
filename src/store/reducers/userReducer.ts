@@ -20,6 +20,13 @@ export interface UserInfoType {
 export interface UserType {
   userInfo: UserInfoType;
   emailConfirm: boolean;
+  teamMemberInfo: {
+    joinDate: string;
+    teamRoleType: string;
+    teamSeq: number | null;
+    userId: string;
+    userName: string;
+  };
 }
 
 const initialState: UserType = {
@@ -40,6 +47,13 @@ const initialState: UserType = {
     userSeq: '',
   },
   emailConfirm: false,
+  teamMemberInfo: {
+    joinDate: '',
+    teamRoleType: '',
+    teamSeq: null,
+    userId: '',
+    userName: '',
+  },
 };
 
 export const userSlice = createSlice({
@@ -71,8 +85,11 @@ export const userSlice = createSlice({
         userSeq: '',
       };
     },
+    setSelectTeamMember: (state, action: PayloadAction<any>) => {
+      state.teamMemberInfo = action.payload;
+    },
   },
 });
 
-export const { setUserInfo, setEmailConfirm, removeUserInfo } = userSlice.actions;
+export const { setUserInfo, setEmailConfirm, removeUserInfo, setSelectTeamMember } = userSlice.actions;
 export default userSlice.reducer;
