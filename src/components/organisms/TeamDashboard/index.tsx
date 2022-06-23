@@ -89,7 +89,8 @@ const TeamDashboard = () => {
   const userInfoQuery = useSelector<ReducerType, boolean>(state => state.userInfoQuery);
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
-  const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
+  // const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
+  const selectTeamSeq = localStorage.getItem('teamSeq');
 
   // ============ React Query ============ //
   const { data: teamListData, isLoading } = useQuery(['fetchTeamList'], fetchTeamListApi, {
@@ -106,7 +107,7 @@ const TeamDashboard = () => {
     },
   });
   const { data: teamReportList, refetch } = useQuery(['fetchTeamReportList', selectTeamSeq], () => fetchTeamReportListApi(selectTeamSeq), {
-    enabled: !!selectTeamSeq,
+    enabled: !!teamListData,
     onError: (e: any) => {
       const errorData = e.response.data;
       if (errorData.code === 'E0008') {

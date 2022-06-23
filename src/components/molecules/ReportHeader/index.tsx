@@ -7,11 +7,12 @@ import { InputType } from '../../../common/types/commonTypes';
 import Select from '../../atoms/Select';
 import { heading5_regular } from '../../../styles/FontStyles';
 import AnnouncementBox from '../AnnouncementBox';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import { useQueryClient } from 'react-query';
 import { fetchReportDetail } from '../../../api/reportApi';
 import { useRouter } from 'next/router';
+import { updateFilterFlied, updateFilterValues } from '../../../store/reducers/reportReducer';
 
 const ReportHeader = () => {
   const {
@@ -25,6 +26,7 @@ const ReportHeader = () => {
 
   const queryClient = useQueryClient();
   const router = useRouter();
+  const dispatch = useDispatch();
   const reportData = useSelector<ReducerType, any>(state => state.report.data?.filterDataList);
 
   const [selected, setSelected] = useState({
@@ -100,6 +102,7 @@ const ReportHeader = () => {
         filterValues: '',
         filterField: value,
       });
+      dispatch(updateFilterFlied(value));
     },
     [selected],
   );
@@ -109,6 +112,7 @@ const ReportHeader = () => {
         ...selected,
         [label]: value,
       });
+      dispatch(updateFilterValues(value));
     },
     [selected],
   );
@@ -123,9 +127,9 @@ const ReportHeader = () => {
   //       fetchReportDetail(router.query.id, selected.filterField, selected.filterValues),
   //     );
   //   }
-  //   if (selected.filterValues === '') {
-  //     return;
-  //   }
+  //   // if (selected.filterValues === '') {
+  //   //   return;
+  //   // }
   // }, [selected.filterValues]);
 
   return (
