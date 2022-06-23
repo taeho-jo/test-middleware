@@ -44,8 +44,10 @@ const data = [
   ],
 ];
 
-const AddOnFeature = () => {
-  const [selectButton, setSelectButton] = useState<number>(0);
+const AddOnFeature = ({ originDataList, title }) => {
+  const [complateSelectButton, setComplateSelectButton] = useState<number>(0);
+  const [addSelectButton, setAddSelectButton] = useState<number>(0);
+  const [systemSelectButton, setsystemSelectButton] = useState<number>(0);
 
   const {
     register,
@@ -59,11 +61,23 @@ const AddOnFeature = () => {
   const onSubmit = data => console.log('success', data);
   const onError = errors => console.log('fail', errors);
 
+  const completeList = originDataList?.map(el => el.completeList);
+  const additionalList = originDataList?.map(el => el.additionalList);
+  const systemErrorList = originDataList?.map(el => el.systemErrorList);
+
   const handleChangeIndex = useCallback(
-    index => {
-      setSelectButton(index);
+    (name, index) => {
+      if (name === 'complate') {
+        setComplateSelectButton(index);
+      }
+      if (name === 'add') {
+        setAddSelectButton(index);
+      }
+      if (name === 'system') {
+        setsystemSelectButton(index);
+      }
     },
-    [selectButton],
+    [complateSelectButton, addSelectButton, systemSelectButton],
   );
   return (
     <>
@@ -81,23 +95,91 @@ const AddOnFeature = () => {
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
-            <div css={[heading4_bold]}>미션별 언급된 추가 기능</div>
+            <div css={[heading4_bold]}>서비스 전체 미션별 완성도 피드백</div>
           </div>
 
           <FlexBox justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
             <div css={{ flex: 1, marginRight: '16px' }}>
-              <div onClick={() => handleChangeIndex(0)} css={[{ opacity: selectButton === 0 ? 1 : 0.4 }, heading4_bold, buttonStyle]}>
-                미션 1
-              </div>
-              <div onClick={() => handleChangeIndex(1)} css={[{ opacity: selectButton === 1 ? 1 : 0.4 }, heading4_bold, buttonStyle]}>
-                미션 2
-              </div>
-              <div onClick={() => handleChangeIndex(2)} css={[{ opacity: selectButton === 2 ? 1 : 0.4 }, heading4_bold, buttonStyle]}>
-                미션 3
-              </div>
+              {completeList?.map((el, index) => {
+                return (
+                  <div
+                    key={`missionBtn${index}`}
+                    onClick={() => handleChangeIndex('complate', index)}
+                    css={[{ opacity: complateSelectButton === index ? 1 : 0.4 }, heading4_bold, buttonStyle]}
+                  >
+                    미션 {index + 1}
+                  </div>
+                );
+              })}
             </div>
             <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px' }}>
-              {data[selectButton].map((el, index) => {
+              {completeList?.[complateSelectButton].map((el, index) => {
+                return (
+                  <li key={index} css={{ listStyle: 'inside', marginBottom: '16px' }}>
+                    {el}
+                  </li>
+                );
+              })}
+            </ul>
+          </FlexBox>
+        </FlexBox>
+      </FlexBox>
+
+      <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
+        <FlexBox style={graphAreaStyle} direction={'column'}>
+          <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
+            <div css={[heading4_bold]}>서비스 전체 미션별 추가기능 피드백</div>
+          </div>
+
+          <FlexBox justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
+            <div css={{ flex: 1, marginRight: '16px' }}>
+              {additionalList?.map((el, index) => {
+                return (
+                  <div
+                    key={`missionBtn${index}`}
+                    onClick={() => handleChangeIndex('add', index)}
+                    css={[{ opacity: addSelectButton === index ? 1 : 0.4 }, heading4_bold, buttonStyle]}
+                  >
+                    미션 {index + 1}
+                  </div>
+                );
+              })}
+            </div>
+            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px' }}>
+              {additionalList?.[addSelectButton].map((el, index) => {
+                return (
+                  <li key={index} css={{ listStyle: 'inside', marginBottom: '16px' }}>
+                    {el}
+                  </li>
+                );
+              })}
+            </ul>
+          </FlexBox>
+        </FlexBox>
+      </FlexBox>
+
+      <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
+        <FlexBox style={graphAreaStyle} direction={'column'}>
+          <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
+            <div css={[heading4_bold]}>서비스 전체 미션별 시스템오류 피드백</div>
+          </div>
+
+          <FlexBox justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
+            <div css={{ flex: 1, marginRight: '16px' }}>
+              {systemErrorList?.map((el, index) => {
+                return (
+                  <div
+                    key={`missionBtn${index}`}
+                    onClick={() => handleChangeIndex('system', index)}
+                    css={[{ opacity: systemSelectButton === index ? 1 : 0.4 }, heading4_bold, buttonStyle]}
+                  >
+                    미션 {index + 1}
+                  </div>
+                );
+              })}
+            </div>
+            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px' }}>
+              {systemErrorList?.[systemSelectButton].map((el, index) => {
                 return (
                   <li key={index} css={{ listStyle: 'inside', marginBottom: '16px' }}>
                     {el}
@@ -121,7 +203,7 @@ const headerBosStyle = css`
   border-bottom: 1px solid #dcdcdc;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 5;
 `;
 const graphBosStyle = css`
   width: 100%;

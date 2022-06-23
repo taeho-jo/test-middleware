@@ -1,8 +1,10 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { body3_bold, body3_regular, caption1_bold, caption1_regular, heading5_bold } from '../../../../styles/FontStyles';
 import FlexBox from '../../FlexBox';
 import { colors } from '../../../../styles/Common.styles';
 import { css } from '@emotion/react';
+import { useSelector } from 'react-redux';
+import { ReducerType } from '../../../../store/reducers';
 
 const data = [
   { value: '성별', children: [] },
@@ -18,12 +20,41 @@ const data = [
 ];
 
 const RespondentAttributes = () => {
+  const answerInfo = useSelector<ReducerType, any>(state => state.report.data);
+  const [dataArr, setDataArr] = useState([]);
+  console.log(answerInfo?.answerInfoSection);
+  // const answerObject = answerInfo?.answerInfoSection?.ageGradeInfoList.length !== 0 ? { value: '성별', children: [] } : null;
+
+  const makeAnswerArr = useCallback(() => {
+    if (answerInfo) {
+      const { answerInfoSection } = answerInfo;
+      const answerObject1 = answerInfoSection?.genderInfoList.length !== 0 ? { value: '성별', children: [] } : null;
+      const answerObject2 = answerInfoSection?.ageGradeInfoList.length !== 0 ? { value: '연령대', children: [] } : null;
+      const answerObject3 = answerInfoSection?.deviceInfoList.length !== 0 ? { value: '보유 기기', children: [] } : null;
+      const answerObject4 = answerInfoSection?.cellInfoList.length !== 0 ? { value: '추가 조건', children: [] } : null;
+
+      const childrenArr = answerInfoSection.cellInfoList.reduce(
+        (acc, cur) =>
+          acc.concat({
+            value: cur.name,
+          }),
+        [],
+      );
+      answerObject4.children.push(...childrenArr);
+      setDataArr([answerObject1, answerObject2, answerObject3, answerObject4]);
+    }
+  }, [answerInfo]);
+
+  useEffect(() => {
+    makeAnswerArr();
+  }, [answerInfo]);
+
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>응답자 특성</span>
       <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={infoBox}>
         <ul>
-          {data.map((el, index) => {
+          {dataArr?.map((el, index) => {
             return (
               <Fragment key={index}>
                 <li css={[liStyle, body3_regular]}>{el.value}</li>

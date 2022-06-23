@@ -13,15 +13,17 @@ import { caption2_bold, heading5_bold } from '../../../styles/FontStyles';
 import { profileColor } from '../../../common/util/commonVar';
 
 import { ReducerType } from '../../../store/reducers';
-import { memberListType, updateTeamSeq } from '../../../store/reducers/teamReducer';
+import { memberListType, TeamListType, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import { useRouter } from 'next/router';
 interface PropsType {
   teamName?: string;
   memberList?: memberListType[];
   parentsIndex: number;
+  onClick: (item) => void;
+  item: any;
 }
 
-const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parentsIndex }: PropsType) => {
+const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parentsIndex, onClick, item }: PropsType) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const isFirstCreateTeam = useSelector<ReducerType, boolean>(state => state.team.isFirstCreate);
@@ -62,11 +64,19 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
       direction={'column'}
       align={'flex-start'}
       column={'flex-start'}
+      onClick={() => onClick(item)}
       style={{ ...itemBox(modalType, isFirstCreateTeam, isInviteModal, parentsIndex, focusItem) }}
     >
       <FlexBox style={{ marginBottom: '15px' }} justify={'space-between'} align={'center'}>
         <span css={[heading5_bold, textStyle]}>{teamName}</span>
-        <Icon name={'ACTION_SETTING'} size={24} onClick={() => handleChangeTeamName(parentsIndex)} style={{ cursor: 'pointer' }} />
+        <Icon
+          name={'ACTION_SETTING'}
+          size={24}
+          onClick={
+            modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember' ? () => console.log('1') : () => handleChangeTeamName(parentsIndex)
+          }
+          style={{ cursor: modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember' ? 'not-allowed' : 'pointer' }}
+        />
       </FlexBox>
 
       <FlexBox justify={'flex-start'} align={'center'} wrap={'wrap'}>
@@ -81,7 +91,14 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
                 margin={'0 6px 0 0'}
               />
               {index + 1 === memberList.length ? (
-                <IconButton onClick={() => handToggleInviteModal(item.teamSeq)} name={'ACTION_ADD_CIRCLE'} style={{ marginTop: '3px' }} />
+                <IconButton
+                  onClick={
+                    modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember'
+                      ? () => console.log('1')
+                      : () => handToggleInviteModal(item.teamSeq)
+                  }
+                  name={'ACTION_ADD_CIRCLE'}
+                />
               ) : null}
             </Fragment>
           );
@@ -98,6 +115,7 @@ const itemBox = (modalType, isFirstCreateTeam, isInviteModal, parentsIndex, focu
   padding: 15px 24px;
   //z-index: 1000;
   background: white;
+  cursor: pointer;
   ${modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember'
     ? `
     position: relative;

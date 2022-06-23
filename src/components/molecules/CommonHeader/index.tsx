@@ -1,17 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import FlexBox from '../../atoms/FlexBox';
 // import Icon from '../../atoms/Icon';
 import Icon from '../../atoms/Icon';
 import { colors } from '../../../styles/Common.styles';
-import Image from 'next/image';
-import { css } from '@emotion/react';
 import ProfileIcon from '../../atoms/ProfileIcon';
 import ImageLogo from '../../../../public/assets/images/Diby-Logo.png';
 import { useDispatch, useSelector } from 'react-redux';
 import LayerPopup from '../../atoms/LayerPopup';
 import { useRouter } from 'next/router';
-import { setSetting } from '../../../store/reducers/userReducer';
 import { ReducerType } from '../../../store/reducers';
+import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
 
 const CommonHeader = () => {
   const router = useRouter();
@@ -26,7 +24,7 @@ const CommonHeader = () => {
 
   const handleLogout = useCallback(() => {
     localStorage.clear();
-    dispatch(setSetting(false));
+    dispatch(updateQueryStatus({ name: 'userInfoQuery', status: false }));
     router.push('/');
   }, []);
 

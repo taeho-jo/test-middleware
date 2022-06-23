@@ -1,11 +1,9 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
 import { body3_regular } from '../../../styles/FontStyles';
-import { setToken } from '../../../store/reducers/authReducer';
-import { persistor } from '../../../pages/_app';
 
 interface PropsType {
   display: boolean;

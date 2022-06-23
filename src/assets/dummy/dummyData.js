@@ -33,7 +33,7 @@ export const straightRateTestData = [
 ];
 export const basicBarTestData = [{ name: 'bing', value: 80 }];
 export const basicBarTestData3 = [{ name: '0', value: 75, data: 75 }];
-export const stackedBarTestData = [{ name: 'bing', value: 0.2, value1: 0.1, value2: 0.3, value3: 0.2 }];
+export const stackedBarTestData = [{ name: 'bing', value: 36.8, value1: 9.2 }];
 export const tableBarChartBrandData = ['상위 33% 이내 브랜드', '상위 9% 이내 브랜드', '상위 5% 이내 브랜드'];
 export const brandBarChartData = [
   { name: '의뢰기업', value: 94, fatality: 4.3 },

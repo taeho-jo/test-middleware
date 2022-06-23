@@ -104,9 +104,7 @@ const Report = () => {
         <BasicPieChart dataList={genderTestData} />
         <BasicPieChart dataList={ageTestData} />
       </FlexBox>
-      <FlexBox align={'flex-start'}>
-        <RatePieChart dataList={successTestData} />
-      </FlexBox>
+      <FlexBox align={'flex-start'}>{/*<RatePieChart dataList={successTestData} />*/}</FlexBox>
       <FlexBox align={'flex-start'}>
         <StraightPieChart dataList={straightRateTestData} />
         <StraightPieChart dataList={straightRateTestData} rate={true} />

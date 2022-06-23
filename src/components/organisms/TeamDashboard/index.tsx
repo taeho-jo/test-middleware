@@ -22,9 +22,11 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import ResearchList from '../ResearchList';
 import { ReducerType } from '../../../store/reducers';
 import { useRouter } from 'next/router';
-import { useGetTeamList } from '../../../api/teamApi';
-import { setSetting } from '../../../store/reducers/userReducer';
-import { useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
+import { fetchTeamListApi, fetchTeamReportListApi } from '../../../api/teamApi';
+import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
+import { updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
+import { fetchRefreshToken } from '../../../api/authApi';
 
 const ResearchType = [
   {
@@ -82,15 +84,47 @@ const DummyListData = [
 
 const TeamDashboard = () => {
   const dispatch = useDispatch();
-  const queryClient = useQueryClient();
-  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
-  const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const userInfoQuery = useSelector<ReducerType, boolean>(state => state.userInfoQuery);
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+  const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
 
-  const [selectedValue, setSelectedValue] = useState('');
+  // ============ React Query ============ //
+  const { data: teamListData, isLoading } = useQuery(['fetchTeamList'], fetchTeamListApi, {
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        queryClient.invalidateQueries(['fetchTeamList']);
+      }
+      if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      }
+    },
+  });
+  const { data: teamReportList, refetch } = useQuery(['fetchTeamReportList', selectTeamSeq], () => fetchTeamReportListApi(selectTeamSeq), {
+    enabled: !!selectTeamSeq,
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        refetch();
+      }
+      if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      }
+    },
+    select: data => {
+      return data.data;
+    },
+  });
+  // ============ React Query ============ //
 
-  // 팀 리스트 API
-  const { data, error, isError } = useGetTeamList();
+  console.log(teamReportList, '!@#!@#!#!@#!@#');
 
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));
@@ -101,9 +135,37 @@ const TeamDashboard = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(setSetting(true));
-    // queryClient.invalidateQueries(['getUserInfo']);
-  }, []);
+    if (teamListData?.code === '200') {
+      const count = teamListData?.data?.count;
+      const list = teamListData?.data?.list;
+      if (count === 0) {
+        dispatch(
+          updateTeamInfo([
+            {
+              teamSeq: null,
+              teamRoleType: null,
+              teamNm: `${userInfo.userName}`,
+              teamMember: [userInfo.userName.slice(0, 1)],
+              createDt: null,
+            },
+          ]),
+        );
+        dispatch(isShow({ isShow: true, type: 'firstCreateTeam' }));
+      } else {
+        dispatch(updateTeamInfo(list));
+        if (selectTeamList !== null) {
+          dispatch(updateSelectTeamList(list[0]));
+        }
+        if (selectTeamSeq !== null) {
+          dispatch(updateTeamSeq(list[0]?.teamSeq));
+        }
+
+        localStorage.setItem('teamSeq', list[0]?.teamSeq);
+        localStorage.setItem('selectTeamList', JSON.stringify(list[0]));
+      }
+    }
+  }, [teamListData]);
+
   return (
     <>
       <div css={teamMainContainer}>
@@ -131,7 +193,7 @@ const TeamDashboard = () => {
         <FlexBox style={{ padding: '24px 32px 32px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
           <span css={[body2_bold, titleStyle]}>모든 리서치</span>
           {/*<div css={{ height: '620px', background: 'pink', overflow: 'scroll' }}>*/}
-          <ResearchList handleMoveDetail={handleMoveDetail} listData={DummyListData} />
+          <ResearchList handleMoveDetail={handleMoveDetail} listData={teamReportList} />
           {/*</div>*/}
         </FlexBox>
       </div>

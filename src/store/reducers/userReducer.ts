@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface UserInfoType {
   authTokenProvider: string | null;
-  authTypeCd: string | null;
+  authTypeCd?: string | null;
   consentToUseMarketingYn: string | null;
   cpPostion: string | null;
   cpSize: string | null;
@@ -19,8 +19,14 @@ export interface UserInfoType {
 
 export interface UserType {
   userInfo: UserInfoType;
-  setting: boolean;
   emailConfirm: boolean;
+  teamMemberInfo: {
+    joinDate: string;
+    teamRoleType: string;
+    teamSeq: number | null;
+    userId: string;
+    userName: string;
+  };
 }
 
 const initialState: UserType = {
@@ -40,8 +46,14 @@ const initialState: UserType = {
     userName: '',
     userSeq: '',
   },
-  setting: false,
   emailConfirm: false,
+  teamMemberInfo: {
+    joinDate: '',
+    teamRoleType: '',
+    teamSeq: null,
+    userId: '',
+    userName: '',
+  },
 };
 
 export const userSlice = createSlice({
@@ -51,10 +63,6 @@ export const userSlice = createSlice({
     setEmailConfirm: (state, action: PayloadAction<boolean>) => {
       console.log('setEmailConfirm 실행');
       state.emailConfirm = action.payload;
-    },
-    setSetting: (state, action: PayloadAction<boolean>) => {
-      console.log('setSetting 실행');
-      state.setting = action.payload;
     },
     setUserInfo: (state, action: PayloadAction<any>) => {
       state.userInfo = action.payload;
@@ -77,8 +85,11 @@ export const userSlice = createSlice({
         userSeq: '',
       };
     },
+    setSelectTeamMember: (state, action: PayloadAction<any>) => {
+      state.teamMemberInfo = action.payload;
+    },
   },
 });
 
-export const { setUserInfo, setSetting, setEmailConfirm, removeUserInfo } = userSlice.actions;
+export const { setUserInfo, setEmailConfirm, removeUserInfo, setSelectTeamMember } = userSlice.actions;
 export default userSlice.reducer;

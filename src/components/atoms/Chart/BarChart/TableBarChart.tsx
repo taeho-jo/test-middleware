@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { css } from '@emotion/react';
 import { basicBarTestData } from '../../../../assets/dummy/dummyData';
 import { BasicBarChart } from '../index';
@@ -11,8 +11,17 @@ interface PropsType {
   negative?: boolean;
   barColor?: boolean;
   fatality?: boolean;
+  name?: string;
 }
-const TableBarChart = ({ fatality = true, dataList, dataValueList, negative = false, barColor = false }: PropsType) => {
+const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negative = false, barColor = false }: PropsType) => {
+  const renderArr = useCallback(() => {
+    if (name) {
+      return dataValueList.filter((el, index) => el.name === name);
+    } else {
+      return dataValueList;
+    }
+  }, [dataValueList, name]);
+
   return (
     <div css={containerStyle}>
       <ul css={ulStyle}>
@@ -27,7 +36,7 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, negative = fa
       </ul>
 
       {/*TODO: Map 함수*/}
-      {dataValueList.map((el, index) => {
+      {renderArr()?.map((el, index) => {
         return (
           <ul key={index} css={[ulStyle, emptyUlStyle]}>
             {/*공갈박스*/}
@@ -43,6 +52,7 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, negative = fa
 
             <div css={chartBox(fatality)}>
               <BasicBarChart
+                max={60}
                 barColor={barColor ? chart_color[index] : ''}
                 negative={negative}
                 dataList={[el]}

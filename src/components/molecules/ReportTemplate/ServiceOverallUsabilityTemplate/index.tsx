@@ -12,7 +12,7 @@ import { TableBarChart, UsabilityTableChart } from '../../../atoms/Chart';
 import { featureSpecificDetailData, featureUseData, featureUseData2, tableBarChartTestData } from '../../../../assets/dummy/dummyData';
 import AnnouncementBox from '../../AnnouncementBox';
 
-const ServiceOverallUsabilityTemplate = () => {
+const ServiceOverallUsabilityTemplate = ({ dataList }) => {
   const {
     register,
     handleSubmit,
@@ -24,6 +24,7 @@ const ServiceOverallUsabilityTemplate = () => {
 
   const onSubmit = data => console.log('success', data);
   const onError = errors => console.log('fail', errors);
+
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
@@ -40,7 +41,7 @@ const ServiceOverallUsabilityTemplate = () => {
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
-            <div css={[heading4_bold]}>@전체 사용성 요소별 점수</div>
+            <div css={[heading4_bold]}>전체 사용성 요소별 점수</div>
           </div>
           <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
             <FlexBox justify={'space-between'}>
@@ -54,7 +55,7 @@ const ServiceOverallUsabilityTemplate = () => {
               </FlexBox>
             </FlexBox>
 
-            <UsabilityTableChart dataList={featureUseData2} negative={true} />
+            <UsabilityTableChart dataList={dataList?.serviceTotalUsabilityList} negative={true} />
           </FlexBox>
         </FlexBox>
       </FlexBox>
@@ -71,7 +72,7 @@ const headerBosStyle = css`
   border-bottom: 1px solid #dcdcdc;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 5;
 `;
 const graphBosStyle = css`
   width: 100%;

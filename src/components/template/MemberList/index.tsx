@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import FlexBox from '../../atoms/FlexBox';
 import { colors } from '../../../styles/Common.styles';
 import { heading5_bold, heading5_regular } from '../../../styles/FontStyles';
@@ -8,6 +8,13 @@ import { profileColor } from '../../../common/util/commonVar';
 import { css } from '@emotion/react';
 import moment from 'moment';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { useRouter } from 'next/router';
+import useGetElementProperty from '../../../hooks/useGetElementProperty';
+import { useDispatch, useSelector } from 'react-redux';
+import { isShow } from '../../../store/reducers/modalReducer';
+import useOutsideClick from '../../../hooks/useOutsideClick';
+import { ReducerType } from '../../../store/reducers';
+import { setSelectTeamMember } from '../../../store/reducers/userReducer';
 
 interface PropsType {
   isLoading: boolean;
@@ -19,114 +26,95 @@ interface PropsType {
     userName: string;
     teamRoleType?: string;
   }[];
+  setPositionValue?: any;
+  setFocus?: any;
+  focus?: boolean;
+  setTeamRoleType?: any;
 }
 
-const MemberList = ({ listData, isLoading, searchText }: PropsType) => {
+const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocus, setTeamRoleType }: PropsType) => {
+  const dispath = useDispatch();
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const cellsRef = useRef([]);
   const cellRef = useRef(null);
 
-  const test = index => {
-    // setSelected(index + 1);
-    // cellRef.current = cellsRef.current[index];
-    // const option = {
-    //   x: getElementProperty('x'),
-    //   y: window.pageYOffset + getElementProperty('y'),
-    //   items: [
-    //     {
-    //       label: '참여 회원 목록',
-    //       onClick: () => push('/'),
-    //     },
-    //     {
-    //       label: '데이터 정제',
-    //       onClick: () => push('/user/withdrawal'),
-    //     },
-    //     {
-    //       label: '데이터 라벨링',
-    //       onClick: () => push('/journey/screening'),
-    //     },
-    //   ],
-    // };
-    // dispatch(setLayerPopup(option));
+  const [list, setList] = useState(null);
+
+  useEffect(() => {
+    if (listData) {
+      if (searchText) {
+        const filterArr = listData.filter(el => el.userName === searchText);
+        setList(filterArr);
+      } else {
+        setList(listData);
+      }
+    }
+  }, [listData, searchText]);
+
+  const { getElementProperty } = useGetElementProperty<HTMLElement>(cellRef);
+
+  const handleClickDropdown = (index, teamRoleType, el) => {
+    dispath(setSelectTeamMember(el));
+    cellRef.current = cellsRef.current[index];
+    const option = {
+      x: getElementProperty('x'),
+      y: window.pageYOffset + getElementProperty('y'),
+    };
+    setPositionValue(option);
+    setTeamRoleType(teamRoleType);
+    setFocus(true);
   };
+
+  useOutsideClick(cellRef, () => {
+    setFocus(false);
+  });
 
   const getList = useCallback(() => {
     if (isLoading) {
       return <ClipLoader />;
     }
-    if (listData === null || listData === undefined) {
+    if (list === null || list === undefined) {
       return <div>팀원이 없습니다</div>;
     } else {
-      if (searchText === '') {
-        return listData.map((el, index) => {
-          const { userId, userName, joinDate, teamRoleType } = el;
-          return (
-            <FlexBox key={index} style={{ borderTop: '1px solid #DCDCDC', position: 'relative' }}>
-              <FlexBox justify={'flex-start'} style={{ padding: '17px 16px', width: '50%' }}>
-                <div css={{ flex: 1 }}>
-                  <ProfileIcon name={userName.slice(0, 1)} backgroundColor={profileColor[index]} />
-                </div>
+      return list.map((el, index) => {
+        const { userId, userName, joinDate, teamRoleType } = el;
+        return (
+          <FlexBox key={index} style={{ borderTop: '1px solid #DCDCDC', position: 'relative' }}>
+            <FlexBox justify={'flex-start'} style={{ padding: '17px 16px', width: '50%' }}>
+              <div css={{ flex: 1 }}>
+                <ProfileIcon name={userName.slice(0, 1)} backgroundColor={profileColor[index]} />
+              </div>
 
-                <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={{ marginLeft: '24px' }}>
-                  <span css={[heading5_regular, { marginBottom: '7px' }]}>{userName}</span>
-                  <span css={[heading5_regular, { color: colors.grey._99 }]}>{userId}</span>
-                </FlexBox>
+              <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={{ marginLeft: '24px' }}>
+                <span css={[heading5_regular, { marginBottom: '7px' }]}>{userName}</span>
+                <span css={[heading5_regular, { color: colors.grey._99 }]}>{userId}</span>
               </FlexBox>
+            </FlexBox>
 
-              <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>
-                <span css={heading5_regular}>{moment(joinDate).format('YYYY-MM-DD')}</span>
-              </FlexBox>
+            <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>
+              <span css={heading5_regular}>{moment(joinDate).format('YYYY-MM-DD')}</span>
+            </FlexBox>
 
-              <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>
-                <span css={heading5_regular}>{teamRoleType}</span>
-              </FlexBox>
+            <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>
+              <span css={heading5_regular}>{teamRoleType}</span>
+            </FlexBox>
 
-              <FlexBox justify={'center'} align={'center'} style={{ padding: '17px 0', flex: 1 }}>
+            <FlexBox justify={'center'} align={'center'} style={{ padding: '17px 0', flex: 1 }}>
+              {userInfo?.userName === userName ? null : (
                 <Icon
-                  onClick={() => test(index)}
+                  onClick={() => handleClickDropdown(index, teamRoleType, el)}
                   forwardref={(el: never) => (cellsRef.current[index] = el)}
                   name={'MORE_HORIZON'}
                   size={24}
                   style={{ cursor: 'pointer' }}
                 />
-              </FlexBox>
+              )}
             </FlexBox>
-          );
-        });
-      } else {
-        const filterArr = listData.filter(el => el.userName === searchText);
-        console.log(filterArr, 'filter aRr');
-        return filterArr.map((el, index) => {
-          const { userId, userName, joinDate, teamRoleType } = el;
-          return (
-            <FlexBox key={index} style={{ borderTop: '1px solid #DCDCDC' }}>
-              <FlexBox justify={'flex-start'} style={{ padding: '17px 16px', width: '50%' }}>
-                <div css={{ flex: 1 }}>
-                  <ProfileIcon name={userName.slice(0, 1)} backgroundColor={profileColor[index]} />
-                </div>
-
-                <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={{ marginLeft: '24px' }}>
-                  <span css={[heading5_regular, { marginBottom: '7px' }]}>{userName}</span>
-                  <span css={[heading5_regular, { color: colors.grey._99 }]}>{userId}</span>
-                </FlexBox>
-              </FlexBox>
-
-              <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>
-                <span css={heading5_regular}>{moment(joinDate).format('YYYY-MM-DD')}</span>
-              </FlexBox>
-
-              <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>
-                <span css={heading5_regular}>{teamRoleType}</span>
-              </FlexBox>
-
-              <FlexBox justify={'center'} align={'center'} style={{ padding: '17px 0', flex: 1 }}>
-                <Icon onClick={() => test(index)} forwardref={cellRef} name={'MORE_HORIZON'} size={24} style={{ cursor: 'pointer' }} />
-              </FlexBox>
-            </FlexBox>
-          );
-        });
-      }
+          </FlexBox>
+        );
+      });
     }
-  }, [listData, isLoading, searchText]);
+  }, [list, listData, isLoading, searchText]);
 
   return (
     <FlexBox justify={'flex-start'} direction={'column'} align={'flex-start'} style={{ maxWidth: '800px', padding: '0px 40px 24px 40px' }}>

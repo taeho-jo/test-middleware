@@ -15,14 +15,13 @@ import { css } from '@emotion/react';
 import AOS from 'aos';
 import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // API
-import { useConfirmEmailApi, useRefreshTokenApi } from '../../api/authApi';
-import { useGetUserInfo } from '../../api/userApi';
-import { setEmailConfirm, setSetting, UserInfoType } from '../../store/reducers/userReducer';
+import { fetchCommonCodeApi, fetchEmailConfirmApi } from '../../api/authApi';
+import { fetchUserInfoApi } from '../../api/userApi';
+import { setUserInfo, UserInfoType } from '../../store/reducers/userReducer';
 import { isShow } from '../../store/reducers/modalReducer';
-import { QueryCache, QueryClient } from 'react-query';
-import ReportHeader from '../../components/molecules/ReportHeader';
-import ReportSideBar from '../../components/molecules/ReportSideBar';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import ReportLayout from './ReportLayout';
+import { updateCommonCode } from '../../store/reducers/commonReducer';
 
 // Types
 interface PropsType {
@@ -30,38 +29,80 @@ interface PropsType {
 }
 
 const Layout = ({ children }: PropsType) => {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const token = localStorage.getItem('accessToken');
   const resetToken = sessionStorage.getItem('accessToken');
   const emailConfirm = useSelector<ReducerType, boolean>(state => state.user.emailConfirm);
-  const userInfoSettingValue = useSelector<ReducerType, boolean>(state => state.user.setting);
+  // const userInfoSettingValue = useSelector<ReducerType, boolean>(state => state.user.setting);
   const isRefreshToken = useSelector<ReducerType, boolean>(state => state.auth.isRefreshToken);
   const userInfo = useSelector<ReducerType, UserInfoType>(state => state.user.userInfo);
+  const teamListQuery = useSelector<ReducerType, boolean>(state => state.queryStatus.teamListQuery);
+  const userInfoQuery = useSelector<ReducerType, boolean>(state => state.userInfoQuery);
+  const getRefreshToken = useSelector<ReducerType, boolean>(state => state.queryStatus.tokenRefresh);
 
   const [showGradient, setShowGradient] = useState<boolean>(true);
 
   const router = useRouter();
 
   const canvasRef = useRef(null);
-  const { isLoading, data, isError, error, refetch } = useGetUserInfo(userInfoSettingValue);
-  const refreshToken = useRefreshTokenApi(isRefreshToken);
-  const confirmEmail = useConfirmEmailApi(refetch);
+
+  // ============ React Query ============ //
+  const { data: commonCode } = useQuery(['fetchCommonCode'], fetchCommonCodeApi);
+
+  const { data: usersInfo, refetch } = useQuery(['fetchUserInfo', 'layout'], () => fetchUserInfoApi(token), {
+    enabled: !!token,
+    onSuccess: data => {
+      dispatch(setUserInfo(data.data));
+      if (data.data.emailVerifiedYn === 'N') {
+        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+      }
+      if (data.data.emailVerifiedYn === 'Y') {
+        return;
+        // router.push('/admin/team');
+      }
+    },
+  });
+
+  const { mutate } = useMutation(['fetchEmailConfirm'], fetchEmailConfirmApi, {
+    onError: e => console.log('error:::', e),
+    onSuccess: data => {
+      dispatch(isShow({ isShow: false, type: '' }));
+      refetch();
+    },
+  });
+
+  // const { data: refreshTokenData, refetch: refreshTokenRefecthData } = useQuery(['fetchRefreshToken'], fetchRefreshToken, {
+  //   enabled: false,
+  //   onSuccess: data => {
+  //     console.log(data?.data, 'DA');
+  //     // localStorage.setItem('accessToken', data?.data.token);
+  //     dispatch(updateQueryStatus({ name: 'tokenRefresh', status: false }));
+  //     // queryClient.invalidateQueries();
+  //   },
+  // });
+  // ============ React Query ============ //
+
+  useEffect(() => {
+    if (commonCode) {
+      dispatch(updateCommonCode(commonCode.data));
+      localStorage.setItem('commonCode', JSON.stringify(commonCode.data));
+    }
+  }, [commonCode]);
 
   useEffect(() => {
     if (Object.keys(router.query).length !== 0) {
-      console.log('탐');
-      // dispatch(setSetting(false));
       dispatch(isShow({ isShow: false, type: '' }));
       const query = router?.query;
       const { token, userId, type, teamseq } = query;
 
       if (token && !userId && type === 'google') {
         localStorage.setItem('accessToken', `${token}`);
-        dispatch(setSetting(true));
+        // dispatch(setSetting(true));
       }
       if (token && !userId && !type) {
         localStorage.setItem('accessToken', `${token}`);
-        confirmEmail.mutate();
+        mutate();
       }
       if (token && userId && !type) {
         sessionStorage.setItem('accessToken', `${token}`);

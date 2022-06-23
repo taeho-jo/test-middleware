@@ -3,29 +3,27 @@ import { useMutation, useQueries, useQuery, useQueryClient } from 'react-query';
 // Types
 import { ProductList } from './types';
 
+const selectTeamList = localStorage.getItem('selectTeamList');
+const teamSeq = JSON.parse(selectTeamList).teamSeq;
+
 const defaultConfig = {
   enabled: status => status,
   onSuccess: data => console.log(data),
-  onError: (e, method, apiName) =>
-    console.error(`AXIOS_${method} => ${apiName} API ::::`, e),
+  onError: (e, method, apiName) => console.error(`AXIOS_${method} => ${apiName} API ::::`, e),
 };
 
 // Product List Api
 export const useGetProductsListApi = () => {
-  return useQuery<ProductList[], Error>(
-    ['AllProduct'],
-    () => AXIOS_GET('/products'),
-    {
-      cacheTime: 0,
-      onError: e => defaultConfig.onError(e, 'GET', 'useGetProductsListApi'),
-    },
-  );
+  return useQuery<ProductList[], Error>(['AllProduct'], () => AXIOS_GET(`/admin/${teamSeq}/product/`), {
+    cacheTime: 0,
+    onError: e => defaultConfig.onError(e, 'GET', 'useGetProductsListApi'),
+  });
 };
 
 // Product Detail Api
 export const useGetProductDetailApi = id => {
   const queryClient = useQueryClient();
-  return useQuery(['ProductDetail', id], () => AXIOS_GET(`/products/${id}`), {
+  return useQuery(['ProductDetail', id], () => AXIOS_GET(`/admin/product/${id}/`), {
     onError: e => defaultConfig.onError(e, 'GET', 'useGetProductDetailApi'),
     onSuccess: () => {
       queryClient.invalidateQueries(['AllProduct']);
