@@ -15,7 +15,7 @@ export const fetchInviteUserInfoApi = async (seq, token) => {
 };
 
 // 사용자 정보 업데이트 API
-export const fetchUserInfoUpdateApi = async (sendObject: UpdateUserInfoType) => {
+export const fetchUserInfoUpdateApi = async sendObject => {
   return await AXIOS_PATCH('/user/update/', sendObject);
 };
 

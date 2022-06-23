@@ -116,21 +116,6 @@ const UiOverallSummaryTemplate = ({ dataList }) => {
                 </FlexBox>
               );
             })}
-            {/*<FlexBox direction={'column'} style={{ width: '33%' }}>*/}
-            {/*  <span css={[heading5_medium, { textAlign: 'center', marginBottom: '4px' }]}>미션 1</span>*/}
-            {/*  <span css={[heading5_bold, { textAlign: 'center' }]}>회원가입하기</span>*/}
-            {/*  <RatePieChart color={'#68A0F4'} dataList={successTestData} />*/}
-            {/*</FlexBox>*/}
-            {/*<FlexBox direction={'column'} style={{ width: '33%' }}>*/}
-            {/*  <span css={[heading5_medium, { textAlign: 'center', marginBottom: '4px' }]}>미션 2</span>*/}
-            {/*  <span css={[heading5_bold, { textAlign: 'center' }]}>탐색하기</span>*/}
-            {/*  <RatePieChart dataList={successTestData} />*/}
-            {/*</FlexBox>*/}
-            {/*<FlexBox direction={'column'} style={{ width: '33%' }}>*/}
-            {/*  <span css={[heading5_medium, { textAlign: 'center', marginBottom: '4px' }]}>미션 3</span>*/}
-            {/*  <span css={[heading5_bold, { textAlign: 'center' }]}>구매하기</span>*/}
-            {/*  <RatePieChart color={'#A286D0'} dataList={successTestData} />*/}
-            {/*</FlexBox>*/}
           </FlexBox>
         </FlexBox>
       </FlexBox>

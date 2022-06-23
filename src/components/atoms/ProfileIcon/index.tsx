@@ -25,7 +25,7 @@ const ProfileIcon = ({
   style,
 }: PropsType) => {
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
-  const profileName = userInfo.userName.slice(0, 1);
+  const profileName = userInfo?.userName?.slice(0, 1);
 
   return (
     <div css={[profileBoxStyle(size, margin, backgroundColor, color), style]}>

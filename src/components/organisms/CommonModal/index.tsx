@@ -19,6 +19,9 @@ import TeamNameModifyModal from '../Modal/TeamNameModifyModal';
 import TeamProductCreateModal from '../Modal/TeamProductCreateModal';
 import TeamProductModifyModal from '../Modal/TeamProductModifyModal';
 import ChangeAuthModal from '../Modal/ChangeAuthModal';
+import ProfileUpdateNickNameModal from '../Modal/ProfileUpdateNickNameModal';
+import ProfileUpdateCpPositionModal from '../Modal/ProfileUpdateCpPositionModal';
+import ProfileUpdateCpSize from '../Modal/ProfileUpdateCpSize';
 
 const CommonModal = () => {
   const show = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -45,6 +48,9 @@ const CommonModal = () => {
           {modalType === 'scenarioResearchModule' && <ScenarioResearchModuleModal />}
           {modalType === 'customerResearchModule' && <CustomerResearchModuleModal />}
           {modalType === 'changeMemberAuth' && <ChangeAuthModal />}
+          {modalType === 'profileNickName' && <ProfileUpdateNickNameModal />}
+          {modalType === 'profileCpPosition' && <ProfileUpdateCpPositionModal />}
+          {modalType === 'profileCpSize' && <ProfileUpdateCpSize />}
         </Modal>
       ) : null}
     </>

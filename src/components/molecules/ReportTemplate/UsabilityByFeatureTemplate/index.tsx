@@ -38,6 +38,7 @@ const UsabilityByFeatureTemplate = ({ dataList }) => {
   //
   // console.log(missionFatality);
 
+  const [stackbarIndex, setStackbarIndex] = useState<number | null>(null);
   return (
     <>
       {dataList?.missionFatality?.map((el, index) => {
@@ -95,12 +96,12 @@ const UsabilityByFeatureTemplate = ({ dataList }) => {
                     </FlexBox>
                   </FlexBox>
 
-                  <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
-                    <FlexBox style={graphAreaStyle} direction={'column'}>
+                  <FlexBox style={{ ...graphBosStyle, overflow: 'unset' }} justify={'center'} align={'flex-start'} overflow={'unset'}>
+                    <FlexBox style={{ ...graphAreaStyle, overflow: 'unset' }} direction={'column'}>
                       <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
                         <div css={[heading4_bold]}>1. 불편 언급 비율과 치명도</div>
                       </div>
-                      <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
+                      <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} overflow={'unset'} style={{ graphContainerStyle }}>
                         <FlexBox justify={'flex-end'} style={{ marginBottom: '4px' }}>
                           <Icon name={'ALERT_NORMAL'} size={10} />
                           <span css={[caption2_bold, { textDecoration: 'underline' }]}>치명도가 뭔가요</span>
@@ -118,11 +119,11 @@ const UsabilityByFeatureTemplate = ({ dataList }) => {
 
                   <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
                     {/*<ReportShortAnswerQuestionLayerPopup display={isShow} setIsShow={setIsShow} />*/}
-                    <FlexBox style={graphAreaStyle} direction={'column'}>
+                    <FlexBox style={graphAreaStyle} direction={'column'} overflow={'unset'}>
                       <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
                         <div css={[heading4_bold]}>2. 상세 내용</div>
                       </div>
-                      <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
+                      <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} overflow={'unset'} style={{ graphContainerStyle }}>
                         <FlexBox style={{ border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 0', marginBottom: '36px' }}>
                           <AnnouncementBox icon={'NOTI'} content={'클릭하면 주관식 응답을 확인할 수 있어요.'} />
                         </FlexBox>
@@ -132,6 +133,9 @@ const UsabilityByFeatureTemplate = ({ dataList }) => {
                             <Fragment key={`detail-${detailIndex}`}>
                               <StackedBarChart
                                 // setIsShow={setIsShow}
+                                setStackbarIndex={setStackbarIndex}
+                                stackbarIndex={stackbarIndex}
+                                detailIndex={detailIndex}
                                 dataList={detailItem.stack}
                                 name={detailItem.name}
                                 label={[
@@ -443,11 +447,13 @@ const headerBosStyle = css`
   border-bottom: 1px solid #dcdcdc;
   position: sticky;
   top: 0;
-  z-index: 5;
+  z-index: 500;
+  overflow: unset;
 `;
 const graphBosStyle = css`
   width: 100%;
   position: relative;
+  overflow: unset;
 `;
 const graphAreaStyle = css`
   border-left: 1px solid #dcdcdc;
@@ -461,6 +467,7 @@ const graphContainerStyle = css`
   padding: 36px 80px 80px;
   width: 100%;
   border-bottom: 1px solid #dcdcdc;
+  overflow: unset;
 `;
 const sortationArea = css`
   width: 100%;

@@ -15,13 +15,14 @@ import { css } from '@emotion/react';
 import AOS from 'aos';
 import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // API
-import { fetchCommonCodeApi, fetchEmailConfirmApi } from '../../api/authApi';
+import { fetchCommonCodeApi, fetchEmailConfirmApi, fetchRefreshToken } from '../../api/authApi';
 import { fetchUserInfoApi } from '../../api/userApi';
 import { setUserInfo, UserInfoType } from '../../store/reducers/userReducer';
 import { isShow } from '../../store/reducers/modalReducer';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import ReportLayout from './ReportLayout';
 import { updateCommonCode } from '../../store/reducers/commonReducer';
+import { showToast } from '../../store/reducers/toastReducer';
 
 // Types
 interface PropsType {
@@ -52,6 +53,16 @@ const Layout = ({ children }: PropsType) => {
 
   const { data: usersInfo, refetch } = useQuery(['fetchUserInfo', 'layout'], () => fetchUserInfoApi(token), {
     enabled: !!token,
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        refetch();
+      } else if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      }
+    },
     onSuccess: data => {
       dispatch(setUserInfo(data.data));
       if (data.data.emailVerifiedYn === 'N') {

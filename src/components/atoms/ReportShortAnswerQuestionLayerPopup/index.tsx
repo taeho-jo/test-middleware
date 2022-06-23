@@ -1,4 +1,4 @@
-import React, { forwardRef, Fragment, useCallback, useRef } from 'react';
+import React, { forwardRef, Fragment, useCallback, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
@@ -10,13 +10,13 @@ import FlexBox from '../FlexBox';
 interface PropsType {
   display: boolean;
   data?: any;
-  setIsShow: any;
   top?: number;
   left?: number;
   normalText?: {
     text: string;
     onClick: () => void;
   }[];
+  setStackbarIndex: any;
   [key: string]: any;
 }
 //
@@ -24,14 +24,14 @@ interface PropsType {
 // reason: "가독성이 낮다."
 // value: 60
 
-const ReportShortAnswerQuestionLayerPopup = ({ display, data, setIsShow, topText, normalText, top = 16, left = 16, ...props }: PropsType) => {
+const ReportShortAnswerQuestionLayerPopup = ({ setStackbarIndex, display, data, topText, normalText, top = 16, left = 16, ...props }: PropsType) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const boxRef = useRef(null);
 
   useOutsideClick(boxRef, () => {
-    setIsShow(false);
+    setStackbarIndex(null);
   });
 
   return (
@@ -76,7 +76,7 @@ const popupContainer = (display, top, left) => css`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  z-index: ${display ? 1 : -1};
+  z-index: ${display ? 99 : -1};
   border: 1px solid #dcdcdc;
 `;
 const emailTextStyle = css`

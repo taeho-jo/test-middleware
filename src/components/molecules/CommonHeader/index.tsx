@@ -72,7 +72,7 @@ const CommonHeader = () => {
             display={focusProfile}
             topText={userInfo.userId}
             normalText={[
-              { text: '프로필 설정', onClick: null },
+              { text: '프로필 설정', onClick: () => router.push('/admin/profile/update') },
               { text: '로그아웃', onClick: handleLogout },
             ]}
           />

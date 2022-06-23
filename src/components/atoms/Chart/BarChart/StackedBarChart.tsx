@@ -13,9 +13,22 @@ interface PropsType {
   negative?: boolean;
   setIsShow?: any;
   handleShowAnswerBox?: (e) => void;
+  stackbarIndex: number;
+  setStackbarIndex: any;
   [key: string]: any;
 }
-const StackedBarChart = ({ handleShowAnswerBox, dataList, name, label, rate, negative = false, value, ...props }: PropsType) => {
+const StackedBarChart = ({
+  handleShowAnswerBox,
+  dataList,
+  name,
+  label,
+  rate,
+  negative = false,
+  value,
+  setStackbarIndex,
+  stackbarIndex,
+  ...props
+}: PropsType) => {
   const [renderDataList, setRenderDataList] = useState(null);
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -24,13 +37,18 @@ const StackedBarChart = ({ handleShowAnswerBox, dataList, name, label, rate, neg
   const [layerData, setLayerData] = useState<object | null>(null);
 
   const onMouseUp = useCallback(
-    (e, index, el) => {
+    (e, index, el, detailIndex) => {
       e.stopPropagation();
+      console.log(index);
+      console.log(detailIndex, 'detailIndex');
+
       if (index === activeIndex) {
         setActiveIndex(null);
       } else {
         setActiveIndex(index);
       }
+      setStackbarIndex(detailIndex);
+
       setIsShow(true);
       setLayerData(el);
       // console.log(el);
@@ -51,8 +69,8 @@ const StackedBarChart = ({ handleShowAnswerBox, dataList, name, label, rate, neg
   }, [dataList]);
 
   return (
-    <>
-      <ReportShortAnswerQuestionLayerPopup data={layerData} display={isShow} setIsShow={setIsShow} />
+    <div style={{ width: '100%', position: 'relative' }}>
+      <ReportShortAnswerQuestionLayerPopup data={layerData} display={stackbarIndex === props.detailIndex} setStackbarIndex={setStackbarIndex} />
       <FlexBox justify={'center'} align={'center'} direction={'column'} style={{ width: '100%' }}>
         <FlexBox justify={'space-between'}>
           {label ? <span css={[heading5_regular, { paddingLeft: '5px' }]}>{label}</span> : ''}
@@ -79,7 +97,7 @@ const StackedBarChart = ({ handleShowAnswerBox, dataList, name, label, rate, neg
                   >
                     {/*{renderDataList?.map((entry, idx) => (*/}
                     <Cell
-                      onClick={e => onMouseUp(e, index, el)}
+                      onClick={e => onMouseUp(e, index, el, props.detailIndex)}
                       cursor="pointer"
                       key={`cell-${index}`}
                       // fill={
@@ -105,7 +123,7 @@ const StackedBarChart = ({ handleShowAnswerBox, dataList, name, label, rate, neg
                   >
                     {/*{renderDataList?.map((entry, idx) => (*/}
                     <Cell
-                      onClick={e => onMouseUp(e, index, el)}
+                      onClick={e => onMouseUp(e, index, el, props.detailIndex)}
                       cursor="pointer"
                       key={`cell-${index}`}
                       // fill={
@@ -125,7 +143,7 @@ const StackedBarChart = ({ handleShowAnswerBox, dataList, name, label, rate, neg
           </BarChart>
         </ResponsiveContainer>
       </FlexBox>
-    </>
+    </div>
   );
 };
 
