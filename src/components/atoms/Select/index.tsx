@@ -5,8 +5,10 @@ import { caption1_bold, heading3_regular } from '../../../styles/FontStyles';
 import { colors } from '../../../styles/Common.styles';
 import Icon from '../Icon';
 type Option = {
-  value: string;
-  label: string;
+  key?: string;
+  value?: string;
+  label?: string;
+  displayName?: string;
 };
 type PropsType = {
   options: Option[];
@@ -23,6 +25,7 @@ type PropsType = {
   fontSize?: any;
   selectBoxHeight?: string;
   selectBoxMargin?: string;
+  [key: string]: any;
 };
 const Select = ({
   options,
@@ -39,6 +42,7 @@ const Select = ({
   fontSize,
   selectBoxHeight,
   selectBoxMargin,
+  ...props
 }: PropsType) => {
   const [isOpen, setOpen] = useState(false);
   // const [selected, setSelected] = useState<string>();
@@ -53,13 +57,12 @@ const Select = ({
       (element as HTMLInputElement).value = selected as string;
     }
   }, [selected]);
-
   return (
     <>
       <select css={selectBoxStyle} {...selectProps} id={name} name={name} className="html-select">
-        {options.map(item => (
+        {options?.map(item => (
           <option key={item.value} value={item.value}>
-            {item.label}
+            {item.displayName ? item.displayName : item.label}
           </option>
         ))}
       </select>
@@ -75,19 +78,20 @@ const Select = ({
         <div css={isOpen ? customSelectOpen('100%', padding) : customSelect(padding)}>
           <div css={customSelectTrigger}>
             <span css={[fontSize ? fontSize : heading3_regular, { padding: 0, color: selected[name] ? colors.grey._3c : colors.grey._cc }]}>
-              {/*{options.find(item => item.value === selected)?.label || '옵션을 선택해주세요.'}*/}
-              {selected[name] ? selected[name] : placeholder ? placeholder : '옵션을 선택해주세요.'}
+              {options?.find(item => item.value === selected[name])?.displayName || '옵션을 선택해주세요.'}
+              {/*{selected[name] ? selected[name] : placeholder ? placeholder : '옵션을 선택해주세요.'}*/}
+              {/*{options.find(item => item.value === selected[name])}*/}
             </span>
             <Icon name={'CHEVRON_DOWN_THIN'} size={24} />
           </div>
           <div css={isOpen ? customOptionOpen('100%') : customOptions}>
-            {options.map(item => (
+            {options?.map(item => (
               <div key={item.value} onClick={() => onClick(item.value, name)} css={optionContainer}>
                 <span
                   css={selected[name] === item.value ? [customOptionSelected, customOption, fontSize] : [customOption, fontSize]}
                   data-value={item.value}
                 >
-                  {item.label}
+                  {item.displayName ? item.displayName : item.label}
                 </span>
               </div>
             ))}

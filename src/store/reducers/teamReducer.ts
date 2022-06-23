@@ -6,11 +6,28 @@ export interface memberListType {
   userId: string;
   userName: string;
 }
+export interface ProductType {
+  planetType: string;
+  productNm: string;
+  productSeq: number;
+  revenueModelType: string;
+  serviceType: string;
+  teamSeq: number;
+}
 export interface TeamListType {
-  teamName: string;
-  memberList: memberListType[];
+  teamNm: string;
+  teamMember: memberListType[];
   teamRoleType: string | null;
   teamSeq: number | null;
+  createDt: string | null;
+}
+export interface TeamProductType {
+  planetType: string;
+  productNm: string;
+  productSeq: number;
+  revenueModelType: string;
+  serviceType: string;
+  teamSeq: number;
 }
 export interface TeamType {
   isFirstCreate: boolean;
@@ -18,6 +35,7 @@ export interface TeamType {
   teamList: TeamListType[] | null;
   selectTeamList: TeamListType[] | null;
   selectTeamSeq: number | null;
+  selectProduct: TeamProductType | null;
 }
 
 const initialState: TeamType = {
@@ -26,6 +44,7 @@ const initialState: TeamType = {
   teamList: null,
   selectTeamList: null,
   selectTeamSeq: null,
+  selectProduct: null,
 };
 
 export const teamSlice = createSlice({
@@ -33,8 +52,11 @@ export const teamSlice = createSlice({
   initialState,
   reducers: {
     updateSelectTeamList: (state, action) => {
-      const selectedArr = state.teamList.filter(el => el.teamSeq === action.payload);
-      state.selectTeamList = selectedArr;
+      // const selectedArr = state.teamList.filter(el => el.teamSeq === action.payload);
+      state.selectTeamList = action.payload;
+    },
+    updateSelectProductList: (state, action) => {
+      state.selectProduct = action.payload;
     },
     updateTeamCreateModal: (state, action) => {
       state.isFirstCreate = action.payload;
@@ -52,5 +74,5 @@ export const teamSlice = createSlice({
   },
 });
 
-export const { updateTeamInfo, updateTeamCreateModal, updateTeamSeq, updateSelectTeamList } = teamSlice.actions;
+export const { updateTeamInfo, updateTeamCreateModal, updateSelectProductList, updateTeamSeq, updateSelectTeamList } = teamSlice.actions;
 export default teamSlice.reducer;

@@ -10,9 +10,8 @@ import { colors } from '../../../styles/Common.styles';
 import { heading5_bold } from '../../../styles/FontStyles';
 // Types
 import { ReducerType } from '../../../store/reducers';
-import { TeamListType } from '../../../store/reducers/teamReducer';
+import { TeamListType, updateSelectTeamList, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import MoreTeamInfoPopup from '../MoreTeamInfoPopup';
-import { UserType } from '../../../store/reducers/userReducer';
 import { isShow } from '../../../store/reducers/modalReducer';
 
 // Dummy
@@ -20,19 +19,35 @@ import { isShow } from '../../../store/reducers/modalReducer';
 const AdminSideBar = () => {
   const dispatch = useDispatch();
   const teamList = useSelector<ReducerType, TeamListType[]>(state => state.team.teamList);
-  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+
+  const handleSelectTeam = useCallback(
+    item => {
+      console.log(item);
+      dispatch(updateSelectTeamList(item));
+      dispatch(updateTeamSeq(item.teamSeq));
+
+      localStorage.setItem('selectTeamList', JSON.stringify(item));
+      localStorage.setItem('teamSeq', item.teamSeq);
+    },
+    [teamList],
+  );
 
   const sideTeamList = useCallback(() => {
     if (teamList !== null) {
       return teamList?.map((item, index) => {
-        return <AdminSideTeamListItem parentsIndex={item.teamSeq} key={index} teamName={item.teamName} memberList={item.memberList} />;
+        return (
+          <AdminSideTeamListItem
+            onClick={handleSelectTeam}
+            item={item}
+            parentsIndex={item.teamSeq}
+            key={index}
+            teamName={item.teamNm}
+            memberList={item.teamMember}
+          />
+        );
       });
     }
   }, [teamList]);
-
-  const handleCreateTeam = useCallback(() => {
-    dispatch(isShow({ isShow: true, type: 'firstCreateTeam' }));
-  }, []);
 
   return (
     <div css={adminSideBarStyle}>

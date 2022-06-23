@@ -9,7 +9,7 @@ import { ReducerType } from '../../../store/reducers';
 import { updateTeamSeq } from '../../../store/reducers/teamReducer';
 
 interface PropsType {
-  title?: string;
+  title?: any;
   closed?: boolean;
   titlePosition?: 'flex-start' | 'center' | 'space-between';
   style?: any;
@@ -20,7 +20,6 @@ const ModalTitle = ({ title = 'Modal', titlePosition = 'flex-start', closed = tr
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
   const closeModal = useCallback(() => {
-    dispatch(updateTeamSeq(null));
     dispatch(isShow({ isShow: false, type: '' }));
   }, []);
 
@@ -35,7 +34,7 @@ const ModalTitle = ({ title = 'Modal', titlePosition = 'flex-start', closed = tr
           <Icon onClick={goBackLogin} name={'NAVIGATION_ARROW_LEFT'} size={24} style={{ cursor: 'pointer', marginRight: '10px' }} />
         ) : null}
 
-        <span css={[heading1_bold, { cursor: 'default' }]}>{title}</span>
+        <span css={[heading1_bold, { cursor: 'default', height: 'auto' }]}>{title}</span>
       </FlexBox>
 
       {closed ? <Icon onClick={closeModal} name={'NAVIGATION_CLOSE_LG'} size={24} style={{ cursor: 'pointer' }} /> : null}

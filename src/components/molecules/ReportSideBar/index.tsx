@@ -6,11 +6,24 @@ import FlexBox from '../../atoms/FlexBox';
 import Icon from '../../atoms/Icon';
 import { heading4_bold } from '../../../styles/FontStyles';
 import { RespondentAttributes, TestInfoBox, TestResults } from '../../atoms/ReportSideInfoBox';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { ReducerType } from '../../../store/reducers';
 
 const ReportSideBar = () => {
+  const reportData = useSelector<ReducerType, any>(state => state.report.data);
+
+  console.log(reportData, '%%%%%%%%%%%%%%%%%%%%%%%%%%');
+
+  const router = useRouter();
   return (
     <div css={sidebarStyle}>
-      <FlexBox style={{ height: '72px', borderBottom: '1px solid #dcdcdc' }} align={'center'} justify={'flex-start'}>
+      <FlexBox
+        onClick={() => router.push('/admin/team')}
+        style={{ height: '72px', borderBottom: '1px solid #dcdcdc', cursor: 'pointer' }}
+        align={'center'}
+        justify={'flex-start'}
+      >
         <img style={{ width: '53px', marginLeft: '24px' }} src={LogoText.src} alt="DibyLogo" />
       </FlexBox>
       <FlexBox style={shareBoxStyle} justify={'space-between'} align={'center'}>
@@ -23,9 +36,9 @@ const ReportSideBar = () => {
         </div>
       </FlexBox>
       <div css={{ height: 'calc(100vh - 136px)', overflow: 'scroll' }}>
-        <TestInfoBox />
+        <TestInfoBox reportData={reportData} />
         <RespondentAttributes />
-        <TestResults />
+        {/*<TestResults />*/}
       </div>
     </div>
   );
@@ -35,6 +48,7 @@ export default ReportSideBar;
 
 const sidebarStyle = css`
   width: 296px;
+  min-width: 296px;
   height: 100vh;
   border-right: 1px solid #dcdcdc;
 `;

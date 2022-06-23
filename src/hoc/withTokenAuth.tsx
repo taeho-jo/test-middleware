@@ -54,6 +54,7 @@ export default function withTokenAuth(SpecificComponent: any, option: boolean) {
             }
           }
           if (userInfo.emailVerifiedYn === 'N') {
+            return;
             router.replace('/');
           }
           // if (userInfo.emailVerifiedYn !== 'Y') {
@@ -78,7 +79,6 @@ export default function withTokenAuth(SpecificComponent: any, option: boolean) {
         if (token) {
           if (userInfo.emailVerifiedYn === 'Y') {
             if (userInfo.firstTimeYn === 'Y') {
-              console.log('이거 왜 안타??');
               router.replace('/admin/profile');
             } else {
               router.replace('/admin/team');

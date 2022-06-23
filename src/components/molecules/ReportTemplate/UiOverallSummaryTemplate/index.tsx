@@ -1,17 +1,60 @@
-import React, { Fragment } from 'react';
+import React, { useCallback, useState } from 'react';
 import FlexBox from '../../../atoms/FlexBox';
-import { caption1_bold, caption2_bold, heading3_bold, heading4_bold, heading5_bold, heading5_medium } from '../../../../styles/FontStyles';
+import { caption2_bold, heading3_bold, heading4_bold, heading5_bold, heading5_medium } from '../../../../styles/FontStyles';
 import CheckBox from '../../../atoms/CheckBox';
 import IconTextButton from '../../../atoms/Button/IconTextButton';
-import { colors } from '../../../../styles/Common.styles';
-import { BasicPieChart, RatePieChart, TableBarChart, UsabilityTableChart } from '../../../atoms/Chart';
-import { ageTestData, genderTestData, successTestData, tableBarChartTestData, tableBarTestData } from '../../../../assets/dummy/dummyData';
+import { chart_color, colors } from '../../../../styles/Common.styles';
+import { RatePieChart, TableBarChart } from '../../../atoms/Chart';
+import { tableBarChartTestData, tableBarTestData } from '../../../../assets/dummy/dummyData';
 import { css } from '@emotion/react';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../../common/types/commonTypes';
 import Icon from '../../../atoms/Icon';
+import FixImage from '/public/assets/png/chartFixAlert.png';
 
-const UiOverallSummaryTemplate = () => {
+interface PropsType {
+  dataList: {
+    missionSuccess: {
+      index: string;
+      name: string;
+      missionSuccessRatioInfo: { name: string; value: number }[];
+    }[];
+    missionFatality: {
+      index: string;
+      name: string;
+      value: number;
+      fatality: string;
+      missionFunctionFatality: {
+        index: string;
+        name: string;
+        value: number;
+        fatality: string;
+        info: string;
+        detailInfo: string;
+        detailList: {
+          name: string;
+          stack: [
+            {
+              value: number;
+              reason: string;
+              answer: string[];
+            },
+          ];
+          count: string;
+          rate: string;
+        }[];
+        usabilityList: {
+          name: string;
+          value: number;
+          fatality: string;
+          mention: string;
+        }[];
+      }[];
+    }[];
+  };
+}
+
+const UiOverallSummaryTemplate = ({ dataList }) => {
   const {
     register,
     handleSubmit,
@@ -23,6 +66,20 @@ const UiOverallSummaryTemplate = () => {
 
   const onSubmit = data => console.log('success', data);
   const onError = errors => console.log('fail', errors);
+
+  const [selectedLabelIndex, setSelectedLabelIndex] = useState(null);
+
+  const handleMouseUp = useCallback(
+    index => {
+      if (selectedLabelIndex === index) {
+        setSelectedLabelIndex(null);
+      } else {
+        setSelectedLabelIndex(index);
+      }
+    },
+    [selectedLabelIndex],
+  );
+  console.log(dataList, 'asdf');
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
@@ -37,26 +94,43 @@ const UiOverallSummaryTemplate = () => {
       </FlexBox>
 
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
+        <img css={fixImage} src={FixImage.src} alt="'FixImage" />
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
             <div css={[heading4_bold]}>미션별 성공률</div>
           </div>
-          <FlexBox justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
-            <FlexBox direction={'column'}>
-              <span css={[heading5_medium, { textAlign: 'center', marginBottom: '4px' }]}>미션 1</span>
-              <span css={[heading5_bold, { textAlign: 'center' }]}>회원가입하기</span>
-              <RatePieChart color={'#68A0F4'} dataList={successTestData} />
-            </FlexBox>
-            <FlexBox direction={'column'}>
-              <span css={[heading5_medium, { textAlign: 'center', marginBottom: '4px' }]}>미션 2</span>
-              <span css={[heading5_bold, { textAlign: 'center' }]}>탐색하기</span>
-              <RatePieChart dataList={successTestData} />
-            </FlexBox>
-            <FlexBox direction={'column'}>
-              <span css={[heading5_medium, { textAlign: 'center', marginBottom: '4px' }]}>미션 3</span>
-              <span css={[heading5_bold, { textAlign: 'center' }]}>구매하기</span>
-              <RatePieChart color={'#A286D0'} dataList={successTestData} />
-            </FlexBox>
+          <FlexBox justify={'space-between'} align={'flex-start'} wrap={'wrap'} style={graphContainerStyle}>
+            {dataList?.missionSuccess.map((el, index) => {
+              return (
+                <FlexBox key={el.name} direction={'column'} style={{ width: '33%' }} overflow={'unset'}>
+                  <span css={[heading5_medium, { textAlign: 'center', marginBottom: '4px' }]}>미션 {index + 1}</span>
+                  <span css={[heading5_bold, { textAlign: 'center' }]}>{el.name}</span>
+                  <RatePieChart
+                    handleMouseUp={handleMouseUp}
+                    index={index}
+                    selectedLabelIndex={selectedLabelIndex}
+                    color={chart_color[index]}
+                    dataList={el}
+                    infoDataList={dataList.missionFatality[index]}
+                  />
+                </FlexBox>
+              );
+            })}
+            {/*<FlexBox direction={'column'} style={{ width: '33%' }}>*/}
+            {/*  <span css={[heading5_medium, { textAlign: 'center', marginBottom: '4px' }]}>미션 1</span>*/}
+            {/*  <span css={[heading5_bold, { textAlign: 'center' }]}>회원가입하기</span>*/}
+            {/*  <RatePieChart color={'#68A0F4'} dataList={successTestData} />*/}
+            {/*</FlexBox>*/}
+            {/*<FlexBox direction={'column'} style={{ width: '33%' }}>*/}
+            {/*  <span css={[heading5_medium, { textAlign: 'center', marginBottom: '4px' }]}>미션 2</span>*/}
+            {/*  <span css={[heading5_bold, { textAlign: 'center' }]}>탐색하기</span>*/}
+            {/*  <RatePieChart dataList={successTestData} />*/}
+            {/*</FlexBox>*/}
+            {/*<FlexBox direction={'column'} style={{ width: '33%' }}>*/}
+            {/*  <span css={[heading5_medium, { textAlign: 'center', marginBottom: '4px' }]}>미션 3</span>*/}
+            {/*  <span css={[heading5_bold, { textAlign: 'center' }]}>구매하기</span>*/}
+            {/*  <RatePieChart color={'#A286D0'} dataList={successTestData} />*/}
+            {/*</FlexBox>*/}
           </FlexBox>
         </FlexBox>
       </FlexBox>
@@ -64,14 +138,14 @@ const UiOverallSummaryTemplate = () => {
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
-            <div css={[heading4_bold]}>미션별 불편 언금 비율과 치명도</div>
+            <div css={[heading4_bold]}>미션별 불편 언급 비율과 치명도</div>
           </div>
           <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
             <FlexBox justify={'flex-end'} style={{ marginBottom: '4px' }}>
               <Icon name={'ALERT_NORMAL'} size={10} />
               <span css={[caption2_bold, { textDecoration: 'underline' }]}>치명도가 뭔가요</span>
             </FlexBox>
-            <TableBarChart barColor={true} dataList={tableBarChartTestData} dataValueList={tableBarTestData} />
+            <TableBarChart barColor={true} dataList={tableBarChartTestData} dataValueList={dataList?.missionFatality} />
           </FlexBox>
         </FlexBox>
       </FlexBox>
@@ -89,10 +163,18 @@ const headerBosStyle = css`
   border-bottom: 1px solid #dcdcdc;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 5;
 `;
 const graphBosStyle = css`
   width: 100%;
+  position: relative;
+`;
+const fixImage = css`
+  width: 278px;
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%);
 `;
 const graphAreaStyle = css`
   border-left: 1px solid #dcdcdc;

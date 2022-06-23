@@ -5,7 +5,7 @@ import { showToast } from '../../../store/reducers/toastReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 // API
-import { useLoginApi } from '../../../api/authApi';
+import { fetchLoginApi } from '../../../api/authApi';
 // Libraries
 import { useForm } from 'react-hook-form';
 // Components
@@ -21,6 +21,10 @@ import { css } from '@emotion/react';
 import { body3_medium } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../../../common/types/commonTypes';
+import { useMutation, useQuery } from 'react-query';
+import { fetchUserInfoApi } from '../../../api/userApi';
+import { setUserInfo } from '../../../store/reducers/userReducer';
+import { isShow } from '../../../store/reducers/modalReducer';
 
 const ReLoginComponent = () => {
   const router = useRouter();
@@ -38,11 +42,34 @@ const ReLoginComponent = () => {
   const onSubmit = data => handleLogin('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const loginResponse = useLoginApi();
+  // const loginResponse = useLoginApi();
+  const {
+    mutate: loginMutate,
+    isLoading,
+    data: loginData,
+  } = useMutation(['login'], fetchLoginApi, {
+    onError: (e: any) => {
+      const { data } = e.response;
+      dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
+    },
+  });
+
+  const { data: usersInfo } = useQuery(['fetchUserInfo', `signup/${loginData?.code}`], () => fetchUserInfoApi(loginData?.data.token), {
+    enabled: !!loginData?.code,
+    onSuccess: data => {
+      dispatch(setUserInfo(data.data));
+      if (data.data.emailVerifiedYn === 'N') {
+        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+      }
+      if (data.data.emailVerifiedYn === 'Y') {
+        router.push('/admin/team');
+      }
+    },
+  });
 
   // 이메일 로그인
   const handleLogin = useCallback((status, data) => {
-    loginResponse.mutate(data);
+    loginMutate(data);
   }, []);
 
   // 로그인 시도 실패
@@ -89,7 +116,7 @@ const ReLoginComponent = () => {
           />
 
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton isLoading={loginResponse.isLoading} type={'submit'} text={'로그인하기'} style={{ marginBottom: '18px' }} />
+            <BasicButton isLoading={isLoading} type={'submit'} text={'로그인하기'} style={{ marginBottom: '18px' }} />
           </FlexBox>
         </Form>
         <FlexBox justify={'center'} align={'center'}>

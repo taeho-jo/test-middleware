@@ -17,41 +17,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import AnnouncementBox from '../../molecules/AnnouncementBox';
 import SelectBox from '../../atoms/SelectBox';
-import { useUpdateUserInfo } from '../../../api/userApi';
+import { fetchUserInfoUpdateApi } from '../../../api/userApi';
 import withTokenAuth from '../../../hoc/withTokenAuth';
 import { InputType } from '../../../common/types/commonTypes';
 import Select from '../../atoms/Select';
-
-const selectBoxArr = [
-  { value: '디자인', label: '디자인' },
-  { value: '기획', label: '기획' },
-  { value: '유저리서치', label: '유저리서치' },
-  { value: 'PO/PM', label: 'PO/PM' },
-  { value: '마케팅', label: '마케팅' },
-];
-
-const selectBoxCompanyArr = [
-  { value: '프리랜서(1인)', label: '프리랜서(1인)' },
-  { value: '1~10인', label: '1~10인' },
-  { value: '11~50인', label: '11~50인' },
-  { value: '51~100인', label: '51~100인' },
-  { value: '101인 이상', label: '101인 이상' },
-];
-const selectBoxInflowPathArr = [
-  { value: '스타트업 지원프로그램 참가', label: '스타트업 지원프로그램 참가' },
-  { value: '보육기관/액셀러레이터 추천 및 홍보', label: '보육기관/액셀러레이터 추천 및 홍보' },
-  { value: '검색', label: '검색' },
-  { value: 'Diby & 디비디랩 UX 콘텐츠', label: 'Diby & 디비디랩 UX 콘텐츠' },
-  { value: '보도자료/기사', label: '보도자료/기사' },
-  { value: '지인추천', label: '지인추천' },
-  { value: '기타', label: '기타' },
-];
+import { useMutation } from 'react-query';
+import { setUserInfo } from '../../../store/reducers/userReducer';
 
 const ProfileSettingFirst = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const commonCode = useSelector<ReducerType, any>(state => state.common.commonCode);
 
   // hook form
   const {
@@ -67,7 +45,13 @@ const ProfileSettingFirst = () => {
     cpPosition: '',
     cpSize: '',
   });
-  const updateUserInfo = useUpdateUserInfo();
+
+  const { mutate } = useMutation('fetchUserInfoUpdate', fetchUserInfoUpdateApi, {
+    onSuccess: data => {
+      dispatch(setUserInfo(data.data));
+      router.push('/admin/team');
+    },
+  });
 
   const handleUpdateUserInfo = useCallback(
     (status, data) => {
@@ -77,8 +61,7 @@ const ProfileSettingFirst = () => {
         userName: data.userName ? data.userName : userInfo.userName,
         firstTimeYn: 'N',
       };
-      // console.log(sendObject);
-      updateUserInfo.mutate(sendObject);
+      mutate(sendObject);
     },
     [selected],
   );
@@ -124,8 +107,8 @@ const ProfileSettingFirst = () => {
           />
 
           <Select
-            title={'[닉네임]님이 맡고 계신 직무'}
-            options={selectBoxArr}
+            title={'[닉네임]님이 맡고 계신 직무 (선택)'}
+            options={commonCode?.CpPositionType}
             // value={selected.funnelsCd}
             selected={selected}
             setSelected={setSelected}
@@ -133,8 +116,8 @@ const ProfileSettingFirst = () => {
             onClick={onClickValue}
           />
           <Select
-            title={'[닉네임]님의 회사 규모'}
-            options={selectBoxCompanyArr}
+            title={'[닉네임]님의 회사 규모 (선택)'}
+            options={commonCode?.CpSizeType}
             // value={selected.funnelsCd}
             selected={selected}
             setSelected={setSelected}
@@ -142,8 +125,8 @@ const ProfileSettingFirst = () => {
             onClick={onClickValue}
           />
           <Select
-            title={'유입 경로'}
-            options={selectBoxInflowPathArr}
+            title={'유입 경로 (선택)'}
+            options={commonCode?.FunnelsType}
             // value={selected.funnelsCd}
             selected={selected}
             setSelected={setSelected}

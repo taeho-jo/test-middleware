@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import PageTitle from '../../atoms/PageTitle';
 import FlexBox from '../../atoms/FlexBox';
@@ -7,37 +7,81 @@ import SearchInput from '../../atoms/SearchInput';
 import IconTextButton from '../../atoms/Button/IconTextButton';
 import MemberList from '../../template/MemberList';
 import { css } from '@emotion/react';
-import { useTeamMemberListApi } from '../../../api/teamApi';
+import { fetchMemberListApi } from '../../../api/teamApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { ReducerType } from '../../../store/reducers';
+import { useQuery, useQueryClient } from 'react-query';
 import LayerPopup from '../../atoms/LayerPopup';
+import TableDropDown from '../../atoms/TableDropDown';
+import { AXIOS_GET } from '../../../hooks/useAxios';
+import { useRouter } from 'next/router';
+import { fetchRefreshToken } from '../../../api/authApi';
 
 const TeamMember = () => {
   const {
     register,
     handleSubmit,
-    // setFocus,
-    control,
     formState: { errors },
   } = useForm({});
 
   const onSubmit = data => submitData('success', data);
   const onError = errors => console.log('fail', errors);
 
-  const [searchText, setSearchText] = useState<string>('');
-
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
+  const router = useRouter();
+  const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
 
-  const { data, isLoading, error } = useTeamMemberListApi();
+  const [searchText, setSearchText] = useState<string>('');
+  const [positionValue, setPositionValue] = useState({
+    x: 0,
+    y: 0,
+  });
+  const [focus, setFocus] = useState<boolean>(false);
+  const [teamRoleType, setTeamRoleType] = useState(null);
+  const [dropDownList, setDropDownList] = useState({
+    manager: [
+      { text: '멤버로 변경하기', onClick: () => console.log('asdfasdafsd') },
+      { text: '우리 팀에서 내보내기', onClick: null },
+    ],
+    member: [
+      { text: '관리자로 변경하기', onClick: null },
+      { text: '우리 팀에서 내보내기', onClick: null },
+    ],
+  });
+
+  // ============ React Query ============ //
+  console.log(selectTeamSeq, '!');
+  const { data, isLoading } = useQuery(['fetchMemberList', selectTeamSeq], () => fetchMemberListApi(selectTeamSeq), {
+    enabled: !!selectTeamSeq,
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        queryClient.invalidateQueries(['fetchMemberList', selectTeamSeq]);
+      }
+      if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      }
+    },
+  });
+  // ============ React Query ============ //
 
   const submitData = useCallback(
     (status, data) => {
-      console.log(data);
       setSearchText(data.search);
     },
     [searchText],
   );
+
+  const handleChangeMemberStatus = useCallback(name => {
+    console.log(name);
+    if (name === '관리자로 변경하기') {
+      dispatch(isShow({ isShow: true, type: 'changeMemberAuth' }));
+    }
+  }, []);
 
   return (
     <>
@@ -55,8 +99,23 @@ const TeamMember = () => {
         />
       </FlexBox>
 
-      <div css={{ position: 'relative' }}>
-        <MemberList isLoading={isLoading} listData={data?.data?.list} searchText={searchText} />
+      <div>
+        <TableDropDown
+          handleChangeMemberStatus={handleChangeMemberStatus}
+          display={focus}
+          top={positionValue.y + 10}
+          left={positionValue.x - 120}
+          normalText={teamRoleType === '관리자' ? dropDownList?.manager : dropDownList?.member}
+        />
+        <MemberList
+          isLoading={isLoading}
+          listData={data?.data?.list}
+          searchText={searchText}
+          setFocus={setFocus}
+          focus={focus}
+          setPositionValue={setPositionValue}
+          setTeamRoleType={setTeamRoleType}
+        />
       </div>
     </>
   );

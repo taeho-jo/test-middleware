@@ -5,7 +5,7 @@ import { showToast } from '../../../store/reducers/toastReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 // API
-import { useLoginApi } from '../../../api/authApi';
+import { fetchLoginApi } from '../../../api/authApi';
 // Libraries
 import { useForm } from 'react-hook-form';
 // Components
@@ -24,11 +24,15 @@ import { colors } from '../../../styles/Common.styles';
 import { body3_medium } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../../../common/types/commonTypes';
-import { useGetUserInfo } from '../../../api/userApi';
+import { fetchUserInfoApi } from '../../../api/userApi';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { setToken } from '../../../store/reducers/authReducer';
+import { setUserInfo } from '../../../store/reducers/userReducer';
 
 const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
 
 const LoginModal = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const dispatch = useDispatch();
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -44,12 +48,24 @@ const LoginModal = () => {
   const onError = errors => handleProcessingError('fail', errors);
 
   // react query
-  // const { refetch } = useGetUserInfo();
-  const loginResponse = useLoginApi();
+  const {
+    mutate: loginMutate,
+    isLoading,
+    data: loginData,
+  } = useMutation(['login'], fetchLoginApi, {
+    onError: (e: any) => {
+      const { data } = e.response;
+      dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
+    },
+  });
+
+  const { data: usersInfo } = useQuery(['fetchUserInfo', `signup/${loginData?.code}`], () => fetchUserInfoApi(loginData?.data.token), {
+    enabled: !!loginData?.code,
+  });
 
   // 이메일 로그인
   const handleLogin = useCallback((status, data) => {
-    loginResponse.mutate(data);
+    loginMutate(data);
   }, []);
 
   // 구글 로그인
@@ -72,13 +88,24 @@ const LoginModal = () => {
     dispatch(isShow({ isShow: true, type: 'signup' }));
   }, []);
 
-  // useEffect(() => {
-  //   if (userInfo.emailVerifiedYn === 'Y') {
-  //     router.push('/admin/team');
-  //   } else {
-  //     dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-  //   }
-  // }, [userInfo.emailVerifiedYn]);
+  useEffect(() => {
+    if (loginData?.code === '200') {
+      localStorage.setItem('accessToken', loginData.data.token);
+      dispatch(setToken(loginData.data.token));
+      dispatch(showToast({ message: '로그인에 성공하였습니다.', isShow: true, status: 'success', duration: 5000 }));
+      dispatch(isShow({ isShow: false, type: '' }));
+      sessionStorage.clear();
+      dispatch(setUserInfo(loginData.data));
+      if (loginData.data.emailVerifiedYn === 'N') {
+        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+      }
+      if (loginData.data.emailVerifiedYn === 'Y') {
+        router.push('/admin/team');
+      }
+
+      // router.push('/admin/team');
+    }
+  }, [loginData]);
 
   return (
     <FlexBox style={{ marginTop: modalShow ? '160px' : 0 }} justify={'center'} direction={'column'}>
@@ -119,7 +146,7 @@ const LoginModal = () => {
           />
 
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton isLoading={loginResponse.isLoading} type={'submit'} text={'로그인하기'} style={{ marginBottom: '18px' }} />
+            <BasicButton isLoading={isLoading} type={'submit'} text={'로그인하기'} style={{ marginBottom: '18px' }} />
             <IconTextButton onClick={loginWithGoogle} name={'GOOGLE'} iconPosition={'left'} text={'구글로 시작하기'} />
           </FlexBox>
         </Form>

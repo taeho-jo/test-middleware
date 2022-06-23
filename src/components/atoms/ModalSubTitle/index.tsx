@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { body2_regular } from '../../../styles/FontStyles';
 
 interface PropsType {
-  subTitle: string[];
+  subTitle: any[];
 }
 
 const ModalSubTitle = ({ subTitle }: PropsType) => {

@@ -89,7 +89,7 @@ const FeatureSpecificDetailTemplate = () => {
               ]}
               value={'49명'}
               valueStyle={{ color: colors.grey._3c, fontWeight: 500 }}
-              rate={'49.5%'}
+              rate={'46%'}
             />
             <StackedBarChart
               dataList={stackedBarTestData}
@@ -153,7 +153,7 @@ const headerBosStyle = css`
   border-bottom: 1px solid #dcdcdc;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 5;
 `;
 const graphBosStyle = css`
   width: 100%;
