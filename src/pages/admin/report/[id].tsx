@@ -18,16 +18,19 @@ import { useQuery, useQueryClient } from 'react-query';
 import { fetchReportDetail } from '../../../api/reportApi';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setReportData } from '../../../store/reducers/reportReducer';
+import { ReducerType } from '../../../store/reducers';
 
 const Report = ({ params }) => {
   const { id } = params;
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
+  const filterFlied = useSelector<ReducerType, any>(state => state.report.filter.filterFlied);
+  const filterValues = useSelector<ReducerType, any>(state => state.report.filter.filterValues);
 
-  const { data, isLoading } = useQuery(['fetchReportDetail', id], () => fetchReportDetail(id, '', ''), {
+  const { data, isLoading } = useQuery(['fetchReportDetail', id], () => fetchReportDetail(id, filterFlied, filterValues), {
     onError: (e: any) => {
       const errorData = e.response.data;
       if (errorData.code === 'E0008') {
@@ -44,6 +47,10 @@ const Report = ({ params }) => {
       return data.data;
     },
   });
+
+  useEffect(() => {
+    console.log(filterFlied, filterValues);
+  }, [filterValues, filterFlied]);
 
   return (
     <div css={originTestBox}>
