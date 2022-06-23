@@ -19,7 +19,7 @@ import { fetchReportDetail } from '../../../api/reportApi';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { setReportData } from '../../../store/reducers/reportReducer';
+import { setReportData, updateFilterFlied, updateFilterValues } from '../../../store/reducers/reportReducer';
 import { ReducerType } from '../../../store/reducers';
 
 const Report = ({ params }) => {
@@ -30,7 +30,7 @@ const Report = ({ params }) => {
   const filterFlied = useSelector<ReducerType, any>(state => state.report.filter.filterFlied);
   const filterValues = useSelector<ReducerType, any>(state => state.report.filter.filterValues);
 
-  const { data, isLoading } = useQuery(['fetchReportDetail', id], () => fetchReportDetail(id, filterFlied, filterValues), {
+  const { data, isLoading, refetch } = useQuery(['fetchReportDetail', id], () => fetchReportDetail(id, filterFlied, filterValues), {
     onError: (e: any) => {
       const errorData = e.response.data;
       if (errorData.code === 'E0008') {
@@ -44,6 +44,8 @@ const Report = ({ params }) => {
     },
     select: data => {
       dispatch(setReportData(data.data));
+      // dispatch(updateFilterFlied(''));
+      // dispatch(updateFilterValues(''));
       return data.data;
     },
   });
@@ -51,6 +53,14 @@ const Report = ({ params }) => {
   useEffect(() => {
     console.log(filterFlied, filterValues);
   }, [filterValues, filterFlied]);
+
+  useEffect(() => {
+    if (filterValues !== '') {
+      refetch();
+    } else {
+      return;
+    }
+  }, [filterValues]);
 
   return (
     <div css={originTestBox}>

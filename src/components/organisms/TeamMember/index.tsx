@@ -32,6 +32,8 @@ const TeamMember = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
+  const localSelectTeamSeq = localStorage.getItem('teamSeq');
+  const teamSeq = selectTeamSeq ? selectTeamSeq : localSelectTeamSeq;
 
   const [searchText, setSearchText] = useState<string>('');
   const [positionValue, setPositionValue] = useState({
@@ -53,13 +55,13 @@ const TeamMember = () => {
 
   // ============ React Query ============ //
   console.log(selectTeamSeq, '!');
-  const { data, isLoading } = useQuery(['fetchMemberList', selectTeamSeq], () => fetchMemberListApi(selectTeamSeq), {
-    enabled: !!selectTeamSeq,
+  const { data, isLoading } = useQuery(['fetchMemberList', teamSeq], () => fetchMemberListApi(teamSeq), {
+    enabled: !!teamSeq,
     onError: (e: any) => {
       const errorData = e.response.data;
       if (errorData.code === 'E0008') {
         queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        queryClient.invalidateQueries(['fetchMemberList', selectTeamSeq]);
+        queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
       }
       if (errorData.code === 'E0007') {
         localStorage.clear();
