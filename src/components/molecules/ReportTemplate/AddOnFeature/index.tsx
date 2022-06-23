@@ -112,7 +112,7 @@ const AddOnFeature = ({ originDataList, title }) => {
                 );
               })}
             </div>
-            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px' }}>
+            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflow: 'scroll' }}>
               {completeList?.[complateSelectButton].map((el, index) => {
                 return (
                   <li key={index} css={{ listStyle: 'inside', marginBottom: '16px' }}>
@@ -145,7 +145,7 @@ const AddOnFeature = ({ originDataList, title }) => {
                 );
               })}
             </div>
-            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px' }}>
+            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflow: 'scroll' }}>
               {additionalList?.[addSelectButton].map((el, index) => {
                 return (
                   <li key={index} css={{ listStyle: 'inside', marginBottom: '16px' }}>
@@ -178,7 +178,7 @@ const AddOnFeature = ({ originDataList, title }) => {
                 );
               })}
             </div>
-            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px' }}>
+            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflow: 'scroll' }}>
               {systemErrorList?.[systemSelectButton].map((el, index) => {
                 return (
                   <li key={index} css={{ listStyle: 'inside', marginBottom: '16px' }}>

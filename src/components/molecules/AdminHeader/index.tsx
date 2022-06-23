@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import FlexBox from '../../atoms/FlexBox';
 import { heading5_bold } from '../../../styles/FontStyles';
@@ -11,13 +11,40 @@ import { ReducerType } from '../../../store/reducers';
 const AdminHeader = () => {
   const router = useRouter();
 
-  // const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
-  const selectTeamList = JSON.parse(localStorage.getItem('selectTeamList'));
+  const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+  const localSelectTeamList = JSON.parse(localStorage.getItem('selectTeamList'));
+  const teamList = selectTeamList ? selectTeamList : localSelectTeamList;
 
+  const [teamNm, setTeamNm] = useState('');
+  useEffect(() => {
+    if (localSelectTeamList) {
+      setTeamNm(localSelectTeamList?.teamNm);
+    }
+  }, [localSelectTeamList]);
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
+  console.log(localSelectTeamList, '++++++++++++++++++++++++++++++++++++++++++++++++++');
   return (
     <FlexBox style={headerStyle} justify={'flex-start'} align={'center'}>
       <span onClick={() => router.push('/admin/team')} css={[heading5_bold, itemsStyle, teamTextStyle(router.pathname)]}>
-        {selectTeamList ? selectTeamList?.teamNm : ''}
+        {teamNm}
       </span>
       <span onClick={() => router.push('/admin/member')} css={[heading5_bold, itemsStyle, memberTextStyle(router.pathname)]}>
         팀원
