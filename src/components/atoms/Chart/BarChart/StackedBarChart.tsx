@@ -15,6 +15,7 @@ interface PropsType {
   handleShowAnswerBox?: (e) => void;
   stackbarIndex: number;
   setStackbarIndex: any;
+  count: number;
   [key: string]: any;
 }
 const StackedBarChart = ({
@@ -27,20 +28,18 @@ const StackedBarChart = ({
   value,
   setStackbarIndex,
   stackbarIndex,
+  count,
   ...props
 }: PropsType) => {
   const [renderDataList, setRenderDataList] = useState(null);
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [isShow, setIsShow] = useState<boolean>(false);
-
   const [layerData, setLayerData] = useState<object | null>(null);
 
   const onMouseUp = useCallback(
     (e, index, el, detailIndex) => {
       e.stopPropagation();
-      console.log(index);
-      console.log(detailIndex, 'detailIndex');
 
       if (index === activeIndex) {
         setActiveIndex(null);
@@ -70,7 +69,12 @@ const StackedBarChart = ({
 
   return (
     <div style={{ width: '100%', position: 'relative' }}>
-      <ReportShortAnswerQuestionLayerPopup data={layerData} display={stackbarIndex === props.detailIndex} setStackbarIndex={setStackbarIndex} />
+      <ReportShortAnswerQuestionLayerPopup
+        data={layerData}
+        count={count}
+        display={stackbarIndex === props.detailIndex}
+        setStackbarIndex={setStackbarIndex}
+      />
       <FlexBox justify={'center'} align={'center'} direction={'column'} style={{ width: '100%' }}>
         <FlexBox justify={'space-between'}>
           {label ? <span css={[heading5_regular, { paddingLeft: '5px' }]}>{label}</span> : ''}
@@ -96,19 +100,7 @@ const StackedBarChart = ({
                     background={{ fill: '#dcdcdc' }}
                   >
                     {/*{renderDataList?.map((entry, idx) => (*/}
-                    <Cell
-                      onClick={e => onMouseUp(e, index, el, props.detailIndex)}
-                      cursor="pointer"
-                      key={`cell-${index}`}
-                      // fill={
-                      //   index === activeIndex
-                      //     ? // ? 'rgba(82, 146, 242)'
-                      //       'green'
-                      //     : negative
-                      //     ? `rgba(232, 116, 144, 1)`
-                      //     : `rgba(104, 160, 244, 1)`
-                      // }
-                    />
+                    <Cell onClick={e => onMouseUp(e, index, el, props.detailIndex)} cursor="pointer" key={`cell-${index}`} />
                     {/*))}*/}
                   </Bar>
                 );
@@ -121,21 +113,7 @@ const StackedBarChart = ({
                     stackId="a"
                     fill={negative ? `rgba(232, 116, 144, ${1 - 0.2 * (index - 1)})` : `rgba(104, 160, 244, ${1 - 0.2 * index})`}
                   >
-                    {/*{renderDataList?.map((entry, idx) => (*/}
-                    <Cell
-                      onClick={e => onMouseUp(e, index, el, props.detailIndex)}
-                      cursor="pointer"
-                      key={`cell-${index}`}
-                      // fill={
-                      //   index === activeIndex
-                      //     ? // ? 'rgba(82, 146, 242)'
-                      //       'red'
-                      //     : negative
-                      //     ? `rgba(232, 116, 144, ${1 - 0.2 * (index - 1)})`
-                      //     : `rgba(104, 160, 244, ${1 - 0.2 * index})`
-                      // }
-                    />
-                    {/*))}*/}
+                    <Cell onClick={e => onMouseUp(e, index, el, props.detailIndex)} cursor="pointer" key={`cell-${index}`} />
                   </Bar>
                 );
               }

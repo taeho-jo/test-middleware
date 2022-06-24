@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import {
   AddOnFeature,
@@ -19,8 +19,12 @@ import { fetchReportDetail } from '../../../api/reportApi';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { setReportData, updateFilterFlied, updateFilterValues } from '../../../store/reducers/reportReducer';
+import { setReportData, updateFilterFail, updateFilterFlied, updateFilterValues } from '../../../store/reducers/reportReducer';
 import { ReducerType } from '../../../store/reducers';
+import LongQuestionTemplate from '../../../components/molecules/ReportTemplate/LongQuestionTemplate';
+import MultipleQuestionTemplate from '../../../components/molecules/ReportTemplate/MultipleQuestionTemplate';
+import { useForm } from 'react-hook-form';
+import { InputType } from '../../../common/types/commonTypes';
 
 const Report = ({ params }) => {
   const { id } = params;
@@ -29,8 +33,22 @@ const Report = ({ params }) => {
   const router = useRouter();
   const filterFlied = useSelector<ReducerType, any>(state => state.report.filter.filterFlied);
   const filterValues = useSelector<ReducerType, any>(state => state.report.filter.filterValues);
+  // const filterFail = useSelector<ReducerType, any>(state => state.report.filter.filterFail);
+  console.log(filterFlied, filterValues);
 
-  const { data, isLoading, refetch } = useQuery(['fetchReportDetail', id], () => fetchReportDetail(id, filterFlied, filterValues), {
+  const [checked, setChecked] = useState(false);
+
+  const handleChangeCheckBox = useCallback(() => {
+    setChecked(prev => !prev);
+    dispatch(updateFilterFail('on'));
+  }, [checked]);
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm<InputType>({});
+
+  const { data, isLoading, refetch } = useQuery(['fetchReportDetail', id], () => fetchReportDetail(id, filterFlied, filterValues, checked), {
     onError: (e: any) => {
       const errorData = e.response.data;
       if (errorData.code === 'E0008') {
@@ -51,10 +69,6 @@ const Report = ({ params }) => {
   });
 
   useEffect(() => {
-    console.log(filterFlied, filterValues);
-  }, [filterValues, filterFlied]);
-
-  useEffect(() => {
     if (filterValues !== '') {
       refetch();
     } else {
@@ -62,28 +76,87 @@ const Report = ({ params }) => {
     }
   }, [filterValues]);
 
+  useEffect(() => {
+    refetch();
+    console.log(33333);
+  }, [checked, refetch]);
+
   return (
     <div css={originTestBox}>
       <div css={testBox}>
         {/* 응답자 특성 템플릿 */}
-        <RespondentAttributesTemplate dataList={data?.answerInfoSection} />
-        <div css={sortationArea} />
+        {data?.S1 ? (
+          <>
+            <RespondentAttributesTemplate
+              handleChangeCheckBox={handleChangeCheckBox}
+              checked={checked}
+              register={register}
+              errors={errors}
+              dataList={data?.answerInfoSection}
+            />
+            <div css={sortationArea} />
 
-        {/* UI 진단 전체 요약 */}
-        <UiOverallSummaryTemplate dataList={data?.S1?.uiSummerySection} />
-        <div css={sortationArea} />
+            {/* UI 진단 전체 요약 */}
+            <UiOverallSummaryTemplate
+              handleChangeCheckBox={handleChangeCheckBox}
+              checked={checked}
+              dataList={data?.S1?.uiSummerySection}
+              register={register}
+              errors={errors}
+            />
+            <div css={sortationArea} />
 
-        {/* 기능별 사용성 비교 */}
-        <UsabilityByFeatureTemplate dataList={data?.S1?.uiSummerySection} />
-        {/*<div css={sortationArea} />*/}
+            {/* 기능별 사용성 비교 */}
+            <UsabilityByFeatureTemplate
+              handleChangeCheckBox={handleChangeCheckBox}
+              checked={checked}
+              dataList={data?.S1?.uiSummerySection}
+              register={register}
+              errors={errors}
+            />
+            {/*<div css={sortationArea} />*/}
+
+            {/* 서비스 전체 사용성 평가*/}
+            <ServiceOverallUsabilityTemplate
+              handleChangeCheckBox={handleChangeCheckBox}
+              checked={checked}
+              dataList={data?.S1?.uiSummerySection}
+              register={register}
+              errors={errors}
+            />
+            <div css={sortationArea} />
+
+            <AddOnFeature
+              handleChangeCheckBox={handleChangeCheckBox}
+              checked={checked}
+              originDataList={data?.S1?.uiSummerySection.missionFatality}
+              title={'서비스 전체 미션별 완성도 피드백'}
+              register={register}
+              errors={errors}
+            />
+            <div css={sortationArea} />
+          </>
+        ) : null}
+
+        {/*객관식 문항*/}
+        <MultipleQuestionTemplate dataList={data?.multipleQuestionList} />
+
+        <div css={sortationArea} />
+        {/*주관식 문항*/}
+        {data?.longQuestionList === null || data?.longQuestionList?.length === 0
+          ? null
+          : data?.longQuestionList?.map((item, index) => {
+              return (
+                <div key={`lognQuestion-${index}`} id={item.questionCode}>
+                  <LongQuestionTemplate dataList={item} />
+                  <div css={sortationArea} />
+                </div>
+              );
+            })}
 
         {/* 기능별 상세 내용 */}
         {/*<FeatureSpecificDetailTemplate />*/}
         {/*<div css={sortationArea} />*/}
-
-        {/* 서비스 전체 사용성 평가*/}
-        <ServiceOverallUsabilityTemplate dataList={data?.S1?.uiSummerySection} />
-        <div css={sortationArea} />
 
         {/*/!* 순 추천 고객 지수(NPS) *!/*/}
         {/*<NpsTemplate />*/}
@@ -106,8 +179,6 @@ const Report = ({ params }) => {
         {/*<div css={sortationArea} />*/}
 
         {/*추가 기능 언급*/}
-        <AddOnFeature originDataList={data?.S1?.uiSummerySection.missionFatality} title={'서비스 전체 미션별 완성도 피드백'} />
-        <div css={sortationArea} />
       </div>
     </div>
   );

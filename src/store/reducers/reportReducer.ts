@@ -3,8 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const initialState: any = {
   data: null,
   filter: {
-    filterFlied: '',
-    filterValues: '',
+    filterFlied: null,
+    filterValues: null,
+    filterFail: null,
   },
 };
 
@@ -21,8 +22,11 @@ export const reportSlice = createSlice({
     updateFilterValues: (state, action) => {
       state.filter.filterValues = action.payload;
     },
+    updateFilterFail: (state, action) => {
+      state.filter.filterFail = action.payload;
+    },
   },
 });
 
-export const { setReportData, updateFilterFlied, updateFilterValues } = reportSlice.actions;
+export const { setReportData, updateFilterFlied, updateFilterValues, updateFilterFail } = reportSlice.actions;
 export default reportSlice.reducer;

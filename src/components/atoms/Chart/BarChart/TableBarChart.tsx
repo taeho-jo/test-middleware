@@ -4,6 +4,7 @@ import { basicBarTestData } from '../../../../assets/dummy/dummyData';
 import { BasicBarChart } from '../index';
 import { caption2_regular } from '../../../../styles/FontStyles';
 import { chart_color } from '../../../../styles/Common.styles';
+import { checkIsInteger } from '../../../../common/util/commonFunc';
 
 interface PropsType {
   dataList: string[];
@@ -48,7 +49,9 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
               );
             })}
             {/*공갈박스*/}
-            {fatality && <li css={[caption2_regular, liStyle, emptyLiStyle, { borderRight: 'none', width: '164px' }]}>{el.fatality}</li>}
+            {fatality && (
+              <li css={[caption2_regular, liStyle, emptyLiStyle, { borderRight: 'none', width: '164px' }]}>{checkIsInteger(el.fatality)}</li>
+            )}
 
             <div css={chartBox(fatality)}>
               <BasicBarChart
@@ -57,7 +60,7 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
                 negative={negative}
                 dataList={[el]}
                 label={[<>{el.name}</>]}
-                rate={`${el.value}%`}
+                rate={`${checkIsInteger(el.value)}%`}
               />
             </div>
             <div css={pointBox(fatality)}>
@@ -69,26 +72,6 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
           </ul>
         );
       })}
-
-      {/*<ul css={[ulStyle, emptyUlStyle]}>*/}
-      {/*  {dataList.map((el, index) => {*/}
-      {/*    return (*/}
-      {/*      <li key={index} css={[liStyle, liWidthStyle(dataList.length), emptyLiStyle]}>*/}
-      {/*        <span>{el}</span>*/}
-      {/*      </li>*/}
-      {/*    );*/}
-      {/*  })}*/}
-      {/*  <li css={[caption2_regular, liStyle, emptyLiStyle, { borderRight: 'none', width: '164px' }]}>4.35</li>*/}
-      {/*  <div css={chartBox}>*/}
-      {/*    <BasicBarChart negative={negative} dataList={basicBarTestData} label={[<>기능 A</>]} rate={'49.5%'} />*/}
-      {/*  </div>*/}
-      {/*  <div css={pointBox}>*/}
-      {/*    {dataList.map((el, index) => {*/}
-      {/*      const positionValue = (index + 1) * (100 / dataList.length);*/}
-      {/*      return <div css={pointStyle(positionValue)} />;*/}
-      {/*    })}*/}
-      {/*  </div>*/}
-      {/*</ul>*/}
     </div>
   );
 };

@@ -13,7 +13,15 @@ import { ReducerType } from '../../../store/reducers';
 const ReportSideBar = () => {
   const reportData = useSelector<ReducerType, any>(state => state.report.data);
 
-  console.log(reportData, '%%%%%%%%%%%%%%%%%%%%%%%%%%');
+  const missionList = reportData?.S1?.uiSummerySection?.missionSuccess?.reduce(
+    (acc, cur, index) =>
+      acc.concat({
+        title: `Task${index + 1}`,
+        name: cur.name,
+      }),
+    [],
+  );
+  console.log(missionList, 'MISW');
 
   const router = useRouter();
   return (
@@ -38,7 +46,7 @@ const ReportSideBar = () => {
       <div css={{ height: 'calc(100vh - 136px)', overflow: 'scroll' }}>
         <TestInfoBox reportData={reportData} />
         <RespondentAttributes />
-        {/*<TestResults />*/}
+        <TestResults missionList={missionList} dataList={reportData?.indexList} />
       </div>
     </div>
   );

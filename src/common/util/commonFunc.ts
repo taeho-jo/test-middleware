@@ -19,3 +19,8 @@ export const closeModal = () => {
   const dispatch = useDispatch();
   dispatch(isShow({ isShow: false, type: '' }));
 };
+
+export const checkIsInteger = number => {
+  const isInteger = Number.isInteger(number);
+  return isInteger ? number : number?.toFixed(2);
+};

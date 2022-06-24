@@ -12,9 +12,10 @@ interface PropsType {
   negative?: boolean;
   barColor?: string;
   max?: number;
+  onClick?: (item) => void;
   [key: string]: any;
 }
-const BasicBarChart = ({ dataList, label, value, rate, negative = false, barColor, max = 100, ...props }: PropsType) => {
+const BasicBarChart = ({ onClick, dataList, label, value, rate, negative = false, barColor, max = 100, ...props }: PropsType) => {
   return (
     <FlexBox justify={'center'} align={'center'} direction={'column'} style={{ width: '100%' }}>
       <FlexBox justify={'space-between'}>

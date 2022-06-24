@@ -116,7 +116,7 @@ const headerBosStyle = css`
   border-bottom: 1px solid #dcdcdc;
   position: sticky;
   top: 0;
-  z-index: 5;
+  z-index: 500;
 `;
 const graphBosStyle = css`
   width: 100%;
