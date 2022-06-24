@@ -73,6 +73,7 @@ const ReportHeader = () => {
         (acc, cur) =>
           acc.concat({
             value: cur.code,
+            code: cur.code,
             displayName: cur.name,
           }),
         [],
@@ -106,13 +107,23 @@ const ReportHeader = () => {
     },
     [selected],
   );
+  console.log(selected);
   const onClickValue = useCallback(
-    (value, label) => {
-      setSelected({
-        ...selected,
-        [label]: value,
-      });
-      dispatch(updateFilterValues(value));
+    (value, label, displayName) => {
+      if (selected.filterField === 'cell') {
+        setSelected({
+          ...selected,
+          [label]: displayName,
+        });
+        dispatch(updateFilterValues(displayName));
+        dispatch(updateFilterFlied(value));
+      } else {
+        setSelected({
+          ...selected,
+          [label]: value,
+        });
+        dispatch(updateFilterValues(value));
+      }
     },
     [selected],
   );
@@ -120,17 +131,6 @@ const ReportHeader = () => {
   useEffect(() => {
     makeAddConditionArr();
   }, [selected.filterField]);
-
-  // useEffect(() => {
-  //   if (selected.filterValues !== '') {
-  //     queryClient.setQueryData(['fetchReportDetail', router.query.id], () =>
-  //       fetchReportDetail(router.query.id, selected.filterField, selected.filterValues),
-  //     );
-  //   }
-  //   // if (selected.filterValues === '') {
-  //   //   return;
-  //   // }
-  // }, [selected.filterValues]);
 
   return (
     <div css={headerStyle}>

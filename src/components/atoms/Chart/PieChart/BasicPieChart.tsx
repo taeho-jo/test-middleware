@@ -5,6 +5,7 @@ import { body3_bold, body3_medium, body3_regular, heading5_regular } from '../..
 import { css } from '@emotion/react';
 import { chart_color, colors } from '../../../../styles/Common.styles';
 import { ChangeDataListType, DataListType } from '../../../molecules/ReportTemplate/RespondentAttributesTemplate';
+import { checkIsInteger } from '../../../../common/util/commonFunc';
 
 interface PropsType {
   dataList: ChangeDataListType[];
@@ -30,16 +31,25 @@ const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseU
       </div>
 
       {labelStatus ? (
-        <FlexBox direction={'column'} justify={'space-between'} style={{ ...mouseOverLabelStyle, marginBottom: '12px' }}>
+        <FlexBox
+          direction={'column'}
+          justify={'space-between'}
+          style={{ ...mouseOverLabelStyle, marginBottom: '12px', pbckground: 'red' }}
+          overflow={'scroll'}
+        >
           {dataList?.map((el, index) => {
             return (
-              <FlexBox key={`rate-${index}`} justify={'space-between'} style={{ marginBottom: index !== dataList.length - 1 ? '12px' : '' }}>
+              // key={`rate-${index}`} justify={'space-between'}
+              <div
+                key={`rate-${index}`}
+                style={{ width: '100%', display: 'flex', justifyContent: 'space-between', marginBottom: index !== dataList.length - 1 ? '12px' : '' }}
+              >
                 <span css={body3_medium}>{el.name}</span>
                 <div>
-                  {el.count ? <span css={body3_regular}>({el.count}명)</span> : null}
-                  <span css={body3_bold}> {el.value}%</span>
+                  {el.count ? <span css={body3_regular}>({el.count}명)</span> : <span css={body3_regular}>({0}명)</span>}
+                  <span css={body3_bold}> {checkIsInteger(el.value)}%</span>
                 </div>
-              </FlexBox>
+              </div>
             );
           })}
         </FlexBox>
@@ -49,31 +59,12 @@ const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseU
             return (
               <FlexBox key={`name-${index}`} align={'center'} justify={'center'} style={{ width: '50%', marginBottom: '10px' }}>
                 <div css={labelStyle(chart_color[index])} />
-                <span css={heading5_regular}>{el.name}</span>
+                <span css={[heading5_regular, { display: 'inline-block', padding: 'l5px' }]}>{el.name}</span>
               </FlexBox>
             );
           })}
         </FlexBox>
       )}
-
-      {/*<FlexBox justify={'space-between'} wrap={'wrap'} style={{ width: '100%', padding: labelPadding ? labelPadding : '24px' }}>*/}
-      {/*  {dataList?.map((el, index) => {*/}
-      {/*    if (labelStatus) {*/}
-      {/*      return (*/}
-      {/*        <FlexBox key={`name-${index}`} align={'center'} justify={'center'} style={mouseOverLabelStyle}>*/}
-      {/*          \*/}
-      {/*        </FlexBox>*/}
-      {/*      );*/}
-      {/*    } else {*/}
-      {/*      return (*/}
-      {/*        <FlexBox key={`name-${index}`} align={'center'} justify={'center'} style={{ width: '50%', marginBottom: '10px' }}>*/}
-      {/*          <div css={labelStyle(chart_color[index])} />*/}
-      {/*          <span css={heading5_regular}>{el.name}</span>*/}
-      {/*        </FlexBox>*/}
-      {/*      );*/}
-      {/*    }*/}
-      {/*  })}*/}
-      {/*</FlexBox>*/}
     </div>
   );
 };
@@ -90,6 +81,8 @@ const mouseOverLabelStyle = css`
   width: 100%;
   padding: 16px;
   margin: 0 auto;
+  max-height: 132px;
+  overflow: scroll;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
 `;

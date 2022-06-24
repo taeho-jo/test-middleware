@@ -6,6 +6,7 @@ import { colors } from '../../../styles/Common.styles';
 import { body3_regular, heading5_bold, heading5_medium, heading5_regular } from '../../../styles/FontStyles';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import FlexBox from '../FlexBox';
+import { checkIsInteger } from '../../../common/util/commonFunc';
 
 interface PropsType {
   display: boolean;
@@ -17,6 +18,7 @@ interface PropsType {
     onClick: () => void;
   }[];
   setStackbarIndex: any;
+  count: number;
   [key: string]: any;
 }
 //
@@ -24,7 +26,17 @@ interface PropsType {
 // reason: "가독성이 낮다."
 // value: 60
 
-const ReportShortAnswerQuestionLayerPopup = ({ setStackbarIndex, display, data, topText, normalText, top = 16, left = 16, ...props }: PropsType) => {
+const ReportShortAnswerQuestionLayerPopup = ({
+  setStackbarIndex,
+  display,
+  data,
+  topText,
+  normalText,
+  top = 16,
+  left = 16,
+  count,
+  ...props
+}: PropsType) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -39,8 +51,8 @@ const ReportShortAnswerQuestionLayerPopup = ({ setStackbarIndex, display, data, 
       <FlexBox justify={'space-between'} align={'center'} style={{ padding: '16px' }}>
         <span css={heading5_medium}>{data?.reason}</span>
         <div>
-          <span css={[heading5_medium, { color: colors.grey._99 }]}>@56명</span>
-          <span css={heading5_bold}>{data?.value}%</span>
+          <span css={[heading5_medium, { color: colors.grey._99 }]}>{count}개</span>&nbsp;
+          <span css={heading5_bold}>{checkIsInteger(data?.value)}%</span>
         </div>
       </FlexBox>
 

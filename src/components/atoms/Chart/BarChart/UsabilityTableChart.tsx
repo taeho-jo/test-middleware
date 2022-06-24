@@ -3,6 +3,7 @@ import { caption2_regular } from '../../../../styles/FontStyles';
 import { BasicBarChart } from '../index';
 import { basicBarTestData } from '../../../../assets/dummy/dummyData';
 import { css } from '@emotion/react';
+import { checkIsInteger } from '../../../../common/util/commonFunc';
 interface PropsType {
   dataList: { name: string; value: number; fatality: number; mention: number }[];
   negative?: boolean;
@@ -18,28 +19,24 @@ const UsabilityTableChart = ({ dataList, negative = false }: PropsType) => {
 
       {dataList?.map((el, index) => {
         return (
-          <ul key={index} css={[ulStyle, emptyUlStyle]}>
+          <ul key={`usability-${index}`} css={[ulStyle, emptyUlStyle]}>
             <li css={[caption2_regular, liStyle, emptyLiStyle, liWidthStyle]}>
               <span>사용성 점수</span>
             </li>
-            <li css={[caption2_regular, liStyle, emptyLiStyle, { width: '110px' }]}>{el.fatality}</li>
-            <li css={[caption2_regular, liStyle, emptyLiStyle, { borderRight: 'none', width: '110px' }]}>{el.mention}%</li>
+            <li css={[caption2_regular, liStyle, emptyLiStyle, { width: '110px' }]}>{el.fatality.toFixed(2)}</li>
+            <li css={[caption2_regular, liStyle, emptyLiStyle, { borderRight: 'none', width: '110px' }]}>{el.mention.toFixed(2)}%</li>
             <div css={chartBox}>
-              <BasicBarChart negative={negative} dataList={[el]} label={[<>{el.name}</>]} rate={`${el.value}%`} />
+              <BasicBarChart
+                negative={negative}
+                dataList={[el]}
+                label={[<>{el.name}</>]}
+                rate={`${checkIsInteger(el.value)}점`}
+                barColor={'#E87490'}
+              />
             </div>
           </ul>
         );
       })}
-      {/*<ul css={[ulStyle, emptyUlStyle]}>*/}
-      {/*  <li css={[caption2_regular, liStyle, emptyLiStyle, liWidthStyle]}>*/}
-      {/*    <span>사용성 점수</span>*/}
-      {/*  </li>*/}
-      {/*  <li css={[caption2_regular, liStyle, emptyLiStyle, { width: '110px' }]}>4.35</li>*/}
-      {/*  <li css={[caption2_regular, liStyle, emptyLiStyle, { borderRight: 'none', width: '110px' }]}>4.35</li>*/}
-      {/*  <div css={chartBox}>*/}
-      {/*    <BasicBarChart negative={negative} dataList={basicBarTestData} label={[<>기능 A</>]} rate={'49.5%'} />*/}
-      {/*  </div>*/}
-      {/*</ul>*/}
     </div>
   );
 };

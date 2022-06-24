@@ -22,18 +22,14 @@ export interface ChangeDataListType {
 }
 
 interface PropsType {
-  // dataList: {
-  //   ageGradeInfoList: DataListType[];
-  //   cellInfoList: DataListType[];
-  //   deviceInfoList: DataListType[];
-  //   genderInfoList: DataListType[];
-  // };
+  register: any;
+  errors: any;
   dataList: any;
+  checked?: boolean;
+  handleChangeCheckBox?: () => void;
 }
 
-const RespondentAttributesTemplate = ({ dataList }: PropsType) => {
-  console.log(dataList, 'DATALIST');
-  console.log(dataList, 'DATALIST');
+const RespondentAttributesTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox }: PropsType) => {
   const [genderInfoList, setGenderInfoList] = useState<ChangeDataListType[] | null>(null);
   const [ageGradeInfoList, setAgeGradeInfoList] = useState<ChangeDataListType[] | null>(null);
   const [deviceInfoList, setDeviceInfoList] = useState<ChangeDataListType[] | null>(null);
@@ -69,7 +65,7 @@ const RespondentAttributesTemplate = ({ dataList }: PropsType) => {
         (acc, cur) =>
           acc.concat({
             name: cur.name,
-            value: parseInt(cur.value),
+            value: cur.value,
             count: cur.count,
           }),
         [],
@@ -78,7 +74,7 @@ const RespondentAttributesTemplate = ({ dataList }: PropsType) => {
         (acc, cur, index) =>
           acc.concat({
             name: index === ageGradeInfoList.length - 1 ? `${parseInt(cur.name)}세 이상` : `${parseInt(cur.name)}-${parseInt(cur.name) + 9}세`,
-            value: parseInt(cur.value),
+            value: cur.value,
             count: cur.count,
           }),
         [],
@@ -87,7 +83,8 @@ const RespondentAttributesTemplate = ({ dataList }: PropsType) => {
         (acc, cur) =>
           acc.concat({
             name: cur.name,
-            value: parseInt(cur.value),
+            value: cur.value,
+            count: cur.count,
           }),
         [],
       );
@@ -99,26 +96,22 @@ const RespondentAttributesTemplate = ({ dataList }: PropsType) => {
     }
   }, [dataList]);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    // setFocus,
-    formState: { errors },
-  } = useForm<InputType>({});
-
-  const onSubmit = data => console.log('success', data);
-  const onError = errors => console.log('fail', errors);
   return (
-    <>
+    <div id={'top'}>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox justify={'flex-start'} align={'center'}>
           <span css={[heading3_bold, { marginRight: '32px' }]}>응답자 특성</span>
-          <CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />
+          <CheckBox
+            handleChangeCheckBox={handleChangeCheckBox}
+            checked={checked}
+            inputName={'privacyConsentYn'}
+            label={'미션에 실패한 응답자의 피드백만 보기'}
+            register={register}
+            errors={errors}
+          />
         </FlexBox>
         <FlexBox justify={'flex-end'}>
-          <IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'원본 데이터 확인하기'} />
+          {/*<IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'원본 데이터 확인하기'} />*/}
           <IconTextButton textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'리서치 코멘트 확인하기'} />
         </FlexBox>
       </FlexBox>
@@ -169,7 +162,7 @@ const RespondentAttributesTemplate = ({ dataList }: PropsType) => {
           </FlexBox>
         </FlexBox>
       </FlexBox>
-    </>
+    </div>
   );
 };
 
@@ -182,7 +175,7 @@ const headerBosStyle = css`
   border-bottom: 1px solid #dcdcdc;
   position: sticky;
   top: 0;
-  z-index: 5;
+  z-index: 500;
 `;
 const graphBosStyle = css`
   width: 100%;

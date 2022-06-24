@@ -54,18 +54,18 @@ interface PropsType {
   };
 }
 
-const UiOverallSummaryTemplate = ({ dataList }) => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    watch,
-    // setFocus,
-    formState: { errors },
-  } = useForm<InputType>({});
-
-  const onSubmit = data => console.log('success', data);
-  const onError = errors => console.log('fail', errors);
+const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox }) => {
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   reset,
+  //   watch,
+  //   // setFocus,
+  //   formState: { errors },
+  // } = useForm<InputType>({});
+  //
+  // const onSubmit = data => console.log('success', data);
+  // const onError = errors => console.log('fail', errors);
 
   const [selectedLabelIndex, setSelectedLabelIndex] = useState(null);
 
@@ -79,16 +79,22 @@ const UiOverallSummaryTemplate = ({ dataList }) => {
     },
     [selectedLabelIndex],
   );
-  console.log(dataList, 'asdf');
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox justify={'flex-start'} align={'center'}>
           <span css={[heading3_bold, { marginRight: '32px' }]}>UI 진단 전체 요약</span>
-          <CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />
+          <CheckBox
+            handleChangeCheckBox={handleChangeCheckBox}
+            checked={checked}
+            inputName={'privacyConsentYn'}
+            label={'미션에 실패한 응답자의 피드백만 보기'}
+            register={register}
+            errors={errors}
+          />
         </FlexBox>
         <FlexBox justify={'flex-end'}>
-          <IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'원본 데이터 확인하기'} />
+          {/*<IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'원본 데이터 확인하기'} />*/}
           <IconTextButton textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'리서치 코멘트 확인하기'} />
         </FlexBox>
       </FlexBox>
@@ -148,7 +154,7 @@ const headerBosStyle = css`
   border-bottom: 1px solid #dcdcdc;
   position: sticky;
   top: 0;
-  z-index: 5;
+  z-index: 500;
 `;
 const graphBosStyle = css`
   width: 100%;

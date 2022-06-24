@@ -23,6 +23,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import ReportLayout from './ReportLayout';
 import { updateCommonCode } from '../../store/reducers/commonReducer';
 import { showToast } from '../../store/reducers/toastReducer';
+import { updateFilterFail, updateFilterFlied, updateFilterValues } from '../../store/reducers/reportReducer';
 
 // Types
 interface PropsType {
@@ -82,6 +83,16 @@ const Layout = ({ children }: PropsType) => {
       refetch();
     },
   });
+
+  useEffect(() => {
+    if (router?.pathname !== '/admin/report/[id]') {
+      dispatch(updateFilterFlied(null));
+      dispatch(updateFilterValues(null));
+      dispatch(updateFilterFail(null));
+    } else {
+      return;
+    }
+  }, [router]);
 
   // const { data: refreshTokenData, refetch: refreshTokenRefecthData } = useQuery(['fetchRefreshToken'], fetchRefreshToken, {
   //   enabled: false,

@@ -4,6 +4,7 @@ import FlexBox from '../../FlexBox';
 import { body3_bold, body3_medium, body3_regular, heading5_regular } from '../../../../styles/FontStyles';
 import { css } from '@emotion/react';
 import { gery_chart_color, positive_chart_color } from '../../../../styles/Common.styles';
+import { checkIsInteger } from '../../../../common/util/commonFunc';
 
 interface PropsType {
   dataList: any;
@@ -23,7 +24,7 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
     return (
       <g>
         <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-          {payload.value}%
+          {payload.value.toFixed(2)}%
         </text>
         <Sector
           cursor="pointer"
@@ -46,7 +47,6 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
     [activeIndex],
   );
 
-  console.log(infoDataList, 'INFO');
   return (
     <div css={pieChartBox}>
       <div css={{ padding: '32px 62px 32px 62px' }}>
@@ -55,7 +55,7 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
             <Pie
               // cursor="pointer"
               onMouseUp={() => handleMouseUp(index)}
-              onMouseEnter={onPieEnter}
+              // onMouseEnter={onPieEnter}
               activeIndex={activeIndex}
               activeShape={renderActiveShape}
               startAngle={0}
@@ -77,27 +77,27 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
       {selectedLabelIndex === index ? (
         <FlexBox key={`rate-${index}`} justify={'space-between'} direction={'column'} style={{ ...mouseOverLabelStyle }}>
           <FlexBox justify={'space-between'} style={{ marginBottom: '12px' }}>
-            <span css={body3_medium}>@성공</span>
+            <span css={body3_medium}>성공</span>
             <div>
-              <span>(@58명)</span>
-              <span>{dataList.missionSuccessRatioInfo[0].value}%</span>
+              <span css={body3_regular}>({dataList.missionSuccessRatioInfo[0].count}명)</span>
+              <span css={body3_bold}>{checkIsInteger(dataList.missionSuccessRatioInfo[0].value)}%</span>
             </div>
           </FlexBox>
           <FlexBox justify={'space-between'} style={{ marginBottom: '12px' }}>
-            <span css={body3_medium}>@실패</span>
+            <span css={body3_medium}>실패</span>
             <div>
-              <span>(@22명)</span>
-              <span>{dataList.missionSuccessRatioInfo[1].value}%</span>
+              <span css={body3_regular}>({dataList.missionSuccessRatioInfo[1].count}명)</span>
+              <span css={body3_bold}>{checkIsInteger(dataList.missionSuccessRatioInfo[1].value)}%</span>
             </div>
           </FlexBox>
           <FlexBox justify={'space-between'} style={{ marginBottom: '12px' }}>
             <span css={body3_medium}>치명도</span>
 
-            <span>{infoDataList.fatality}%</span>
+            <span css={body3_bold}>{checkIsInteger(infoDataList.fatality)}%</span>
           </FlexBox>
           <FlexBox justify={'space-between'}>
             <span css={body3_medium}>언급비율</span>
-            <span>{infoDataList.value}%</span>
+            <span css={body3_bold}>{checkIsInteger(infoDataList.value)}%</span>
           </FlexBox>
         </FlexBox>
       ) : (
@@ -133,4 +133,5 @@ const mouseOverLabelStyle = css`
   margin: 0 auto;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  //height: 144px;
 `;

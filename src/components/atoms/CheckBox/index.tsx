@@ -9,17 +9,19 @@ interface PropsType {
   register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
   style?: any;
   errors?: object;
+  checked?: boolean;
+  handleChangeCheckBox?: () => void;
   registerOptions?: {
     [key: string]: any;
   };
 }
 
-const CheckBox = ({ inputName, label, register, style, registerOptions, errors }: PropsType) => {
+const CheckBox = ({ inputName, label, register, style, registerOptions, errors, checked, handleChangeCheckBox }: PropsType) => {
   const vaildation = errors ? (errors[inputName] ? false : true) : true;
 
   return (
     <div css={[checkBoxContainerStyle, { ...style }]}>
-      <input id={inputName} type={'checkbox'} {...register(inputName, registerOptions)} />
+      <input onClick={handleChangeCheckBox} id={inputName} checked={checked} type={'checkbox'} {...register(inputName, registerOptions)} />
       <label htmlFor={inputName} css={[caption1_regular, labelTextStyle(vaildation)]} dangerouslySetInnerHTML={{ __html: label }} />
     </div>
   );

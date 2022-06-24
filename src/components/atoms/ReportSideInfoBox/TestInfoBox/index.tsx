@@ -5,7 +5,6 @@ import { body3_bold, caption1_bold, caption1_regular, heading5_bold } from '../.
 import { colors } from '../../../../styles/Common.styles';
 
 const TestInfoBox = ({ reportData }) => {
-  console.log(reportData, 'S');
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>테스트정보</span>

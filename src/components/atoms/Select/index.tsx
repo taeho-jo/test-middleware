@@ -80,6 +80,8 @@ const Select = ({
             <span css={[fontSize ? fontSize : heading3_regular, { padding: 0, color: selected[name] ? colors.grey._3c : colors.grey._cc }]}>
               {options?.find(item => item.value === selected[name])?.displayName
                 ? options?.find(item => item.value === selected[name])?.displayName
+                : options?.find(item => item.displayName === selected[name])?.displayName
+                ? options?.find(item => item.displayName === selected[name])?.displayName
                 : placeholder
                 ? placeholder
                 : '옵션을 선택해주세요.'}
@@ -88,7 +90,7 @@ const Select = ({
           </div>
           <div css={isOpen ? customOptionOpen('100%') : customOptions}>
             {options?.map(item => (
-              <div key={item.value} onClick={() => onClick(item.value, name)} css={optionContainer}>
+              <div key={item.value} onClick={() => onClick(item.value, name, item.displayName)} css={optionContainer}>
                 <span
                   css={selected[name] === item.value ? [customOptionSelected, customOption, fontSize] : [customOption, fontSize]}
                   data-value={item.value}
@@ -142,7 +144,7 @@ const customSelectOpen = (size, padding) => css`
   padding: ${padding ? padding : '9px 16px'};
   background: white;
   position: absolute;
-  z-index: 10;
+  z-index: 9099;
   height: 258px;
   overflow: scroll;
   // TODO: 이건 지워야 될 수 있음

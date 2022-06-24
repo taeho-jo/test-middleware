@@ -119,7 +119,7 @@ export const reportData = {
                       answer: ['주관식 내용1', '주관식 내용2', '주관식 내용3', '주관식 내용4'],
                     },
                   ],
-                  count: '49',
+                  count: '55',
                   rate: '49.5',
                 },
               ],

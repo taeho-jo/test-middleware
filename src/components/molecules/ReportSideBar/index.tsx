@@ -13,8 +13,6 @@ import { ReducerType } from '../../../store/reducers';
 const ReportSideBar = () => {
   const reportData = useSelector<ReducerType, any>(state => state.report.data);
 
-  console.log(reportData, '%%%%%%%%%%%%%%%%%%%%%%%%%%');
-
   const router = useRouter();
   return (
     <div css={sidebarStyle}>
@@ -38,7 +36,7 @@ const ReportSideBar = () => {
       <div css={{ height: 'calc(100vh - 136px)', overflow: 'scroll' }}>
         <TestInfoBox reportData={reportData} />
         <RespondentAttributes />
-        {/*<TestResults />*/}
+        <TestResults />
       </div>
     </div>
   );
