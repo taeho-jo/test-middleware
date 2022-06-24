@@ -24,27 +24,29 @@ const MultipleQuestionTemplate = ({ dataList }) => {
 
       {dataList?.map((item, index) => {
         return (
-          <FlexBox key={`multi-${index}`} style={graphBosStyle} justify={'center'} align={'flex-start'}>
-            <FlexBox style={graphAreaStyle} direction={'column'}>
-              <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
-                <div css={[heading4_bold]}>{item.intent}</div>
-              </div>
-              <FlexBox direction={'column'} justify={'center'} align={'flex-start'} style={graphContainerStyle}>
-                {item.detailMultipleList.map((detail, detailIndex) => {
-                  return (
-                    <BasicBarChart
-                      key={`detailMultiple-${detail.name}-${index}`}
-                      dataList={basicBarTestData}
-                      value={`${detail.count}명`}
-                      valueStyle={{ color: colors.grey._99, fontWeight: 500 }}
-                      label={[<>{detail.name}</>]}
-                      rate={`${checkIsInteger(detail.value)}%`}
-                    />
-                  );
-                })}
+          <div key={`multi-${index}`} id={item.code}>
+            <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
+              <FlexBox style={graphAreaStyle} direction={'column'}>
+                <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
+                  <div css={[heading4_bold]}>{item.intent}</div>
+                </div>
+                <FlexBox direction={'column'} justify={'center'} align={'flex-start'} style={graphContainerStyle}>
+                  {item.detailMultipleList.map((detail, detailIndex) => {
+                    return (
+                      <BasicBarChart
+                        key={`detailMultiple-${detail.name}-${index}`}
+                        dataList={basicBarTestData}
+                        value={`${detail.count}명`}
+                        valueStyle={{ color: colors.grey._99, fontWeight: 500 }}
+                        label={[<>{detail.name}</>]}
+                        rate={`${checkIsInteger(detail.value)}%`}
+                      />
+                    );
+                  })}
+                </FlexBox>
               </FlexBox>
             </FlexBox>
-          </FlexBox>
+          </div>
         );
       })}
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>

@@ -33,7 +33,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
     <>
       {dataList?.missionFatality?.map((el, index) => {
         return (
-          <Fragment key={index}>
+          <div key={index} id={el.name}>
             <FlexBox style={headerBosStyle} justify={'space-between'}>
               <FlexBox justify={'flex-start'} align={'center'}>
                 <span css={[heading3_bold, { marginRight: '32px' }]}>
@@ -205,7 +205,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                 </Fragment>
               );
             })}
-          </Fragment>
+          </div>
         );
       })}
     </>

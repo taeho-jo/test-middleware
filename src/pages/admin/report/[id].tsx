@@ -147,10 +147,10 @@ const Report = ({ params }) => {
           ? null
           : data?.longQuestionList?.map((item, index) => {
               return (
-                <Fragment key={`lognQuestion-${index}`}>
+                <div key={`lognQuestion-${index}`} id={item.questionCode}>
                   <LongQuestionTemplate dataList={item} />
                   <div css={sortationArea} />
-                </Fragment>
+                </div>
               );
             })}
 
