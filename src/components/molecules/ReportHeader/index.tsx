@@ -12,7 +12,8 @@ import { ReducerType } from '../../../store/reducers';
 import { useQueryClient } from 'react-query';
 import { fetchReportDetail } from '../../../api/reportApi';
 import { useRouter } from 'next/router';
-import { updateFilterFlied, updateFilterValues } from '../../../store/reducers/reportReducer';
+import { updateFilterFail, updateFilterFlied, updateFilterValues } from '../../../store/reducers/reportReducer';
+import BasicButton from '../../atoms/Button/BasicButton';
 
 const ReportHeader = () => {
   const {
@@ -26,6 +27,8 @@ const ReportHeader = () => {
 
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { id } = router.query;
+
   const dispatch = useDispatch();
   const reportData = useSelector<ReducerType, any>(state => state.report.data?.filterDataList);
 
@@ -127,6 +130,16 @@ const ReportHeader = () => {
     },
     [selected],
   );
+  const resetFilter = useCallback(() => {
+    dispatch(updateFilterValues(null));
+    dispatch(updateFilterFlied(null));
+    dispatch(updateFilterFail(null));
+    setSelected({
+      filterField: '',
+      filterValues: '',
+    });
+    // queryClient.invalidateQueries(['fetchReportDetail', id]);
+  }, []);
 
   useEffect(() => {
     makeAddConditionArr();
@@ -165,6 +178,7 @@ const ReportHeader = () => {
         />
       </div>
       <AnnouncementBox content={'필터를 이용하여, 응답자 조건별로 데이터를 확인해보세요!'} />
+      <BasicButton onClick={resetFilter} theme={'dark'} text={'초기화'} style={{ width: 'auto', padding: '5px 30px', marginLeft: '10px' }} />
     </div>
   );
 };

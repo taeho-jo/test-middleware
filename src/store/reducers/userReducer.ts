@@ -61,7 +61,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setEmailConfirm: (state, action: PayloadAction<boolean>) => {
-      console.log('setEmailConfirm 실행');
       state.emailConfirm = action.payload;
     },
     setUserInfo: (state, action: PayloadAction<any>) => {

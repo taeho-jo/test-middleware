@@ -7,8 +7,9 @@ import Icon from '../../atoms/Icon';
 import { heading4_bold } from '../../../styles/FontStyles';
 import { RespondentAttributes, TestInfoBox, TestResults } from '../../atoms/ReportSideInfoBox';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
+import { isShow } from '../../../store/reducers/modalReducer';
 
 const ReportSideBar = () => {
   const reportData = useSelector<ReducerType, any>(state => state.report.data);
@@ -22,7 +23,7 @@ const ReportSideBar = () => {
     [],
   );
   console.log(missionList, 'MISW');
-
+  const dispatch = useDispatch();
   const router = useRouter();
   return (
     <div css={sidebarStyle}>
@@ -36,11 +37,11 @@ const ReportSideBar = () => {
       </FlexBox>
       <FlexBox style={shareBoxStyle} justify={'space-between'} align={'center'}>
         <FlexBox justify={'flex-start'}>
-          <Icon name={'MEMBER'} style={{ marginRight: '12px' }} />
+          <Icon name={'MEMBER'} style={{ marginRight: '12px' }} size={24} />
           <span css={heading4_bold}>1</span>
         </FlexBox>
-        <div>
-          <Icon name={'ACTION_SHARE'} />
+        <div css={{ cursor: 'pointer' }}>
+          <Icon name={'ACTION_SHARE'} onClick={() => dispatch(isShow({ isShow: true, type: 'shareReportModal' }))} />
         </div>
       </FlexBox>
       <div css={{ height: 'calc(100vh - 136px)', overflow: 'scroll' }}>

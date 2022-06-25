@@ -45,15 +45,15 @@ export default function withTokenAuth(SpecificComponent: any, option: boolean) {
     useEffect(() => {
       if (!option) {
         if (token) {
-          if (userInfo.emailVerifiedYn === 'Y') {
-            if (userInfo.firstTimeYn === 'Y') {
+          if (userInfo?.emailVerifiedYn === 'Y') {
+            if (userInfo?.firstTimeYn === 'Y') {
               router.replace('/admin/profile');
             }
-            if (userInfo.firstTimeYn === 'N') {
+            if (userInfo?.firstTimeYn === 'N') {
               return;
             }
           }
-          if (userInfo.emailVerifiedYn === 'N') {
+          if (userInfo?.emailVerifiedYn === 'N') {
             return;
             router.replace('/');
           }

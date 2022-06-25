@@ -21,10 +21,6 @@ const Toast = ({ position, id, message, duration, status }: PropsType) => {
   const arr = useSelector((state: ReducerType) => state.toast.toastArr);
 
   useEffect(() => {
-    console.log(type);
-  }, [type]);
-
-  useEffect(() => {
     const fadeOut = setInterval(() => {
       setType(null);
     }, 2000);

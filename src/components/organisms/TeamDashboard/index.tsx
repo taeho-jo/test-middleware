@@ -125,8 +125,6 @@ const TeamDashboard = () => {
   });
   // ============ React Query ============ //
 
-  console.log(teamReportList, '!@#!@#!#!@#!@#');
-
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));
   }, []);

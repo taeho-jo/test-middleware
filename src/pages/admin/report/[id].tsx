@@ -19,7 +19,14 @@ import { fetchReportDetail } from '../../../api/reportApi';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { setReportData, updateFilterFail, updateFilterFlied, updateFilterValues, updateRawData } from '../../../store/reducers/reportReducer';
+import {
+  setReportData,
+  updateCommentData,
+  updateFilterFail,
+  updateFilterFlied,
+  updateFilterValues,
+  updateRawData,
+} from '../../../store/reducers/reportReducer';
 import { ReducerType } from '../../../store/reducers';
 import LongQuestionTemplate from '../../../components/molecules/ReportTemplate/LongQuestionTemplate';
 import MultipleQuestionTemplate from '../../../components/molecules/ReportTemplate/MultipleQuestionTemplate';
@@ -34,14 +41,18 @@ const Report = ({ params }) => {
   const router = useRouter();
   const filterFlied = useSelector<ReducerType, any>(state => state.report.filter.filterFlied);
   const filterValues = useSelector<ReducerType, any>(state => state.report.filter.filterValues);
-  // const filterFail = useSelector<ReducerType, any>(state => state.report.filter.filterFail);
+  const filterFail = useSelector<ReducerType, any>(state => state.report.filter.filterFail);
   console.log(filterFlied, filterValues);
 
   const [checked, setChecked] = useState(false);
 
   const handleChangeCheckBox = useCallback(() => {
     setChecked(prev => !prev);
-    dispatch(updateFilterFail('on'));
+    if (checked) {
+      dispatch(updateFilterFail(null));
+    } else {
+      dispatch(updateFilterFail('on'));
+    }
   }, [checked]);
 
   const {
@@ -49,7 +60,7 @@ const Report = ({ params }) => {
     formState: { errors },
   } = useForm<InputType>({});
 
-  const { data, isLoading, refetch } = useQuery(['fetchReportDetail', id], () => fetchReportDetail(id, filterFlied, filterValues, checked), {
+  const { data, isLoading, refetch } = useQuery(['fetchReportDetail', id], () => fetchReportDetail(id, filterFlied, filterValues, filterFail), {
     onError: (e: any) => {
       const errorData = e.response.data;
       if (errorData.code === 'E0008') {
@@ -68,21 +79,29 @@ const Report = ({ params }) => {
   });
 
   const modalControl = useCallback((status, name, item?) => {
-    dispatch(updateRawData(item));
+    if (item?.list) {
+      dispatch(updateCommentData(item));
+    }
+    if (item?.data) {
+      dispatch(updateRawData(item));
+    }
+
     dispatch(isShow({ isShow: status, type: name }));
   }, []);
 
   useEffect(() => {
     if (filterValues !== '') {
       refetch();
+    } else if (!filterFlied && !filterValues) {
+      refetch();
     } else {
       return;
     }
-  }, [filterValues]);
+  }, [filterValues, checked]);
 
   useEffect(() => {
     refetch();
-  }, [checked, refetch]);
+  }, [filterFail]);
 
   return (
     <div css={originTestBox}>
@@ -91,8 +110,9 @@ const Report = ({ params }) => {
         {data?.S1 ? (
           <>
             <RespondentAttributesTemplate
+              modalControl={modalControl}
               handleChangeCheckBox={handleChangeCheckBox}
-              checked={checked}
+              checked={filterFail}
               register={register}
               errors={errors}
               dataList={data?.answerInfoSection}
@@ -103,7 +123,7 @@ const Report = ({ params }) => {
             <UiOverallSummaryTemplate
               modalControl={modalControl}
               handleChangeCheckBox={handleChangeCheckBox}
-              checked={checked}
+              checked={filterFail}
               dataList={data?.S1?.uiSummerySection}
               register={register}
               errors={errors}
@@ -114,7 +134,7 @@ const Report = ({ params }) => {
             <UsabilityByFeatureTemplate
               modalControl={modalControl}
               handleChangeCheckBox={handleChangeCheckBox}
-              checked={checked}
+              checked={filterFail}
               dataList={data?.S1?.uiSummerySection}
               register={register}
               errors={errors}
@@ -125,7 +145,7 @@ const Report = ({ params }) => {
             <ServiceOverallUsabilityTemplate
               modalControl={modalControl}
               handleChangeCheckBox={handleChangeCheckBox}
-              checked={checked}
+              checked={filterFail}
               dataList={data?.S1?.uiSummerySection}
               register={register}
               errors={errors}
@@ -135,7 +155,7 @@ const Report = ({ params }) => {
             <AddOnFeature
               modalControl={modalControl}
               handleChangeCheckBox={handleChangeCheckBox}
-              checked={checked}
+              checked={filterFail}
               originDataList={data?.S1?.uiSummerySection.missionFatality}
               title={'서비스 전체 미션별 완성도 피드백'}
               register={register}

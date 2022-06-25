@@ -40,7 +40,6 @@ const ResetPw = () => {
   const { mutate, isLoading, data } = useMutation(['fetchChangePassword'], fetchChangePasswordApi);
 
   const handleResetPassword = useCallback((status, data) => {
-    console.log(data);
     const sendObject = {
       password: data.password,
     };

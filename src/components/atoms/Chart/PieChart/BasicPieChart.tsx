@@ -31,12 +31,7 @@ const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseU
       </div>
 
       {labelStatus ? (
-        <FlexBox
-          direction={'column'}
-          justify={'space-between'}
-          style={{ ...mouseOverLabelStyle, marginBottom: '12px', pbckground: 'red' }}
-          overflow={'scroll'}
-        >
+        <FlexBox direction={'column'} justify={'space-between'} style={{ ...mouseOverLabelStyle, marginBottom: '12px', pbckground: 'red' }}>
           {dataList?.map((el, index) => {
             return (
               // key={`rate-${index}`} justify={'space-between'}
@@ -81,7 +76,6 @@ const mouseOverLabelStyle = css`
   width: 100%;
   padding: 16px;
   margin: 0 auto;
-  max-height: 132px;
   overflow: scroll;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);

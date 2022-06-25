@@ -32,7 +32,6 @@ export const useGetInviteTeamUserInfo = (seq, isSend) => {
     },
     onSuccess: data => {
       router.push('/admin/team');
-      console.log(data, '성공했음???');
     },
   });
 };

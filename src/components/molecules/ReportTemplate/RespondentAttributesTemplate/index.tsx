@@ -27,9 +27,10 @@ interface PropsType {
   dataList: any;
   checked?: boolean;
   handleChangeCheckBox?: () => void;
+  modalControl?: (status, name, item) => void;
 }
 
-const RespondentAttributesTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox }: PropsType) => {
+const RespondentAttributesTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl }: PropsType) => {
   const [genderInfoList, setGenderInfoList] = useState<ChangeDataListType[] | null>(null);
   const [ageGradeInfoList, setAgeGradeInfoList] = useState<ChangeDataListType[] | null>(null);
   const [deviceInfoList, setDeviceInfoList] = useState<ChangeDataListType[] | null>(null);
@@ -112,7 +113,12 @@ const RespondentAttributesTemplate = ({ dataList, register, errors, checked, han
         </FlexBox>
         <FlexBox justify={'flex-end'}>
           {/*<IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'원본 데이터 확인하기'} />*/}
-          <IconTextButton textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'리서치 코멘트 확인하기'} />
+          <IconTextButton
+            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
+            textStyle={'custom'}
+            name={'NAVIGATION_ARROW_RIGHT'}
+            text={'리서치 코멘트 확인하기'}
+          />
         </FlexBox>
       </FlexBox>
 

@@ -245,7 +245,7 @@ const Layout = ({ children }: PropsType) => {
       </>
     );
   }
-  if (token && userInfo.emailVerifiedYn === 'Y') {
+  if (token && userInfo?.emailVerifiedYn === 'Y') {
     return (
       <>
         {separateDomain()}
@@ -254,7 +254,7 @@ const Layout = ({ children }: PropsType) => {
       </>
     );
   }
-  if (!token || userInfo.emailVerifiedYn !== 'Y') {
+  if (!token || userInfo?.emailVerifiedYn !== 'Y') {
     return (
       <>
         <div css={mainContainer}>
