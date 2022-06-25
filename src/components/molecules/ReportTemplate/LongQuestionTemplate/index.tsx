@@ -13,7 +13,7 @@ const LongQuestionTemplate = ({ dataList, modalControl }) => {
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox justify={'flex-start'} align={'center'}>
-          <span css={[heading3_bold, { marginRight: '32px' }]}>주관식 문항</span>
+          <span css={[heading3_bold, { marginRight: '32px' }]}>주관식 문항 - {dataList.name}</span>
           {/*<CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />*/}
         </FlexBox>
         <FlexBox justify={'flex-end'}>
@@ -24,7 +24,12 @@ const LongQuestionTemplate = ({ dataList, modalControl }) => {
             name={'NAVIGATION_ARROW_RIGHT'}
             text={'원본 데이터 확인하기'}
           />
-          <IconTextButton textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'리서치 코멘트 확인하기'} />
+          <IconTextButton
+            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
+            textStyle={'custom'}
+            name={'NAVIGATION_ARROW_RIGHT'}
+            text={'리서치 코멘트 확인하기'}
+          />
         </FlexBox>
       </FlexBox>
 

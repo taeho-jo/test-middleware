@@ -26,6 +26,8 @@ import FatalityInfoModal from '../Modal/FatalityInfoModal';
 import UsabilityAssessmentInfo from '../Modal/UsabilityAssessmentInfo';
 import RecommendedCustomerIndexModal from '../Modal/RecommendedCustomerIndexModal';
 import OriginDataModal from '../Modal/OriginDataModal';
+import CommentModal from '../Modal/CommentModal';
+import ShareReportModal from '../Modal/ShareReportModal';
 
 const CommonModal = () => {
   const show = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -59,6 +61,8 @@ const CommonModal = () => {
           {modalType === 'usabilityAssessmentInfo' && <UsabilityAssessmentInfo />}
           {modalType === 'recommendedCustomerIndexModal' && <RecommendedCustomerIndexModal />}
           {modalType === 'originDataModal' && <OriginDataModal />}
+          {modalType === 'commentDataModal' && <CommentModal />}
+          {modalType === 'shareReportModal' && <ShareReportModal />}
         </Modal>
       ) : null}
     </>

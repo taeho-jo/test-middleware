@@ -18,12 +18,10 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setToken: (state, action: PayloadAction<any>) => {
-      console.log(action, 'ACTION');
       state.accessToken = action.payload;
       // state.email = action.payload;
     },
     resetToken: state => {
-      console.log('RESET RESET');
       state.accessToken = '';
     },
     updateIsRefreshTokenStatus: (state, action) => {

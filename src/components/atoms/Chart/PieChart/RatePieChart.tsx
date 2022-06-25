@@ -24,7 +24,7 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
     return (
       <g>
         <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-          {payload.value.toFixed(2)}%
+          {checkIsInteger(payload.value)}%
         </text>
         <Sector
           cursor="pointer"

@@ -95,7 +95,12 @@ const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleC
         </FlexBox>
         <FlexBox justify={'flex-end'}>
           {/*<IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'원본 데이터 확인하기'} />*/}
-          <IconTextButton textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'리서치 코멘트 확인하기'} />
+          <IconTextButton
+            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
+            textStyle={'custom'}
+            name={'NAVIGATION_ARROW_RIGHT'}
+            text={'리서치 코멘트 확인하기'}
+          />
         </FlexBox>
       </FlexBox>
 

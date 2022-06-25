@@ -43,7 +43,6 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
   const handToggleInviteModal = useCallback(
     num => {
       setFocusItem(num);
-      console.log(num);
       dispatch(updateTeamSeq(num));
       dispatch(isShow({ isShow: true, type: 'inviteTeamMember' }));
     },

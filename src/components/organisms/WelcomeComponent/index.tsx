@@ -47,7 +47,6 @@ const WelcomeComponent = () => {
   const { mutate: loginMutate, data: loginData } = useMutation(['login'], fetchLoginApi, {
     onError: (e: any) => {
       const { data } = e.response;
-      console.log(data, 'DATA');
       dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
     },
   });
@@ -102,7 +101,6 @@ const WelcomeComponent = () => {
   const handleSignup = useCallback(
     (status, signupData) => {
       const { consentToUseMarketingYn, password, privacyConsentYn, userId } = signupData;
-      console.log(signupData, 'signupdata');
 
       if (!toggleStatus) {
         const sendObject = {
@@ -148,8 +146,6 @@ const WelcomeComponent = () => {
       setTeamSeq(router.query.teamseq);
     }
   }, [router.query]);
-
-  console.log(router.query.teamSeq, ' TEAM');
 
   // useEffect(() => {
   //   if (loginData?.code === '200') {

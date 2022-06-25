@@ -17,10 +17,21 @@ interface PropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
   [key: string]: any;
 }
 
-const BasicButton = ({ isLoading = false, style, designBgColor, text, type = 'button', status = 'normal', theme = 'light', onClick }: PropsType) => {
+const BasicButton = ({
+  isLoading = false,
+  style,
+  designBgColor,
+  text,
+  type = 'button',
+  status = 'normal',
+  theme = 'light',
+  onClick,
+  ...props
+}: PropsType) => {
   const buttonTextStyle = heading4_bold;
   return (
     <button
+      {...props}
       onClick={onClick}
       type={type}
       css={[buttonStyle(status, theme, isLoading), { ...style }, { background: designBgColor ? designBgColor : '' }]}

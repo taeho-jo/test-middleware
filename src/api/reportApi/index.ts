@@ -8,7 +8,7 @@ export const fetchReportDetail = async (reportSeq, filterFields = null, filterVa
 
   let apiUrl = `/report/view/${reportSeq}/`;
 
-  if (filterFields && filterValues) {
+  if (filterFields && filterValues && !filterFail) {
     console.log(1);
     apiUrl = `/report/view/${reportSeq}/?filterFields=${filterFields}&filterValues
 =${filterValues}`;

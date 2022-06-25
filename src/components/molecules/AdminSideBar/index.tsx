@@ -22,7 +22,6 @@ const AdminSideBar = () => {
 
   const handleSelectTeam = useCallback(
     item => {
-      console.log(item);
       dispatch(updateSelectTeamList(item));
       dispatch(updateTeamSeq(item.teamSeq));
 
