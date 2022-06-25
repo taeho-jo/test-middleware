@@ -89,10 +89,10 @@ const IconTypes = {
 const Icon = ({ name, size = 24, style, iconColor, onClick, forwardref, width = '24px', height = '24px' }: PropsType) => {
   const IconComponent = IconTypes[name];
   // const viewBox = `0 0 24 24`;
-  const viewBox = `0 0 ${size} ${size}`;
+  const viewBox = `0 0 24 24`;
 
   return (
-    <div css={{ width: width, height: height }} ref={forwardref} onClick={onClick}>
+    <div css={{ width: width, height: height, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }} ref={forwardref} onClick={onClick}>
       <IconComponent
         css={[iconStyle(iconColor), style]}
         // onClick={onClick}

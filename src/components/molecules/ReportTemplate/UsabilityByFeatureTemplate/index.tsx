@@ -20,20 +20,22 @@ import { InputType } from '../../../../common/types/commonTypes';
 import Icon from '../../../atoms/Icon';
 import AnnouncementBox from '../../AnnouncementBox';
 import ReportShortAnswerQuestionLayerPopup from '../../../atoms/ReportShortAnswerQuestionLayerPopup';
+import OriginDataLayPopup from '../OriginDataLayPopup';
 
-const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox }) => {
+const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl }) => {
   // const { missionSuccess, missionFatality } = dataList;
   //
   // console.log(missionFatality);
 
   const [stackbarIndex, setStackbarIndex] = useState<number | null>(null);
+  const [rawDataIndex, setRawDataIndex] = useState(null);
   const [featureRawData, setFeatureRawData] = useState(null);
 
   return (
     <>
       {dataList?.missionFatality?.map((el, index) => {
         return (
-          <div key={index} id={el.name}>
+          <div key={index} id={el.name} css={{ position: 'relative' }}>
             <FlexBox style={headerBosStyle} justify={'space-between'}>
               <FlexBox justify={'flex-start'} align={'center'}>
                 <span css={[heading3_bold, { marginRight: '32px' }]}>
@@ -49,13 +51,13 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                 />
               </FlexBox>
               <FlexBox justify={'flex-end'} style={{ width: '40%' }}>
-                <IconTextButton
-                  onClick={() => console.log(featureRawData)}
-                  style={{ marginRight: '8px' }}
-                  textStyle={'custom'}
-                  name={'NAVIGATION_ARROW_RIGHT'}
-                  text={'원본 데이터 확인하기'}
-                />
+                {/*<IconTextButton*/}
+                {/*  onClick={() => modalControl(true, 'originDataModal')}*/}
+                {/*  style={{ marginRight: '8px' }}*/}
+                {/*  textStyle={'custom'}*/}
+                {/*  name={'NAVIGATION_ARROW_RIGHT'}*/}
+                {/*  text={'원본 데이터 확인하기'}*/}
+                {/*/>*/}
                 <IconTextButton textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'리서치 코멘트 확인하기'} />
               </FlexBox>
             </FlexBox>
@@ -64,13 +66,18 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
               <FlexBox style={graphAreaStyle} direction={'column'}>
                 <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
                   <div css={[heading4_bold]}>
-                    [미션 {index + 1}. {el.name}] 기능별 불편 언급 비율과 치명도{' '}
+                    [미션 {index + 1}. {el.name}] 기능별 불편 언급 비율과 치명도
                   </div>
                 </div>
                 <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
                   <FlexBox justify={'flex-end'} style={{ marginBottom: '4px' }}>
                     <Icon name={'ALERT_NORMAL'} size={10} />
-                    <span css={[caption2_bold, { textDecoration: 'underline' }]}>치명도가 뭔가요</span>
+                    <span
+                      onClick={() => modalControl(true, 'fatalityInfo')}
+                      css={[caption2_bold, { textDecoration: 'underline', cursor: 'pointer' }]}
+                    >
+                      치명도가 뭔가요
+                    </span>
                   </FlexBox>
                   <TableBarChart dataList={tableBarChartTestData} dataValueList={el.missionFunctionFatality} />
                 </FlexBox>
@@ -93,6 +100,12 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                     </FlexBox>
                     <FlexBox justify={'flex-end'} style={{ width: '40%' }}>
                       <IconTextButton
+                        onClick={() =>
+                          modalControl(true, 'originDataModal', {
+                            title: `[미션 ${index + 1}. ${el.name}] ${item.name}`,
+                            data: item.missionFunctionRawData,
+                          })
+                        }
                         style={{ marginRight: '8px' }}
                         textStyle={'custom'}
                         name={'NAVIGATION_ARROW_RIGHT'}
@@ -116,7 +129,12 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                       >
                         <FlexBox justify={'flex-end'} style={{ marginBottom: '4px' }}>
                           <Icon name={'ALERT_NORMAL'} size={10} />
-                          <span css={[caption2_bold, { textDecoration: 'underline' }]}>치명도가 뭔가요</span>
+                          <span
+                            onClick={() => modalControl(true, 'fatalityInfo')}
+                            css={[caption2_bold, { textDecoration: 'underline', cursor: 'pointer' }]}
+                          >
+                            치명도가 뭔가요
+                          </span>
                         </FlexBox>
                         <TableBarChart dataList={tableBarChartTestData} dataValueList={el.missionFunctionFatality} name={item.name} />
 
@@ -189,11 +207,21 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                         <FlexBox justify={'space-between'}>
                           <FlexBox justify={'flex-start'} style={{ marginBottom: '4px' }}>
                             <Icon name={'ALERT_NORMAL'} size={10} />
-                            <span css={[caption2_bold, { textDecoration: 'underline' }]}>사용성 평가 요소가 뭔가요</span>
+                            <span
+                              onClick={() => modalControl(true, 'usabilityAssessmentInfo')}
+                              css={[caption2_bold, { textDecoration: 'underline', cursor: 'pointer' }]}
+                            >
+                              사용성 평가 요소가 뭔가요
+                            </span>
                           </FlexBox>
                           <FlexBox justify={'flex-end'} style={{ marginBottom: '4px' }}>
                             <Icon name={'ALERT_NORMAL'} size={10} />
-                            <span css={[caption2_bold, { textDecoration: 'underline' }]}>치명도가 뭔가요</span>
+                            <span
+                              onClick={() => modalControl(true, 'fatalityInfo')}
+                              css={[caption2_bold, { textDecoration: 'underline', cursor: 'pointer' }]}
+                            >
+                              치명도가 뭔가요
+                            </span>
                           </FlexBox>
                         </FlexBox>
 

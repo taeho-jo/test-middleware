@@ -19,7 +19,7 @@ import { useForm } from 'react-hook-form';
 import { InputType } from '../../../../common/types/commonTypes';
 import AnnouncementBox from '../../AnnouncementBox';
 
-const FeatureSpecificDetailTemplate = () => {
+const FeatureSpecificDetailTemplate = ({ modalControl }) => {
   const {
     register,
     handleSubmit,
@@ -52,7 +52,7 @@ const FeatureSpecificDetailTemplate = () => {
           <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
             <FlexBox justify={'flex-end'} style={{ marginBottom: '4px' }}>
               <Icon name={'ALERT_NORMAL'} size={10} />
-              <span css={[caption2_bold, { textDecoration: 'underline' }]}>치명도가 뭔가요</span>
+              <span css={[caption2_bold, { textDecoration: 'underline' }]}>요 치명도가 뭔가요</span>
             </FlexBox>
             <TableBarChart dataList={tableBarChartTestData} dataValueList={featureSpecificDetailData} />
 
@@ -128,7 +128,12 @@ const FeatureSpecificDetailTemplate = () => {
             <FlexBox justify={'space-between'}>
               <FlexBox justify={'flex-start'} style={{ marginBottom: '4px' }}>
                 <Icon name={'ALERT_NORMAL'} size={10} />
-                <span css={[caption2_bold, { textDecoration: 'underline' }]}>사용성 평가 요소가 뭔가요</span>
+                <span
+                  onClick={() => modalControl(true, 'usabilityAssessmentInfo')}
+                  css={[caption2_bold, { textDecoration: 'underline', cursor: 'pointer' }]}
+                >
+                  사용성 평가 요소가 뭔가요
+                </span>
               </FlexBox>
               <FlexBox justify={'flex-end'} style={{ marginBottom: '4px' }}>
                 <Icon name={'ALERT_NORMAL'} size={10} />

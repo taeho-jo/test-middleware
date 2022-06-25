@@ -2,22 +2,23 @@ import React, { forwardRef, Fragment, useCallback, useEffect, useRef } from 'rea
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
-import { colors } from '../../../styles/Common.styles';
-import { body3_regular, heading5_bold, heading5_medium, heading5_regular } from '../../../styles/FontStyles';
-import useOutsideClick from '../../../hooks/useOutsideClick';
-import FlexBox from '../FlexBox';
-import { checkIsInteger } from '../../../common/util/commonFunc';
+import { colors } from '../../../../styles/Common.styles';
+import { body3_regular, heading5_bold, heading5_medium, heading5_regular } from '../../../../styles/FontStyles';
+import useOutsideClick from '../../../../hooks/useOutsideClick';
+
+import { checkIsInteger } from '../../../../common/util/commonFunc';
+import FlexBox from '../../../atoms/FlexBox';
 
 interface PropsType {
   display: boolean;
-  data?: any;
+  dataList?: any;
   top?: number;
   left?: number;
   normalText?: {
     text: string;
     onClick: () => void;
   }[];
-  setStackbarIndex?: any;
+  setRawDataIndex?: any;
   count?: number;
   [key: string]: any;
 }
@@ -27,12 +28,13 @@ interface PropsType {
 // value: 60
 
 const ReportShortAnswerQuestionLayerPopup = ({
-  setStackbarIndex,
+  rawDataIndex,
+  setRawDataIndex,
   display,
-  data,
+  dataList,
   topText,
   normalText,
-  top = 16,
+  top = 640,
   left = 16,
   count,
   ...props
@@ -43,28 +45,20 @@ const ReportShortAnswerQuestionLayerPopup = ({
   const boxRef = useRef(null);
 
   useOutsideClick(boxRef, () => {
-    setStackbarIndex(null);
+    setRawDataIndex(null);
   });
 
   return (
     <div ref={boxRef} css={popupContainer(display, top, left)}>
-      <FlexBox justify={'space-between'} align={'center'} style={{ padding: '16px' }}>
-        <span css={heading5_medium}>{data?.reason}</span>
-        <div>
-          <span css={[heading5_medium, { color: colors.grey._99 }]}>{count}개</span>&nbsp;
-          <span css={heading5_bold}>{checkIsInteger(data?.value)}%</span>
-        </div>
-      </FlexBox>
-
-      <ul css={{ background: colors.grey._fa, width: '100%', height: '274px', overflow: 'scroll', padding: '16px 24px' }}>
-        {data?.answer.map((item, index) => {
+      <div css={{ background: colors.grey._fa, width: '100%', height: '500px', overflow: 'scroll', padding: '16px 24px' }}>
+        {dataList?.map((item, index) => {
           return (
-            <li css={[heading5_regular, { listStyle: 'inside', marginBottom: index === data?.answer.length - 1 ? 0 : '16px' }]} key={`item-${index}`}>
-              {item}
-            </li>
+            <div key={`raw-${index}`} css={{ lineHeight: '30px' }}>
+              * {item}
+            </div>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 };
