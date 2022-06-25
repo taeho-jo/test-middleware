@@ -44,7 +44,7 @@ const data = [
   ],
 ];
 
-const AddOnFeature = ({ originDataList, title, register, errors, checked, handleChangeCheckBox }) => {
+const AddOnFeature = ({ originDataList, title, register, errors, checked, handleChangeCheckBox, modalControl }) => {
   const [complateSelectButton, setComplateSelectButton] = useState<number>(0);
   const [addSelectButton, setAddSelectButton] = useState<number>(0);
   const [systemSelectButton, setsystemSelectButton] = useState<number>(0);
@@ -52,6 +52,9 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
   const completeList = originDataList?.map(el => el.completeList);
   const additionalList = originDataList?.map(el => el.additionalList);
   const systemErrorList = originDataList?.map(el => el.systemErrorList);
+
+  const totalList = [...completeList, ...additionalList, ...systemErrorList].flat();
+  console.log(totalList);
 
   const handleChangeIndex = useCallback(
     (name, index) => {
@@ -82,7 +85,13 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
           />
         </FlexBox>
         <FlexBox justify={'flex-end'}>
-          <IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'원본 데이터 확인하기'} />
+          <IconTextButton
+            onClick={() => modalControl(true, 'originDataModal', { title: '추가 기능 언급', data: totalList })}
+            style={{ marginRight: '8px' }}
+            textStyle={'custom'}
+            name={'NAVIGATION_ARROW_RIGHT'}
+            text={'원본 데이터 확인하기'}
+          />
           <IconTextButton textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'리서치 코멘트 확인하기'} />
         </FlexBox>
       </FlexBox>

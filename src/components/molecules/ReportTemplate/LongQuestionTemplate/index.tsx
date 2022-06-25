@@ -1,6 +1,6 @@
 import React from 'react';
 import FlexBox from '../../../atoms/FlexBox';
-import { heading3_bold, heading4_bold } from '../../../../styles/FontStyles';
+import { body3_regular, heading3_bold, heading4_bold } from '../../../../styles/FontStyles';
 import CheckBox from '../../../atoms/CheckBox';
 import IconTextButton from '../../../atoms/Button/IconTextButton';
 import { colors } from '../../../../styles/Common.styles';
@@ -8,7 +8,7 @@ import { css } from '@emotion/react';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../../common/types/commonTypes';
 
-const LongQuestionTemplate = ({ dataList }) => {
+const LongQuestionTemplate = ({ dataList, modalControl }) => {
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
@@ -17,7 +17,13 @@ const LongQuestionTemplate = ({ dataList }) => {
           {/*<CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />*/}
         </FlexBox>
         <FlexBox justify={'flex-end'}>
-          <IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'원본 데이터 확인하기'} />
+          <IconTextButton
+            onClick={() => modalControl(true, 'originDataModal', { title: `주관식 문항 - ${dataList.name}`, data: dataList.rawData })}
+            style={{ marginRight: '8px' }}
+            textStyle={'custom'}
+            name={'NAVIGATION_ARROW_RIGHT'}
+            text={'원본 데이터 확인하기'}
+          />
           <IconTextButton textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'리서치 코멘트 확인하기'} />
         </FlexBox>
       </FlexBox>
@@ -32,10 +38,22 @@ const LongQuestionTemplate = ({ dataList }) => {
             <div css={{ flex: 1, marginRight: '16px' }}>
               <div css={[heading4_bold, buttonStyle]}>전체 피드백</div>
             </div>
-            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 44px', height: '400px', overflow: 'scroll' }}>
+            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflow: 'scroll' }}>
               {dataList?.rawData?.map((el, index) => {
                 return (
-                  <li key={index} css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>
+                  <li
+                    key={index}
+                    css={[
+                      body3_regular,
+                      {
+                        marginBottom: '16px',
+                        height: 'auto',
+                        listStyle: 'inside',
+                        textIndent: '-20px',
+                        paddingLeft: '20px',
+                      },
+                    ]}
+                  >
                     {el}
                   </li>
                 );

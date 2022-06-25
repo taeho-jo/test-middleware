@@ -54,7 +54,7 @@ interface PropsType {
   };
 }
 
-const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox }) => {
+const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl }) => {
   // const {
   //   register,
   //   handleSubmit,
@@ -134,7 +134,9 @@ const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleC
           <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
             <FlexBox justify={'flex-end'} style={{ marginBottom: '4px' }}>
               <Icon name={'ALERT_NORMAL'} size={10} />
-              <span css={[caption2_bold, { textDecoration: 'underline' }]}>치명도가 뭔가요</span>
+              <span onClick={() => modalControl(true, 'fatalityInfo')} css={[caption2_bold, { textDecoration: 'underline', cursor: 'pointer' }]}>
+                치명도가 뭔가요
+              </span>
             </FlexBox>
             <TableBarChart barColor={true} dataList={tableBarChartTestData} dataValueList={dataList?.missionFatality} />
           </FlexBox>

@@ -22,6 +22,10 @@ import ChangeAuthModal from '../Modal/ChangeAuthModal';
 import ProfileUpdateNickNameModal from '../Modal/ProfileUpdateNickNameModal';
 import ProfileUpdateCpPositionModal from '../Modal/ProfileUpdateCpPositionModal';
 import ProfileUpdateCpSize from '../Modal/ProfileUpdateCpSize';
+import FatalityInfoModal from '../Modal/FatalityInfoModal';
+import UsabilityAssessmentInfo from '../Modal/UsabilityAssessmentInfo';
+import RecommendedCustomerIndexModal from '../Modal/RecommendedCustomerIndexModal';
+import OriginDataModal from '../Modal/OriginDataModal';
 
 const CommonModal = () => {
   const show = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -51,6 +55,10 @@ const CommonModal = () => {
           {modalType === 'profileNickName' && <ProfileUpdateNickNameModal />}
           {modalType === 'profileCpPosition' && <ProfileUpdateCpPositionModal />}
           {modalType === 'profileCpSize' && <ProfileUpdateCpSize />}
+          {modalType === 'fatalityInfo' && <FatalityInfoModal />}
+          {modalType === 'usabilityAssessmentInfo' && <UsabilityAssessmentInfo />}
+          {modalType === 'recommendedCustomerIndexModal' && <RecommendedCustomerIndexModal />}
+          {modalType === 'originDataModal' && <OriginDataModal />}
         </Modal>
       ) : null}
     </>

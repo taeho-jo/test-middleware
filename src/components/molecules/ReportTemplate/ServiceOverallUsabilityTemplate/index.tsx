@@ -12,7 +12,7 @@ import { TableBarChart, UsabilityTableChart } from '../../../atoms/Chart';
 import { featureSpecificDetailData, featureUseData, featureUseData2, tableBarChartTestData } from '../../../../assets/dummy/dummyData';
 import AnnouncementBox from '../../AnnouncementBox';
 
-const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox }) => {
+const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl }) => {
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
@@ -42,7 +42,12 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
             <FlexBox justify={'space-between'}>
               <FlexBox justify={'flex-start'} style={{ marginBottom: '4px' }}>
                 <Icon name={'ALERT_NORMAL'} size={10} />
-                <span css={[caption2_bold, { textDecoration: 'underline' }]}>사용성 평가 요소가 뭔가요</span>
+                <span
+                  onClick={() => modalControl(true, 'usabilityAssessmentInfo')}
+                  css={[caption2_bold, { textDecoration: 'underline', cursor: 'pointer' }]}
+                >
+                  사용성 평가 요소가 뭔가요
+                </span>
               </FlexBox>
               <FlexBox justify={'flex-end'} style={{ marginBottom: '4px' }}>
                 <Icon name={'ALERT_NORMAL'} size={10} />

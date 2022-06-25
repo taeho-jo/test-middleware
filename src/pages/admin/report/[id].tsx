@@ -19,12 +19,13 @@ import { fetchReportDetail } from '../../../api/reportApi';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { setReportData, updateFilterFail, updateFilterFlied, updateFilterValues } from '../../../store/reducers/reportReducer';
+import { setReportData, updateFilterFail, updateFilterFlied, updateFilterValues, updateRawData } from '../../../store/reducers/reportReducer';
 import { ReducerType } from '../../../store/reducers';
 import LongQuestionTemplate from '../../../components/molecules/ReportTemplate/LongQuestionTemplate';
 import MultipleQuestionTemplate from '../../../components/molecules/ReportTemplate/MultipleQuestionTemplate';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
+import { isShow } from '../../../store/reducers/modalReducer';
 
 const Report = ({ params }) => {
   const { id } = params;
@@ -62,11 +63,14 @@ const Report = ({ params }) => {
     },
     select: data => {
       dispatch(setReportData(data.data));
-      // dispatch(updateFilterFlied(''));
-      // dispatch(updateFilterValues(''));
       return data.data;
     },
   });
+
+  const modalControl = useCallback((status, name, item?) => {
+    dispatch(updateRawData(item));
+    dispatch(isShow({ isShow: status, type: name }));
+  }, []);
 
   useEffect(() => {
     if (filterValues !== '') {
@@ -78,7 +82,6 @@ const Report = ({ params }) => {
 
   useEffect(() => {
     refetch();
-    console.log(33333);
   }, [checked, refetch]);
 
   return (
@@ -98,6 +101,7 @@ const Report = ({ params }) => {
 
             {/* UI 진단 전체 요약 */}
             <UiOverallSummaryTemplate
+              modalControl={modalControl}
               handleChangeCheckBox={handleChangeCheckBox}
               checked={checked}
               dataList={data?.S1?.uiSummerySection}
@@ -108,6 +112,7 @@ const Report = ({ params }) => {
 
             {/* 기능별 사용성 비교 */}
             <UsabilityByFeatureTemplate
+              modalControl={modalControl}
               handleChangeCheckBox={handleChangeCheckBox}
               checked={checked}
               dataList={data?.S1?.uiSummerySection}
@@ -118,6 +123,7 @@ const Report = ({ params }) => {
 
             {/* 서비스 전체 사용성 평가*/}
             <ServiceOverallUsabilityTemplate
+              modalControl={modalControl}
               handleChangeCheckBox={handleChangeCheckBox}
               checked={checked}
               dataList={data?.S1?.uiSummerySection}
@@ -127,6 +133,7 @@ const Report = ({ params }) => {
             <div css={sortationArea} />
 
             <AddOnFeature
+              modalControl={modalControl}
               handleChangeCheckBox={handleChangeCheckBox}
               checked={checked}
               originDataList={data?.S1?.uiSummerySection.missionFatality}
@@ -139,16 +146,24 @@ const Report = ({ params }) => {
         ) : null}
 
         {/*객관식 문항*/}
-        <MultipleQuestionTemplate dataList={data?.multipleQuestionList} />
+        {data?.multipleQuestionList === null || data?.multipleQuestionList?.length === 0
+          ? null
+          : data?.multipleQuestionList?.map((item, index) => {
+              return (
+                <div key={`multiple-${index}`} id={item.code}>
+                  <MultipleQuestionTemplate dataList={item} modalControl={modalControl} />
+                  <div css={sortationArea} />
+                </div>
+              );
+            })}
 
-        <div css={sortationArea} />
         {/*주관식 문항*/}
         {data?.longQuestionList === null || data?.longQuestionList?.length === 0
           ? null
           : data?.longQuestionList?.map((item, index) => {
               return (
                 <div key={`lognQuestion-${index}`} id={item.questionCode}>
-                  <LongQuestionTemplate dataList={item} />
+                  <LongQuestionTemplate dataList={item} modalControl={modalControl} />
                   <div css={sortationArea} />
                 </div>
               );
@@ -159,7 +174,7 @@ const Report = ({ params }) => {
         {/*<div css={sortationArea} />*/}
 
         {/*/!* 순 추천 고객 지수(NPS) *!/*/}
-        {/*<NpsTemplate />*/}
+        {/*<NpsTemplate modalControl={modalControl}/>*/}
         {/*<div css={sortationArea} />*/}
 
         {/*/!*일반 척도형 그래프*!/*/}

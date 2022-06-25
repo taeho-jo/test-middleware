@@ -12,7 +12,7 @@ import { BasicHorizontalBarChart, TableBarChart } from '../../../atoms/Chart';
 import { basicBarTestData3, featureSpecificDetailData, tableBarChartTestData } from '../../../../assets/dummy/dummyData';
 import AnnouncementBox from '../../AnnouncementBox';
 
-const NpsTemplate = () => {
+const NpsTemplate = ({ modalControl }) => {
   const {
     register,
     handleSubmit,
@@ -53,7 +53,12 @@ const NpsTemplate = () => {
 
             <FlexBox justify={'flex-start'} style={{ marginBottom: '4px' }}>
               <Icon name={'ALERT_NORMAL'} size={10} />
-              <span css={[caption2_bold, { textDecoration: 'underline' }]}>순 추천 고객 지수가 뭔가요</span>
+              <span
+                onClick={() => modalControl(true, 'recommendedCustomerIndexModal')}
+                css={[caption2_bold, { textDecoration: 'underline', cursor: 'pointer' }]}
+              >
+                순 추천 고객 지수가 뭔가요
+              </span>
             </FlexBox>
 
             <FlexBox>
