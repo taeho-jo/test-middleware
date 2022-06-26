@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { css } from '@emotion/react';
 import LogoIcon from '../../../assets/logoIcon.png';
 import LogoText from '../../../assets/DibyLogo_black.png';
@@ -10,9 +10,26 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import { isShow } from '../../../store/reducers/modalReducer';
+import { useQuery, useQueryClient } from 'react-query';
+import { fetchReportShareIdApi } from '../../../api/reportApi';
+import { updateReportViewId } from '../../../store/reducers/reportReducer';
 
 const ReportSideBar = () => {
+  const queryClient = useQueryClient();
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { id } = router.query;
+  console.log(id);
   const reportData = useSelector<ReducerType, any>(state => state.report.data);
+
+  const { data, refetch } = useQuery(['fetchReportShareId', id], () => fetchReportShareIdApi(id), {
+    enabled: false,
+    onSuccess: data => {
+      const reportViewId = data?.data?.reportViewId;
+      dispatch(updateReportViewId(reportViewId));
+      dispatch(isShow({ isShow: true, type: 'shareReportModal' }));
+    },
+  });
 
   const missionList = reportData?.S1?.uiSummerySection?.missionSuccess?.reduce(
     (acc, cur, index) =>
@@ -22,9 +39,11 @@ const ReportSideBar = () => {
       }),
     [],
   );
-  console.log(missionList, 'MISW');
-  const dispatch = useDispatch();
-  const router = useRouter();
+
+  const reportShare = useCallback(() => {
+    refetch();
+  }, []);
+
   return (
     <div css={sidebarStyle}>
       <FlexBox
@@ -41,7 +60,7 @@ const ReportSideBar = () => {
           <span css={heading4_bold}>1</span>
         </FlexBox>
         <div css={{ cursor: 'pointer' }}>
-          <Icon name={'ACTION_SHARE'} onClick={() => dispatch(isShow({ isShow: true, type: 'shareReportModal' }))} />
+          <Icon name={'ACTION_SHARE'} onClick={reportShare} />
         </div>
       </FlexBox>
       <div css={{ height: 'calc(100vh - 136px)', overflow: 'scroll' }}>

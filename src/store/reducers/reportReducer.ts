@@ -7,6 +7,7 @@ const initialState: any = {
     filterValues: null,
     filterFail: null,
   },
+  reportViewId: null,
   rawData: null,
   commentData: null,
 };
@@ -27,6 +28,9 @@ export const reportSlice = createSlice({
     updateFilterFail: (state, action) => {
       state.filter.filterFail = action.payload;
     },
+    updateReportViewId: (state, action) => {
+      state.reportViewId = action.payload;
+    },
     updateRawData: (state, action) => {
       state.rawData = action.payload;
     },
@@ -36,5 +40,6 @@ export const reportSlice = createSlice({
   },
 });
 
-export const { setReportData, updateFilterFlied, updateFilterValues, updateFilterFail, updateRawData, updateCommentData } = reportSlice.actions;
+export const { setReportData, updateFilterFlied, updateFilterValues, updateFilterFail, updateReportViewId, updateRawData, updateCommentData } =
+  reportSlice.actions;
 export default reportSlice.reducer;

@@ -257,20 +257,30 @@ const Layout = ({ children }: PropsType) => {
   if (!token || userInfo?.emailVerifiedYn !== 'Y') {
     return (
       <>
-        <div css={mainContainer}>
-          <main css={contentsContainer}>
-            <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
-            {showGradient ? (
-              <>
-                <div css={gradientDiv}></div>
-                <AppBar dark={showGradient} />
-              </>
-            ) : null}
-            <div>{children}</div>
-          </main>
-        </div>
-        <AlertToast position={'top-center'} />
-        <CommonModal />
+        {router.pathname === '/admin/report/[id]' ? (
+          <div css={mainContainer}>
+            <main css={contentsContainer}>
+              <ReportLayout>{children}</ReportLayout>
+            </main>
+          </div>
+        ) : (
+          <>
+            <div css={mainContainer}>
+              <main css={contentsContainer}>
+                <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
+                {showGradient ? (
+                  <>
+                    <div css={gradientDiv}></div>
+                    <AppBar dark={showGradient} />
+                  </>
+                ) : null}
+                <div>{children}</div>
+              </main>
+            </div>
+            <AlertToast position={'top-center'} />
+            <CommonModal />
+          </>
+        )}
       </>
     );
   }

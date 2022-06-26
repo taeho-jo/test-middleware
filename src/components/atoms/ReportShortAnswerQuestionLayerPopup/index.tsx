@@ -59,7 +59,19 @@ const ReportShortAnswerQuestionLayerPopup = ({
       <ul css={{ background: colors.grey._fa, width: '100%', height: '274px', overflow: 'scroll', padding: '16px 24px' }}>
         {data?.answer.map((item, index) => {
           return (
-            <li css={[heading5_regular, { listStyle: 'inside', marginBottom: index === data?.answer.length - 1 ? 0 : '16px' }]} key={`item-${index}`}>
+            <li
+              css={[
+                heading5_regular,
+                {
+                  marginBottom: '16px',
+                  height: 'auto',
+                  listStyle: 'inside',
+                  textIndent: '-20px',
+                  paddingLeft: '20px',
+                },
+              ]}
+              key={`item-${index}`}
+            >
               {item}
             </li>
           );

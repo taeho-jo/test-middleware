@@ -15,7 +15,7 @@ import {
 import BrandEvaluationTemplate from '../../../components/molecules/ReportTemplate/BrandEvaluationTemplate';
 import { reportData } from '../../../assets/dummy/testReport';
 import { useQuery, useQueryClient } from 'react-query';
-import { fetchReportDetail } from '../../../api/reportApi';
+import { fetchReportDetail, fetchReportShare } from '../../../api/reportApi';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,14 +35,15 @@ import { InputType } from '../../../common/types/commonTypes';
 import { isShow } from '../../../store/reducers/modalReducer';
 
 const Report = ({ params }) => {
-  const { id } = params;
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
+  const { id } = params;
+  const { share } = router.query;
+
   const filterFlied = useSelector<ReducerType, any>(state => state.report.filter.filterFlied);
   const filterValues = useSelector<ReducerType, any>(state => state.report.filter.filterValues);
   const filterFail = useSelector<ReducerType, any>(state => state.report.filter.filterFail);
-  console.log(filterFlied, filterValues);
 
   const [checked, setChecked] = useState(false);
 
@@ -60,23 +61,28 @@ const Report = ({ params }) => {
     formState: { errors },
   } = useForm<InputType>({});
 
-  const { data, isLoading, refetch } = useQuery(['fetchReportDetail', id], () => fetchReportDetail(id, filterFlied, filterValues, filterFail), {
-    onError: (e: any) => {
-      const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        queryClient.invalidateQueries(['fetchReportDetail', id]);
-      }
-      if (errorData.code === 'E0007') {
-        localStorage.clear();
-        router.push('/');
-      }
+  const { data, isLoading, refetch } = useQuery(
+    ['fetchReportDetail', id],
+    share ? () => fetchReportShare(id, filterFlied, filterValues, filterFail) : () => fetchReportDetail(id, filterFlied, filterValues, filterFail),
+    {
+      onError: (e: any) => {
+        const errorData = e.response.data;
+        console.log(errorData, 'ERRo');
+        if (errorData.code === 'E0008') {
+          queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+          queryClient.invalidateQueries(['fetchReportDetail', id]);
+        }
+        if (errorData.code === 'E0007' || errorData.code === 'E0002') {
+          localStorage.clear();
+          router.push('/');
+        }
+      },
+      select: data => {
+        dispatch(setReportData(data.data));
+        return data.data;
+      },
     },
-    select: data => {
-      dispatch(setReportData(data.data));
-      return data.data;
-    },
-  });
+  );
 
   const modalControl = useCallback((status, name, item?) => {
     if (item?.list) {

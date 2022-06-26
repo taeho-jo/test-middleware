@@ -20,14 +20,15 @@ import { useQueryClient } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { ReducerType } from '../../../store/reducers';
-
+const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
 const ShareReportModal = () => {
-  const [copyUrl, setCopyUrl] = useState<string | null>('https://localhost:3000/team/report/{{teamSeq}}');
-  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const selectTeamSeq = useSelector<ReducerType, number | null>(state => state.team.selectTeamSeq);
+  const reportViewId = useSelector<ReducerType, string>(state => state.report.reportViewId);
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+
+  const [copyUrl, setCopyUrl] = useState<string | null>(`${CURRENT_DOMAIN}/admin/report/share/?teamSeq=${reportViewId}`);
 
   const {
     register,
