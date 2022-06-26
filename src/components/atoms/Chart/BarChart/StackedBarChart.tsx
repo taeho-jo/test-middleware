@@ -99,9 +99,7 @@ const StackedBarChart = ({
                     fill={negative ? `rgba(232, 116, 144, 1)` : `rgba(104, 160, 244, 1)`}
                     background={{ fill: '#dcdcdc' }}
                   >
-                    {/*{renderDataList?.map((entry, idx) => (*/}
                     <Cell onClick={e => onMouseUp(e, index, el, props.detailIndex)} cursor="pointer" key={`cell-${index}`} />
-                    {/*))}*/}
                   </Bar>
                 );
               } else {
