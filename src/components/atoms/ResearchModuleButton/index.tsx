@@ -32,6 +32,7 @@ const researchBox = (backgroundColor, color, image, hoverImage) => css`
   margin-right: 16px;
   border-radius: 8px;
   cursor: pointer;
+  white-space: nowrap;
   padding: ${image ? '16px 30px' : '26.5px 30px'};
   background-color: ${backgroundColor};
   ${image

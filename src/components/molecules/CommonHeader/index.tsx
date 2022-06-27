@@ -30,7 +30,7 @@ const CommonHeader = () => {
 
   return (
     <FlexBox
-      style={{ boxSizing: 'border-box' }}
+      style={{ boxSizing: 'border-box', minWidth: '1440px', position: 'fixed', zIndex: 50, maxWidth: '1980px' }}
       padding={'12px 40px'}
       justify={'space-between'}
       align={'center'}

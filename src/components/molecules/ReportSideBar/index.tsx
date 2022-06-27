@@ -79,6 +79,10 @@ const sidebarStyle = css`
   min-width: 296px;
   height: 100vh;
   border-right: 1px solid #dcdcdc;
+  background: white;
+  // 주석
+  position: fixed;
+  z-index: 501;
 `;
 
 const logoBoxStyle = css`

@@ -203,8 +203,7 @@ const TeamDashboard = () => {
 export default TeamDashboard;
 
 const teamMainContainer = css`
-  overflow: scroll;
-  height: calc(100vh - 95px);
+  //height: calc(100vh - 95px);
 `;
 
 const researchKinds = css`
