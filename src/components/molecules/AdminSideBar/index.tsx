@@ -69,6 +69,11 @@ const adminSideBarStyle = css`
   min-width: 240px;
   height: 100vh;
   border-right: 1px solid ${colors.grey._ec};
+  //주석
+  position: fixed;
+  z-index: 50;
+  background: white;
+  //margin-top: 48px;
 `;
 
 const teamCreateAreaStyle = css`

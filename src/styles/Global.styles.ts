@@ -17,13 +17,15 @@ const reset = (popupShow, isAdmin, story) => css`
       'Malgun Gothic', sans-serif;
   }
   * {
-    html,
     body {
       padding: 0;
-      margin: 0;
+      margin: 0 auto;
       width: 100%;
-      overflow: ${story ? 'auto' : popupShow || isAdmin ? 'hidden' : 'auto'};
-      min-width: ${isAdmin ? '1440px' : 'unset'};
+      height: 100%;
+      overflow: hidden;
+      max-width: 1980px;
+      // overflow: ${story ? 'auto' : popupShow || isAdmin ? 'hidden' : 'auto'};
+      // min-width: ${isAdmin ? '1440px' : 'unset'};
       //height: 100%;
     }
     /* 공통셋팅 */
