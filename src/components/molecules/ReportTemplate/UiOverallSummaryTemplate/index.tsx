@@ -58,7 +58,9 @@ const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleC
   const [selectedLabelIndex, setSelectedLabelIndex] = useState(null);
 
   const handleMouseUp = useCallback(
-    index => {
+    (index, e) => {
+      e.stopPropagation();
+      console.log(index, '!');
       if (selectedLabelIndex === index) {
         setSelectedLabelIndex(null);
       } else {
@@ -114,6 +116,7 @@ const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleC
                     handleMouseUp={handleMouseUp}
                     index={index}
                     selectedLabelIndex={selectedLabelIndex}
+                    setSelectedLabelIndex={setSelectedLabelIndex}
                     color={chart_color[index]}
                     dataList={el}
                     infoDataList={dataList.missionFatality[index]}

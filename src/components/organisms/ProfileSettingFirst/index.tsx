@@ -98,12 +98,10 @@ const ProfileSettingFirst = () => {
           />
 
           <AnnouncementBox
-            content={
-              <div>
+            content={`<div>
                 닉네임을 입력하지 않을 경우, <br />
                 회원님의 이메일 계정으로 닉네임이 생성돼요.
-              </div>
-            }
+              </div>`}
           />
 
           <Select

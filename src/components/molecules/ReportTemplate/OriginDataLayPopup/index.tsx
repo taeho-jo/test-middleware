@@ -1,13 +1,9 @@
-import React, { forwardRef, Fragment, useCallback, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
 import { colors } from '../../../../styles/Common.styles';
-import { body3_regular, heading5_bold, heading5_medium, heading5_regular } from '../../../../styles/FontStyles';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
-
-import { checkIsInteger } from '../../../../common/util/commonFunc';
-import FlexBox from '../../../atoms/FlexBox';
 
 interface PropsType {
   display: boolean;

@@ -10,7 +10,7 @@ interface PropsType {
     projectNm: string;
     reportSeq: number;
   }[];
-  handleMoveDetail?: (id) => void;
+  handleMoveDetail?: (id, name) => void;
 }
 
 const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {

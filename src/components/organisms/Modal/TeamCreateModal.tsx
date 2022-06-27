@@ -113,12 +113,10 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
 
           {first ? (
             <AnnouncementBox
-              content={
-                <div>
+              content={`<div>
                   별도로 팀 이름을 입력하지 않을 경우, <br />
                   회원님의 닉네임으로 팀이 생성돼요.
-                </div>
-              }
+                </div>`}
             />
           ) : null}
 

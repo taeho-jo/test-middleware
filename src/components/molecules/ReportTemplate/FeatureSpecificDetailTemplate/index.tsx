@@ -59,12 +59,7 @@ const FeatureSpecificDetailTemplate = ({ modalControl }) => {
             <AnnouncementBox
               style={{ width: '100%', marginTop: '32px', padding: '12px 16px' }}
               color={colors.grey._3c}
-              content={[
-                <>
-                  @전체 350개의 응답중 기능 A에 대한 언급빈도는 168개이며, 4.35(많이 치명적임)의 치명도가 나왔습니다.
-                  <br /> 구체적으로 어떤 부분이 불편했는지는 다음 그래프에서 상세하게 확인하실 수 있습니다.
-                </>,
-              ]}
+              content={`@전체 350개의 응답중 기능 A에 대한 언급빈도는 168개이며, 4.35(많이 치명적임)의 치명도가 나왔습니다. <br /> 구체적으로 어떤 부분이 불편했는지는 다음 그래프에서 상세하게 확인하실 수 있습니다.`}
             />
           </FlexBox>
         </FlexBox>
@@ -106,14 +101,10 @@ const FeatureSpecificDetailTemplate = ({ modalControl }) => {
             <AnnouncementBox
               style={{ width: '100%', marginTop: '32px', padding: '12px 16px' }}
               color={colors.grey._3c}
-              content={[
-                <>
-                  @기능 A에 대해 언급 된 불편 개수는 총 5개이며,
+              content={`@기능 A에 대해 언급 된 불편 개수는 총 5개이며,
                   <br />그 중 조회 콘첸츠(뉴스, 블로그 글 등)에 대한 불편함이 가장 높게 평가되었습니다.
                   <br />
-                  기능 A에서 언급된 사용성 평가 요소는 다음 그래프에서 상세하게 확인하실 수 있습니다.
-                </>,
-              ]}
+                  기능 A에서 언급된 사용성 평가 요소는 다음 그래프에서 상세하게 확인하실 수 있습니다.`}
             />
           </FlexBox>
         </FlexBox>

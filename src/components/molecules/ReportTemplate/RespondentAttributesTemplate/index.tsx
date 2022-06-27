@@ -43,7 +43,8 @@ const RespondentAttributesTemplate = ({ dataList, register, errors, checked, han
   });
 
   const handleMouseUp = useCallback(
-    (name, index) => {
+    (name, index, e) => {
+      e.stopPropagation();
       setLabelStatus({
         gender: false,
         ageGrade: false,
@@ -133,15 +134,33 @@ const RespondentAttributesTemplate = ({ dataList, register, errors, checked, han
           <FlexBox justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
             <FlexBox direction={'column'} overflow={'unset'}>
               <span css={[heading5_bold, { textAlign: 'center' }]}>성별</span>
-              <BasicPieChart dataList={genderInfoList} name={'gender'} labelStatus={labelStatus.gender} handleMouseUp={handleMouseUp} />
+              <BasicPieChart
+                dataList={genderInfoList}
+                name={'gender'}
+                labelStatus={labelStatus.gender}
+                setLabelStatus={setLabelStatus}
+                handleMouseUp={handleMouseUp}
+              />
             </FlexBox>
             <FlexBox direction={'column'} overflow={'unset'}>
               <span css={[heading5_bold, { textAlign: 'center' }]}>연령대</span>
-              <BasicPieChart dataList={ageGradeInfoList} name={'ageGrade'} labelStatus={labelStatus.ageGrade} handleMouseUp={handleMouseUp} />
+              <BasicPieChart
+                dataList={ageGradeInfoList}
+                name={'ageGrade'}
+                setLabelStatus={setLabelStatus}
+                labelStatus={labelStatus.ageGrade}
+                handleMouseUp={handleMouseUp}
+              />
             </FlexBox>
             <FlexBox direction={'column'} overflow={'unset'}>
               <span css={[heading5_bold, { textAlign: 'center' }]}>기기</span>
-              <BasicPieChart dataList={deviceInfoList} name={'device'} labelStatus={labelStatus.device} handleMouseUp={handleMouseUp} />
+              <BasicPieChart
+                dataList={deviceInfoList}
+                name={'device'}
+                setLabelStatus={setLabelStatus}
+                labelStatus={labelStatus.device}
+                handleMouseUp={handleMouseUp}
+              />
             </FlexBox>
           </FlexBox>
         </FlexBox>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { css } from '@emotion/react';
 import FlexBox from '../../../components/atoms/FlexBox';
@@ -13,10 +13,6 @@ import icon1 from '../../../../public/assets/images/admin/team/uitest_hover.png'
 import icon2 from '../../../../public/assets/images/admin/team/scenario_hover.png';
 import icon3 from '../../../../public/assets/images/admin/team/uxposition_hover.png';
 import icon4 from '../../../../public/assets/images/admin/team/customer_hover.png';
-import uiBackground from '/public/assets/png/image_thumbnail_uitest.png';
-import customerBackground from '/public/assets/png/image_thumbnail_customer.png';
-import scenarioBackground from '/public/assets/png/image_thumbnail_scenario.png';
-import uxBackground from '/public/assets/png/image_thumbnail_uxposition.png';
 import ResearchModuleButton from '../../atoms/ResearchModuleButton';
 import { isShow } from '../../../store/reducers/modalReducer';
 import ResearchList from '../ResearchList';
@@ -24,9 +20,9 @@ import { ReducerType } from '../../../store/reducers';
 import { useRouter } from 'next/router';
 import { useQuery, useQueryClient } from 'react-query';
 import { fetchTeamListApi, fetchTeamReportListApi } from '../../../api/teamApi';
-import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
 import { updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import { fetchRefreshToken } from '../../../api/authApi';
+import { updateProjectName } from '../../../store/reducers/reportReducer';
 
 const ResearchType = [
   {
@@ -75,18 +71,10 @@ const ResearchType = [
   },
 ];
 
-const DummyListData = [
-  { img: uiBackground.src, testTitle: '우쥬테스트 UI 진단 v0.1', testType: 'UI 진단 테스트', testDate: '2022. 03. 15' },
-  { img: customerBackground.src, testTitle: '우쥬테스트 잠재 고객 조사', testType: '잠재 고객 조사', testDate: '2022. 03. 15' },
-  { img: scenarioBackground.src, testTitle: '우쥬테스트 시나리오 검증', testType: '시나리오 검증', testDate: '2022. 03. 15' },
-  { img: uxBackground.src, testTitle: '우쥬테스트 UX 포지션 분석', testType: 'UX 포지션 분석', testDate: '2022. 03. 15' },
-];
-
 const TeamDashboard = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const queryClient = useQueryClient();
-  const userInfoQuery = useSelector<ReducerType, boolean>(state => state.userInfoQuery);
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
   // const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
@@ -129,7 +117,8 @@ const TeamDashboard = () => {
     dispatch(isShow({ isShow: true, type: modalType }));
   }, []);
 
-  const handleMoveDetail = useCallback(id => {
+  const handleMoveDetail = useCallback((id, name) => {
+    dispatch(updateProjectName(name));
     router.push(`/admin/report/${id}`);
   }, []);
 
@@ -174,7 +163,7 @@ const TeamDashboard = () => {
             {ResearchType.map((item, index) => {
               return (
                 <ResearchModuleButton
-                  onClick={showResearchModuleModal}
+                  onClick={index === 0 ? () => console.log('') : showResearchModuleModal}
                   key={index}
                   title={item.title}
                   link={item.link}
@@ -191,9 +180,7 @@ const TeamDashboard = () => {
         </FlexBox>
         <FlexBox style={{ padding: '24px 32px 32px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
           <span css={[body2_bold, titleStyle]}>모든 리서치</span>
-          {/*<div css={{ height: '620px', background: 'pink', overflow: 'scroll' }}>*/}
           <ResearchList handleMoveDetail={handleMoveDetail} listData={teamReportList} />
-          {/*</div>*/}
         </FlexBox>
       </div>
     </>

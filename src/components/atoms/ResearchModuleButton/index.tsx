@@ -3,7 +3,7 @@ import { heading5_bold } from '../../../styles/FontStyles';
 import { css } from '@emotion/react';
 
 interface PropsType {
-  index: number;
+  index?: number;
   title: string;
   link: string;
   backgroundColor: string;
@@ -19,7 +19,7 @@ const ResearchModuleButton = ({ index, title, link, backgroundColor, color, imag
     <div key={index} onClick={() => onClick(modalType)} css={researchBox(backgroundColor, color, image, hoverImage)}>
       {index === 0 && <span css={absoluteTextStyle}>?</span>}
       <span css={[heading5_bold, { color: color }]}>{title}</span>
-      {index !== 0 && <div className="aaa" css={iconContainer(image)} />}
+      {index !== 0 && <div className="module" css={iconContainer(image)} />}
     </div>
   );
 };
@@ -43,7 +43,7 @@ const researchBox = (backgroundColor, color, image, hoverImage) => css`
   `
     : ``}
   :hover {
-    .aaa {
+    .module {
       background-image: url('${hoverImage?.src}');
     }
   }
