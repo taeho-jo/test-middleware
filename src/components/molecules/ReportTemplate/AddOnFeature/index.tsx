@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import FlexBox from '../../../atoms/FlexBox';
-import { heading3_bold, heading4_bold, heading5_regular } from '../../../../styles/FontStyles';
+import { body3_regular, heading3_bold, heading4_bold, heading5_regular } from '../../../../styles/FontStyles';
 import CheckBox from '../../../atoms/CheckBox';
 import IconTextButton from '../../../atoms/Button/IconTextButton';
 import { css } from '@emotion/react';
@@ -128,13 +128,38 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
                 );
               })}
             </div>
-            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 44px', height: '400px', overflow: 'scroll' }}>
+            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflow: 'scroll' }}>
               {completeList?.[completeSelectButton]?.length === 0 ? (
-                <li css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>피드백이 없습니다.</li>
+                <li
+                  css={[
+                    body3_regular,
+                    {
+                      marginBottom: '16px',
+                      height: 'auto',
+                      listStyle: 'inside',
+                      textIndent: '-20px',
+                      paddingLeft: '20px',
+                    },
+                  ]}
+                >
+                  피드백이 없습니다.
+                </li>
               ) : (
                 completeList?.[completeSelectButton].map((el, index) => {
                   return (
-                    <li key={index} css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>
+                    <li
+                      key={index}
+                      css={[
+                        body3_regular,
+                        {
+                          marginBottom: '16px',
+                          height: 'auto',
+                          listStyle: 'inside',
+                          textIndent: '-20px',
+                          paddingLeft: '20px',
+                        },
+                      ]}
+                    >
                       {el}
                     </li>
                   );
@@ -198,13 +223,38 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
                 );
               })}
             </div>
-            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 44px', height: '400px', overflow: 'scroll' }}>
+            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflow: 'scroll' }}>
               {additionalList?.[addSelectButton]?.length === 0 ? (
-                <li css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>피드백이 없습니다.</li>
+                <li
+                  css={[
+                    body3_regular,
+                    {
+                      marginBottom: '16px',
+                      height: 'auto',
+                      listStyle: 'inside',
+                      textIndent: '-20px',
+                      paddingLeft: '20px',
+                    },
+                  ]}
+                >
+                  피드백이 없습니다.
+                </li>
               ) : (
                 additionalList?.[addSelectButton].map((el, index) => {
                   return (
-                    <li key={index} css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>
+                    <li
+                      key={index}
+                      css={[
+                        body3_regular,
+                        {
+                          marginBottom: '16px',
+                          height: 'auto',
+                          listStyle: 'inside',
+                          textIndent: '-20px',
+                          paddingLeft: '20px',
+                        },
+                      ]}
+                    >
                       {el}
                     </li>
                   );
@@ -267,13 +317,38 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
                 );
               })}
             </div>
-            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 44px', height: '400px', overflow: 'scroll' }}>
+            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflow: 'scroll' }}>
               {systemErrorList?.[systemSelectButton]?.length === 0 ? (
-                <li css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>피드백이 없습니다.</li>
+                <li
+                  css={[
+                    body3_regular,
+                    {
+                      marginBottom: '16px',
+                      height: 'auto',
+                      listStyle: 'inside',
+                      textIndent: '-20px',
+                      paddingLeft: '20px',
+                    },
+                  ]}
+                >
+                  피드백이 없습니다.
+                </li>
               ) : (
                 systemErrorList?.[systemSelectButton].map((el, index) => {
                   return (
-                    <li key={index} css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>
+                    <li
+                      key={index}
+                      css={[
+                        body3_regular,
+                        {
+                          marginBottom: '16px',
+                          height: 'auto',
+                          listStyle: 'inside',
+                          textIndent: '-20px',
+                          paddingLeft: '20px',
+                        },
+                      ]}
+                    >
                       {el}
                     </li>
                   );

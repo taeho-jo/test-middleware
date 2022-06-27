@@ -26,7 +26,7 @@ interface PropsType {
   column?: string;
   row?: string;
   style?: any;
-  overflow?: any;
+  // overflow?: any;
   [key: string]: any;
   // key?: string | number;
 }
@@ -60,7 +60,7 @@ const FlexBox = ({
   column,
   row,
   style,
-  overflow = 'hidden',
+  // overflow = 'auto',
   ...props
 }: // key,
 PropsType) => {
@@ -88,7 +88,7 @@ PropsType) => {
           shadow,
           column,
           row,
-          overflow,
+          // overflow,
         ),
         style,
       ]}
@@ -120,7 +120,7 @@ const flexBox = (
   shadow,
   column,
   row,
-  overflow,
+  // overflow,
 ) => css`
   box-sizing: border-box;
   height: ${height};
@@ -132,7 +132,7 @@ const flexBox = (
   display: ${display};
   border: ${border};
   flex-wrap: ${wrap};
-  overflow: ${overflow};
+
   border-radius: ${radius};
   box-shadow: ${shadow};
   grid-column: ${column};

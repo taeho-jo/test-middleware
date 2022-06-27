@@ -294,8 +294,9 @@ const mainContainer = css`
 `;
 const contentsContainer = css`
   width: 100%;
-  min-height: 100vh;
+  //min-height: 100vh;
   transition: 0.6s ease;
+  overflow-x: auto;
 `;
 
 const gradientCanvas = showGradient => css`
