@@ -20,6 +20,6 @@ const darkBackgroundStyle = css`
   right: 0;
   width: 100%;
   height: 100%;
-  z-index: 500;
+  z-index: 502;
   background: rgba(0, 0, 0, 0.4);
 `;
