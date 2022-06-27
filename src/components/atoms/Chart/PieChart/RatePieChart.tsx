@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Cell, Pie, PieChart, ResponsiveContainer, Sector } from 'recharts';
 import FlexBox from '../../FlexBox';
 import { body3_bold, body3_medium, body3_regular, heading5_regular } from '../../../../styles/FontStyles';
 import { css } from '@emotion/react';
 import { gery_chart_color, positive_chart_color } from '../../../../styles/Common.styles';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
+import useOutsideClick from '../../../../hooks/useOutsideClick';
 
 interface PropsType {
   dataList: any;
@@ -12,10 +13,12 @@ interface PropsType {
   color?: string;
   selectedLabelIndex: null | number;
   index: number;
-  handleMouseUp: (index) => void;
+  handleMouseUp: (index, e) => void;
+  setSelectedLabelIndex?: any;
 }
 
-const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp, index, selectedLabelIndex }: PropsType) => {
+const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp, index, selectedLabelIndex, setSelectedLabelIndex }: PropsType) => {
+  const boxRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const renderActiveShape = useCallback(props => {
@@ -28,6 +31,7 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
         </text>
         <Sector
           cursor="pointer"
+          onClick={e => handleMouseUp(index, e)}
           cx={cx}
           cy={cy}
           innerRadius={innerRadius}
@@ -40,12 +44,9 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
     );
   }, []);
 
-  const onPieEnter = useCallback(
-    (_, index) => {
-      setActiveIndex(index);
-    },
-    [activeIndex],
-  );
+  useOutsideClick(boxRef, () => {
+    setSelectedLabelIndex(null);
+  });
 
   return (
     <div css={pieChartBox}>
@@ -54,7 +55,7 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
           <PieChart>
             <Pie
               // cursor="pointer"
-              onMouseUp={() => handleMouseUp(index)}
+
               // onMouseEnter={onPieEnter}
               activeIndex={activeIndex}
               activeShape={renderActiveShape}
@@ -66,8 +67,8 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
               fill="#8884d8"
               dataKey="value"
             >
-              {dataList?.missionSuccessRatioInfo.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={index === 0 ? color : gery_chart_color} />
+              {dataList?.missionSuccessRatioInfo.map((entry, idx) => (
+                <Cell cursor={'pointer'} onClick={e => handleMouseUp(index, e)} key={`cell-${idx}`} fill={idx === 0 ? color : gery_chart_color} />
               ))}
             </Pie>
           </PieChart>
@@ -101,7 +102,7 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
           </FlexBox>
         </FlexBox>
       ) : (
-        <FlexBox justify={'space-between'} wrap={'wrap'} style={{ width: '100%', padding: '24px' }}>
+        <div ref={boxRef} css={textBoxStyle}>
           {dataList?.missionSuccessRatioInfo.map((el, index) => {
             return (
               <FlexBox key={index} align={'center'} justify={'center'} style={{ width: '50%', marginBottom: '10px' }}>
@@ -110,7 +111,7 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
               </FlexBox>
             );
           })}
-        </FlexBox>
+        </div>
       )}
     </div>
   );
@@ -134,4 +135,11 @@ const mouseOverLabelStyle = css`
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
   //height: 144px;
+`;
+const textBoxStyle = css`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 24px;
 `;

@@ -7,6 +7,8 @@ import ActionSetting from '/public/assets/svg/action_settings.svg';
 import ActionAddCircle from '/public/assets/svg/action_add_circle.svg';
 import ActionSearch from '/public/assets/svg/action_search.svg';
 import ActionShare from '/public/assets/svg/action_share.svg';
+import ActionReset from '/public/assets/svg/reset.svg';
+import ActionResetDisable from '/public/assets/svg/reset_disabled.svg';
 import NavigationArrowLeft from '/public/assets/svg/navigation_arrow_left.svg';
 import NavigationArrowRight from '/public/assets/svg/navigation_arrow_right.svg';
 import NavigationChevronDown from '/public/assets/svg/navigation_chevron_down_s.svg';
@@ -58,6 +60,8 @@ const IconTypes = {
   ACTION_MORE: ActionMore,
   ACTION_SEARCH: ActionSearch,
   ACTION_SHARE: ActionShare,
+  ACTION_RESET: ActionReset,
+  ACTION_RESET_DISABLED: ActionResetDisable,
   NAVIGATION_ARROW_LEFT: NavigationArrowLeft,
   NAVIGATION_ARROW_RIGHT: NavigationArrowRight,
   NAVIGATION_CHEVRON_DOWN: NavigationChevronDown,

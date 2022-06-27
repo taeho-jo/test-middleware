@@ -4,7 +4,7 @@ import LogoIcon from '../../../assets/logoIcon.png';
 import LogoText from '../../../assets/DibyLogo_black.png';
 import FlexBox from '../../atoms/FlexBox';
 import Icon from '../../atoms/Icon';
-import { heading4_bold } from '../../../styles/FontStyles';
+import { heading3_bold, heading4_bold } from '../../../styles/FontStyles';
 import { RespondentAttributes, TestInfoBox, TestResults } from '../../atoms/ReportSideInfoBox';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,12 +15,11 @@ import { fetchReportShareIdApi } from '../../../api/reportApi';
 import { updateReportViewId } from '../../../store/reducers/reportReducer';
 
 const ReportSideBar = () => {
-  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const { id } = router.query;
-  console.log(id);
   const reportData = useSelector<ReducerType, any>(state => state.report.data);
+  const projectName = useSelector<ReducerType, string>(state => state.report.projectName);
 
   const { data, refetch } = useQuery(['fetchReportShareId', id], () => fetchReportShareIdApi(id), {
     enabled: false,
@@ -55,10 +54,7 @@ const ReportSideBar = () => {
         <img style={{ width: '53px', marginLeft: '24px' }} src={LogoText.src} alt="DibyLogo" />
       </FlexBox>
       <FlexBox style={shareBoxStyle} justify={'space-between'} align={'center'}>
-        <FlexBox justify={'flex-start'}>
-          <Icon name={'MEMBER'} style={{ marginRight: '12px' }} size={24} />
-          <span css={heading4_bold}>1</span>
-        </FlexBox>
+        <span css={[heading3_bold, projectNameStyle]}>{projectName ? projectName : ''}</span>
         <div css={{ cursor: 'pointer' }}>
           <Icon name={'ACTION_SHARE'} onClick={reportShare} />
         </div>
@@ -85,9 +81,15 @@ const sidebarStyle = css`
   z-index: 501;
 `;
 
-const logoBoxStyle = css`
-  height: 72px;
-  //background: lightcoral;
+const projectNameStyle = css`
+  margin-right: 16px;
+  white-space: normal;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: auto;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 const shareBoxStyle = css`
   height: 64px;

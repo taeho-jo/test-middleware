@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, LabelList } from 'recharts';
 import FlexBox from '../../FlexBox';
 import { body3_bold, body3_medium, body3_regular, heading5_regular } from '../../../../styles/FontStyles';
@@ -6,16 +6,28 @@ import { css } from '@emotion/react';
 import { chart_color, colors } from '../../../../styles/Common.styles';
 import { ChangeDataListType, DataListType } from '../../../molecules/ReportTemplate/RespondentAttributesTemplate';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
+import useOutsideClick from '../../../../hooks/useOutsideClick';
 
 interface PropsType {
   dataList: ChangeDataListType[];
   labelPadding?: string;
   name?: string;
   labelStatus?: boolean;
-  handleMouseUp?: (name, index) => void;
+  handleMouseUp?: (name, index, e) => void;
+  setLabelStatus?: any;
 }
 
-const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseUp }: PropsType) => {
+const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseUp, setLabelStatus }: PropsType) => {
+  const boxRef = useRef(null);
+
+  useOutsideClick(boxRef, e => {
+    setLabelStatus({
+      gender: false,
+      ageGrade: false,
+      device: false,
+    });
+  });
+
   return (
     <div css={pieChartBox}>
       <div css={{ padding: '32px 62px 32px 62px' }}>
@@ -23,7 +35,7 @@ const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseU
           <PieChart css={hoverPieChartStyle}>
             <Pie cursor="pointer" startAngle={360} endAngle={0} data={dataList} innerRadius={30} outerRadius={45} fill="#8884d8" dataKey="value">
               {dataList?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={chart_color[index]} onClick={() => handleMouseUp(name, index)} />
+                <Cell key={`cell-${index}`} fill={chart_color[index]} onClick={e => handleMouseUp(name, index, e)} />
               ))}
             </Pie>
           </PieChart>
@@ -49,7 +61,7 @@ const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseU
           })}
         </FlexBox>
       ) : (
-        <FlexBox justify={'space-between'} wrap={'wrap'} style={{ width: '100%', padding: labelPadding ? labelPadding : '24px' }}>
+        <div ref={boxRef} css={textBoxStyle(labelPadding)}>
           {dataList?.map((el, index) => {
             return (
               <FlexBox key={`name-${index}`} align={'center'} justify={'center'} style={{ width: '50%', marginBottom: '10px' }}>
@@ -58,7 +70,7 @@ const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseU
               </FlexBox>
             );
           })}
-        </FlexBox>
+        </div>
       )}
     </div>
   );
@@ -86,4 +98,12 @@ const labelStyle = background => css`
   width: 12px;
   height: 12px;
   margin-right: 8px;
+`;
+
+const textBoxStyle = labelPadding => css`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: ${labelPadding ? labelPadding : '24px'};
 `;

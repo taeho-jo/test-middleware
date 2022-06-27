@@ -67,7 +67,6 @@ const Report = ({ params }) => {
     {
       onError: (e: any) => {
         const errorData = e.response.data;
-        console.log(errorData, 'ERRo');
         if (errorData.code === 'E0008') {
           queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
           queryClient.invalidateQueries(['fetchReportDetail', id]);

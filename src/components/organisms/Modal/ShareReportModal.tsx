@@ -89,7 +89,7 @@ const ShareReportModal = () => {
             readOnly={true}
             style={{ marginBottom: '16px' }}
           />
-          <AnnouncementBox style={{ marginBottom: '16px' }} content={<div>링크를 클릭하면 복사가 돼요.</div>} />
+          <AnnouncementBox style={{ marginBottom: '16px' }} content={'<div>링크를 클릭하면 복사가 돼요.</div>'} />
         </Form>
       </PopupBox>
     </FlexBox>

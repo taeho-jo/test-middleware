@@ -82,7 +82,7 @@ const ResetPw = () => {
             />
           </div>
 
-          <AnnouncementBox content={<div>*비밀번호는 문자+숫자 6자 이상 조합해주세요.</div>} />
+          <AnnouncementBox content={`<div>*비밀번호는 문자+숫자 6자 이상 조합해주세요.</div>`} />
 
           <FlexBox style={{ margin: '32px 0 40px' }} direction={'column'} align={'center'} justify={'space-between'}>
             <BasicButton theme={'dark'} isLoading={false} type={'submit'} text={'비밀번호 재설정하기'} />

@@ -13,7 +13,7 @@ interface PropsType {
   moduleType: string;
   projectNm: string;
   reportSeq: number;
-  onClick?: (id) => void;
+  onClick?: (id, name) => void;
 }
 
 const ListReport = ({ createDt, moduleType, projectNm, reportSeq, onClick }: PropsType) => {
@@ -48,7 +48,7 @@ const ListReport = ({ createDt, moduleType, projectNm, reportSeq, onClick }: Pro
   }, []);
 
   return (
-    <div css={mainContainer(pickBackgroundImage(moduleType))} onClick={() => onClick(reportSeq)}>
+    <div css={mainContainer(pickBackgroundImage(moduleType))} onClick={() => onClick(reportSeq, projectNm)}>
       <span css={[caption1_regular, blockStyle]}>{changeName(moduleType)}</span>
       <span css={[heading5_bold, titleStyle]}>{projectNm}</span>
       <span css={[caption1_regular, dateStyle]}>{moment(createDt).format('YYYY. MM. DD')}</span>

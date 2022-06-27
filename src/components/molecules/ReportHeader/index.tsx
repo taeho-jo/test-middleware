@@ -14,6 +14,8 @@ import { fetchReportDetail } from '../../../api/reportApi';
 import { useRouter } from 'next/router';
 import { updateFilterFail, updateFilterFlied, updateFilterValues } from '../../../store/reducers/reportReducer';
 import BasicButton from '../../atoms/Button/BasicButton';
+import IconButton from '../../atoms/Button/IconButton';
+import IconTextButton from '../../atoms/Button/IconTextButton';
 
 const ReportHeader = () => {
   const {
@@ -31,6 +33,8 @@ const ReportHeader = () => {
 
   const dispatch = useDispatch();
   const reportData = useSelector<ReducerType, any>(state => state.report.data?.filterDataList);
+  const filterValues = useSelector<ReducerType, any>(state => state.report.filter.filterValues);
+  const filterFail = useSelector<ReducerType, any>(state => state.report.filter.filterFail);
 
   const [selected, setSelected] = useState({
     filterField: '',
@@ -148,6 +152,17 @@ const ReportHeader = () => {
   return (
     <div css={headerStyle}>
       <span css={[heading5_regular, { marginRight: '12px' }]}>필터</span>
+      <IconTextButton
+        onClick={resetFilter}
+        disabled={filterValues || filterFail === 'on' ? false : true}
+        style={{ marginRight: '8px' }}
+        textStyle={'custom'}
+        name={'ACTION_RESET'}
+        text={'필터 초기화'}
+        iconPosition={'left'}
+        css={{ padding: '6px 16px 6px 8px' }}
+      />
+      {/*<BasicButton onClick={resetFilter} theme={'dark'} text={'초기화'} style={{ width: 'auto', padding: '5px 30px', marginLeft: '10px' }} />*/}
       <div css={{ width: '264px', marginRight: '12px' }}>
         <Select
           options={conditionArr}
@@ -178,7 +193,6 @@ const ReportHeader = () => {
         />
       </div>
       <AnnouncementBox content={'필터를 이용하여, 응답자 조건별로 데이터를 확인해보세요!'} />
-      <BasicButton onClick={resetFilter} theme={'dark'} text={'초기화'} style={{ width: 'auto', padding: '5px 30px', marginLeft: '10px' }} />
     </div>
   );
 };
