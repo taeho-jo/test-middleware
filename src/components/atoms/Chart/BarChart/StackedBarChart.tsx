@@ -50,6 +50,7 @@ const StackedBarChart = ({
 
       setIsShow(true);
       setLayerData(el);
+
       // console.log(el);
     },
 

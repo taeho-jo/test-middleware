@@ -20,13 +20,14 @@ const MultipleQuestionTemplate = ({ dataList, modalControl }) => {
             onClick={() => modalControl(true, 'originDataModal', { title: `객관식 문항 - ${dataList.intent}`, data: dataList.rawData })}
             style={{ marginRight: '8px' }}
             textStyle={'custom'}
-            name={'NAVIGATION_ARROW_RIGHT'}
+            name={'NAVIGATION_CHEVRON_RIGHT'}
             text={'원본 데이터 확인하기'}
           />
           <IconTextButton
+            disabled={true}
             onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
             textStyle={'custom'}
-            name={'NAVIGATION_ARROW_RIGHT'}
+            name={'NAVIGATION_CHEVRON_RIGHT'}
             text={'리서치 코멘트 확인하기'}
           />
         </FlexBox>

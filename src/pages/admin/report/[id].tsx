@@ -130,6 +130,7 @@ const Report = ({ params }) => {
               modalControl={modalControl}
               handleChangeCheckBox={handleChangeCheckBox}
               checked={filterFail}
+              comment={data?.S1?.comment}
               dataList={data?.S1?.uiSummerySection}
               register={register}
               errors={errors}

@@ -45,35 +45,41 @@ const data = [
 ];
 
 const AddOnFeature = ({ originDataList, title, register, errors, checked, handleChangeCheckBox, modalControl }) => {
-  const [complateSelectButton, setComplateSelectButton] = useState<number>(0);
+  const [completeSelectButton, setCompleteSelectButton] = useState<number>(0);
   const [addSelectButton, setAddSelectButton] = useState<number>(0);
-  const [systemSelectButton, setsystemSelectButton] = useState<number>(0);
+  const [systemSelectButton, setSystemSelectButton] = useState<number>(0);
 
   const completeList = originDataList?.map(el => el.completeList);
   const additionalList = originDataList?.map(el => el.additionalList);
   const systemErrorList = originDataList?.map(el => el.systemErrorList);
+
+  const completeCommentList = originDataList?.map(el => el.completeComment);
+  const additionalCommentList = originDataList?.map(el => el.additionalComment);
+  const systemErrorCommentList = originDataList?.map(el => el.systemErrorComment);
+
+  console.log(completeCommentList, additionalCommentList, systemErrorCommentList);
 
   const totalList = [...completeList, ...additionalList, ...systemErrorList].flat();
 
   const handleChangeIndex = useCallback(
     (name, index) => {
       if (name === 'complate') {
-        setComplateSelectButton(index);
+        setCompleteSelectButton(index);
       }
       if (name === 'add') {
         setAddSelectButton(index);
       }
       if (name === 'system') {
-        setsystemSelectButton(index);
+        setSystemSelectButton(index);
       }
     },
-    [complateSelectButton, addSelectButton, systemSelectButton],
+    [completeSelectButton, addSelectButton, systemSelectButton],
   );
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox justify={'flex-start'} align={'center'}>
-          <span css={[heading3_bold, { marginRight: '32px' }]}>추가 기능 언급</span>
+          <span css={[heading3_bold, { marginRight: '32px' }]}>추가 기능 언급-서비스 전체 미션별 완성도 피드백</span>
           <CheckBox
             handleChangeCheckBox={handleChangeCheckBox}
             checked={checked}
@@ -85,14 +91,16 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
         </FlexBox>
         <FlexBox justify={'flex-end'}>
           <IconTextButton
-            onClick={() => modalControl(true, 'originDataModal', { title: '추가 기능 언급', data: totalList })}
+            onClick={() =>
+              modalControl(true, 'originDataModal', { title: '추가 기능 언급-서비스 전체 미션별 완성도 피드백', data: completeList.flat() })
+            }
             style={{ marginRight: '8px' }}
             textStyle={'custom'}
             name={'NAVIGATION_ARROW_RIGHT'}
             text={'원본 데이터 확인하기'}
           />
           <IconTextButton
-            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
+            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [completeCommentList[completeSelectButton]] })}
             textStyle={'custom'}
             name={'NAVIGATION_ARROW_RIGHT'}
             text={'리서치 코멘트 확인하기'}
@@ -113,7 +121,7 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
                   <div
                     key={`missionBtn${index}`}
                     onClick={() => handleChangeIndex('complate', index)}
-                    css={[{ opacity: complateSelectButton === index ? 1 : 0.4 }, heading4_bold, buttonStyle]}
+                    css={[{ opacity: completeSelectButton === index ? 1 : 0.4 }, heading4_bold, buttonStyle]}
                   >
                     미션 {index + 1}
                   </div>
@@ -121,15 +129,52 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
               })}
             </div>
             <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 44px', height: '400px', overflow: 'scroll' }}>
-              {completeList?.[complateSelectButton].map((el, index) => {
-                return (
-                  <li key={index} css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>
-                    {el}
-                  </li>
-                );
-              })}
+              {completeList?.[completeSelectButton]?.length === 0 ? (
+                <li css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>피드백이 없습니다.</li>
+              ) : (
+                completeList?.[completeSelectButton].map((el, index) => {
+                  return (
+                    <li key={index} css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>
+                      {el}
+                    </li>
+                  );
+                })
+              )}
             </ul>
           </FlexBox>
+        </FlexBox>
+      </FlexBox>
+
+      <div css={sortationArea} />
+
+      <FlexBox style={headerBosStyle} justify={'space-between'}>
+        <FlexBox justify={'flex-start'} align={'center'}>
+          <span css={[heading3_bold, { marginRight: '32px' }]}>추가 기능 언급-서비스 전체 미션별 추가기능 피드백</span>
+          <CheckBox
+            handleChangeCheckBox={handleChangeCheckBox}
+            checked={checked}
+            inputName={'privacyConsentYn'}
+            label={'미션에 실패한 응답자의 피드백만 보기'}
+            register={register}
+            errors={errors}
+          />
+        </FlexBox>
+        <FlexBox justify={'flex-end'}>
+          <IconTextButton
+            onClick={() =>
+              modalControl(true, 'originDataModal', { title: '추가 기능 언급-서비스 전체 미션별 추가기능 피드백', data: additionalList.flat() })
+            }
+            style={{ marginRight: '8px' }}
+            textStyle={'custom'}
+            name={'NAVIGATION_ARROW_RIGHT'}
+            text={'원본 데이터 확인하기'}
+          />
+          <IconTextButton
+            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [additionalCommentList[addSelectButton]] })}
+            textStyle={'custom'}
+            name={'NAVIGATION_ARROW_RIGHT'}
+            text={'리서치 코멘트 확인하기'}
+          />
         </FlexBox>
       </FlexBox>
 
@@ -154,15 +199,51 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
               })}
             </div>
             <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 44px', height: '400px', overflow: 'scroll' }}>
-              {additionalList?.[addSelectButton].map((el, index) => {
-                return (
-                  <li key={index} css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>
-                    {el}
-                  </li>
-                );
-              })}
+              {additionalList?.[addSelectButton]?.length === 0 ? (
+                <li css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>피드백이 없습니다.</li>
+              ) : (
+                additionalList?.[addSelectButton].map((el, index) => {
+                  return (
+                    <li key={index} css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>
+                      {el}
+                    </li>
+                  );
+                })
+              )}
             </ul>
           </FlexBox>
+        </FlexBox>
+      </FlexBox>
+
+      <div css={sortationArea} />
+      <FlexBox style={headerBosStyle} justify={'space-between'}>
+        <FlexBox justify={'flex-start'} align={'center'}>
+          <span css={[heading3_bold, { marginRight: '32px' }]}>추가 기능 언급-서비스 전체 미션별 시스템오류 피드백</span>
+          <CheckBox
+            handleChangeCheckBox={handleChangeCheckBox}
+            checked={checked}
+            inputName={'privacyConsentYn'}
+            label={'미션에 실패한 응답자의 피드백만 보기'}
+            register={register}
+            errors={errors}
+          />
+        </FlexBox>
+        <FlexBox justify={'flex-end'}>
+          <IconTextButton
+            onClick={() =>
+              modalControl(true, 'originDataModal', { title: '추가 기능 언급-서비스 전체 미션별 시스템오류 피드백', data: systemErrorList.flat() })
+            }
+            style={{ marginRight: '8px' }}
+            textStyle={'custom'}
+            name={'NAVIGATION_ARROW_RIGHT'}
+            text={'원본 데이터 확인하기'}
+          />
+          <IconTextButton
+            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [systemErrorCommentList[systemSelectButton]] })}
+            textStyle={'custom'}
+            name={'NAVIGATION_ARROW_RIGHT'}
+            text={'리서치 코멘트 확인하기'}
+          />
         </FlexBox>
       </FlexBox>
 
@@ -187,13 +268,17 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
               })}
             </div>
             <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 44px', height: '400px', overflow: 'scroll' }}>
-              {systemErrorList?.[systemSelectButton].map((el, index) => {
-                return (
-                  <li key={index} css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>
-                    {el}
-                  </li>
-                );
-              })}
+              {systemErrorList?.[systemSelectButton]?.length === 0 ? (
+                <li css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>피드백이 없습니다.</li>
+              ) : (
+                systemErrorList?.[systemSelectButton].map((el, index) => {
+                  return (
+                    <li key={index} css={{ listStyle: 'inside', marginBottom: '16px', listStylePosition: 'inside', textIndent: '-20px' }}>
+                      {el}
+                    </li>
+                  );
+                })
+              )}
             </ul>
           </FlexBox>
         </FlexBox>
@@ -238,5 +323,9 @@ const buttonStyle = css`
   border-radius: 8px;
   margin-bottom: 16px;
   cursor: pointer;
-  opacity: sel;
+`;
+const sortationArea = css`
+  width: 100%;
+  height: 16px;
+  background: #dcdcdc;
 `;
