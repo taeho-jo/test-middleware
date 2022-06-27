@@ -31,8 +31,8 @@ const TroublesShootingTemplate = () => {
           <CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />
         </FlexBox>
         <FlexBox justify={'flex-end'}>
-          <IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'원본 데이터 확인하기'} />
-          <IconTextButton textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'리서치 코멘트 확인하기'} />
+          <IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_CHEVRON_RIGHT'} text={'원본 데이터 확인하기'} />
+          <IconTextButton textStyle={'custom'} name={'NAVIGATION_CHEVRON_RIGHT'} text={'리서치 코멘트 확인하기'} />
         </FlexBox>
       </FlexBox>
 

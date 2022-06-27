@@ -54,19 +54,7 @@ interface PropsType {
   };
 }
 
-const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl }) => {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   reset,
-  //   watch,
-  //   // setFocus,
-  //   formState: { errors },
-  // } = useForm<InputType>({});
-  //
-  // const onSubmit = data => console.log('success', data);
-  // const onError = errors => console.log('fail', errors);
-
+const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl, comment }) => {
   const [selectedLabelIndex, setSelectedLabelIndex] = useState(null);
 
   const handleMouseUp = useCallback(
@@ -94,11 +82,17 @@ const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleC
           />
         </FlexBox>
         <FlexBox justify={'flex-end'}>
-          {/*<IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'원본 데이터 확인하기'} />*/}
           <IconTextButton
-            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
+            disabled={true}
+            style={{ marginRight: '8px' }}
             textStyle={'custom'}
-            name={'NAVIGATION_ARROW_RIGHT'}
+            name={'NAVIGATION_CHEVRON_RIGHT'}
+            text={'원본 데이터 확인하기'}
+          />
+          <IconTextButton
+            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [comment] })}
+            textStyle={'custom'}
+            name={'NAVIGATION_CHEVRON_RIGHT'}
             text={'리서치 코멘트 확인하기'}
           />
         </FlexBox>

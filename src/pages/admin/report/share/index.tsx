@@ -11,7 +11,9 @@ const Share = () => {
   const { teamSeq } = router.query;
 
   useEffect(() => {
-    router.replace(`/admin/report/${teamSeq}/?share=true`);
+    if (teamSeq) {
+      router.replace(`/admin/report/${teamSeq}/?share=true`);
+    }
   }, [teamSeq]);
 
   return (

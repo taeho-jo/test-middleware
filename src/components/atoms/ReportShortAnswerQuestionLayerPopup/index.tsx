@@ -51,7 +51,7 @@ const ReportShortAnswerQuestionLayerPopup = ({
       <FlexBox justify={'space-between'} align={'center'} style={{ padding: '16px' }}>
         <span css={heading5_medium}>{data?.reason}</span>
         <div>
-          <span css={[heading5_medium, { color: colors.grey._99 }]}>{count}개</span>&nbsp;
+          <span css={[heading5_medium, { color: colors.grey._99 }]}>{data?.answer?.length}개</span>&nbsp;
           <span css={heading5_bold}>{checkIsInteger(data?.value)}%</span>
         </div>
       </FlexBox>

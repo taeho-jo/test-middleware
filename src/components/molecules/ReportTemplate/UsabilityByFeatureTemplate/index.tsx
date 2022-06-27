@@ -51,17 +51,19 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                 />
               </FlexBox>
               <FlexBox justify={'flex-end'} style={{ width: '40%' }}>
-                {/*<IconTextButton*/}
-                {/*  onClick={() => modalControl(true, 'originDataModal')}*/}
-                {/*  style={{ marginRight: '8px' }}*/}
-                {/*  textStyle={'custom'}*/}
-                {/*  name={'NAVIGATION_ARROW_RIGHT'}*/}
-                {/*  text={'원본 데이터 확인하기'}*/}
-                {/*/>*/}
                 <IconTextButton
+                  disabled={true}
+                  onClick={() => modalControl(true, 'originDataModal')}
+                  style={{ marginRight: '8px' }}
+                  textStyle={'custom'}
+                  name={'NAVIGATION_CHEVRON_RIGHT'}
+                  text={'원본 데이터 확인하기'}
+                />
+                <IconTextButton
+                  disabled={true}
                   onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
                   textStyle={'custom'}
-                  name={'NAVIGATION_ARROW_RIGHT'}
+                  name={'NAVIGATION_CHEVRON_RIGHT'}
                   text={'리서치 코멘트 확인하기'}
                 />
               </FlexBox>
@@ -84,7 +86,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                       치명도가 뭔가요
                     </span>
                   </FlexBox>
-                  <TableBarChart dataList={tableBarChartTestData} dataValueList={el.missionFunctionFatality} />
+                  <TableBarChart dataList={tableBarChartTestData} dataValueList={[el]} />
                 </FlexBox>
               </FlexBox>
             </FlexBox>
@@ -101,7 +103,14 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                       <span css={[heading3_bold, { marginRight: '32px' }]}>
                         기능별 상세 내용 - [미션 {index + 1}. {el.name}] {item.name}
                       </span>
-                      <CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />
+                      <CheckBox
+                        handleChangeCheckBox={handleChangeCheckBox}
+                        checked={checked}
+                        inputName={'privacyConsentYn'}
+                        label={'미션에 실패한 응답자의 피드백만 보기'}
+                        register={register}
+                        errors={errors}
+                      />
                     </FlexBox>
                     <FlexBox justify={'flex-end'} style={{ width: '40%' }}>
                       <IconTextButton
@@ -113,13 +122,13 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                         }
                         style={{ marginRight: '8px' }}
                         textStyle={'custom'}
-                        name={'NAVIGATION_ARROW_RIGHT'}
+                        name={'NAVIGATION_CHEVRON_RIGHT'}
                         text={'원본 데이터 확인하기'}
                       />
                       <IconTextButton
-                        onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
+                        onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [item.comment] })}
                         textStyle={'custom'}
-                        name={'NAVIGATION_ARROW_RIGHT'}
+                        name={'NAVIGATION_CHEVRON_RIGHT'}
                         text={'리서치 코멘트 확인하기'}
                       />
                     </FlexBox>

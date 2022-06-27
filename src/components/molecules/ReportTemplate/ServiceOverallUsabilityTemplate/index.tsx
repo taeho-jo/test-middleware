@@ -28,11 +28,18 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
           />
         </FlexBox>
         <FlexBox justify={'flex-end'}>
-          {/*<IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_ARROW_RIGHT'} text={'원본 데이터 확인하기'} />*/}
           <IconTextButton
+            disabled={true}
+            style={{ marginRight: '8px' }}
+            textStyle={'custom'}
+            name={'NAVIGATION_CHEVRON_RIGHT'}
+            text={'원본 데이터 확인하기'}
+          />
+          <IconTextButton
+            disabled={true}
             onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
             textStyle={'custom'}
-            name={'NAVIGATION_ARROW_RIGHT'}
+            name={'NAVIGATION_CHEVRON_RIGHT'}
             text={'리서치 코멘트 확인하기'}
           />
         </FlexBox>
