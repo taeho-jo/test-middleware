@@ -9,7 +9,7 @@ const AdminLayout = ({ children }) => {
   return (
     <FlexBox align={'flex-start'} justify={'flex-start'}>
       <AdminSideBar />
-      <div css={adminHeaderStyle}>
+      <div css={mainLayoutStyle}>
         <AdminHeader />
         <div css={contentsArea}>{children}</div>
       </div>
@@ -19,11 +19,9 @@ const AdminLayout = ({ children }) => {
 
 export default AdminLayout;
 
-const adminHeaderStyle = css`
-  height: 48px;
+const mainLayoutStyle = css`
   width: 100%;
-  border: 1px solid ${colors.grey._ec};
-  border-left: none;
+
   //color: red;
 `;
 const contentsArea = css`

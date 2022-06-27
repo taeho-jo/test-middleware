@@ -43,6 +43,7 @@ const headerStyle = css`
   height: 47px;
   width: 100%;
   padding: 0 32px;
+  border: 1px solid ${colors.grey._ec};
 `;
 const itemsStyle = css`
   height: auto;
