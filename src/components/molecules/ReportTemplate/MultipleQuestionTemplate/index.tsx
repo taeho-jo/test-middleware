@@ -5,7 +5,6 @@ import IconTextButton from '../../../atoms/Button/IconTextButton';
 import { css } from '@emotion/react';
 import { colors } from '../../../../styles/Common.styles';
 import { BasicBarChart } from '../../../atoms/Chart';
-import { basicBarTestData } from '../../../../assets/dummy/dummyData';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
 
 const MultipleQuestionTemplate = ({ dataList, modalControl }) => {
@@ -43,7 +42,7 @@ const MultipleQuestionTemplate = ({ dataList, modalControl }) => {
                 return (
                   <BasicBarChart
                     key={`detailMultiple-${detail.name}-${detailIndex}`}
-                    dataList={basicBarTestData}
+                    dataList={[detail]}
                     value={`${detail.count}명`}
                     valueStyle={{ color: colors.grey._99, fontWeight: 500 }}
                     label={[<>{detail.name}</>]}

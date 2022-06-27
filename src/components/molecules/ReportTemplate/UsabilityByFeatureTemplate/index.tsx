@@ -1,35 +1,17 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import FlexBox from '../../../atoms/FlexBox';
-import { caption1_bold, caption2_bold, heading3_bold, heading4_bold, heading5_bold, heading5_medium } from '../../../../styles/FontStyles';
+import { caption2_bold, heading3_bold, heading4_bold } from '../../../../styles/FontStyles';
 import CheckBox from '../../../atoms/CheckBox';
 import IconTextButton from '../../../atoms/Button/IconTextButton';
 import { colors } from '../../../../styles/Common.styles';
-import { BasicPieChart, StackedBarChart, TableBarChart, UsabilityTableChart } from '../../../atoms/Chart';
-import {
-  ageTestData,
-  featureSpecificDetailData,
-  featureUseData,
-  genderTestData,
-  stackedBarTestData,
-  tableBarChartTestData,
-  tableBarTestData,
-} from '../../../../assets/dummy/dummyData';
+import { StackedBarChart, TableBarChart, UsabilityTableChart } from '../../../atoms/Chart';
+import { tableBarChartTestData } from '../../../../assets/dummy/dummyData';
 import { css } from '@emotion/react';
-import { useForm } from 'react-hook-form';
-import { InputType } from '../../../../common/types/commonTypes';
 import Icon from '../../../atoms/Icon';
 import AnnouncementBox from '../../AnnouncementBox';
-import ReportShortAnswerQuestionLayerPopup from '../../../atoms/ReportShortAnswerQuestionLayerPopup';
-import OriginDataLayPopup from '../OriginDataLayPopup';
 
 const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl }) => {
-  // const { missionSuccess, missionFatality } = dataList;
-  //
-  // console.log(missionFatality);
-
   const [stackbarIndex, setStackbarIndex] = useState<number | null>(null);
-  const [rawDataIndex, setRawDataIndex] = useState(null);
-  const [featureRawData, setFeatureRawData] = useState(null);
 
   return (
     <>
@@ -160,7 +142,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                         <AnnouncementBox
                           style={{ width: '100%', marginTop: '32px', padding: '12px 16px' }}
                           color={colors.grey._3c}
-                          content={[<>{item.info}</>]}
+                          content={item.info}
                         />
                       </FlexBox>
                     </FlexBox>
@@ -211,7 +193,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                         <AnnouncementBox
                           style={{ width: '100%', marginTop: '32px', padding: '12px 16px' }}
                           color={colors.grey._3c}
-                          content={[<>{item.detailInfo}</>]}
+                          content={item.detailInfo}
                         />
                       </FlexBox>
                     </FlexBox>

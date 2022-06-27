@@ -12,10 +12,12 @@ interface PropsType {
 }
 
 const AnnouncementBox = ({ style, content, icon = 'ALERT_NORMAL', color = colors.grey._99 }: PropsType) => {
+  console.log(content, ';ll;ll');
   return (
     <div css={[caption1_regular, notificationBox(color), style]}>
       <Icon name={icon} size={24} iconColor={colors.grey._cc} style={{ marginRight: '8px' }} />
-      <span css={{ marginLeft: '8px' }}>{content}</span>
+      {/*<div  />*/}
+      <span css={{ marginLeft: '8px' }} dangerouslySetInnerHTML={{ __html: content }} />
     </div>
   );
 };
