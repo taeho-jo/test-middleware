@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import FlexBox from '../../../atoms/FlexBox';
 import { caption2_bold, heading3_bold, heading4_bold } from '../../../../styles/FontStyles';
 import CheckBox from '../../../atoms/CheckBox';
@@ -13,6 +13,11 @@ import { featureSpecificDetailData, featureUseData, featureUseData2, tableBarCha
 import AnnouncementBox from '../../AnnouncementBox';
 
 const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl }) => {
+  const [usabilityIndex, setUsabilityIndex] = useState<number | null>(null);
+  const handleClickUsabilityIndex = useCallback((e, index) => {
+    e.stopPropagation();
+    setUsabilityIndex(index);
+  }, []);
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
@@ -67,7 +72,13 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
               </FlexBox>
             </FlexBox>
 
-            <UsabilityTableChart dataList={dataList?.serviceTotalUsabilityList} negative={true} />
+            <UsabilityTableChart
+              handleClickUsabilityIndex={handleClickUsabilityIndex}
+              usabilityIndex={usabilityIndex}
+              setUsabilityIndex={setUsabilityIndex}
+              dataList={dataList?.serviceTotalUsabilityList}
+              negative={true}
+            />
           </FlexBox>
         </FlexBox>
       </FlexBox>

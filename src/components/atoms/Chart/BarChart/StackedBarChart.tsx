@@ -94,7 +94,7 @@ const StackedBarChart = ({
               if (index === 0) {
                 return (
                   <Bar
-                    key={`value${index}`}
+                    key={`value${props.detailIndex}`}
                     dataKey={`value${index}`}
                     stackId="a"
                     fill={negative ? `rgba(232, 116, 144, 1)` : `rgba(104, 160, 244, 1)`}
@@ -107,7 +107,7 @@ const StackedBarChart = ({
                 return (
                   <Bar
                     cursor={'pointer'}
-                    key={`value1${index}`}
+                    key={`value1${props.detailIndex}`}
                     dataKey={`value${index}`}
                     stackId="a"
                     fill={negative ? `rgba(232, 116, 144, ${1 - 0.2 * (index - 1)})` : `rgba(104, 160, 244, ${1 - 0.2 * index})`}

@@ -1,14 +1,24 @@
-import React from 'react';
-import { caption2_regular } from '../../../../styles/FontStyles';
+import React, { useRef } from 'react';
+import { body3_bold, body3_medium, caption2_regular } from '../../../../styles/FontStyles';
 import { BasicBarChart } from '../index';
 import { basicBarTestData } from '../../../../assets/dummy/dummyData';
 import { css } from '@emotion/react';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
+import FlexBox from '../../FlexBox';
+import useOutsideClick from '../../../../hooks/useOutsideClick';
 interface PropsType {
   dataList: { name: string; value: number; fatality: number; mention: number }[];
   negative?: boolean;
+  setUsabilityIndex?: any;
+  usabilityIndex?: number | null;
+  handleClickUsabilityIndex?: (e, index) => void;
 }
-const UsabilityTableChart = ({ dataList, negative = false }: PropsType) => {
+const UsabilityTableChart = ({ dataList, negative = false, usabilityIndex, setUsabilityIndex, handleClickUsabilityIndex }: PropsType) => {
+  const usabilityRef = useRef(null);
+  useOutsideClick(usabilityRef, () => {
+    setUsabilityIndex(null);
+  });
+
   return (
     <div css={containerStyle}>
       <ul css={ulStyle}>
@@ -23,9 +33,9 @@ const UsabilityTableChart = ({ dataList, negative = false }: PropsType) => {
             <li css={[caption2_regular, liStyle, emptyLiStyle, liWidthStyle]}>
               <span>사용성 점수</span>
             </li>
-            <li css={[caption2_regular, liStyle, emptyLiStyle, { width: '110px' }]}>{el.fatality.toFixed(2)}</li>
-            <li css={[caption2_regular, liStyle, emptyLiStyle, { borderRight: 'none', width: '110px' }]}>{el.mention.toFixed(2)}%</li>
-            <div css={chartBox}>
+            <li css={[caption2_regular, liStyle, emptyLiStyle, { width: '110px' }]}>{checkIsInteger(el.fatality)}</li>
+            <li css={[caption2_regular, liStyle, emptyLiStyle, { borderRight: 'none', width: '110px' }]}>{checkIsInteger(el.mention)}%</li>
+            <div onClick={e => handleClickUsabilityIndex(e, index)} css={chartBox}>
               <BasicBarChart
                 negative={negative}
                 dataList={[el]}
@@ -34,6 +44,25 @@ const UsabilityTableChart = ({ dataList, negative = false }: PropsType) => {
                 barColor={'#E87490'}
               />
             </div>
+
+            {usabilityIndex === index && (
+              <div ref={usabilityRef} css={infoBoxStyle}>
+                <div style={{ width: '100%' }}>
+                  <FlexBox justify={'space-between'} style={{ marginBottom: '12px' }}>
+                    <span css={body3_medium}>사용성 점수</span>
+                    <span css={body3_bold}>{checkIsInteger(el.value)}점</span>
+                  </FlexBox>
+                  <FlexBox justify={'space-between'} style={{ marginBottom: '12px' }}>
+                    <span css={body3_medium}>치명도</span>
+                    <span css={body3_bold}>{checkIsInteger(el.fatality)}</span>
+                  </FlexBox>
+                  <FlexBox justify={'space-between'}>
+                    <span css={body3_medium}>언급 비율</span>
+                    <span css={body3_bold}>{checkIsInteger(el.mention)}%</span>
+                  </FlexBox>
+                </div>
+              </div>
+            )}
           </ul>
         );
       })}
@@ -52,6 +81,7 @@ const ulStyle = css`
   width: 100%;
   border-top: 1px solid #dcdcdc;
   border-bottom: 1px solid #dcdcdc;
+  position: relative;
 `;
 const emptyUlStyle = css`
   border-top: none;
@@ -82,4 +112,19 @@ const chartBox = css`
   left: 0px;
   bottom: -27px;
   width: calc(100% - 240px);
+`;
+const infoBoxStyle = css`
+  width: 220px;
+  padding: 16px;
+  margin: 0 auto;
+  overflow: scroll;
+  border-radius: 8px;
+  z-index: 10;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  background: white;
+  top: 70px;
 `;

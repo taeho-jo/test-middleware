@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import FlexBox from '../../../atoms/FlexBox';
 import { caption2_bold, heading3_bold, heading4_bold } from '../../../../styles/FontStyles';
 import CheckBox from '../../../atoms/CheckBox';
@@ -12,6 +12,12 @@ import AnnouncementBox from '../../AnnouncementBox';
 
 const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl }) => {
   const [stackbarIndex, setStackbarIndex] = useState<number | null>(null);
+  const [usabilityIndex, setUsabilityIndex] = useState<number | null>(null);
+
+  const handleClickUsabilityIndex = useCallback((e, index) => {
+    e.stopPropagation();
+    setUsabilityIndex(index);
+  }, []);
 
   return (
     <>
@@ -149,7 +155,6 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                   </FlexBox>
 
                   <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
-                    {/*<ReportShortAnswerQuestionLayerPopup display={isShow} setIsShow={setIsShow} />*/}
                     <FlexBox style={graphAreaStyle} direction={'column'} overflow={'unset'}>
                       <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
                         <div css={[heading4_bold]}>2. 상세 내용</div>
@@ -164,12 +169,10 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                         <FlexBox style={{ border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 0', marginBottom: '36px' }}>
                           <AnnouncementBox icon={'NOTI'} content={'클릭하면 주관식 응답을 확인할 수 있어요.'} />
                         </FlexBox>
-                        {/*<div css={{ width: '100%' }} >*/}
                         {sortList.map((detailItem, detailIndex) => {
                           return (
                             <Fragment key={`detail-${detailIndex}`}>
                               <StackedBarChart
-                                // setIsShow={setIsShow}
                                 setStackbarIndex={setStackbarIndex}
                                 stackbarIndex={stackbarIndex}
                                 detailIndex={detailIndex}
@@ -226,7 +229,13 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                           </FlexBox>
                         </FlexBox>
 
-                        <UsabilityTableChart dataList={item.usabilityList} negative={true} />
+                        <UsabilityTableChart
+                          handleClickUsabilityIndex={handleClickUsabilityIndex}
+                          usabilityIndex={usabilityIndex}
+                          setUsabilityIndex={setUsabilityIndex}
+                          dataList={item.usabilityList}
+                          negative={true}
+                        />
                       </FlexBox>
                     </FlexBox>
                   </FlexBox>

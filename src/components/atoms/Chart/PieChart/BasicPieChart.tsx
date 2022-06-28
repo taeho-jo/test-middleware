@@ -29,7 +29,7 @@ const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseU
   });
 
   return (
-    <div css={pieChartBox}>
+    <div ref={boxRef} css={pieChartBox}>
       <div css={{ padding: '32px 62px 32px 62px' }}>
         <ResponsiveContainer width={96} height={96}>
           <PieChart css={hoverPieChartStyle}>
@@ -42,8 +42,19 @@ const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseU
         </ResponsiveContainer>
       </div>
 
-      {labelStatus ? (
-        <FlexBox direction={'column'} justify={'space-between'} style={{ ...mouseOverLabelStyle, marginBottom: '12px', pbckground: 'red' }}>
+      <div css={textBoxStyle(labelPadding)}>
+        {dataList?.map((el, index) => {
+          return (
+            <FlexBox key={`name-${index}`} align={'center'} justify={'center'} style={{ width: '50%', marginBottom: '10px' }}>
+              <div css={labelStyle(chart_color[index])} />
+              <span css={[heading5_regular, { display: 'inline-block', padding: 'l5px' }]}>{el.name}</span>
+            </FlexBox>
+          );
+        })}
+      </div>
+
+      {labelStatus && (
+        <div css={infoBoxStyle}>
           {dataList?.map((el, index) => {
             return (
               // key={`rate-${index}`} justify={'space-between'}
@@ -53,21 +64,14 @@ const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseU
               >
                 <span css={body3_medium}>{el.name}</span>
                 <div>
-                  {el.count ? <span css={body3_regular}>({el.count}명)</span> : <span css={body3_regular}>({0}명)</span>}
+                  {el.count ? (
+                    <span css={[body3_regular, { color: colors.grey._66 }]}>({el.count}명)</span>
+                  ) : (
+                    <span css={body3_regular}>({0}명)</span>
+                  )}
                   <span css={body3_bold}> {checkIsInteger(el.value)}%</span>
                 </div>
               </div>
-            );
-          })}
-        </FlexBox>
-      ) : (
-        <div ref={boxRef} css={textBoxStyle(labelPadding)}>
-          {dataList?.map((el, index) => {
-            return (
-              <FlexBox key={`name-${index}`} align={'center'} justify={'center'} style={{ width: '50%', marginBottom: '10px' }}>
-                <div css={labelStyle(chart_color[index])} />
-                <span css={[heading5_regular, { display: 'inline-block', padding: 'l5px' }]}>{el.name}</span>
-              </FlexBox>
             );
           })}
         </div>
@@ -78,21 +82,12 @@ const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseU
 
 export default BasicPieChart;
 const pieChartBox = css`
+  position: relative;
   width: 220px;
 `;
 const hoverPieChartStyle = css`
   cursor: pointer;
 `;
-
-const mouseOverLabelStyle = css`
-  width: 100%;
-  padding: 16px;
-  margin: 0 auto;
-  overflow: scroll;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-`;
-
 const labelStyle = background => css`
   background: ${background};
   width: 12px;
@@ -106,4 +101,18 @@ const textBoxStyle = labelPadding => css`
   flex-wrap: wrap;
   width: 100%;
   padding: ${labelPadding ? labelPadding : '24px'};
+`;
+const infoBoxStyle = css`
+  width: 100%;
+  padding: 16px;
+  margin: 0 auto;
+  overflow: scroll;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  background: white;
+  top: 160px;
 `;

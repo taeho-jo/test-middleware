@@ -1,10 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import { basicBarTestData } from '../../../../assets/dummy/dummyData';
 import { BasicBarChart } from '../index';
-import { caption2_regular } from '../../../../styles/FontStyles';
+import { body3_bold, body3_medium, body3_regular, caption2_regular } from '../../../../styles/FontStyles';
 import { chart_color } from '../../../../styles/Common.styles';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
+import FlexBox from '../../FlexBox';
+import useOutsideClick from '../../../../hooks/useOutsideClick';
 
 interface PropsType {
   dataList: string[];
@@ -15,6 +17,9 @@ interface PropsType {
   name?: string;
 }
 const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negative = false, barColor = false }: PropsType) => {
+  const infoBoxRef = useRef();
+  const [selectInfo, setSelectInfo] = useState<number>(null);
+
   const renderArr = useCallback(() => {
     if (name) {
       return dataValueList.filter((el, index) => el.name === name);
@@ -22,6 +27,16 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
       return dataValueList;
     }
   }, [dataValueList, name]);
+
+  const handleClickChart = useCallback((e, index) => {
+    e.stopPropagation();
+    setSelectInfo(index);
+    // console.log(index);
+  }, []);
+
+  useOutsideClick(infoBoxRef, () => {
+    setSelectInfo(null);
+  });
 
   return (
     <div css={containerStyle}>
@@ -63,12 +78,27 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
                 rate={`${checkIsInteger(el.value)}%`}
               />
             </div>
-            <div css={pointBox(fatality)}>
+            <div onClick={e => handleClickChart(e, index)} css={pointBox(fatality)}>
               {dataList.map((el, index) => {
                 const positionValue = (index + 1) * (100 / dataList.length);
                 return <div key={`point-${index}`} css={pointStyle(positionValue)} />;
               })}
             </div>
+
+            {selectInfo === index && (
+              <div ref={infoBoxRef} css={infoBoxStyle}>
+                <div style={{ width: '100%' }}>
+                  <FlexBox justify={'space-between'} style={{ marginBottom: '12px' }}>
+                    <span css={body3_medium}>언급비율</span>
+                    <span css={body3_bold}>{checkIsInteger(el.value)}%</span>
+                  </FlexBox>
+                  <FlexBox justify={'space-between'}>
+                    <span css={body3_medium}>치명도</span>
+                    <span css={body3_bold}>{checkIsInteger(el.fatality)}</span>
+                  </FlexBox>
+                </div>
+              </div>
+            )}
           </ul>
         );
       })}
@@ -87,6 +117,7 @@ const ulStyle = css`
   width: 100%;
   border-top: 1px solid #dcdcdc;
   border-bottom: 1px solid #dcdcdc;
+  //position: relative;
 `;
 const emptyUlStyle = css`
   border-top: none;
@@ -143,4 +174,19 @@ const pointStyle = positionValue => css`
   left: ${positionValue - 0.2}%;
   background: #ffffff;
   border-radius: 50%;
+`;
+const infoBoxStyle = css`
+  width: 220px;
+  padding: 16px;
+  margin: 0 auto;
+  overflow: scroll;
+  border-radius: 8px;
+  z-index: 10;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25) !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  background: white;
+  top: 80px;
 `;

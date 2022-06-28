@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import FlexBox from '../../../atoms/FlexBox';
 import { heading3_bold, heading4_bold } from '../../../../styles/FontStyles';
 import IconTextButton from '../../../atoms/Button/IconTextButton';
@@ -8,6 +8,14 @@ import { BasicBarChart } from '../../../atoms/Chart';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
 
 const MultipleQuestionTemplate = ({ dataList, modalControl }) => {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const handleClickIndex = useCallback((e, index) => {
+    e.stopPropagation();
+    console.log(index);
+    setSelectedIndex(index);
+  }, []);
+
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
@@ -41,6 +49,11 @@ const MultipleQuestionTemplate = ({ dataList, modalControl }) => {
               {dataList.detailMultipleList.map((detail, detailIndex) => {
                 return (
                   <BasicBarChart
+                    infoBox={true}
+                    detailIndex={detailIndex}
+                    handleClickIndex={handleClickIndex}
+                    selectedIndex={selectedIndex}
+                    setSelectedIndex={setSelectedIndex}
                     key={`detailMultiple-${detail.name}-${detailIndex}`}
                     dataList={[detail]}
                     value={`${detail.count}명`}
