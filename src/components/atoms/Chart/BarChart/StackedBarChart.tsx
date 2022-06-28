@@ -105,7 +105,6 @@ const StackedBarChart = ({
                   </Bar>
                 );
               } else {
-                console.log(index, '~~~~~~~~~~~~');
                 return (
                   <Bar
                     cursor={'pointer'}

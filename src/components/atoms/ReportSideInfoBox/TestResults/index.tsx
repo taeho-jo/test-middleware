@@ -1,9 +1,10 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import FlexBox from '../../FlexBox';
 import { css } from '@emotion/react';
 import { body3_medium, caption1_bold, heading5_bold } from '../../../../styles/FontStyles';
 import { colors } from '../../../../styles/Common.styles';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 const data = [
   { title: '1', name: '리포트 전체 요약' },
@@ -13,7 +14,14 @@ const data = [
 ];
 
 const TestResults = ({ dataList, missionList }) => {
+  const router = useRouter();
+  console.log(router, 'RouTer');
   const [intentList, setIntentList] = useState([]);
+  const [selectIntent, setSelectIntent] = useState<number | null>(null);
+
+  const handleSelectIntent = useCallback((e, index) => {
+    setSelectIntent(index);
+  }, []);
 
   useEffect(() => {
     if (dataList) {
@@ -22,36 +30,41 @@ const TestResults = ({ dataList, missionList }) => {
     }
   }, [dataList, missionList]);
 
+  console.log(intentList, 'INTENTLIST');
+
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>테스트 결과</span>
       {intentList?.map((el, index) => {
         return (
           <Fragment key={index}>
-            <FlexBox
-              direction={'column'}
-              align={'flex-start'}
-              justify={'flex-start'}
-              style={el.title && el.title.includes('Task') ? infoBox2 : infoBox}
-            >
-              <div css={[body3_medium, { height: 'auto', cursor: 'pointer' }]}>
-                {el.title ? (
-                  <>
-                    <span>{el.title}</span>
-                    <br />
-                  </>
-                ) : null}
-                {index === 0 ? (
-                  <a css={{ textDecoration: 'none', color: colors.grey._3c }} href={'#top'}>
-                    {el.name}
-                  </a>
-                ) : (
-                  <a css={{ textDecoration: 'none', color: colors.grey._3c }} href={el.title ? `#${el.name}` : el.code ? `#${el.code}` : '#top'}>
-                    {el.name}
-                  </a>
-                )}
-              </div>
-            </FlexBox>
+            <a style={{ width: '100%', textDecoration: 'none' }} href={el.title ? `#${el.name}` : el.code ? `#${el.code}` : '#top'}>
+              <FlexBox
+                direction={'column'}
+                align={'flex-start'}
+                justify={'flex-start'}
+                style={selectIntent === index ? infoBox : infoBox2}
+                onClick={e => handleSelectIntent(e, index)}
+              >
+                <div css={[body3_medium, { height: 'auto', cursor: 'pointer' }]}>
+                  {el.title ? (
+                    <>
+                      <span>{el.title}</span>
+                      <br />
+                    </>
+                  ) : null}
+                  {/*{index === 0 ? (*/}
+                  {/*  <a css={{ textDecoration: 'none', color: colors.grey._3c }} href={'#top'} onClick={() => console.log(el.code)}>*/}
+                  {/*    {el.name}*/}
+                  {/*  </a>*/}
+                  {/*) : (*/}
+                  {/*<a css={{ textDecoration: 'none' }} href={el.title ? `#${el.name}` : el.code ? `#${el.code}` : '#top'}>*/}
+                  <span css={{ color: colors.grey._3c }}>{el.name}</span>
+                  {/*</a>*/}
+                  {/*)}*/}
+                </div>
+              </FlexBox>
+            </a>
           </Fragment>
         );
       })}
@@ -65,8 +78,8 @@ const testInfoBoxStyle = css`
   padding: 32px 24px 16px 24px;
 `;
 const infoBox = css`
-  background: ${colors.grey._fa};
-  border: 1px solid #dcdcdc;
+  background: ${colors.white};
+  border: 2px solid ${colors.blue._500};
   border-radius: 16px;
   margin: 8px 0;
   padding: 16px;
