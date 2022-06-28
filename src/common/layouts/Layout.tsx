@@ -121,6 +121,7 @@ const Layout = ({ children }: PropsType) => {
       if (token && !userId && type === 'google') {
         localStorage.setItem('accessToken', `${token}`);
         // dispatch(setSetting(true));
+        refetch();
       }
       if (token && !userId && !type) {
         localStorage.setItem('accessToken', `${token}`);
@@ -132,7 +133,7 @@ const Layout = ({ children }: PropsType) => {
         router.push('/admin/reset-password');
       }
     }
-  }, [router.query]);
+  }, [router.query, token]);
 
   // <------------- LandingPage css 및 animation 을 위한 useEffect -------------> //
   useEffect(() => {

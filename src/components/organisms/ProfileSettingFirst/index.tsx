@@ -48,6 +48,7 @@ const ProfileSettingFirst = () => {
 
   const { mutate } = useMutation('fetchUserInfoUpdate', fetchUserInfoUpdateApi, {
     onSuccess: data => {
+      console.log(data, '!!!!!!!!!!!!!!!!!!!!!!!!!!!');
       dispatch(setUserInfo(data.data));
       router.push('/admin/team');
     },
@@ -83,7 +84,7 @@ const ProfileSettingFirst = () => {
   return (
     <FlexBox style={{ marginTop: '160px', height: '100%' }} justify={'flex-start'} direction={'column'}>
       <PopupBox padding={'0'} width={'434px'} height={'auto'}>
-        <ModalTitle style={{ padding: '24px 32px 0' }} closed={false} title={`반가워요. ${userInfo.userName} 님!`} titlePosition={'center'} />
+        <ModalTitle style={{ padding: '24px 32px 0' }} closed={false} title={`반가워요. ${userInfo?.userName} 님!`} titlePosition={'center'} />
         <ModalTitle style={{ padding: '5px 32px 24px' }} closed={false} title={`계정과 관련해서 몇 가지 질문드릴게요.`} titlePosition={'center'} />
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
           <Input
@@ -92,8 +93,8 @@ const ProfileSettingFirst = () => {
             label={'userName'}
             errors={errors}
             // errorMsg={'필수 항목입니다.'}
-            defaultValue={userInfo.userName}
-            placeholder={userInfo.userName}
+            defaultValue={userInfo?.userName}
+            placeholder={userInfo?.userName}
             style={{ marginBottom: '16px' }}
           />
 

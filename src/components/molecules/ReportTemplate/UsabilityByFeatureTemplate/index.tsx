@@ -74,7 +74,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                       치명도가 뭔가요
                     </span>
                   </FlexBox>
-                  <TableBarChart dataList={tableBarChartTestData} dataValueList={[el]} />
+                  <TableBarChart barColor={true} dataList={tableBarChartTestData} dataValueList={[el]} />
                 </FlexBox>
               </FlexBox>
             </FlexBox>
@@ -143,7 +143,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                             치명도가 뭔가요
                           </span>
                         </FlexBox>
-                        <TableBarChart dataList={tableBarChartTestData} dataValueList={el.missionFunctionFatality} name={item.name} />
+                        <TableBarChart barColor={true} dataList={tableBarChartTestData} dataValueList={el.missionFunctionFatality} name={item.name} />
 
                         <AnnouncementBox
                           style={{ width: '100%', marginTop: '32px', padding: '12px 16px' }}

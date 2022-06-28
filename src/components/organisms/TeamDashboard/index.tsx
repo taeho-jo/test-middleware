@@ -132,8 +132,8 @@ const TeamDashboard = () => {
             {
               teamSeq: null,
               teamRoleType: null,
-              teamNm: `${userInfo.userName}`,
-              teamMember: [userInfo.userName.slice(0, 1)],
+              teamNm: `${userInfo?.userName}`,
+              teamMember: [userInfo?.userName.slice(0, 1)],
               createDt: null,
             },
           ]),

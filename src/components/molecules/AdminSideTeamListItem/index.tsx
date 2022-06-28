@@ -83,13 +83,13 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
           return (
             <Fragment key={index}>
               <ProfileIcon
-                name={item.userName?.slice(0, 1)}
+                name={item?.userName?.slice(0, 1)}
                 backgroundColor={profileColor[index]}
                 size={'20px'}
                 fontStyle={caption2_bold}
                 margin={'0 6px 0 0'}
               />
-              {index + 1 === memberList.length ? (
+              {index + 1 === memberList?.length ? (
                 <IconButton
                   onClick={
                     modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember'

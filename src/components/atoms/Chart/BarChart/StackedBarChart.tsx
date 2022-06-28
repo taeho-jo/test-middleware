@@ -99,9 +99,9 @@ const StackedBarChart = ({
                     stackId="a"
                     fill={negative ? `rgba(232, 116, 144, 1)` : `rgba(104, 160, 244, 1)`}
                     background={{ fill: '#dcdcdc' }}
-                    // stroke={'#4585e6'}
+                    // stroke={'#dcdcdc'}
                   >
-                    <Cell onClick={e => onMouseUp(e, index, el, props.detailIndex)} cursor="pointer" key={`cell-${index}`} />
+                    <Cell stroke={'#dcdcdc'} onClick={e => onMouseUp(e, index, el, props.detailIndex)} cursor="pointer" key={`cell-${index}`} />
                   </Bar>
                 );
               } else {
@@ -111,16 +111,11 @@ const StackedBarChart = ({
                     key={`value1${props.detailIndex}`}
                     dataKey={`value${index}`}
                     stackId="a"
-                    // stroke={'#4585e6'}
+                    // stroke={'#dcdcdc'}
                     // `rgba(104, 160, 244, ${1 - 0.2 * index})`
                     fill={negative ? `rgba(232, 116, 144, ${1 - 0.2 * index})` : `rgba(104, 160, 244, ${1 - 0.2 * index})`}
                   >
-                    <Cell
-                      // stroke={negative ? `rgba(232, 116, 144, ${1 - 0.2 * (index - 1)})` : `rgba(104, 160, 244, ${1 - 0.2 * index})`}
-                      onClick={e => onMouseUp(e, index, el, props.detailIndex)}
-                      cursor="pointer"
-                      key={`cell-${index}`}
-                    />
+                    <Cell stroke={'#dcdcdc'} onClick={e => onMouseUp(e, index, el, props.detailIndex)} cursor="pointer" key={`cell-${index}`} />
                   </Bar>
                 );
               }

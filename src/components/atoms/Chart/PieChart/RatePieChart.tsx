@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Cell, Pie, PieChart, ResponsiveContainer, Sector } from 'recharts';
 import FlexBox from '../../FlexBox';
-import { body3_bold, body3_medium, body3_regular, heading5_regular } from '../../../../styles/FontStyles';
+import { body3_bold, body3_medium, body3_regular, heading5_bold, heading5_regular } from '../../../../styles/FontStyles';
 import { css } from '@emotion/react';
-import { gery_chart_color, positive_chart_color } from '../../../../styles/Common.styles';
+import { colors, gery_chart_color, positive_chart_color } from '../../../../styles/Common.styles';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
 
@@ -26,7 +26,7 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
 
     return (
       <g>
-        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={colors.green.chart} css={heading5_bold}>
           {checkIsInteger(payload.value)}%
         </text>
         <Sector
