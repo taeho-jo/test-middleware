@@ -79,7 +79,7 @@ const ResetPasswordModal = () => {
             placeholder={'이메일을 입력해주세요.'}
             registerOptions={{
               required: true,
-              pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+              pattern: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
             }}
           />
           <BasicButton isLoading={isLoading} type={'submit'} text={'비밀번호 재설정 메일 보내기'} style={{ marginTop: '32px' }} />

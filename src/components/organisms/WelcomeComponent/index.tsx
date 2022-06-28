@@ -176,7 +176,7 @@ const WelcomeComponent = () => {
             style={{ marginBottom: '16px' }}
             registerOptions={{
               required: true,
-              pattern: /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+              pattern: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
             }}
           />
           <Input
