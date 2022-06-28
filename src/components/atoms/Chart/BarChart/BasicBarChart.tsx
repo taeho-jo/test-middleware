@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import FlexBox from '../../FlexBox';
-import { body3_bold, body3_medium, body3_regular, heading5_bold, heading5_regular } from '../../../../styles/FontStyles';
+import { body3_bold, body3_medium, body3_regular, heading5_bold, heading5_medium, heading5_regular } from '../../../../styles/FontStyles';
 import { colors, gery_chart_color } from '../../../../styles/Common.styles';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
 import { css } from '@emotion/react';
@@ -48,7 +48,7 @@ const BasicBarChart = ({
   return (
     <FlexBox justify={'center'} align={'center'} direction={'column'} style={{ width: '100%', position: 'relative' }}>
       <FlexBox justify={'space-between'}>
-        {label ? <span css={[heading5_regular, { paddingLeft: '5px' }]}>{label}</span> : ''}
+        {label ? <span css={[heading5_medium, { paddingLeft: '5px' }]}>{label}</span> : ''}
         <div>
           {value ? (
             <>

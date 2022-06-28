@@ -69,7 +69,7 @@ const TeamSetting = () => {
           title={'프로덕트'}
           content={
             productData?.data?.length === 0
-              ? '프러덕트 없음'
+              ? '프로덕트 없음'
               : productData?.data?.length > 1
               ? `${productData?.data[0]?.productNm} 외 ${productData?.data?.length - 1}개`
               : productData?.data[0]?.productNm

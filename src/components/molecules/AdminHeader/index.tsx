@@ -25,7 +25,7 @@ const AdminHeader = () => {
   return (
     <FlexBox style={headerStyle} justify={'flex-start'} align={'center'} backgroundColor={'white'}>
       <span onClick={() => router.push('/admin/team')} css={[heading5_bold, itemsStyle, teamTextStyle(router.pathname)]}>
-        {teamNm}
+        {localSelectTeamList ? localSelectTeamList?.teamNm : '팀을 선택해주세요.'}
       </span>
       <span onClick={() => router.push('/admin/member')} css={[heading5_bold, itemsStyle, memberTextStyle(router.pathname)]}>
         팀원

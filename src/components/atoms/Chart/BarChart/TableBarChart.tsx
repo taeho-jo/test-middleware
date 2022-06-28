@@ -2,8 +2,8 @@ import React, { useCallback, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import { basicBarTestData } from '../../../../assets/dummy/dummyData';
 import { BasicBarChart } from '../index';
-import { body3_bold, body3_medium, body3_regular, caption2_regular } from '../../../../styles/FontStyles';
-import { chart_color } from '../../../../styles/Common.styles';
+import { body3_bold, body3_medium, body3_regular, caption2_regular, heading5_bold } from '../../../../styles/FontStyles';
+import { chart_color, colors } from '../../../../styles/Common.styles';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
 import FlexBox from '../../FlexBox';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
@@ -65,7 +65,9 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
             })}
             {/*공갈박스*/}
             {fatality && (
-              <li css={[caption2_regular, liStyle, emptyLiStyle, { borderRight: 'none', width: '164px' }]}>{checkIsInteger(el.fatality)}</li>
+              <li css={[heading5_bold, liStyle, emptyLiStyle, { borderRight: 'none', width: '164px', color: colors.grey._99 }]}>
+                {checkIsInteger(el.fatality)}
+              </li>
             )}
 
             <div css={chartBox(fatality)}>

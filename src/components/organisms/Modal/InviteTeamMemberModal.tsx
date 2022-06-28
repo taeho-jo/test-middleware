@@ -28,12 +28,14 @@ interface PropsType {
   first?: boolean;
 }
 const InviteTeamMemberModal = ({ first = false }: PropsType) => {
-  const [copyUrl, setCopyUrl] = useState<string | null>(null);
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const selectTeamSeq = useSelector<ReducerType, number | null>(state => state.team.selectTeamSeq);
+  const localSelectTeamSeq = localStorage.getItem('teamSeq');
+  const teamSeq = selectTeamSeq ? selectTeamSeq : localSelectTeamSeq;
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const [copyUrl, setCopyUrl] = useState<string | null>(`${CURRENT_DOMAIN}/admin/welcome?teamseq=${teamSeq}`);
 
   // hook form
   const {
@@ -122,7 +124,7 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
             title={'링크 복사'}
             register={register}
             label={'link'}
-            defaultValue={copyUrl}
+            defaultValue={`${CURRENT_DOMAIN}/admin/welcome?teamseq=${teamSeq}`}
             errors={errors}
             readOnly={true}
             style={{ marginBottom: '16px' }}

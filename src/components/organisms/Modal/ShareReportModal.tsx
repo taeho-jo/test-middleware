@@ -84,7 +84,7 @@ const ShareReportModal = () => {
             title={'링크 복사'}
             register={register}
             label={'link'}
-            defaultValue={copyUrl}
+            defaultValue={`${CURRENT_DOMAIN}/admin/report/share/?teamSeq=${reportViewId}`}
             errors={errors}
             readOnly={true}
             style={{ marginBottom: '16px' }}

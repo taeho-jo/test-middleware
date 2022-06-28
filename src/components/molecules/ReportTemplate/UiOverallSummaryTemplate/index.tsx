@@ -101,7 +101,7 @@ const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleC
       </FlexBox>
 
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
-        <img css={fixImage} src={FixImage.src} alt="'FixImage" />
+        {/*<img css={fixImage} src={FixImage.src} alt="'FixImage" />*/}
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
             <div css={[heading4_bold]}>미션별 성공률</div>

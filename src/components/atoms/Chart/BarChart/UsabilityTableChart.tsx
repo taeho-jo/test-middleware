@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
-import { body3_bold, body3_medium, caption2_regular } from '../../../../styles/FontStyles';
+import { body3_bold, body3_medium, caption2_regular, heading5_bold } from '../../../../styles/FontStyles';
 import { BasicBarChart } from '../index';
 import { basicBarTestData } from '../../../../assets/dummy/dummyData';
 import { css } from '@emotion/react';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
 import FlexBox from '../../FlexBox';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
+import { colors } from '../../../../styles/Common.styles';
 interface PropsType {
   dataList: { name: string; value: number; fatality: number; mention: number }[];
   negative?: boolean;
@@ -33,8 +34,10 @@ const UsabilityTableChart = ({ dataList, negative = false, usabilityIndex, setUs
             <li css={[caption2_regular, liStyle, emptyLiStyle, liWidthStyle]}>
               <span>사용성 점수</span>
             </li>
-            <li css={[caption2_regular, liStyle, emptyLiStyle, { width: '110px' }]}>{checkIsInteger(el.fatality)}</li>
-            <li css={[caption2_regular, liStyle, emptyLiStyle, { borderRight: 'none', width: '110px' }]}>{checkIsInteger(el.mention)}%</li>
+            <li css={[heading5_bold, liStyle, emptyLiStyle, { width: '110px', color: colors.grey._99 }]}>{checkIsInteger(el.fatality)}</li>
+            <li css={[heading5_bold, liStyle, emptyLiStyle, { borderRight: 'none', width: '110px', color: colors.grey._99 }]}>
+              {checkIsInteger(el.mention)}%
+            </li>
             <div onClick={e => handleClickUsabilityIndex(e, index)} css={chartBox}>
               <BasicBarChart
                 negative={negative}

@@ -3,6 +3,7 @@ export const colors = {
     _300: '#cfffac',
     _500: '#a8ff69',
     _700: '#8bce5b',
+    chart: '#7cc08e',
   },
   cyan: {
     _300: '#95efe9',
