@@ -76,7 +76,7 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
       </div>
 
       {selectedLabelIndex === index ? (
-        <FlexBox key={`rate-${index}`} justify={'space-between'} direction={'column'} style={{ ...mouseOverLabelStyle }}>
+        <div ref={boxRef} key={`rate-${index}`} css={infoBoxStyle}>
           <FlexBox justify={'space-between'} style={{ marginBottom: '12px' }}>
             <span css={body3_medium}>성공</span>
             <div>
@@ -100,9 +100,9 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
             <span css={body3_medium}>언급비율</span>
             <span css={body3_bold}>{checkIsInteger(infoDataList.value)}%</span>
           </FlexBox>
-        </FlexBox>
+        </div>
       ) : (
-        <div ref={boxRef} css={textBoxStyle}>
+        <div css={textBoxStyle}>
           {dataList?.missionSuccessRatioInfo.map((el, index) => {
             return (
               <FlexBox key={index} align={'center'} justify={'center'} style={{ width: '50%', marginBottom: '10px' }}>
@@ -120,6 +120,7 @@ export default RatePieChart;
 
 const pieChartBox = css`
   width: 220px;
+  position: relative;
 `;
 
 const labelStyle = background => css`
@@ -142,4 +143,18 @@ const textBoxStyle = css`
   flex-wrap: wrap;
   width: 100%;
   padding: 24px;
+`;
+const infoBoxStyle = css`
+  //justify={'space-between'} direction={'column'} style={{ ...mouseOverLabelStyle }}
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  padding: 16px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  background: white;
+  top: 160px;
 `;
