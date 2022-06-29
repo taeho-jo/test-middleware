@@ -14,7 +14,7 @@ import { ReducerType } from '../../../store/reducers';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
 import { CURRENT_DOMAIN, INVITE_CONFIRM_EMAIL_TEMPLATE } from '../../../common/util/commonVar';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { setToken } from '../../../store/reducers/authReducer';
 import { body3_medium } from '../../../styles/FontStyles';
 import TextButton from '../../atoms/Button/TextButton';
@@ -23,12 +23,15 @@ import { fetchInviteUserInfoApi, fetchUserInfoApi } from '../../../api/userApi';
 import { setUserInfo } from '../../../store/reducers/userReducer';
 
 const WelcomeComponent = () => {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
+  console.log(router, '~');
+  const { teamSeq, type } = router.query;
   const token = localStorage.getItem('accessToken');
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
 
-  const [teamSeq, setTeamSeq] = useState(null);
+  console.log(teamSeq);
 
   const [toggleStatus, setToggleStatus] = useState(false);
 
@@ -41,31 +44,41 @@ const WelcomeComponent = () => {
     formState: { errors },
   } = useForm<InputType>({});
   const onSubmit = data => (toggleStatus ? handleLogin('loginsuccess', data) : handleSignup('success', data));
-
   const onError = errors => handleProcessingError('fail', errors);
 
+  // ============ React Query ============ //
+  // 로그인
   const { mutate: loginMutate, data: loginData } = useMutation(['login'], fetchLoginApi, {
     onError: (e: any) => {
       const { data } = e.response;
       dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
     },
-  });
-  const { data: LoginUsersInfo } = useQuery(
-    ['fetchInviteUserInfo', `login/${loginData?.code}`],
-    () => fetchInviteUserInfoApi(teamSeq, loginData?.data.token),
-    {
-      enabled: !!loginData?.code,
-      onSuccess: data => {
-        dispatch(setUserInfo(data.data));
-        if (data.data.emailVerifiedYn === 'N') {
-          dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-        }
-        if (data.data.emailVerifiedYn === 'Y') {
-          router.push('/admin/team');
-        }
-      },
+    onSuccess: data => {
+      // localStorage.setItem('accessToken', data?.data?.token);
+      router.push(`/?type=${teamSeq}&token=${data?.data?.token}`);
     },
-  );
+  });
+
+  // 로그이 유저 info
+  // const { data: LoginUsersInfo, refetch: infoRefetch } = useQuery(
+  //   ['fetchInviteUserInfo'],
+  //   () => fetchInviteUserInfoApi(teamSeq, loginData?.data?.token),
+  //   {
+  //     enabled: !!loginData?.code,
+  //     onSuccess: data => {
+  //       localStorage.setItem('accessToken', loginData?.data?.token);
+  //       dispatch(setUserInfo(data.data));
+  //
+  //       if (data.data.emailVerifiedYn === 'N') {
+  //         router.push('/');
+  //         dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+  //       }
+  //       if (data.data.emailVerifiedYn === 'Y') {
+  //         router.push('/admin/team');
+  //       }
+  //     },
+  //   },
+  // );
 
   const { mutate: signupMutate, data: signupData } = useMutation(['signup', 'invite', teamSeq], fetchSignupApi, {
     onError: (e: any) => {
@@ -78,22 +91,19 @@ const WelcomeComponent = () => {
       dispatch(showToast({ message: data.message, isShow: true, status: 'success', duration: 5000 }));
     },
   });
-  const { data: signUpUsersInfo } = useQuery(
-    ['fetchInviteUserInfo', `sign/${signupData?.code}`],
-    () => fetchInviteUserInfoApi(router.query.teamSeq, loginData?.data.token),
-    {
-      enabled: !!signupData?.code,
-      onSuccess: data => {
-        dispatch(setUserInfo(data.data));
-        if (data.data.emailVerifiedYn === 'N') {
-          dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-        }
-        if (data.data.emailVerifiedYn === 'Y') {
-          router.push('/admin/team');
-        }
-      },
+  const { data: signUpUsersInfo } = useQuery(['fetchInviteUserInfo'], () => fetchInviteUserInfoApi(router.query.teamSeq, loginData?.data.token), {
+    enabled: !!signupData?.code,
+    onSuccess: data => {
+      dispatch(setUserInfo(data.data));
+      if (data.data.emailVerifiedYn === 'N') {
+        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+      }
+      if (data.data.emailVerifiedYn === 'Y') {
+        router.push('/admin/team');
+      }
     },
-  );
+  });
+  // ============ React Query ============ //
 
   // token이 있는 경우 --> 로그인이 되어있는 경우
   // 회원가입 후
@@ -132,34 +142,23 @@ const WelcomeComponent = () => {
   );
 
   // 구글 로그인
-  const loginWithGoogle = useCallback(() => {
-    router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
-  }, []);
+  const loginWithGoogle = () => {
+    router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=${teamSeq}`);
+  };
 
   // 회원가입 시도 실패
   const handleProcessingError = useCallback((status, errors) => {
     dispatch(showToast({ message: '정보를 입력해주세요.', isShow: true, status: 'warning', duration: 5000 }));
   }, []);
 
-  useEffect(() => {
-    if (router.query) {
-      setTeamSeq(router.query.teamseq);
-    }
-  }, [router.query]);
-
   // useEffect(() => {
-  //   if (loginData?.code === '200') {
-  //     localStorage.setItem('accessToken', loginData.data.token);
-  //     dispatch(setToken(loginData.data.token));
-  //     dispatch(showToast({ message: '로그인에 성공하였습니다.', isShow: true, status: 'success', duration: 5000 }));
-  //     dispatch(isShow({ isShow: false, type: '' }));
-  //     sessionStorage.clear();
-  //     router.push('/admin/team');
+  //   if (type === 'google') {
+  //     infoRefetch();
   //   }
-  // }, [loginData]);
+  // }, [type]);
 
-  const handleGoBackLogin = useCallback(() => {
-    setToggleStatus(true);
+  const handleGoBackLogin = useCallback(status => {
+    setToggleStatus(status);
   }, []);
   return (
     <FlexBox style={{ marginTop: '160px', height: '100%' }} justify={'flex-start'} direction={'column'}>
@@ -194,9 +193,14 @@ const WelcomeComponent = () => {
           />
 
           {toggleStatus ? (
-            <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-              <BasicButton type={'submit'} text={'로그인하기'} style={{ marginBottom: '34px' }} />
-            </FlexBox>
+            <>
+              <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
+                <BasicButton type={'submit'} text={'로그인하기'} style={{ marginBottom: '34px' }} />
+              </FlexBox>
+              <FlexBox style={{ marginTop: '48px' }}>
+                <TextButton onClick={() => handleGoBackLogin(false)} textStyle={body3_medium} text={'계정 만들러가기!'} />
+              </FlexBox>
+            </>
           ) : (
             <>
               <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
@@ -205,7 +209,7 @@ const WelcomeComponent = () => {
               </FlexBox>
 
               <FlexBox style={{ marginTop: '48px' }}>
-                <TextButton onClick={handleGoBackLogin} textStyle={body3_medium} text={'계정이 있어요!'} />
+                <TextButton onClick={() => handleGoBackLogin(true)} textStyle={body3_medium} text={'계정이 있어요!'} />
               </FlexBox>
             </>
           )}

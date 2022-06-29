@@ -6,9 +6,28 @@ import { css } from '@emotion/react';
 import { colors } from '../../../../styles/Common.styles';
 import { BasicBarChart } from '../../../atoms/Chart';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
+import { reportHeader } from '../FeatureSpecificDetailTemplate';
+import { GeneralScaleTypeTemplate } from '../index';
 
 const MultipleQuestionTemplate = ({ dataList, modalControl }) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const onMouseOver = useCallback(
+    (e, index) => {
+      e.stopPropagation();
+      setActiveIndex(index);
+    },
+    [activeIndex],
+  );
+
+  const onMouseLeave = useCallback(
+    e => {
+      e.stopPropagation();
+      setActiveIndex(null);
+    },
+    [activeIndex],
+  );
 
   const handleClickIndex = useCallback((e, index) => {
     e.stopPropagation();
@@ -19,10 +38,12 @@ const MultipleQuestionTemplate = ({ dataList, modalControl }) => {
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox justify={'flex-start'} align={'center'}>
-          <span css={[heading3_bold, { marginRight: '32px' }]}>객관식 문항 - {dataList.intent}</span>
+        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
+            객관식 문항 - {dataList.intent}
+          </span>
         </FlexBox>
-        <FlexBox justify={'flex-end'}>
+        <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton
             onClick={() => modalControl(true, 'originDataModal', { title: `객관식 문항 - ${dataList.intent}`, data: dataList.rawData })}
             style={{ marginRight: '8px' }}
@@ -45,24 +66,30 @@ const MultipleQuestionTemplate = ({ dataList, modalControl }) => {
             <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
               <div css={[heading4_bold]}>{dataList.intent}</div>
             </div>
+
             <FlexBox direction={'column'} justify={'center'} align={'flex-start'} style={graphContainerStyle}>
-              {dataList.detailMultipleList.map((detail, detailIndex) => {
-                return (
-                  <BasicBarChart
-                    infoBox={true}
-                    detailIndex={detailIndex}
-                    handleClickIndex={handleClickIndex}
-                    selectedIndex={selectedIndex}
-                    setSelectedIndex={setSelectedIndex}
-                    key={`detailMultiple-${detail.name}-${detailIndex}`}
-                    dataList={[detail]}
-                    value={`${detail.count}명`}
-                    valueStyle={{ color: colors.grey._99, fontWeight: 500 }}
-                    label={[<>{detail.name}</>]}
-                    rate={`${checkIsInteger(detail.value)}%`}
-                  />
-                );
-              })}
+              {dataList?.detailMultipleList?.length !== 0
+                ? dataList.detailMultipleList?.map((detail, detailIndex) => {
+                    return (
+                      <BasicBarChart
+                        onMouseOver={onMouseOver}
+                        onMouseLeave={onMouseLeave}
+                        infoBox={true}
+                        detailIndex={detailIndex}
+                        handleClickIndex={handleClickIndex}
+                        selectedIndex={selectedIndex}
+                        setSelectedIndex={setSelectedIndex}
+                        key={`detailMultiple-${detail.name}-${detailIndex}`}
+                        dataList={[detail]}
+                        value={`${detail.count}명`}
+                        valueStyle={{ color: colors.grey._99, fontWeight: 500 }}
+                        label={[<>{detail.name}</>]}
+                        rate={`${checkIsInteger(detail.value)}%`}
+                        activeIndex={activeIndex}
+                      />
+                    );
+                  })
+                : null}
             </FlexBox>
           </FlexBox>
         </FlexBox>

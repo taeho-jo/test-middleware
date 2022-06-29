@@ -36,6 +36,10 @@ export const colors = {
 } as const;
 
 export const chart_color = ['#68A0f4', '#7CC08E', '#a286d0', '#EDE06A', '#E3B268', '#E87490'];
+export const hover_chart_color = ['#3375d6', '#52a367', '#7c5bb3', '#e3d44b', '#cc9541', '#db466a'];
+export const rate_chart_color1 = ['#68A0f4', '#7CC08E', '#a286d0', '#EDE06A', '#E3B268', '#E87490'];
+export const rate_chart_color2 = ['#68A0f4', '#7CC08E', '#a286d0', '#EDE06A', '#E3B268', '#E87490'];
+export const rate_chart_color3 = ['#68A0f4', '#7CC08E', '#a286d0', '#EDE06A', '#E3B268', '#E87490'];
 export const gery_chart_color = '#dcdcdc';
 export const negative_chart_color = '#E87490';
 export const positive_chart_color = '#7CC08E';

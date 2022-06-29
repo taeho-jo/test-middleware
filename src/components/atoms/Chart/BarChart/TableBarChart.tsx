@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { basicBarTestData } from '../../../../assets/dummy/dummyData';
 import { BasicBarChart } from '../index';
 import { body3_bold, body3_medium, body3_regular, caption2_regular, heading5_bold } from '../../../../styles/FontStyles';
-import { chart_color, colors } from '../../../../styles/Common.styles';
+import { chart_color, colors, hover_chart_color } from '../../../../styles/Common.styles';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
 import FlexBox from '../../FlexBox';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
@@ -19,7 +19,23 @@ interface PropsType {
 const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negative = false, barColor = false }: PropsType) => {
   const infoBoxRef = useRef();
   const [selectInfo, setSelectInfo] = useState<number>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const onMouseOver = useCallback(
+    (e, index) => {
+      e.stopPropagation();
+      console.log(index, 'INDEX');
+      setActiveIndex(index);
+    },
+    [activeIndex],
+  );
 
+  const onMouseLeave = useCallback(
+    e => {
+      e.stopPropagation();
+      setActiveIndex(null);
+    },
+    [activeIndex],
+  );
   const renderArr = useCallback(() => {
     if (name) {
       return dataValueList.filter((el, index) => el.name === name);
@@ -73,14 +89,19 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
             <div css={chartBox(fatality)}>
               <BasicBarChart
                 max={60}
-                barColor={barColor ? chart_color[index] : ''}
+                barColor={index === activeIndex ? hover_chart_color[index] : barColor ? chart_color[index] : ''}
                 negative={negative}
                 dataList={[el]}
                 label={[<>{el.name}</>]}
                 rate={`${checkIsInteger(el.value)}%`}
               />
             </div>
-            <div onClick={e => handleClickChart(e, index)} css={pointBox(fatality)}>
+            <div
+              onClick={e => handleClickChart(e, index)}
+              onMouseOut={e => onMouseLeave(e)}
+              onMouseOver={e => onMouseOver(e, index)}
+              css={pointBox(fatality)}
+            >
               {dataList.map((el, index) => {
                 const positionValue = (index + 1) * (100 / dataList.length);
                 return <div key={`point-${index}`} css={pointStyle(positionValue)} />;

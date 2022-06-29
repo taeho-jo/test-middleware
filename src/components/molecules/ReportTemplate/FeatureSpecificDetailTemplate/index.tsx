@@ -34,11 +34,13 @@ const FeatureSpecificDetailTemplate = ({ modalControl }) => {
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox justify={'flex-start'} align={'center'}>
-          <span css={[heading3_bold, { marginRight: '32px' }]}>@기능별 상세 내용 - [미션 1.회원가입] 기능 A</span>
+        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
+            @기능별 상세 내용 - [미션 1.회원가입] 기능 A
+          </span>
           <CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />
         </FlexBox>
-        <FlexBox justify={'flex-end'}>
+        <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_CHEVRON_RIGHT'} text={'원본 데이터 확인하기'} />
           <IconTextButton textStyle={'custom'} name={'NAVIGATION_CHEVRON_RIGHT'} text={'리서치 코멘트 확인하기'} />
         </FlexBox>
@@ -166,4 +168,15 @@ const graphContainerStyle = css`
   padding: 36px 80px 80px;
   width: 100%;
   border-bottom: 1px solid #dcdcdc;
+`;
+export const reportHeader = css`
+  //background: pink;
+  @media (max-width: 1440px) {
+    //background: plum;
+    flex-direction: column;
+    align-items: flex-start;
+    .title {
+      margin-bottom: 10px;
+    }
+  }
 `;

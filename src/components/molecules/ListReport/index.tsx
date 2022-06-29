@@ -13,10 +13,11 @@ interface PropsType {
   moduleType: string;
   projectNm: string;
   reportSeq: number;
+  reportViewId: string;
   onClick?: (id, name) => void;
 }
 
-const ListReport = ({ createDt, moduleType, projectNm, reportSeq, onClick }: PropsType) => {
+const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, onClick }: PropsType) => {
   const changeName = useCallback(name => {
     switch (name) {
       case 'UI_DIAGNOSIS':
@@ -48,7 +49,7 @@ const ListReport = ({ createDt, moduleType, projectNm, reportSeq, onClick }: Pro
   }, []);
 
   return (
-    <div css={mainContainer(pickBackgroundImage(moduleType))} onClick={() => onClick(reportSeq, projectNm)}>
+    <div css={mainContainer(pickBackgroundImage(moduleType))} onClick={() => onClick(reportViewId, projectNm)}>
       <span css={[caption1_regular, blockStyle]}>{changeName(moduleType)}</span>
       <span css={[heading5_bold, titleStyle]}>{projectNm}</span>
       <span css={[caption1_regular, dateStyle]}>{moment(createDt).format('YYYY. MM. DD')}</span>

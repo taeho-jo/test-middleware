@@ -78,8 +78,10 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox justify={'flex-start'} align={'center'}>
-          <span css={[heading3_bold, { marginRight: '32px' }]}>추가 기능 언급-서비스 전체 미션별 완성도 피드백</span>
+        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
+            추가 기능 언급-서비스 전체 미션별 완성도 피드백
+          </span>
           <CheckBox
             handleChangeCheckBox={handleChangeCheckBox}
             checked={checked}
@@ -89,7 +91,7 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
             errors={errors}
           />
         </FlexBox>
-        <FlexBox justify={'flex-end'}>
+        <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton
             onClick={() =>
               modalControl(true, 'originDataModal', { title: '추가 기능 언급-서비스 전체 미션별 완성도 피드백', data: completeList.flat() })
@@ -173,8 +175,10 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
       <div css={sortationArea} />
 
       <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox justify={'flex-start'} align={'center'}>
-          <span css={[heading3_bold, { marginRight: '32px' }]}>추가 기능 언급-서비스 전체 미션별 추가기능 피드백</span>
+        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
+            추가 기능 언급-서비스 전체 미션별 추가기능 피드백
+          </span>
           <CheckBox
             handleChangeCheckBox={handleChangeCheckBox}
             checked={checked}
@@ -184,7 +188,7 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
             errors={errors}
           />
         </FlexBox>
-        <FlexBox justify={'flex-end'}>
+        <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton
             onClick={() =>
               modalControl(true, 'originDataModal', { title: '추가 기능 언급-서비스 전체 미션별 추가기능 피드백', data: additionalList.flat() })
@@ -267,8 +271,10 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
 
       <div css={sortationArea} />
       <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox justify={'flex-start'} align={'center'}>
-          <span css={[heading3_bold, { marginRight: '32px' }]}>추가 기능 언급-서비스 전체 미션별 시스템오류 피드백</span>
+        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
+            추가 기능 언급-서비스 전체 미션별 시스템오류 피드백
+          </span>
           <CheckBox
             handleChangeCheckBox={handleChangeCheckBox}
             checked={checked}
@@ -278,7 +284,7 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
             errors={errors}
           />
         </FlexBox>
-        <FlexBox justify={'flex-end'}>
+        <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton
             onClick={() =>
               modalControl(true, 'originDataModal', { title: '추가 기능 언급-서비스 전체 미션별 시스템오류 피드백', data: systemErrorList.flat() })
@@ -403,4 +409,15 @@ const sortationArea = css`
   width: 100%;
   height: 16px;
   background: #dcdcdc;
+`;
+const reportHeader = css`
+  //background: pink;
+  @media (max-width: 1440px) {
+    //background: plum;
+    flex-direction: column;
+    align-items: flex-start;
+    .title {
+      margin-bottom: 10px;
+    }
+  }
 `;

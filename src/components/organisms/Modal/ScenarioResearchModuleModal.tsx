@@ -24,7 +24,11 @@ const ScenarioResearchModuleModal = () => {
             <span css={[heading4_bold, marginStyle('24px')]}>#고객 가설 검증</span>
             <span css={[heading4_bold, marginStyle('4px')]}>#사용자 인식 파악</span>
             <FlexBox style={{ marginTop: '108px', padding: '8px 0' }}>
-              <BasicButton theme={'dark'} text={'설계안 작성하러 가기'} />
+              <BasicButton
+                onClick={() => window.open('https://dbdlab.notion.site/e431cc58286c4b1b9113f45f1ce88f57')}
+                theme={'dark'}
+                text={'설계안 작성하러 가기'}
+              />
             </FlexBox>
           </FlexBox>
           <Image src={Senario} alt={'Senario frame'} />

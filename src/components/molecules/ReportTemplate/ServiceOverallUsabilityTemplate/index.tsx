@@ -11,9 +11,30 @@ import Icon from '../../../atoms/Icon';
 import { TableBarChart, UsabilityTableChart } from '../../../atoms/Chart';
 import { featureSpecificDetailData, featureUseData, featureUseData2, tableBarChartTestData } from '../../../../assets/dummy/dummyData';
 import AnnouncementBox from '../../AnnouncementBox';
+import { reportHeader } from '../FeatureSpecificDetailTemplate';
 
 const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl }) => {
   const [usabilityIndex, setUsabilityIndex] = useState<number | null>(null);
+
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const onMouseOver = useCallback(
+    (e, index) => {
+      e.stopPropagation();
+      console.log(index);
+      setActiveIndex(index);
+    },
+    [activeIndex],
+  );
+
+  const onMouseLeave = useCallback(
+    e => {
+      e.stopPropagation();
+      setActiveIndex(null);
+    },
+    [activeIndex],
+  );
+
   const handleClickUsabilityIndex = useCallback((e, index) => {
     e.stopPropagation();
     setUsabilityIndex(index);
@@ -21,8 +42,10 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox justify={'flex-start'} align={'center'}>
-          <span css={[heading3_bold, { marginRight: '32px' }]}>서비스 전체 사용성 평가</span>
+        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
+            서비스 전체 사용성 평가
+          </span>
           <CheckBox
             handleChangeCheckBox={handleChangeCheckBox}
             checked={checked}
@@ -32,7 +55,7 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
             errors={errors}
           />
         </FlexBox>
-        <FlexBox justify={'flex-end'}>
+        <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton
             disabled={true}
             style={{ marginRight: '8px' }}
@@ -73,11 +96,14 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
             </FlexBox>
 
             <UsabilityTableChart
+              onMouseOver={onMouseOver}
+              onMouseLeave={onMouseLeave}
               handleClickUsabilityIndex={handleClickUsabilityIndex}
               usabilityIndex={usabilityIndex}
               setUsabilityIndex={setUsabilityIndex}
               dataList={dataList?.serviceTotalUsabilityList}
               negative={true}
+              activeIndex={activeIndex}
             />
           </FlexBox>
         </FlexBox>

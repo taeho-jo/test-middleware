@@ -16,7 +16,7 @@ import AOS from 'aos';
 import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // API
 import { fetchCommonCodeApi, fetchEmailConfirmApi, fetchRefreshToken } from '../../api/authApi';
-import { fetchUserInfoApi } from '../../api/userApi';
+import { fetchInviteUserInfoApi, fetchUserInfoApi } from '../../api/userApi';
 import { setUserInfo, UserInfoType } from '../../store/reducers/userReducer';
 import { isShow } from '../../store/reducers/modalReducer';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -24,6 +24,7 @@ import ReportLayout from './ReportLayout';
 import { updateCommonCode } from '../../store/reducers/commonReducer';
 import { showToast } from '../../store/reducers/toastReducer';
 import { updateFilterFail, updateFilterFlied, updateFilterValues } from '../../store/reducers/reportReducer';
+import team from '../../pages/admin/team';
 
 // Types
 interface PropsType {
@@ -33,10 +34,11 @@ interface PropsType {
 const Layout = ({ children }: PropsType) => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { teamSeq, type } = router.query;
   const token = localStorage.getItem('accessToken');
   const resetToken = sessionStorage.getItem('accessToken');
-  const emailConfirm = useSelector<ReducerType, boolean>(state => state.user.emailConfirm);
-  // const userInfoSettingValue = useSelector<ReducerType, boolean>(state => state.user.setting);
+
   const isRefreshToken = useSelector<ReducerType, boolean>(state => state.auth.isRefreshToken);
   const userInfo = useSelector<ReducerType, UserInfoType>(state => state.user.userInfo);
   const teamListQuery = useSelector<ReducerType, boolean>(state => state.queryStatus.teamListQuery);
@@ -44,8 +46,6 @@ const Layout = ({ children }: PropsType) => {
   const getRefreshToken = useSelector<ReducerType, boolean>(state => state.queryStatus.tokenRefresh);
 
   const [showGradient, setShowGradient] = useState<boolean>(true);
-
-  const router = useRouter();
 
   const canvasRef = useRef(null);
 
@@ -72,6 +72,30 @@ const Layout = ({ children }: PropsType) => {
       if (data.data.emailVerifiedYn === 'Y') {
         return;
         // router.push('/admin/team');
+      }
+    },
+  });
+
+  const { data: usersInviteInfo, refetch: inviteRefetch } = useQuery(['fetchInviteUserInfo', 'layout'], () => fetchInviteUserInfoApi(type, token), {
+    enabled: !!token,
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        refetch();
+      } else if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      }
+    },
+    onSuccess: data => {
+      dispatch(setUserInfo(data.data));
+      if (data.data.emailVerifiedYn === 'N') {
+        router.push('/');
+        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+      }
+      if (data.data.emailVerifiedYn === 'Y') {
+        router.push('/admin/team');
       }
     },
   });
@@ -118,7 +142,7 @@ const Layout = ({ children }: PropsType) => {
       const query = router?.query;
       const { token, userId, type, teamseq } = query;
 
-      if (token && !userId && type === 'google') {
+      if (token && !userId && type) {
         localStorage.setItem('accessToken', `${token}`);
         // dispatch(setSetting(true));
         refetch();
@@ -126,6 +150,11 @@ const Layout = ({ children }: PropsType) => {
       if (token && !userId && !type) {
         localStorage.setItem('accessToken', `${token}`);
         mutate();
+      }
+      if (token && !userId && type) {
+        console.log('여기야?');
+        localStorage.setItem('accessToken', `${token}`);
+        inviteRefetch();
       }
       if (token && userId && !type) {
         sessionStorage.setItem('accessToken', `${token}`);

@@ -11,6 +11,7 @@ import AnnouncementBox from '../../AnnouncementBox';
 import Icon from '../../../atoms/Icon';
 import { BasicBarChart, BasicHorizontalBarChart, BasicLineChart, BasicPieChart, HistogramBarChart } from '../../../atoms/Chart';
 import { basicBarTestData, basicBarTestData3, buyTestData, genderTestData, histogramBarTestData } from '../../../../assets/dummy/dummyData';
+import { reportHeader } from '../FeatureSpecificDetailTemplate';
 
 const PriceEvaluationTemplate = () => {
   const {
@@ -27,11 +28,13 @@ const PriceEvaluationTemplate = () => {
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox justify={'flex-start'} align={'center'}>
-          <span css={[heading3_bold, { marginRight: '32px' }]}>적정 가격 평가</span>
+        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
+            적정 가격 평가
+          </span>
           <CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />
         </FlexBox>
-        <FlexBox justify={'flex-end'}>
+        <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_CHEVRON_RIGHT'} text={'원본 데이터 확인하기'} />
           <IconTextButton textStyle={'custom'} name={'NAVIGATION_CHEVRON_RIGHT'} text={'리서치 코멘트 확인하기'} />
         </FlexBox>

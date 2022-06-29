@@ -70,9 +70,9 @@ const TeamProductCreateModal = () => {
   });
 
   const [selected, setSelected] = useState({
-    planetType: '',
-    serviceType: '',
-    revenueModelType: '',
+    planetType: null,
+    serviceType: null,
+    revenueModelType: null,
   });
 
   const handleCreateProduct = useCallback(

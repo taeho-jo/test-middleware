@@ -39,6 +39,7 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
   const cellRef = useRef(null);
 
   const [list, setList] = useState(null);
+  const [myRole, setMyRole] = useState<string | null>(null);
 
   useEffect(() => {
     if (listData) {
@@ -50,6 +51,14 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
       }
     }
   }, [listData, searchText]);
+  useEffect(() => {
+    if (listData) {
+      const myInfo = listData.filter(el => el.userId === userInfo.userId)[0].teamRoleType;
+      setMyRole(myInfo);
+    }
+  }, [listData]);
+
+  console.log(myRole, 'myRole');
 
   const { getElementProperty } = useGetElementProperty<HTMLElement>(cellRef);
 
@@ -78,6 +87,7 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
     } else {
       return list.map((el, index) => {
         const { userId, userName, joinDate, teamRoleType } = el;
+
         return (
           <FlexBox key={index} style={{ borderTop: '1px solid #DCDCDC', position: 'relative' }}>
             <FlexBox justify={'flex-start'} style={{ padding: '17px 16px', width: '50%' }}>
@@ -86,29 +96,46 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
               </div>
 
               <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={{ marginLeft: '24px' }}>
-                <span css={[heading5_regular, { marginBottom: '7px' }]}>{userName}</span>
+                <span css={[heading5_regular, { marginBottom: '7px' }]}>{`${userName} ${joinDate ? '' : '(합류를 기다리는 중)'}`}</span>
                 <span css={[heading5_regular, { color: colors.grey._99 }]}>{userId}</span>
               </FlexBox>
             </FlexBox>
 
             <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>
-              <span css={heading5_regular}>{moment(joinDate).format('YYYY-MM-DD')}</span>
+              <span css={heading5_regular}>{joinDate ? moment(joinDate).format('YYYY-MM-DD') : '-'}</span>
             </FlexBox>
 
             <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>
-              <span css={heading5_regular}>{teamRoleType}</span>
+              <span css={heading5_regular}>{joinDate ? teamRoleType : '-'}</span>
             </FlexBox>
 
             <FlexBox justify={'center'} align={'center'} style={{ padding: '17px 0', flex: 1 }}>
-              {userInfo?.userName === userName ? null : (
+              {myRole === '맴버' ? (
+                userInfo.userId === userId ? (
+                  <Icon
+                    onClick={() => handleClickDropdown(index, 'myRole', el)}
+                    forwardref={(el: never) => (cellsRef.current[index] = el)}
+                    name={'MORE_HORIZON'}
+                    size={24}
+                    style={{ cursor: 'pointer' }}
+                  />
+                ) : null
+              ) : (
                 <Icon
-                  onClick={() => handleClickDropdown(index, teamRoleType, el)}
+                  onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}
                   forwardref={(el: never) => (cellsRef.current[index] = el)}
                   name={'MORE_HORIZON'}
                   size={24}
                   style={{ cursor: 'pointer' }}
                 />
               )}
+              {/*<Icon*/}
+              {/*  onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}*/}
+              {/*  forwardref={(el: never) => (cellsRef.current[index] = el)}*/}
+              {/*  name={'MORE_HORIZON'}*/}
+              {/*  size={24}*/}
+              {/*  style={{ cursor: 'pointer' }}*/}
+              {/*/>*/}
             </FlexBox>
           </FlexBox>
         );

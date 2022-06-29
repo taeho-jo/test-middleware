@@ -23,7 +23,11 @@ const UxResearchModuleModal = () => {
             <span css={[heading4_bold, marginStyle('24px')]}>#UX 전략 점검</span>
             <span css={[heading4_bold, marginStyle('4px')]}>#고객-제품 인식 검증</span>
             <FlexBox style={{ marginTop: '108px', padding: '8px 0' }}>
-              <BasicButton theme={'dark'} text={'설계안 작성하러 가기'} />
+              <BasicButton
+                onClick={() => window.open('https://dbdlab.notion.site/UX-205652e102c3439b9bcb44a7383f5bb3')}
+                theme={'dark'}
+                text={'설계안 작성하러 가기'}
+              />
             </FlexBox>
           </FlexBox>
           <Image src={Ux} alt={'Ux frame'} />

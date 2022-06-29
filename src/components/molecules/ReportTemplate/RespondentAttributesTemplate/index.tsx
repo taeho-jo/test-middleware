@@ -96,8 +96,10 @@ const RespondentAttributesTemplate = ({ dataList, register, errors, checked, han
   return (
     <div id={'top'}>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox justify={'flex-start'} align={'center'}>
-          <span css={[heading3_bold, { marginRight: '32px' }]}>응답자 특성</span>
+        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
+            응답자 특성
+          </span>
           <CheckBox
             handleChangeCheckBox={handleChangeCheckBox}
             checked={checked}
@@ -107,7 +109,7 @@ const RespondentAttributesTemplate = ({ dataList, register, errors, checked, han
             errors={errors}
           />
         </FlexBox>
-        <FlexBox justify={'flex-end'}>
+        <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton
             disabled={true}
             style={{ marginRight: '8px' }}
@@ -239,4 +241,16 @@ const tableStyle = css`
 const tableStyle2 = css`
   border-top: 1px solid #dcdcdc;
   border-bottom: 1px solid #dcdcdc;
+`;
+
+const reportHeader = css`
+  //background: pink;
+  @media (max-width: 1440px) {
+    //background: plum;
+    flex-direction: column;
+    align-items: flex-start;
+    .title {
+      margin-bottom: 10px;
+    }
+  }
 `;
