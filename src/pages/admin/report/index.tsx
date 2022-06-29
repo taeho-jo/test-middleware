@@ -37,9 +37,9 @@ const Report = () => {
         <HistogramBarChart dataList={histogramBarTestData} />
       </FlexBox>
       <FlexBox justify={'center'} align={'flex-start'} style={{ width: 'calc(100vw - 296px)', padding: '16px' }}>
-        <BasicHorizontalBarChart dataList={basicBarTestData3} />
-        <BasicHorizontalBarChart dataList={basicBarTestData3} />
-        <BasicHorizontalBarChart dataList={basicBarTestData3} />
+        {/*<BasicHorizontalBarChart dataList={basicBarTestData3} />*/}
+        {/*<BasicHorizontalBarChart dataList={basicBarTestData3} />*/}
+        {/*<BasicHorizontalBarChart dataList={basicBarTestData3} />*/}
       </FlexBox>
       <FlexBox align={'flex-start'} style={{ width: 'calc(100vw - 296px)', padding: '16px' }}>
         <UsabilityTableChart dataList={featureUseData3} negative={true} />

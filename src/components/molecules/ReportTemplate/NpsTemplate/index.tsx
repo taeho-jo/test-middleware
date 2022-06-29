@@ -82,24 +82,24 @@ const NpsTemplate = ({ modalControl }) => {
               </FlexBox>
             </FlexBox>
 
-            <FlexBox>
-              <FlexBox justify={'space-around'} style={tableBodyStyle(6)}>
-                <BasicHorizontalBarChart barColor={'#E87490'} dataList={basicBarTestData3} />
-                <BasicHorizontalBarChart barColor={'#E87490'} dataList={basicBarTestData3} />
-                <BasicHorizontalBarChart barColor={'#E87490'} dataList={basicBarTestData3} />
-                <BasicHorizontalBarChart barColor={'#E87490'} dataList={basicBarTestData3} />
-                <BasicHorizontalBarChart barColor={'#E87490'} dataList={basicBarTestData3} />
-                <BasicHorizontalBarChart barColor={'#E87490'} dataList={basicBarTestData3} />
-              </FlexBox>
-              <FlexBox justify={'space-around'} style={tableBodyStyle(2)}>
-                <BasicHorizontalBarChart barColor={'#A286D0'} dataList={basicBarTestData3} />
-                <BasicHorizontalBarChart barColor={'#A286D0'} dataList={basicBarTestData3} />
-              </FlexBox>
-              <FlexBox justify={'space-around'} style={tableBodyStyle(2)}>
-                <BasicHorizontalBarChart dataList={basicBarTestData3} />
-                <BasicHorizontalBarChart dataList={basicBarTestData3} />
-              </FlexBox>
-            </FlexBox>
+            {/*<FlexBox>*/}
+            {/*  <FlexBox justify={'space-around'} style={tableBodyStyle(6)}>*/}
+            {/*    <BasicHorizontalBarChart barColor={'#E87490'} dataList={basicBarTestData3} />*/}
+            {/*    <BasicHorizontalBarChart barColor={'#E87490'} dataList={basicBarTestData3} />*/}
+            {/*    <BasicHorizontalBarChart barColor={'#E87490'} dataList={basicBarTestData3} />*/}
+            {/*    <BasicHorizontalBarChart barColor={'#E87490'} dataList={basicBarTestData3} />*/}
+            {/*    <BasicHorizontalBarChart barColor={'#E87490'} dataList={basicBarTestData3} />*/}
+            {/*    <BasicHorizontalBarChart barColor={'#E87490'} dataList={basicBarTestData3} />*/}
+            {/*  </FlexBox>*/}
+            {/*  <FlexBox justify={'space-around'} style={tableBodyStyle(2)}>*/}
+            {/*    <BasicHorizontalBarChart barColor={'#A286D0'} dataList={basicBarTestData3} />*/}
+            {/*    <BasicHorizontalBarChart barColor={'#A286D0'} dataList={basicBarTestData3} />*/}
+            {/*  </FlexBox>*/}
+            {/*  <FlexBox justify={'space-around'} style={tableBodyStyle(2)}>*/}
+            {/*    <BasicHorizontalBarChart dataList={basicBarTestData3} />*/}
+            {/*    <BasicHorizontalBarChart dataList={basicBarTestData3} />*/}
+            {/*  </FlexBox>*/}
+            {/*</FlexBox>*/}
             <div css={[heading4_bold, { textAlign: 'center', width: '100%', marginTop: '40px' }]}>순 추천 고객 지수(NPS) : -38점 </div>
           </FlexBox>
         </FlexBox>
