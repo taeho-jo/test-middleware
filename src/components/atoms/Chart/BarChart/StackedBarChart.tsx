@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import FlexBox from '../../FlexBox';
 import { heading5_bold, heading5_regular } from '../../../../styles/FontStyles';
 import ReportShortAnswerQuestionLayerPopup from '../../ReportShortAnswerQuestionLayerPopup';
+import { chart_color } from '../../../../styles/Common.styles';
 
 interface PropsType {
   dataList: any;
@@ -37,23 +38,34 @@ const StackedBarChart = ({
   const [isShow, setIsShow] = useState<boolean>(false);
   const [layerData, setLayerData] = useState<object | null>(null);
 
-  const onMouseUp = useCallback(
+  const onMouseClick = useCallback(
     (e, index, el, detailIndex) => {
       e.stopPropagation();
-
       if (index === activeIndex) {
         setActiveIndex(null);
       } else {
         setActiveIndex(index);
       }
       setStackbarIndex(detailIndex);
-
       setIsShow(true);
       setLayerData(el);
-
-      // console.log(el);
     },
+    [activeIndex],
+  );
 
+  const onMouseOver = useCallback(
+    (e, index) => {
+      e.stopPropagation();
+      setActiveIndex(index);
+    },
+    [activeIndex],
+  );
+
+  const onMouseLeave = useCallback(
+    e => {
+      e.stopPropagation();
+      setActiveIndex(null);
+    },
     [activeIndex],
   );
 
@@ -84,41 +96,34 @@ const StackedBarChart = ({
             <span css={{ marginRight: '16px' }}>|</span>
             {rate ? <span css={[heading5_bold, { color: '#68a0f4', paddingRight: '10px' }]}>{rate}</span> : ''}
           </div>
-          {/*{rate ? <span css={[heading5_bold, { color: '#68a0f4' }]}>{rate}</span> : ''}*/}
         </FlexBox>
         <ResponsiveContainer width={'100%'} height={50}>
-          <BarChart data={renderDataList} layout="vertical" barCategoryGap={1} barSize={16}>
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
+          <BarChart stroke={'#dcdcdc'} data={renderDataList} layout="vertical" barCategoryGap={1} barSize={16}>
             <XAxis type="number" hide domain={[0, 100]} />
             <YAxis type="category" hide />
+            <Bar dataKey={'value'} stackId={'a'} background={{ fill: '#dcdcdc' }} />
             {dataList?.map((el, index) => {
-              if (index === 0) {
-                return (
-                  <Bar
-                    key={`value${props.detailIndex}`}
-                    dataKey={`value${index}`}
-                    stackId="a"
-                    fill={negative ? `rgba(232, 116, 144, 1)` : `rgba(104, 160, 244, 1)`}
-                    background={{ fill: '#dcdcdc' }}
-                    // stroke={'#dcdcdc'}
-                  >
-                    <Cell stroke={'#dcdcdc'} onClick={e => onMouseUp(e, index, el, props.detailIndex)} cursor="pointer" key={`cell-${index}`} />
-                  </Bar>
-                );
-              } else {
-                return (
-                  <Bar
-                    cursor={'pointer'}
-                    key={`value1${props.detailIndex}`}
-                    dataKey={`value${index}`}
-                    stackId="a"
-                    // stroke={'#dcdcdc'}
-                    // `rgba(104, 160, 244, ${1 - 0.2 * index})`
-                    fill={negative ? `rgba(232, 116, 144, ${1 - 0.2 * index})` : `rgba(104, 160, 244, ${1 - 0.2 * index})`}
-                  >
-                    <Cell stroke={'#dcdcdc'} onClick={e => onMouseUp(e, index, el, props.detailIndex)} cursor="pointer" key={`cell-${index}`} />
-                  </Bar>
-                );
-              }
+              return (
+                <Bar key={`stackedBar-${index}`} dataKey={`value${index}`} stackId={'a'}>
+                  <Cell
+                    stroke={'#dcdcdc'}
+                    fill={
+                      index === activeIndex
+                        ? 'rgb(47, 113, 212)'
+                        : negative
+                        ? `rgba(232, 116, 144,${1 - 0.1 * index})`
+                        : `rgba(104, 160, 244, ${1 - 0.09 * index})`
+                    }
+                    onMouseOut={e => onMouseLeave(e)}
+                    onMouseOver={e => onMouseOver(e, index)}
+                    onClick={e => onMouseClick(e, index, el, props.detailIndex)}
+                    cursor="pointer"
+                    key={`cell-${index}`}
+                  />
+                </Bar>
+              );
             })}
           </BarChart>
         </ResponsiveContainer>

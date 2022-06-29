@@ -35,7 +35,7 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
   const localSelectTeamSeq = localStorage.getItem('teamSeq');
   const teamSeq = selectTeamSeq ? selectTeamSeq : localSelectTeamSeq;
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
-  const [copyUrl, setCopyUrl] = useState<string | null>(`${CURRENT_DOMAIN}/admin/welcome?teamseq=${teamSeq}`);
+  const [copyUrl, setCopyUrl] = useState<string | null>(`${CURRENT_DOMAIN}/admin/welcome?teamSeq=${teamSeq}`);
 
   // hook form
   const {
@@ -81,8 +81,8 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
       emailTemplateName: INVITE_EMAIL_TEMPLATE,
     };
 
-    if (newMailArr.length === 0) {
-      dispatch(showToast({ message: '메일 주소 형식을 확인 바랍니다.', isShow: true, status: 'warning', duration: 5000 }));
+    if (newMailArr.length === 0 || mailArr.length !== newMailArr.length) {
+      dispatch(showToast({ message: '올바르지 않은 이메일 형식이 포함되어있습니다.', isShow: true, status: 'warning', duration: 5000 }));
     } else {
       setSendObject(sendObject);
       mutate(sendObject);
@@ -108,7 +108,7 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
 
   useEffect(() => {
     if (selectTeamSeq) {
-      setCopyUrl(`${CURRENT_DOMAIN}/admin/welcome?teamseq=${selectTeamSeq}`);
+      setCopyUrl(`${CURRENT_DOMAIN}/admin/welcome?teamSeq=${selectTeamSeq}`);
     }
   }, [selectTeamSeq]);
 
@@ -124,7 +124,7 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
             title={'링크 복사'}
             register={register}
             label={'link'}
-            defaultValue={`${CURRENT_DOMAIN}/admin/welcome?teamseq=${teamSeq}`}
+            defaultValue={`${CURRENT_DOMAIN}/admin/welcome?teamSeq=${teamSeq}`}
             errors={errors}
             readOnly={true}
             style={{ marginBottom: '16px' }}

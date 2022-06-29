@@ -28,6 +28,9 @@ import RecommendedCustomerIndexModal from '../Modal/RecommendedCustomerIndexModa
 import OriginDataModal from '../Modal/OriginDataModal';
 import CommentModal from '../Modal/CommentModal';
 import ShareReportModal from '../Modal/ShareReportModal';
+import RemoveMemberModal from '../Modal/RemoveMemberModal';
+import ReInviteModal from '../Modal/ReInviteModal';
+import WithdrawalTeamModal from '../Modal/WithdrawalTeamModal';
 
 const CommonModal = () => {
   const show = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -54,6 +57,9 @@ const CommonModal = () => {
           {modalType === 'scenarioResearchModule' && <ScenarioResearchModuleModal />}
           {modalType === 'customerResearchModule' && <CustomerResearchModuleModal />}
           {modalType === 'changeMemberAuth' && <ChangeAuthModal />}
+          {modalType === 'removeMember' && <RemoveMemberModal />}
+          {modalType === 'withdrawalTeam' && <WithdrawalTeamModal />}
+          {modalType === 'inviteMember' && <ReInviteModal />}
           {modalType === 'profileNickName' && <ProfileUpdateNickNameModal />}
           {modalType === 'profileCpPosition' && <ProfileUpdateCpPositionModal />}
           {modalType === 'profileCpSize' && <ProfileUpdateCpSize />}

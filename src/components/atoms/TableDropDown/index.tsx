@@ -73,6 +73,7 @@ const emailTextStyle = css`
 `;
 
 const cursorBtnStyle = css`
+  white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;

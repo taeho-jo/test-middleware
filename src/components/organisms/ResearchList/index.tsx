@@ -4,12 +4,7 @@ import ListReport from '../../molecules/ListReport';
 import { heading1_bold } from '../../../styles/FontStyles';
 
 interface PropsType {
-  listData: {
-    createDt: string;
-    moduleType: string;
-    projectNm: string;
-    reportSeq: number;
-  }[];
+  listData: { reportViewId: string; createDt: string; moduleType: string; projectNm: string; reportSeq: number }[];
   handleMoveDetail?: (id, name) => void;
 }
 
@@ -27,6 +22,7 @@ const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
           <Fragment key={index}>
             <ListReport
               onClick={handleMoveDetail}
+              reportViewId={el.reportViewId}
               reportSeq={el.reportSeq}
               moduleType={el.moduleType}
               projectNm={el.projectNm}

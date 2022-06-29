@@ -25,7 +25,11 @@ const CustomerResearchModuleModal = () => {
             <span css={[heading4_bold, marginStyle('24px')]}>#타게팅 우선순위 파악</span>
             <span css={[heading4_bold, marginStyle('4px')]}>#대략적인 이해</span>
             <FlexBox style={{ marginTop: '108px', padding: '8px 0' }}>
-              <BasicButton theme={'dark'} text={'설계안 작성하러 가기'} />
+              <BasicButton
+                onClick={() => window.open('https://dbdlab.notion.site/34d243dc532d462b84468a710a63c3e8')}
+                theme={'dark'}
+                text={'설계안 작성하러 가기'}
+              />
             </FlexBox>
           </FlexBox>
           <Image src={Customer} alt={'Customer frame'} />

@@ -27,7 +27,7 @@ import { updateProjectName } from '../../../store/reducers/reportReducer';
 const ResearchType = [
   {
     title: '어떤 리서치를 해야할 지 모르겠어요.',
-    link: 'https://naver.com',
+    link: 'https://form.typeform.com/to/lmyqEfEb',
     backgroundColor: `${colors.grey._3c}`,
     color: `${colors.white}`,
     hoverImage: null,
@@ -35,7 +35,7 @@ const ResearchType = [
   },
   {
     title: 'UI 진단',
-    link: 'https://naver.com',
+    link: 'https://dbdlab.notion.site/UI-5a3e44a7bcb2439097e311fd62ad5e5d',
     backgroundColor: `${colors.white}`,
     color: null,
     hoverImage: icon1,
@@ -44,7 +44,7 @@ const ResearchType = [
   },
   {
     title: '시나리오 검증',
-    link: 'https://naver.com',
+    link: 'https://dbdlab.notion.site/e431cc58286c4b1b9113f45f1ce88f57',
     backgroundColor: `${colors.white}`,
     color: null,
     hoverImage: icon3,
@@ -53,7 +53,7 @@ const ResearchType = [
   },
   {
     title: 'UX 포지션 분석',
-    link: 'https://naver.com',
+    link: 'https://dbdlab.notion.site/UX-205652e102c3439b9bcb44a7383f5bb3',
     backgroundColor: `${colors.white}`,
     color: null,
     hoverImage: icon2,
@@ -62,7 +62,7 @@ const ResearchType = [
   },
   {
     title: '잠재 고객 검증',
-    link: 'https://naver.com',
+    link: 'https://dbdlab.notion.site/34d243dc532d462b84468a710a63c3e8',
     backgroundColor: `${colors.white}`,
     color: null,
     hoverImage: icon4,
@@ -77,8 +77,12 @@ const TeamDashboard = () => {
   const queryClient = useQueryClient();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
-  // const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
-  const selectTeamSeq = localStorage.getItem('teamSeq');
+  const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
+  // const selectTeamSeq = localStorage.getItem('teamSeq');
+
+  useEffect(() => {
+    queryClient.removeQueries('fetchInviteUserInfo');
+  }, []);
 
   // ============ React Query ============ //
   const { data: teamListData, isLoading } = useQuery(['fetchTeamList'], fetchTeamListApi, {
@@ -108,6 +112,7 @@ const TeamDashboard = () => {
       }
     },
     select: data => {
+      console.log(data, 'DATA DATA');
       return data.data;
     },
   });
@@ -141,10 +146,10 @@ const TeamDashboard = () => {
         dispatch(isShow({ isShow: true, type: 'firstCreateTeam' }));
       } else {
         dispatch(updateTeamInfo(list));
-        if (selectTeamList !== null) {
+        if (selectTeamList === null) {
           dispatch(updateSelectTeamList(list[0]));
         }
-        if (selectTeamSeq !== null) {
+        if (selectTeamSeq === null) {
           dispatch(updateTeamSeq(list[0]?.teamSeq));
         }
 
@@ -152,7 +157,7 @@ const TeamDashboard = () => {
         localStorage.setItem('selectTeamList', JSON.stringify(list[0]));
       }
     }
-  }, [teamListData]);
+  }, [teamListData, selectTeamList, selectTeamSeq]);
 
   return (
     <>
@@ -163,7 +168,7 @@ const TeamDashboard = () => {
             {ResearchType.map((item, index) => {
               return (
                 <ResearchModuleButton
-                  onClick={index === 0 ? () => console.log('') : showResearchModuleModal}
+                  onClick={index === 0 ? () => window.open(item.link) : showResearchModuleModal}
                   key={index}
                   title={item.title}
                   link={item.link}

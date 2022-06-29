@@ -25,7 +25,11 @@ const UiResearchModuleModal = () => {
             <span css={[heading4_bold, marginStyle('4px')]}>#사용성 확인</span>
             <span css={[heading4_bold, marginStyle('4px')]}>#디자인 10 요소</span>
             <FlexBox style={{ marginTop: '108px', padding: '8px 0' }}>
-              <BasicButton theme={'dark'} text={'설계안 작성하러 가기'} />
+              <BasicButton
+                onClick={() => window.open('https://dbdlab.notion.site/UI-5a3e44a7bcb2439097e311fd62ad5e5d')}
+                theme={'dark'}
+                text={'설계안 작성하러 가기'}
+              />
             </FlexBox>
           </FlexBox>
           <Image src={Ui} alt={'ui frame'} objectFit={'fill'} />

@@ -9,15 +9,35 @@ import { tableBarChartTestData } from '../../../../assets/dummy/dummyData';
 import { css } from '@emotion/react';
 import Icon from '../../../atoms/Icon';
 import AnnouncementBox from '../../AnnouncementBox';
+import { reportHeader } from '../FeatureSpecificDetailTemplate';
 
 const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl }) => {
   const [stackbarIndex, setStackbarIndex] = useState<number | null>(null);
   const [usabilityIndex, setUsabilityIndex] = useState<number | null>(null);
 
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
   const handleClickUsabilityIndex = useCallback((e, index) => {
     e.stopPropagation();
     setUsabilityIndex(index);
   }, []);
+
+  const onMouseOver = useCallback(
+    (e, index) => {
+      e.stopPropagation();
+      console.log(index);
+      setActiveIndex(index);
+    },
+    [activeIndex],
+  );
+
+  const onMouseLeave = useCallback(
+    e => {
+      e.stopPropagation();
+      setActiveIndex(null);
+    },
+    [activeIndex],
+  );
 
   return (
     <>
@@ -25,8 +45,8 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
         return (
           <div key={index} id={el.name} css={{ position: 'relative' }}>
             <FlexBox style={headerBosStyle} justify={'space-between'}>
-              <FlexBox justify={'flex-start'} align={'center'}>
-                <span css={[heading3_bold, { marginRight: '32px' }]}>
+              <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+                <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
                   [미션 {index + 1}. {el.name}]의 기능별 사용성 비교
                 </span>
                 <CheckBox
@@ -87,8 +107,8 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
               return (
                 <Fragment key={`feature-${itemIndex}`}>
                   <FlexBox style={headerBosStyle} justify={'space-between'}>
-                    <FlexBox justify={'flex-start'} align={'center'}>
-                      <span css={[heading3_bold, { marginRight: '32px' }]}>
+                    <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+                      <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
                         기능별 상세 내용 - [미션 {index + 1}. {el.name}] {item.name}
                       </span>
                       <CheckBox
@@ -230,11 +250,14 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                         </FlexBox>
 
                         <UsabilityTableChart
+                          onMouseOver={onMouseOver}
+                          onMouseLeave={onMouseLeave}
                           handleClickUsabilityIndex={handleClickUsabilityIndex}
                           usabilityIndex={usabilityIndex}
                           setUsabilityIndex={setUsabilityIndex}
                           dataList={item.usabilityList}
                           negative={true}
+                          activeIndex={activeIndex}
                         />
                       </FlexBox>
                     </FlexBox>

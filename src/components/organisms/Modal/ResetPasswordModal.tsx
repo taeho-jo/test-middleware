@@ -37,8 +37,9 @@ const ResetPasswordModal = () => {
   const onError = errors => handleProcessingError('fail', errors);
 
   const { mutate, data, isLoading } = useMutation(['fetchResetPassword'], fetchResetPasswordEmailApi, {
-    onError: e => {
-      dispatch(showToast({ message: '비밀번호 재설정 메일 발송에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
+    onError: (e: any) => {
+      console.log(e.response.data);
+      dispatch(showToast({ message: `${e.response.data.message}`, isShow: true, status: 'warning', duration: 5000 }));
     },
     onSuccess: data => {
       dispatch(showToast({ message: '비밀번호 재설정 메일이 발송되었습니다.', isShow: true, status: '', duration: 5000 }));

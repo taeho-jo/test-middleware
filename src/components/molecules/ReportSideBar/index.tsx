@@ -40,7 +40,9 @@ const ReportSideBar = () => {
   );
 
   const reportShare = useCallback(() => {
-    refetch();
+    // refetch();
+    dispatch(updateReportViewId(id));
+    dispatch(isShow({ isShow: true, type: 'shareReportModal' }));
   }, []);
 
   return (

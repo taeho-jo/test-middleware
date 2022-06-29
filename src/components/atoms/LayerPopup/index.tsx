@@ -1,15 +1,17 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
 import { body3_regular } from '../../../styles/FontStyles';
+import useOutsideClick from '../../../hooks/useOutsideClick';
 
 interface PropsType {
   display: boolean;
   topText?: string;
   top?: number;
   right?: number;
+  setFocusProfile: any;
   normalText: {
     text: string;
     onClick: () => void;
@@ -17,11 +19,17 @@ interface PropsType {
   [key: string]: any;
 }
 
-const LayerPopup = ({ display, topText, normalText, top = 16, right = 16, ...props }: PropsType) => {
+const LayerPopup = ({ display, topText, normalText, top = 16, right = 16, setFocusProfile, ...props }: PropsType) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const boxRef = useRef(null);
+
+  useOutsideClick(boxRef, () => {
+    setFocusProfile(false);
+  });
+
   return (
-    <div css={popupContainer(display, top, right)}>
+    <div ref={boxRef} css={popupContainer(display, top, right)}>
       {topText && <div css={[body3_regular, emailTextStyle]}>{topText}</div>}
 
       {normalText.map((el, index) => {

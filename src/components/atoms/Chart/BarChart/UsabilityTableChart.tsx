@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { body3_bold, body3_medium, caption2_regular, heading5_bold } from '../../../../styles/FontStyles';
 import { BasicBarChart } from '../index';
 import { basicBarTestData } from '../../../../assets/dummy/dummyData';
@@ -13,9 +13,22 @@ interface PropsType {
   setUsabilityIndex?: any;
   usabilityIndex?: number | null;
   handleClickUsabilityIndex?: (e, index) => void;
+  onMouseOver?: any;
+  onMouseLeave?: any;
+  activeIndex?: number | null;
 }
-const UsabilityTableChart = ({ dataList, negative = false, usabilityIndex, setUsabilityIndex, handleClickUsabilityIndex }: PropsType) => {
+const UsabilityTableChart = ({
+  dataList,
+  negative = false,
+  usabilityIndex,
+  setUsabilityIndex,
+  handleClickUsabilityIndex,
+  onMouseLeave,
+  onMouseOver,
+  activeIndex,
+}: PropsType) => {
   const usabilityRef = useRef(null);
+
   useOutsideClick(usabilityRef, () => {
     setUsabilityIndex(null);
   });
@@ -38,13 +51,18 @@ const UsabilityTableChart = ({ dataList, negative = false, usabilityIndex, setUs
             <li css={[heading5_bold, liStyle, emptyLiStyle, { borderRight: 'none', width: '110px', color: colors.grey._99 }]}>
               {checkIsInteger(el.mention)}%
             </li>
-            <div onClick={e => handleClickUsabilityIndex(e, index)} css={chartBox}>
+            <div
+              onClick={e => handleClickUsabilityIndex(e, index)}
+              onMouseOut={e => onMouseLeave(e)}
+              onMouseOver={e => onMouseOver(e, index)}
+              css={chartBox}
+            >
               <BasicBarChart
                 negative={negative}
                 dataList={[el]}
                 label={[<>{el.name}</>]}
                 rate={`${checkIsInteger(el.value)}점`}
-                barColor={'#E87490'}
+                barColor={activeIndex === index ? '#db466a' : '#E87490'}
               />
             </div>
 

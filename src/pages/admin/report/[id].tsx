@@ -177,8 +177,19 @@ const Report = ({ params }) => {
           : data?.multipleQuestionList?.map((item, index) => {
               return (
                 <div key={`multiple-${index}`} id={item.code}>
-                  <MultipleQuestionTemplate dataList={item} modalControl={modalControl} />
-                  <div css={sortationArea} />
+                  {item?.detailScaleList?.length === 0 ? null : (
+                    <>
+                      <GeneralScaleTypeTemplate dataList={item} modalControl={modalControl} />
+                      <div css={sortationArea} />
+                    </>
+                  )}
+
+                  {item?.detailMultipleList.length === 0 ? null : (
+                    <>
+                      <MultipleQuestionTemplate dataList={item} modalControl={modalControl} />
+                      <div css={sortationArea} />
+                    </>
+                  )}
                 </div>
               );
             })}
@@ -232,6 +243,8 @@ const originTestBox = css`
   height: calc(100vh - 72px);
   overflow: scroll;
   position: relative;
+  //background: pink;
+  width: 100%;
 `;
 const testBox = css`
   //position: sticky;

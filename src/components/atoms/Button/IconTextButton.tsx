@@ -54,6 +54,7 @@ const iconTextButtonStyle = (roundBorder, iconPosition, status) => css`
   align-items: center;
   box-sizing: border-box;
   justify-content: space-between;
+  white-space: nowrap;
   cursor: pointer;
   padding: ${iconPosition === 'right' ? '0 8px 0 16px' : '0 16px 0 8px'};
   ${roundBorder

@@ -13,10 +13,12 @@ import { ReducerType } from '../../../store/reducers';
 import { TeamListType, updateSelectTeamList, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import MoreTeamInfoPopup from '../MoreTeamInfoPopup';
 import { isShow } from '../../../store/reducers/modalReducer';
+import { useQueryClient } from 'react-query';
 
 // Dummy
 
 const AdminSideBar = () => {
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const teamList = useSelector<ReducerType, TeamListType[]>(state => state.team.teamList);
 
@@ -24,6 +26,8 @@ const AdminSideBar = () => {
     item => {
       dispatch(updateSelectTeamList(item));
       dispatch(updateTeamSeq(item.teamSeq));
+
+      queryClient.invalidateQueries(['fetchTeamReportList', item.teamSeq]);
 
       localStorage.setItem('selectTeamList', JSON.stringify(item));
       localStorage.setItem('teamSeq', item.teamSeq);

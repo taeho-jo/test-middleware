@@ -7,16 +7,19 @@ import { colors } from '../../../../styles/Common.styles';
 import { css } from '@emotion/react';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../../common/types/commonTypes';
+import { reportHeader } from '../FeatureSpecificDetailTemplate';
 
 const LongQuestionTemplate = ({ dataList, modalControl }) => {
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox justify={'flex-start'} align={'center'}>
-          <span css={[heading3_bold, { marginRight: '32px' }]}>주관식 문항 - {dataList.name}</span>
+        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
+            주관식 문항 - {dataList.name}
+          </span>
           {/*<CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />*/}
         </FlexBox>
-        <FlexBox justify={'flex-end'}>
+        <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton
             onClick={() => modalControl(true, 'originDataModal', { title: `주관식 문항 - ${dataList.name}`, data: dataList.rawData })}
             style={{ marginRight: '8px' }}

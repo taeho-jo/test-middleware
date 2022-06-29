@@ -15,15 +15,43 @@ interface PropsType {
   index: number;
   handleMouseUp: (index, e) => void;
   setSelectedLabelIndex?: any;
+  onMouseOver: any;
+  onMouseLeave: any;
 }
 
-const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp, index, selectedLabelIndex, setSelectedLabelIndex }: PropsType) => {
+const RatePieChart = ({
+  dataList,
+  infoDataList,
+  color = '#7CC08E',
+  handleMouseUp,
+  index,
+  selectedLabelIndex,
+  setSelectedLabelIndex,
+  onMouseOver,
+  onMouseLeave,
+}: PropsType) => {
   const boxRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  // const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  // const onMouseOver = useCallback(
+  //   (e, index) => {
+  //     console.log(index);
+  //     e.stopPropagation();
+  //     setActiveIndex(index);
+  //   },
+  //   [activeIndex],
+  // );
+  //
+  // const onMouseLeave = useCallback(
+  //   e => {
+  //     e.stopPropagation();
+  //     setActiveIndex(null);
+  //   },
+  //   [activeIndex],
+  // );
 
   const renderActiveShape = useCallback(props => {
     const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill, payload } = props;
-
     return (
       <g>
         <text x={cx} y={cy} dy={8} textAnchor="middle" fill={colors.green.chart} css={heading5_bold}>
@@ -32,6 +60,8 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
         <Sector
           cursor="pointer"
           onClick={e => handleMouseUp(index, e)}
+          onMouseOver={e => onMouseOver(e, index)}
+          onMouseOut={e => onMouseLeave(e)}
           cx={cx}
           cy={cy}
           innerRadius={innerRadius}
@@ -54,21 +84,25 @@ const RatePieChart = ({ dataList, infoDataList, color = '#7CC08E', handleMouseUp
         <ResponsiveContainer width={96} height={96}>
           <PieChart>
             <Pie
-              // cursor="pointer"
-
-              // onMouseEnter={onPieEnter}
-              activeIndex={activeIndex}
+              activeIndex={0}
               activeShape={renderActiveShape}
               startAngle={0}
               endAngle={360}
               data={dataList?.missionSuccessRatioInfo}
               innerRadius={30}
               outerRadius={45}
-              fill="#8884d8"
+              // fill="#8884d8"
               dataKey="value"
             >
               {dataList?.missionSuccessRatioInfo.map((entry, idx) => (
-                <Cell cursor={'pointer'} onClick={e => handleMouseUp(index, e)} key={`cell-${idx}`} fill={idx === 0 ? color : gery_chart_color} />
+                <Cell
+                  cursor={'pointer'}
+                  // onMouseOut={e => onMouseLeave(e)}
+                  // onMouseOver={e => onMouseOver(e, idx)}
+                  onClick={e => handleMouseUp(index, e)}
+                  key={`cell-${idx}`}
+                  fill={idx === 0 ? color : gery_chart_color}
+                />
               ))}
             </Pie>
           </PieChart>

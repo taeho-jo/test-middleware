@@ -7,7 +7,13 @@ const ReportLayout = ({ children }) => {
   return (
     <FlexBox style={{ width: '100%' }} justify={'flex-start'} align={'flex-start'}>
       <ReportSideBar />
-      <div css={{ width: 'calc(100% - 296px)', marginLeft: '296px', minWidth: '1440px' }}>
+      <div
+        css={{
+          width: 'calc(100% - 296px)',
+          marginLeft: '296px',
+          minWidth: '900px',
+        }}
+      >
         <ReportHeader />
         <div css={{ marginTop: '72px' }}>{children}</div>
       </div>

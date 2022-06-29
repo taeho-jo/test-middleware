@@ -3,7 +3,7 @@ import { PieChart, Pie, Sector, Cell, ResponsiveContainer, LabelList } from 'rec
 import FlexBox from '../../FlexBox';
 import { body3_bold, body3_medium, body3_regular, heading5_regular } from '../../../../styles/FontStyles';
 import { css } from '@emotion/react';
-import { chart_color, colors } from '../../../../styles/Common.styles';
+import { chart_color, colors, hover_chart_color } from '../../../../styles/Common.styles';
 import { ChangeDataListType, DataListType } from '../../../molecules/ReportTemplate/RespondentAttributesTemplate';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
@@ -19,6 +19,26 @@ interface PropsType {
 
 const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseUp, setLabelStatus }: PropsType) => {
   const boxRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const onMouseOver = useCallback(
+    (e, index) => {
+      e.stopPropagation();
+      // if (index === activeIndex) {
+      //   setActiveIndex(null);
+      // } else {
+      setActiveIndex(index);
+    },
+    [activeIndex],
+  );
+
+  const onMouseLeave = useCallback(
+    e => {
+      e.stopPropagation();
+      setActiveIndex(null);
+    },
+    [activeIndex],
+  );
 
   useOutsideClick(boxRef, e => {
     setLabelStatus({
@@ -35,7 +55,13 @@ const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseU
           <PieChart css={hoverPieChartStyle}>
             <Pie cursor="pointer" startAngle={360} endAngle={0} data={dataList} innerRadius={30} outerRadius={45} fill="#8884d8" dataKey="value">
               {dataList?.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={chart_color[index]} onClick={e => handleMouseUp(name, index, e)} />
+                <Cell
+                  key={`cell-${index}`}
+                  fill={index === activeIndex ? hover_chart_color[index] : chart_color[index]}
+                  onMouseOut={e => onMouseLeave(e)}
+                  onMouseOver={e => onMouseOver(e, index)}
+                  onClick={e => handleMouseUp(name, index, e)}
+                />
               ))}
             </Pie>
           </PieChart>

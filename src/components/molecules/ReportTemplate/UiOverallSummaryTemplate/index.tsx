@@ -3,7 +3,7 @@ import FlexBox from '../../../atoms/FlexBox';
 import { caption2_bold, heading3_bold, heading4_bold, heading5_bold, heading5_medium } from '../../../../styles/FontStyles';
 import CheckBox from '../../../atoms/CheckBox';
 import IconTextButton from '../../../atoms/Button/IconTextButton';
-import { chart_color, colors } from '../../../../styles/Common.styles';
+import { chart_color, colors, hover_chart_color } from '../../../../styles/Common.styles';
 import { RatePieChart, TableBarChart } from '../../../atoms/Chart';
 import { tableBarChartTestData, tableBarTestData } from '../../../../assets/dummy/dummyData';
 import { css } from '@emotion/react';
@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { InputType } from '../../../../common/types/commonTypes';
 import Icon from '../../../atoms/Icon';
 import FixImage from '/public/assets/png/chartFixAlert.png';
+import { reportHeader } from '../FeatureSpecificDetailTemplate';
 
 interface PropsType {
   dataList: {
@@ -56,6 +57,7 @@ interface PropsType {
 
 const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl, comment }) => {
   const [selectedLabelIndex, setSelectedLabelIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const handleMouseUp = useCallback(
     (index, e) => {
@@ -69,11 +71,30 @@ const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleC
     },
     [selectedLabelIndex],
   );
+
+  const onMouseOver = useCallback(
+    (e, index) => {
+      e.stopPropagation();
+      setActiveIndex(index);
+    },
+    [activeIndex],
+  );
+
+  const onMouseLeave = useCallback(
+    e => {
+      e.stopPropagation();
+      setActiveIndex(null);
+    },
+    [activeIndex],
+  );
+
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox justify={'flex-start'} align={'center'}>
-          <span css={[heading3_bold, { marginRight: '32px' }]}>UI 진단 전체 요약</span>
+        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
+            UI 진단 전체 요약
+          </span>
           <CheckBox
             handleChangeCheckBox={handleChangeCheckBox}
             checked={checked}
@@ -83,7 +104,7 @@ const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleC
             errors={errors}
           />
         </FlexBox>
-        <FlexBox justify={'flex-end'}>
+        <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton
             disabled={true}
             style={{ marginRight: '8px' }}
@@ -114,10 +135,12 @@ const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleC
                   <span css={[heading5_bold, { textAlign: 'center' }]}>{el.name}</span>
                   <RatePieChart
                     handleMouseUp={handleMouseUp}
+                    onMouseOver={onMouseOver}
+                    onMouseLeave={onMouseLeave}
                     index={index}
                     selectedLabelIndex={selectedLabelIndex}
                     setSelectedLabelIndex={setSelectedLabelIndex}
-                    color={chart_color[index]}
+                    color={activeIndex === index ? hover_chart_color[index] : chart_color[index]}
                     dataList={el}
                     infoDataList={dataList.missionFatality[index]}
                   />

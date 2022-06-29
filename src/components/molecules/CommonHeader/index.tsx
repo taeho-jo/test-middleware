@@ -13,14 +13,19 @@ import { updateQueryStatus } from '../../../store/reducers/useQueryControlReduce
 
 const CommonHeader = () => {
   const router = useRouter();
+  const { pathname } = router;
   const dispatch = useDispatch();
   const isSessionStorage = sessionStorage.getItem('accessToken');
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const [focusProfile, setFocusProfile] = useState<boolean>(false);
 
-  const test = useCallback(() => {
-    setFocusProfile(prev => !prev);
-  }, [focusProfile]);
+  const showLayerPopup = useCallback(
+    e => {
+      e.stopPropagation();
+      setFocusProfile(true);
+    },
+    [focusProfile],
+  );
 
   const handleLogout = useCallback(() => {
     localStorage.clear();
@@ -37,7 +42,12 @@ const CommonHeader = () => {
       height={'48px'}
       backgroundColor={colors.grey._3c}
     >
-      <FlexBox justify={'flex-start'} align={'center'} onClick={() => router.push('/admin/team')} style={{ cursor: 'pointer' }}>
+      <FlexBox
+        justify={'flex-start'}
+        align={'center'}
+        onClick={pathname === '/admin/profile' ? () => console.log('') : () => router.push('/admin/team')}
+        style={{ cursor: 'pointer' }}
+      >
         {/*<Icon name={'LOGO_ICON'} size={40} />*/}
         <div
           style={{
@@ -63,16 +73,17 @@ const CommonHeader = () => {
 
       {isSessionStorage ? null : (
         <FlexBox justify={'flex-end'} align={'center'}>
-          <FlexBox justify={'flex-end'} align={'center'} onClick={test} style={{ cursor: 'pointer' }}>
+          <FlexBox justify={'flex-end'} align={'center'} onClick={e => showLayerPopup(e)} style={{ cursor: 'pointer' }}>
             <ProfileIcon />
             <Icon name={'NAVIGATION_CHEVRON_DOWN'} style={{ marginLeft: '8px', cursor: 'pointer' }} size={24} />
           </FlexBox>
 
           <LayerPopup
             display={focusProfile}
+            setFocusProfile={setFocusProfile}
             topText={userInfo.userId}
             normalText={[
-              { text: '프로필 설정', onClick: () => router.push('/admin/profile/update') },
+              { text: '프로필 설정', onClick: pathname === '/admin/profile' ? () => console.log('') : () => router.push('/admin/profile/update') },
               { text: '로그아웃', onClick: handleLogout },
             ]}
           />

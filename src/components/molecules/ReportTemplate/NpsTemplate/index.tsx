@@ -11,6 +11,7 @@ import Icon from '../../../atoms/Icon';
 import { BasicHorizontalBarChart, TableBarChart } from '../../../atoms/Chart';
 import { basicBarTestData3, featureSpecificDetailData, tableBarChartTestData } from '../../../../assets/dummy/dummyData';
 import AnnouncementBox from '../../AnnouncementBox';
+import { reportHeader } from '../FeatureSpecificDetailTemplate';
 
 const NpsTemplate = ({ modalControl }) => {
   const {
@@ -27,11 +28,13 @@ const NpsTemplate = ({ modalControl }) => {
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox justify={'flex-start'} align={'center'}>
-          <span css={[heading3_bold, { marginRight: '32px' }]}>순 추천 고객 지수(NPS)</span>
+        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
+            순 추천 고객 지수(NPS)
+          </span>
           <CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />
         </FlexBox>
-        <FlexBox justify={'flex-end'}>
+        <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_CHEVRON_RIGHT'} text={'원본 데이터 확인하기'} />
           <IconTextButton textStyle={'custom'} name={'NAVIGATION_CHEVRON_RIGHT'} text={'리서치 코멘트 확인하기'} />
         </FlexBox>

@@ -7,11 +7,11 @@ import SearchInput from '../../atoms/SearchInput';
 import IconTextButton from '../../atoms/Button/IconTextButton';
 import MemberList from '../../template/MemberList';
 import { css } from '@emotion/react';
-import { fetchMemberListApi } from '../../../api/teamApi';
+import { fetchMemberListApi, fetchMemberRemoveApi } from '../../../api/teamApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { ReducerType } from '../../../store/reducers';
-import { useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import LayerPopup from '../../atoms/LayerPopup';
 import TableDropDown from '../../atoms/TableDropDown';
 import { AXIOS_GET } from '../../../hooks/useAxios';
@@ -51,11 +51,15 @@ const TeamMember = () => {
       { text: '관리자로 변경하기', onClick: null },
       { text: '우리 팀에서 내보내기', onClick: null },
     ],
+    invite: [
+      { text: '우리 팀에서 내보내기', onClick: null },
+      { text: '초대 메일 다시 보내기', onClick: null },
+    ],
+    myRole: [{ text: '팀에서 나가기', onClick: null }],
   });
 
   // ============ React Query ============ //
-  console.log(selectTeamSeq, '!');
-  const { data, isLoading } = useQuery(['fetchMemberList', teamSeq], () => fetchMemberListApi(teamSeq), {
+  const { data, isLoading, refetch } = useQuery(['fetchMemberList', teamSeq], () => fetchMemberListApi(teamSeq), {
     enabled: !!teamSeq,
     onError: (e: any) => {
       const errorData = e.response.data;
@@ -69,6 +73,7 @@ const TeamMember = () => {
       }
     },
   });
+
   // ============ React Query ============ //
 
   const submitData = useCallback(
@@ -82,6 +87,15 @@ const TeamMember = () => {
     console.log(name);
     if (name === '관리자로 변경하기' || name === '멤버로 변경하기') {
       dispatch(isShow({ isShow: true, type: 'changeMemberAuth' }));
+    }
+    if (name === '우리 팀에서 내보내기' || name === '팀에서 나가기') {
+      dispatch(isShow({ isShow: true, type: 'removeMember' }));
+    }
+    if (name === '초대 메일 다시 보내기') {
+      dispatch(isShow({ isShow: true, type: 'inviteMember' }));
+    }
+    if (name === '팀에서 나가기') {
+      dispatch(isShow({ isShow: true, type: 'withdrawalTeam' }));
     }
   }, []);
 
@@ -107,7 +121,15 @@ const TeamMember = () => {
           display={focus}
           top={positionValue.y + 10}
           left={positionValue.x - 120}
-          normalText={teamRoleType === '관리자' ? dropDownList?.manager : dropDownList?.member}
+          normalText={
+            teamRoleType === '맴버'
+              ? dropDownList?.member
+              : teamRoleType === '관리자'
+              ? dropDownList?.manager
+              : teamRoleType === 'myRole'
+              ? dropDownList.myRole
+              : dropDownList.invite
+          }
         />
         <MemberList
           isLoading={isLoading}

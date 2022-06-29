@@ -21,6 +21,9 @@ interface PropsType {
   handleClickIndex?: (e, index) => void;
   detailIndex?: number;
   infoBox?: boolean;
+  onMouseOver?: any;
+  onMouseLeave?: any;
+  activeIndex?: number | null;
   [key: string]: any;
 }
 const BasicBarChart = ({
@@ -36,6 +39,9 @@ const BasicBarChart = ({
   setSelectedIndex,
   handleClickIndex,
   detailIndex,
+  onMouseOver,
+  onMouseLeave,
+  activeIndex,
   infoBox = false,
   ...props
 }: PropsType) => {
@@ -69,8 +75,10 @@ const BasicBarChart = ({
               {dataList.map((entry, index) => (
                 <Cell
                   onClick={e => handleClickIndex(e, detailIndex)}
+                  onMouseOut={e => onMouseLeave(e)}
+                  onMouseOver={e => onMouseOver(e, detailIndex)}
                   cursor="pointer"
-                  fill={barColor ? barColor : negative ? '#E87490' : '#68A0F4'}
+                  fill={activeIndex === detailIndex ? '#3375d6' : barColor ? barColor : negative ? '#E87490' : '#68A0F4'}
                   key={`cell-${detailIndex}`}
                 />
               ))}
