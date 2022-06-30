@@ -80,10 +80,6 @@ const TeamDashboard = () => {
   const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
   // const selectTeamSeq = localStorage.getItem('teamSeq');
 
-  useEffect(() => {
-    queryClient.removeQueries('fetchInviteUserInfo');
-  }, []);
-
   // ============ React Query ============ //
   const { data: teamListData, isLoading } = useQuery(['fetchTeamList'], fetchTeamListApi, {
     onError: (e: any) => {
@@ -136,7 +132,6 @@ const TeamDashboard = () => {
           updateTeamInfo([
             {
               teamSeq: null,
-              teamRoleType: null,
               teamNm: `${userInfo?.userName}`,
               teamMember: [userInfo?.userName.slice(0, 1)],
               createDt: null,

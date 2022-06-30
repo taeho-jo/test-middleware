@@ -144,7 +144,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
 
                   <FlexBox style={{ ...graphBosStyle, overflow: 'unset' }} justify={'center'} align={'flex-start'} overflow={'unset'}>
                     <FlexBox style={{ ...graphAreaStyle, overflow: 'unset' }} direction={'column'}>
-                      <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
+                      <div id={item.name} css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
                         <div css={[heading4_bold]}>1. 불편 언급 비율과 치명도</div>
                       </div>
                       <FlexBox
@@ -176,7 +176,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
 
                   <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
                     <FlexBox style={graphAreaStyle} direction={'column'} overflow={'unset'}>
-                      <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
+                      <div id={item.name} css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
                         <div css={[heading4_bold]}>2. 상세 내용</div>
                       </div>
                       <FlexBox
@@ -187,7 +187,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                         style={{ graphContainerStyle, padding: '32px 80px 80px' }}
                       >
                         <FlexBox style={{ border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 0', marginBottom: '36px' }}>
-                          <AnnouncementBox icon={'NOTI'} content={'클릭하면 주관식 응답을 확인할 수 있어요.'} />
+                          <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />
                         </FlexBox>
                         {sortList.map((detailItem, detailIndex) => {
                           return (
@@ -224,7 +224,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
 
                   <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
                     <FlexBox style={graphAreaStyle} direction={'column'}>
-                      <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
+                      <div id={item.name} css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
                         <div css={[heading4_bold]}>3. 사용성 요소별 점수</div>
                       </div>
                       <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>

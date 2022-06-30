@@ -6,8 +6,10 @@ import { css } from '@emotion/react';
 import { body3_bold, body3_medium, heading5_bold, heading5_regular } from '../../../../styles/FontStyles';
 import { colors } from '../../../../styles/Common.styles';
 import { checkIsInteger } from '../../../../common/util/commonFunc';
+import useOutsideClick from '../../../../hooks/useOutsideClick';
 interface PropsType {
-  selectedIndex: number;
+  selectedIndex?: any;
+  setSelectedIndex?: any;
   dataList: { count: number; name: string; rawData: string[]; value: number };
   barColor?: string;
   onMouseLeave?: (e) => void;
@@ -21,10 +23,15 @@ const BasicHorizontalBarChart = ({
   onMouseLeave,
   onMouseOver,
   index,
+  setSelectedIndex,
   selectedIndex,
   handleClickIndex,
 }: PropsType) => {
   const boxRef = useRef(null);
+
+  useOutsideClick(boxRef, () => {
+    setSelectedIndex(null);
+  });
 
   return (
     <div css={barChartBoxStyle}>
@@ -56,7 +63,7 @@ const BasicHorizontalBarChart = ({
             </FlexBox>
             <FlexBox justify={'space-between'} style={{ marginBottom: '12px' }}>
               <span css={body3_medium}>인원수</span>
-              <span css={body3_bold}>{checkIsInteger(dataList.count)}ㅇ</span>
+              <span css={body3_bold}>{checkIsInteger(dataList.count)}명</span>
             </FlexBox>
             <FlexBox justify={'space-between'}>
               <span css={body3_medium}>비율</span>

@@ -7,14 +7,12 @@ import SearchInput from '../../atoms/SearchInput';
 import IconTextButton from '../../atoms/Button/IconTextButton';
 import MemberList from '../../template/MemberList';
 import { css } from '@emotion/react';
-import { fetchMemberListApi, fetchMemberRemoveApi } from '../../../api/teamApi';
+import { fetchMemberListApi } from '../../../api/teamApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { ReducerType } from '../../../store/reducers';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import LayerPopup from '../../atoms/LayerPopup';
+import { useQuery, useQueryClient } from 'react-query';
 import TableDropDown from '../../atoms/TableDropDown';
-import { AXIOS_GET } from '../../../hooks/useAxios';
 import { useRouter } from 'next/router';
 import { fetchRefreshToken } from '../../../api/authApi';
 
@@ -62,7 +60,7 @@ const TeamMember = () => {
   const { data, isLoading, refetch } = useQuery(['fetchMemberList', teamSeq], () => fetchMemberListApi(teamSeq), {
     enabled: !!teamSeq,
     onError: (e: any) => {
-      const errorData = e.response.data;
+      const errorData = e?.response?.data;
       if (errorData.code === 'E0008') {
         queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
         queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
@@ -122,7 +120,7 @@ const TeamMember = () => {
           top={positionValue.y + 10}
           left={positionValue.x - 120}
           normalText={
-            teamRoleType === '맴버'
+            teamRoleType === '멤버'
               ? dropDownList?.member
               : teamRoleType === '관리자'
               ? dropDownList?.manager

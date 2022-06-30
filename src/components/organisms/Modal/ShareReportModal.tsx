@@ -68,6 +68,7 @@ const ShareReportModal = () => {
       await navigator.clipboard.writeText(text);
       dispatch(showToast({ message: '초대 링크 복사 완료', isShow: true, status: 'success', duration: 5000 }));
     } catch (error) {
+      console.log(error, 'ERRor');
       dispatch(showToast({ message: '초대 링크 복사 실패', isShow: true, status: 'warning', duration: 5000 }));
     }
   };

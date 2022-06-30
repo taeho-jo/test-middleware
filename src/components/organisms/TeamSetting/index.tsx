@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PageTitle from '../../atoms/PageTitle';
 import FlexBox from '../../atoms/FlexBox';
 import { heading3_bold } from '../../../styles/FontStyles';
@@ -20,6 +20,7 @@ const TeamSetting = () => {
     dispatch(isShow({ isShow: true, type: name }));
   }, []);
 
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
   const localSelectTeamSeq = localStorage.getItem('teamSeq');
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
@@ -27,6 +28,17 @@ const TeamSetting = () => {
 
   const teamSeq = selectTeamSeq ? selectTeamSeq : localSelectTeamSeq;
   const teamList = selectTeamList ? selectTeamList : localSelectTeamList;
+
+  const [myRole, setMyRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (userInfo && selectTeamList) {
+      const memberArr = selectTeamList?.teamMember;
+      const myRole = memberArr?.filter(el => el.userId === userInfo.userId)?.[0]?.teamRoleType;
+      setMyRole(myRole);
+    }
+  }, [userInfo, selectTeamList]);
+
   // ============ React Query ============ //
   const { data: productData, refetch } = useQuery(['fetchProductList', teamSeq], () => fetchProductListApi(teamSeq), {
     enabled: !!teamSeq,
@@ -63,7 +75,7 @@ const TeamSetting = () => {
           title={'팀 이름'}
           content={teamList ? teamList?.teamNm : ''}
           btnText={'팀 명 수정하기'}
-          showBtn={true}
+          showBtn={myRole === '멤버' ? false : true}
         />
         <SettingCard
           title={'프로덕트'}
@@ -75,7 +87,7 @@ const TeamSetting = () => {
               : productData?.data[0]?.productNm
           }
           btnText={'프로덕트 관리하기'}
-          showBtn={true}
+          showBtn={myRole === '멤버' ? false : true}
           // style={{ marginTop: '100px' }}
           onClick={productData?.data?.length === 0 ? showModalFun : () => router.push('/admin/setting/detail')}
           name={'createTeamProduct'}

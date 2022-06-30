@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { css } from '@emotion/react';
 import LogoIcon from '../../../assets/logoIcon.png';
 import LogoText from '../../../assets/DibyLogo_black.png';
@@ -45,6 +45,11 @@ const ReportSideBar = () => {
     dispatch(isShow({ isShow: true, type: 'shareReportModal' }));
   }, []);
 
+  const [clicked, setClicked] = useState('');
+  const changeClicked = useCallback(text => {
+    setClicked(text);
+  }, []);
+
   return (
     <div css={sidebarStyle}>
       <FlexBox
@@ -63,8 +68,8 @@ const ReportSideBar = () => {
       </FlexBox>
       <div css={{ height: 'calc(100vh - 136px)', overflow: 'scroll' }}>
         <TestInfoBox reportData={reportData} />
-        <RespondentAttributes />
-        <TestResults missionList={missionList} dataList={reportData?.indexList} />
+        <RespondentAttributes changeClicked={changeClicked} clicked={clicked} />
+        <TestResults clicked={clicked} changeClicked={changeClicked} missionList={missionList} dataList={reportData?.indexList} />
       </div>
     </div>
   );

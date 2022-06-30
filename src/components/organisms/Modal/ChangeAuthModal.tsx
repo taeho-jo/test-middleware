@@ -34,7 +34,7 @@ const ChangeAuthModal = () => {
         localStorage.clear();
         router.push('/');
       } else {
-        dispatch(showToast({ message: '권한 수정에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
+        dispatch(showToast({ message: errorData?.message, isShow: true, status: 'warning', duration: 5000 }));
       }
     },
     onSuccess: data => {

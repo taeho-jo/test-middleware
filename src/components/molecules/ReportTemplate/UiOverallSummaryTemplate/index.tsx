@@ -55,7 +55,7 @@ interface PropsType {
   };
 }
 
-const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl, comment }) => {
+const UiOverallSummaryTemplate = ({ id, dataList, register, errors, checked, handleChangeCheckBox, modalControl, comment }) => {
   const [selectedLabelIndex, setSelectedLabelIndex] = useState(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -88,10 +88,11 @@ const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleC
     [activeIndex],
   );
 
+  console.log(id, id, 'IDIDIDIDID');
   return (
     <>
-      <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
+      <FlexBox id={id} style={headerBosStyle} justify={'space-between'}>
+        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'} id={'#top'}>
           <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
             UI 진단 전체 요약
           </span>

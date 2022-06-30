@@ -53,12 +53,10 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
   }, [listData, searchText]);
   useEffect(() => {
     if (listData) {
-      const myInfo = listData.filter(el => el.userId === userInfo.userId)[0].teamRoleType;
+      const myInfo = listData.filter(el => el.userId === userInfo.userId)?.[0]?.teamRoleType;
       setMyRole(myInfo);
     }
   }, [listData]);
-
-  console.log(myRole, 'myRole');
 
   const { getElementProperty } = useGetElementProperty<HTMLElement>(cellRef);
 
@@ -87,16 +85,21 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
     } else {
       return list.map((el, index) => {
         const { userId, userName, joinDate, teamRoleType } = el;
+        console.log(userInfo.userId, userId, '!!!!!!!!!!!!!!!!!!');
 
         return (
           <FlexBox key={index} style={{ borderTop: '1px solid #DCDCDC', position: 'relative' }}>
             <FlexBox justify={'flex-start'} style={{ padding: '17px 16px', width: '50%' }}>
               <div css={{ flex: 1 }}>
-                <ProfileIcon name={userName.slice(0, 1)} backgroundColor={profileColor[index]} />
+                <ProfileIcon name={userName ? userName?.slice(0, 1) : '?'} backgroundColor={profileColor[index]} />
               </div>
 
               <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={{ marginLeft: '24px' }}>
-                <span css={[heading5_regular, { marginBottom: '7px' }]}>{`${userName} ${joinDate ? '' : '(합류를 기다리는 중)'}`}</span>
+                <span css={[heading5_regular, { marginBottom: '7px' }]}>
+                  {userName
+                    ? `${userName} ${joinDate ? '' : '(합류를 기다리는 중)'}`
+                    : `${userId.split('@')[0]} ${joinDate ? '' : '(합류를 기다리는 중)'}`}
+                </span>
                 <span css={[heading5_regular, { color: colors.grey._99 }]}>{userId}</span>
               </FlexBox>
             </FlexBox>
@@ -110,7 +113,7 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
             </FlexBox>
 
             <FlexBox justify={'center'} align={'center'} style={{ padding: '17px 0', flex: 1 }}>
-              {myRole === '맴버' ? (
+              {myRole === '멤버' ? (
                 userInfo.userId === userId ? (
                   <Icon
                     onClick={() => handleClickDropdown(index, 'myRole', el)}
@@ -129,13 +132,6 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
                   style={{ cursor: 'pointer' }}
                 />
               )}
-              {/*<Icon*/}
-              {/*  onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}*/}
-              {/*  forwardref={(el: never) => (cellsRef.current[index] = el)}*/}
-              {/*  name={'MORE_HORIZON'}*/}
-              {/*  size={24}*/}
-              {/*  style={{ cursor: 'pointer' }}*/}
-              {/*/>*/}
             </FlexBox>
           </FlexBox>
         );

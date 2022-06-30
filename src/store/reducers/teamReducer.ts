@@ -5,6 +5,7 @@ export interface memberListType {
   teamSeq: number;
   userId: string;
   userName: string;
+  teamRoleType: string;
 }
 export interface ProductType {
   planetType: string;
@@ -17,7 +18,7 @@ export interface ProductType {
 export interface TeamListType {
   teamNm: string;
   teamMember: memberListType[];
-  teamRoleType: string | null;
+  // teamRoleType: string | null;
   teamSeq: number | null;
   createDt: string | null;
 }
