@@ -5,6 +5,7 @@ import { colors } from '../../../../styles/Common.styles';
 import { css } from '@emotion/react';
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../../../store/reducers';
+import { useRouter } from 'next/router';
 
 const data = [
   { value: '성별', children: [] },
@@ -19,10 +20,13 @@ const data = [
   },
 ];
 
-const RespondentAttributes = () => {
+const RespondentAttributes = ({ changeClicked, clicked }) => {
   const answerInfo = useSelector<ReducerType, any>(state => state.report.data);
   const [dataArr, setDataArr] = useState([]);
-  console.log(answerInfo?.answerInfoSection);
+  const [indexClicked, setIndexClicked] = useState(false);
+
+  const router = useRouter();
+  console.log(router.query.id, 'AEG');
   // const answerObject = answerInfo?.answerInfoSection?.ageGradeInfoList.length !== 0 ? { value: '성별', children: [] } : null;
 
   const makeAnswerArr = useCallback(() => {
@@ -52,24 +56,32 @@ const RespondentAttributes = () => {
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>응답자 특성</span>
-      <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={infoBox}>
-        <ul>
-          {dataArr?.map((el, index) => {
-            return (
-              <Fragment key={index}>
-                <li css={[liStyle, body3_regular]}>{el.value}</li>
-                {el?.children.map((item, index) => {
-                  return (
-                    <ul key={`children-${index}`}>
-                      <li css={[childrenLiStyle, caption1_regular]}>{item.value}</li>
-                    </ul>
-                  );
-                })}
-              </Fragment>
-            );
-          })}
-        </ul>
-      </FlexBox>
+      <a style={{ width: '100%', textDecoration: 'none' }} href={'#one'}>
+        <FlexBox
+          onClick={() => changeClicked('one')}
+          direction={'column'}
+          align={'flex-start'}
+          justify={'flex-start'}
+          style={clicked === 'one' ? infoBox : infoBox2}
+        >
+          <ul>
+            {dataArr?.map((el, index) => {
+              return (
+                <Fragment key={index}>
+                  <li css={[liStyle, body3_regular]}>{el.value}</li>
+                  {el?.children.map((item, index) => {
+                    return (
+                      <ul key={`children-${index}`}>
+                        <li css={[childrenLiStyle, caption1_regular]}>{item.value}</li>
+                      </ul>
+                    );
+                  })}
+                </Fragment>
+              );
+            })}
+          </ul>
+        </FlexBox>
+      </a>
     </FlexBox>
   );
 };
@@ -80,11 +92,19 @@ const testInfoBoxStyle = css`
   padding: 32px 24px 16px 24px;
 `;
 const infoBox = css`
-  background: ${colors.grey._fa};
-  border: 1px solid #dcdcdc;
+  background: ${colors.white};
+  border: 2px solid ${colors.blue._500};
   border-radius: 16px;
   margin-top: 8px;
   padding: 16px;
+`;
+const infoBox2 = css`
+  background: ${colors.white};
+  border: 1px solid ${colors.grey._3c};
+  border-radius: 16px;
+  margin: 8px 0;
+  padding: 16px;
+  height: auto;
 `;
 const liStyle = css`
   list-style: inside;

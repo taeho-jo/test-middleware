@@ -79,7 +79,6 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
       </FlexBox>
 
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
-        명
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
             <div css={[heading4_bold]}>{dataList.intent}</div>
@@ -88,7 +87,7 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
           <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
             <FlexBox direction={'column'} style={{ border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 0', marginBottom: '36px' }}>
               <span css={[heading5_regular, { color: colors.grey._99, marginBottom: '12px' }]}>Q. {dataList.name}</span>
-              <AnnouncementBox icon={'NOTI'} content={'클릭하면 주관식 응답을 확인할 수 있어요.'} />
+              <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />
             </FlexBox>
 
             <FlexBox

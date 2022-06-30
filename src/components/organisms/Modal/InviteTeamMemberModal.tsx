@@ -43,6 +43,7 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
     handleSubmit,
     reset,
     formState: { errors },
+    setValue,
   } = useForm<InputType>({});
 
   const onSubmit = data => handleInvite('success', data);
@@ -61,33 +62,37 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
         localStorage.clear();
         router.push('/');
       } else {
-        dispatch(showToast({ message: '인증메일 재전송에 실패하였습니다.', isShow: true, status: 'waring', duration: 5000 }));
+        dispatch(showToast({ message: errorData.message, isShow: true, status: 'waring', duration: 5000 }));
       }
     },
     onSuccess: data => {
+      dispatch(showToast({ message: '초대 메일을 발송하였습니다.', isShow: true, status: 'waring', duration: 5000 }));
       queryClient.invalidateQueries(['fetchMemberList', selectTeamSeq]);
       dispatch(isShow({ isShow: false, type: '' }));
     },
   });
 
-  const handleInvite = useCallback((status, data) => {
-    const mailArr = data.email?.trim().split(/[, ]+/).join('\n').split('\n');
-    const newMailArr = mailArr.filter(el => el.match(emailRex));
+  const handleInvite = useCallback(
+    (status, data) => {
+      const mailArr = data.email?.trim().split(/[, ]+/).join('\n').split('\n');
+      const newMailArr = mailArr.filter(el => el.match(emailRex));
 
-    const sendObject = {
-      teamSeq: selectTeamSeq,
-      inviteMembers: newMailArr,
-      inviteUserName: userInfo?.userName,
-      emailTemplateName: INVITE_EMAIL_TEMPLATE,
-    };
+      const sendObject = {
+        teamSeq: selectTeamSeq,
+        inviteMembers: newMailArr,
+        inviteUserName: userInfo?.userName,
+        emailTemplateName: INVITE_EMAIL_TEMPLATE,
+      };
 
-    if (newMailArr.length === 0 || mailArr.length !== newMailArr.length) {
-      dispatch(showToast({ message: '올바르지 않은 이메일 형식이 포함되어있습니다.', isShow: true, status: 'warning', duration: 5000 }));
-    } else {
-      setSendObject(sendObject);
-      mutate(sendObject);
-    }
-  }, []);
+      if (newMailArr.length === 0 || mailArr.length !== newMailArr.length) {
+        dispatch(showToast({ message: '올바르지 않은 이메일 형식이 포함되어있습니다.', isShow: true, status: 'warning', duration: 5000 }));
+      } else {
+        setSendObject(sendObject);
+        mutate(sendObject);
+      }
+    },
+    [selectTeamSeq],
+  );
 
   const handleProcessingError = useCallback((status, errors) => {
     // dispatch(showToast({ message: '가입된 계정이 없습니다. 다시 확인해주세요!', isShow: true, status: 'warning', duration: 5000 }));
@@ -108,6 +113,7 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
 
   useEffect(() => {
     if (selectTeamSeq) {
+      setValue('label', `${CURRENT_DOMAIN}/admin/welcome?teamSeq=${selectTeamSeq}`);
       setCopyUrl(`${CURRENT_DOMAIN}/admin/welcome?teamSeq=${selectTeamSeq}`);
     }
   }, [selectTeamSeq]);
@@ -123,8 +129,8 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
             onClick={() => handleCopyClipBoard(copyUrl)}
             title={'링크 복사'}
             register={register}
-            label={'link'}
-            defaultValue={`${CURRENT_DOMAIN}/admin/welcome?teamSeq=${teamSeq}`}
+            label={'label'}
+            defaultValue={copyUrl}
             errors={errors}
             readOnly={true}
             style={{ marginBottom: '16px' }}

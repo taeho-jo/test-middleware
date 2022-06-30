@@ -65,7 +65,7 @@ const PriceEvaluationTemplate = () => {
               <span css={[heading5_regular, { color: colors.grey._99, marginBottom: '12px' }]}>
                 Q. [ 서비스명 ]의 사용 비용은 []조건으로 []원 입니다. 우쥬인님께서는 해당 서비스를 유료 구매하실 의향이 있으신가요?
               </span>
-              <AnnouncementBox icon={'NOTI'} content={'클릭하면 주관식 응답을 확인할 수 있어요.'} />
+              <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />
             </FlexBox>
 
             <FlexBox width={'100%'}>
@@ -88,7 +88,7 @@ const PriceEvaluationTemplate = () => {
               <span css={[heading5_regular, { color: colors.grey._99, marginBottom: '12px' }]}>
                 Q. [ 서비스명 ]의 [ 문제 해결 방식 ]이 [ /7]정도로 [ 문제 상황 ] 을 해결한다고 생각하신 이유는 무엇인가요?
               </span>
-              <AnnouncementBox icon={'NOTI'} content={'클릭하면 주관식 응답을 확인할 수 있어요.'} />
+              <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />
             </FlexBox>
 
             <BasicBarChart

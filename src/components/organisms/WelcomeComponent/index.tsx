@@ -26,12 +26,8 @@ const WelcomeComponent = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
-  console.log(router, '~');
-  const { teamSeq, type } = router.query;
-  const token = localStorage.getItem('accessToken');
-  const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
 
-  console.log(teamSeq);
+  const { teamSeq, type } = router.query;
 
   const [toggleStatus, setToggleStatus] = useState(false);
 
@@ -55,54 +51,41 @@ const WelcomeComponent = () => {
     },
     onSuccess: data => {
       // localStorage.setItem('accessToken', data?.data?.token);
-      router.push(`/?type=${teamSeq}&token=${data?.data?.token}`);
+      router.push(`/?teamSeq=${teamSeq}&token=${data?.data?.token}`);
     },
   });
-
-  // 로그이 유저 info
-  // const { data: LoginUsersInfo, refetch: infoRefetch } = useQuery(
-  //   ['fetchInviteUserInfo'],
-  //   () => fetchInviteUserInfoApi(teamSeq, loginData?.data?.token),
-  //   {
-  //     enabled: !!loginData?.code,
-  //     onSuccess: data => {
-  //       localStorage.setItem('accessToken', loginData?.data?.token);
-  //       dispatch(setUserInfo(data.data));
-  //
-  //       if (data.data.emailVerifiedYn === 'N') {
-  //         router.push('/');
-  //         dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-  //       }
-  //       if (data.data.emailVerifiedYn === 'Y') {
-  //         router.push('/admin/team');
-  //       }
-  //     },
-  //   },
-  // );
 
   const { mutate: signupMutate, data: signupData } = useMutation(['signup', 'invite', teamSeq], fetchSignupApi, {
     onError: (e: any) => {
       const { data } = e.response;
       dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
     },
-    onSuccess: data => {
+  });
+
+  useEffect(() => {
+    if (signupData) {
       localStorage.setItem('accessToken', signupData.data.token);
       dispatch(setToken(signupData.data.token));
-      dispatch(showToast({ message: data.message, isShow: true, status: 'success', duration: 5000 }));
+      dispatch(showToast({ message: '회원가입에 성공하셨습니다.', isShow: true, status: 'success', duration: 5000 }));
+      queryClient.invalidateQueries(['fetchInviteUserInfo']);
+    }
+  }, [signupData]);
+  const { data: signUpUsersInfo, refetch: inviteInfoRefetch } = useQuery(
+    ['fetchInviteUserInfo'],
+    () => fetchInviteUserInfoApi(router.query.teamSeq, loginData?.data.token),
+    {
+      enabled: !!signupData?.code,
+      onSuccess: data => {
+        dispatch(setUserInfo(data.data));
+        if (data.data.emailVerifiedYn === 'N') {
+          dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+        }
+        if (data.data.emailVerifiedYn === 'Y') {
+          router.push('/admin/team');
+        }
+      },
     },
-  });
-  const { data: signUpUsersInfo } = useQuery(['fetchInviteUserInfo'], () => fetchInviteUserInfoApi(router.query.teamSeq, loginData?.data.token), {
-    enabled: !!signupData?.code,
-    onSuccess: data => {
-      dispatch(setUserInfo(data.data));
-      if (data.data.emailVerifiedYn === 'N') {
-        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-      }
-      if (data.data.emailVerifiedYn === 'Y') {
-        router.push('/admin/team');
-      }
-    },
-  });
+  );
   // ============ React Query ============ //
 
   // token이 있는 경우 --> 로그인이 되어있는 경우
@@ -111,20 +94,33 @@ const WelcomeComponent = () => {
   const handleSignup = useCallback(
     (status, signupData) => {
       const { consentToUseMarketingYn, password, privacyConsentYn, userId } = signupData;
-
+      let sendObject;
       if (!toggleStatus) {
-        const sendObject = {
-          userId,
-          password,
-          userName: userId.split('@')[0],
-          privacyConsentYn: 'Y',
-          consentToUseMarketingYn: 'Y',
-          emailTemplateName: INVITE_CONFIRM_EMAIL_TEMPLATE,
-        };
+        if (teamSeq) {
+          sendObject = {
+            userId,
+            password,
+            userName: userId.split('@')[0],
+            privacyConsentYn: 'Y',
+            consentToUseMarketingYn: 'Y',
+            emailTemplateName: INVITE_CONFIRM_EMAIL_TEMPLATE,
+            teamSeq: teamSeq,
+          };
+        } else {
+          sendObject = {
+            userId,
+            password,
+            userName: userId.split('@')[0],
+            privacyConsentYn: 'Y',
+            consentToUseMarketingYn: 'Y',
+            emailTemplateName: INVITE_CONFIRM_EMAIL_TEMPLATE,
+          };
+        }
+
         signupMutate(sendObject);
       }
     },
-    [toggleStatus],
+    [toggleStatus, teamSeq],
   );
 
   const handleLogin = useCallback(

@@ -58,7 +58,7 @@ const AdminSideBar = () => {
         <span css={heading5_bold}>팀</span>
         <Icon onClick={() => dispatch(isShow({ isShow: true, type: 'createTeam' }))} name={'ACTION_CREATE'} size={24} style={{ cursor: 'pointer' }} />
       </FlexBox>
-      {sideTeamList()}
+      <div css={{ height: 'calc(100% - 95px)', overflow: 'scroll' }}>{sideTeamList()}</div>
       <FlexBox justify={'center'} style={{ marginTop: '24px' }}>
         <MoreTeamInfoPopup textArr={['리서치에 필요한 응답자를', '정확하고 빠르게 모집할 수 있어요!']} />
       </FlexBox>

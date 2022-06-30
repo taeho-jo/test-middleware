@@ -13,6 +13,8 @@ import { fetchChangePasswordApi } from '../../../api/authApi';
 import { useRouter } from 'next/router';
 import TextButton from '../../atoms/Button/TextButton';
 import { useMutation } from 'react-query';
+import { showToast } from '../../../store/reducers/toastReducer';
+import { useDispatch } from 'react-redux';
 
 const pwInquiryInputArr = [
   {
@@ -25,6 +27,7 @@ const pwInquiryInputArr = [
 ];
 
 const ResetPw = () => {
+  const dispatch = useDispatch();
   const email = sessionStorage.getItem('userId');
   const router = useRouter();
 
@@ -37,7 +40,12 @@ const ResetPw = () => {
   const onSubmit = data => handleResetPassword('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const { mutate, isLoading, data } = useMutation(['fetchChangePassword'], fetchChangePasswordApi);
+  const { mutate, isLoading, data } = useMutation(['fetchChangePassword'], fetchChangePasswordApi, {
+    onSuccess: data => {
+      dispatch(showToast({ message: '비밀번호가 성공적으로 변경되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+      router.push('/admin/reset-password-success');
+    },
+  });
 
   const handleResetPassword = useCallback((status, data) => {
     const sendObject = {

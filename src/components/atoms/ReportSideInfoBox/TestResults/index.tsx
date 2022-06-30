@@ -6,21 +6,30 @@ import { colors } from '../../../../styles/Common.styles';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
-const data = [
-  { title: '1', name: '리포트 전체 요약' },
-  { title: 'Task 2', name: '일자리 지원하기 (도움 받기)' },
-  { title: 'Q1', name: 'UX 리서치와 관련해서 필요한 정보를 수집하는 채널을 비중이 높은 순으로 최대 3개까지 선택해주세요.' },
-  { title: 'Q1', name: 'UX 리서치와 관련해서 필요한 정보를 수집하는 채널을 비중이 높은 순으로 최대 3개까지 선택해주세요.' },
-];
-
-const TestResults = ({ dataList, missionList }) => {
-  const router = useRouter();
-  console.log(router, 'RouTer');
+const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const [intentList, setIntentList] = useState([]);
   const [selectIntent, setSelectIntent] = useState<number | null>(null);
+  const [detailSelectIntent, setDetailSelectIntent] = useState(null);
+  const [text, setText] = useState('');
 
-  const handleSelectIntent = useCallback((e, index) => {
-    setSelectIntent(index);
+  const handleSelectIntent = useCallback(
+    (e, index) => {
+      if (index === 'top') {
+        setDetailSelectIntent(null);
+        setSelectIntent(0);
+        changeClicked('');
+      } else {
+        setDetailSelectIntent(null);
+        setSelectIntent(index);
+        changeClicked('');
+      }
+    },
+    [changeClicked, clicked],
+  );
+
+  const handleDetailSelectIntent = useCallback(index => {
+    setSelectIntent(null);
+    setDetailSelectIntent(index);
   }, []);
 
   useEffect(() => {
@@ -30,42 +39,63 @@ const TestResults = ({ dataList, missionList }) => {
     }
   }, [dataList, missionList]);
 
-  console.log(intentList, 'INTENTLIST');
-
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>테스트 결과</span>
       {intentList?.map((el, index) => {
         return (
-          <Fragment key={index}>
-            <a style={{ width: '100%', textDecoration: 'none' }} href={el.title ? `#${el.name}` : el.code ? `#${el.code}` : '#top'}>
-              <FlexBox
-                direction={'column'}
-                align={'flex-start'}
-                justify={'flex-start'}
-                style={selectIntent === index ? infoBox : infoBox2}
-                onClick={e => handleSelectIntent(e, index)}
-              >
-                <div css={[body3_medium, { height: 'auto', cursor: 'pointer' }]}>
-                  {el.title ? (
-                    <>
-                      <span>{el.title}</span>
-                      <br />
-                    </>
-                  ) : null}
-                  {/*{index === 0 ? (*/}
-                  {/*  <a css={{ textDecoration: 'none', color: colors.grey._3c }} href={'#top'} onClick={() => console.log(el.code)}>*/}
-                  {/*    {el.name}*/}
-                  {/*  </a>*/}
-                  {/*) : (*/}
-                  {/*<a css={{ textDecoration: 'none' }} href={el.title ? `#${el.name}` : el.code ? `#${el.code}` : '#top'}>*/}
-                  <span css={{ color: colors.grey._3c }}>{el.name}</span>
-                  {/*</a>*/}
-                  {/*)}*/}
-                </div>
-              </FlexBox>
-            </a>
-          </Fragment>
+          <>
+            <Fragment key={index}>
+              <a style={{ width: '100%', textDecoration: 'none' }} href={el.title ? `#${el.name}` : el.code ? `#${el.code}` : '#top'}>
+                <FlexBox
+                  direction={'column'}
+                  align={'flex-start'}
+                  justify={'flex-start'}
+                  style={selectIntent === index ? infoBox : infoBox2}
+                  // setSelectIntent={setSelectIntent}
+                  onClick={e => handleSelectIntent(e, index === 0 ? 'top' : index)}
+                >
+                  <div css={[body3_medium, { height: 'auto', cursor: 'pointer' }]}>
+                    {el.title ? (
+                      <>
+                        <span>{el.title}</span>
+                        <br />
+                      </>
+                    ) : null}
+                    <span css={{ color: colors.grey._3c }}>{el.name}</span>
+                  </div>
+                </FlexBox>
+              </a>
+            </Fragment>
+            {el.detail?.map((item, idx) => {
+              const splitData = item.name.split('-');
+              const id = splitData[1].trim();
+              return (
+                <Fragment key={idx}>
+                  <a style={{ width: '100%', textDecoration: 'none' }} href={`#${id}`}>
+                    <FlexBox
+                      direction={'column'}
+                      align={'flex-start'}
+                      justify={'flex-start'}
+                      style={detailSelectIntent === `${index}-${idx}` ? infoBox : infoBox2}
+                      setSelectIntent={setSelectIntent}
+                      onClick={() => handleDetailSelectIntent(`${index}-${idx}`)}
+                    >
+                      <div css={[body3_medium, { height: 'auto', cursor: 'pointer' }]}>
+                        {item.title ? (
+                          <>
+                            <span>{item.title}</span>
+                            <br />
+                          </>
+                        ) : null}
+                        <span css={{ color: colors.grey._3c }}>{item.name}</span>
+                      </div>
+                    </FlexBox>
+                  </a>
+                </Fragment>
+              );
+            })}
+          </>
         );
       })}
     </FlexBox>

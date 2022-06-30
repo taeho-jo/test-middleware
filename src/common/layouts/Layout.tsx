@@ -76,37 +76,41 @@ const Layout = ({ children }: PropsType) => {
     },
   });
 
-  const { data: usersInviteInfo, refetch: inviteRefetch } = useQuery(['fetchInviteUserInfo', 'layout'], () => fetchInviteUserInfoApi(type, token), {
-    enabled: !!token,
-    onError: (e: any) => {
-      const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        refetch();
-      } else if (errorData.code === 'E0007') {
-        localStorage.clear();
-        router.push('/');
-      }
-    },
-    onSuccess: data => {
-      dispatch(setUserInfo(data.data));
-      if (data.data.emailVerifiedYn === 'N') {
-        router.push('/');
-        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-      }
-      if (data.data.emailVerifiedYn === 'Y') {
-        router.push('/admin/team');
-      }
-    },
-  });
-
-  const { mutate } = useMutation(['fetchEmailConfirm'], fetchEmailConfirmApi, {
+  const { mutate, data: confirmData } = useMutation(['fetchEmailConfirm'], fetchEmailConfirmApi, {
     onError: e => console.log('error:::', e),
     onSuccess: data => {
       dispatch(isShow({ isShow: false, type: '' }));
       refetch();
     },
   });
+
+  const { data: usersInviteInfo, refetch: inviteRefetch } = useQuery(
+    ['fetchInviteUserInfo', 'layout'],
+    () => fetchInviteUserInfoApi(teamSeq, token),
+    {
+      enabled: !!confirmData,
+      onError: (e: any) => {
+        const errorData = e.response.data;
+        if (errorData.code === 'E0008') {
+          queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+          refetch();
+        } else if (errorData.code === 'E0007') {
+          localStorage.clear();
+          router.push('/');
+        }
+      },
+      onSuccess: data => {
+        dispatch(setUserInfo(data.data));
+        if (data.data.emailVerifiedYn === 'N') {
+          router.push('/');
+          dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+        }
+        if (data.data.emailVerifiedYn === 'Y') {
+          router.push('/admin/team');
+        }
+      },
+    },
+  );
 
   useEffect(() => {
     if (router?.pathname !== '/admin/report/[id]') {
@@ -140,27 +144,50 @@ const Layout = ({ children }: PropsType) => {
     if (Object.keys(router.query).length !== 0) {
       dispatch(isShow({ isShow: false, type: '' }));
       const query = router?.query;
-      const { token, userId, type, teamseq } = query;
+      const { token, userId, type, teamSeq } = query;
 
-      if (token && !userId && type) {
+      console.log('token:::', token);
+      console.log('userId:::', userId);
+      console.log('type:::', type);
+      console.log('teamseq:::', teamSeq);
+      // 구글로그인 했거나, 초대받은사람이 로그인하거나
+      if (token && !userId && type && !teamSeq) {
         localStorage.setItem('accessToken', `${token}`);
         // dispatch(setSetting(true));
         refetch();
       }
-      if (token && !userId && !type) {
+      if (token && !userId && !type && !teamSeq) {
         localStorage.setItem('accessToken', `${token}`);
         mutate();
       }
-      if (token && !userId && type) {
+      if (token && !userId && type && teamSeq) {
         console.log('여기야?');
         localStorage.setItem('accessToken', `${token}`);
         inviteRefetch();
       }
-      if (token && userId && !type) {
+      if (token && !userId && !type && teamSeq) {
+        console.log('여기야?');
+        localStorage.setItem('accessToken', `${token}`);
+        inviteRefetch();
+      }
+      if (token && userId && !type && !teamSeq) {
         sessionStorage.setItem('accessToken', `${token}`);
         sessionStorage.setItem('userId', `${userId}`);
         router.push('/admin/reset-password');
       }
+
+      // 1. 쿼리스트링 받아옴
+      // 로그인 = token, 회원가입 = rToken
+      // 구글 = gToken, 초대 = iToken, 재설정 = rToken , 이메일인증 = cToken,
+      // if (iToken) {
+      //   // 초대(쿼리)
+      // } else if (gToken) {
+      //   // 구글(쿼리)
+      // } else if (rToken) {
+      //   // 재설정(쿼리)
+      // } else {
+      //   // 로그인, 회원가입
+      // }
     }
   }, [router.query, token]);
 

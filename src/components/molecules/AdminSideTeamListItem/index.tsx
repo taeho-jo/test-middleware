@@ -29,6 +29,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
   const isFirstCreateTeam = useSelector<ReducerType, boolean>(state => state.team.isFirstCreate);
   const isInviteModal = useSelector<ReducerType, boolean>(state => state.team.isInviteModal);
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
+  const teamSeq = useSelector<ReducerType, number>(state => state.team.teamSeq);
 
   const [focusItem, setFocusItem] = useState(null);
 
@@ -84,7 +85,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
             <Fragment key={index}>
               <ProfileIcon
                 name={item?.userName?.slice(0, 1)}
-                backgroundColor={profileColor[index]}
+                backgroundColor={parentsIndex === teamSeq ? profileColor[index] : 'grey'}
                 size={'20px'}
                 fontStyle={caption2_bold}
                 margin={'0 6px 0 0'}

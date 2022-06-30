@@ -126,6 +126,7 @@ const Report = ({ params }) => {
 
             {/* UI 진단 전체 요약 */}
             <UiOverallSummaryTemplate
+              id={'top'}
               modalControl={modalControl}
               handleChangeCheckBox={handleChangeCheckBox}
               checked={filterFail}

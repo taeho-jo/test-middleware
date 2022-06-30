@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 // Redux
 import { showToast } from '../../../store/reducers/toastReducer';
@@ -57,6 +57,7 @@ const ReLoginComponent = () => {
   const { data: usersInfo } = useQuery(['fetchUserInfo', `signup/${loginData?.code}`], () => fetchUserInfoApi(loginData?.data.token), {
     enabled: !!loginData?.code,
     onSuccess: data => {
+      sessionStorage.clear();
       dispatch(setUserInfo(data.data));
       if (data.data.emailVerifiedYn === 'N') {
         dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
@@ -71,6 +72,13 @@ const ReLoginComponent = () => {
   const handleLogin = useCallback((status, data) => {
     loginMutate(data);
   }, []);
+
+  useEffect(() => {
+    if (loginData) {
+      const token = loginData?.data?.token;
+      localStorage.setItem('accessToken', token);
+    }
+  }, [loginData]);
 
   // 로그인 시도 실패
   const handleProcessingError = useCallback((status, errors) => {

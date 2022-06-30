@@ -50,6 +50,36 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
   const [sendObject, setSendObject] = useState(null);
 
   // ============ React Query ============ //
+  const {
+    data: teamListData,
+    isLoading,
+    refetch,
+  } = useQuery(['fetchTeamList'], fetchTeamListApi, {
+    enabled: false,
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        queryClient.invalidateQueries(['fetchTeamList']);
+      }
+      if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      }
+    },
+    // onSuccess: data => {
+    //   const list = data?.data?.list;
+    //   dispatch(updateTeamInfo(list));
+    // },
+  });
+
+  useEffect(() => {
+    if (teamListData) {
+      const list = teamListData?.data?.list;
+      dispatch(updateTeamInfo(list));
+    }
+  }, [teamListData]);
+
   const { mutate, data: createTeamData } = useMutation('fetchCreateTeam', fetchCreateTeamApi, {
     onError: (e: any) => {
       const errorData = e.response.data;
@@ -65,10 +95,9 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
       }
     },
     onSuccess: data => {
+      refetch();
       dispatch(showToast({ message: '팀 생성이 완료되었습니다.', isShow: true, status: '', duration: 5000 }));
       first ? dispatch(isShow({ isShow: true, type: 'inviteTeamMember' })) : dispatch(isShow({ isShow: false, type: '' }));
-
-      queryClient.invalidateQueries('fetchTeamList');
     },
   });
   // ============ React Query ============ //

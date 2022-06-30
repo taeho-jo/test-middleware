@@ -8,6 +8,7 @@ const TestInfoBox = ({ reportData }) => {
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>테스트정보</span>
+
       <FlexBox style={infoBox} direction={'column'} align={'flex-start'} justify={'flex-start'}>
         <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'}>
           <span css={[caption1_bold, { marginBottom: '8px', color: colors.grey._66 }]}>응답수</span>
