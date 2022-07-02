@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import FlexBox from '../../../atoms/FlexBox';
 import { caption2_bold, heading3_bold, heading4_bold } from '../../../../styles/FontStyles';
 import CheckBox from '../../../atoms/CheckBox';
@@ -14,6 +14,7 @@ import AnnouncementBox from '../../AnnouncementBox';
 import { reportHeader } from '../FeatureSpecificDetailTemplate';
 
 const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl }) => {
+  const [sortDataList, setSortDataList] = useState([]);
   const [usabilityIndex, setUsabilityIndex] = useState<number | null>(null);
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -39,6 +40,14 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
     e.stopPropagation();
     setUsabilityIndex(index);
   }, []);
+
+  // useEffect(() => {
+  //   if (dataList) {
+  //     const copyList = [...dataList?.serviceTotalUsabilityInfo?.serviceTotalUsabilityList];
+  //     const sortList = copyList.sort((a, b) => b.count - a.count);
+  //   }
+  // }, [dataList]);
+
   return (
     <>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
@@ -64,8 +73,8 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
             text={'원본 데이터 확인하기'}
           />
           <IconTextButton
-            disabled={true}
-            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
+            // disabled={true}
+            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [dataList?.serviceTotalUsabilityInfo?.comment] })}
             textStyle={'custom'}
             name={'NAVIGATION_CHEVRON_RIGHT'}
             text={'리서치 코멘트 확인하기'}
@@ -101,7 +110,7 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
               handleClickUsabilityIndex={handleClickUsabilityIndex}
               usabilityIndex={usabilityIndex}
               setUsabilityIndex={setUsabilityIndex}
-              dataList={dataList?.serviceTotalUsabilityList}
+              dataList={dataList?.serviceTotalUsabilityInfo?.serviceTotalUsabilityList}
               negative={true}
               activeIndex={activeIndex}
             />

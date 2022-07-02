@@ -46,6 +46,7 @@ const BasicHorizontalBarChart = ({
 
           <Bar dataKey="value" background={{ fill: '#dcdcdc' }}>
             <Cell
+              cursor={'pointer'}
               fill={barColor}
               onClick={e => handleClickIndex(e, index)}
               onMouseOut={e => onMouseLeave(e)}

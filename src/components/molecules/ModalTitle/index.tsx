@@ -33,11 +33,9 @@ const ModalTitle = ({ title = 'Modal', titlePosition = 'flex-start', titleStyle,
   return (
     <FlexBox align={'center'} style={{ boxSizing: 'border-box', ...style }}>
       <FlexBox justify={titlePosition} align={'center'}>
-        {modalType === 'resetPassword' ? (
-          <Icon onClick={goBackLogin} name={'NAVIGATION_ARROW_LEFT'} size={24} style={{ cursor: 'pointer', marginRight: '10px' }} />
-        ) : null}
+        {modalType === 'resetPassword' ? <Icon onClick={goBackLogin} name={'NAVIGATION_ARROW_LEFT'} size={24} style={{ cursor: 'pointer' }} /> : null}
 
-        <span css={[heading1_bold, { cursor: 'default', height: 'auto', ...titleStyle }]}>{title}</span>
+        <span css={[heading1_bold, { cursor: 'default', marginLeft: '10px', height: 'auto', ...titleStyle }]}>{title}</span>
       </FlexBox>
 
       {closed ? <Icon onClick={closeModal} name={'NAVIGATION_CLOSE_LG'} size={24} style={{ cursor: 'pointer' }} /> : null}

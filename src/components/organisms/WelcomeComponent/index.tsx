@@ -26,6 +26,7 @@ const WelcomeComponent = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
+  const localToken = localStorage.getItem('accessToken');
 
   const { teamSeq, type } = router.query;
 
@@ -90,7 +91,6 @@ const WelcomeComponent = () => {
 
   // token이 있는 경우 --> 로그인이 되어있는 경우
   // 회원가입 후
-
   const handleSignup = useCallback(
     (status, signupData) => {
       const { consentToUseMarketingYn, password, privacyConsentYn, userId } = signupData;
@@ -147,15 +147,16 @@ const WelcomeComponent = () => {
     dispatch(showToast({ message: '정보를 입력해주세요.', isShow: true, status: 'warning', duration: 5000 }));
   }, []);
 
-  // useEffect(() => {
-  //   if (type === 'google') {
-  //     infoRefetch();
-  //   }
-  // }, [type]);
-
   const handleGoBackLogin = useCallback(status => {
     setToggleStatus(status);
   }, []);
+
+  useEffect(() => {
+    if (teamSeq && localToken) {
+      router.push(`/?teamSeq=${teamSeq}&token=${localToken}`);
+    }
+  }, [teamSeq, localToken]);
+
   return (
     <FlexBox style={{ marginTop: '160px', height: '100%' }} justify={'flex-start'} direction={'column'}>
       <PopupBox padding={'0'} width={'400px'} height={'auto'}>

@@ -62,7 +62,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
                         <br />
                       </>
                     ) : null}
-                    <span css={{ color: colors.grey._3c }}>{el.name}</span>
+                    <span css={{ color: colors.grey._3c, wordBreak: 'keep-all' }}>{el.name}</span>
                   </div>
                 </FlexBox>
               </a>
@@ -88,7 +88,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
                             <br />
                           </>
                         ) : null}
-                        <span css={{ color: colors.grey._3c }}>{item.name}</span>
+                        <span css={{ color: colors.grey._3c, wordBreak: 'keep-all' }}>{item.name}</span>
                       </div>
                     </FlexBox>
                   </a>

@@ -47,7 +47,7 @@ const TeamProductCreateModal = () => {
 
   const [sendObject, setSendObject] = useState(null);
 
-  const { mutate } = useMutation(['fetchCreateProduct'], fetchCreateProductApi, {
+  const { mutate, isLoading } = useMutation(['fetchCreateProduct'], fetchCreateProductApi, {
     onError: (e: any) => {
       const errorData = e.response.data;
       if (errorData.code === 'E0008') {
@@ -60,10 +60,11 @@ const TeamProductCreateModal = () => {
         localStorage.clear();
         router.push('/');
       } else {
-        dispatch(showToast({ message: '팀 생성에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
+        dispatch(showToast({ message: errorData.message, isShow: true, status: 'warning', duration: 5000 }));
       }
     },
     onSuccess: data => {
+      dispatch(showToast({ message: '프로덕트가 생성되었습니다.', isShow: true, status: 'success', duration: 5000 }));
       queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
       dispatch(isShow({ isShow: false, type: '' }));
     },
@@ -150,7 +151,7 @@ const TeamProductCreateModal = () => {
             onClick={onClickValue}
           />
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton theme={'dark'} type={'submit'} text={'정보 저장하기'} />
+            <BasicButton isLoading={isLoading} theme={'dark'} type={'submit'} text={'정보 저장하기'} />
             {/*<FlexBox justify={'center'} align={'center'} style={{ marginTop: '22px' }}>*/}
             {/*  <span css={[caption1_regular, { color: colors.red }]}>프로덕트 삭제하기</span>*/}
             {/*  <Icon name={'NAVIGATION_CLOSE_SM'} iconColor={colors.red} />*/}

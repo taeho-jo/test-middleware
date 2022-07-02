@@ -71,7 +71,7 @@ const BasicBarChart = ({
           <XAxis type="number" hide domain={[0, max]} />
           <YAxis type="category" hide />
           {infoBox ? (
-            <Bar dataKey="value" fill={barColor ? barColor : negative ? '#E87490' : '#68A0F4'} background={{ fill: '#dcdcdc' }}>
+            <Bar cursor="pointer" dataKey="value" fill={barColor ? barColor : negative ? '#E87490' : '#68A0F4'} background={{ fill: '#dcdcdc' }}>
               {dataList.map((entry, index) => (
                 <Cell
                   onClick={e => handleClickIndex(e, detailIndex)}
@@ -84,7 +84,7 @@ const BasicBarChart = ({
               ))}
             </Bar>
           ) : (
-            <Bar dataKey="value" fill={barColor ? barColor : negative ? '#E87490' : '#68A0F4'} background={{ fill: '#dcdcdc' }} />
+            <Bar cursor="pointer" dataKey="value" fill={barColor ? barColor : negative ? '#E87490' : '#68A0F4'} background={{ fill: '#dcdcdc' }} />
           )}
         </BarChart>
       </ResponsiveContainer>

@@ -54,7 +54,7 @@ const RatePieChart = ({
     const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill, payload } = props;
     return (
       <g>
-        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={colors.green.chart} css={heading5_bold}>
+        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill} css={heading5_bold}>
           {checkIsInteger(payload.value)}%
         </text>
         <Sector

@@ -80,7 +80,7 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
           <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-            추가 기능 언급-서비스 전체 미션별 완성도 피드백
+            서비스 전체 미션별 완성도 피드백
           </span>
           <CheckBox
             handleChangeCheckBox={handleChangeCheckBox}
@@ -113,7 +113,7 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
-            <div css={[heading4_bold]}>서비스 전체 미션별 완성도 피드백</div>
+            <div css={[heading4_bold]}>{originDataList?.[completeSelectButton].name}</div>
           </div>
 
           <FlexBox justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
@@ -130,7 +130,17 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
                 );
               })}
             </div>
-            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflow: 'scroll' }}>
+            <ul
+              css={{
+                background: colors.grey._f7,
+                borderRadius: '8px',
+                flex: 3,
+                padding: '16px 24px',
+                height: '400px',
+                overflow: 'scroll',
+                overflowY: 'scroll',
+              }}
+            >
               {completeList?.[completeSelectButton]?.length === 0 ? (
                 <li
                   css={[
@@ -177,7 +187,7 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
           <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-            추가 기능 언급-서비스 전체 미션별 추가기능 피드백
+            서비스 전체 미션별 추가기능 피드백
           </span>
           <CheckBox
             handleChangeCheckBox={handleChangeCheckBox}
@@ -210,7 +220,7 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
-            <div css={[heading4_bold]}>서비스 전체 미션별 추가기능 피드백</div>
+            <div css={[heading4_bold]}>{originDataList?.[addSelectButton].name}</div>
           </div>
 
           <FlexBox justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
@@ -273,7 +283,7 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
           <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-            추가 기능 언급-서비스 전체 미션별 시스템오류 피드백
+            서비스 전체 미션별 시스템오류 피드백
           </span>
           <CheckBox
             handleChangeCheckBox={handleChangeCheckBox}
@@ -306,7 +316,7 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
-            <div css={[heading4_bold]}>서비스 전체 미션별 시스템오류 피드백</div>
+            <div css={[heading4_bold]}>{originDataList?.[systemSelectButton].name}</div>
           </div>
 
           <FlexBox justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>

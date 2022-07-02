@@ -48,7 +48,6 @@ const ProfileSettingFirst = () => {
 
   const { mutate } = useMutation('fetchUserInfoUpdate', fetchUserInfoUpdateApi, {
     onSuccess: data => {
-      console.log(data, '!!!!!!!!!!!!!!!!!!!!!!!!!!!');
       dispatch(setUserInfo(data.data));
       router.push('/admin/team');
     },

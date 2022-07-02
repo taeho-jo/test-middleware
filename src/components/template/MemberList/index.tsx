@@ -85,7 +85,6 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
     } else {
       return list.map((el, index) => {
         const { userId, userName, joinDate, teamRoleType } = el;
-        console.log(userInfo.userId, userId, '!!!!!!!!!!!!!!!!!!');
 
         return (
           <FlexBox key={index} style={{ borderTop: '1px solid #DCDCDC', position: 'relative' }}>

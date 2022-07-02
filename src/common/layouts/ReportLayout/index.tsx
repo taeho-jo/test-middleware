@@ -12,10 +12,11 @@ const ReportLayout = ({ children }) => {
           width: 'calc(100% - 296px)',
           marginLeft: '296px',
           minWidth: '900px',
+          overflowY: 'scroll',
         }}
       >
         <ReportHeader />
-        <div css={{ marginTop: '72px' }}>{children}</div>
+        <div css={{ marginTop: '72px', overflowY: 'scroll' }}>{children}</div>
       </div>
     </FlexBox>
   );

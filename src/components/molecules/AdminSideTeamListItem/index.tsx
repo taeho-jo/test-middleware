@@ -29,7 +29,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
   const isFirstCreateTeam = useSelector<ReducerType, boolean>(state => state.team.isFirstCreate);
   const isInviteModal = useSelector<ReducerType, boolean>(state => state.team.isInviteModal);
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
-  const teamSeq = useSelector<ReducerType, number>(state => state.team.teamSeq);
+  const teamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
 
   const [focusItem, setFocusItem] = useState(null);
 
@@ -50,6 +50,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
     [focusItem],
   );
 
+  console.log(focusItem, parentsIndex, teamSeq);
   useEffect(() => {
     if (modalType === '') {
       setFocusItem(null);
@@ -113,19 +114,18 @@ export default AdminSideTeamListItem;
 const itemBox = (modalType, isFirstCreateTeam, isInviteModal, parentsIndex, focusItem) => css`
   width: ${modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember' ? '240px' : 'calc(100%-1px)'};
   padding: 15px 24px;
-  //z-index: 1000;
-  background: white;
   cursor: pointer;
   ${modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember'
     ? `
     position: relative;
-    z-index: 101;
+    z-index: 503;
     width: 240px;
   `
     : ''}
   ${parentsIndex === focusItem || focusItem === 'first'
     ? `
-    z-index: 101;
+    z-index: 503;
+    background: white;
   `
     : `
     z-index: -1;

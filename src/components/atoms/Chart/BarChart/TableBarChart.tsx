@@ -23,7 +23,6 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
   const onMouseOver = useCallback(
     (e, index) => {
       e.stopPropagation();
-      console.log(index, 'INDEX');
       setActiveIndex(index);
     },
     [activeIndex],
@@ -186,11 +185,13 @@ const pointBox = fatality => css`
   height: 16px;
   left: 0px;
   bottom: 0px;
-
+  cursor: pointer;
+  //z-index: -1;
   width: ${fatality ? `calc(100% - 164px)` : '100%'};
 `;
 
 const pointStyle = positionValue => css`
+  //z-index: 2;
   width: 4px;
   height: 4px;
   position: absolute;
