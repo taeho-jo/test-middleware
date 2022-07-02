@@ -50,35 +50,11 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
   const [sendObject, setSendObject] = useState(null);
 
   // ============ React Query ============ //
-  const {
-    data: teamListData,
-    isLoading,
-    refetch,
-  } = useQuery(['fetchTeamList'], fetchTeamListApi, {
-    enabled: false,
-    onError: (e: any) => {
-      const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        queryClient.invalidateQueries(['fetchTeamList']);
-      }
-      if (errorData.code === 'E0007') {
-        localStorage.clear();
-        router.push('/');
-      }
-    },
-    // onSuccess: data => {
-    //   const list = data?.data?.list;
-    //   dispatch(updateTeamInfo(list));
-    // },
-  });
-
-  useEffect(() => {
-    if (teamListData) {
-      const list = teamListData?.data?.list;
-      dispatch(updateTeamInfo(list));
-    }
-  }, [teamListData]);
+  // useEffect(() => {
+  //   if (teamListData) {
+  //
+  //   }
+  // }, [teamListData]);
 
   const { mutate, data: createTeamData } = useMutation('fetchCreateTeam', fetchCreateTeamApi, {
     onError: (e: any) => {
@@ -94,8 +70,28 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
         dispatch(showToast({ message: '팀 생성에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
       }
     },
+  });
+
+  const {
+    data: teamListData,
+    isLoading,
+    refetch,
+  } = useQuery(['fetchTeamList'], fetchTeamListApi, {
+    enabled: !!createTeamData,
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        queryClient.invalidateQueries(['fetchTeamList']);
+      }
+      if (errorData.code === 'E0007') {
+        localStorage.clear();
+        router.push('/');
+      }
+    },
     onSuccess: data => {
-      refetch();
+      const list = data?.data?.list;
+      dispatch(updateTeamInfo(list));
       dispatch(showToast({ message: '팀 생성이 완료되었습니다.', isShow: true, status: '', duration: 5000 }));
       first ? dispatch(isShow({ isShow: true, type: 'inviteTeamMember' })) : dispatch(isShow({ isShow: false, type: '' }));
     },
@@ -125,7 +121,7 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
       <PopupBox style={{ position: 'absolute', top: '96px', left: first ? '264px' : '40%' }} padding={'0px'} width={'392px'} height={'auto'}>
         <ModalTitle title={'반가워요!'} closed={!first} />
-        <ModalSubTitle subTitle={[`${first ? userInfo?.userName : '새로 만드실'} 님의 팀 이름을 입력해주세요`]} />
+        <ModalSubTitle subTitle={[`${first ? userInfo?.userName : '새로 만드실'} ${!first && userInfo?.userName}님의 팀 이름을 입력해주세요.`]} />
 
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
           <Input

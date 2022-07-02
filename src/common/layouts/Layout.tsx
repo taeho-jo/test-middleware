@@ -122,15 +122,6 @@ const Layout = ({ children }: PropsType) => {
     }
   }, [router]);
 
-  // const { data: refreshTokenData, refetch: refreshTokenRefecthData } = useQuery(['fetchRefreshToken'], fetchRefreshToken, {
-  //   enabled: false,
-  //   onSuccess: data => {
-  //     console.log(data?.data, 'DA');
-  //     // localStorage.setItem('accessToken', data?.data.token);
-  //     dispatch(updateQueryStatus({ name: 'tokenRefresh', status: false }));
-  //     // queryClient.invalidateQueries();
-  //   },
-  // });
   // ============ React Query ============ //
 
   useEffect(() => {
@@ -161,13 +152,12 @@ const Layout = ({ children }: PropsType) => {
         mutate();
       }
       if (token && !userId && type && teamSeq) {
-        console.log('여기야?');
         localStorage.setItem('accessToken', `${token}`);
         inviteRefetch();
       }
       if (token && !userId && !type && teamSeq) {
-        console.log('여기야?');
         localStorage.setItem('accessToken', `${token}`);
+        mutate();
         inviteRefetch();
       }
       if (token && userId && !type && !teamSeq) {

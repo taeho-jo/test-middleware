@@ -60,10 +60,11 @@ const TeamProductCreateModal = () => {
         localStorage.clear();
         router.push('/');
       } else {
-        dispatch(showToast({ message: '팀 생성에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
+        dispatch(showToast({ message: errorData.message, isShow: true, status: 'warning', duration: 5000 }));
       }
     },
     onSuccess: data => {
+      dispatch(showToast({ message: '프로덕트가 생성되었습니다.', isShow: true, status: 'warning', duration: 5000 }));
       queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
       dispatch(isShow({ isShow: false, type: '' }));
     },

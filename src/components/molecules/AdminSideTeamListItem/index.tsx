@@ -29,7 +29,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
   const isFirstCreateTeam = useSelector<ReducerType, boolean>(state => state.team.isFirstCreate);
   const isInviteModal = useSelector<ReducerType, boolean>(state => state.team.isInviteModal);
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
-  const teamSeq = useSelector<ReducerType, number>(state => state.team.teamSeq);
+  const teamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
 
   const [focusItem, setFocusItem] = useState(null);
 
