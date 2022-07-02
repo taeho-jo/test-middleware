@@ -20,6 +20,8 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
+  const [rawData, setRawData] = useState<string[]>([]);
+
   const handleClickIndex = useCallback((e, index) => {
     e.stopPropagation();
     console.log(index);
@@ -55,11 +57,15 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
         [],
       );
 
+      const rawDataArr = reMakeArr.map(el => el.rawData).flat();
+      console.log(rawDataArr.flat(), 'rqa');
+
       const total = reMakeArr?.reduce((acc, cur) => {
         return acc + cur.count;
       }, 0);
       setTotalAnswerCount(total);
       setReMakeArr(reMakeArr);
+      setRawData(rawDataArr);
     }
   }, [dataList]);
 
@@ -73,8 +79,19 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
           {/*<CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />*/}
         </FlexBox>
         <FlexBox justify={'flex-end'} width={'30%'}>
-          <IconTextButton style={{ marginRight: '8px' }} textStyle={'custom'} name={'NAVIGATION_CHEVRON_RIGHT'} text={'원본 데이터 확인하기'} />
-          <IconTextButton textStyle={'custom'} name={'NAVIGATION_CHEVRON_RIGHT'} text={'리서치 코멘트 확인하기'} />
+          <IconTextButton
+            style={{ marginRight: '8px' }}
+            textStyle={'custom'}
+            onClick={() => modalControl(true, 'originDataModal', { title: `${dataList.name}`, data: rawData })}
+            name={'NAVIGATION_CHEVRON_RIGHT'}
+            text={'원본 데이터 확인하기'}
+          />
+          <IconTextButton
+            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [dataList?.comment] })}
+            textStyle={'custom'}
+            name={'NAVIGATION_CHEVRON_RIGHT'}
+            text={'리서치 코멘트 확인하기'}
+          />
         </FlexBox>
       </FlexBox>
 
@@ -111,6 +128,7 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
                   <Fragment key={`scale-${index}`}>
                     <BasicHorizontalBarChart
                       selectedIndex={selectedIndex}
+                      setSelectedIndex={setSelectedIndex}
                       barColor={activeIndex === index ? '#3375d6' : '#68A0F4'}
                       index={index}
                       dataList={el}
