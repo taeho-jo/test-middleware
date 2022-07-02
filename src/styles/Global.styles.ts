@@ -7,9 +7,10 @@ const reset = (popupShow, isAdmin, story) => css`
   :root {
     --gradient: linear-gradient(93.75deg, #a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);
   }
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  //::-webkit-scrollbar {
+  //  display: none;
+  //}
+
   * {
     //box-sizing: border-box;
     box-sizing: ${story ? 'auto' : isAdmin ? 'border-box' : 'unset'};
@@ -61,6 +62,7 @@ const reset = (popupShow, isAdmin, story) => css`
       will-change: transform;
       overflow: hidden;
     }
+
     img {
       object-fit: contain;
     }

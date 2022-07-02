@@ -6,17 +6,20 @@ import Icon from '../../atoms/Icon';
 import { caption1_bold, caption1_regular } from '../../../styles/FontStyles';
 import IconTextButtonStories from '../../../stories/atoms/Button/IconTextButton.stories';
 import IconTextButton from '../../atoms/Button/IconTextButton';
+import { useRouter } from 'next/router';
 
 interface PropsType {
   textArr: string[];
+  handleOffInfoBox: () => void;
 }
 
-const MoreTeamInfoPopup = ({ textArr }: PropsType) => {
+const MoreTeamInfoPopup = ({ textArr, handleOffInfoBox }: PropsType) => {
+  const router = useRouter();
   return (
     <FlexBox direction={'column'} justify={'flex-start'} align={'flex-start'} style={mainContainer}>
       <FlexBox justify={'space-between'} align={'center'} style={{ marginBottom: '8px' }}>
         <span css={[caption1_bold, { color: '#666666' }]}>팀에 대해 더 알려주세요.</span>
-        <Icon name={'NAVIGATION_CLOSE_SM'} size={24} style={{ cursor: 'pointer' }} />
+        <Icon onClick={handleOffInfoBox} name={'NAVIGATION_CLOSE_SM'} size={24} style={{ cursor: 'pointer' }} />
       </FlexBox>
       <div css={caption1_regular}>
         {textArr?.map((el, index) => {
@@ -28,7 +31,12 @@ const MoreTeamInfoPopup = ({ textArr }: PropsType) => {
         })}
       </div>
       <div css={{ marginTop: '50px' }}>
-        <IconTextButton name={'NAVIGATION_CHEVRON_RIGHT'} textStyle={'custom'} text={'팀 정보 입력하기'} />
+        <IconTextButton
+          onClick={() => router.push('/admin/setting')}
+          name={'NAVIGATION_CHEVRON_RIGHT'}
+          textStyle={'custom'}
+          text={'팀 정보 입력하기'}
+        />
       </div>
     </FlexBox>
   );

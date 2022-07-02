@@ -72,9 +72,13 @@ const StackedBarChart = ({
   useEffect(() => {
     if (dataList) {
       const newObject = {};
-      dataList.forEach((el, index) => {
+      const sortArr = [...dataList];
+      const sortArr2 = sortArr.sort((a, b) => b.value - a.value);
+
+      sortArr2.forEach((el, index) => {
         newObject[`value${index}`] = el.value;
       });
+
       const newArr = [{ name: name, ...newObject }];
       setRenderDataList(newArr);
     }

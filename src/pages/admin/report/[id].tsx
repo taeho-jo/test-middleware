@@ -202,7 +202,7 @@ const Report = ({ params }) => {
               return (
                 <div key={`lognQuestion-${index}`} id={item.questionCode}>
                   <LongQuestionTemplate dataList={item} modalControl={modalControl} />
-                  <div css={sortationArea} />
+                  {index === data?.longQuestionList?.length - 1 ? null : <div css={sortationArea} />}
                 </div>
               );
             })}
@@ -242,12 +242,12 @@ export default Report;
 
 const originTestBox = css`
   height: calc(100vh - 72px);
-  overflow: scroll;
   position: relative;
   //background: pink;
   width: 100%;
 `;
 const testBox = css`
+  padding-bottom: 170px;
   //position: sticky;
   //top: 0;
 `;

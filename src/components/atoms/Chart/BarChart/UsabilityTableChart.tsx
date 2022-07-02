@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { body3_bold, body3_medium, caption2_regular, heading5_bold } from '../../../../styles/FontStyles';
 import { BasicBarChart } from '../index';
 import { basicBarTestData } from '../../../../assets/dummy/dummyData';
@@ -27,11 +27,20 @@ const UsabilityTableChart = ({
   onMouseOver,
   activeIndex,
 }: PropsType) => {
+  const [chartData, setChartData] = useState([]);
   const usabilityRef = useRef(null);
 
   useOutsideClick(usabilityRef, () => {
     setUsabilityIndex(null);
   });
+
+  useEffect(() => {
+    if (dataList) {
+      const copyData = [...dataList];
+      const sortData = copyData.sort((a, b) => b.value - a.value);
+      setChartData(sortData);
+    }
+  }, [dataList]);
 
   return (
     <div css={containerStyle}>
@@ -41,10 +50,10 @@ const UsabilityTableChart = ({
         <li css={[caption2_regular, liStyle, { width: '110px' }]}>언급 비율</li>
       </ul>
 
-      {dataList?.map((el, index) => {
+      {chartData?.map((el, index) => {
         return (
           <ul key={`usability-${index}`} css={[ulStyle, emptyUlStyle]}>
-            <li css={[caption2_regular, liStyle, emptyLiStyle, liWidthStyle]}>
+            <li css={[heading5_bold, liStyle, emptyLiStyle, liWidthStyle]}>
               <span>사용성 점수</span>
             </li>
             <li css={[heading5_bold, liStyle, emptyLiStyle, { width: '110px', color: colors.grey._99 }]}>{checkIsInteger(el.fatality)}</li>
@@ -106,13 +115,15 @@ const ulStyle = css`
 `;
 const emptyUlStyle = css`
   border-top: none;
-  position: relative;
+  //position: relative;
 `;
 const liStyle = css`
   display: flex;
   justify-content: center;
   border-right: 1px solid #dcdcdc;
+  //border-left: 1px solid #dcdcdc;
   padding: 16px 36px;
+  //padding: 39px 36px;
   box-sizing: border-box;
   height: 100%;
   &:last-child {
@@ -123,7 +134,8 @@ const liWidthStyle = css`
   width: calc(100% - 240px);
 `;
 const emptyLiStyle = css`
-  padding: 36px;
+  padding: 40px;
+  //padding: 39px 36px;
   span {
     visibility: hidden;
   }

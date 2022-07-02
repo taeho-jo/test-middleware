@@ -109,7 +109,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                   <FlexBox style={headerBosStyle} justify={'space-between'}>
                     <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
                       <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-                        기능별 상세 내용 - [미션 {index + 1}. {el.name}] {item.name}
+                        기능별 상세 내용 - [미션 {index + 1}. {el.name}]
                       </span>
                       <CheckBox
                         handleChangeCheckBox={handleChangeCheckBox}

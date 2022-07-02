@@ -137,10 +137,6 @@ const Layout = ({ children }: PropsType) => {
       const query = router?.query;
       const { token, userId, type, teamSeq } = query;
 
-      console.log('token:::', token);
-      console.log('userId:::', userId);
-      console.log('type:::', type);
-      console.log('teamseq:::', teamSeq);
       // 구글로그인 했거나, 초대받은사람이 로그인하거나
       if (token && !userId && type && !teamSeq) {
         localStorage.setItem('accessToken', `${token}`);
@@ -338,12 +334,13 @@ export default Layout;
 const mainContainer = css`
   position: relative;
   width: 100%;
+  overflow: auto;
 `;
 const contentsContainer = css`
   width: 100%;
   //min-height: 100vh;
   transition: 0.6s ease;
-  overflow-x: auto;
+  overflow: auto;
 `;
 
 const gradientCanvas = showGradient => css`
