@@ -40,12 +40,13 @@ const AdminHeader = () => {
 export default AdminHeader;
 
 const headerStyle = css`
-  height: 47px;
+  height: 48px;
   max-width: 1740px;
   width: calc(100% - 240px);
   min-width: 1200px;
   padding: 0 32px;
-  border: 1px solid ${colors.grey._ec};
+  //border: 1px solid ${colors.grey._ec};
+  border-bottom: 1px solid ${colors.grey._ec};
   margin-left: 240px;
   position: fixed;
 `;
