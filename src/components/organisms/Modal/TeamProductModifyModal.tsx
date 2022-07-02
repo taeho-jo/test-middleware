@@ -66,7 +66,7 @@ const TeamProductModifyModal = () => {
       }
     },
     onSuccess: data => {
-      dispatch(showToast({ message: '프로덕트 정보가 수정되었습니다.', isShow: true, status: 'warning', duration: 5000 }));
+      dispatch(showToast({ message: '프로덕트 정보가 수정되었습니다.', isShow: true, status: 'success', duration: 5000 }));
       queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
       dispatch(isShow({ isShow: false, type: '' }));
     },
