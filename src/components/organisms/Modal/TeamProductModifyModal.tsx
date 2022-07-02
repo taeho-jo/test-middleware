@@ -74,8 +74,10 @@ const TeamProductModifyModal = () => {
 
   const { mutate: deleteMutate } = useMutation(['fetchDeleteProduct', selectTeamSeq, selectProduct.productSeq], fetchDeleteProductAi, {
     onSuccess: data => {
+      dispatch(showToast({ message: '프로덕트가 삭제되었습니다.', isShow: true, status: 'success', duration: 5000 }));
       queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
       dispatch(isShow({ isShow: false, type: '' }));
+      router.push('/admin/setting');
     },
   });
 
