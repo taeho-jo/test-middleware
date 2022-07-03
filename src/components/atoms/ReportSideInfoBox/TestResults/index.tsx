@@ -14,20 +14,21 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
 
   const handleSelectIntent = useCallback(
     (e, index) => {
-      if (index === 'top') {
-        console.log('리포트전체 요약');
-        setDetailSelectIntent(null);
-        setSelectIntent(0);
-        changeClicked('');
-      } else {
-        console.log('여기');
-        setDetailSelectIntent(null);
-        setSelectIntent(index);
-        changeClicked('');
-      }
+      console.log(index);
+
+      setDetailSelectIntent(null);
+      setSelectIntent(index);
+      changeClicked('');
     },
     [changeClicked, clicked],
   );
+
+  useEffect(() => {
+    if (clicked === 'one') {
+      setSelectIntent(null);
+      setDetailSelectIntent(null);
+    }
+  }, [clicked]);
 
   const handleDetailSelectIntent = useCallback(index => {
     setSelectIntent(null);
@@ -36,11 +37,11 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
 
   useEffect(() => {
     if (dataList) {
-      const newArr = [{ name: '리포트 전체 요약' }, ...missionList, ...dataList];
+      const newArr = [{ name: '리포트 전체 요약' }, ...dataList];
       setIntentList(newArr);
     }
   }, [dataList, missionList]);
-
+  console.log(intentList, ':::::intentList');
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>테스트 결과</span>
@@ -48,19 +49,23 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
         return (
           <>
             <Fragment key={index}>
-              <a style={{ width: '100%', textDecoration: 'none' }} href={el.title ? `#${el.name}` : el.code ? `#${el.code}` : '#top'}>
+              <a
+                style={{ width: '100%', textDecoration: 'none' }}
+                href={el.detail ? `#${el.name}` : el.code ? `#${el.code}` : `#${el.name}`}
+                // href={'#리포트 전체 요약'}
+              >
                 <FlexBox
                   direction={'column'}
                   align={'flex-start'}
                   justify={'flex-start'}
                   style={selectIntent === index ? infoBox : infoBox2}
                   // setSelectIntent={setSelectIntent}
-                  onClick={e => handleSelectIntent(e, index === 0 ? 'top' : index)}
+                  onClick={e => handleSelectIntent(e, index)}
                 >
                   <div css={[body3_medium, { height: 'auto', cursor: 'pointer' }]}>
-                    {el.title ? (
+                    {el.detail ? (
                       <>
-                        <span>{el.title}</span>
+                        <span>Task {index}</span>
                         <br />
                       </>
                     ) : null}
@@ -74,7 +79,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
               const id = splitData[1].trim();
               return (
                 <Fragment key={idx}>
-                  <a style={{ width: '100%', textDecoration: 'none' }} href={`#${id}`}>
+                  <a style={{ width: '100%', textDecoration: 'none' }} href={`#기능-${id}`}>
                     <FlexBox
                       direction={'column'}
                       align={'flex-start'}

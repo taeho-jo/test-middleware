@@ -21,6 +21,8 @@ const ReportSideBar = () => {
   const reportData = useSelector<ReducerType, any>(state => state.report.data);
   const projectName = useSelector<ReducerType, string>(state => state.report.projectName);
 
+  const [clicked, setClicked] = useState('');
+
   const { data, refetch } = useQuery(['fetchReportShareId', id], () => fetchReportShareIdApi(id), {
     enabled: false,
     onSuccess: data => {
@@ -45,7 +47,6 @@ const ReportSideBar = () => {
     dispatch(isShow({ isShow: true, type: 'shareReportModal' }));
   }, []);
 
-  const [clicked, setClicked] = useState('');
   const changeClicked = useCallback(text => {
     setClicked(text);
   }, []);

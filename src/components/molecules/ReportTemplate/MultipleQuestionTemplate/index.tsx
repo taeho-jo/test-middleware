@@ -9,7 +9,7 @@ import { checkIsInteger } from '../../../../common/util/commonFunc';
 import { reportHeader } from '../FeatureSpecificDetailTemplate';
 import { GeneralScaleTypeTemplate } from '../index';
 
-const MultipleQuestionTemplate = ({ dataList, modalControl }) => {
+const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -52,8 +52,7 @@ const MultipleQuestionTemplate = ({ dataList, modalControl }) => {
             text={'원본 데이터 확인하기'}
           />
           <IconTextButton
-            disabled={true}
-            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
+            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [dataList?.comment] })}
             textStyle={'custom'}
             name={'NAVIGATION_CHEVRON_RIGHT'}
             text={'리서치 코멘트 확인하기'}

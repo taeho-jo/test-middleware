@@ -126,7 +126,6 @@ const Report = ({ params }) => {
 
             {/* UI 진단 전체 요약 */}
             <UiOverallSummaryTemplate
-              id={'top'}
               modalControl={modalControl}
               handleChangeCheckBox={handleChangeCheckBox}
               checked={filterFail}
@@ -187,7 +186,7 @@ const Report = ({ params }) => {
 
                   {item?.detailMultipleList.length === 0 ? null : (
                     <>
-                      <MultipleQuestionTemplate dataList={item} modalControl={modalControl} />
+                      <MultipleQuestionTemplate dataList={item} modalControl={modalControl} parentIndex={index} />
                       <div css={sortationArea} />
                     </>
                   )}
@@ -248,7 +247,7 @@ const originTestBox = css`
   width: 100%;
 `;
 const testBox = css`
-  padding-bottom: 170px;
+  padding-bottom: 195px;
   //scroll-behavior: smooth;
   //position: sticky;
   //top: 0;
