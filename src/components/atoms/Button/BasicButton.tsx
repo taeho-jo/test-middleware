@@ -34,6 +34,7 @@ const BasicButton = ({
       {...props}
       onClick={onClick}
       type={type}
+      disabled={isLoading}
       css={[buttonStyle(status, theme, isLoading), { ...style }, { background: designBgColor ? designBgColor : '' }]}
     >
       {isLoading ? (

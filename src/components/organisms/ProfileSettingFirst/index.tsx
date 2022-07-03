@@ -105,7 +105,7 @@ const ProfileSettingFirst = () => {
           />
 
           <Select
-            title={'[닉네임]님이 맡고 계신 직무 (선택)'}
+            title={'맡고 계신 직무 (선택)'}
             options={commonCode?.CpPositionType}
             // value={selected.funnelsCd}
             selected={selected}
@@ -114,7 +114,7 @@ const ProfileSettingFirst = () => {
             onClick={onClickValue}
           />
           <Select
-            title={'[닉네임]님의 회사 규모 (선택)'}
+            title={'회사 규모 (선택)'}
             options={commonCode?.CpSizeType}
             // value={selected.funnelsCd}
             selected={selected}

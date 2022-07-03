@@ -193,6 +193,7 @@ const WelcomeComponent = () => {
             <>
               <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
                 <BasicButton type={'submit'} text={'로그인하기'} style={{ marginBottom: '34px' }} />
+                <IconTextButton onClick={loginWithGoogle} name={'GOOGLE'} iconPosition={'left'} text={'구글로 로그인'} textStyle={'custom'} />
               </FlexBox>
               <FlexBox style={{ marginTop: '48px' }}>
                 <TextButton onClick={() => handleGoBackLogin(false)} textStyle={body3_medium} text={'계정 만들러가기!'} />
