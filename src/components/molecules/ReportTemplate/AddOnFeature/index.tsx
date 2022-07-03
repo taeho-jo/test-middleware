@@ -137,7 +137,6 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
                 flex: 3,
                 padding: '16px 24px',
                 height: '400px',
-                overflow: 'scroll',
                 overflowY: 'scroll',
               }}
             >
@@ -186,7 +185,7 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
 
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
-          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
+          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflowY: 'hidden' }]}>
             서비스 전체 미션별 추가기능 피드백
           </span>
           <CheckBox
@@ -237,7 +236,7 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
                 );
               })}
             </div>
-            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflow: 'scroll' }}>
+            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflowY: 'scroll' }}>
               {additionalList?.[addSelectButton]?.length === 0 ? (
                 <li
                   css={[
@@ -333,7 +332,7 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
                 );
               })}
             </div>
-            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflow: 'scroll' }}>
+            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflowY: 'scroll' }}>
               {systemErrorList?.[systemSelectButton]?.length === 0 ? (
                 <li
                   css={[

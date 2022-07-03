@@ -66,7 +66,7 @@ const ReportSideBar = () => {
           <Icon name={'ACTION_SHARE'} onClick={reportShare} />
         </div>
       </FlexBox>
-      <div css={{ height: 'calc(100vh - 136px)', overflow: 'scroll' }}>
+      <div css={{ height: 'calc(100vh - 136px)', overflowY: 'scroll' }}>
         <TestInfoBox reportData={reportData} />
         <RespondentAttributes changeClicked={changeClicked} clicked={clicked} />
         <TestResults clicked={clicked} changeClicked={changeClicked} missionList={missionList} dataList={reportData?.indexList} />

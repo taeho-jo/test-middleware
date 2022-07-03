@@ -12,7 +12,6 @@ const ReportLayout = ({ children }) => {
           width: 'calc(100% - 296px)',
           marginLeft: '296px',
           minWidth: '900px',
-          overflowY: 'scroll',
         }}
       >
         <ReportHeader />

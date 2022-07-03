@@ -244,10 +244,12 @@ const originTestBox = css`
   height: calc(100vh - 72px);
   position: relative;
   //background: pink;
+  //scroll-behavior: smooth;
   width: 100%;
 `;
 const testBox = css`
   padding-bottom: 170px;
+  //scroll-behavior: smooth;
   //position: sticky;
   //top: 0;
 `;

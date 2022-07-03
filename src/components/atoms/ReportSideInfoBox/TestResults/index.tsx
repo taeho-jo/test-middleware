@@ -15,10 +15,12 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const handleSelectIntent = useCallback(
     (e, index) => {
       if (index === 'top') {
+        console.log('리포트전체 요약');
         setDetailSelectIntent(null);
         setSelectIntent(0);
         changeClicked('');
       } else {
+        console.log('여기');
         setDetailSelectIntent(null);
         setSelectIntent(index);
         changeClicked('');
