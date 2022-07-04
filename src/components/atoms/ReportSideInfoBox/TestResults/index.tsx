@@ -12,7 +12,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const [selectIntent, setSelectIntent] = useState<number | null>(null);
   const [detailSelectIntent, setDetailSelectIntent] = useState(null);
 
-  // const longData = useSelector<ReducerType, any>(state => state.report?.data?.longQuestionList);
+  const longData = useSelector<ReducerType, any>(state => state.report?.data?.longQuestionList);
   const multipleData = useSelector<ReducerType, any>(state => state.report?.data?.multipleQuestionList);
 
   const handleSelectIntent = useCallback(
@@ -50,14 +50,14 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
           }),
         [],
       );
-      // const newLongArr = longData?.reduce(
-      //   (acc, cur) =>
-      //     acc.concat({
-      //       code: cur.questionCode,
-      //       name: cur.name,
-      //     }),
-      //   [],
-      // );
+      const newLongArr = longData?.reduce(
+        (acc, cur) =>
+          acc.concat({
+            code: cur.questionCode,
+            name: cur.name,
+          }),
+        [],
+      );
       const otherArr = [...newMultipleArr];
 
       const otherArr2 = [

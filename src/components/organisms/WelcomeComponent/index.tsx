@@ -186,7 +186,7 @@ const WelcomeComponent = () => {
             placeholder={'비밀번호를 입력해주세요.'}
             registerOptions={{
               required: true,
-              pattern: /^(?=.*[A-Za-z])(?=.*[0-9]).{6,10}$/,
+              pattern: /^(?=.*[A-Za-z])(?=.*[0-9]).{6,20}$/,
             }}
           />
           {!toggleStatus && <AnnouncementBox style={{ marginTop: '12px' }} content={'*비밀번호는 문자+숫자 6자 이상 조합해주세요.'} />}
