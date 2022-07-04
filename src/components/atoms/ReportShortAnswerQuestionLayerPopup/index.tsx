@@ -56,7 +56,7 @@ const ReportShortAnswerQuestionLayerPopup = ({
         </div>
       </FlexBox>
 
-      <ul css={{ background: colors.grey._fa, width: '100%', height: 'auto', maxHeight: '274px', overflow: 'scroll', padding: '16px 24px' }}>
+      <ul css={{ background: colors.grey._fa, width: '100%', height: 'auto', maxHeight: '274px', overflowY: 'scroll', padding: '16px 24px' }}>
         {data?.answer.map((item, index) => {
           return (
             <li

@@ -65,7 +65,7 @@ const AdminSideBar = () => {
         <span css={heading5_bold}>팀</span>
         <Icon onClick={() => dispatch(isShow({ isShow: true, type: 'createTeam' }))} name={'ACTION_CREATE'} size={24} style={{ cursor: 'pointer' }} />
       </FlexBox>
-      <div css={{ height: 'calc(100% - 95px)', overflow: 'scroll' }}>
+      <div css={{ height: 'calc(100% - 95px)', overflowY: 'scroll' }}>
         {sideTeamList()}
         {infoBox && (
           <FlexBox justify={'center'} style={{ marginTop: '24px' }}>

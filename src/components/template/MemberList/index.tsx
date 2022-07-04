@@ -90,7 +90,10 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
           <FlexBox key={index} style={{ borderTop: '1px solid #DCDCDC', position: 'relative' }}>
             <FlexBox justify={'flex-start'} style={{ padding: '17px 16px', width: '50%' }}>
               <div css={{ flex: 1 }}>
-                <ProfileIcon name={userName ? userName?.slice(0, 1) : '?'} backgroundColor={profileColor[index]} />
+                <ProfileIcon
+                  name={userName ? userName?.slice(0, 1) : '?'}
+                  backgroundColor={userId === userInfo?.userId ? '#cfffac' : profileColor[index]}
+                />
               </div>
 
               <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={{ marginLeft: '24px' }}>
@@ -165,6 +168,6 @@ export default MemberList;
 const listBoxStyle = css`
   width: 100%;
   height: 720px;
-  overflow: scroll;
+  overflow-y: scroll;
   position: relative;
 `;

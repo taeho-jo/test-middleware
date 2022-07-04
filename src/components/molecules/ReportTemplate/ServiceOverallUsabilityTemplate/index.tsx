@@ -49,7 +49,7 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
   // }, [dataList]);
 
   return (
-    <>
+    <div id={'서비스 전체 사용성 평가'}>
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
           <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
@@ -117,7 +117,7 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
           </FlexBox>
         </FlexBox>
       </FlexBox>
-    </>
+    </div>
   );
 };
 
@@ -131,6 +131,8 @@ const headerBosStyle = css`
   position: sticky;
   top: 0;
   z-index: 500;
+  display: flex;
+  justify-content: space-between;
 `;
 const graphBosStyle = css`
   width: 100%;

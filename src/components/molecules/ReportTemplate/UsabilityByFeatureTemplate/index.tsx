@@ -68,8 +68,8 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                   text={'원본 데이터 확인하기'}
                 />
                 <IconTextButton
-                  disabled={true}
-                  onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
+                  // disabled={true}
+                  onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [el.comment] })}
                   textStyle={'custom'}
                   name={'NAVIGATION_CHEVRON_RIGHT'}
                   text={'리서치 코멘트 확인하기'}

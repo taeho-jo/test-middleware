@@ -203,6 +203,7 @@ const headerStyle = css`
   height: 72px;
   width: calc(100vw - 296px);
   border-bottom: 1px solid #dcdcdc;
+  background: white;
   padding: 17px 24px;
   display: flex;
   align-items: center;

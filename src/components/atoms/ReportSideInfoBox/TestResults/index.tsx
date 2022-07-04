@@ -37,10 +37,20 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
 
   useEffect(() => {
     if (dataList) {
-      const newArr = [{ name: '리포트 전체 요약' }, ...dataList];
+      const missionArr = dataList.filter(el => el.code.includes('S1M'));
+      const otherArr = dataList.filter(el => !el.code.includes('S1M'));
+      console.log(missionArr, otherArr);
+      const otherArr2 = [
+        { name: '서비스 전체 사용성 평가' },
+        { name: '서비스 전체 완성도 피드백' },
+        { name: '서비스 전체 추가기능 피드백' },
+        { name: '서비스 전체 시스템오류 피드백' },
+      ];
+      const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr];
       setIntentList(newArr);
     }
   }, [dataList, missionList]);
+  console.log(intentList, ':::::INTENTLIST');
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>테스트 결과</span>
@@ -64,11 +74,11 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
                   <div css={[body3_medium, { height: 'auto', cursor: 'pointer' }]}>
                     {el.detail ? (
                       <>
-                        <span>Task {index}</span>
+                        <span>미션 {index}.</span>
                         <br />
                       </>
                     ) : null}
-                    <span css={{ color: colors.grey._3c, wordBreak: 'keep-all' }}>{el.name}</span>
+                    <span css={{ color: colors.grey._3c, wordBreak: 'keep-all' }}>{el.detail ? `${el.name}의 기능별 사용성 비교` : el.name}</span>
                   </div>
                 </FlexBox>
               </a>

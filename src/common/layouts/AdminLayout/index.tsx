@@ -32,5 +32,5 @@ const contentsArea = css`
   margin-left: 240px;
   width: 100%;
   //margin-top: 48px;
-  overflow: scroll;
+  overflow-y: scroll;
 `;

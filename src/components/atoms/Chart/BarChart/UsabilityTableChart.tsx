@@ -150,7 +150,7 @@ const infoBoxStyle = css`
   width: 220px;
   padding: 16px;
   margin: 0 auto;
-  overflow: scroll;
+  //overflow: scroll;
   border-radius: 8px;
   z-index: 10;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
