@@ -1,32 +1,19 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import {
   AddOnFeature,
-  FeatureSpecificDetailTemplate,
   GeneralScaleTypeTemplate,
-  NpsTemplate,
-  PriceEvaluationTemplate,
   RespondentAttributesTemplate,
   ServiceOverallUsabilityTemplate,
-  TroublesShootingTemplate,
   UiOverallSummaryTemplate,
   UsabilityByFeatureTemplate,
 } from '../../../components/molecules/ReportTemplate';
-import BrandEvaluationTemplate from '../../../components/molecules/ReportTemplate/BrandEvaluationTemplate';
-import { reportData } from '../../../assets/dummy/testReport';
 import { useQuery, useQueryClient } from 'react-query';
 import { fetchReportDetail, fetchReportShare } from '../../../api/reportApi';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setReportData,
-  updateCommentData,
-  updateFilterFail,
-  updateFilterFlied,
-  updateFilterValues,
-  updateRawData,
-} from '../../../store/reducers/reportReducer';
+import { setReportData, updateCommentData, updateFilterFail, updateRawData } from '../../../store/reducers/reportReducer';
 import { ReducerType } from '../../../store/reducers';
 import LongQuestionTemplate from '../../../components/molecules/ReportTemplate/LongQuestionTemplate';
 import MultipleQuestionTemplate from '../../../components/molecules/ReportTemplate/MultipleQuestionTemplate';

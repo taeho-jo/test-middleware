@@ -25,7 +25,6 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
   const onMouseOver = useCallback(
     (e, index) => {
       e.stopPropagation();
-      console.log(index);
       setActiveIndex(index);
     },
     [activeIndex],
