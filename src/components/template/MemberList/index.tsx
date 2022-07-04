@@ -125,6 +125,24 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
                     style={{ cursor: 'pointer' }}
                   />
                 ) : null
+              ) : myRole === '관리자' ? (
+                userInfo.userId === userId ? (
+                  <Icon
+                    onClick={() => handleClickDropdown(index, 'myRoleManager', el)}
+                    forwardref={(el: never) => (cellsRef.current[index] = el)}
+                    name={'MORE_HORIZON'}
+                    size={24}
+                    style={{ cursor: 'pointer' }}
+                  />
+                ) : (
+                  <Icon
+                    onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}
+                    forwardref={(el: never) => (cellsRef.current[index] = el)}
+                    name={'MORE_HORIZON'}
+                    size={24}
+                    style={{ cursor: 'pointer' }}
+                  />
+                )
               ) : (
                 <Icon
                   onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}

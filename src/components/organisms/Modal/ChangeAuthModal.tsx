@@ -34,7 +34,8 @@ const ChangeAuthModal = () => {
         localStorage.clear();
         router.push('/');
       } else {
-        dispatch(showToast({ message: errorData?.message, isShow: true, status: 'warning', duration: 5000 }));
+        dispatch(showToast({ message: errorData.message, isShow: true, status: 'warning', duration: 5000 }));
+        dispatch(isShow({ isShow: false, type: '' }));
       }
     },
     onSuccess: data => {

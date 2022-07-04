@@ -24,7 +24,6 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
 
   const handleClickIndex = useCallback((e, index) => {
     e.stopPropagation();
-    console.log(index);
     setSelectedIndex(index);
   }, []);
 

@@ -33,7 +33,7 @@ const BasicHorizontalBarChart = ({
   useOutsideClick(boxRef, () => {
     setSelectedIndex(null);
   });
-  console.log(dataList, '');
+
   return (
     <div css={barChartBoxStyle}>
       <FlexBox direction={'column'} align={'center'}>

@@ -5,12 +5,15 @@ import { body3_medium, caption1_bold, heading5_bold } from '../../../../styles/F
 import { colors } from '../../../../styles/Common.styles';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { ReducerType } from '../../../../store/reducers';
 
 const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const [intentList, setIntentList] = useState([]);
   const [selectIntent, setSelectIntent] = useState<number | null>(null);
   const [detailSelectIntent, setDetailSelectIntent] = useState(null);
-  const [text, setText] = useState('');
+
+  const longData = useSelector<ReducerType, any>(state => state.report?.data?.longQuestionList);
+  const multipleData = useSelector<ReducerType, any>(state => state.report?.data?.multipleQuestionList);
 
   const handleSelectIntent = useCallback(
     (e, index) => {
@@ -38,8 +41,25 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   useEffect(() => {
     if (dataList) {
       const missionArr = dataList.filter(el => el.code.includes('S1M'));
-      const otherArr = dataList.filter(el => !el.code.includes('S1M'));
-      console.log(missionArr, otherArr);
+
+      const newMultipleArr = multipleData?.reduce(
+        (acc, cur) =>
+          acc.concat({
+            code: cur.code,
+            name: cur.intent,
+          }),
+        [],
+      );
+      const newLongArr = longData?.reduce(
+        (acc, cur) =>
+          acc.concat({
+            code: cur.questionCode,
+            name: cur.name,
+          }),
+        [],
+      );
+      const otherArr = [...newMultipleArr, ...newLongArr];
+
       const otherArr2 = [
         { name: '서비스 전체 사용성 평가' },
         { name: '서비스 전체 완성도 피드백' },
@@ -49,8 +69,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
       const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr];
       setIntentList(newArr);
     }
-  }, [dataList, missionList]);
-  console.log(intentList, ':::::INTENTLIST');
+  }, [dataList, missionList, longData, multipleData]);
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>테스트 결과</span>
