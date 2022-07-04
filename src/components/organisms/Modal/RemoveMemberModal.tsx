@@ -20,6 +20,11 @@ const RemoveMemberModal = () => {
   const teamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
   // ============ React Query ============ //
   const { mutate: removeMutate } = useMutation(['fetchMemberRemove', teamSeq], () => fetchMemberRemoveApi(teamSeq, teamMemberInfo?.userId), {
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      dispatch(showToast({ message: errorData.message, isShow: true, status: 'warning', duration: 5000 }));
+      dispatch(isShow({ isShow: false, type: '' }));
+    },
     onSuccess: data => {
       queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
       dispatch(showToast({ message: '팀원을 내보내었습니다.', isShow: true, status: 'success', duration: 5000 }));

@@ -54,6 +54,10 @@ const TeamMember = () => {
       { text: '초대 메일 다시 보내기', onClick: null },
     ],
     myRole: [{ text: '팀에서 나가기', onClick: null }],
+    myRoleManager: [
+      { text: '멤버로 변경하기', onClick: null },
+      { text: '팀에서 나가기', onClick: null },
+    ],
   });
 
   // ============ React Query ============ //
@@ -126,6 +130,8 @@ const TeamMember = () => {
               ? dropDownList?.manager
               : teamRoleType === 'myRole'
               ? dropDownList.myRole
+              : teamRoleType === 'myRoleManager'
+              ? dropDownList.myRoleManager
               : dropDownList.invite
           }
         />
