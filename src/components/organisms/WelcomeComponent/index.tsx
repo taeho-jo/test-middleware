@@ -21,6 +21,7 @@ import TextButton from '../../atoms/Button/TextButton';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { fetchInviteUserInfoApi, fetchUserInfoApi } from '../../../api/userApi';
 import { setUserInfo } from '../../../store/reducers/userReducer';
+import AnnouncementBox from '../../molecules/AnnouncementBox';
 
 const WelcomeComponent = () => {
   const queryClient = useQueryClient();
@@ -188,6 +189,7 @@ const WelcomeComponent = () => {
               pattern: /^(?=.*[A-Za-z])(?=.*[0-9]).{6,10}$/,
             }}
           />
+          {!toggleStatus && <AnnouncementBox style={{ marginTop: '12px' }} content={'*비밀번호는 문자+숫자 6자 이상 조합해주세요.'} />}
 
           {toggleStatus ? (
             <>

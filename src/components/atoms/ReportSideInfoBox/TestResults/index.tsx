@@ -41,7 +41,6 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
       setIntentList(newArr);
     }
   }, [dataList, missionList]);
-  console.log(intentList, ':::::intentList');
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>테스트 결과</span>
@@ -77,6 +76,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
             {el.detail?.map((item, idx) => {
               const splitData = item.name.split('-');
               const id = splitData[1].trim();
+
               return (
                 <Fragment key={idx}>
                   <a style={{ width: '100%', textDecoration: 'none' }} href={`#기능-${id}`}>

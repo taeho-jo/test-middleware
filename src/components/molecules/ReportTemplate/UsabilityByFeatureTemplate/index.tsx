@@ -103,13 +103,12 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
             {el.missionFunctionFatality.map((item, itemIndex) => {
               const copyList = [...item.detailList];
               const sortList = copyList.sort((a, b) => b.count - a.count);
-
               return (
-                <div id={`기능-${el.name}`} key={`feature-${itemIndex}`}>
+                <div id={`기능-${item.name}`} key={`feature-${itemIndex}`}>
                   <FlexBox style={headerBosStyle} justify={'space-between'}>
                     <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
                       <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-                        기능별 상세 내용 - [미션 {index + 1}. {el.name}]
+                        기능별 상세 내용 - [미션 {index + 1}. {item.name}]
                       </span>
                       <CheckBox
                         handleChangeCheckBox={handleChangeCheckBox}

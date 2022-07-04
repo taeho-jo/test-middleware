@@ -17,12 +17,12 @@ import { updateReportViewId } from '../../../store/reducers/reportReducer';
 const ReportSideBar = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { id } = router.query;
+  const { id, share } = router.query;
   const reportData = useSelector<ReducerType, any>(state => state.report.data);
   const projectName = useSelector<ReducerType, string>(state => state.report.projectName);
 
   const [clicked, setClicked] = useState('');
-
+  console.log('share::::::', share);
   const { data, refetch } = useQuery(['fetchReportShareId', id], () => fetchReportShareIdApi(id), {
     enabled: false,
     onSuccess: data => {
@@ -63,9 +63,11 @@ const ReportSideBar = () => {
       </FlexBox>
       <FlexBox style={shareBoxStyle} justify={'space-between'} align={'center'}>
         <span css={[heading3_bold, projectNameStyle]}>{projectName ? projectName : ''}</span>
-        <div css={{ cursor: 'pointer' }}>
-          <Icon name={'ACTION_SHARE'} onClick={reportShare} />
-        </div>
+        {share ? null : (
+          <div css={{ cursor: 'pointer' }}>
+            <Icon name={'ACTION_SHARE'} onClick={reportShare} />
+          </div>
+        )}
       </FlexBox>
       <div css={{ height: 'calc(100vh - 136px)', overflowY: 'scroll' }}>
         <TestInfoBox reportData={reportData} />

@@ -58,7 +58,6 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
       );
 
       const rawDataArr = reMakeArr.map(el => el.rawData).flat();
-      console.log(rawDataArr.flat(), 'rqa');
 
       const total = reMakeArr?.reduce((acc, cur) => {
         return acc + cur.count;
