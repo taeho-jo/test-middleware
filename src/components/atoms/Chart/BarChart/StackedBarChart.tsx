@@ -36,6 +36,7 @@ const StackedBarChart = ({
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [isShow, setIsShow] = useState<boolean>(false);
+  const [sortData, setSortData] = useState([]);
   const [layerData, setLayerData] = useState<object | null>(null);
 
   const onMouseClick = useCallback(
@@ -75,14 +76,13 @@ const StackedBarChart = ({
       const sortArr = [...dataList];
       const sortArr2 = sortArr.sort((a, b) => b.value - a.value);
 
-      console.log(sortArr2);
+      setSortData(sortArr2);
 
       sortArr2.forEach((el, index) => {
         newObject[`value${index}`] = el.value;
       });
 
       const newArr = [{ name: name, ...newObject }];
-      console.log(newArr, 'ASDF');
       setRenderDataList(newArr);
     }
   }, [dataList]);
@@ -111,7 +111,7 @@ const StackedBarChart = ({
             <XAxis type="number" hide domain={[0, 100]} />
             <YAxis type="category" hide />
             <Bar dataKey={'value'} stackId={'a'} background={{ fill: '#dcdcdc' }} />
-            {dataList?.map((el, index) => {
+            {sortData?.map((el, index) => {
               return (
                 <Bar key={`stackedBar-${index}`} dataKey={`value${index}`} stackId={'a'}>
                   <Cell
