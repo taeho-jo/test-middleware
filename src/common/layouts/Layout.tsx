@@ -54,6 +54,7 @@ const Layout = ({ children }: PropsType) => {
 
   const { data: usersInfo, refetch } = useQuery(['fetchUserInfo', 'layout'], () => fetchUserInfoApi(token), {
     enabled: !!token,
+
     onError: (e: any) => {
       const errorData = e.response.data;
       if (errorData.code === 'E0008') {
@@ -129,7 +130,7 @@ const Layout = ({ children }: PropsType) => {
       dispatch(updateCommonCode(commonCode.data));
       localStorage.setItem('commonCode', JSON.stringify(commonCode.data));
     }
-  }, [commonCode]);
+  }, []);
 
   useEffect(() => {
     if (Object.keys(router.query).length !== 0) {

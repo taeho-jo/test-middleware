@@ -195,16 +195,16 @@ const Report = ({ params }) => {
             })}
 
         {/*주관식 문항*/}
-        {data?.longQuestionList === null || data?.longQuestionList?.length === 0
-          ? null
-          : data?.longQuestionList?.map((item, index) => {
-              return (
-                <div key={`lognQuestion-${index}`} id={item.questionCode}>
-                  <LongQuestionTemplate dataList={item} modalControl={modalControl} />
-                  {index === data?.longQuestionList?.length - 1 ? null : <div css={sortationArea} />}
-                </div>
-              );
-            })}
+        {/*{data?.longQuestionList === null || data?.longQuestionList?.length === 0*/}
+        {/*  ? null*/}
+        {/*  : data?.longQuestionList?.map((item, index) => {*/}
+        {/*      return (*/}
+        {/*        <div key={`lognQuestion-${index}`} id={item.questionCode}>*/}
+        {/*          <LongQuestionTemplate dataList={item} modalControl={modalControl} />*/}
+        {/*          {index === data?.longQuestionList?.length - 1 ? null : <div css={sortationArea} />}*/}
+        {/*        </div>*/}
+        {/*      );*/}
+        {/*    })}*/}
 
         {/* 기능별 상세 내용 */}
         {/*<FeatureSpecificDetailTemplate />*/}
@@ -247,7 +247,7 @@ const originTestBox = css`
   width: 100%;
 `;
 const testBox = css`
-  padding-bottom: 195px;
+  //padding-bottom: 195px;
   //scroll-behavior: smooth;
   //position: sticky;
   //top: 0;
