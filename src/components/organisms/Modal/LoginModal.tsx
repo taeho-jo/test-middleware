@@ -36,7 +36,7 @@ const LoginModal = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
-
+  console.log(CURRENT_DOMAIN);
   // hook form
   const {
     register,
@@ -70,7 +70,8 @@ const LoginModal = () => {
 
   // 구글 로그인
   const loginWithGoogle = useCallback(() => {
-    router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
+    // router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
+    router.push(`${CURRENT_DOMAIN}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
   }, []);
 
   // 로그인 시도 실패
