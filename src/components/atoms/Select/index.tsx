@@ -147,7 +147,7 @@ const customSelectOpen = (size, padding) => css`
   z-index: 9099;
 
   max-height: 258px;
-  overflow: scroll;
+  overflow-y: scroll;
   // TODO: 이건 지워야 될 수 있음
   top: ${padding ? '-20px' : 'unset'};
 `;

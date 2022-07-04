@@ -334,7 +334,6 @@ export default Layout;
 const mainContainer = css`
   position: relative;
   width: 100%;
-  overflow: auto;
 `;
 const contentsContainer = css`
   width: 100%;

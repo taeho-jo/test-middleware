@@ -105,7 +105,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
               const sortList = copyList.sort((a, b) => b.count - a.count);
 
               return (
-                <Fragment key={`feature-${itemIndex}`}>
+                <div id={`기능-${el.name}`} key={`feature-${itemIndex}`}>
                   <FlexBox style={headerBosStyle} justify={'space-between'}>
                     <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
                       <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
@@ -263,7 +263,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                     </FlexBox>
                   </FlexBox>
                   <div css={sortationArea} />
-                </Fragment>
+                </div>
               );
             })}
           </div>

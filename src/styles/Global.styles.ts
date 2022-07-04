@@ -18,6 +18,9 @@ const reset = (popupShow, isAdmin, story) => css`
       'Malgun Gothic', sans-serif;
   }
   * {
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       padding: 0;
       margin: 0 auto;

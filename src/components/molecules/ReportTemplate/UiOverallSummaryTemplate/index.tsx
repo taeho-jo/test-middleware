@@ -55,14 +55,13 @@ interface PropsType {
   };
 }
 
-const UiOverallSummaryTemplate = ({ id, dataList, register, errors, checked, handleChangeCheckBox, modalControl, comment }) => {
+const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleChangeCheckBox, modalControl, comment }) => {
   const [selectedLabelIndex, setSelectedLabelIndex] = useState(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const handleMouseUp = useCallback(
     (index, e) => {
       e.stopPropagation();
-      console.log(index, '!');
       if (selectedLabelIndex === index) {
         setSelectedLabelIndex(null);
       } else {
@@ -88,11 +87,10 @@ const UiOverallSummaryTemplate = ({ id, dataList, register, errors, checked, han
     [activeIndex],
   );
 
-  console.log(id, id, 'IDIDIDIDID');
   return (
-    <>
-      <FlexBox id={id} style={headerBosStyle} justify={'space-between'}>
-        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'} id={'#top'}>
+    <div id="리포트 전체 요약">
+      <FlexBox style={headerBosStyle} justify={'space-between'}>
+        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
           <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
             UI 진단 전체 요약
           </span>
@@ -168,7 +166,7 @@ const UiOverallSummaryTemplate = ({ id, dataList, register, errors, checked, han
           </FlexBox>
         </FlexBox>
       </FlexBox>
-    </>
+    </div>
   );
 };
 

@@ -121,7 +121,7 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
       <PopupBox style={{ position: 'absolute', top: '96px', left: first ? '264px' : '40%' }} padding={'0px'} width={'392px'} height={'auto'}>
         <ModalTitle title={'반가워요!'} closed={!first} />
-        <ModalSubTitle subTitle={[`${first ? userInfo?.userName : '새로 만드실'} ${!first && userInfo?.userName}님의 팀 이름을 입력해주세요.`]} />
+        <ModalSubTitle subTitle={[`${first ? userInfo?.userName : `새로 만드실 ${userInfo?.userName}`}님의 팀 이름을 입력해주세요.`]} />
 
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
           <Input

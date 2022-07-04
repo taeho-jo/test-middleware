@@ -23,11 +23,6 @@ const data = [
 const RespondentAttributes = ({ changeClicked, clicked }) => {
   const answerInfo = useSelector<ReducerType, any>(state => state.report.data);
   const [dataArr, setDataArr] = useState([]);
-  const [indexClicked, setIndexClicked] = useState(false);
-
-  const router = useRouter();
-  console.log(router.query.id, 'AEG');
-  // const answerObject = answerInfo?.answerInfoSection?.ageGradeInfoList.length !== 0 ? { value: '성별', children: [] } : null;
 
   const makeAnswerArr = useCallback(() => {
     if (answerInfo) {

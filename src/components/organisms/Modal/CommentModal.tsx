@@ -14,7 +14,7 @@ const OriginDataModal = () => {
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
       <PopupBox padding={'0 0 24px 0'} width={'900px'} height={'auto'}>
         <ModalTitle title={'리서치 코멘트'} titleStyle={{ fontSize: '18px', fontWeight: 700 }} />
-        <ul css={{ height: '522px', overflow: 'scroll', background: colors.grey._f7, padding: '32px 32px 0' }}>
+        <ul css={{ height: '522px', overflowY: 'scroll', background: colors.grey._f7, padding: '32px 32px 0' }}>
           {commentData?.list === null || commentData?.list?.length === 0 ? (
             <li
               css={[

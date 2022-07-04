@@ -21,6 +21,8 @@ const ReportSideBar = () => {
   const reportData = useSelector<ReducerType, any>(state => state.report.data);
   const projectName = useSelector<ReducerType, string>(state => state.report.projectName);
 
+  const [clicked, setClicked] = useState('');
+
   const { data, refetch } = useQuery(['fetchReportShareId', id], () => fetchReportShareIdApi(id), {
     enabled: false,
     onSuccess: data => {
@@ -45,7 +47,6 @@ const ReportSideBar = () => {
     dispatch(isShow({ isShow: true, type: 'shareReportModal' }));
   }, []);
 
-  const [clicked, setClicked] = useState('');
   const changeClicked = useCallback(text => {
     setClicked(text);
   }, []);
@@ -66,7 +67,7 @@ const ReportSideBar = () => {
           <Icon name={'ACTION_SHARE'} onClick={reportShare} />
         </div>
       </FlexBox>
-      <div css={{ height: 'calc(100vh - 136px)', overflow: 'scroll' }}>
+      <div css={{ height: 'calc(100vh - 136px)', overflowY: 'scroll' }}>
         <TestInfoBox reportData={reportData} />
         <RespondentAttributes changeClicked={changeClicked} clicked={clicked} />
         <TestResults clicked={clicked} changeClicked={changeClicked} missionList={missionList} dataList={reportData?.indexList} />
