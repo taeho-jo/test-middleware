@@ -79,7 +79,7 @@ const ProfileSettingFirst = () => {
   const handleProcessingError = useCallback((status, errors) => {
     console.log(errors, 'ERRORS');
   }, []);
-
+  console.log(commonCode, 'CommonCode');
   return (
     <FlexBox style={{ marginTop: '160px', height: '100%' }} justify={'flex-start'} direction={'column'}>
       <PopupBox padding={'0'} width={'434px'} height={'auto'}>

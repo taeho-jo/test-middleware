@@ -77,6 +77,7 @@ const Report = ({ params }) => {
         }
       },
       select: data => {
+        localStorage.setItem('projectNm', data.data.projectNm);
         dispatch(setReportData(data.data));
         return data.data;
       },

@@ -12,7 +12,7 @@ interface PropsType {
   dataList: string[];
   dataValueList: { name: string; value: number; fatality: number }[];
   negative?: boolean;
-  barColor?: boolean;
+  barColor?: boolean | string;
   fatality?: boolean;
   name?: string;
 }
@@ -88,7 +88,8 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
             <div css={chartBox(fatality)}>
               <BasicBarChart
                 max={60}
-                barColor={index === activeIndex ? hover_chart_color[index] : barColor ? chart_color[index] : ''}
+                // barColor={index === activeIndex ? hover_chart_color[index] : barColor ? chart_color[index] : ''}
+                barColor={'#68A0f4'}
                 negative={negative}
                 dataList={[el]}
                 label={[<>{el.name}</>]}

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import LogoIcon from '../../../assets/logoIcon.png';
 import LogoText from '../../../assets/DibyLogo_black.png';
@@ -20,6 +20,8 @@ const ReportSideBar = () => {
   const { id, share } = router.query;
   const reportData = useSelector<ReducerType, any>(state => state.report.data);
   const projectName = useSelector<ReducerType, string>(state => state.report.projectName);
+  const projectNm = useSelector<ReducerType, string>(state => state.report?.data?.projectNm);
+  // console.log(dataaa, 'NM NM');
 
   const [clicked, setClicked] = useState('');
 
@@ -61,7 +63,7 @@ const ReportSideBar = () => {
         <img style={{ width: '53px', marginLeft: '24px' }} src={LogoText.src} alt="DibyLogo" />
       </FlexBox>
       <FlexBox style={shareBoxStyle} justify={'space-between'} align={'center'}>
-        <span css={[heading3_bold, projectNameStyle]}>{projectName ? projectName : ''}</span>
+        <span css={[heading3_bold, projectNameStyle]}>{projectNm ? projectNm : projectName ? projectName : '@'}</span>
         {share ? null : (
           <div css={{ cursor: 'pointer' }}>
             <Icon name={'ACTION_SHARE'} onClick={reportShare} />
