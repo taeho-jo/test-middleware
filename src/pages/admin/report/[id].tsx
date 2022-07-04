@@ -43,6 +43,12 @@ const Report = ({ params }) => {
     }
   }, [checked]);
 
+  useEffect(() => {
+    if (filterFail === 'on') {
+      setChecked(false);
+    }
+  }, [filterFail]);
+
   const {
     register,
     formState: { errors },
