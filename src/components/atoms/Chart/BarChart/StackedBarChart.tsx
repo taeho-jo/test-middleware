@@ -75,11 +75,14 @@ const StackedBarChart = ({
       const sortArr = [...dataList];
       const sortArr2 = sortArr.sort((a, b) => b.value - a.value);
 
+      console.log(sortArr2);
+
       sortArr2.forEach((el, index) => {
         newObject[`value${index}`] = el.value;
       });
 
       const newArr = [{ name: name, ...newObject }];
+      console.log(newArr, 'ASDF');
       setRenderDataList(newArr);
     }
   }, [dataList]);

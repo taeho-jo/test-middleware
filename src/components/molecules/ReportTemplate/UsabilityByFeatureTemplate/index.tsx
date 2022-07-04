@@ -94,7 +94,8 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                       치명도가 뭔가요
                     </span>
                   </FlexBox>
-                  <TableBarChart barColor={true} dataList={tableBarChartTestData} dataValueList={[el]} />
+                  <TableBarChart barColor={true} dataList={tableBarChartTestData} dataValueList={el.missionFunctionFatality} />
+                  {/*<TableBarChart barColor={true} dataList={tableBarChartTestData} dataValueList={[el]} />*/}
                 </FlexBox>
               </FlexBox>
             </FlexBox>
@@ -108,7 +109,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                   <FlexBox style={headerBosStyle} justify={'space-between'}>
                     <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
                       <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-                        기능별 상세 내용 - [미션 {index + 1}. {item.name}]
+                        기능별 상세 내용 - {item.name}
                       </span>
                       <CheckBox
                         handleChangeCheckBox={handleChangeCheckBox}
@@ -162,7 +163,12 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                             치명도가 뭔가요
                           </span>
                         </FlexBox>
-                        <TableBarChart barColor={true} dataList={tableBarChartTestData} dataValueList={el.missionFunctionFatality} name={item.name} />
+                        <TableBarChart
+                          barColor={'#68A0f4'}
+                          dataList={tableBarChartTestData}
+                          dataValueList={el.missionFunctionFatality}
+                          name={item.name}
+                        />
 
                         <AnnouncementBox
                           style={{ width: '100%', marginTop: '32px', padding: '12px 16px' }}
