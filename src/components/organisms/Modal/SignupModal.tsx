@@ -30,6 +30,7 @@ import { CURRENT_DOMAIN, EMAIL_CONFIRM_TEMPLATE } from '../../../common/util/com
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { setToken } from '../../../store/reducers/authReducer';
 import { setUserInfo } from '../../../store/reducers/userReducer';
+import AnnouncementBox from '../../molecules/AnnouncementBox';
 
 // const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
 
@@ -141,9 +142,10 @@ const SignupModal = () => {
             placeholder={'비밀번호를 입력해주세요.'}
             registerOptions={{
               required: true,
-              pattern: /^(?=.*[A-Za-z])(?=.*[0-9]).{6,10}$/,
+              pattern: /^(?=.*[A-Za-z])(?=.*[0-9]).{6,20}$/,
             }}
           />
+          <AnnouncementBox style={{ marginTop: '12px' }} content={'*비밀번호는 문자+숫자 6자 이상 조합해주세요.'} />
           <div css={[caption1_regular, { marginTop: '32px' }]}>
             Diby의 계정을 생성할 때,&nbsp;
             <TextButton
