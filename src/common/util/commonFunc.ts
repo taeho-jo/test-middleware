@@ -22,5 +22,9 @@ export const closeModal = () => {
 
 export const checkIsInteger = number => {
   const isInteger = Number.isInteger(number);
+  return isInteger ? number : number?.toFixed(1);
+};
+export const checkIsIntegerTwo = number => {
+  const isInteger = Number.isInteger(number);
   return isInteger ? number : number?.toFixed(2);
 };

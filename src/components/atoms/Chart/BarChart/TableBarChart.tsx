@@ -4,7 +4,7 @@ import { basicBarTestData } from '../../../../assets/dummy/dummyData';
 import { BasicBarChart } from '../index';
 import { body3_bold, body3_medium, body3_regular, caption2_regular, heading5_bold } from '../../../../styles/FontStyles';
 import { chart_color, colors, hover_chart_color } from '../../../../styles/Common.styles';
-import { checkIsInteger } from '../../../../common/util/commonFunc';
+import { checkIsInteger, checkIsIntegerTwo } from '../../../../common/util/commonFunc';
 import FlexBox from '../../FlexBox';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
 
@@ -81,7 +81,7 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
             {/*공갈박스*/}
             {fatality && (
               <li css={[heading5_bold, liStyle, emptyLiStyle, { borderRight: 'none', width: '164px', color: colors.grey._99 }]}>
-                {checkIsInteger(el.fatality)}
+                {checkIsIntegerTwo(el.fatality)}
               </li>
             )}
 
@@ -117,7 +117,7 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
                   </FlexBox>
                   <FlexBox justify={'space-between'}>
                     <span css={body3_medium}>치명도</span>
-                    <span css={body3_bold}>{checkIsInteger(el.fatality)}</span>
+                    <span css={body3_bold}>{checkIsIntegerTwo(el.fatality)}</span>
                   </FlexBox>
                 </div>
               </div>
