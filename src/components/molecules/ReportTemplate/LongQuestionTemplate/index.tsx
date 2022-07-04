@@ -15,14 +15,14 @@ const LongQuestionTemplate = ({ dataList, modalControl }) => {
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
           <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-            주관식 문항 - {dataList.name}
+            {dataList.name}
           </span>
           {/*<CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />*/}
         </FlexBox>
         <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton
             disabled={true}
-            onClick={() => modalControl(true, 'originDataModal', { title: `주관식 문항 - ${dataList.name}`, data: dataList.rawData })}
+            onClick={() => modalControl(true, 'originDataModal', { title: `${dataList.name}`, data: dataList.rawData })}
             style={{ marginRight: '8px' }}
             textStyle={'custom'}
             name={'NAVIGATION_CHEVRON_RIGHT'}

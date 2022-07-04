@@ -38,8 +38,19 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
   const cellsRef = useRef([]);
   const cellRef = useRef(null);
 
+  console.log(listData, 'asdfasdf');
+
   const [list, setList] = useState(null);
   const [myRole, setMyRole] = useState<string | null>(null);
+  const [managerCount, setManagerCount] = useState(0);
+
+  useEffect(() => {
+    if (listData) {
+      const roleArr = listData.map(el => el.teamRoleType);
+      const managerCount = roleArr.filter(el => el === '관리자');
+      setManagerCount(managerCount.length);
+    }
+  }, [listData]);
 
   useEffect(() => {
     if (listData) {
@@ -125,24 +136,14 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
                     style={{ cursor: 'pointer' }}
                   />
                 ) : null
-              ) : myRole === '관리자' ? (
-                userInfo.userId === userId ? (
-                  <Icon
-                    onClick={() => handleClickDropdown(index, 'myRoleManager', el)}
-                    forwardref={(el: never) => (cellsRef.current[index] = el)}
-                    name={'MORE_HORIZON'}
-                    size={24}
-                    style={{ cursor: 'pointer' }}
-                  />
-                ) : (
-                  <Icon
-                    onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}
-                    forwardref={(el: never) => (cellsRef.current[index] = el)}
-                    name={'MORE_HORIZON'}
-                    size={24}
-                    style={{ cursor: 'pointer' }}
-                  />
-                )
+              ) : teamRoleType === '관리자' && managerCount <= 1 ? null : myRole === '관리자' && userInfo.userId === userId ? (
+                <Icon
+                  onClick={() => handleClickDropdown(index, 'myRoleManager', el)}
+                  forwardref={(el: never) => (cellsRef.current[index] = el)}
+                  name={'MORE_HORIZON'}
+                  size={24}
+                  style={{ cursor: 'pointer' }}
+                />
               ) : (
                 <Icon
                   onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}
@@ -151,7 +152,15 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
                   size={24}
                   style={{ cursor: 'pointer' }}
                 />
-              )}
+              )
+              // <Icon
+              //   onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}
+              //   forwardref={(el: never) => (cellsRef.current[index] = el)}
+              //   name={'MORE_HORIZON'}
+              //   size={24}
+              //   style={{ cursor: 'pointer' }}
+              // />
+              }
             </FlexBox>
           </FlexBox>
         );

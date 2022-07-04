@@ -72,7 +72,7 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
           <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-            객관식 문항 - {dataList.intent}
+            {dataList.intent}
           </span>
           {/*<CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />*/}
         </FlexBox>
