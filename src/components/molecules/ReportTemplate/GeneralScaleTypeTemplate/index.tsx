@@ -113,15 +113,15 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
             >
               <FlexBox justify={'flex-start'} align={'center'}>
                 <Icon name={'NAVIGATION_ARROW_LEFT'} size={12} />
-                <span css={caption2_bold}>전혀 도움이 되지 않음</span>
+                <span css={caption2_bold}>전혀 동의하지 않음</span>
               </FlexBox>
               <FlexBox justify={'flex-end'} align={'center'}>
-                <span css={caption2_bold}>매우 도움이 됨</span>
+                <span css={caption2_bold}>매우 동의함</span>
                 <Icon name={'NAVIGATION_ARROW_RIGHT'} size={12} />
               </FlexBox>
             </FlexBox>
 
-            <FlexBox justify={'space-around'} style={{ padding: '32px 45px', borderBottom: '1px solid #dcdcdc' }}>
+            <FlexBox justify={'space-around'} style={{ padding: '32px 45px', borderBottom: '1px solid #dcdcdc', position: 'relative' }}>
               {reMakeArr?.map((el, index) => {
                 return (
                   <Fragment key={`scale-${index}`}>

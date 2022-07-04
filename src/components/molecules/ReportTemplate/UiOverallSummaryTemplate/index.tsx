@@ -88,7 +88,7 @@ const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleC
   );
 
   return (
-    <div id="리포트 전체 요약">
+    <div id="UI 진단 전체 요약">
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
           <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>

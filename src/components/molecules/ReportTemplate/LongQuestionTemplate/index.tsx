@@ -21,6 +21,7 @@ const LongQuestionTemplate = ({ dataList, modalControl }) => {
         </FlexBox>
         <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton
+            disabled={true}
             onClick={() => modalControl(true, 'originDataModal', { title: `주관식 문항 - ${dataList.name}`, data: dataList.rawData })}
             style={{ marginRight: '8px' }}
             textStyle={'custom'}
