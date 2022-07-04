@@ -182,7 +182,7 @@ function Section1() {
                 return (
                   <CardWrapper data-aos="fade-up" key={`card_${index}`}>
                     <Card className={index === count % cards.length ? 'box-shadow-active' : ''}>
-                      <Icon name={'GOOGLE'} size={40} />
+                      <Icon name={`${card.img}`} size={24} />
                       <p>{card.title}</p>
                     </Card>
                   </CardWrapper>
