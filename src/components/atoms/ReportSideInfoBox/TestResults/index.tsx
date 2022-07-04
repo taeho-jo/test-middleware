@@ -12,7 +12,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const [selectIntent, setSelectIntent] = useState<number | null>(null);
   const [detailSelectIntent, setDetailSelectIntent] = useState(null);
 
-  const longData = useSelector<ReducerType, any>(state => state.report?.data?.longQuestionList);
+  // const longData = useSelector<ReducerType, any>(state => state.report?.data?.longQuestionList);
   const multipleData = useSelector<ReducerType, any>(state => state.report?.data?.multipleQuestionList);
 
   const handleSelectIntent = useCallback(
@@ -50,15 +50,15 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
           }),
         [],
       );
-      const newLongArr = longData?.reduce(
-        (acc, cur) =>
-          acc.concat({
-            code: cur.questionCode,
-            name: cur.name,
-          }),
-        [],
-      );
-      const otherArr = [...newMultipleArr, ...newLongArr];
+      // const newLongArr = longData?.reduce(
+      //   (acc, cur) =>
+      //     acc.concat({
+      //       code: cur.questionCode,
+      //       name: cur.name,
+      //     }),
+      //   [],
+      // );
+      const otherArr = [...newMultipleArr];
 
       const otherArr2 = [
         { name: '서비스 전체 사용성 평가' },
@@ -69,7 +69,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
       const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr];
       setIntentList(newArr);
     }
-  }, [dataList, missionList, longData, multipleData]);
+  }, [dataList, missionList, multipleData]);
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>테스트 결과</span>
