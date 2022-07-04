@@ -204,11 +204,14 @@ const Layout = ({ children }: PropsType) => {
     switch (router.pathname) {
       case '/admin/report/[id]':
         return (
-          <div css={mainContainer}>
-            <main css={contentsContainer}>
-              <ReportLayout>{children}</ReportLayout>
-            </main>
-          </div>
+          <>
+            <div css={mainContainer}>
+              <main css={contentsContainer}>
+                <ReportLayout>{children}</ReportLayout>
+              </main>
+            </div>
+            <CommonModal />
+          </>
         );
       case '/admin/reset-password':
       case '/admin/reset-password-success':
@@ -301,11 +304,14 @@ const Layout = ({ children }: PropsType) => {
     return (
       <>
         {router.pathname === '/admin/report/[id]' ? (
-          <div css={mainContainer}>
-            <main css={contentsContainer}>
-              <ReportLayout>{children}</ReportLayout>
-            </main>
-          </div>
+          <>
+            <div css={mainContainer}>
+              <main css={contentsContainer}>
+                <ReportLayout>{children}</ReportLayout>
+              </main>
+            </div>
+            <CommonModal />
+          </>
         ) : (
           <>
             <div css={mainContainer}>
