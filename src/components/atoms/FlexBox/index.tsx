@@ -14,7 +14,7 @@ interface PropsType {
   width?: string;
   height?: string;
   padding?: string;
-  onClick?: () => void;
+  onClick?: (e?) => void;
   xs?: number;
   sm?: number;
   md?: number;
@@ -26,6 +26,9 @@ interface PropsType {
   column?: string;
   row?: string;
   style?: any;
+  // overflow?: any;
+  [key: string]: any;
+  // key?: string | number;
 }
 
 const calcWidthPercent = (span: any) => {
@@ -57,10 +60,13 @@ const FlexBox = ({
   column,
   row,
   style,
-}: PropsType) => {
-  console.log(style, 'CSS');
+  // overflow = 'auto',
+  ...props
+}: // key,
+PropsType) => {
   return (
     <div
+      // key={key}
       onClick={onClick}
       css={[
         flexBox(
@@ -82,9 +88,11 @@ const FlexBox = ({
           shadow,
           column,
           row,
+          // overflow,
         ),
         style,
       ]}
+      {...props}
     >
       {children}
     </div>
@@ -112,7 +120,9 @@ const flexBox = (
   shadow,
   column,
   row,
+  // overflow,
 ) => css`
+  box-sizing: border-box;
   height: ${height};
   justify-content: ${justify};
   align-items: ${align};
@@ -122,13 +132,13 @@ const flexBox = (
   display: ${display};
   border: ${border};
   flex-wrap: ${wrap};
-  overflow: hidden;
+
   border-radius: ${radius};
   box-shadow: ${shadow};
   grid-column: ${column};
   grid-row: ${row};
   width: ${lg ? `${calcWidthPercent(lg)}%` : 'auto'};
-  @media only screen and (max-width: 1024px) {
-    width: ${md ? `${calcWidthPercent(md)}%` : 'auto'};
-  }
+  // @media only screen and (max-width: 1024px) {
+  //   width: ${md ? `${calcWidthPercent(md)}%` : 'auto'};
+  // }
 `;

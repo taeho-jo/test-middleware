@@ -3,16 +3,14 @@ const path = require('path');
 const resolvePath = _path => path.join(process.cwd(), _path);
 
 module.exports = {
-  stories: [
-    '../src/stories/**/*.stories.mdx',
-    '../src/stories/**/*.stories.@(js|jsx|ts|tsx)',
-  ],
-  addons: [
-    '@storybook/addon-links',
-    '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
-  ],
+  stories: ['../src/stories/**/*.stories.mdx', '../src/stories/**/*.stories.@(js|jsx|ts|tsx)'],
+  addons: ['@storybook/addon-links', '@storybook/addon-essentials', '@storybook/addon-interactions'],
   framework: '@storybook/react',
+  resolve: {
+    alias: {
+      'react-redux': require.resolve('react-redux'),
+    },
+  },
   webpackFinal: async config => {
     const rules = config.module.rules;
     const fileLoaderRule = rules.find(rule => rule.test.test('.svg'));
@@ -25,6 +23,7 @@ module.exports = {
 
     return config;
   },
+
   // webpackFinal: async config => ({
   //   ...config,
   //   resolve: {

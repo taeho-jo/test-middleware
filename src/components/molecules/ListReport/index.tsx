@@ -1,22 +1,58 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
 import { caption1_regular, heading5_bold } from '../../../styles/FontStyles';
+import moment from 'moment';
+import uiBackground from '/public/assets/png/image_thumbnail_uitest.png';
+import customerBackground from '/public/assets/png/image_thumbnail_customer.png';
+import scenarioBackground from '/public/assets/png/image_thumbnail_scenario.png';
+import uxBackground from '/public/assets/png/image_thumbnail_uxposition.png';
 
 interface PropsType {
-  testType: string;
-  testTitle: string;
-  testDate: string;
-  img: string;
-  width?: string;
+  createDt: string;
+  moduleType: string;
+  projectNm: string;
+  reportSeq: number;
+  reportViewId: string;
+  onClick?: (id, name) => void;
 }
 
-const ListReport = ({ testType, testTitle, testDate, img, width }: PropsType) => {
+const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, onClick }: PropsType) => {
+  const changeName = useCallback(name => {
+    switch (name) {
+      case 'UI_DIAGNOSIS':
+        return 'UI 진단 테스트';
+      case 'SCENARIO_VERIFICATION':
+        return '시나리오 검증';
+      case 'UX_POSITION_ANALYSIS':
+        return 'UX 포지션 분석';
+      case 'POTENTIAL_CUSTOMER_RESEARCH':
+        return '잠재 고객 조사';
+      default:
+        return 'UI 진단 테스트';
+    }
+  }, []);
+
+  const pickBackgroundImage = useCallback(name => {
+    switch (name) {
+      case 'UI_DIAGNOSIS':
+        return uiBackground.src;
+      case 'SCENARIO_VERIFICATION':
+        return scenarioBackground.src;
+      case 'UX_POSITION_ANALYSIS':
+        return uxBackground.src;
+      case 'POTENTIAL_CUSTOMER_RESEARCH':
+        return customerBackground.src;
+      default:
+        return uiBackground.src;
+    }
+  }, []);
+
   return (
-    <div css={mainContainer(img, width)}>
-      <span css={[caption1_regular, blockStyle]}>{testType}</span>
-      <span css={[heading5_bold, titleStyle]}>{testTitle}</span>
-      <span css={[caption1_regular, dateStyle]}>{testDate}</span>
+    <div css={mainContainer(pickBackgroundImage(moduleType))} onClick={() => onClick(reportViewId, projectNm)}>
+      <span css={[caption1_regular, blockStyle]}>{changeName(moduleType)}</span>
+      <span css={[heading5_bold, titleStyle]}>{projectNm}</span>
+      <span css={[caption1_regular, dateStyle]}>{moment(createDt).format('YYYY. MM. DD')}</span>
     </div>
   );
 };
@@ -44,10 +80,9 @@ const dateStyle = [
   `,
 ];
 
-const mainContainer = (img, width) => css`
-  width: ${width ? width : '100%'};
+const mainContainer = img => css`
+  width: 256px;
   height: 184px;
-  //background: hotpink;
   border-radius: 8px;
   border: 1px solid ${colors.grey._ec};
   padding: 25px 20px 0 20px;
@@ -55,4 +90,7 @@ const mainContainer = (img, width) => css`
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: contain;
+  margin-bottom: 20px;
+  margin-right: 16px;
+  cursor: pointer;
 `;

@@ -72,7 +72,7 @@ __webpack_require__.d(__webpack_exports__, {
   "uz": () => (/* binding */ Solution4)
 });
 
-// EXTERNAL MODULE: ./node_modules/react/index.js
+// EXTERNAL MODULE: ./node_modules/react/landing.js
 var react = __webpack_require__(67294);
 // EXTERNAL MODULE: ./diby-client-landing/components/Page.tsx
 var Page = __webpack_require__(85498);
@@ -82,9 +82,9 @@ var AppBar = __webpack_require__(17250);
 var router = __webpack_require__(11163);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/ArrowRightAlt.js
 var ArrowRightAlt = __webpack_require__(57354);
-// EXTERNAL MODULE: ./node_modules/@mui/material/node/styles/index.js
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/styles/landing.js
 var styles = __webpack_require__(59006);
-// EXTERNAL MODULE: ./node_modules/@mui/material/node/index.js
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/landing.js
 var node = __webpack_require__(7772);
 // EXTERNAL MODULE: ./diby-client-landing/components/Grid.tsx
 var Grid = __webpack_require__(53532);
@@ -586,7 +586,7 @@ const Section2 = ({
 };
 
 /* harmony default export */ const Solution_Section2 = (Section2);
-// EXTERNAL MODULE: ./node_modules/@mui/material/node/Grid/index.js
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/Grid/landing.js
 var node_Grid = __webpack_require__(17373);
 var Grid_default = /*#__PURE__*/__webpack_require__.n(node_Grid);
 ;// CONCATENATED MODULE: ./diby-client-landing/components/SolutionCard.tsx
@@ -1143,7 +1143,7 @@ var Footer = __webpack_require__(46823);
 /* harmony default export */ const img_persona_bottom_panelset = ({"src":"/_next/static/media/img_persona_bottom_panelset.9f619d4c.png","height":596,"width":1088,"blurDataURL":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAAKlBMVEXy9fTGxsbm5ub8/PzR8/H4+/v//f7+/PyB7OX09PTs7Oz09PT7/Pz//PywcDQ3AAAADXRSTlP+ARJw/fyDgf1nIz2N4JafgAAAAAlwSFlzAAAWJQAAFiUBSVIk8AAAACpJREFUCJkdxscRADAIAzBDaCnef90c6CUcvS8jEiqLMOPEqnziJCGy0T4VqADcBVI6KwAAAABJRU5ErkJggg=="});
 ;// CONCATENATED MODULE: ./diby-client-landing/assets/images/usecase_customer/img_persona_bottom_qs.png
 /* harmony default export */ const img_persona_bottom_qs = ({"src":"/_next/static/media/img_persona_bottom_qs.f4e65fa1.png","height":596,"width":1088,"blurDataURL":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAAJFBMVEXCw8P19fXo6uv7+/vm5ub9/f319fXr6+v09PT7+/v8/f3t7e4t9vT6AAAACnRSTlMD/fyCEndmIT2M5KvhigAAAAlwSFlzAAAWJQAAFiUBSVIk8AAAAClJREFUCJljYGfg4GRmZmZmYGFg5eLmZuQCM5iYYAyQCAMDGyMTNzcjABG0AMY+f0tvAAAAAElFTkSuQmCC"});
-;// CONCATENATED MODULE: ./diby-client-landing/pages/Solution/index.tsx
+;// CONCATENATED MODULE: ./diby-client-landing/pages/Solution/landing.tsx
 
 
 

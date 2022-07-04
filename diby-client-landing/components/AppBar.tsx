@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { isShow } from '../../src/store/reducers/modalReducer';
 // Components
-import { Grid, Stack, Button, IconButton, Popover, Icon } from '@mui/material';
+import { Button, Grid, IconButton, Popover, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { GridContainer } from './Grid';
 import { breakpoints } from '../Theme';
 // Images
 import MenuIcon from '@mui/icons-material/Menu';
-import LogoWhite from '../../public/assets/images/diby_white1.png';
-import LogoBlack from '../../public/assets/images/diby_black1.png';
 import icon1 from '../../public/assets/images/icon_uitest1.png';
 import icon2 from '../../public/assets/images/icon_uxposition1.png';
 import icon3 from '../../public/assets/images/icon_scenario1.png';
 import icon4 from '../../public/assets/images/icon_customer1.png';
+import { ReducerType } from '../../src/store/reducers';
 
 const AppBarButton = styled(Button)({
   fontWeight: '700',
@@ -38,6 +40,7 @@ const DesignButton = styled(Button)({
 });
 
 function AppBar({ dark = false }: { dark?: boolean }) {
+  const dispatch = useDispatch();
   const navigate = useRouter();
   const darkMode = dark ?? false;
 
@@ -46,6 +49,10 @@ function AppBar({ dark = false }: { dark?: boolean }) {
   const [mobileMenuAnchor, setMobileMenuAnchor] = useState<HTMLButtonElement | null>(null);
   const isUseCaseOpen = Boolean(useCasesMenuAnchor);
   const isMobileMenuOpen = Boolean(mobileMenuAnchor);
+  const token = localStorage.getItem('accessToken');
+  const userId = sessionStorage.getItem('userId');
+  const resetToken = sessionStorage.getItem('accessToken');
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
 
   const handleResize = () => {
     setIsMobile(window.innerWidth < breakpoints.md);
@@ -70,6 +77,16 @@ function AppBar({ dark = false }: { dark?: boolean }) {
   const handleClick = (path: string) => {
     navigate.push(path);
   };
+  const handleMoveAdmin = useCallback(
+    (path: string) => {
+      if (token && userInfo.emailVerifiedYn === 'Y') {
+        navigate.push(path);
+      } else {
+        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+      }
+    },
+    [token, userInfo.emailVerifiedYn],
+  );
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -89,19 +106,6 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 padding: `${isMobile ? '10px' : '6px'} 0 0 0`,
               }}
             >
-              {/*<Image src={darkMode ? LogoWhite : LogoBlack} alt={'Logo'} width={56} height={30} priority={true} quality={100} />*/}
-              {/*<Image*/}
-              {/*  src={*/}
-              {/*    darkMode*/}
-              {/*      ? 'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/diby_white1.png'*/}
-              {/*      : 'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/diby_black1.png'*/}
-              {/*  }*/}
-              {/*  alt={'Logo'}*/}
-              {/*  width={56}*/}
-              {/*  height={30}*/}
-              {/*  priority={true}*/}
-              {/*  quality={100}*/}
-              {/*/>*/}
               <img
                 src={
                   darkMode
@@ -141,15 +145,48 @@ function AppBar({ dark = false }: { dark?: boolean }) {
           )}
 
           {!isMobile && (
-            <DesignButton
-              color={darkMode ? 'green' : 'white'}
-              style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}
-              onClick={() => {
-                handleClick('/tri');
-              }}
-            >
-              설계하기
-            </DesignButton>
+            <div>
+              {token && !userId ? (
+                <>
+                  <DesignButton
+                    style={{ color: darkMode ? 'white' : '#3c3c46' }}
+                    onClick={() => {
+                      localStorage.clear();
+                      navigate.push('/');
+                    }}
+                  >
+                    로그아웃
+                  </DesignButton>
+                  <DesignButton
+                    color={darkMode ? 'green' : 'white'}
+                    style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}
+                    onClick={() => handleMoveAdmin('/admin/team')}
+                  >
+                    대시보드
+                  </DesignButton>
+                </>
+              ) : (
+                <>
+                  <DesignButton
+                    style={{ color: darkMode ? 'white' : '#3c3c46' }}
+                    onClick={() => {
+                      dispatch(isShow({ isShow: true, type: 'login' }));
+                    }}
+                  >
+                    로그인
+                  </DesignButton>
+                  <DesignButton
+                    color={darkMode ? 'green' : 'white'}
+                    style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}
+                    onClick={() => {
+                      dispatch(isShow({ isShow: true, type: 'signup' }));
+                    }}
+                  >
+                    회원가입
+                  </DesignButton>
+                </>
+              )}
+            </div>
           )}
 
           {isMobile && (
@@ -193,7 +230,6 @@ function AppBar({ dark = false }: { dark?: boolean }) {
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <div style={{ width: '24px', height: '24px', margin: 'auto 0' }}>
                   <Image src={icon1} alt={'diby1'} width={24} height={24} priority={true} quality={100} />
-                  {/*<img src={icon1.src} alt={'diby1'} style={{ width: '24px', height: '24px' }} />*/}
                 </div>
                 <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UI 진단 테스트</p>
               </div>
@@ -207,7 +243,6 @@ function AppBar({ dark = false }: { dark?: boolean }) {
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <div style={{ width: '24px', height: '24px', margin: 'auto 0' }}>
                   <Image src={icon2} alt={'diby2'} width={24} height={24} priority={true} quality={100} />
-                  {/*<img src={icon2.src} alt={'diby2'} style={{ width: '24px', height: '24px' }} />*/}
                 </div>
                 <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UX 포지션 테스트</p>
               </div>
@@ -223,7 +258,6 @@ function AppBar({ dark = false }: { dark?: boolean }) {
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <div style={{ width: '24px', height: '24px', margin: 'auto 0' }}>
                   <Image src={icon3} alt={'diby3'} width={24} height={24} priority={true} quality={100} />
-                  {/*<img src={icon3.src} alt={'diby3'} style={{ width: '24px', height: '24px' }} />*/}
                 </div>
                 <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>시나리오 테스트</p>
               </div>
@@ -237,7 +271,6 @@ function AppBar({ dark = false }: { dark?: boolean }) {
               <div style={{ flex: 1, display: 'flex', flexDirection: 'row', verticalAlign: 'center' }}>
                 <div style={{ width: '24px', height: '24px', margin: 'auto 0' }}>
                   <Image src={icon4} alt={'diby4'} width={24} height={24} priority={true} quality={100} />
-                  {/*<img src={icon4.src} alt={'diby4'} style={{ width: '24px', height: '24px' }} />*/}
                 </div>
                 <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>퍼소나 테스트</p>
               </div>
@@ -262,6 +295,25 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             <p style={{ width: '100%', fontSize: '16px', fontWeight: 'bold', textTransform: 'none', textAlign: 'left', margin: '0' }}>가격안내</p>
           </Button>
           <div style={{ margin: '0 -24px', borderTop: '1px dashed #ccc', opacity: '0.3' }} />
+          {/*<div>*/}
+          {/*  <DesignButton*/}
+          {/*    style={{ color: darkMode ? 'white' : '#3c3c46' }}*/}
+          {/*    onClick={() => {*/}
+          {/*      dispatch(isShow({ isShow: true, type: 'login' }));*/}
+          {/*    }}*/}
+          {/*  >*/}
+          {/*    로그인*/}
+          {/*  </DesignButton>*/}
+          {/*  <DesignButton*/}
+          {/*    color={darkMode ? 'green' : 'white'}*/}
+          {/*    style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}*/}
+          {/*    onClick={() => {*/}
+          {/*      dispatch(isShow({ isShow: true, type: 'signup' }));*/}
+          {/*    }}*/}
+          {/*  >*/}
+          {/*    회원가입*/}
+          {/*  </DesignButton>*/}
+          {/*</div>*/}
           <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '18px' }}>
             <DesignButton
               color={'white'}

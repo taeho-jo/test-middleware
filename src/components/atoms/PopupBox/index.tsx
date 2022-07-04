@@ -8,11 +8,12 @@ interface PropsType {
   height?: string;
   radius?: string;
   padding?: string;
+  style?: any;
   children: React.ReactNode;
 }
 
-const PopupBox = ({ width = 'auto', height = 'auto', radius = '16px', padding = '0', children }: PropsType) => {
-  return <div css={popupBoxStyle(width, height, radius, padding)}>{children}</div>;
+const PopupBox = ({ width = 'auto', height = 'auto', radius = '16px', padding = '0', style, children }: PropsType) => {
+  return <div css={[popupBoxStyle(width, height, radius, padding), style]}>{children}</div>;
 };
 
 export default PopupBox;
@@ -23,9 +24,10 @@ const popupBoxStyle = (width, height, radius, padding) => css`
   border: none;
   border-radius: ${radius};
   padding: ${padding};
-  //position: absolute;
-  //left: 50%;
-  //transform: translate(-50%);
   background: ${colors.white};
   position: relative;
+  box-sizing: border-box;
+  @media (max-width: 390px) {
+    width: 100%;
+  }
 `;

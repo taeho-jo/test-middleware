@@ -1405,7 +1405,7 @@ var InnerSlider = /*#__PURE__*/function (_React$Component) {
 
     _defineProperty(_assertThisInitialized(_this), "adaptHeight", function () {
       if (_this.props.adaptiveHeight && _this.list) {
-        var elem = _this.list.querySelector("[data-index=\"".concat(_this.state.currentSlide, "\"]"));
+        var elem = _this.list.querySelector("[data-landing=\"".concat(_this.state.currentSlide, "\"]"));
 
         _this.list.style.height = (0, _innerSliderUtils.getHeight)(elem) + "px";
       }
@@ -2973,7 +2973,7 @@ var initializedState = function initializedState(spec) {
     slideWidth = listWidth;
   }
 
-  var slideHeight = listNode && getHeight(listNode.querySelector('[data-index="0"]'));
+  var slideHeight = listNode && getHeight(listNode.querySelector('[data-landing="0"]'));
   var listHeight = slideHeight * spec.slidesToShow;
   var currentSlide = spec.currentSlide === undefined ? spec.initialSlide : spec.currentSlide;
 
@@ -3764,7 +3764,7 @@ exports.canUseDOM = canUseDOM;
             return Map;
         }
         /**
-         * Returns index in provided array that matches the specified key.
+         * Returns landing in provided array that matches the specified key.
          *
          * @param {Array<Array>} arr
          * @param {*} key

@@ -26,7 +26,7 @@ for (const i in data[0]) {
 }
 
 const handleSelectBarChart = (index, state) => {
-  console.log(index, state);
+  // console.log(index, state);
 };
 
 const StackedBarChart = () => {

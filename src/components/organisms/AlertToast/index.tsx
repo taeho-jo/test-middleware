@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Toast from '../../atoms/Toast';
 import Portal from '../../atoms/Portal';
 import { useSelector } from 'react-redux';
@@ -78,5 +78,5 @@ export default AlertToast;
 
 const positionStyle = css`
   position: fixed;
-  z-index: 100;
+  z-index: 99999999;
 `;

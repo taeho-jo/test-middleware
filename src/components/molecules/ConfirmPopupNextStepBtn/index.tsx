@@ -1,21 +1,20 @@
 import React from 'react';
-import Button from '../../atoms/Button';
 import { heading4_bold } from '../../../styles/FontStyles';
 import { css } from '@emotion/react';
+import IconTextButton from '../../atoms/Button/IconTextButton';
 
 interface PropsType {
   title: string;
   btnText: string;
   style?: any;
-  pathname: string;
-  onClick?: (path) => void;
+  onClick?: () => void;
 }
 
-const ConfirmPopupNextStepBtn = ({ title, btnText, onClick, style, pathname }: PropsType) => {
+const ConfirmPopupNextStepBtn = ({ title, onClick, style, btnText }: PropsType) => {
   return (
-    <div css={[mainBoxStyle, style]}>
+    <div css={[mainBoxStyle, style]} onClick={onClick}>
       <h4 css={[heading4_bold, titleBoxStyle]}>{title}</h4>
-      <Button buttonType={'action'} btnText={btnText} onClick={() => onClick(pathname)} />
+      <IconTextButton text={btnText} name={'NAVIGATION_CHEVRON_RIGHT'} />
     </div>
   );
 };
@@ -23,9 +22,10 @@ const ConfirmPopupNextStepBtn = ({ title, btnText, onClick, style, pathname }: P
 export default ConfirmPopupNextStepBtn;
 
 const mainBoxStyle = css`
-  margin-top: 40px;
+  padding: 0 40px 40px;
 `;
 
 const titleBoxStyle = css`
-  margin-bottom: 8px;
+  //margin-bottom: 10px;
+  margin: 16px 0;
 `;

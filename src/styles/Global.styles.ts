@@ -1,136 +1,41 @@
 import { css } from '@emotion/react';
 
-const reset = css`
+const reset = (popupShow, isAdmin, story) => css`
   @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
   $aos-distance: 30px;
 
   :root {
     --gradient: linear-gradient(93.75deg, #a8ff69 8.23%, #24e1d5 35.57%, #2878f0 62.91%, #7b3ce9 91.55%);
   }
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  //::-webkit-scrollbar {
+  //  display: none;
+  //}
+
   * {
     //box-sizing: border-box;
+    box-sizing: ${story ? 'auto' : isAdmin ? 'border-box' : 'unset'};
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
       'Malgun Gothic', sans-serif;
   }
   * {
-    //html,
-    //body,
-    //div,
-    //span,
-    //object,
-    //iframe,
-    //h1,
-    //h2,
-    //h3,
-    //h4,
-    //h5,
-    //h6,
-    //p,
-    //blockquote,
-    //pre,
-    //abbr,
-    //address,
-    //cite,
-    //code,
-    //del,
-    //dfn,
-    //em,
-    //img,
-    //input,
-    //ins,
-    //kbd,
-    //q,
-    //samp,
-    //small,
-    //strong,
-    //sub,
-    //sup,
-    //var,
-    //b,
-    //i,
-    //dl,
-    //dt,
-    //dd,
-    //ol,
-    //ul,
-    //li,
-    //fieldset,
-    //form,
-    //label,
-    //legend,
-    //table,
-    //caption,
-    //tbody,
-    //tfoot,
-    //thead,
-    //tr,
-    //th,
-    //td,
-    //article,
-    //aside,
-    //canvas,
-    //details,
-    //figcaption,
-    //figure,
-    //footer,
-    //header,
-    //hgroup,
-    //menu,
-    //nav,
-    //section,
-    //summary,
-    //time,
-    //mark,
-    //audio,
-    //video {
-    //  margin: 0;
-    //  padding: 0;
-    //}
-    //article,
-    //aside,
-    //details,
-    //figcaption,
-    //figure,
-    //footer,
-    //header,
-    //hgroup,
-    //menu,
-    //nav,
-    //section {
-    //  display: block;
-    //}
-    //ul,
-    //ol {
-    //  list-style: none;
-    //}
-    //ul::after,
-    //ol::after,
-    //.clb::after {
-    //  content: '';
-    //  display: block;
-    //  clear: both;
-    //}
-    //img {
-    //  border: none;
-    //}
-    //html {
-    //  font-size: 10px;
-    //}
-    html,
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       padding: 0;
-      margin: 0;
+      margin: 0 auto;
       width: 100%;
-      //min-width: 1440px;
+      height: 100%;
+      overflow: ${isAdmin ? 'hidden' : 'unset'};
+      max-width: 1980px;
+      // overflow: ${story ? 'auto' : popupShow || isAdmin ? 'hidden' : 'auto'};
+      // min-width: ${isAdmin ? '1440px' : 'unset'};
       //height: 100%;
     }
     /* 공통셋팅 */
     a {
-      text-decoration: none;
-      color: #000000;
+      //text-decoration: none;
+      //color: #000000;
     }
     ul,
     ol {
@@ -160,13 +65,38 @@ const reset = css`
       will-change: transform;
       overflow: hidden;
     }
+
     img {
       object-fit: contain;
     }
 
     p,
     span {
-      color: #3c3c46;
+      // color: ${isAdmin ? '#3c3c46' : ''};
+      //cursor: default;
+    }
+
+    input[type='checkbox'] + label {
+      cursor: pointer;
+      padding-left: 30px;
+      height: 22px;
+      background: url('/assets/images/common/toggle_check_box_off_24px.png') left/22px no-repeat;
+      line-height: 22px;
+    }
+
+    input[type='checkbox']:hover + label {
+      background: url('/assets/images/common/toggle_check_box_off_hover_24px.png') left/22px no-repeat;
+    }
+    input[type='checkbox']:disabled + label {
+      background: url('/assets/images/common/toggle_check_box_off_disabled_24px.png') left/22px no-repeat;
+    }
+
+    input[type='checkbox']:checked + label {
+      background: url('/assets/images/common/toggle_check_box_24px.png') left/22px no-repeat;
+    }
+
+    input[type='checkbox'] {
+      display: none;
     }
 
     #gradient-canvas {

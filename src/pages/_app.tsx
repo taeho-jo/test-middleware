@@ -1,5 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
-import Script from 'next/script'
+import { useRouter } from 'next/router';
 // Redux
 import { persistedReducer, wrapper } from '../store';
 import { createStore } from 'redux';
@@ -7,7 +7,7 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 // Components
 import Layout from '../common/layouts/Layout';
-import AppAnimation from '../common/layouts/AppAnimation';
+import Seo from '../common/layouts/Seo';
 // Libraries
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -21,9 +21,6 @@ import 'slick-carousel/slick/slick-theme.css';
 // Types
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next';
-import Seo from '../common/layouts/Seo';
-import { useRouter } from 'next/router';
-// import { GetServerSideProps } from 'next';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -32,11 +29,12 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-function MyApp({ Component, pageProps }: AppPropsWithLayout, props) {
-  const store = createStore(persistedReducer);
-  const persistor = persistStore(store);
+export const store = createStore(persistedReducer);
+export const persistor = persistStore(store);
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
-  console.log(props, 'Props');
+
   const [queryClient] = React.useState(
     () =>
       new QueryClient({
@@ -53,26 +51,22 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout, props) {
   return (
     <>
       <Seo path={router.pathname} />
-      <PersistGate persistor={persistor} loading={<div></div>}>
+      <PersistGate persistor={persistor} loading={null}>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             <ThemeProvider theme={theme}>
               <GlobalStyles />
               <Layout>
                 {/*<AppAnimation>*/}
-
                 <Component {...pageProps} />
-
                 {/*</AppAnimation>*/}
               </Layout>
-              <Script type='text/javascript' src='/lib/beusableHeatmap.js'/>
-
+              {/*<Script type="text/javascript" src="/lib/beusableHeatmap.js" />*/}
             </ThemeProvider>
           </Hydrate>
           <ReactQueryDevtools initialIsOpen={false} position={'bottom-right'} />
         </QueryClientProvider>
       </PersistGate>
-
     </>
   );
 }

@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { InputHTMLAttributes, useEffect, useRef } from 'react';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
+import { caption1_bold } from '../../../styles/FontStyles';
+import { text } from 'stream/consumers';
 
-interface PropsType {
-  line?: boolean;
+interface PropsType extends InputHTMLAttributes<HTMLInputElement> {
+  register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
+  errorMsg?: string;
+  errors?: object;
+  // watch?: any;
   validation?: boolean;
   type?: string;
   placeholder?: string;
   width?: string;
   label: string;
-  register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
-  errorMsg?: string;
-  errors?: object;
-  watch?: any;
-  onChangeStatus?: (name, status) => void;
-  status?: boolean;
   disabled?: boolean;
-  defaultValue?: string;
+  style?: any;
+  title?: string;
+  onClick?: () => void;
+  // defaultValue?: string;
   registerOptions?: {
     [key: string]: any;
   };
@@ -24,8 +26,6 @@ interface PropsType {
 }
 
 const Input = ({
-  line = false,
-  validation = true,
   type = 'text',
   placeholder,
   width = '100%',
@@ -33,66 +33,109 @@ const Input = ({
   register,
   errorMsg,
   errors,
-  watch,
+  // watch,
   registerOptions,
-  onChangeStatus,
-  status,
-  defaultValue = '',
   disabled = false,
-  marginBottom,
+  style,
+  title,
+  // defaultValue,
   ...props
 }: PropsType) => {
-  console.log(errors[label], 'input component');
   return (
     <>
+      {title ? <label css={[caption1_bold, labelTextStyle(errors[label])]}>{title}</label> : null}
+
       <input
-        css={inputStyle(line, errors[label] ? false : true, status, disabled, width, marginBottom)}
-        onFocus={onChangeStatus ? () => onChangeStatus(label, true) : () => console.log('Input Focus', label)}
+        css={[inputStyle(disabled, width, errors[label]), { ...style }]}
         type={type}
         autoComplete={'off'}
         placeholder={errors[label] ? errorMsg : placeholder}
         disabled={disabled}
-        defaultValue={defaultValue}
+        id={label}
         name={label}
         {...props}
         {...register(label, registerOptions)}
       />
-      {/*{errors[label] && <p css={errorStyle}>{errorMsg}</p>}*/}
     </>
   );
 };
 export default Input;
 
-const inputStyle = (line, validation, status, disabled, width, marginBottom) => css`
-  width: ${width};
-  margin-bottom: ${marginBottom};
+const inputStyle = (disabled, width, error) => css`
+  box-sizing: border-box;
   outline: none;
-  ${line
-    ? `border: none;
-    border-radius: 0;
-    padding: 10px;
-    border-bottom: ${!validation ? `2px solid ${colors.red}` : status ? `2px solid ${colors.grey._3c}` : `1px solid ${colors.grey._3c}`};
-    `
-    : `
-  border: ${!validation ? `2px solid ${colors.red}` : status ? `2px solid ${colors.grey._3c}` : `1px solid ${colors.grey._3c}`};
-  padding: 10px 24px;
+  font-weight: 500;
+  font-size: 18px;
+  color: ${colors.grey._3c};
   border-radius: 4px;
-  `}
-  font-weight: 700;
-  color: ${!validation ? colors.red : colors.grey._3c};
+  padding: 10px 16px;
+  width: ${width};
   ::placeholder {
-    color: ${!validation ? colors.red : colors.grey._cc};
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+  }
+  :focus {
+    font-weight: 700;
+    border: 2px solid ${colors.grey._3c};
+    padding: 9px 14px;
+  }
+  :hover {
+    border: 2px solid ${colors.cyan._500};
+    padding: 9px 16px;
+  }
+  :invalid {
+    border: 1px solid ${colors.red};
+    color: ${colors.red};
+    :hover {
+      border: 1px solid ${colors.red};
+      padding: 10px 16px;
+    }
+    :focus {
+      padding: 10px 16px;
+    }
+    ::placeholder {
+      color: ${colors.red};
+    }
   }
   :disabled {
+    background: ${colors.grey._ec};
+    cursor: not-allowed;
     color: ${colors.grey._99};
-    ${line
-      ? `
-      border-bottom: 1px solid ${colors.grey._3c}; 
-      background: ${colors.white};
-    `
-      : `
-      border: 1px solid ${colors.grey._99};
-      background: ${colors.grey._ec};
-    `}
+    :hover {
+      border: 1px solid #3c3c46;
+      padding: 10px 16px;
+    }
   }
+  ${!error &&
+  css`
+    border: 1px solid #3c3c46;
+    ::placeholder {
+      color: ${colors.grey._cc};
+    }
+  `}
+  ${error &&
+  css`
+    border: 1px solid ${colors.red};
+    color: red;
+    :focus {
+      border: 2px solid ${colors.red};
+    }
+    ::placeholder {
+      color: ${colors.red};
+    }
+  `}
+`;
+
+const labelTextStyle = error => css`
+  margin-bottom: 8px;
+  display: inline-block;
+  ${!error &&
+  css`
+    color: ${colors.grey._99};
+  `}
+  ${error &&
+  css`
+    color: ${colors.red};
+  `}
 `;

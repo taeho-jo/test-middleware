@@ -1,13 +1,13 @@
 import React from 'react';
 import { GetServerSideProps } from 'next';
-import AddInfoPopup from '../../components/organisms/AddInfoPopup';
+// import AddInfoPopup from '../../components/organisms/AddInfoPopup';
 
 interface PropsType {
   id: string;
 }
 
 const AddInfo = ({ id }: PropsType) => {
-  return <AddInfoPopup id={id} />;
+  return <div>{id}</div>;
 };
 
 export default AddInfo;

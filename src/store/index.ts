@@ -1,16 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { MakeStore, createWrapper } from 'next-redux-wrapper';
+import { createWrapper, MakeStore } from 'next-redux-wrapper';
 import logger from 'redux-logger';
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
+import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import reducer from './reducers';
@@ -18,8 +9,11 @@ import reducer from './reducers';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'],
-  blacklist: ['counter'],
+  // stateReconciler: autoMergeLevel2,
+  whitelist: ['auth', 'user', 'team', 'common', 'report'],
+  // blacklist: ['counter', 'modal'],
+  // stateReconciler: hardSet,
+  // migrate: createMigrate(migrations, { debug: true }),
 };
 
 export const persistedReducer = persistReducer(persistConfig, reducer);
@@ -39,4 +33,6 @@ const makeStore: MakeStore<any> = () => {
   return { ...persistor, ...store };
 };
 
-export const wrapper = createWrapper<any>(makeStore, {});
+export const wrapper = createWrapper(makeStore, {
+  debug: process.env.NODE_ENV !== 'production',
+});

@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { colors } from './Common.styles';
 
 const height30 = css`
   height: 30px;
@@ -31,24 +32,31 @@ const height12 = css`
 
 const font24 = css`
   font-size: 24px;
+  color: ${colors.grey._3c};
 `;
 const font20 = css`
   font-size: 20px;
+  color: ${colors.grey._3c};
 `;
 const font18 = css`
   font-size: 18px;
+  color: ${colors.grey._3c};
 `;
 const font16 = css`
   font-size: 16px;
+  color: ${colors.grey._3c};
 `;
 const font14 = css`
   font-size: 14px;
+  color: ${colors.grey._3c};
 `;
 const font12 = css`
   font-size: 12px;
+  color: ${colors.grey._3c};
 `;
 const font10 = css`
   font-size: 10px;
+  color: ${colors.grey._3c};
 `;
 
 const fontBold = css`

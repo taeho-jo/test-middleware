@@ -12,14 +12,14 @@ __webpack_require__.d(__webpack_exports__, {
   "Z": () => (/* binding */ components_Footer)
 });
 
-// EXTERNAL MODULE: ./node_modules/react/index.js
+// EXTERNAL MODULE: ./node_modules/react/landing.js
 var react = __webpack_require__(67294);
 // EXTERNAL MODULE: ./node_modules/next/router.js
 var router = __webpack_require__(11163);
-// EXTERNAL MODULE: ./node_modules/@mui/material/node/Grid/index.js
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/Grid/landing.js
 var Grid = __webpack_require__(17373);
 var Grid_default = /*#__PURE__*/__webpack_require__.n(Grid);
-// EXTERNAL MODULE: ./node_modules/@mui/material/node/styles/index.js
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/styles/landing.js
 var styles = __webpack_require__(59006);
 // EXTERNAL MODULE: ./diby-client-landing/components/Grid.tsx
 var components_Grid = __webpack_require__(53532);
@@ -27,9 +27,9 @@ var components_Grid = __webpack_require__(53532);
 /* harmony default export */ const diby_black = ({"src":"/_next/static/media/diby_black.9ffdc7f3.png","height":72,"width":168,"blurDataURL":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAADCAMAAACZFr56AAAAHlBMVEU7O0U7O0U7O0U7O0U7O0U7O0U7O0U7O0U7O0U7O0UrtoaCAAAACnRSTlM2r4eVwUltdlejZRyHpgAAAAlwSFlzAAAhOAAAITgBRZYxYAAAACFJREFUCJkFwYcBADAMwjADGc3/D1dC3riBvNKpTIZxHx8EMABUYtakbAAAAABJRU5ErkJggg=="});
 ;// CONCATENATED MODULE: ./diby-client-landing/assets/images/diby_white.png
 /* harmony default export */ const diby_white = ({"src":"/_next/static/media/diby_white.9b2efa3d.png","height":72,"width":168,"blurDataURL":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAADCAMAAACZFr56AAAAIVBMVEX///////////////////////////////////////////9/gMdvAAAAC3RSTlOxlTlwgsGmjEkrV2e8eQYAAAAJcEhZcwAAITgAACE4AUWWMWAAAAAiSURBVAiZBcGHAQAwCMMwhzD7/8GVIK3ZC/SKpgY5nNvxAQUvAGKqFDpDAAAAAElFTkSuQmCC"});
-// EXTERNAL MODULE: ./node_modules/@mui/material/node/Stack/index.js
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/Stack/landing.js
 var Stack = __webpack_require__(46591);
-// EXTERNAL MODULE: ./node_modules/@mui/material/node/Button/index.js
+// EXTERNAL MODULE: ./node_modules/@mui/material/node/Button/landing.js
 var Button = __webpack_require__(86096);
 var Button_default = /*#__PURE__*/__webpack_require__.n(Button);
 // EXTERNAL MODULE: ./diby-client-landing/Theme.tsx

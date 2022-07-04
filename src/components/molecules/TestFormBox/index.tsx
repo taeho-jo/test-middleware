@@ -21,7 +21,6 @@ const TestFormBox = () => {
   const [checkedList, setCheckedList] = useState<string[]>([]);
 
   const handleCheckList = (value: string): void => {
-    console.log(value, '함수안');
     if (checkedList.length === 0) {
       setCheckedList([value]);
     } else if (checkedList.includes(value)) {
@@ -32,9 +31,7 @@ const TestFormBox = () => {
     }
   };
 
-  console.log(checkedList, 'checkedList');
   const aaa = data => {
-    console.log(data, 'DATA');
     // handleCheckList(data);
   };
 

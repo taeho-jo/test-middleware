@@ -4,7 +4,13 @@ import { HYDRATE } from 'next-redux-wrapper';
 // Reducers
 import counter from './counterReducer';
 import auth from './authReducer';
+import user from './userReducer';
 import toast from './toastReducer';
+import modal from './modalReducer';
+import team from './teamReducer';
+import common from './commonReducer';
+import queryStatus from './useQueryControlReducer';
+import report from './reportReducer';
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
@@ -13,10 +19,17 @@ const reducer = (state, action) => {
       ...action.payload,
     };
   }
+
   return combineReducers({
     counter,
     auth,
+    user,
     toast,
+    modal,
+    team,
+    common,
+    queryStatus,
+    report,
   })(state, action);
 };
 

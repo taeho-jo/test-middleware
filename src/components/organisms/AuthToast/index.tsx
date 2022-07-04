@@ -80,5 +80,5 @@ export default AuthToast;
 
 const positionStyle = css`
   position: fixed;
-  z-index: 100;
+  z-index: 99999999;
 `;
