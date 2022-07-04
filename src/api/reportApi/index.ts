@@ -39,31 +39,31 @@ export const fetchReportShareIdApi = async reportSeq => {
 
 // 리포트 공유 조회 API
 export const fetchReportShare = async (reportSeq, filterFields = null, filterValues = null, filterFail) => {
-  let apiUrl = `/share/view/${reportSeq}/`;
+  let apiUrl = `/report/share/${reportSeq}/`;
 
   if (filterFields && filterValues && !filterFail) {
     console.log(1);
-    apiUrl = `/share/view/${reportSeq}/?filterFields=${filterFields}&filterValues
+    apiUrl = `/report/share/${reportSeq}/?filterFields=${filterFields}&filterValues
 =${filterValues}`;
     return await AXIOS_GET(apiUrl);
   }
 
   if (!filterFields && !filterValues && filterFail) {
     console.log(2);
-    apiUrl = `/share/view/${reportSeq}/?filterFail=on`;
+    apiUrl = `/report/share/${reportSeq}/?filterFail=on`;
     return await AXIOS_GET(apiUrl);
   }
 
   if (filterFields && filterValues && filterFail) {
     console.log(3);
-    apiUrl = `/share/view/${reportSeq}/?filterFields=${filterFields}&filterValues
+    apiUrl = `/report/share/${reportSeq}/?filterFields=${filterFields}&filterValues
 =${filterValues}&filterFail=on`;
     return await AXIOS_GET(apiUrl);
   }
 
   if (!filterFields && !filterValues && !filterFail) {
     console.log(4);
-    apiUrl = `/share/view/${reportSeq}/`;
+    apiUrl = `/report/share/${reportSeq}/`;
     return await AXIOS_GET(apiUrl);
   }
 };

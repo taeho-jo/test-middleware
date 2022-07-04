@@ -40,12 +40,12 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
           <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-            객관식 문항 - {dataList.intent}
+            {dataList.intent}
           </span>
         </FlexBox>
         <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton
-            onClick={() => modalControl(true, 'originDataModal', { title: `객관식 문항 - ${dataList.intent}`, data: dataList.rawData })}
+            onClick={() => modalControl(true, 'originDataModal', { title: `${dataList.intent}`, data: dataList.rawData })}
             style={{ marginRight: '8px' }}
             textStyle={'custom'}
             name={'NAVIGATION_CHEVRON_RIGHT'}
