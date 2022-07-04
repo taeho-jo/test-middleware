@@ -92,7 +92,7 @@ const SignupModal = () => {
 
   // 구글 로그인
   const loginWithGoogle = useCallback(() => {
-    router.push(`${CURRENT_DOMAIN}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
+    router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
   }, []);
 
   // 회원가입 시도 실패
