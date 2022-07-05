@@ -98,7 +98,7 @@ const ReportHeader = () => {
       if (selected.filterField === 'cell') {
         setAddConditionArr(cellArr);
       }
-      if (selected.filterField === null) {
+      if (selected.filterField === '') {
         setAddConditionArr([]);
       }
     }

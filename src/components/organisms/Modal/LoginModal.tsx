@@ -42,6 +42,8 @@ const LoginModal = () => {
     register,
     handleSubmit,
     reset,
+    watch,
+    getValues,
     formState: { errors },
   } = useForm<InputType>({});
   const onSubmit = data => handleLogin('success', data);
@@ -76,7 +78,7 @@ const LoginModal = () => {
 
   // 로그인 시도 실패
   const handleProcessingError = useCallback((status, errors) => {
-    dispatch(showToast({ message: '가입된 계정이 없습니다. 다시 확인해주세요!', isShow: true, status: 'warning', duration: 5000 }));
+    // dispatch(showToast({ message: '가입된 계정이 없습니다. 다시 확인해주세요!', isShow: true, status: 'warning', duration: 5000 }));
   }, []);
 
   // 비밀번호 찾기 클릭
@@ -118,32 +120,26 @@ const LoginModal = () => {
             register={register}
             label={'userId'}
             errors={errors}
-            errorMsg={'필수 항목입니다.'}
+            errorMsg={'이메일을 입력해주세요.'}
             placeholder={'이메일을 입력해주세요.'}
             style={{ marginBottom: '16px' }}
             registerOptions={{
               required: true,
-              // onChange: e => updateLoginField('userId', e.target.value),
               pattern: /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-              // pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
             }}
           />
 
           <Input
             title={'비밀번호'}
             type={'password'}
-            // pattern="[A-Za-z0-9]{6,10}"
-            // required
             register={register}
             label={'password'}
             errors={errors}
-            errorMsg={'필수 항목입니다.'}
+            errorMsg={'비밀번호를 입력해주세요.'}
             placeholder={'비밀번호를 입력해주세요.'}
-            // disabled={true}
             registerOptions={{
               required: true,
-              // onChange: e => updateLoginField('password', e.target.value),
-              pattern: /^(?=.*[A-Za-z])(?=.*[0-9]).{6,10}$/,
+              pattern: /^(?=.*[A-Za-z])(?=.*[0-9]).{6,20}$/,
             }}
           />
 

@@ -118,6 +118,7 @@ const Layout = ({ children }: PropsType) => {
       dispatch(updateFilterFlied(null));
       dispatch(updateFilterValues(null));
       dispatch(updateFilterFail(null));
+      dispatch(isShow({ isShow: false, type: '' }));
     } else {
       return;
     }
