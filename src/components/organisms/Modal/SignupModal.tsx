@@ -97,7 +97,7 @@ const SignupModal = () => {
 
   // 회원가입 시도 실패
   const handleProcessingError = useCallback((status, errors) => {
-    dispatch(showToast({ message: '정보를 입력해주세요.', isShow: true, status: 'warning', duration: 5000 }));
+    // dispatch(showToast({ message: '정보를 입력해주세요.', isShow: true, status: 'warning', duration: 5000 }));
   }, []);
 
   // 로그인 돌아가기
@@ -123,12 +123,11 @@ const SignupModal = () => {
             register={register}
             label={'userId'}
             errors={errors}
-            errorMsg={'필수 항목입니다.'}
+            errorMsg={'이메일을 입력해주세요.'}
             placeholder={'이메일을 입력해주세요.'}
             style={{ marginBottom: '16px' }}
             registerOptions={{
               required: true,
-              // pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
               pattern: /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
             }}
           />
@@ -138,7 +137,7 @@ const SignupModal = () => {
             register={register}
             label={'password'}
             errors={errors}
-            errorMsg={'필수 항목입니다.'}
+            errorMsg={'비밀번호를 입력해주세요.'}
             placeholder={'비밀번호를 입력해주세요.'}
             registerOptions={{
               required: true,
