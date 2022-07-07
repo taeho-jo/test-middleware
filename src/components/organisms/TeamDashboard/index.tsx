@@ -158,7 +158,7 @@ const TeamDashboard = () => {
     <>
       <div css={teamMainContainer}>
         <FlexBox direction={'column'} justify={'flex-start'} align={'flex-start'} style={researchKinds}>
-          <span css={[body2_bold, titleStyle]}>테스트 종류</span>
+          <span css={[body2_bold, titleStyle]}>리서치 종류</span>
           <FlexBox justify={'flex-start'} align={'flex-start'}>
             {ResearchType.map((item, index) => {
               return (
