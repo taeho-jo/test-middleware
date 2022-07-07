@@ -136,7 +136,7 @@ function Section1() {
   return (
     <div style={{ width: '100%', marginBottom: '150px', maxWidth: '1920px', margin: '0 auto' }}>
       <Section>
-        <GridContainer container spacing={0} style={{ marginTop: '80px', overflowX: 'hidden' }}>
+        <GridContainer container spacing={0} style={{ marginTop: '80px' }}>
           <LeftGrid item xs={12} md={7} lg={6}>
             <div style={{ flex: 1 }} />
             <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
@@ -164,10 +164,10 @@ function Section1() {
           </LeftGrid>
           <RightGrid item xs={0} md={5} lg={6}>
             <div style={{ height: '488px', overflowX: 'visible' }}>
-              <div style={{ height: '488px', overflowY: 'hidden' }}>
+              <div style={{ height: '488px', overflowY: 'hidden', boxShadow: '5px 5px 25px grey', borderRadius: '10px' }}>
                 <div data-aos="fade-up" style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}>
                   <img
-                    src={'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/img_dashboard_2_1_.webp'}
+                    src={'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/img_dashboard.png'}
                     alt="dashboard_img2"
                     style={{ width: '840px', height: '488px', borderRadius: '10px' }}
                   />

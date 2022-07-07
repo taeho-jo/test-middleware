@@ -26,6 +26,8 @@ const Report = ({ params }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { id } = params;
+  console.log(params);
+  console.log(encodeURIComponent(`${id}`));
   const { share } = router.query;
 
   const filterFlied = useSelector<ReducerType, any>(state => state.report.filter.filterFlied);
@@ -59,12 +61,12 @@ const Report = ({ params }) => {
     share ? () => fetchReportShare(id, filterFlied, filterValues, filterFail) : () => fetchReportDetail(id, filterFlied, filterValues, filterFail),
     {
       onError: (e: any) => {
-        const errorData = e.response.data;
-        if (errorData.code === 'E0008') {
+        const errorData = e.response?.data;
+        if (errorData?.code === 'E0008') {
           queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
           queryClient.invalidateQueries(['fetchReportDetail', id]);
         }
-        if (errorData.code === 'E0007' || errorData.code === 'E0002') {
+        if (errorData?.code === 'E0007' || errorData?.code === 'E0002') {
           localStorage.clear();
           router.push('/');
         }
