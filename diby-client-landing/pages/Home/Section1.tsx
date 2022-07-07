@@ -164,7 +164,7 @@ function Section1() {
           </LeftGrid>
           <RightGrid item xs={0} md={5} lg={6}>
             <div style={{ height: '488px', overflowX: 'visible' }}>
-              <div style={{ height: '488px', overflowY: 'hidden', boxShadow: '5px 5px 10px grey', borderRadius: '10px' }}>
+              <div style={{ height: '488px', overflowY: 'hidden', boxShadow: '5px 5px 25px grey', borderRadius: '10px' }}>
                 <div data-aos="fade-up" style={{ objectFit: 'contain', width: '840px', height: '488px', borderRadius: '10px' }}>
                   <img
                     src={'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/img_dashboard.png'}
