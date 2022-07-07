@@ -3,6 +3,7 @@ import { AXIOS_GET } from '../../hooks/useAxios';
 
 // 리포트 조회 API
 export const fetchReportDetail = async (reportSeq, filterFields = null, filterValues = null, filterFail) => {
+  console.log(reportSeq, '!!!!!!!!!!!!!!!!!!');
   let apiUrl = `/report/view/${reportSeq}/`;
 
   if (filterFields && filterValues && !filterFail) {
