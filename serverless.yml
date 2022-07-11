@@ -2,6 +2,7 @@
 myNextApplication:
   component: "@sls-next/serverless-component@latest"
   inputs:
+    roleArn: 'arn:aws:iam::183697223334:role/diby_prod_role_policy',
     bucketRegion: 'ap-northeast-2'    # S3 Bucket 지역 설정
     bucketName: '${env.BUCKET_NAME}'    # S3 Bucket 이름
     cloudfront:
