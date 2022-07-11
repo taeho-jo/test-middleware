@@ -7,4 +7,7 @@ myNextApplication:
     bucketName: '${env.BUCKET_NAME}'    # S3 Bucket 이름
     cloudfront:
       distributionId: '${env.DISTRIBUTION_ID}'  # cloudfront distribution ID
+      name:
+        defaultLambda: '${env.DEFAULT_LAMBDA}'
+        apiLambda: '${env.API_LAMBDA}'
     domain : ["${env.SUB_DOMAIN}", "${env.DOMAIN}"]  # custom domain [ sub, domain ] --> ex. [ 'stag', 'diby.io ] / [ '', 'diby.io ]
