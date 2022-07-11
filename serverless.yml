@@ -6,8 +6,8 @@ myNextApplication:
     bucketRegion: 'ap-northeast-2'    # S3 Bucket 지역 설정
     bucketName: '${env.BUCKET_NAME}'    # S3 Bucket 이름
     name:
-      defaultLambda: '${env.DEFAULT_LAMBDA}'
-      apiLambda: '${env.API_LAMBDA}'
+      defaultLambda: '${env.DEFAULT_LAMBDA}' # 람다 함수 지정
+      apiLambda: '${env.API_LAMBDA}' # 람다 함수 지정
     cloudfront:
       distributionId: '${env.DISTRIBUTION_ID}'  # cloudfront distribution ID
     domain : ["${env.SUB_DOMAIN}", "${env.DOMAIN}"]  # custom domain [ sub, domain ] --> ex. [ 'stag', 'diby.io ] / [ '', 'diby.io ]
