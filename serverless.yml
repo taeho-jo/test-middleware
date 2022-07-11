@@ -7,7 +7,8 @@ myNextApplication:
     bucketName: '${env.BUCKET_NAME}'    # S3 Bucket 이름
     name:
       defaultLambda: '${env.DEFAULT_LAMBDA}' # 람다 함수 지정
-      apiLambda: '${env.API_LAMBDA}' # 람다 함수 지정
+      apiLambda: '${env.API_LAMBDA}' # 람다 API 함수 지정
+      imageLambda: '${env.IMAGE_LAMBDA}' # 람다 IMAGE 함수 지정
     cloudfront:
       distributionId: '${env.DISTRIBUTION_ID}'  # cloudfront distribution ID
     domain : ["${env.SUB_DOMAIN}", "${env.DOMAIN}"]  # custom domain [ sub, domain ] --> ex. [ 'stag', 'diby.io ] / [ '', 'diby.io ]
