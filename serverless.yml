@@ -5,9 +5,9 @@ myNextApplication:
     roleArn: '${env.ROLE_ARN}'
     bucketRegion: 'ap-northeast-2'    # S3 Bucket 지역 설정
     bucketName: '${env.BUCKET_NAME}'    # S3 Bucket 이름
+    name:
+      defaultLambda: '${env.DEFAULT_LAMBDA}'
+      apiLambda: '${env.API_LAMBDA}'
     cloudfront:
       distributionId: '${env.DISTRIBUTION_ID}'  # cloudfront distribution ID
-      name:
-        defaultLambda: '${env.DEFAULT_LAMBDA}'
-        apiLambda: '${env.API_LAMBDA}'
     domain : ["${env.SUB_DOMAIN}", "${env.DOMAIN}"]  # custom domain [ sub, domain ] --> ex. [ 'stag', 'diby.io ] / [ '', 'diby.io ]
