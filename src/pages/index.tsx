@@ -1,4 +1,3 @@
-import React from 'react';
 // Components
 import Section1 from '../../diby-client-landing/pages/Home/Section1';
 import Section2 from '../../diby-client-landing/pages/Home/Section2';
@@ -6,6 +5,9 @@ import Section3 from '../../diby-client-landing/pages/Home/Section3';
 import Section4 from '../../diby-client-landing/pages/Home/Section4';
 import CustomFooter from '../../diby-client-landing/pages/Home/CustomFooter';
 import withTokenAuth from '../hoc/withTokenAuth';
+import { useRouter } from 'next/router';
+import { isShow } from '../store/reducers/modalReducer';
+import { useDispatch } from 'react-redux';
 
 const Home = () => {
   return (

@@ -147,28 +147,16 @@ const SignupModal = () => {
           <AnnouncementBox style={{ marginTop: '12px' }} content={'*비밀번호는 문자+숫자 6자 이상 조합해주세요.'} />
           <div css={[caption1_regular, { marginTop: '32px' }]}>
             Diby의 계정을 생성할 때,&nbsp;
-            <TextButton
-              onClick={() =>
-                dispatch(showToast({ message: '이용약관으로 이동 할겁니다. 링크주세욤', isShow: true, status: 'success', duration: 5000 }))
-              }
-              textStyle={caption1_regular}
-              text={'이용약관'}
-            />
+            <TextButton onClick={() => router.push('/rules/service/20220705')} textStyle={caption1_regular} text={'이용약관'} />
             과&nbsp;
-            <TextButton
-              onClick={() =>
-                dispatch(showToast({ message: '개인정보처리방침으로 이동 할겁니다. 링크주세욤', isShow: true, status: 'warning', duration: 5000 }))
-              }
-              textStyle={caption1_regular}
-              text={'개인정보처리방침'}
-            />
-            ,&nbsp;
-            <TextButton
-              onClick={() => dispatch(showToast({ message: '정보수신으로 이동 할겁니다. 링크주세욤', isShow: true, status: '', duration: 5000 }))}
-              textStyle={caption1_regular}
-              text={'정보수신'}
-            />
-            에&nbsp; 동의해요.
+            <TextButton onClick={() => router.push('/policy/privacy/20220705')} textStyle={caption1_regular} text={'개인정보처리방침'} />
+            ,&nbsp; 정보수신에
+            {/*<TextButton*/}
+            {/*  onClick={() => dispatch(showToast({ message: '정보수신으로 이동 할겁니다. 링크주세욤', isShow: true, status: '', duration: 5000 }))}*/}
+            {/*  textStyle={caption1_regular}*/}
+            {/*  text={'정보수신'}*/}
+            {/*/>*/}
+            &nbsp; 동의해요.
           </div>
 
           {/* TODO: checkBox 혹시 모르니 우선 주석*/}

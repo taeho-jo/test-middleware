@@ -66,6 +66,16 @@ export const profileColor = [
   '#cfffac',
 ];
 
+export const RULES_SERVICE_DATE_OPTION = [
+  { value: '20220705', displayName: '2022.07.05' },
+  { value: '20220715', displayName: '2022.07.15' },
+];
+
+export const POLICY_PRIVACY_DATE_OPTION = [
+  { value: '20220705', displayName: '2022.07.05' },
+  { value: '20220731', displayName: '2022.07.31' },
+];
+
 // <-------------------- 구글 redirect URL 변수 --------------------> //
 export const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
 
