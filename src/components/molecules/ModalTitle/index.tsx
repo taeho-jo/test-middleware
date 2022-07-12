@@ -4,7 +4,7 @@ import FlexBox from '../../atoms/FlexBox';
 import Icon from '../../atoms/Icon';
 import { css } from '@emotion/react';
 import { heading1_bold } from '../../../styles/FontStyles';
-import { isShow } from '../../../store/reducers/modalReducer';
+import { isShow, updateReturnPage } from '../../../store/reducers/modalReducer';
 import { ReducerType } from '../../../store/reducers';
 import { updateTeamSeq } from '../../../store/reducers/teamReducer';
 import { updateRawData } from '../../../store/reducers/reportReducer';
@@ -24,6 +24,7 @@ const ModalTitle = ({ title = 'Modal', titlePosition = 'flex-start', titleStyle,
   const closeModal = useCallback(() => {
     dispatch(isShow({ isShow: false, type: '' }));
     dispatch(updateRawData(null));
+    dispatch(updateReturnPage(false));
   }, []);
 
   const goBackLogin = useCallback(() => {

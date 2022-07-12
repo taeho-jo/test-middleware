@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 // Redux
 import { ReducerType } from '../store/reducers';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { isShow } from '../store/reducers/modalReducer';
 
 export default function withTokenAuth(SpecificComponent: any, option: boolean) {
   const AuthenticateCheck = () => {
     const router = useRouter();
+    const dispatch = useDispatch();
     const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
     const token = localStorage.getItem('accessToken');
-    const test = true;
     const resetToken = sessionStorage.getItem('accessToken');
     // option
     // true : 권한 상관없이 접근가능
@@ -89,36 +90,6 @@ export default function withTokenAuth(SpecificComponent: any, option: boolean) {
           router.replace('/');
         }
       }
-
-      // if (resetToken) {
-      //   removeSesstionStorage();
-      // }
-      // if (!option && userInfo.emailVerifiedYn === 'Y' && userInfo.firstTimeYn === 'Y') {
-      //   router.replace('/admin/profile')z;
-      // }
-      // if (!option && userInfo.emailVerifiedYn === 'Y' && userInfo.firstTimeYn === 'N') {
-      //   router.replace('/admin/team');
-      // }
-      // if ((!option && !token) || userInfo.emailVerifiedYn === 'N') {
-      //   router.replace('/main');
-      // }
-      // if (!option && token && userInfo.emailVerifiedYn === 'Y') {
-      //   return;
-      // }
-      // if (!option && token && userInfo.emailVerifiedYn !== 'Y') {
-      //   router.replace('/main');
-      // }
-      // if (option && token && userInfo.emailVerifiedYn === 'Y' && userInfo.firstTimeYn === 'Y') {
-      //   router.replace('/main');
-      // }
-      // if (router.pathname === '/') {
-      //   if (option && token && userInfo.emailVerifiedYn === 'Y' && userInfo.firstTimeYn === 'Y') {
-      //     router.replace('/admin/profile');
-      //   }
-      //   if (option && token && userInfo.emailVerifiedYn === 'Y' && userInfo.firstTimeYn === 'N') {
-      //     router.replace('/admin/team');
-      //   }
-      // }
     }, [token, userInfo]);
 
     return <SpecificComponent />;

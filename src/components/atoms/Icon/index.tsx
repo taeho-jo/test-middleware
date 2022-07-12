@@ -36,6 +36,7 @@ import UxPositionInactive from '/public/assets/svg/uxposition_inactive.svg';
 import MoreHorizon from '/public/assets/svg/more_horizon.svg';
 import Member from '/public/assets/svg/member.svg';
 import Noti from '/public/assets/svg/noti.svg';
+import DibyLogoBlack from '/public/assets/svg/diby_logo_black.svg';
 
 import { css } from '@emotion/react';
 
@@ -88,6 +89,7 @@ const IconTypes = {
   MORE_HORIZON: MoreHorizon,
   MEMBER: Member,
   NOTI: Noti,
+  DIBY_LOGO_BLACK: DibyLogoBlack,
 };
 
 const Icon = ({ name, size = 24, style, iconColor, onClick, forwardref, width = '24px', height = '24px' }: PropsType) => {
