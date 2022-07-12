@@ -16,6 +16,7 @@ const FooterButton = styled(Button)(({ theme }) => ({
   justifyContent: 'flex-start',
   textTransform: 'none',
 }));
+
 function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
   const darkMode = props.dark ?? false;
   const ImgLogo = darkMode ? LogoWhite : LogoBlack;
@@ -62,8 +63,24 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
               유저리서치 솔루션입니다.
             </p>
             <p style={{ fontSize: '12px', color: color }}>Ⓒ DBDLAB Corp.</p>
-            <FooterButton color={darkMode ? 'white' : 'primary'} style={{ fontSize: '14px', fontWeight: 'bold' }}>
-              이용 약관 및 개인 정보 보호
+            <FooterButton
+              color={darkMode ? 'white' : 'primary'}
+              style={{ fontSize: '14px', fontWeight: 'bold' }}
+              onClick={() => {
+                handleClick('/rules/service/20220705');
+              }}
+            >
+              이용 약관
+            </FooterButton>
+            <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#3c3c46', marginRight: '10px' }}>및</span>
+            <FooterButton
+              color={darkMode ? 'white' : 'primary'}
+              style={{ fontSize: '14px', fontWeight: 'bold' }}
+              onClick={() => {
+                handleClick('/policy/privacy/20220705');
+              }}
+            >
+              개인 정보 보호
             </FooterButton>
             <p style={{ fontSize: '12px', color: '#CCCCCC' }}>
               해당 웹사이트는

@@ -5,7 +5,8 @@ import { heading1_bold } from '../../../styles/FontStyles';
 import Select from '../Select';
 import { useRouter } from 'next/router';
 import { isShow, updateReturnPage } from '../../../store/reducers/modalReducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReducerType } from '../../../store/reducers';
 
 interface PropsType {
   DATE_OPTION: {
@@ -22,10 +23,16 @@ interface PropsType {
 const PolicyHeader = ({ DATE_OPTION, selected, title, onClick }: PropsType) => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const isReturnPage = useSelector<ReducerType, boolean>(state => state.modal.returnPage);
   const handleChange = useCallback(() => {
-    dispatch(isShow({ isShow: true, type: 'signup' }));
-    router.push('/');
-  }, []);
+    if (isReturnPage) {
+      dispatch(isShow({ isShow: true, type: 'signup' }));
+      dispatch(updateReturnPage(false));
+      router.push('/');
+    } else {
+      router.push('/');
+    }
+  }, [isReturnPage]);
   return (
     <div css={{ marginBottom: '80px' }}>
       <img onClick={handleChange} style={{ width: '140px', marginBottom: '27px', cursor: 'pointer' }} src={LogoText.src} alt="DibyLogo" />
