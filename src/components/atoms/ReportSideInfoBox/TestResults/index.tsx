@@ -78,7 +78,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
           <>
             <Fragment key={index}>
               <a
-                style={{ width: '100%', textDecoration: 'none' }}
+                style={{ width: '100%', textDecoration: 'none', margin: '8px 0' }}
                 href={el.detail ? `#${el.name}` : el.code ? `#${el.code}` : `#${el.name}`}
                 // href={'#리포트 전체 요약'}
               >
@@ -108,7 +108,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
 
               return (
                 <Fragment key={idx}>
-                  <a style={{ width: '100%', textDecoration: 'none' }} href={`#기능-${id}`}>
+                  <a style={{ width: '100%', textDecoration: 'none', margin: '8px 0' }} href={`#기능-${id}`}>
                     <FlexBox
                       direction={'column'}
                       align={'flex-start'}
@@ -147,7 +147,7 @@ const infoBox = css`
   background: ${colors.white};
   border: 2px solid ${colors.blue._500};
   border-radius: 16px;
-  margin: 8px 0;
+  //margin: 8px 0;
   padding: 16px;
   height: auto;
 `;
@@ -155,7 +155,7 @@ const infoBox2 = css`
   background: ${colors.white};
   border: 1px solid ${colors.grey._3c};
   border-radius: 16px;
-  margin: 8px 0;
+  //margin: 8px 0;
   padding: 16px;
   height: auto;
 `;

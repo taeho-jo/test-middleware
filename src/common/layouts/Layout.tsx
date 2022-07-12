@@ -39,7 +39,6 @@ const Layout = ({ children }: PropsType) => {
   const token = localStorage.getItem('accessToken');
   const resetToken = sessionStorage.getItem('accessToken');
 
-  const isReturnPage = useSelector<ReducerType, boolean>(state => state.modal.returnPage);
   const userInfo = useSelector<ReducerType, UserInfoType>(state => state.user.userInfo);
 
   const [showGradient, setShowGradient] = useState<boolean>(true);
@@ -112,7 +111,6 @@ const Layout = ({ children }: PropsType) => {
 
   useEffect(() => {
     if (router?.pathname !== '/' && router?.pathname !== '/admin/report/[id]') {
-      console.log(router.pathname, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
       dispatch(updateFilterFlied(null));
       dispatch(updateFilterValues(null));
       dispatch(updateFilterFail(null));
