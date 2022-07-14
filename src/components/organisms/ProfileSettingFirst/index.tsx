@@ -57,7 +57,9 @@ const ProfileSettingFirst = () => {
     (status, data) => {
       // loginResponse.mutate(data);
       const sendObject = {
-        ...selected,
+        funnelsType: selected.funnelsCd,
+        cpPositionType: selected.cpPosition,
+        cpSizeType: selected.cpSize,
         userName: data.userName ? data.userName : userInfo.userName,
         firstTimeYn: 'N',
       };
@@ -98,8 +100,9 @@ const ProfileSettingFirst = () => {
           />
 
           <AnnouncementBox
+            style={{ padding: '12px 16px' }}
             content={`<div>
-                닉네임을 입력하지 않을 경우, <br />
+                닉네임을 입력하지 않을 경우,<br/>
                 회원님의 이메일 계정으로 닉네임이 생성돼요.
               </div>`}
           />

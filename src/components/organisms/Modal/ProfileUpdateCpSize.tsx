@@ -24,10 +24,14 @@ const ProfileUpdateCpSize = () => {
   const commonCode = useSelector<ReducerType, any>(state => state.common.commonCode);
 
   const cpSizeType = commonCode?.CpSizeType;
-  const userCpSize = userInfo.CpSizeType;
+  const userCpSize = userInfo?.cpSizeType;
   const currentCpSize = cpSizeType.filter(el => el.key === userCpSize);
 
   const { mutate } = useMutation('fetchUserInfoUpdate', fetchUserInfoUpdateApi, {
+    onError: (e: any) => {
+      const errorData = e?.response?.data;
+      dispatch(showToast({ message: errorData.message, isShow: true, status: 'warning', duration: 5000 }));
+    },
     onSuccess: data => {
       dispatch(setUserInfo(data.data));
       queryClient.invalidateQueries(['fetchUserInfo', 'layout']);
@@ -49,7 +53,7 @@ const ProfileUpdateCpSize = () => {
   const handleUpdate = useCallback(
     (status, data) => {
       const sendObject = {
-        cpSize: selected.cpSize,
+        cpSizeType: selected.cpSize,
       };
       console.log(sendObject);
       mutate(sendObject);
@@ -66,11 +70,6 @@ const ProfileUpdateCpSize = () => {
     },
     [selected],
   );
-
-  //   key: "ONETEN", value: "ONETEN", displayName: "1~10인"}
-  // 1: {key: "ELEFITY", value: "ELEFITY", displayName: "11~50인"}
-  // 2: {key: "FITYHUND", value: "FITYHUND", displayName: "51~100인"}
-  // 3: {key: "HUNDMAX", value: "HUNDMAX", displayName: "101인이상"}
 
   return (
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
@@ -90,7 +89,7 @@ const ProfileUpdateCpSize = () => {
           />
 
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton theme={'dark'} type={'submit'} text={'직무 수정하기'} />
+            <BasicButton theme={'dark'} type={'submit'} text={'회사규모 수정하기'} />
           </FlexBox>
         </Form>
       </PopupBox>

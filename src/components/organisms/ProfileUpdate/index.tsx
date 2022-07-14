@@ -62,7 +62,7 @@ const ProfileUpdate = () => {
           onClick={showModalFun}
           name={'profileCpSize'}
           title={'회사규모'}
-          content={userInfo.cpSize ? cpSize.filter(el => el.key === userInfo.cpSizeType)[0].displayName : ''}
+          content={userInfo.cpSizeType ? cpSize.filter(el => el.key === userInfo.cpSizeType)[0].displayName : ''}
           btnText={'회사 규모 수정하기'}
           showBtn={true}
         />

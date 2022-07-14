@@ -128,7 +128,7 @@ const SignupModal = () => {
             register={register}
             label={'userId'}
             errors={errors}
-            errorMsg={'이메일을 입력해주세요.'}
+            errorMsg={'올바른 이메일을 입력해주세요.'}
             placeholder={'이메일을 입력해주세요.'}
             style={{ marginBottom: '16px' }}
             registerOptions={{
@@ -142,7 +142,7 @@ const SignupModal = () => {
             register={register}
             label={'password'}
             errors={errors}
-            errorMsg={'비밀번호를 입력해주세요.'}
+            errorMsg={'비밀번호는 문자+숫자 6자 이상 조합해주세요.'}
             placeholder={'비밀번호를 입력해주세요.'}
             registerOptions={{
               required: true,
@@ -155,36 +155,8 @@ const SignupModal = () => {
             <TextButton onClick={() => showPolicyPage('/rules/service/20220705')} textStyle={caption1_regular} text={'이용약관'} />
             과&nbsp;
             <TextButton onClick={() => showPolicyPage('/policy/privacy/20220705')} textStyle={caption1_regular} text={'개인정보처리방침'} />
-            ,&nbsp; 정보수신에
-            {/*<TextButton*/}
-            {/*  onClick={() => dispatch(showToast({ message: '정보수신으로 이동 할겁니다. 링크주세욤', isShow: true, status: '', duration: 5000 }))}*/}
-            {/*  textStyle={caption1_regular}*/}
-            {/*  text={'정보수신'}*/}
-            {/*/>*/}
-            &nbsp; 동의해요.
+            ,&nbsp; 정보수신에&nbsp; 동의해요.
           </div>
-
-          {/* TODO: checkBox 혹시 모르니 우선 주석*/}
-          {/*<CheckBox*/}
-          {/*  style={{ marginTop: '42px', marginBottom: '8px' }}*/}
-          {/*  inputName={'privacyConsentYn'}*/}
-          {/*  label={*/}
-          {/*    'Diby <a style="text-decoration: underline">이용약관</a>과 <a style="text-decoration: underline">개인 정보처리 방침</a>에 동의합니다. (필수)'*/}
-          {/*  }*/}
-          {/*  register={register}*/}
-          {/*  errors={errors}*/}
-          {/*  registerOptions={{*/}
-          {/*    required: true,*/}
-          {/*  }}*/}
-          {/*/>*/}
-          {/*<CheckBox*/}
-          {/*  style={{ marginBottom: '62px' }}*/}
-          {/*  inputName={'consentToUseMarketingYn'}*/}
-          {/*  label={'Diby에서 발행하는 UX / CX 아티클과 연구자료를<br> 받아볼게요. (선택)'}*/}
-          {/*  register={register}*/}
-          {/*  errors={errors}*/}
-          {/*/>*/}
-          {/* TODO: checkBox 혹시 모르니 우선 주석*/}
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
             <BasicButton isLoading={isLoading} type={'submit'} text={'간편하게 시작하기'} style={{ marginBottom: '18px' }} />
             <IconTextButton onClick={loginWithGoogle} name={'GOOGLE'} iconPosition={'left'} text={'구글로 시작하기'} />

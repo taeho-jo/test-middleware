@@ -129,7 +129,7 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
             register={register}
             label={'team'}
             errors={errors}
-            errorMsg={'필수 항목입니다.'}
+            errorMsg={'팀 이름을 입력해주세요. '}
             placeholder={`${userInfo?.userName}의 팀`}
             style={{ marginBottom: '16px' }}
             registerOptions={{
@@ -139,6 +139,7 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
 
           {first ? (
             <AnnouncementBox
+              style={{ padding: '12px 16px' }}
               content={`<div>
                   별도로 팀 이름을 입력하지 않을 경우, <br />
                   회원님의 닉네임으로 팀이 생성돼요.

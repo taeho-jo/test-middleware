@@ -132,13 +132,15 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
                 })}
               </div>
               <ul
+                className={'scrollType1'}
                 css={{
                   background: colors.grey._f7,
                   borderRadius: '8px',
                   flex: 3,
                   padding: '16px 24px',
                   height: '400px',
-                  overflowY: 'scroll',
+                  wordBreak: 'keep-all',
+                  // overflowY: 'scroll',
                 }}
               >
                 {completeList?.[completeSelectButton]?.length === 0 ? (
@@ -239,7 +241,10 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
                   );
                 })}
               </div>
-              <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflowY: 'scroll' }}>
+              <ul
+                className={'scrollType1'}
+                css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', wordBreak: 'keep-all' }}
+              >
                 {additionalList?.[addSelectButton]?.length === 0 ? (
                   <li
                     css={[
@@ -338,7 +343,10 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
                   );
                 })}
               </div>
-              <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflowY: 'scroll' }}>
+              <ul
+                className={'scrollType1'}
+                css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', wordBreak: 'keep-all' }}
+              >
                 {systemErrorList?.[systemSelectButton]?.length === 0 ? (
                   <li
                     css={[

@@ -65,7 +65,7 @@ const AdminSideBar = () => {
         <span css={heading5_bold}>팀</span>
         <Icon onClick={() => dispatch(isShow({ isShow: true, type: 'createTeam' }))} name={'ACTION_CREATE'} size={24} style={{ cursor: 'pointer' }} />
       </FlexBox>
-      <div css={{ height: 'calc(100% - 95px)', overflowY: 'scroll' }}>
+      <div className={'scrollType1'} css={scrollContainerStyle}>
         {sideTeamList()}
         {infoBox && (
           <FlexBox justify={'center'} style={{ marginTop: '24px' }}>
@@ -75,7 +75,7 @@ const AdminSideBar = () => {
       </div>
 
       {modalType === 'inviteTeamMember' && (
-        <div css={{ width: '240px', height: '100%', background: 'rgba(0,0,0,0.4)', position: 'absolute', top: 0, left: 0 }}></div>
+        <div css={{ width: '241px', height: '100%', background: 'rgba(0,0,0,0.4)', position: 'absolute', top: 0, left: 0 }}></div>
       )}
     </div>
   );
@@ -84,7 +84,7 @@ const AdminSideBar = () => {
 export default AdminSideBar;
 
 const adminSideBarStyle = modalType => css`
-  width: 240px;
+  width: 241px;
   min-width: 240px;
   height: 100vh;
   border-right: 1px solid ${colors.grey._ec};
@@ -100,4 +100,22 @@ const teamCreateAreaStyle = css`
   height: 48px;
   padding: 15px 24px;
   border-bottom: 1px solid ${colors.grey._ec};
+`;
+
+const scrollContainerStyle = css`
+  height: calc(100% - 95px);
+  //overflow-y: overlay;
+  //overflow-x: hidden;
+  //&::-webkit-scrollbar {
+  //  width: 6px;
+  //}
+  //&::-webkit-scrollbar-thumb {
+  //  height: 17%;
+  //  background-color: red;
+  //  /* 스크롤바 둥글게 설정    */
+  //  border-radius: 10px;
+  //}
+  //&::-webkit-scrollbar-track {
+  //  background-color: rgba(0, 0, 0, 0);
+  //}
 `;

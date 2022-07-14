@@ -126,40 +126,41 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
             </FlexBox>
 
             <FlexBox justify={'center'} align={'center'} style={{ padding: '17px 0', flex: 1 }}>
-              {myRole === '멤버' ? (
-                userInfo.userId === userId ? (
+              {
+                myRole === '멤버' ? (
+                  userInfo.userId === userId ? (
+                    <Icon
+                      onClick={() => handleClickDropdown(index, 'myRole', el)}
+                      forwardref={(el: never) => (cellsRef.current[index] = el)}
+                      name={'MORE_HORIZON'}
+                      size={24}
+                      style={{ cursor: 'pointer' }}
+                    />
+                  ) : null
+                ) : teamRoleType === '관리자' && managerCount <= 1 ? null : myRole === '관리자' && userInfo.userId === userId ? (
                   <Icon
-                    onClick={() => handleClickDropdown(index, 'myRole', el)}
+                    onClick={() => handleClickDropdown(index, 'myRoleManager', el)}
                     forwardref={(el: never) => (cellsRef.current[index] = el)}
                     name={'MORE_HORIZON'}
                     size={24}
                     style={{ cursor: 'pointer' }}
                   />
-                ) : null
-              ) : teamRoleType === '관리자' && managerCount <= 1 ? null : myRole === '관리자' && userInfo.userId === userId ? (
-                <Icon
-                  onClick={() => handleClickDropdown(index, 'myRoleManager', el)}
-                  forwardref={(el: never) => (cellsRef.current[index] = el)}
-                  name={'MORE_HORIZON'}
-                  size={24}
-                  style={{ cursor: 'pointer' }}
-                />
-              ) : (
-                <Icon
-                  onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}
-                  forwardref={(el: never) => (cellsRef.current[index] = el)}
-                  name={'MORE_HORIZON'}
-                  size={24}
-                  style={{ cursor: 'pointer' }}
-                />
-              )
-              // <Icon
-              //   onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}
-              //   forwardref={(el: never) => (cellsRef.current[index] = el)}
-              //   name={'MORE_HORIZON'}
-              //   size={24}
-              //   style={{ cursor: 'pointer' }}
-              // />
+                ) : (
+                  <Icon
+                    onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}
+                    forwardref={(el: never) => (cellsRef.current[index] = el)}
+                    name={'MORE_HORIZON'}
+                    size={24}
+                    style={{ cursor: 'pointer' }}
+                  />
+                )
+                // <Icon
+                //   onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}
+                //   forwardref={(el: never) => (cellsRef.current[index] = el)}
+                //   name={'MORE_HORIZON'}
+                //   size={24}
+                //   style={{ cursor: 'pointer' }}
+                // />
               }
             </FlexBox>
           </FlexBox>
@@ -195,6 +196,20 @@ export default MemberList;
 const listBoxStyle = css`
   width: 100%;
   height: 720px;
-  overflow-y: scroll;
+  //overflow-y: scroll;
+  overflow-y: overlay;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 17%;
+    background-color: rgba(0, 0, 0, 0.2);
+    /* 스크롤바 둥글게 설정    */
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+  }
   position: relative;
 `;

@@ -113,7 +113,7 @@ const TeamProductCreateModal = () => {
             register={register}
             label={'productNm'}
             errors={errors}
-            errorMsg={'필수 항목입니다.'}
+            errorMsg={'프로덕트 이름을 입력해주세요.'}
             placeholder={`프로덕트 이름을 입력해주세요.`}
             // style={{ marginBottom: '16px' }}
             registerOptions={{
