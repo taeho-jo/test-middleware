@@ -32,5 +32,19 @@ const contentsArea = css`
   margin-left: 240px;
   width: 100%;
   //margin-top: 48px;
-  overflow-y: scroll;
+  //overflow-y: scroll;
+  overflow-y: overlay;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 17%;
+    background-color: rgba(0, 0, 0, 0.2);
+    /* 스크롤바 둥글게 설정    */
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+  }
 `;

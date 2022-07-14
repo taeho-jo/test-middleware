@@ -56,14 +56,16 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
   return (
     <div css={containerStyle}>
       <ul css={ulStyle}>
-        {dataList.map((el, index) => {
-          return (
-            <li key={index} css={[caption2_regular, liStyle, liWidthStyle(dataList.length, fatality)]}>
-              {el}
-            </li>
-          );
-        })}
+        <li css={[caption2_regular, liStyle, liWidthStyle(dataList.length, fatality), { width: 'calc(100% - 164px)' }]}>불편 언급 비율</li>
         {fatality && <li css={[caption2_regular, liStyle, { width: '164px' }]}>치명도</li>}
+        {/*{dataList.map((el, index) => {*/}
+        {/*  return (*/}
+        {/*    <li key={index} css={[caption2_regular, liStyle, liWidthStyle(dataList.length, fatality)]}>*/}
+        {/*      {el}*/}
+        {/*    </li>*/}
+        {/*  );*/}
+        {/*})}*/}
+        {/*{fatality && <li css={[caption2_regular, liStyle, { width: '164px' }]}>치명도</li>}*/}
       </ul>
 
       {/*TODO: Map 함수*/}
@@ -164,7 +166,7 @@ const liWidthStyle = (length, fatality) => css`
   `
     : `
     width: calc(100% / ${length});
-  `}//width: calc((100% - 164px) / ${length});
+  `}
 `;
 const emptyLiStyle = css`
   padding: 30px;

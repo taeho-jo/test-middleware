@@ -15,7 +15,9 @@ const ReportLayout = ({ children }) => {
         }}
       >
         <ReportHeader />
-        <div css={{ marginTop: '72px', overflowY: 'scroll' }}>{children}</div>
+        <div className={'scrollType1'} css={{ marginTop: '72px' }}>
+          {children}
+        </div>
       </div>
     </FlexBox>
   );

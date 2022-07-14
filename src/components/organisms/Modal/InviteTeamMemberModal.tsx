@@ -141,7 +141,7 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
             register={register}
             label={'email'}
             errors={errors}
-            errorMsg={'필수 항목입니다.'}
+            errorMsg={'이메일을 입력해주세요.'}
             placeholder={'이메일을 입력해주세요.'}
             style={{ marginBottom: '16px' }}
             registerOptions={{

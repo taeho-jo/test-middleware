@@ -99,6 +99,23 @@ const reset = (popupShow, isAdmin, story) => css`
       display: none;
     }
 
+    .scrollType1 {
+      overflow-y: overlay;
+      overflow-x: hidden;
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+      &::-webkit-scrollbar-thumb {
+        height: 17%;
+        background-color: rgba(0, 0, 0, 0.2);
+        /* 스크롤바 둥글게 설정    */
+        border-radius: 10px;
+      }
+      &::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0);
+      }
+    }
+
     #gradient-canvas {
       --gradient-color-1: #3c3c46;
       --gradient-color-2: #3d2f4d;

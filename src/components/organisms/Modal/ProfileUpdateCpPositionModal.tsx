@@ -33,9 +33,9 @@ const ProfileUpdateCpPositionModal = () => {
   });
 
   const cpPositionType = commonCode?.CpPositionType;
-  console.log(cpPositionType);
-  const userCpPosition = userInfo.cpPostionType;
+  const userCpPosition = userInfo.cpPositionType;
   const currentPosition = cpPositionType.filter(el => el.key === userCpPosition);
+  console.log(userInfo);
 
   const { handleSubmit } = useForm<InputType>({});
   const onSubmit = data => handleUpdate('success', data);
@@ -47,7 +47,7 @@ const ProfileUpdateCpPositionModal = () => {
   const handleUpdate = useCallback(
     (status, data) => {
       const sendObject = {
-        cpPosition: selected.cpPosition,
+        cpPositionType: selected.cpPosition,
       };
       console.log(sendObject);
       mutate(sendObject);

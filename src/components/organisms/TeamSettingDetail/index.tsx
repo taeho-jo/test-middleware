@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import { updateSelectProductList } from '../../../store/reducers/teamReducer';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { fetchRefreshToken } from '../../../api/authApi';
+import IconTextButton from '../../atoms/Button/IconTextButton';
 
 const TeamSettingDetail = () => {
   const queryClient = useQueryClient();
@@ -68,6 +69,15 @@ const TeamSettingDetail = () => {
             </Fragment>
           );
         })}
+        <div css={addProductContainer}>
+          <IconTextButton
+            onClick={() => dispatch(isShow({ isShow: true, type: 'createTeamProduct' }))}
+            name={'ACTION_ADD_SMALL'}
+            iconPosition={'left'}
+            textStyle={'custom'}
+            text={'프로덕트 생성하기'}
+          />
+        </div>
         {/*<SettingCard*/}
         {/*  title={'프로덕트'}*/}
         {/*  content={productList?.data?.data.length === 0 ? '프러덕트 없음' : productList?.data?.data[0].productSeq}*/}
@@ -85,4 +95,7 @@ export default TeamSettingDetail;
 const teamNameBoxStyle = css`
   padding: 32px 0 20px 16px;
   width: 100%;
+`;
+const addProductContainer = css`
+  margin-top: 24px;
 `;
