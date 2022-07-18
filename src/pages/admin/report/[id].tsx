@@ -108,18 +108,18 @@ const Report = ({ params }) => {
     <div css={originTestBox}>
       <div css={testBox}>
         {/* 응답자 특성 템플릿 */}
+        <RespondentAttributesTemplate
+          modalControl={modalControl}
+          handleChangeCheckBox={handleChangeCheckBox}
+          checked={filterFail}
+          register={register}
+          errors={errors}
+          dataList={data?.answerInfoSection}
+        />
+        <div css={sortationArea} />
+
         {data?.S1 ? (
           <>
-            <RespondentAttributesTemplate
-              modalControl={modalControl}
-              handleChangeCheckBox={handleChangeCheckBox}
-              checked={filterFail}
-              register={register}
-              errors={errors}
-              dataList={data?.answerInfoSection}
-            />
-            <div css={sortationArea} />
-
             {/* UI 진단 전체 요약 */}
             <UiOverallSummaryTemplate
               modalControl={modalControl}

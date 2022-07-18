@@ -12,9 +12,10 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const [selectIntent, setSelectIntent] = useState<number | null>(null);
   const [detailSelectIntent, setDetailSelectIntent] = useState(null);
 
+  const s1Data = useSelector<ReducerType, any>(state => state.report?.data?.S1);
   const longData = useSelector<ReducerType, any>(state => state.report?.data?.longQuestionList);
   const multipleData = useSelector<ReducerType, any>(state => state.report?.data?.multipleQuestionList);
-
+  console.log(s1Data, 'S!!!!!!!!!!!!!!!!!!!!!!!');
   const handleSelectIntent = useCallback(
     (e, index) => {
       console.log(index);
@@ -66,8 +67,15 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
         { name: '서비스 전체 추가기능 피드백' },
         { name: '서비스 전체 시스템오류 피드백' },
       ];
-      const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr];
-      setIntentList(newArr);
+      if (s1Data) {
+        const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr];
+        setIntentList(newArr);
+      } else {
+        const newArr = [...missionArr, ...otherArr];
+        setIntentList(newArr);
+      }
+      // const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr];
+      // setIntentList(newArr);
     }
   }, [dataList, missionList, multipleData]);
   return (

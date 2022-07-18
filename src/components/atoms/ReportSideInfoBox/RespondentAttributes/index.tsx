@@ -27,11 +27,13 @@ const RespondentAttributes = ({ changeClicked, clicked }) => {
   const makeAnswerArr = useCallback(() => {
     if (answerInfo) {
       const { answerInfoSection } = answerInfo;
+
       const answerObject1 = answerInfoSection?.genderInfoList.length !== 0 ? { value: '성별', children: [] } : null;
       const answerObject2 = answerInfoSection?.ageGradeInfoList.length !== 0 ? { value: '연령대', children: [] } : null;
       const answerObject3 = answerInfoSection?.deviceInfoList.length !== 0 ? { value: '보유 기기', children: [] } : null;
       const answerObject4 = answerInfoSection?.cellInfoList.length !== 0 ? { value: '추가 조건', children: [] } : null;
 
+      console.log(answerObject1, answerObject4);
       const childrenArr = answerInfoSection?.cellInfoList.reduce(
         (acc, cur) =>
           acc.concat({
@@ -39,8 +41,14 @@ const RespondentAttributes = ({ changeClicked, clicked }) => {
           }),
         [],
       );
-      answerObject4.children.push(...childrenArr);
-      setDataArr([answerObject1, answerObject2, answerObject3, answerObject4]);
+      console.log(childrenArr, 'CHJ');
+      answerObject4?.children.push(...childrenArr);
+      console.log(answerObject4, '?>?????????????????');
+      if (answerObject4) {
+        setDataArr([answerObject1, answerObject2, answerObject3, answerObject4]);
+      } else {
+        setDataArr([answerObject1, answerObject2, answerObject3]);
+      }
     }
   }, [answerInfo]);
 
