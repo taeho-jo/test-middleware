@@ -49,10 +49,15 @@ const ReportHeader = () => {
     { value: 'device', displayName: '보유 기기' },
     { value: 'cell', displayName: '추가 조건' },
   ];
+  const conditionArr2 = [
+    { value: 'gender', displayName: '성별' },
+    { value: 'ageGrade', displayName: '연령' },
+    { value: 'device', displayName: '보유 기기' },
+  ];
 
   const makeAddConditionArr = useCallback(() => {
     if (reportData) {
-      const genderArr = reportData.genderFilter.reduce(
+      const genderArr = reportData?.genderFilter.reduce(
         (acc, cur) =>
           acc.concat({
             value: cur.code,
@@ -60,7 +65,7 @@ const ReportHeader = () => {
           }),
         [],
       );
-      const ageGradeArr = reportData.ageGradeFilter.reduce(
+      const ageGradeArr = reportData?.ageGradeFilter.reduce(
         (acc, cur) =>
           acc.concat({
             value: cur.code,
@@ -68,7 +73,7 @@ const ReportHeader = () => {
           }),
         [],
       );
-      const deviceArr = reportData.deviceFilter.reduce(
+      const deviceArr = reportData?.deviceFilter.reduce(
         (acc, cur) =>
           acc.concat({
             value: cur.code,
@@ -76,7 +81,7 @@ const ReportHeader = () => {
           }),
         [],
       );
-      const cellArr = reportData.cellFilter.reduce(
+      const cellArr = reportData?.cellFilter.reduce(
         (acc, cur) =>
           acc.concat({
             value: cur.code,
@@ -165,7 +170,7 @@ const ReportHeader = () => {
       {/*<BasicButton onClick={resetFilter} theme={'dark'} text={'초기화'} style={{ width: 'auto', padding: '5px 30px', marginLeft: '10px' }} />*/}
       <div css={{ width: '264px', marginRight: '12px' }}>
         <Select
-          options={conditionArr}
+          options={reportData?.cellFilter.length === 0 ? conditionArr2 : conditionArr}
           placeholder={'전체 응답자'}
           padding={'4px 16px'}
           fontSize={heading5_regular}
