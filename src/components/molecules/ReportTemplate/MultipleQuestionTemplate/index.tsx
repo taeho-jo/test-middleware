@@ -72,7 +72,9 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
               {dataList?.name && (
                 <FlexBox direction={'column'} style={{ border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 0', marginBottom: '36px' }}>
                   <span css={[heading5_regular, { color: colors.grey._99, marginBottom: '12px' }]}>Q. {dataList.name}</span>
-                  <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />
+                  {dataList?.code.includes('-O') && (
+                    <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />
+                  )}
                 </FlexBox>
               )}
 
