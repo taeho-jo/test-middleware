@@ -147,7 +147,19 @@ const customSelectOpen = (size, padding) => css`
   z-index: 9099;
 
   max-height: 258px;
-  overflow-y: scroll;
+  overflow-y: overlay;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 17%;
+    background-color: rgba(0, 0, 0, 0.2);
+    /* 스크롤바 둥글게 설정    */
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+  }
   // TODO: 이건 지워야 될 수 있음
   top: ${padding ? '-20px' : 'unset'};
 `;

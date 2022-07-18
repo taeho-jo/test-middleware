@@ -101,6 +101,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
                       ? () => console.log('1')
                       : () => handToggleInviteModal(item.teamSeq)
                   }
+                  style={{ cursor: modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember' ? 'not-allowed' : 'pointer' }}
                   name={'ACTION_ADD_CIRCLE'}
                 />
               ) : null}

@@ -18,7 +18,7 @@ import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 import { fetchCommonCodeApi, fetchEmailConfirmApi, fetchRefreshToken } from '../../api/authApi';
 import { fetchInviteUserInfoApi, fetchUserInfoApi } from '../../api/userApi';
 import { setUserInfo, UserInfoType } from '../../store/reducers/userReducer';
-import { isShow } from '../../store/reducers/modalReducer';
+import { isShow, updateReturnPage } from '../../store/reducers/modalReducer';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import ReportLayout from './ReportLayout';
 import { updateCommonCode } from '../../store/reducers/commonReducer';
@@ -39,11 +39,7 @@ const Layout = ({ children }: PropsType) => {
   const token = localStorage.getItem('accessToken');
   const resetToken = sessionStorage.getItem('accessToken');
 
-  const isRefreshToken = useSelector<ReducerType, boolean>(state => state.auth.isRefreshToken);
   const userInfo = useSelector<ReducerType, UserInfoType>(state => state.user.userInfo);
-  const teamListQuery = useSelector<ReducerType, boolean>(state => state.queryStatus.teamListQuery);
-  const userInfoQuery = useSelector<ReducerType, boolean>(state => state.userInfoQuery);
-  const getRefreshToken = useSelector<ReducerType, boolean>(state => state.queryStatus.tokenRefresh);
 
   const [showGradient, setShowGradient] = useState<boolean>(true);
 
@@ -114,17 +110,28 @@ const Layout = ({ children }: PropsType) => {
   );
 
   useEffect(() => {
-    if (router?.pathname !== '/admin/report/[id]') {
+    if (router?.pathname !== '/' && router?.pathname !== '/admin/report/[id]') {
       dispatch(updateFilterFlied(null));
       dispatch(updateFilterValues(null));
       dispatch(updateFilterFail(null));
       dispatch(isShow({ isShow: false, type: '' }));
+      // if (isReturnPage) {
+      //   dispatch(isShow({ isShow: true, type: 'signup' }));
+      //   dispatch(updateReturnPage(false));
+      // } else {
+      //   dispatch(isShow({ isShow: false, type: '' }));
+      // }
     } else {
       return;
     }
   }, [router]);
 
   // ============ React Query ============ //
+
+  // useEffect(() => {
+  //   console.log(isReturnPage, '::::::::isReturnPage');
+  //
+  // }, [isReturnPage]);
 
   useEffect(() => {
     if (commonCode) {
@@ -137,7 +144,7 @@ const Layout = ({ children }: PropsType) => {
     if (Object.keys(router.query).length !== 0) {
       dispatch(isShow({ isShow: false, type: '' }));
       const query = router?.query;
-      const { token, userId, type, teamSeq } = query;
+      const { token, userId, type, teamSeq, replace } = query;
 
       // 구글로그인 했거나, 초대받은사람이 로그인하거나
       if (token && !userId && type && !teamSeq) {

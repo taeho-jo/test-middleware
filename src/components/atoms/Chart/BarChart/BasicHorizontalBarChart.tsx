@@ -73,7 +73,10 @@ const BasicHorizontalBarChart = ({
                 <span css={heading5_bold}>{checkIsInteger(dataList.value)}%</span>
               </div>
             </FlexBox>
-            <ul css={{ background: colors.grey._fa, width: '100%', height: 'auto', maxHeight: '274px', overflowY: 'scroll', padding: '16px 24px' }}>
+            <ul
+              className={'scrollType1'}
+              css={{ background: colors.grey._fa, width: '100%', height: 'auto', maxHeight: '274px', wordBreak: 'keep-all', padding: '16px 24px' }}
+            >
               {dataList?.rawData.map((item, index) => {
                 return (
                   <li

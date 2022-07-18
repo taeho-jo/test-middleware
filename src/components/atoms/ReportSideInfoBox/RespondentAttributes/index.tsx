@@ -51,7 +51,7 @@ const RespondentAttributes = ({ changeClicked, clicked }) => {
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>응답자 특성</span>
-      <a style={{ width: '100%', textDecoration: 'none' }} href={'#one'}>
+      <a style={{ width: '100%', textDecoration: 'none', margin: '8px 0' }} href={'#one'}>
         <FlexBox
           onClick={() => changeClicked('one')}
           direction={'column'}
@@ -90,14 +90,14 @@ const infoBox = css`
   background: ${colors.white};
   border: 2px solid ${colors.blue._500};
   border-radius: 16px;
-  margin-top: 8px;
+  //margin-top: 8px;
   padding: 16px;
 `;
 const infoBox2 = css`
   background: ${colors.white};
   border: 1px solid ${colors.grey._3c};
   border-radius: 16px;
-  margin: 8px 0;
+  //margin: 8px 0;
   padding: 16px;
   height: auto;
 `;

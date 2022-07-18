@@ -70,7 +70,7 @@ const ReportSideBar = () => {
           </div>
         )}
       </FlexBox>
-      <div css={{ height: 'calc(100vh - 136px)', overflowY: 'scroll' }}>
+      <div className={'scrollType1'} css={{ height: 'calc(100vh - 136px)' }}>
         <TestInfoBox reportData={reportData} />
         <RespondentAttributes changeClicked={changeClicked} clicked={clicked} />
         <TestResults clicked={clicked} changeClicked={changeClicked} missionList={missionList} dataList={reportData?.indexList} />

@@ -48,7 +48,10 @@ const LongQuestionTemplate = ({ dataList, modalControl }) => {
             <div css={{ flex: 1, marginRight: '16px' }}>
               <div css={[heading4_bold, buttonStyle]}>전체 피드백</div>
             </div>
-            <ul css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', overflowY: 'scroll' }}>
+            <ul
+              className={'scrollType1'}
+              css={{ background: colors.grey._f7, borderRadius: '8px', flex: 3, padding: '16px 24px', height: '400px', wordBreak: 'keep-all' }}
+            >
               {dataList?.rawData?.map((el, index) => {
                 return (
                   <li

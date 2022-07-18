@@ -80,7 +80,6 @@ const alertBox = (position, status, type) => css`
   padding: 15px;
   margin-top: 10px;
   display: flex;
-  cursor: pointer;
   animation: ${position.includes('left') || position.includes('right') ? horizontal : type === 'fadeOut' ? vertical : outVertical}
     ${type === 'fadeOut' ? '0.7s' : '1s'};
 `;
