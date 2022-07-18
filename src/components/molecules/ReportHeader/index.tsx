@@ -213,7 +213,7 @@ const headerStyle = css`
   display: flex;
   align-items: center;
   min-width: 1440px;
-  max-width: 1684px;
+  //max-width: 1684px;
   // 주석
   position: fixed;
   z-index: 501;
