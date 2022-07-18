@@ -23,11 +23,11 @@ const reset = (popupShow, isAdmin, story) => css`
     }
     body {
       padding: 0;
-      margin: 0 auto;
+      margin: 0;
       width: 100%;
       height: 100%;
       overflow: ${isAdmin ? 'hidden' : 'unset'};
-      max-width: 1980px;
+      //max-width: 1980px;
       // overflow: ${story ? 'auto' : popupShow || isAdmin ? 'hidden' : 'auto'};
       // min-width: ${isAdmin ? '1440px' : 'unset'};
       //height: 100%;

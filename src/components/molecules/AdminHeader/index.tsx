@@ -41,7 +41,7 @@ export default AdminHeader;
 
 const headerStyle = css`
   height: 48px;
-  max-width: 1740px;
+  //max-width: 1740px;
   width: calc(100% - 240px);
   min-width: 1200px;
   padding: 0 32px;
