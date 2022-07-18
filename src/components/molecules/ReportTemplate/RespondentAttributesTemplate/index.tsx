@@ -168,29 +168,31 @@ const RespondentAttributesTemplate = ({ dataList, register, errors, checked, han
         </FlexBox>
       </FlexBox>
 
-      <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
-        <FlexBox style={graphAreaStyle} direction={'column'}>
-          <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
-            <div css={[heading4_bold]}>추가 조건</div>
-          </div>
-          <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle2}>
-            <FlexBox justify={'space-between'} align={'center'} style={[tableStyle, { background: '#f7f7f7' }]}>
-              <div css={[caption1_bold, { height: 'auto', flex: 4, borderRight: '1px solid #dcdcdc', padding: '8px 16px' }]}>조건</div>
-              <div css={[caption1_bold, { height: 'auto', flex: 1, padding: '8px 16px' }]}>응답자 규모</div>
+      {cellInfoList?.length !== 0 && (
+        <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
+          <FlexBox style={graphAreaStyle} direction={'column'}>
+            <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
+              <div css={[heading4_bold]}>추가 조건</div>
+            </div>
+            <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle2}>
+              <FlexBox justify={'space-between'} align={'center'} style={[tableStyle, { background: '#f7f7f7' }]}>
+                <div css={[caption1_bold, { height: 'auto', flex: 4, borderRight: '1px solid #dcdcdc', padding: '8px 16px' }]}>조건</div>
+                <div css={[caption1_bold, { height: 'auto', flex: 1, padding: '8px 16px' }]}>응답자 규모</div>
+              </FlexBox>
+              {cellInfoList?.map((el, index) => {
+                return (
+                  <Fragment key={index}>
+                    <FlexBox justify={'space-between'} align={'center'} style={[index === cellInfoList.length - 1 ? tableStyle2 : tableStyle]}>
+                      <div css={[heading5_medium, { height: 'auto', flex: 4, borderRight: '1px solid #dcdcdc', padding: '8px 16px' }]}>{el.name}</div>
+                      <div css={[heading5_medium, { height: 'auto', flex: 1, padding: '8px 16px' }]}>{el.value}명</div>
+                    </FlexBox>
+                  </Fragment>
+                );
+              })}
             </FlexBox>
-            {cellInfoList?.map((el, index) => {
-              return (
-                <Fragment key={index}>
-                  <FlexBox justify={'space-between'} align={'center'} style={[index === cellInfoList.length - 1 ? tableStyle2 : tableStyle]}>
-                    <div css={[heading5_medium, { height: 'auto', flex: 4, borderRight: '1px solid #dcdcdc', padding: '8px 16px' }]}>{el.name}</div>
-                    <div css={[heading5_medium, { height: 'auto', flex: 1, padding: '8px 16px' }]}>{el.value}명</div>
-                  </FlexBox>
-                </Fragment>
-              );
-            })}
           </FlexBox>
         </FlexBox>
-      </FlexBox>
+      )}
     </div>
   );
 };
