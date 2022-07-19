@@ -190,7 +190,7 @@ const UsabilityByFeatureTemplate = ({ dataList, register, errors, checked, handl
                         overflow={'unset'}
                         style={{ graphContainerStyle, padding: '32px 80px 80px' }}
                       >
-                        <FlexBox style={{ border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 0', marginBottom: '36px' }}>
+                        <FlexBox style={{ border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 32px', marginBottom: '36px' }}>
                           <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />
                         </FlexBox>
                         {sortList.map((detailItem, detailIndex) => {
