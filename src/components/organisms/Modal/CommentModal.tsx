@@ -10,6 +10,8 @@ import { colors } from '../../../styles/Common.styles';
 const OriginDataModal = () => {
   const commentData = useSelector<ReducerType, any>(state => state.report.commentData);
 
+  console.log(commentData, 'Comment Data');
+
   return (
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
       <PopupBox padding={'0 0 24px 0'} width={'900px'} height={'auto'}>
@@ -42,6 +44,8 @@ const OriginDataModal = () => {
                       listStyle: 'inside',
                       textIndent: '-20px',
                       paddingLeft: '20px',
+                      lineHeight: '20px',
+                      whiteSpace: 'pre-wrap',
                     },
                   ]}
                   key={`rawData-${index}`}
