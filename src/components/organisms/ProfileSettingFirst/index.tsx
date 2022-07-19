@@ -57,12 +57,18 @@ const ProfileSettingFirst = () => {
     (status, data) => {
       // loginResponse.mutate(data);
       const sendObject = {
-        funnelsType: selected.funnelsCd,
-        cpPositionType: selected.cpPosition,
-        cpSizeType: selected.cpSize,
+        funnelsType: selected.funnelsCd ? selected.funnelsCd : null,
+        cpPositionType: selected.cpPosition ? selected.cpPosition : null,
+        cpSizeType: selected.cpSize ? selected.cpSize : null,
         userName: data.userName ? data.userName : userInfo.userName,
         firstTimeYn: 'N',
       };
+      for (const key in sendObject) {
+        if (sendObject[key] === null) {
+          delete sendObject[key];
+        }
+      }
+      console.log(sendObject);
       mutate(sendObject);
     },
     [selected],
@@ -81,7 +87,7 @@ const ProfileSettingFirst = () => {
   const handleProcessingError = useCallback((status, errors) => {
     console.log(errors, 'ERRORS');
   }, []);
-  console.log(commonCode, 'CommonCode');
+
   return (
     <FlexBox style={{ marginTop: '160px', height: '100%' }} justify={'flex-start'} direction={'column'}>
       <PopupBox padding={'0'} width={'434px'} height={'auto'}>
