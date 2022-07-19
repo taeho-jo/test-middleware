@@ -29,6 +29,7 @@ class MyDocument extends Document {
           <meta name="google-site-verification" content="VOhtSYTyB99y881SKWMXBlOpPgmSFRKA7-8W7AlzlrY" />
           <meta name="naver-site-verification" content="4cb24b7cbfcbd02dd6230263b6358c44b114b844" />
 
+          {/*ga*/}
           <script
             dangerouslySetInnerHTML={{
               __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -38,6 +39,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-WR7GKCP');`,
             }}
           />
+          {/*hotjar*/}
           <script
             dangerouslySetInnerHTML={{
               __html: `(function(h,o,t,j,a,r){
