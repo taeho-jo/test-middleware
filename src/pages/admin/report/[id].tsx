@@ -26,8 +26,6 @@ const Report = ({ params }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { id } = params;
-  console.log(params);
-  console.log(encodeURIComponent(`${id}`));
   const { share } = router.query;
 
   const filterFlied = useSelector<ReducerType, any>(state => state.report.filter.filterFlied);
