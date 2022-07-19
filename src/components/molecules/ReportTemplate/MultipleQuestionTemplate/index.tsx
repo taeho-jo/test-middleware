@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import FlexBox from '../../../atoms/FlexBox';
 import { heading3_bold, heading4_bold, heading5_regular } from '../../../../styles/FontStyles';
 import IconTextButton from '../../../atoms/Button/IconTextButton';
@@ -11,9 +11,10 @@ import { GeneralScaleTypeTemplate } from '../index';
 import AnnouncementBox from '../../AnnouncementBox';
 
 const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
-  console.log(dataList, 'DATALIST');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const [isAnswerData, setIsAnswerData] = useState(false);
 
   const onMouseOver = useCallback(
     (e, index) => {
@@ -32,10 +33,19 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
   );
 
   const handleClickIndex = useCallback((e, index) => {
+    console.log(index, ';~~~~~~~~~~');
     e.stopPropagation();
-    console.log(index);
     setSelectedIndex(index);
+    // if (bool) {
+    //   modalControl(true, 'originDataModal', {
+    //     title: `${dataList.intent}`,
+    //     data: rawData.flat(),
+    //   });
+    // }
   }, []);
+
+  const bool = dataList?.detailMultipleList?.map(el => el.multipleAnswerData).filter(Boolean).length !== 0;
+  const rawData = dataList?.detailMultipleList?.map(el => el.multipleAnswerData).filter(Boolean);
 
   return (
     <>
@@ -47,7 +57,13 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
         </FlexBox>
         <FlexBox justify={'flex-end'} width={'30%'}>
           <IconTextButton
-            onClick={() => modalControl(true, 'originDataModal', { title: `${dataList.intent}`, data: dataList.rawData })}
+            onClick={() =>
+              modalControl(true, 'originDataModal', {
+                title: `${dataList.intent}`,
+                data: rawData.flat(),
+              })
+            }
+            disabled={rawData.length === 0 ? true : false}
             style={{ marginRight: '8px' }}
             textStyle={'custom'}
             name={'NAVIGATION_CHEVRON_RIGHT'}
@@ -70,11 +86,19 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
 
             <FlexBox direction={'column'} justify={'center'} align={'flex-start'} style={graphContainerStyle}>
               {dataList?.name && (
-                <FlexBox direction={'column'} style={{ border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 0', marginBottom: '36px' }}>
-                  <span css={[heading5_regular, { color: colors.grey._99, marginBottom: '12px' }]}>Q. {dataList.name}</span>
-                  {dataList?.code.includes('-O') && (
-                    <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />
-                  )}
+                <FlexBox
+                  direction={'column'}
+                  style={{ border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 24px', marginBottom: '36px' }}
+                >
+                  <span
+                    css={[
+                      heading5_regular,
+                      { color: colors.grey._99, marginBottom: isAnswerData ? '12px' : '0px', height: 'auto', wordBreak: 'keep-all' },
+                    ]}
+                  >
+                    Q. {dataList.name}
+                  </span>
+                  {bool && <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />}
                 </FlexBox>
               )}
 

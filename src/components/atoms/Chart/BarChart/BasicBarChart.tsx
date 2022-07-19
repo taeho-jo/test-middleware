@@ -8,7 +8,7 @@ import { css } from '@emotion/react';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
 
 interface PropsType {
-  dataList: { name: string; value: number }[];
+  dataList: { count: number; multipleAnswerData?: string[]; name: string; rawData?: string[]; value: number }[];
   label?: any;
   value?: string;
   rate?: string;
@@ -46,6 +46,8 @@ const BasicBarChart = ({
   ...props
 }: PropsType) => {
   const boxRef = useRef(null);
+
+  const bool = dataList[0]?.multipleAnswerData;
 
   useOutsideClick(boxRef, () => {
     setSelectedIndex(null);
@@ -89,18 +91,94 @@ const BasicBarChart = ({
         </BarChart>
       </ResponsiveContainer>
 
-      {infoBox && selectedIndex === detailIndex && (
-        <div ref={boxRef} css={infoBoxStyle}>
-          <FlexBox justify={'space-between'}>
-            <span css={body3_medium}>언급자수</span>
-            <span css={body3_bold}>{value}</span>
-          </FlexBox>
-          <FlexBox justify={'space-between'}>
-            <span css={body3_medium}>언급 비율</span>
-            <span css={body3_bold}>{rate}</span>
-          </FlexBox>
-        </div>
-      )}
+      {bool
+        ? infoBox &&
+          selectedIndex === detailIndex && (
+            <div ref={boxRef} css={[popupContainer()]}>
+              <FlexBox justify={'space-between'} align={'center'} style={{ padding: '16px' }}>
+                <span css={heading5_medium}>기타</span>
+                <div>
+                  <span css={[heading5_medium, { color: colors.grey._99 }]}>{dataList[0]?.count}명</span>&nbsp;
+                  <span css={heading5_bold}>{dataList[0]?.value}%</span>
+                </div>
+              </FlexBox>
+
+              <ul
+                className={'scrollType1'}
+                css={{ background: colors.grey._fa, width: '100%', height: 'auto', maxHeight: '274px', wordBreak: 'keep-all', padding: '16px 24px' }}
+              >
+                {bool.length === 0 ? (
+                  <li css={[heading5_regular, { height: 'auto', listStyle: 'inside', textIndent: '-20px', paddingLeft: '20px' }]}>
+                    작성된 주관식 응답이 없습니다.
+                  </li>
+                ) : (
+                  bool.map((item, index) => {
+                    return (
+                      <li
+                        css={[
+                          heading5_regular,
+                          {
+                            marginBottom: index === bool.length - 1 ? 0 : '16px',
+                            height: 'auto',
+                            listStyle: 'inside',
+                            textIndent: '-20px',
+                            paddingLeft: '20px',
+                          },
+                        ]}
+                        key={`item-${index}`}
+                      >
+                        {item}
+                      </li>
+                    );
+                  })
+                )}
+                {/*{bool.map((item, index) => {*/}
+                {/*  return (*/}
+                {/*    <li*/}
+                {/*      css={[*/}
+                {/*        heading5_regular,*/}
+                {/*        {*/}
+                {/*          marginBottom: index === bool.length - 1 ? 0 : '16px',*/}
+                {/*          height: 'auto',*/}
+                {/*          listStyle: 'inside',*/}
+                {/*          textIndent: '-20px',*/}
+                {/*          paddingLeft: '20px',*/}
+                {/*        },*/}
+                {/*      ]}*/}
+                {/*      key={`item-${index}`}*/}
+                {/*    >*/}
+                {/*      {item}*/}
+                {/*    </li>*/}
+                {/*  );*/}
+                {/*})}*/}
+              </ul>
+            </div>
+          )
+        : infoBox &&
+          selectedIndex === detailIndex && (
+            <div ref={boxRef} css={infoBoxStyle}>
+              <FlexBox justify={'space-between'}>
+                <span css={body3_medium}>언급자수</span>
+                <span css={body3_bold}>{value}</span>
+              </FlexBox>
+              <FlexBox justify={'space-between'}>
+                <span css={body3_medium}>언급 비율</span>
+                <span css={body3_bold}>{rate}</span>
+              </FlexBox>
+            </div>
+          )}
+      {/*{infoBox && selectedIndex === detailIndex && (*/}
+      {/*  <div ref={boxRef} css={infoBoxStyle}>*/}
+      {/*    <FlexBox justify={'space-between'}>*/}
+      {/*      <span css={body3_medium}>언급자수</span>*/}
+      {/*      <span css={body3_bold}>{value}</span>*/}
+      {/*    </FlexBox>*/}
+      {/*    <FlexBox justify={'space-between'}>*/}
+      {/*      <span css={body3_medium}>언급 비율</span>*/}
+      {/*      <span css={body3_bold}>{rate}</span>*/}
+      {/*    </FlexBox>*/}
+      {/*  </div>*/}
+      {/*)}*/}
     </FlexBox>
   );
 };
@@ -122,4 +200,25 @@ const infoBoxStyle = css`
   top: 25px;
   z-index: 1;
   left: 0;
+`;
+
+const popupContainer = () => css`
+  width: 660px;
+  border-radius: 8px;
+  //padding: 16px;
+  background-color: ${colors.white};
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25) !important;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.2s ease-in;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 99;
+  border: 1px solid #dcdcdc;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 `;
