@@ -41,9 +41,9 @@ const RespondentAttributes = ({ changeClicked, clicked }) => {
           }),
         [],
       );
-      console.log(childrenArr, 'CHJ');
+
       answerObject4?.children.push(...childrenArr);
-      console.log(answerObject4, '?>?????????????????');
+
       if (answerObject4) {
         setDataArr([answerObject1, answerObject2, answerObject3, answerObject4]);
       } else {

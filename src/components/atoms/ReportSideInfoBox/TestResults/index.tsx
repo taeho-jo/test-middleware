@@ -15,7 +15,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const s1Data = useSelector<ReducerType, any>(state => state.report?.data?.S1);
   const longData = useSelector<ReducerType, any>(state => state.report?.data?.longQuestionList);
   const multipleData = useSelector<ReducerType, any>(state => state.report?.data?.multipleQuestionList);
-  console.log(s1Data, 'S!!!!!!!!!!!!!!!!!!!!!!!');
+
   const handleSelectIntent = useCallback(
     (e, index) => {
       console.log(index);
