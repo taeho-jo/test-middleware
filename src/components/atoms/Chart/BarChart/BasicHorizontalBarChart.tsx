@@ -11,7 +11,7 @@ import ReportShortAnswerQuestionLayerPopup from '../../ReportShortAnswerQuestion
 interface PropsType {
   selectedIndex?: any;
   setSelectedIndex?: any;
-  dataList: { count: number; name: string; rawData: string[]; value: number };
+  dataList: { count: number; name: string; multipleAnswerData: string[]; value: number };
   barColor?: string;
   onMouseLeave?: (e) => void;
   onMouseOver?: (e, index) => void;
@@ -77,7 +77,7 @@ const BasicHorizontalBarChart = ({
               className={'scrollType1'}
               css={{ background: colors.grey._fa, width: '100%', height: 'auto', maxHeight: '274px', wordBreak: 'keep-all', padding: '16px 24px' }}
             >
-              {dataList?.rawData.map((item, index) => {
+              {dataList?.multipleAnswerData?.map((item, index) => {
                 return (
                   <li
                     css={[
