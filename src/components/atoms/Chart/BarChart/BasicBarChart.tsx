@@ -48,6 +48,7 @@ const BasicBarChart = ({
   const boxRef = useRef(null);
 
   const bool = dataList[0]?.multipleAnswerData;
+  // console.log(bool, 'bool~');
 
   useOutsideClick(boxRef, () => {
     setSelectedIndex(null);
@@ -91,21 +92,30 @@ const BasicBarChart = ({
         </BarChart>
       </ResponsiveContainer>
 
-      {bool
+      {bool.length !== 0
         ? infoBox &&
           selectedIndex === detailIndex && (
             <div ref={boxRef} css={[popupContainer()]}>
               <FlexBox justify={'space-between'} align={'center'} style={{ padding: '16px' }}>
-                <span css={heading5_medium}>기타</span>
+                <span css={heading5_medium}>{dataList[0]?.name}</span>
                 <div>
                   <span css={[heading5_medium, { color: colors.grey._99 }]}>{dataList[0]?.count}명</span>&nbsp;
-                  <span css={heading5_bold}>{dataList[0]?.value}%</span>
+                  <span css={heading5_bold}>{checkIsInteger(dataList[0]?.value)}%</span>
                 </div>
               </FlexBox>
 
               <ul
                 className={'scrollType1'}
-                css={{ background: colors.grey._fa, width: '100%', height: 'auto', maxHeight: '274px', wordBreak: 'keep-all', padding: '16px 24px' }}
+                css={{
+                  background: colors.grey._fa,
+                  width: '100%',
+                  height: 'auto',
+                  maxHeight: '274px',
+                  wordBreak: 'keep-all',
+                  padding: '16px 24px',
+                  borderBottomLeftRadius: '8px',
+                  borderBottomRightRadius: '8px',
+                }}
               >
                 {bool.length === 0 ? (
                   <li css={[heading5_regular, { height: 'auto', listStyle: 'inside', textIndent: '-20px', paddingLeft: '20px' }]}>

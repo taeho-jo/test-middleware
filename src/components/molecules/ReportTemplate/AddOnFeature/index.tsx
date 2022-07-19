@@ -24,8 +24,6 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
   const additionalCommentList = originDataList?.map(el => el.additionalComment);
   const systemErrorCommentList = originDataList?.map(el => el.systemErrorComment);
 
-  console.log(completeCommentList, additionalCommentList, systemErrorCommentList);
-
   const totalList = [...completeList, ...additionalList, ...systemErrorList].flat();
 
   const handleChangeIndex = useCallback(

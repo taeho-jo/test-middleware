@@ -33,7 +33,6 @@ const RespondentAttributes = ({ changeClicked, clicked }) => {
       const answerObject3 = answerInfoSection?.deviceInfoList.length !== 0 ? { value: '보유 기기', children: [] } : null;
       const answerObject4 = answerInfoSection?.cellInfoList.length !== 0 ? { value: '추가 조건', children: [] } : null;
 
-      console.log(answerObject1, answerObject4);
       const childrenArr = answerInfoSection?.cellInfoList.reduce(
         (acc, cur) =>
           acc.concat({
