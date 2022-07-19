@@ -8,7 +8,7 @@ import { css } from '@emotion/react';
 import useOutsideClick from '../../../../hooks/useOutsideClick';
 
 interface PropsType {
-  dataList: { count: number; multipleAnswerData?: string[]; name: string; rawData?: string[]; value: number }[];
+  dataList: { count?: number; multipleAnswerData?: string[]; name: string; rawData?: string[]; value: number }[];
   label?: any;
   value?: string;
   rate?: string;
