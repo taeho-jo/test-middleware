@@ -33,15 +33,8 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
   );
 
   const handleClickIndex = useCallback((e, index) => {
-    console.log(index, ';~~~~~~~~~~');
     e.stopPropagation();
     setSelectedIndex(index);
-    // if (bool) {
-    //   modalControl(true, 'originDataModal', {
-    //     title: `${dataList.intent}`,
-    //     data: rawData.flat(),
-    //   });
-    // }
   }, []);
 
   const bool = dataList?.detailMultipleList
@@ -101,7 +94,8 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
                         marginBottom: bool?.length !== 0 ? '12px' : '0px',
                         height: 'auto',
                         wordBreak: 'keep-all',
-                        textAlign: 'center',
+                        textAlign: 'left',
+                        whiteSpace: 'pre-wrap',
                       },
                     ]}
                   >

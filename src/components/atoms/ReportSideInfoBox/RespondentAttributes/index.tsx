@@ -99,6 +99,9 @@ const infoBox = css`
   border-radius: 16px;
   //margin-top: 8px;
   padding: 16px;
+  &:hover {
+    background: ${colors.grey._f7};
+  }
 `;
 const infoBox2 = css`
   background: ${colors.white};
@@ -107,6 +110,9 @@ const infoBox2 = css`
   //margin: 8px 0;
   padding: 16px;
   height: auto;
+  &:hover {
+    background: ${colors.grey._f7};
+  }
 `;
 const liStyle = css`
   list-style: inside;
