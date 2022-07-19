@@ -44,7 +44,6 @@ const OriginDataModal = () => {
                       listStyle: 'inside',
                       textIndent: '-20px',
                       paddingLeft: '20px',
-                      lineHeight: '20px',
                       whiteSpace: 'pre-wrap',
                     },
                   ]}
