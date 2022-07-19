@@ -109,6 +109,16 @@ const ReportHeader = () => {
     }
   }, [reportData, selected]);
 
+  useEffect(() => {
+    if (addConditionArr) {
+      dispatch(updateFilterValues(addConditionArr[0]?.value));
+      setSelected({
+        ...selected,
+        filterValues: addConditionArr[0]?.value,
+      });
+    }
+  }, [addConditionArr]);
+
   const onClickFlied = useCallback(
     (value, label) => {
       setSelected({
@@ -119,7 +129,7 @@ const ReportHeader = () => {
     },
     [selected],
   );
-  console.log(selected);
+
   const onClickValue = useCallback(
     (value, label, displayName) => {
       if (selected.filterField === 'cell') {

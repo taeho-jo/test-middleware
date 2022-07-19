@@ -51,7 +51,6 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
     [focusItem],
   );
 
-  console.log(focusItem, parentsIndex, teamSeq);
   useEffect(() => {
     if (modalType === '') {
       setFocusItem(null);

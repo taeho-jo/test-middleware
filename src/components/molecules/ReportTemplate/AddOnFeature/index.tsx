@@ -11,39 +11,6 @@ import AnnouncementBox from '../../AnnouncementBox';
 import { TableBarChart } from '../../../atoms/Chart';
 import { brandBarChartData, tableBarChartBrandData } from '../../../../assets/dummy/dummyData';
 
-const data = [
-  [
-    '사용하는 것의 불편사항보다는 건의사항 이지만 큰 카테고리(리빙) 안에 작은 카테고리로 (청소 / 수리) 등이 있으면 좋을 것 같습니다.',
-    '카테고리 세분화가 필요할 것 같습니다.',
-    '카테고리가 모호해서랄까 광범위해서 지어하기가 좀 어려웠어요.',
-    '카테고리가 너무 단순해요 좀 더 세부적으로 나눠졌으면 좋겠어요.',
-    '도움의 카테고리가 좀 부족하다.',
-  ],
-  [
-    '한눈에 메뉴들을 보기가 힘들다.',
-    '사용하는 것의 불편사항보다는 건의사항 이지만 큰 카테고리(리빙) 안에 작은 카테고리로 (청소 / 수리) 등이 있으면 좋을 것 같습니다.',
-    '카테고리 세분화가 필요할 것 같습니다.',
-    '카테고리가 모호해서랄까 광범위해서 지어하기가 좀 어려웠어요.',
-    '카테고리가 너무 단순해요 좀 더 세부적으로 나눠졌으면 좋겠어요.',
-    '도움의 카테고리가 좀 부족하다.',
-    '한눈에 메뉴들을 보기가 힘들다.',
-  ],
-  [
-    '카테고리가 모호해서랄까 광범위해서 지어하기가 좀 어려웠어요.',
-    '카테고리가 너무 단순해요 좀 더 세부적으로 나눠졌으면 좋겠어요.',
-    '사용하는 것의 불편사항보다는 건의사항 이지만 큰 카테고리(리빙) 안에 작은 카테고리로 (청소 / 수리) 등이 있으면 좋을 것 같습니다.',
-    '카테고리 세분화가 필요할 것 같습니다.',
-    '카테고리가 모호해서랄까 광범위해서 지어하기가 좀 어려웠어요.',
-    '카테고리가 너무 단순해요 좀 더 세부적으로 나눠졌으면 좋겠어요.',
-    '카테고리가 모호해서랄까 광범위해서 지어하기가 좀 어려웠어요.',
-    '카테고리가 너무 단순해요 좀 더 세부적으로 나눠졌으면 좋겠어요.',
-    '사용하는 것의 불편사항보다는 건의사항 이지만 큰 카테고리(리빙) 안에 작은 카테고리로 (청소 / 수리) 등이 있으면 좋을 것 같습니다.',
-    '카테고리 세분화가 필요할 것 같습니다.',
-    '카테고리가 모호해서랄까 광범위해서 지어하기가 좀 어려웠어요.',
-    '카테고리가 너무 단순해요 좀 더 세부적으로 나눠졌으면 좋겠어요.',
-  ],
-];
-
 const AddOnFeature = ({ originDataList, title, register, errors, checked, handleChangeCheckBox, modalControl }) => {
   const [completeSelectButton, setCompleteSelectButton] = useState<number>(0);
   const [addSelectButton, setAddSelectButton] = useState<number>(0);
@@ -56,8 +23,6 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
   const completeCommentList = originDataList?.map(el => el.completeComment);
   const additionalCommentList = originDataList?.map(el => el.additionalComment);
   const systemErrorCommentList = originDataList?.map(el => el.systemErrorComment);
-
-  console.log(completeCommentList, additionalCommentList, systemErrorCommentList);
 
   const totalList = [...completeList, ...additionalList, ...systemErrorList].flat();
 

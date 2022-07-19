@@ -108,7 +108,6 @@ const TeamDashboard = () => {
       }
     },
     select: data => {
-      console.log(data, 'DATA DATA');
       return data.data;
     },
   });

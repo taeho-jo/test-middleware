@@ -38,8 +38,6 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
   const cellsRef = useRef([]);
   const cellRef = useRef(null);
 
-  console.log(listData, 'asdfasdf');
-
   const [list, setList] = useState(null);
   const [myRole, setMyRole] = useState<string | null>(null);
   const [managerCount, setManagerCount] = useState(0);
