@@ -38,7 +38,7 @@ const StackedBarChart = ({
   const [isShow, setIsShow] = useState<boolean>(false);
   const [sortData, setSortData] = useState([]);
   const [layerData, setLayerData] = useState<object | null>(null);
-  console.log(layerData, 'lay');
+
   const onMouseClick = useCallback(
     (e, index, el, detailIndex) => {
       e.stopPropagation();
