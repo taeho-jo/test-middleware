@@ -88,13 +88,10 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
               {dataList?.name && (
                 <FlexBox
                   direction={'column'}
-                  style={{ border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 24px', marginBottom: '36px' }}
+                  style={{ border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 32px', marginBottom: '36px' }}
                 >
                   <span
-                    css={[
-                      heading5_regular,
-                      { color: colors.grey._99, marginBottom: isAnswerData ? '12px' : '0px', height: 'auto', wordBreak: 'keep-all' },
-                    ]}
+                    css={[heading5_regular, { color: colors.grey._99, marginBottom: bool ? '12px' : '0px', height: 'auto', wordBreak: 'keep-all' }]}
                   >
                     Q. {dataList.name}
                   </span>
