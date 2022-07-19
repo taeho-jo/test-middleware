@@ -92,7 +92,7 @@ const BasicBarChart = ({
         </BarChart>
       </ResponsiveContainer>
 
-      {bool.length !== 0
+      {bool?.length !== 0
         ? infoBox &&
           selectedIndex === detailIndex && (
             <div ref={boxRef} css={[popupContainer()]}>
@@ -117,7 +117,7 @@ const BasicBarChart = ({
                   borderBottomRightRadius: '8px',
                 }}
               >
-                {bool.length === 0 ? (
+                {bool?.length === 0 ? (
                   <li css={[heading5_regular, { height: 'auto', listStyle: 'inside', textIndent: '-20px', paddingLeft: '20px' }]}>
                     작성된 주관식 응답이 없습니다.
                   </li>
@@ -128,7 +128,7 @@ const BasicBarChart = ({
                         css={[
                           heading5_regular,
                           {
-                            marginBottom: index === bool.length - 1 ? 0 : '16px',
+                            marginBottom: index === bool?.length - 1 ? 0 : '16px',
                             height: 'auto',
                             listStyle: 'inside',
                             textIndent: '-20px',

@@ -51,12 +51,12 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
             count: cur.count,
             name: cur.name.split('.')[0],
             value: cur.value,
-            rawData: cur.rawData,
+            multipleAnswerData: cur.multipleAnswerData,
           }),
         [],
       );
 
-      const rawDataArr = reMakeArr.map(el => el.rawData).flat();
+      const rawDataArr = reMakeArr.map(el => el.multipleAnswerData).flat();
 
       const total = reMakeArr?.reduce((acc, cur) => {
         return acc + cur.count;

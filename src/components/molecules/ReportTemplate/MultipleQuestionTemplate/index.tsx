@@ -33,15 +33,8 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
   );
 
   const handleClickIndex = useCallback((e, index) => {
-    console.log(index, ';~~~~~~~~~~');
     e.stopPropagation();
     setSelectedIndex(index);
-    // if (bool) {
-    //   modalControl(true, 'originDataModal', {
-    //     title: `${dataList.intent}`,
-    //     data: rawData.flat(),
-    //   });
-    // }
   }, []);
 
   const bool = dataList?.detailMultipleList
@@ -49,8 +42,6 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
     .filter(Boolean)
     .flat();
   const rawData = dataList?.detailMultipleList?.map(el => el.multipleAnswerData).filter(Boolean);
-
-  console.log(bool, '부모 bool');
 
   return (
     <>
@@ -68,7 +59,7 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
                 data: rawData.flat(),
               })
             }
-            disabled={bool.length === 0 ? true : false}
+            disabled={bool?.length === 0 ? true : false}
             style={{ marginRight: '8px' }}
             textStyle={'custom'}
             name={'NAVIGATION_CHEVRON_RIGHT'}
@@ -100,16 +91,17 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
                       heading5_regular,
                       {
                         color: colors.grey._99,
-                        marginBottom: bool.length !== 0 ? '12px' : '0px',
+                        marginBottom: bool?.length !== 0 ? '12px' : '0px',
                         height: 'auto',
                         wordBreak: 'keep-all',
-                        textAlign: 'center',
+                        textAlign: 'left',
+                        whiteSpace: 'pre-wrap',
                       },
                     ]}
                   >
                     Q. {dataList.name}
                   </span>
-                  {bool.length !== 0 && <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />}
+                  {bool?.length !== 0 && <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />}
                 </FlexBox>
               )}
 
