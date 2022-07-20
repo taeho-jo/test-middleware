@@ -114,8 +114,17 @@ function Section1() {
         <GridContainer container spacing={0} style={{ paddingTop: '90px', overflowX: 'hidden' }}>
           <LeftGrid item xs={12} md={7} lg={6}>
             <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
-              <Header>1분안에 끝나는 설계안 받기</Header>
-              <Title>지금 바로 무료로 설계안을 받아보세요.</Title>
+              <Header>
+                간단한 질문에 응답하고
+                <br />
+                리서치 설계안 받기
+              </Header>
+              <Title>
+                프로덕트 정보와 리서치의 목적에 대해
+                <br />
+                응답해주시면 리서치 수행방법이 포함된 <br />
+                설계안을 받아보실 수 있습니다.
+              </Title>
               {/*<NextButton color="blue" variant="contained" endIcon={isMobile ? undefined : <ArrowRightAltIcon style={{ color: 'white' }} />}>*/}
               {/*  1분안에 끝나는 설계안 받아보기*/}
               {/*</NextButton>*/}

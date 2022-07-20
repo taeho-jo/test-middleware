@@ -30,7 +30,7 @@ const UiResearchModuleModal = () => {
               <BasicButton
                 onClick={() => window.open('https://dbdlab.notion.site/UI-5a3e44a7bcb2439097e311fd62ad5e5d')}
                 theme={'dark'}
-                text={'설계안 작성하러 가기'}
+                text={'무료로 설계안 받기'}
               />
             </FlexBox>
           </FlexBox>

@@ -140,11 +140,11 @@ function Section1() {
   }, []);
 
   const newlineForMobile = isMobile ? '\n' : ' ';
-  const desc1 = `필요할 때, 빠르게 피드백을${newlineForMobile}주문할 수 있습니다.\n인터랙티브 리포트는${newlineForMobile}60일간 조회할 수 있으며,\n모든 결과와 RAW DATA는${newlineForMobile}다운로드 할 수 있습니다.`;
+  const desc1 = `필요할 때, 빠르게 리서치를${newlineForMobile}진행할 수 있습니다.\n\n웹리포트는${newlineForMobile}90일간 조회할 수 있으며,\n모든 결과와 원본 데이터는${newlineForMobile}다운로드 할 수 있습니다.`;
   const desc2 =
-    `서비스에 필요한 피드백을${newlineForMobile}정기 구독할 수 있습니다.\n` +
-    `담당자가 별도로 설정하지 않아도,\n지정된 날짜에 웹리포트가 제공됩니다.\n\n` +
-    `리포트는 구독기간내에${newlineForMobile}무제한 조회할 수 있으며,\n모든 결과와 RAW DATA는${newlineForMobile}다운로드할 수 있습니다.`;
+    `서비스에 필요한 리서치를${newlineForMobile}정기적으로 수행할 수 있습니다.\n\n` +
+    // `담당자가 별도로 설정하지 않아도,\n지정된 날짜에 웹리포트가 제공됩니다.\n\n` +
+    `웹리포트는 구독기간내${newlineForMobile}무제한 조회할 수 있으며,\n모든 결과와 원본 데이터는${newlineForMobile}다운로드할 수 있습니다.`;
   // 지정된 날짜에 인터렉티브${newlineForMobile}리포트가 제공됩니다.
   return (
     <Section>
@@ -162,7 +162,7 @@ function Section1() {
         </Grid>
         <Grid item sm={12} md={6} lg={6} style={{ paddingTop: isMobile ? '48px' : '90px' }}>
           <PriceDiv>
-            <Title data-aos="fade-up">피드백 1회 주문</Title>
+            <Title data-aos="fade-up">리서치 1회 주문</Title>
             <Card data-aos="fade-up" className="box-shadow-active">
               <p style={{ fontSize: '16px', lineHeight: '24px', fontWeight: 'bold', margin: '16px auto 8px' }}>응답자 보상 비용</p>
               <p style={{ fontSize: '16px', lineHeight: '24px', margin: '8px auto 16px', paddingTop: '8px' }}>(패널 보상 비용 * 패널 수)</p>
@@ -185,7 +185,7 @@ function Section1() {
         </Grid>
         <Grid item sm={12} md={6} lg={6} style={{ paddingTop: isMobile ? '48px' : '90px' }}>
           <PriceDiv>
-            <Title data-aos="fade-up">피드백 정기 구독</Title>
+            <Title data-aos="fade-up">리서치 정기 구독</Title>
             <Card data-aos="fade-up" className="box-shadow-active">
               <p style={{ fontSize: '16px', lineHeight: '24px', fontWeight: 'bold', margin: '16px auto 8px' }}>응답자 보상 비용</p>
               <p style={{ fontSize: '16px', lineHeight: '24px', margin: '8px auto 16px', paddingTop: '8px' }}>(패널 보상 비용 * 패널 수)</p>

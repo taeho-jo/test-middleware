@@ -129,12 +129,12 @@ const Section1 = ({ data }) => {
                   endIcon={isMobile ? undefined : <ArrowRightAltIcon style={{ color: 'white' }} />}
                 >
                   {navigate.pathname === '/usecases/ui'
-                    ? 'UI 진단 테스트로 사용성 개선하기'
+                    ? 'UI 진단으로 사용성 개선하기'
                     : navigate.pathname === '/usecases/ux'
-                    ? 'UX 포지션 테스트로 UX 전략 수립하기'
+                    ? 'UX 포지션 분석으로 UX 전략 수립하기'
                     : navigate.pathname === '/usecases/scenario'
-                    ? '시나리오 테스트로 의사결정하기'
-                    : '퍼소나 테스트로 퍼소나 정의하기'}
+                    ? '시나리오 검증으로 의사결정하기'
+                    : '퍼소나 분석으로 퍼소나 정의하기'}
                 </NextButton>
               </Stack>
               <div style={{ flex: 1 }} />

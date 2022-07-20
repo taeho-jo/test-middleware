@@ -74,7 +74,7 @@ function Solution1() {
     section1: {
       chart: SolutionChart1,
       bg: SolutionChartBG1,
-      header: 'UI 진단 테스트',
+      header: 'UI 진단',
       title: '핵심 기능을 사용하는 과정에서\n사용자의 불편함을 파악하고\n개선 우선순위를 선정하세요.',
       labs: [
         { name: 'SolutionImage1_1', image: SolutionImage1_1 },
@@ -84,7 +84,7 @@ function Solution1() {
       ],
     },
     section2: {
-      title: '응답자가 UI 진단 테스트에 참여하는 방법',
+      title: '응답자가 UI 진단에 참여하는 방법',
       slides: [
         {
           title: '1. 미션 수행',
@@ -98,7 +98,7 @@ function Solution1() {
         },
         {
           title: '2. 설문 응답',
-          desc: 'UI 진단 테스트에서 필수로 포함해야하는 질문과\n' + '원하시는 질문을 추가한 질문 세트에 응답합니다. ',
+          desc: 'UI 진단에서 필수로 포함해야하는 질문과\n' + '원하시는 질문을 추가한 질문 세트에 응답합니다. ',
           image: SolutionTopSlide1_2,
         },
         {
@@ -145,15 +145,17 @@ function Solution1() {
     section4: {
       slides: [
         {
-          title: '1. 테스트 선택',
+          title: '1. 리서치 종류 선택',
+          btnTitle: '1. 리서치 선택',
           desc:
-            '어떻게 리서치를 시작하지?\n이제 고민하지 마세요.\nDiby에서 리서치를 통해 달성하고 싶은 목적별로\n테스트를 제공하고 있습니다.\n각 테스트에서 제공하는 공통 질문 이외에도\n' +
+            '어떻게 리서치를 시작하지?\n이제 고민하지 마세요.\nDiby에서 리서치를 통해 달성하고 싶은 목적별로\n리서치 종류를 제공하고 있습니다.\n각 리서치에서 제공하는 공통 질문 이외에도\n' +
             '원하시는 질문을 추가하거나,\n' +
             'Diby의 추천 질문을 선택하실 수 있습니다.',
           image: SolutionBottomSlide1_3,
         },
         {
           title: '2. 응답자 조건 설정',
+          btnTitle: '2. 응답자 조건 설정',
           desc:
             '원하시는 응답자의 인구통계학 조건을 설정하세요.\n성별, 연령대, 사용 기기는 기본으로 제공하며,\n' +
             '추가로 조건을 커스텀할 수 있습니다.\n설정하신 조건으로 Diby 패널 중, 응답자를 선별합니다.',
@@ -161,6 +163,7 @@ function Solution1() {
         },
         {
           title: '3. 지시할 미션 입력',
+          btnTitle: '3. 지시할 미션 입력',
           desc:
             '응답자가 수행할 미션을 설정하세요.\n미션 수행 여부는 인증 이미지 등으로 100% 검수하며,\n' +
             '미션 수행 성공비율을 파악할 수 있습니다.\n미션은 총 3개까지 입력할 수 있습니다.',
@@ -187,7 +190,7 @@ function Solution2() {
     section1: {
       chart: SolutionChart2,
       bg: SolutionChartBG2,
-      header: 'UX 포지션 테스트',
+      header: 'UX 포지션 분석',
       title: '고객이 프로덕트를 어떻게 인식하고\n있는지를 파악하고,\n고객 만족도가 가장 높은 지점을 찾아\n팀의 기획의도와 일치시키세요. ',
       labs: [
         { name: 'SolutionImage2_1', image: SolutionImage2_1 },
@@ -196,7 +199,7 @@ function Solution2() {
       ],
     },
     section2: {
-      title: '응답자가 UX 포지션 테스트에 참여하는 방법',
+      title: '응답자가 UX 포지션 분석에 참여하는 방법',
       slides: [
         {
           title: '1. 실사용 고객 모집',
@@ -213,7 +216,7 @@ function Solution2() {
         },
         {
           title: '2. 설문 응답',
-          desc: `UX 포지션 테스트에서 인식 평가를 위해
+          desc: `UX 포지션 분석에서 인식 평가를 위해
 제공하는 질문에 응답합니다.
 질문을 통해 프로덕트 사용의 동기부여 요인
 (즐거움 / 유용함)과 의사결정 권한의 정도를 파악하고,
@@ -263,19 +266,21 @@ function Solution2() {
     section4: {
       slides: [
         {
-          title: '1. 테스트 선택',
+          title: '1. 리서치 종류 선택',
+          btnTitle: '1. 리서치 선택',
           desc:
             '어떻게 리서치를 시작하지?\n' +
             '이제 고민하지 마세요. \n' +
             'Diby에서 리서치를 통해 달성하고 싶은 목적별로\n' +
-            '테스트를 제공하고 있습니다.' +
-            '\n테스트에서 제공하는 공통 질문 이외에도\n' +
+            '리서치 종류하고 있습니다.' +
+            '\n리서치에서 제공하는 공통 질문 이외에도\n' +
             '원하시는 질문을 추가하거나,\n' +
             'Diby의 추천 질문을 선택하실 수 있습니다.',
           image: SolutionBottomSlide2_0,
         },
         {
           title: '2. 내부 설계의도 확인',
+          btnTitle: '2. 내부 설계의도 확인',
           desc:
             'Diby의 팀용 UX 포지션 분석 문항에 응답하세요.\n응답한 결과를 바탕으로\n' +
             '팀에서 프로덕트를 어떻게 인식하고 있는지 계산합니다.\n팀의 UX 설계 의도와 실사용 고객의 응답을 비교하고,\n' +
@@ -285,6 +290,7 @@ function Solution2() {
         },
         {
           title: '3. 세그먼트 기준 설정',
+          btnTitle: '3. 세그먼트 기준 설정',
           desc:
             '고객의 인식 결과를 확인할 때,\n' +
             '적용하고 싶은 기준을 설정해주세요.\n' +
@@ -314,7 +320,7 @@ function Solution3() {
     section1: {
       chart: SolutionChart3,
       bg: SolutionChartBG3,
-      header: '시나리오 테스트',
+      header: '시나리오 검증',
       title: '가설 검증과 AB 테스트를 통해\n팀의 커뮤니케이션 비용을 줄이세요.',
       labs: [
         { name: 'SolutionImage3_1', image: SolutionImage3_1 },
@@ -324,7 +330,7 @@ function Solution3() {
       ],
     },
     section2: {
-      title: '응답자가 시나리오 검증 테스트에 참여하는 방법',
+      title: '응답자가 시나리오 검증에 참여하는 방법',
       slides: [
         {
           title: '1. 미션 수행',
@@ -379,19 +385,21 @@ function Solution3() {
     section4: {
       slides: [
         {
-          title: '1. 테스트 선택',
+          title: '1. 리서치 종류 선택',
+          btnTitle: '1. 리서치 선택',
           desc:
             '어떻게 리서치를 시작하지?\n' +
             '이제 고민하지 마세요. \n' +
             'Diby에서 리서치를 통해 달성하고 싶은 목적별로\n' +
-            '테스트를 제공하고 있습니다.' +
-            '\n테스트에서 제공하는 공통 질문 이외에도\n' +
+            '리서치 종류를 제공하고 있습니다.' +
+            '\n리서치에서 제공하는 공통 질문 이외에도\n' +
             '원하시는 질문을 추가하거나,\n' +
             'Diby의 추천 질문을 선택하실 수 있습니다.',
           image: SolutionBottomSlide3_3,
         },
         {
           title: '2. 응답자 조건 설정',
+          btnTitle: '2. 응답자 조건 설정',
           desc:
             '원하시는 응답자의 인구통계학 조건을 설정하세요.\n' +
             '성별, 연령대, 사용 기기는 기본으로 제공하며,\n' +
@@ -401,6 +409,7 @@ function Solution3() {
         },
         {
           title: '3. 지시할 미션 입력',
+          btnTitle: '3. 지시할 미션 입력',
           desc:
             '응답자가 수행할 미션을 설정하세요.\n미션 수행 여부는 인증이미지 등으로 100% 검수하며,\n' +
             '미션 수행 성공비율을 파악할 수 있습니다.\n미션은 총 3개까지 입력할 수 있습니다.',
@@ -427,7 +436,7 @@ function Solution4() {
     section1: {
       chart: SolutionChart4,
       bg: SolutionChartBG4,
-      header: '퍼소나 테스트',
+      header: '퍼소나 분석',
       title: '프로덕트 사용 방식 혹은 호감도가\n높은 집단이 어떤 특징을 가졌는지\n확인하여 퍼소나를 정의하세요.',
       labs: [
         { name: 'SolutionImage4_1', image: SolutionImage4_1 },
@@ -437,7 +446,7 @@ function Solution4() {
       ],
     },
     section2: {
-      title: '응답자가 퍼소나 테스트에 참여하는 방법',
+      title: '응답자가 퍼소나 분석에 참여하는 방법',
       slides: [
         {
           title: '1. 응답자 모집',
@@ -495,19 +504,21 @@ function Solution4() {
     section4: {
       slides: [
         {
-          title: ' 1. 테스트 선택',
+          title: '1. 리서치 종류 선택',
+          btnTitle: '1. 리서치 선택',
           desc:
             '어떻게 리서치를 시작하지?\n' +
             '이제 고민하지 마세요. \n' +
             'Diby에서 리서치를 통해 달성하고 싶은 목적별로\n' +
-            '테스트를 제공하고 있습니다.' +
-            '\n테스트에서 제공하는 공통 질문 이외에도\n' +
+            '리서치 종류를 제공하고 있습니다.' +
+            '\n리서치에서 제공하는 공통 질문 이외에도\n' +
             '원하시는 질문을 추가하거나,\n' +
             'Diby의 추천 질문을 선택하실 수 있습니다.',
           image: SolutionBottomSlide4_1,
         },
         {
           title: '2. 퍼소나 조건 설정',
+          btnTitle: '2. 퍼소나 조건 설정',
           desc:
             '원하시는 퍼소나의 조건을 설정하세요.\n' +
             '성별, 연령대, 사용 기기는 기본으로 제공하며,\n' +
@@ -517,6 +528,7 @@ function Solution4() {
         },
         {
           title: '3. 문항선택 / 직접입력',
+          btnTitle: '3. 문항선택 / 직접입력',
           desc: '리서치의 목적에 맞게 Diby 가 추천한 문항을\n선택하고 커스텀하세요.\n혹은 원하시는 문항을 직접 제작할 수 있습니다.',
           image: SolutionBottomSlide4_3,
         },

@@ -55,8 +55,10 @@ function Section3() {
     <Section>
       <GridContainer container spacing={16} style={{ width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
         <Grid item sm={12} md={12} lg={12}>
-          <Header data-aos="fade-up">설계안은 즉시 메일로 전송됩니다.</Header>
-          <Title data-aos="fade-up">간략한 비용과 소요시간을 확인 후, 프로젝트 시작 여부를 결정할 수 있습니다.</Title>
+          <Header data-aos="fade-up">잠깐, 어떤 리서치를 해야할지 모르겠나요?</Header>
+          <Title data-aos="fade-up">
+            Diby 의 리서치 추천으로 지금 프로덕트의 문제를 해결하기 위해 어떤 리서치를 해야하는지 1분안에 확인해보세요.
+          </Title>
           <div data-aos="fade-up" style={{ display: 'flex', justifyContent: 'center', border: '1px solid #cccccc', borderRadius: '8px' }}>
             <Widget id="lmyqEfEb" style={{ width: '100%', height: isMobile ? '660px' : '524px' }} className="my-form" />
           </div>

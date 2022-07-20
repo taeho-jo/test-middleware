@@ -148,7 +148,7 @@ const Section4 = ({ data }) => {
                       style={{ backgroundColor: slideIndex === index ? '#24E1D5' : '#CCCCCC' }}
                       onClick={() => setSlideIndex(index)}
                     >
-                      {slide.title}
+                      {slide.btnTitle}
                     </SlideButton>
                   ))}
                 </div>

@@ -94,7 +94,7 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
                         marginBottom: bool?.length !== 0 ? '12px' : '0px',
                         height: 'auto',
                         wordBreak: 'keep-all',
-                        textAlign: 'left',
+                        textAlign: 'center',
                         whiteSpace: 'pre-wrap',
                       },
                     ]}
