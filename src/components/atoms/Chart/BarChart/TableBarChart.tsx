@@ -75,7 +75,7 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
             {/*공갈박스*/}
             {dataList.map((item, index) => {
               return (
-                <li key={index} css={[liStyle, liWidthStyle(dataList.length, fatality), emptyLiStyle]}>
+                <li key={index} css={[liStyle, liWidthStyle(dataList.length, fatality), renderArr().length === 1 ? emptyLiStyle2 : emptyLiStyle]}>
                   <span>{item}</span>
                 </li>
               );
@@ -170,6 +170,12 @@ const liWidthStyle = (length, fatality) => css`
 `;
 const emptyLiStyle = css`
   padding: 30px;
+  span {
+    visibility: hidden;
+  }
+`;
+const emptyLiStyle2 = css`
+  //padding: 30px;
   span {
     visibility: hidden;
   }
