@@ -43,6 +43,8 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
     if (dataList) {
       const missionArr = dataList.filter(el => el.code.includes('S1M'));
 
+      // console.log(missionArr, 'MISSIONARR');
+
       const newMultipleArr = multipleData?.reduce(
         (acc, cur) =>
           acc.concat({
@@ -70,6 +72,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
       if (s1Data) {
         const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr];
         setIntentList(newArr);
+        console.log(newArr);
       } else {
         const newArr = [...missionArr, ...otherArr];
         setIntentList(newArr);
