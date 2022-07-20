@@ -72,8 +72,9 @@ const Title = styled('p')(({ theme }) => ({
     fontSize: '32px',
     lineHeight: '48px',
   },
-  fontWeight: 'bold',
+  fontWeight: '200',
   margin: '0px',
+  marginTop: '24px',
 }));
 
 const NextButton = styled(Button)({
