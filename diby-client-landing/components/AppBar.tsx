@@ -121,7 +121,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
           {!isMobile && (
             <Stack className="hide-on-md" direction="row" justifyContent="center" alignItems="center" spacing={16} style={{ marginRight: '30px' }}>
               <AppBarButton color={darkMode ? 'white' : 'primary'} variant="text" onClick={handleClickUseCases}>
-                테스트 종류
+                리서치 종류
               </AppBarButton>
               <AppBarButton
                 color={darkMode ? 'white' : 'primary'}
@@ -219,7 +219,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
         }}
       >
         <div style={{ padding: '32px 24px' }}>
-          <p style={{ margin: '0 0 10px 0', textAlign: 'left', fontSize: '16px', fontWeight: 'bold' }}>테스트 종류</p>
+          <p style={{ margin: '0 0 10px 0', textAlign: 'left', fontSize: '16px', fontWeight: 'bold' }}>리서치 종류</p>
           <div style={{ width: '280px', height: '60px', display: 'flex' }}>
             <Button
               style={{ flex: 1, padding: '0', margin: '0 auto 0 0', width: '110px', justifyContent: 'flex-start' }}
@@ -231,7 +231,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 <div style={{ width: '24px', height: '24px', margin: 'auto 0' }}>
                   <Image src={icon1} alt={'diby1'} width={24} height={24} priority={true} quality={100} />
                 </div>
-                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UI 진단 테스트</p>
+                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UI 진단</p>
               </div>
             </Button>
             <Button
@@ -244,7 +244,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 <div style={{ width: '24px', height: '24px', margin: 'auto 0' }}>
                   <Image src={icon2} alt={'diby2'} width={24} height={24} priority={true} quality={100} />
                 </div>
-                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UX 포지션 테스트</p>
+                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UX 포지션 분석</p>
               </div>
             </Button>
           </div>
@@ -259,7 +259,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 <div style={{ width: '24px', height: '24px', margin: 'auto 0' }}>
                   <Image src={icon3} alt={'diby3'} width={24} height={24} priority={true} quality={100} />
                 </div>
-                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>시나리오 테스트</p>
+                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>시나리오 검증</p>
               </div>
             </Button>
             <Button
@@ -272,7 +272,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 <div style={{ width: '24px', height: '24px', margin: 'auto 0' }}>
                   <Image src={icon4} alt={'diby4'} width={24} height={24} priority={true} quality={100} />
                 </div>
-                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>퍼소나 테스트</p>
+                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>퍼소나 분석</p>
               </div>
             </Button>
           </div>
@@ -295,36 +295,58 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             <p style={{ width: '100%', fontSize: '16px', fontWeight: 'bold', textTransform: 'none', textAlign: 'left', margin: '0' }}>가격안내</p>
           </Button>
           <div style={{ margin: '0 -24px', borderTop: '1px dashed #ccc', opacity: '0.3' }} />
-          {/*<div>*/}
+
+          {/*<div style={{ display: 'flex', justifyContent: 'center', paddingTop: '18px' }}>*/}
           {/*  <DesignButton*/}
-          {/*    style={{ color: darkMode ? 'white' : '#3c3c46' }}*/}
+          {/*    color={'white'}*/}
+          {/*    style={{ backgroundColor: '#24E1D5' }}*/}
           {/*    onClick={() => {*/}
-          {/*      dispatch(isShow({ isShow: true, type: 'login' }));*/}
+          {/*      handleClick('/tri');*/}
           {/*    }}*/}
           {/*  >*/}
-          {/*    로그인*/}
-          {/*  </DesignButton>*/}
-          {/*  <DesignButton*/}
-          {/*    color={darkMode ? 'green' : 'white'}*/}
-          {/*    style={{ backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : '#24E1D5' }}*/}
-          {/*    onClick={() => {*/}
-          {/*      dispatch(isShow({ isShow: true, type: 'signup' }));*/}
-          {/*    }}*/}
-          {/*  >*/}
-          {/*    회원가입*/}
+          {/*    설계하기*/}
           {/*  </DesignButton>*/}
           {/*</div>*/}
-          <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '18px' }}>
-            <DesignButton
-              color={'white'}
-              style={{ backgroundColor: '#24E1D5' }}
-              onClick={() => {
-                handleClick('/tri');
-              }}
-            >
-              설계하기
-            </DesignButton>
-          </div>
+          {token && !userId ? (
+            <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '18px' }}>
+              <DesignButton
+                style={{ color: darkMode ? '#3c3c46' : 'white' }}
+                onClick={() => {
+                  localStorage.clear();
+                  navigate.push('/');
+                }}
+              >
+                로그아웃
+              </DesignButton>
+              <DesignButton
+                color={darkMode ? 'green' : 'white'}
+                style={{ backgroundColor: darkMode ? '#24E1D5' : 'rgba(255, 255, 255, 0.1)' }}
+                onClick={() => handleMoveAdmin('/admin/team')}
+              >
+                대시보드
+              </DesignButton>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '18px' }}>
+              <DesignButton
+                style={{ color: darkMode ? '#3c3c46' : 'white' }}
+                onClick={() => {
+                  dispatch(isShow({ isShow: true, type: 'login' }));
+                }}
+              >
+                로그인
+              </DesignButton>
+              <DesignButton
+                color={darkMode ? 'white' : 'green'}
+                style={{ backgroundColor: darkMode ? '#24E1D5' : 'rgba(255, 255, 255, 0.1)' }}
+                onClick={() => {
+                  dispatch(isShow({ isShow: true, type: 'signup' }));
+                }}
+              >
+                회원가입
+              </DesignButton>
+            </div>
+          )}
         </div>
       </Popover>
       <Popover
@@ -355,7 +377,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                   {/*<img src={icon1.src} alt={'diby1'} style={{ width: '40px', height: '40px' }} />*/}
                 </div>
                 <div style={{ paddingLeft: '16px' }}>
-                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UI 진단 테스트</p>
+                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UI 진단</p>
                   <p style={{ margin: '0', textAlign: 'left', fontSize: '14px' }}>사용성 문제점 파악</p>
                 </div>
               </div>
@@ -372,7 +394,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                   {/*<img src={icon2.src} alt={'diby2'} style={{ width: '40px', height: '40px' }} />*/}
                 </div>
                 <div style={{ paddingLeft: '16px' }}>
-                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UX 포지션 테스트</p>
+                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UX 포지션 분석</p>
                   <p style={{ margin: '0', textAlign: 'left', fontSize: '14px' }}>실사용자 대상 UX 평가 및 전략수립</p>
                 </div>
               </div>
@@ -391,7 +413,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                   {/*<img src={icon3.src} alt={'diby3'} style={{ width: '40px', height: '40px' }} />*/}
                 </div>
                 <div style={{ paddingLeft: '16px' }}>
-                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>시나리오 테스트</p>
+                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>시나리오 검증</p>
                   <p style={{ margin: '0', textAlign: 'left', fontSize: '14px' }}>가설 검정 및 의사결정</p>
                 </div>
               </div>
@@ -408,7 +430,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                   {/*<img src={icon4.src} alt={'diby4'} style={{ width: '40px', height: '40px' }} />*/}
                 </div>
                 <div style={{ paddingLeft: '16px' }}>
-                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>퍼소나 테스트</p>
+                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>퍼소나 분석</p>
                   <p style={{ margin: '0', textAlign: 'left', fontSize: '14px' }}>핵심 고객 정의</p>
                 </div>
               </div>

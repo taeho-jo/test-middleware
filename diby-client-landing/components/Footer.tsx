@@ -91,14 +91,14 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
 
           <Grid item xs={6} md={3} lg={2}>
             <Stack direction="column" spacing={16} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
-              <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#999999' }}>테스트 서비스</p>
+              <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#999999' }}>리서치 종류</p>
               <FooterButton
                 color={darkMode ? 'white' : 'primary'}
                 onClick={() => {
                   handleClick('/usecases/ui');
                 }}
               >
-                UI 진단 테스트
+                UI 진단
               </FooterButton>
               <FooterButton
                 color={darkMode ? 'white' : 'primary'}
@@ -106,7 +106,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
                   handleClick('/usecases/ux');
                 }}
               >
-                UX 포지션 테스트
+                UX 포지션 분석
               </FooterButton>
               <FooterButton
                 color={darkMode ? 'white' : 'primary'}
@@ -114,7 +114,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
                   handleClick('/usecases/scenario');
                 }}
               >
-                시나리오 테스트
+                시나리오 검증
               </FooterButton>
               <FooterButton
                 color={darkMode ? 'white' : 'primary'}
@@ -122,7 +122,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
                   handleClick('/usecases/customer');
                 }}
               >
-                퍼소나 테스트
+                퍼소나 분석
               </FooterButton>
             </Stack>
           </Grid>

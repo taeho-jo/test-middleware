@@ -62,13 +62,13 @@ function Section4() {
   const data = [
     { title: '리포트 요약', desc: '리서치의 목적별로\n실제 의사결정에 활용할 수 있는\n결과 요약을 제공합니다.', icon: 'feature_1' },
     {
-      title: '테스트 방법 추천',
-      desc: '리서치를 수행하는 이유에 맞추어\n가장 적합한 테스트를 추천합니다.',
+      title: '리서치 종류 추천',
+      desc: '수행하는 목적에 따라\n가장 적합한 리서치를 추천합니다.',
       icon: 'feature_2',
     },
     { title: '피드백 검색', desc: '결과리포트에서\n원하는 키워드로\n피드백을 검색합니다.', icon: 'feature_3' },
     { title: '담당 매니저 배정', desc: '해당 도메인을 가장 잘 아는\n담당 매니저를 1:1 배정합니다.', icon: 'feature_4' },
-    { title: '리서치 설계 추천', desc: '테스트 종류와\n프로덕트 타입에 맞추어\n문항과 조건 등을 추천합니다.', icon: 'feature_5' },
+    { title: '리서치 추천', desc: '리서치 종류와\n프로덕트 타입, 수행 목적에 따라 \n문항과 조건 등을 제안합니다.', icon: 'feature_5' },
     { title: '패널 표집', desc: '팀에서 원하는 조건에 부합하는 패널만을\n표집하고, 응답의 품질을 검수합니다.', icon: 'feature_6' },
     { title: '피드백 분석', desc: 'Diby 자체 개발 자연어 처리 솔루션을\n활용하여, 정성데이터를 정량화합니다.', icon: 'feature_7' },
     { title: '스마트 리포트', desc: '유사 산업군에서 수행한 다른 리서치의 응답을\n익명화하여 비교합니다.', icon: 'feature_8' },
@@ -79,7 +79,7 @@ function Section4() {
     <Section>
       <GridContainer container spacing={16} style={{ width: '100%', maxWidth: '1920px', margin: '0 auto' }}>
         <Grid item sm={12} md={12} lg={12}>
-          <Header data-aos="fade-up">CX 팀을 위한 핵심 기능</Header>
+          <Header data-aos="fade-up">유저리서치를 위한 핵심 기능</Header>
         </Grid>
         {data.map((item, index) => (
           <Grid item sm={6} md={6} lg={4} key={`id_${index}`}>

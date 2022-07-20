@@ -28,7 +28,7 @@ const UxResearchModuleModal = () => {
               <BasicButton
                 onClick={() => window.open('https://dbdlab.notion.site/UX-205652e102c3439b9bcb44a7383f5bb3')}
                 theme={'dark'}
-                text={'설계안 작성하러 가기'}
+                text={'무료로 설계안 받기'}
               />
             </FlexBox>
           </FlexBox>

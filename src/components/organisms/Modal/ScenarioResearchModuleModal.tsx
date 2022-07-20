@@ -30,7 +30,7 @@ const ScenarioResearchModuleModal = () => {
               <BasicButton
                 onClick={() => window.open('https://dbdlab.notion.site/e431cc58286c4b1b9113f45f1ce88f57')}
                 theme={'dark'}
-                text={'설계안 작성하러 가기'}
+                text={'무료로 설계안 받기'}
               />
             </FlexBox>
           </FlexBox>

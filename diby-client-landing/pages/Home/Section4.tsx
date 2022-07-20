@@ -97,15 +97,15 @@ function Section4() {
           <Stack direction="column" spacing={24} justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
             <LottieIcon name="home_icon_4" delay={1500} />
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold', color: '#2878F0' }}>
-              다양한 테스트
+              다양한 리서치
             </Desc>
             <Desc data-aos="fade-up">
               리서치의 목적에 맞게 선택하실 수 있는
-              <br /> 다양한 테스트를 제공합니다.
+              <br /> 다양한 리서치를 제공합니다.
             </Desc>
             <Desc data-aos="fade-up" style={{ fontWeight: 'bold' }}>
               원하시는 대로 커스텀하거나, <br />
-              추천 테스트를 활용하세요.
+              추천 리서치를 활용하세요.
             </Desc>
           </Stack>
         </Grid>

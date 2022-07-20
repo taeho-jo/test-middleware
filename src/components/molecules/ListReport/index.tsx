@@ -21,7 +21,7 @@ const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, 
   const changeName = useCallback(name => {
     switch (name) {
       case 'UI_DIAGNOSIS':
-        return 'UI 진단 테스트';
+        return 'UI 진단';
       case 'SCENARIO_VERIFICATION':
         return '시나리오 검증';
       case 'UX_POSITION_ANALYSIS':
@@ -29,7 +29,7 @@ const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, 
       case 'POTENTIAL_CUSTOMER_RESEARCH':
         return '잠재 고객 조사';
       default:
-        return 'UI 진단 테스트';
+        return 'UI 진단';
     }
   }, []);
 

@@ -25,33 +25,33 @@ const Seo = ({
     switch (path) {
       case '/usecases/ui':
         return {
-          title: 'Diby | UI 진단 테스트',
+          title: 'Diby | UI 진단',
           description: '사용성 테스트 (usabiltiy test)로 서비스내 문제점 파악',
-          ogTitle: 'UI 진단 테스트 | Diby',
+          ogTitle: 'UI 진단 | Diby',
           ogDescription: '사용성 테스트 (usabiltiy test)로 서비스내 문제점 파악',
           url,
         };
       case '/usecases/ux':
         return {
-          title: 'Diby | UX 포지션 테스트',
+          title: 'Diby | UX 포지션 분석',
           description: '실사용자 대상 UX 평가 및 전략 수립',
-          ogTitle: 'UX 포지션 테스트 | Diby',
+          ogTitle: 'UX 포지션 분석 | Diby',
           ogDescription: '실사용자 대상 UX 평가 및 전략 수립',
           url,
         };
       case '/usecases/scenario':
         return {
-          title: 'Diby | 시나리오 테스트',
+          title: 'Diby | 시나리오 검증',
           description: 'UX UI 가설 수립 및 검증',
-          ogTitle: '시나리오 테스트 | Diby',
+          ogTitle: '시나리오 검증 | Diby',
           ogDescription: 'UX UI 가설 수립 및 검증',
           url,
         };
       case '/usecases/customer':
         return {
-          title: 'Diby | 퍼소나 테스트',
+          title: 'Diby | 퍼소나 분석',
           description: '시장조사, 핵심 고객 정의',
-          ogTitle: '퍼소나 테스트 | Diby',
+          ogTitle: '퍼소나 분석 | Diby',
           ogDescription: '시장조사, 핵심 고객 정의',
           url,
         };
@@ -83,10 +83,10 @@ const Seo = ({
         return {
           title: 'Diby | 일 잘하는 당신을 위한 유저리서치 솔루션',
           description:
-              '유저리서치로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요.',
+            '유저리서치로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요.',
           ogTitle: '유저리서치 솔루션, Diby',
           ogDescription:
-              '유저리서치로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요.',
+            '유저리서치로 서비스를 사용한 잠재고객의 피드백을 수집합니다. Diby 에서 리서치 설계부터 응답자 보상 지급, 문장형 데이터를 분석하고 업무 효율성을 높이세요.',
           url,
         };
     }
