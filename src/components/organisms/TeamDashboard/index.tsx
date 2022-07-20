@@ -61,7 +61,7 @@ const ResearchType = [
     modalType: 'uxResearchModule',
   },
   {
-    title: '잠재 고객 검증',
+    title: '퍼소나 분석',
     link: 'https://dbdlab.notion.site/34d243dc532d462b84468a710a63c3e8',
     backgroundColor: `${colors.white}`,
     color: null,

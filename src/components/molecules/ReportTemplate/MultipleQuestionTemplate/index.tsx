@@ -127,6 +127,9 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
                     );
                   })
                 : null}
+              <div css={[heading4_bold, { color: colors.grey._99, textAlign: 'center', width: '100%', marginTop: '40px' }]}>
+                총 응답자 수 : {dataList?.totalCount}명
+              </div>
             </FlexBox>
           </FlexBox>
         </FlexBox>
