@@ -58,8 +58,7 @@ const BrandEvaluationTemplate = () => {
               </span>
               <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />
             </FlexBox>
-            <TableBarChart fatality={false} dataList={tableBarChartBrandData} dataValueList={brandBarChartData} />
-
+            <TableBarChart fatality={false} dataList={tableBarChartBrandData} dataValueList={brandBarChartData} />자{' '}
             <div css={[heading4_bold, { color: colors.grey._99, textAlign: 'center', width: '100%', marginTop: '40px' }]}>총 응답자 수 : @58명 </div>
           </FlexBox>
         </FlexBox>
