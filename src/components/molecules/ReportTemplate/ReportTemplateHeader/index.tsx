@@ -57,9 +57,9 @@ const headerBosStyle = css`
   padding: 24px;
   background: white;
   border-bottom: 1px solid #dcdcdc;
-  //position: sticky;
-  //top: 0;
-  //z-index: 500;
+  position: sticky;
+  top: 0;
+  z-index: 500;
 `;
 const reportHeader = css`
   //background: pink;

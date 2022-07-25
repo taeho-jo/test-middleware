@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import {
   AddOnFeature,
@@ -22,6 +22,7 @@ import { InputType } from '../../../common/types/commonTypes';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { RespondentCharacteristicsTemplate } from '../../../components/template/ReportTemplate';
 import ReportTemplateHeader from '../../../components/molecules/ReportTemplate/ReportTemplateHeader';
+import UiTestFullSummaryTemplate from '../../../components/template/ReportTemplate/UiTestFullSummaryTemplate';
 
 const Report = ({ params }) => {
   const queryClient = useQueryClient();
@@ -104,9 +105,78 @@ const Report = ({ params }) => {
     refetch();
   }, [filterFail]);
 
+  const callbackFunction = entries => {
+    const [entry] = entries;
+    if (entry.isIntersecting) {
+      console.log(entry);
+      console.log(entry.target.id);
+    }
+  };
+
+  const respondentRef = useRef([]);
+
+  useEffect(() => {
+    console.log(respondentRef, '!');
+    const option = {
+      rootMargin: '72px',
+      threshold: 1.0,
+    };
+    const observer = new IntersectionObserver(callbackFunction, option);
+    let currentTarget;
+    for (let i = 0; i < respondentRef.current.length; i++) {
+      currentTarget = respondentRef.current[i];
+      if (currentTarget) observer.observe(currentTarget);
+    }
+
+    return () => {
+      if (currentTarget) observer.unobserve(currentTarget);
+    };
+  }, [respondentRef]);
+
   return (
-    <div css={testContainer1}>
-      <div css={testContainer2}>
+    <div css={testContainer1} className={'scrollType1'}>
+      <div id={'one'} css={testContainer2} ref={el => (respondentRef.current[0] = el)}>
+        <ReportTemplateHeader
+          handleChangeCheckBox={handleChangeCheckBox}
+          modalControl={modalControl}
+          checked={filterFail}
+          errors={errors}
+          register={register}
+        />
+        <RespondentCharacteristicsTemplate dataList={data?.answerInfoSection} />
+      </div>
+
+      <div id={'two'} css={testContainer2} className={'scrollType1'}>
+        <ReportTemplateHeader
+          handleChangeCheckBox={handleChangeCheckBox}
+          modalControl={modalControl}
+          checked={filterFail}
+          errors={errors}
+          register={register}
+        />
+        {/*<div>asdfasdfasdfasdf</div>*/}
+        {/* UI 진단 전체 요약 */}
+        <UiTestFullSummaryTemplate
+          modalControl={modalControl}
+          handleChangeCheckBox={handleChangeCheckBox}
+          checked={filterFail}
+          comment={data?.S1?.comment}
+          dataList={data?.S1?.uiSummerySection}
+          register={register}
+          errors={errors}
+        />
+        {/*<UiOverallSummaryTemplate*/}
+        {/*  modalControl={modalControl}*/}
+        {/*  handleChangeCheckBox={handleChangeCheckBox}*/}
+        {/*  checked={filterFail}*/}
+        {/*  comment={data?.S1?.comment}*/}
+        {/*  dataList={data?.S1?.uiSummerySection}*/}
+        {/*  register={register}*/}
+        {/*  errors={errors}*/}
+        {/*/>*/}
+      </div>
+
+      <div id={'asdfa'} css={testContainer2} ref={el => (respondentRef.current[2] = el)}>
         <ReportTemplateHeader
           handleChangeCheckBox={handleChangeCheckBox}
           modalControl={modalControl}
@@ -116,26 +186,7 @@ const Report = ({ params }) => {
         />
         <RespondentCharacteristicsTemplate />
       </div>
-      <div css={testContainer2}>
-        <ReportTemplateHeader
-          handleChangeCheckBox={handleChangeCheckBox}
-          modalControl={modalControl}
-          checked={filterFail}
-          errors={errors}
-          register={register}
-        />
-        <RespondentCharacteristicsTemplate />
-      </div>
-      <div css={testContainer2}>
-        <ReportTemplateHeader
-          handleChangeCheckBox={handleChangeCheckBox}
-          modalControl={modalControl}
-          checked={filterFail}
-          errors={errors}
-          register={register}
-        />
-        <RespondentCharacteristicsTemplate />
-      </div>
+
       <div css={testContainer2}>
         <ReportTemplateHeader
           handleChangeCheckBox={handleChangeCheckBox}
@@ -314,10 +365,16 @@ const testContainer1 = css`
   scroll-behavior: smooth;
 `;
 const testContainer2 = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   width: 100%;
   height: calc(100vh - 72px);
+  overflow-y: scroll;
   scroll-snap-align: start;
   background: pink;
+  position: relative;
   &:nth-of-type(even) {
     background: royalblue;
   }
