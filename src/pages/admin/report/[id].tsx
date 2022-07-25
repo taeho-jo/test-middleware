@@ -20,6 +20,8 @@ import MultipleQuestionTemplate from '../../../components/molecules/ReportTempla
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
 import { isShow } from '../../../store/reducers/modalReducer';
+import { RespondentCharacteristicsTemplate } from '../../../components/template/ReportTemplate';
+import ReportTemplateHeader from '../../../components/molecules/ReportTemplate/ReportTemplateHeader';
 
 const Report = ({ params }) => {
   const queryClient = useQueryClient();
@@ -103,130 +105,182 @@ const Report = ({ params }) => {
   }, [filterFail]);
 
   return (
-    <div css={originTestBox}>
-      <div css={testBox}>
-        {/* 응답자 특성 템플릿 */}
-        <RespondentAttributesTemplate
-          modalControl={modalControl}
+    <div css={testContainer1}>
+      <div css={testContainer2}>
+        <ReportTemplateHeader
           handleChangeCheckBox={handleChangeCheckBox}
+          modalControl={modalControl}
           checked={filterFail}
-          register={register}
           errors={errors}
-          dataList={data?.answerInfoSection}
+          register={register}
         />
-        <div css={sortationArea} />
-
-        {data?.S1 ? (
-          <>
-            {/* UI 진단 전체 요약 */}
-            <UiOverallSummaryTemplate
-              modalControl={modalControl}
-              handleChangeCheckBox={handleChangeCheckBox}
-              checked={filterFail}
-              comment={data?.S1?.comment}
-              dataList={data?.S1?.uiSummerySection}
-              register={register}
-              errors={errors}
-            />
-            <div css={sortationArea} />
-
-            {/* 기능별 사용성 비교 */}
-            <UsabilityByFeatureTemplate
-              modalControl={modalControl}
-              handleChangeCheckBox={handleChangeCheckBox}
-              checked={filterFail}
-              dataList={data?.S1?.uiSummerySection}
-              register={register}
-              errors={errors}
-            />
-            {/*<div css={sortationArea} />*/}
-
-            {/* 서비스 전체 사용성 평가*/}
-            <ServiceOverallUsabilityTemplate
-              modalControl={modalControl}
-              handleChangeCheckBox={handleChangeCheckBox}
-              checked={filterFail}
-              dataList={data?.S1?.uiSummerySection}
-              register={register}
-              errors={errors}
-            />
-            <div css={sortationArea} />
-
-            <AddOnFeature
-              modalControl={modalControl}
-              handleChangeCheckBox={handleChangeCheckBox}
-              checked={filterFail}
-              originDataList={data?.S1?.uiSummerySection.missionFatality}
-              title={'서비스 전체 미션별 완성도 피드백'}
-              register={register}
-              errors={errors}
-            />
-            <div css={sortationArea} />
-          </>
-        ) : null}
-
-        {/*객관식 문항*/}
-        {data?.multipleQuestionList === null || data?.multipleQuestionList?.length === 0
-          ? null
-          : data?.multipleQuestionList?.map((item, index) => {
-              return (
-                <div key={`multiple-${index}`} id={item.code}>
-                  {item?.detailScaleList?.length === 0 ? null : (
-                    <>
-                      <GeneralScaleTypeTemplate dataList={item} modalControl={modalControl} />
-                      <div css={sortationArea} />
-                    </>
-                  )}
-
-                  {item?.detailMultipleList.length === 0 ? null : (
-                    <>
-                      <MultipleQuestionTemplate dataList={item} modalControl={modalControl} parentIndex={index} />
-                      <div css={sortationArea} />
-                    </>
-                  )}
-                </div>
-              );
-            })}
-
-        {/*주관식 문항*/}
-        {data?.longQuestionList === null || data?.longQuestionList?.length === 0
-          ? null
-          : data?.longQuestionList?.map((item, index) => {
-              return (
-                <div key={`lognQuestion-${index}`} id={item.questionCode}>
-                  <LongQuestionTemplate dataList={item} modalControl={modalControl} />
-                  {index === data?.longQuestionList?.length - 1 ? null : <div css={sortationArea} />}
-                </div>
-              );
-            })}
-
-        {/* 기능별 상세 내용 */}
-        {/*<FeatureSpecificDetailTemplate />*/}
-        {/*<div css={sortationArea} />*/}
-
-        {/*/!* 순 추천 고객 지수(NPS) *!/*/}
-        {/*<NpsTemplate modalControl={modalControl}/>*/}
-        {/*<div css={sortationArea} />*/}
-
-        {/*/!*일반 척도형 그래프*!/*/}
-        {/*<GeneralScaleTypeTemplate />*/}
-        {/*<div css={sortationArea} />*/}
-
-        {/*/!*적정 가격 평가*!/*/}
-        {/*<PriceEvaluationTemplate />*/}
-        {/*<div css={sortationArea} />*/}
-
-        {/*/!*브랜드 평가*!/*/}
-        {/*<BrandEvaluationTemplate />*/}
-        {/*<div css={sortationArea} />*/}
-
-        {/*/!*문제 해결(동기 부여)*!/*/}
-        {/*<TroublesShootingTemplate />*/}
-        {/*<div css={sortationArea} />*/}
-
-        {/*추가 기능 언급*/}
+        <RespondentCharacteristicsTemplate />
+      </div>
+      <div css={testContainer2}>
+        <ReportTemplateHeader
+          handleChangeCheckBox={handleChangeCheckBox}
+          modalControl={modalControl}
+          checked={filterFail}
+          errors={errors}
+          register={register}
+        />
+        <RespondentCharacteristicsTemplate />
+      </div>
+      <div css={testContainer2}>
+        <ReportTemplateHeader
+          handleChangeCheckBox={handleChangeCheckBox}
+          modalControl={modalControl}
+          checked={filterFail}
+          errors={errors}
+          register={register}
+        />
+        <RespondentCharacteristicsTemplate />
+      </div>
+      <div css={testContainer2}>
+        <ReportTemplateHeader
+          handleChangeCheckBox={handleChangeCheckBox}
+          modalControl={modalControl}
+          checked={filterFail}
+          errors={errors}
+          register={register}
+        />
+        <RespondentCharacteristicsTemplate />
+      </div>
+      <div css={testContainer2}>
+        <ReportTemplateHeader
+          handleChangeCheckBox={handleChangeCheckBox}
+          modalControl={modalControl}
+          checked={filterFail}
+          errors={errors}
+          register={register}
+        />
+        <RespondentCharacteristicsTemplate />
       </div>
     </div>
+    // <div css={originTestBox}>
+    //   <div css={testBox}>
+    //     {/* 응답자 특성 템플릿 */}
+    //     <RespondentAttributesTemplate
+    //       modalControl={modalControl}
+    //       handleChangeCheckBox={handleChangeCheckBox}
+    //       checked={filterFail}
+    //       register={register}
+    //       errors={errors}
+    //       dataList={data?.answerInfoSection}
+    //     />
+    //     <div css={sortationArea} />
+    //
+    //     {data?.S1 ? (
+    //       <>
+    //         {/* UI 진단 전체 요약 */}
+    //         <UiOverallSummaryTemplate
+    //           modalControl={modalControl}
+    //           handleChangeCheckBox={handleChangeCheckBox}
+    //           checked={filterFail}
+    //           comment={data?.S1?.comment}
+    //           dataList={data?.S1?.uiSummerySection}
+    //           register={register}
+    //           errors={errors}
+    //         />
+    //         <div css={sortationArea} />
+    //
+    //         {/* 기능별 사용성 비교 */}
+    //         <UsabilityByFeatureTemplate
+    //           modalControl={modalControl}
+    //           handleChangeCheckBox={handleChangeCheckBox}
+    //           checked={filterFail}
+    //           dataList={data?.S1?.uiSummerySection}
+    //           register={register}
+    //           errors={errors}
+    //         />
+    //         {/*<div css={sortationArea} />*/}
+    //
+    //         {/* 서비스 전체 사용성 평가*/}
+    //         <ServiceOverallUsabilityTemplate
+    //           modalControl={modalControl}
+    //           handleChangeCheckBox={handleChangeCheckBox}
+    //           checked={filterFail}
+    //           dataList={data?.S1?.uiSummerySection}
+    //           register={register}
+    //           errors={errors}
+    //         />
+    //         <div css={sortationArea} />
+    //
+    //         <AddOnFeature
+    //           modalControl={modalControl}
+    //           handleChangeCheckBox={handleChangeCheckBox}
+    //           checked={filterFail}
+    //           originDataList={data?.S1?.uiSummerySection.missionFatality}
+    //           title={'서비스 전체 미션별 완성도 피드백'}
+    //           register={register}
+    //           errors={errors}
+    //         />
+    //         <div css={sortationArea} />
+    //       </>
+    //     ) : null}
+    //
+    //     {/*객관식 문항*/}
+    //     {data?.multipleQuestionList === null || data?.multipleQuestionList?.length === 0
+    //       ? null
+    //       : data?.multipleQuestionList?.map((item, index) => {
+    //           return (
+    //             <div key={`multiple-${index}`} id={item.code}>
+    //               {item?.detailScaleList?.length === 0 ? null : (
+    //                 <>
+    //                   <GeneralScaleTypeTemplate dataList={item} modalControl={modalControl} />
+    //                   <div css={sortationArea} />
+    //                 </>
+    //               )}
+    //
+    //               {item?.detailMultipleList.length === 0 ? null : (
+    //                 <>
+    //                   <MultipleQuestionTemplate dataList={item} modalControl={modalControl} parentIndex={index} />
+    //                   <div css={sortationArea} />
+    //                 </>
+    //               )}
+    //             </div>
+    //           );
+    //         })}
+    //
+    //     {/*주관식 문항*/}
+    //     {data?.longQuestionList === null || data?.longQuestionList?.length === 0
+    //       ? null
+    //       : data?.longQuestionList?.map((item, index) => {
+    //           return (
+    //             <div key={`lognQuestion-${index}`} id={item.questionCode}>
+    //               <LongQuestionTemplate dataList={item} modalControl={modalControl} />
+    //               {index === data?.longQuestionList?.length - 1 ? null : <div css={sortationArea} />}
+    //             </div>
+    //           );
+    //         })}
+    //
+    //     {/* 기능별 상세 내용 */}
+    //     {/*<FeatureSpecificDetailTemplate />*/}
+    //     {/*<div css={sortationArea} />*/}
+    //
+    //     {/*/!* 순 추천 고객 지수(NPS) *!/*/}
+    //     {/*<NpsTemplate modalControl={modalControl}/>*/}
+    //     {/*<div css={sortationArea} />*/}
+    //
+    //     {/*/!*일반 척도형 그래프*!/*/}
+    //     {/*<GeneralScaleTypeTemplate />*/}
+    //     {/*<div css={sortationArea} />*/}
+    //
+    //     {/*/!*적정 가격 평가*!/*/}
+    //     {/*<PriceEvaluationTemplate />*/}
+    //     {/*<div css={sortationArea} />*/}
+    //
+    //     {/*/!*브랜드 평가*!/*/}
+    //     {/*<BrandEvaluationTemplate />*/}
+    //     {/*<div css={sortationArea} />*/}
+    //
+    //     {/*/!*문제 해결(동기 부여)*!/*/}
+    //     {/*<TroublesShootingTemplate />*/}
+    //     {/*<div css={sortationArea} />*/}
+    //
+    //     {/*추가 기능 언급*/}
+    //   </div>
+    // </div>
   );
 };
 
@@ -251,6 +305,29 @@ const sortationArea = css`
   height: 16px;
   background: #dcdcdc;
 `;
+
+const testContainer1 = css`
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  width: 100%;
+  height: calc(100vh - 72px);
+  scroll-behavior: smooth;
+`;
+const testContainer2 = css`
+  width: 100%;
+  height: calc(100vh - 72px);
+  scroll-snap-align: start;
+  background: pink;
+  &:nth-of-type(even) {
+    background: royalblue;
+  }
+`;
+// const testContainer2 = css`
+//   width: 100%;
+//   height: calc(100vh - 72px);
+//   scroll-snap-align: start;
+//   background: royalblue;
+// `;
 
 export function getServerSideProps(context) {
   return {
