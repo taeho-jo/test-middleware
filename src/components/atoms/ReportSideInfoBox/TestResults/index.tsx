@@ -61,6 +61,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
           }),
         [],
       );
+      console.log(newLongArr, '!');
       const otherArr = [...newMultipleArr];
 
       const otherArr2 = [
@@ -70,11 +71,11 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
         { name: '서비스 전체 시스템오류 피드백' },
       ];
       if (s1Data) {
-        const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr];
+        const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr, ...newLongArr];
         setIntentList(newArr);
         console.log(newArr);
       } else {
-        const newArr = [...missionArr, ...otherArr];
+        const newArr = [...missionArr, ...otherArr, ...newLongArr];
         setIntentList(newArr);
       }
       // const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr];
