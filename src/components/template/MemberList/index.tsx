@@ -194,9 +194,11 @@ export default MemberList;
 const listBoxStyle = css`
   width: 100%;
   height: 720px;
+  //background: red;
   //overflow-y: scroll;
   overflow-y: overlay;
   overflow-x: hidden;
+  padding-bottom: 100px;
   &::-webkit-scrollbar {
     width: 6px;
   }
