@@ -45,19 +45,20 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
 
   useEffect(() => {
     if (dataList) {
-      const reMakeArr = dataList?.detailScaleList?.reduce(
-        (acc, cur) =>
-          acc.concat({
-            count: cur.count,
-            name: cur.name.split('.')[0],
-            value: cur.value,
-            multipleAnswerData: cur.multipleAnswerData,
-          }),
-        [],
-      );
+      const reMakeArr = dataList?.detailScaleList
+        ?.reduce(
+          (acc, cur) =>
+            acc.concat({
+              count: cur.count,
+              name: cur.name.split('.')[0],
+              value: cur.value,
+              multipleAnswerData: cur.multipleAnswerData,
+            }),
+          [],
+        )
+        .sort((a, b) => a.name - b.name);
 
       const rawDataArr = reMakeArr.map(el => el.multipleAnswerData).flat();
-
       const total = reMakeArr?.reduce((acc, cur) => {
         return acc + cur.count;
       }, 0);

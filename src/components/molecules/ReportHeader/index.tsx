@@ -111,11 +111,23 @@ const ReportHeader = () => {
 
   useEffect(() => {
     if (addConditionArr) {
-      dispatch(updateFilterValues(addConditionArr[0]?.value));
-      setSelected({
-        ...selected,
-        filterValues: addConditionArr[0]?.value,
-      });
+      if (selected.filterField === 'cell') {
+        const filed = addConditionArr[0]?.value;
+        const value = addConditionArr[0]?.displayName;
+
+        dispatch(updateFilterFlied(filed));
+        dispatch(updateFilterValues(value));
+        setSelected({
+          ...selected,
+          filterValues: value,
+        });
+      } else {
+        dispatch(updateFilterValues(addConditionArr[0]?.value));
+        setSelected({
+          ...selected,
+          filterValues: addConditionArr[0]?.value,
+        });
+      }
     }
   }, [addConditionArr]);
 
