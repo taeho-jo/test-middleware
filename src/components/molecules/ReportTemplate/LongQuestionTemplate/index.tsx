@@ -29,8 +29,8 @@ const LongQuestionTemplate = ({ dataList, modalControl }) => {
             text={'원본 데이터 확인하기'}
           />
           <IconTextButton
-            disabled={true}
-            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
+            disabled={dataList.comment ? false : true}
+            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [dataList.comment] })}
             textStyle={'custom'}
             name={'NAVIGATION_CHEVRON_RIGHT'}
             text={'리서치 코멘트 확인하기'}
