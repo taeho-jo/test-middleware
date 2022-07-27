@@ -61,7 +61,6 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
           }),
         [],
       );
-      console.log(newLongArr, '!');
       const otherArr = [...newMultipleArr];
 
       const otherArr2 = [
@@ -73,7 +72,6 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
       if (s1Data) {
         const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr, ...newLongArr];
         setIntentList(newArr);
-        console.log(newArr);
       } else {
         const newArr = [...missionArr, ...otherArr, ...newLongArr];
         setIntentList(newArr);
@@ -87,8 +85,8 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
       <span css={heading5_bold}>테스트 결과</span>
       {intentList?.map((el, index) => {
         return (
-          <>
-            <Fragment key={index}>
+          <Fragment key={el.name}>
+            <Fragment>
               <a
                 style={{ width: '100%', textDecoration: 'none', margin: '8px 0' }}
                 href={el.detail ? `#${el.name}` : el.code ? `#${el.code}` : `#${el.name}`}
@@ -126,7 +124,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
                       align={'flex-start'}
                       justify={'flex-start'}
                       style={detailSelectIntent === `${index}-${idx}` ? infoBox : infoBox2}
-                      setSelectIntent={setSelectIntent}
+                      // setSelectIntent={setSelectIntent}
                       onClick={() => handleDetailSelectIntent(`${index}-${idx}`)}
                     >
                       <div css={[body3_medium, { height: 'auto', cursor: 'pointer' }]}>
@@ -143,7 +141,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
                 </Fragment>
               );
             })}
-          </>
+          </Fragment>
         );
       })}
     </FlexBox>

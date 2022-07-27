@@ -82,7 +82,7 @@ const BasicBarChart = ({
                   onMouseOver={e => onMouseOver(e, detailIndex)}
                   cursor="pointer"
                   fill={activeIndex === detailIndex ? '#3375d6' : barColor ? barColor : negative ? '#E87490' : '#68A0F4'}
-                  key={`cell-${detailIndex}`}
+                  key={`cell-${index}`}
                 />
               ))}
             </Bar>
@@ -135,7 +135,7 @@ const BasicBarChart = ({
                             paddingLeft: '20px',
                           },
                         ]}
-                        key={`item-${index}`}
+                        key={`${item}-${index}`}
                       >
                         {item}
                       </li>

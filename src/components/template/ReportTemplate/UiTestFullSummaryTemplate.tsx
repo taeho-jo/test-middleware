@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import FlexBox from '../../atoms/FlexBox';
 import { chart_color, colors, hover_chart_color } from '../../../styles/Common.styles';
 import { caption2_bold, heading4_bold, heading5_bold, heading5_medium } from '../../../styles/FontStyles';
@@ -39,13 +39,8 @@ const UiTestFullSummaryTemplate = ({ dataList, register, errors, checked, handle
     [activeIndex],
   );
   return (
-    <div
-      id="UI 진단 전체 요약"
-      css={css`
-        margin-top: 64px;
-      `}
-    >
-      <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
+    <>
+      <FlexBox style={graphBoxStyle} justify={'center'} align={'flex-start'}>
         {/*<img css={fixImage} src={FixImage.src} alt="'FixImage" />*/}
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
@@ -54,28 +49,30 @@ const UiTestFullSummaryTemplate = ({ dataList, register, errors, checked, handle
           <FlexBox justify={'space-between'} align={'flex-start'} wrap={'wrap'} style={graphContainerStyle}>
             {dataList?.missionSuccess.map((el, index) => {
               return (
-                <FlexBox key={el.name} direction={'column'} style={{ width: '33%' }} overflow={'unset'}>
-                  <span css={[heading5_medium, { textAlign: 'center', marginBottom: '4px' }]}>미션 {index + 1}</span>
-                  <span css={[heading5_bold, { textAlign: 'center' }]}>{el.name}</span>
-                  <RatePieChart
-                    handleMouseUp={handleMouseUp}
-                    onMouseOver={onMouseOver}
-                    onMouseLeave={onMouseLeave}
-                    index={index}
-                    selectedLabelIndex={selectedLabelIndex}
-                    setSelectedLabelIndex={setSelectedLabelIndex}
-                    color={activeIndex === index ? hover_chart_color[index] : chart_color[index]}
-                    dataList={el}
-                    infoDataList={dataList.missionFatality[index]}
-                  />
-                </FlexBox>
+                <Fragment key={el.name}>
+                  <FlexBox direction={'column'} style={{ width: '33%' }} overflow={'unset'}>
+                    <span css={[heading5_medium, { textAlign: 'center', marginBottom: '4px' }]}>미션 {index + 1}</span>
+                    <span css={[heading5_bold, { textAlign: 'center' }]}>{el.name}</span>
+                    <RatePieChart
+                      handleMouseUp={handleMouseUp}
+                      onMouseOver={onMouseOver}
+                      onMouseLeave={onMouseLeave}
+                      index={index}
+                      selectedLabelIndex={selectedLabelIndex}
+                      setSelectedLabelIndex={setSelectedLabelIndex}
+                      color={activeIndex === index ? hover_chart_color[index] : chart_color[index]}
+                      dataList={el}
+                      infoDataList={dataList.missionFatality[index]}
+                    />
+                  </FlexBox>
+                </Fragment>
               );
             })}
           </FlexBox>
         </FlexBox>
       </FlexBox>
 
-      <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
+      <FlexBox style={graphBoxStyle} justify={'center'} align={'flex-start'}>
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
             <div css={[heading4_bold]}>미션별 불편 언급 비율과 치명도</div>
@@ -91,25 +88,26 @@ const UiTestFullSummaryTemplate = ({ dataList, register, errors, checked, handle
           </FlexBox>
         </FlexBox>
       </FlexBox>
-    </div>
+    </>
   );
 };
 export default UiTestFullSummaryTemplate;
 
-const headerBosStyle = css`
-  height: 64px;
-  width: 100%;
-  padding: 24px;
-  background: white;
-  border-bottom: 1px solid #dcdcdc;
-  position: sticky;
-  top: 0;
-  z-index: 500;
+const mainContentsArea = css`
+  height: calc(100vh - 136px);
+  //height: calc(100vh - 72px);
+  //margin-top: 136px;
+  background: red;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
 `;
-const graphBosStyle = css`
+
+const graphBoxStyle = css`
   width: 100%;
   position: relative;
-  //background: red;
 `;
 const fixImage = css`
   width: 278px;

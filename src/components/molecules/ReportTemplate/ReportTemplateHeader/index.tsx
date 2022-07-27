@@ -6,19 +6,22 @@ import IconTextButton from '../../../atoms/Button/IconTextButton';
 import { css } from '@emotion/react';
 
 interface PropsTypes {
+  title: string;
   handleChangeCheckBox: () => void;
   modalControl: (status: boolean, name: string, item: any) => void;
   checked: any;
   register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
   errors: any;
+  originData?: any;
+  researchData?: string;
 }
 
-const ReportTemplateHeader = ({ handleChangeCheckBox, modalControl, checked, register, errors }: PropsTypes) => {
+const ReportTemplateHeader = ({ title, handleChangeCheckBox, modalControl, checked, register, errors, originData, researchData }: PropsTypes) => {
   return (
     <FlexBox style={headerBosStyle} justify={'space-between'}>
       <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
         <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-          응답자 특성
+          {title}
         </span>
         <CheckBox
           handleChangeCheckBox={handleChangeCheckBox}
@@ -31,15 +34,15 @@ const ReportTemplateHeader = ({ handleChangeCheckBox, modalControl, checked, reg
       </FlexBox>
       <FlexBox justify={'flex-end'} width={'30%'}>
         <IconTextButton
-          disabled={true}
+          disabled={originData?.length > 0 ? false : true}
           style={{ marginRight: '8px' }}
           textStyle={'custom'}
           name={'NAVIGATION_CHEVRON_RIGHT'}
           text={'원본 데이터 확인하기'}
         />
         <IconTextButton
-          disabled={true}
-          onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [] })}
+          disabled={researchData ? false : true}
+          onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [researchData] })}
           textStyle={'custom'}
           name={'NAVIGATION_CHEVRON_RIGHT'}
           text={'리서치 코멘트 확인하기'}
@@ -57,9 +60,9 @@ const headerBosStyle = css`
   padding: 24px;
   background: white;
   border-bottom: 1px solid #dcdcdc;
-  position: sticky;
-  top: 0;
-  z-index: 500;
+  //position: sticky;
+  //top: 0;
+  //z-index: 500;
 `;
 const reportHeader = css`
   //background: pink;

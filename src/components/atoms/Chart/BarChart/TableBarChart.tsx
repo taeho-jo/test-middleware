@@ -71,11 +71,14 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
       {/*TODO: Map 함수*/}
       {renderArr()?.map((el, index) => {
         return (
-          <ul key={index} css={[ulStyle, emptyUlStyle]}>
+          <ul key={el.name} css={[ulStyle, emptyUlStyle]}>
             {/*공갈박스*/}
             {dataList.map((item, index) => {
               return (
-                <li key={index} css={[liStyle, liWidthStyle(dataList.length, fatality), renderArr().length === 1 ? emptyLiStyle2 : emptyLiStyle]}>
+                <li
+                  key={`${item}-${index}`}
+                  css={[liStyle, liWidthStyle(dataList.length, fatality), renderArr().length === 1 ? emptyLiStyle2 : emptyLiStyle]}
+                >
                   <span>{item}</span>
                 </li>
               );

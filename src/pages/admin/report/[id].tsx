@@ -20,9 +20,11 @@ import MultipleQuestionTemplate from '../../../components/molecules/ReportTempla
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
 import { isShow } from '../../../store/reducers/modalReducer';
-import { RespondentCharacteristicsTemplate } from '../../../components/template/ReportTemplate';
+import { MissionDetailTemplate, MissionUsabilityTemplate, RespondentCharacteristicsTemplate } from '../../../components/template/ReportTemplate';
 import ReportTemplateHeader from '../../../components/molecules/ReportTemplate/ReportTemplateHeader';
 import UiTestFullSummaryTemplate from '../../../components/template/ReportTemplate/UiTestFullSummaryTemplate';
+import { heading1_bold } from '../../../styles/FontStyles';
+import { colors } from '../../../styles/Common.styles';
 
 const Report = ({ params }) => {
   const queryClient = useQueryClient();
@@ -107,106 +109,228 @@ const Report = ({ params }) => {
 
   const callbackFunction = entries => {
     const [entry] = entries;
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
     if (entry.isIntersecting) {
-      console.log(entry);
-      console.log(entry.target.id);
+      console.log(entry, 'ENTRY');
+      console.log(entry.target.id, 'ID');
+      for (let i = 0; i < childrenRef.current.length; i++) {
+        childrenRef?.current[i]?.scrollTo(0, 0);
+      }
     }
   };
 
+  const rootRef = useRef(null);
   const respondentRef = useRef([]);
-
+  const childrenRef = useRef([]);
   useEffect(() => {
     console.log(respondentRef, '!');
     const option = {
-      rootMargin: '72px',
+      rootMargin: '72px 0px 295px 0px',
       threshold: 1.0,
     };
     const observer = new IntersectionObserver(callbackFunction, option);
     let currentTarget;
     for (let i = 0; i < respondentRef.current.length; i++) {
       currentTarget = respondentRef.current[i];
-      if (currentTarget) observer.observe(currentTarget);
+
+      console.log(currentTarget, 'CURRENT TARGET');
+      if (currentTarget) {
+        observer.observe(currentTarget);
+      }
     }
 
     return () => {
       if (currentTarget) observer.unobserve(currentTarget);
     };
-  }, [respondentRef]);
+  }, [rootRef, respondentRef, childrenRef]);
+
+  useEffect(() => {
+    if (childrenRef) {
+      console.log(childrenRef.current[0], '@@');
+    }
+  }, [childrenRef]);
 
   return (
-    <div css={testContainer1} className={'scrollType1'}>
-      <div id={'one'} css={testContainer2} ref={el => (respondentRef.current[0] = el)}>
+    <div css={reportContainer} className={'scrollType1'} ref={rootRef}>
+      {/*응답자 특성*/}
+      <div id={'one'} css={reportSectionBox} ref={el => (respondentRef.current[0] = el)}>
         <ReportTemplateHeader
+          title={'응답자 특성'}
           handleChangeCheckBox={handleChangeCheckBox}
           modalControl={modalControl}
           checked={filterFail}
           errors={errors}
           register={register}
         />
-        <RespondentCharacteristicsTemplate dataList={data?.answerInfoSection} />
+        {/*<div*/}
+        {/*  css={css`*/}
+        {/*    width: 100%;*/}
+        {/*    height: calc(100vh - 136px);*/}
+        {/*    display: flex;*/}
+        {/*    justify-content: center;*/}
+        {/*    align-items: center;*/}
+        {/*  `}*/}
+        {/*>*/}
+        {/*  1*/}
+        {/*</div>*/}
+        <div css={chartSectionBox}>
+          <div css={chartBox} className={'scrollType1'} ref={el => (childrenRef.current[0] = el)}>
+            <RespondentCharacteristicsTemplate dataList={data?.answerInfoSection} />
+          </div>
+        </div>
       </div>
+      {/*응답자 특성*/}
 
-      <div id={'two'} css={testContainer2} className={'scrollType1'}>
-        <ReportTemplateHeader
-          handleChangeCheckBox={handleChangeCheckBox}
-          modalControl={modalControl}
-          checked={filterFail}
-          errors={errors}
-          register={register}
-        />
-        {/*<div>asdfasdfasdfasdf</div>*/}
-        {/* UI 진단 전체 요약 */}
-        <UiTestFullSummaryTemplate
-          modalControl={modalControl}
-          handleChangeCheckBox={handleChangeCheckBox}
-          checked={filterFail}
-          comment={data?.S1?.comment}
-          dataList={data?.S1?.uiSummerySection}
-          register={register}
-          errors={errors}
-        />
-        {/*<UiOverallSummaryTemplate*/}
-        {/*  modalControl={modalControl}*/}
-        {/*  handleChangeCheckBox={handleChangeCheckBox}*/}
-        {/*  checked={filterFail}*/}
-        {/*  comment={data?.S1?.comment}*/}
-        {/*  dataList={data?.S1?.uiSummerySection}*/}
-        {/*  register={register}*/}
-        {/*  errors={errors}*/}
-        {/*/>*/}
-      </div>
+      {/* UI 진단 전체 요약 */}
+      {data?.S1 ? (
+        <div id={'two'} css={reportSectionBox} ref={el => (respondentRef.current[1] = el)}>
+          <>
+            <ReportTemplateHeader
+              title={'UI 진단 전체 요약'}
+              handleChangeCheckBox={handleChangeCheckBox}
+              modalControl={modalControl}
+              checked={filterFail}
+              errors={errors}
+              register={register}
+              originData={[]}
+              researchData={data?.S1?.comment}
+            />
+            {/*<div*/}
+            {/*  css={css`*/}
+            {/*    width: 100%;*/}
+            {/*    height: calc(100vh - 136px);*/}
+            {/*    display: flex;*/}
+            {/*    justify-content: center;*/}
+            {/*    align-items: center;*/}
+            {/*  `}*/}
+            {/*>*/}
+            {/*  2*/}
+            {/*</div>*/}
+            <div css={chartSectionBox}>
+              <div css={chartBox} className={'scrollType1'} ref={el => (childrenRef.current[1] = el)}>
+                <UiTestFullSummaryTemplate
+                  modalControl={modalControl}
+                  handleChangeCheckBox={handleChangeCheckBox}
+                  checked={filterFail}
+                  comment={data?.S1?.comment}
+                  dataList={data?.S1?.uiSummerySection}
+                  register={register}
+                  errors={errors}
+                />
+              </div>
+            </div>
+          </>
+        </div>
+      ) : (
+        <div id={'two'} css={reportSectionBox2} ref={el => (respondentRef.current[1] = el)} />
+      )}
+      {/* UI 진단 전체 요약 */}
 
-      <div id={'asdfa'} css={testContainer2} ref={el => (respondentRef.current[2] = el)}>
-        <ReportTemplateHeader
-          handleChangeCheckBox={handleChangeCheckBox}
-          modalControl={modalControl}
-          checked={filterFail}
-          errors={errors}
-          register={register}
-        />
-        <RespondentCharacteristicsTemplate />
-      </div>
+      {/*기능별 상세 비교*/}
+      {data?.S1 ? (
+        data?.S1?.uiSummerySection?.missionFatality?.map((item, index) => {
+          return (
+            <div key={`${item.name}`} id={item.name} css={reportSectionBox} ref={el => (respondentRef.current[2 + index] = el)}>
+              <ReportTemplateHeader
+                title={`${item.name}`}
+                handleChangeCheckBox={handleChangeCheckBox}
+                modalControl={modalControl}
+                checked={filterFail}
+                errors={errors}
+                register={register}
+                originData={[]}
+                researchData={data?.S1?.comment}
+              />
+              <div>{index}</div>
+            </div>
+          );
+        })
+      ) : (
+        <div id={'three'} css={reportSectionBox2} ref={el => (respondentRef.current[2] = el)} />
+      )}
+      {/*{data?.S1 ? (*/}
+      {/*  data?.S1?.uiSummerySection?.missionFatality?.map((item, index) => {*/}
+      {/*    return (*/}
+      {/*      <>*/}
+      {/*        <div key={`three-${index}`} id={`three-${index}`} css={reportSectionBox} ref={el => (respondentRef.current[2 + index] = el)}>*/}
+      {/*          <ReportTemplateHeader*/}
+      {/*            title={`[미션 ${index + 1}. ${item.name}]의 기능별 사용성 비교`}*/}
+      {/*            handleChangeCheckBox={handleChangeCheckBox}*/}
+      {/*            modalControl={modalControl}*/}
+      {/*            checked={filterFail}*/}
+      {/*            errors={errors}*/}
+      {/*            register={register}*/}
+      {/*            originData={[]}*/}
+      {/*            researchData={data?.S1?.comment}*/}
+      {/*          />*/}
+      {/*          <div css={chartSectionBox}>*/}
+      {/*            <div css={chartBox} className={'scrollType1'} ref={el => (childrenRef.current[2 + index] = el)}>*/}
+      {/*              <MissionUsabilityTemplate />*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
 
-      <div css={testContainer2}>
-        <ReportTemplateHeader
-          handleChangeCheckBox={handleChangeCheckBox}
-          modalControl={modalControl}
-          checked={filterFail}
-          errors={errors}
-          register={register}
-        />
-        <RespondentCharacteristicsTemplate />
-      </div>
-      <div css={testContainer2}>
-        <ReportTemplateHeader
-          handleChangeCheckBox={handleChangeCheckBox}
-          modalControl={modalControl}
-          checked={filterFail}
-          errors={errors}
-          register={register}
-        />
-        <RespondentCharacteristicsTemplate />
-      </div>
+      {/*        {item?.missionFunctionFatality?.map((el, idx) => {*/}
+      {/*          return (*/}
+      {/*            <div key={`for-${idx}`} id={`for-${idx}`} css={reportSectionBox} ref={el => (respondentRef.current[5 + index] = el)}>*/}
+      {/*              <ReportTemplateHeader*/}
+      {/*                title={`기능별 상세 내용 - ${el.name}`}*/}
+      {/*                handleChangeCheckBox={handleChangeCheckBox}*/}
+      {/*                modalControl={modalControl}*/}
+      {/*                checked={filterFail}*/}
+      {/*                errors={errors}*/}
+      {/*                register={register}*/}
+      {/*                originData={[]}*/}
+      {/*                researchData={data?.S1?.comment}*/}
+      {/*              />*/}
+      {/*              <div css={chartSectionBox}>*/}
+      {/*                <div css={chartBox} className={'scrollType1'} ref={el => (childrenRef.current[5 + index] = el)}>*/}
+      {/*                  <MissionDetailTemplate />*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          );*/}
+      {/*        })}*/}
+      {/*      </>*/}
+      {/*    );*/}
+      {/*  })*/}
+      {/*) : (*/}
+      {/*  <div />*/}
+      {/*)}*/}
+      {/*기능별 상세 비교*/}
+
+      {/*<div id={'asdfa'} css={reportSectionBox} ref={el => (respondentRef.current[3] = el)}>*/}
+      {/*  <ReportTemplateHeader*/}
+      {/*    handleChangeCheckBox={handleChangeCheckBox}*/}
+      {/*    modalControl={modalControl}*/}
+      {/*    checked={filterFail}*/}
+      {/*    errors={errors}*/}
+      {/*    register={register}*/}
+      {/*  />*/}
+      {/*  /!*<div*!/*/}
+      {/*  /!*  css={css`*!/*/}
+      {/*  /!*    width: 100%;*!/*/}
+      {/*  /!*    height: calc(100vh - 136px);*!/*/}
+      {/*  /!*    display: flex;*!/*/}
+      {/*  /!*    justify-content: center;*!/*/}
+      {/*  /!*    align-items: center;*!/*/}
+      {/*  /!*  `}*!/*/}
+      {/*  /!*>*!/*/}
+      {/*  /!*  3*!/*/}
+      {/*  /!*</div>*!/*/}
+      {/*  <RespondentCharacteristicsTemplate />*/}
+      {/*</div>*/}
+
+      {/*<div css={reportSectionBox}>*/}
+      {/*  <ReportTemplateHeader*/}
+      {/*    handleChangeCheckBox={handleChangeCheckBox}*/}
+      {/*    modalControl={modalControl}*/}
+      {/*    checked={filterFail}*/}
+      {/*    errors={errors}*/}
+      {/*    register={register}*/}
+      {/*  />*/}
+      {/*  <RespondentCharacteristicsTemplate />*/}
+      {/*</div>*/}
     </div>
     // <div css={originTestBox}>
     //   <div css={testBox}>
@@ -357,29 +481,56 @@ const sortationArea = css`
   background: #dcdcdc;
 `;
 
-const testContainer1 = css`
+const reportContainer = css`
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
   width: 100%;
   height: calc(100vh - 72px);
   scroll-behavior: smooth;
 `;
-const testContainer2 = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+const reportSectionBox = css`
   width: 100%;
   height: calc(100vh - 72px);
-  overflow-y: scroll;
   scroll-snap-align: start;
-  background: pink;
   position: relative;
-  &:nth-of-type(even) {
-    background: royalblue;
-  }
+  background: pink;
+  //margin-top: 72px;
+  //&:nth-of-type(even) {
+  //  background: red;
+  //}
 `;
-// const testContainer2 = css`
+const reportSectionBox2 = css`
+  width: 100%;
+  //height: calc(100vh - 72px);
+  scroll-snap-align: start;
+  position: relative;
+  background: pink;
+  //margin-top: 72px;
+  //&:nth-of-type(even) {
+  //  background: red;
+  //}
+`;
+const chartSectionBox = css`
+  width: 100%;
+  height: calc(100vh - 136px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const chartBox = css`
+  width: 900px;
+  min-width: 900px;
+  height: calc(100vh - 136px);
+  border-left: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: scroll;
+  //overflow: hidden;
+`;
+// const reportSectionBox = css`
 //   width: 100%;
 //   height: calc(100vh - 72px);
 //   scroll-snap-align: start;

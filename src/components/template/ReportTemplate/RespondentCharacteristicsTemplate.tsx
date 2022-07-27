@@ -73,7 +73,7 @@ const RespondentCharacteristicsTemplate = ({ dataList }: PropsType) => {
     }
   }, [dataList]);
   return (
-    <div css={testBox}>
+    <>
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
@@ -139,41 +139,19 @@ const RespondentCharacteristicsTemplate = ({ dataList }: PropsType) => {
           </FlexBox>
         </FlexBox>
       )}
-    </div>
+    </>
   );
 };
 
 export default RespondentCharacteristicsTemplate;
 
-const testBox = css`
-  //height: calc(100vh - 136px);
-  height: calc(100vh - 72px);
+const mainContentsArea = css`
+  height: calc(100vh - 136px);
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-`;
-const testTextBox = css`
-  display: block;
-  border: 1px solid black;
-  width: 200px;
-  white-space: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* 라인수 */
-  -webkit-box-orient: vertical;
-  padding: 10px;
-`;
-const headerBosStyle = css`
-  height: 64px;
-  width: 100%;
-  padding: 24px;
-  background: white;
-  border-bottom: 1px solid #dcdcdc;
-  position: sticky;
-  top: 0;
-  z-index: 500;
+  align-items: center;
+  overflow-y: scroll;
 `;
 const graphBosStyle = css`
   width: 100%;
