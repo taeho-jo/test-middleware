@@ -1,6 +1,6 @@
 import React from 'react';
 import FlexBox from '../../../atoms/FlexBox';
-import { body3_regular, heading3_bold, heading4_bold } from '../../../../styles/FontStyles';
+import { body3_regular, heading3_bold, heading4_bold, heading5_regular } from '../../../../styles/FontStyles';
 import CheckBox from '../../../atoms/CheckBox';
 import IconTextButton from '../../../atoms/Button/IconTextButton';
 import { colors } from '../../../../styles/Common.styles';
@@ -8,6 +8,7 @@ import { css } from '@emotion/react';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../../common/types/commonTypes';
 import { reportHeader } from '../FeatureSpecificDetailTemplate';
+import AnnouncementBox from '../../AnnouncementBox';
 
 const LongQuestionTemplate = ({ dataList, modalControl }) => {
   return (
@@ -15,7 +16,7 @@ const LongQuestionTemplate = ({ dataList, modalControl }) => {
       <FlexBox style={headerBosStyle} justify={'space-between'}>
         <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
           <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-            {dataList.name}
+            {dataList.intent}
           </span>
           {/*<CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />*/}
         </FlexBox>
@@ -41,7 +42,17 @@ const LongQuestionTemplate = ({ dataList, modalControl }) => {
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
-            <div css={[heading4_bold]}>{dataList.name}</div>
+            <div css={[heading4_bold]}>{dataList.intent}</div>
+          </div>
+
+          <div css={graphContainerStyle2}>
+            <FlexBox
+              direction={'column'}
+              style={{ width: '100%', border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 0', marginBottom: '36px' }}
+            >
+              <span css={[heading5_regular, { color: colors.grey._99, marginBottom: '0px' }]}>Q. {dataList.name}</span>
+              {/*{rawData?.length > 0 && <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />}*/}
+            </FlexBox>
           </div>
 
           <FlexBox justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
@@ -105,6 +116,10 @@ const graphContainerStyle = css`
   padding: 36px 80px 80px;
   width: 100%;
   border-bottom: 1px solid #dcdcdc;
+`;
+const graphContainerStyle2 = css`
+  padding: 36px 80px 0;
+  width: 100%;
 `;
 const buttonStyle = css`
   height: auto;
