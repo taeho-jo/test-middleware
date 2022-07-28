@@ -70,8 +70,14 @@ const UsabilityTableChart = ({
                 negative={negative}
                 dataList={[el]}
                 label={[<>{el.name}</>]}
-                rate={`${checkIsInteger(el.value)}점`}
-                barColor={activeIndex === index ? '#db466a' : '#E87490'}
+                rate={checkIsInteger(el.mention) === 0 && checkIsInteger(el.fatality) === 0 ? '언급없음' : `${checkIsInteger(el.value)}점`}
+                barColor={
+                  checkIsInteger(el.mention) === 0 && checkIsInteger(el.fatality) === 0
+                    ? colors.grey._3c
+                    : activeIndex === index
+                    ? '#db466a'
+                    : '#E87490'
+                }
               />
             </div>
 
