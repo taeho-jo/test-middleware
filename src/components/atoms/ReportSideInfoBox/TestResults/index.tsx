@@ -57,7 +57,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
         (acc, cur) =>
           acc.concat({
             code: cur.questionCode,
-            name: cur.name,
+            name: cur.intent,
           }),
         [],
       );
