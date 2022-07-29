@@ -25,6 +25,8 @@ import ReportTemplateHeader from '../../../components/molecules/ReportTemplate/R
 import UiTestFullSummaryTemplate from '../../../components/template/ReportTemplate/UiTestFullSummaryTemplate';
 import { heading1_bold } from '../../../styles/FontStyles';
 import { colors } from '../../../styles/Common.styles';
+import useOnScreen from '../../../hooks/useOnScreen';
+import useOnMultipleScreen from '../../../hooks/useOnMultipleScreen';
 
 const Report = ({ params }) => {
   const queryClient = useQueryClient();
@@ -107,53 +109,30 @@ const Report = ({ params }) => {
     refetch();
   }, [filterFail]);
 
-  const callbackFunction = entries => {
-    const [entry] = entries;
-    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-    if (entry.isIntersecting) {
-      console.log(entry, 'ENTRY');
-      console.log(entry.target.id, 'ID');
-      for (let i = 0; i < childrenRef.current.length; i++) {
-        childrenRef?.current[i]?.scrollTo(0, 0);
-      }
-    }
-  };
-
-  const rootRef = useRef(null);
-  const respondentRef = useRef([]);
-  const childrenRef = useRef([]);
-  useEffect(() => {
-    console.log(respondentRef, '!');
-    const option = {
-      rootMargin: '72px 0px 295px 0px',
-      threshold: 1.0,
-    };
-    const observer = new IntersectionObserver(callbackFunction, option);
-    let currentTarget;
-    for (let i = 0; i < respondentRef.current.length; i++) {
-      currentTarget = respondentRef.current[i];
-
-      console.log(currentTarget, 'CURRENT TARGET');
-      if (currentTarget) {
-        observer.observe(currentTarget);
-      }
-    }
-
-    return () => {
-      if (currentTarget) observer.unobserve(currentTarget);
-    };
-  }, [rootRef, respondentRef, childrenRef]);
-
-  useEffect(() => {
-    if (childrenRef) {
-      console.log(childrenRef.current[0], '@@');
-    }
-  }, [childrenRef]);
+  // 응답자 특성 ref
+  const [respondentRef, respondentChildrenRef] = useOnScreen({
+    rootMargin: '72px 0px 0px 0px',
+    threshold: 0.9,
+  });
+  // UI 진단 전체 요약 ref
+  const [uiTestRef, uiTestChildrenRef] = useOnScreen({
+    rootMargin: '72px 0px 0px 0px',
+    threshold: 0.9,
+  });
+  // 미션 ref
+  const [testRef, testChildrenRef] = useOnScreen({
+    rootMargin: '72px 0px 0px 0px',
+    threshold: 0.9,
+  });
+  const [missionRef] = useOnMultipleScreen({
+    rootMargin: '72px 0px 0px 0px',
+    threshold: 0.9,
+  });
 
   return (
-    <div css={reportContainer} className={'scrollType1'} ref={rootRef}>
+    <div css={reportContainer} className={'scrollType1'}>
       {/*응답자 특성*/}
-      <div id={'one'} css={reportSectionBox} ref={el => (respondentRef.current[0] = el)}>
+      <div id={'one'} css={reportSectionBox} ref={respondentRef}>
         <ReportTemplateHeader
           title={'응답자 특성'}
           handleChangeCheckBox={handleChangeCheckBox}
@@ -162,19 +141,12 @@ const Report = ({ params }) => {
           errors={errors}
           register={register}
         />
-        {/*<div*/}
-        {/*  css={css`*/}
-        {/*    width: 100%;*/}
-        {/*    height: calc(100vh - 136px);*/}
-        {/*    display: flex;*/}
-        {/*    justify-content: center;*/}
-        {/*    align-items: center;*/}
-        {/*  `}*/}
-        {/*>*/}
-        {/*  1*/}
-        {/*</div>*/}
         <div css={chartSectionBox}>
-          <div css={chartBox} className={'scrollType1'} ref={el => (childrenRef.current[0] = el)}>
+          <div
+            css={chartBox(data?.answerInfoSection?.cellInfoList?.length === 0 ? true : false)}
+            className={'scrollType1'}
+            ref={respondentChildrenRef}
+          >
             <RespondentCharacteristicsTemplate dataList={data?.answerInfoSection} />
           </div>
         </div>
@@ -183,7 +155,7 @@ const Report = ({ params }) => {
 
       {/* UI 진단 전체 요약 */}
       {data?.S1 ? (
-        <div id={'two'} css={reportSectionBox} ref={el => (respondentRef.current[1] = el)}>
+        <div id={'two2'} css={reportSectionBox} ref={uiTestRef}>
           <>
             <ReportTemplateHeader
               title={'UI 진단 전체 요약'}
@@ -195,19 +167,8 @@ const Report = ({ params }) => {
               originData={[]}
               researchData={data?.S1?.comment}
             />
-            {/*<div*/}
-            {/*  css={css`*/}
-            {/*    width: 100%;*/}
-            {/*    height: calc(100vh - 136px);*/}
-            {/*    display: flex;*/}
-            {/*    justify-content: center;*/}
-            {/*    align-items: center;*/}
-            {/*  `}*/}
-            {/*>*/}
-            {/*  2*/}
-            {/*</div>*/}
             <div css={chartSectionBox}>
-              <div css={chartBox} className={'scrollType1'} ref={el => (childrenRef.current[1] = el)}>
+              <div css={chartBox()} className={'scrollType1'} ref={uiTestChildrenRef}>
                 <UiTestFullSummaryTemplate
                   modalControl={modalControl}
                   handleChangeCheckBox={handleChangeCheckBox}
@@ -222,7 +183,7 @@ const Report = ({ params }) => {
           </>
         </div>
       ) : (
-        <div id={'two'} css={reportSectionBox2} ref={el => (respondentRef.current[1] = el)} />
+        <div id={'two'} css={reportSectionBox2} ref={uiTestRef} />
       )}
       {/* UI 진단 전체 요약 */}
 
@@ -230,9 +191,9 @@ const Report = ({ params }) => {
       {data?.S1 ? (
         data?.S1?.uiSummerySection?.missionFatality?.map((item, index) => {
           return (
-            <div key={`${item.name}`} id={item.name} css={reportSectionBox} ref={el => (respondentRef.current[2 + index] = el)}>
+            <div key={`${item.name}`} id={item.name} css={reportSectionBox} ref={el => missionRef.current}>
               <ReportTemplateHeader
-                title={`${item.name}`}
+                title={`[미션 ${index + 1}. ${item.name}]의 기능별 사용성 비교`}
                 handleChangeCheckBox={handleChangeCheckBox}
                 modalControl={modalControl}
                 checked={filterFail}
@@ -246,8 +207,9 @@ const Report = ({ params }) => {
           );
         })
       ) : (
-        <div id={'three'} css={reportSectionBox2} ref={el => (respondentRef.current[2] = el)} />
+        <div id={'three'} css={reportSectionBox2} />
       )}
+
       {/*{data?.S1 ? (*/}
       {/*  data?.S1?.uiSummerySection?.missionFatality?.map((item, index) => {*/}
       {/*    return (*/}
@@ -517,15 +479,16 @@ const chartSectionBox = css`
   justify-content: center;
   align-items: center;
 `;
-const chartBox = css`
+const chartBox = (padding = false) => css`
   width: 900px;
   min-width: 900px;
+  padding-top: ${padding ? '0px' : '190px'};
   height: calc(100vh - 136px);
   border-left: 1px solid #dcdcdc;
   border-right: 1px solid #dcdcdc;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   overflow-y: scroll;
   //overflow: hidden;
