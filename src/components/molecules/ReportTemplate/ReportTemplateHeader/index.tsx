@@ -9,7 +9,7 @@ interface PropsTypes {
   title: string;
   handleChangeCheckBox: () => void;
   modalControl: (status: boolean, name: string, item: any) => void;
-  checked: any;
+  checked?: any;
   register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
   errors: any;
   originData?: any;
@@ -17,6 +17,7 @@ interface PropsTypes {
 }
 
 const ReportTemplateHeader = ({ title, handleChangeCheckBox, modalControl, checked, register, errors, originData, researchData }: PropsTypes) => {
+  console.log(researchData, 'researchData');
   return (
     <FlexBox style={headerBosStyle} justify={'space-between'}>
       <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
@@ -37,6 +38,7 @@ const ReportTemplateHeader = ({ title, handleChangeCheckBox, modalControl, check
           disabled={originData?.length > 0 ? false : true}
           style={{ marginRight: '8px' }}
           textStyle={'custom'}
+          onClick={() => modalControl(true, 'originDataModal', { title, data: originData })}
           name={'NAVIGATION_CHEVRON_RIGHT'}
           text={'원본 데이터 확인하기'}
         />

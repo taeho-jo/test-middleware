@@ -13,7 +13,7 @@ const OriginDataModal = () => {
   return (
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
       <PopupBox padding={'0 0 24px 0'} width={'900px'} height={'auto'}>
-        <ModalTitle title={rawData.title} titleStyle={{ fontSize: '18px', fontWeight: 700 }} />
+        <ModalTitle title={rawData?.title} titleStyle={{ fontSize: '18px', fontWeight: 700 }} />
         <ul className={'scrollType1'} css={{ height: '522px', background: colors.grey._f7, padding: '32px 32px 0', wordBreak: 'keep-all' }}>
           {rawData?.data?.length === 0 ? (
             <li

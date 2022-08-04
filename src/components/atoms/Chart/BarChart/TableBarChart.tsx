@@ -37,7 +37,7 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
   );
   const renderArr = useCallback(() => {
     if (name) {
-      return dataValueList.filter((el, index) => el.name === name);
+      return dataValueList?.filter((el, index) => el.name === name);
     } else {
       return dataValueList;
     }

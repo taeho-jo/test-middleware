@@ -6,7 +6,6 @@ const useOnMultipleScreen = option => {
 
   const callbackFunction = entries => {
     const [entry] = entries;
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
     if (entry.isIntersecting) {
       console.log(entry, 'ENTRY');
       console.log(entry.target.id, 'ID');
@@ -18,12 +17,14 @@ const useOnMultipleScreen = option => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => callbackFunction(entries), option);
+    // const observer2 = new IntersectionObserver(entries => callbackFunction2(entries), option);
+    console.log('이거 안찍힘???????????????');
+    let currentTarget; // let currentTarget2;
+    console.log('asdasd', ref);
 
-    let currentTarget;
     for (let i = 0; i < ref.current.length; i++) {
       currentTarget = ref.current[i];
 
-      console.log(currentTarget, 'CURRENT TARGET');
       if (currentTarget) {
         observer.observe(currentTarget);
       }
@@ -32,9 +33,9 @@ const useOnMultipleScreen = option => {
     return () => {
       if (currentTarget) observer.unobserve(currentTarget);
     };
-  }, [ref, childrenRef]);
+  }, [ref, childrenRef, option]);
 
-  return [ref];
+  return [ref, childrenRef];
 };
 
 export default useOnMultipleScreen;

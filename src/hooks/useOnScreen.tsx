@@ -6,13 +6,10 @@ const useOnScreen = option => {
 
   const callbackFunction = (entries, childrenRef) => {
     const [entry] = entries;
-    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
     if (entry.isIntersecting) {
       console.log(entry, 'ENTRY');
       console.log(entry.target.id, 'TARGET ID');
       childrenRef?.current?.scrollTo(0, 0);
-      // childrenRef?.current?.scrollIntoView({ behavior: 'smooth' });
-      console.log(childrenRef.current, 'Children Element');
     }
   };
 
@@ -27,7 +24,7 @@ const useOnScreen = option => {
         observer.unobserve(ref.current);
       }
     };
-  }, [ref, childrenRef]);
+  }, [ref, childrenRef, option]);
 
   return [ref, childrenRef];
 };

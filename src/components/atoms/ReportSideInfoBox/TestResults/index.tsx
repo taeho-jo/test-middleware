@@ -18,8 +18,6 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
 
   const handleSelectIntent = useCallback(
     (e, index) => {
-      console.log(index);
-
       setDetailSelectIntent(null);
       setSelectIntent(index);
       changeClicked('');

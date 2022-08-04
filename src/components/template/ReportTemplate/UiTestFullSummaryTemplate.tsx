@@ -40,7 +40,7 @@ const UiTestFullSummaryTemplate = ({ dataList, register, errors, checked, handle
   );
   return (
     <>
-      <FlexBox style={graphBoxStyle} justify={'center'} align={'flex-start'}>
+      <FlexBox css={graphBoxStyle} justify={'center'} align={'flex-start'}>
         {/*<img css={fixImage} src={FixImage.src} alt="'FixImage" />*/}
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
@@ -72,7 +72,7 @@ const UiTestFullSummaryTemplate = ({ dataList, register, errors, checked, handle
         </FlexBox>
       </FlexBox>
 
-      <FlexBox style={graphBoxStyle} justify={'center'} align={'flex-start'}>
+      <FlexBox css={graphBoxStyle} justify={'center'} align={'flex-start'}>
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
             <div css={[heading4_bold]}>미션별 불편 언급 비율과 치명도</div>
@@ -108,6 +108,7 @@ const mainContentsArea = css`
 const graphBoxStyle = css`
   width: 100%;
   position: relative;
+  overflow: unset;
 `;
 const fixImage = css`
   width: 278px;
