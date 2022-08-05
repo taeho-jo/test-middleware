@@ -43,38 +43,38 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
   return (
     <>
       <div id={'서비스 전체 완성도 피드백'}>
-        <FlexBox style={headerBosStyle} justify={'space-between'}>
-          <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
-            <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-              서비스 전체 완성도 피드백
-            </span>
-            <CheckBox
-              handleChangeCheckBox={handleChangeCheckBox}
-              checked={checked}
-              inputName={'privacyConsentYn'}
-              label={'미션에 실패한 응답자의 피드백만 보기'}
-              register={register}
-              errors={errors}
-            />
-          </FlexBox>
-          <FlexBox justify={'flex-end'} width={'30%'}>
-            <IconTextButton
-              onClick={() =>
-                modalControl(true, 'originDataModal', { title: '추가 기능 언급-서비스 전체 미션별 완성도 피드백', data: completeList.flat() })
-              }
-              style={{ marginRight: '8px' }}
-              textStyle={'custom'}
-              name={'NAVIGATION_ARROW_RIGHT'}
-              text={'원본 데이터 확인하기'}
-            />
-            <IconTextButton
-              onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [completeCommentList[completeSelectButton]] })}
-              textStyle={'custom'}
-              name={'NAVIGATION_ARROW_RIGHT'}
-              text={'리서치 코멘트 확인하기'}
-            />
-          </FlexBox>
-        </FlexBox>
+        {/*<FlexBox style={headerBosStyle} justify={'space-between'}>*/}
+        {/*  <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>*/}
+        {/*    <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>*/}
+        {/*      서비스 전체 완성도 피드백*/}
+        {/*    </span>*/}
+        {/*    <CheckBox*/}
+        {/*      handleChangeCheckBox={handleChangeCheckBox}*/}
+        {/*      checked={checked}*/}
+        {/*      inputName={'privacyConsentYn'}*/}
+        {/*      label={'미션에 실패한 응답자의 피드백만 보기'}*/}
+        {/*      register={register}*/}
+        {/*      errors={errors}*/}
+        {/*    />*/}
+        {/*  </FlexBox>*/}
+        {/*  <FlexBox justify={'flex-end'} width={'30%'}>*/}
+        {/*    <IconTextButton*/}
+        {/*      onClick={() =>*/}
+        {/*        modalControl(true, 'originDataModal', { title: '추가 기능 언급-서비스 전체 미션별 완성도 피드백', data: completeList.flat() })*/}
+        {/*      }*/}
+        {/*      style={{ marginRight: '8px' }}*/}
+        {/*      textStyle={'custom'}*/}
+        {/*      name={'NAVIGATION_ARROW_RIGHT'}*/}
+        {/*      text={'원본 데이터 확인하기'}*/}
+        {/*    />*/}
+        {/*    <IconTextButton*/}
+        {/*      onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [completeCommentList[completeSelectButton]] })}*/}
+        {/*      textStyle={'custom'}*/}
+        {/*      name={'NAVIGATION_ARROW_RIGHT'}*/}
+        {/*      text={'리서치 코멘트 확인하기'}*/}
+        {/*    />*/}
+        {/*  </FlexBox>*/}
+        {/*</FlexBox>*/}
 
         <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
           <FlexBox style={graphAreaStyle} direction={'column'}>
@@ -153,38 +153,38 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
       <div css={sortationArea} />
 
       <div id={'서비스 전체 추가기능 피드백'}>
-        <FlexBox style={headerBosStyle} justify={'space-between'}>
-          <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
-            <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflowY: 'hidden' }]}>
-              서비스 전체 추가기능 피드백
-            </span>
-            <CheckBox
-              handleChangeCheckBox={handleChangeCheckBox}
-              checked={checked}
-              inputName={'privacyConsentYn'}
-              label={'미션에 실패한 응답자의 피드백만 보기'}
-              register={register}
-              errors={errors}
-            />
-          </FlexBox>
-          <FlexBox justify={'flex-end'} width={'30%'}>
-            <IconTextButton
-              onClick={() =>
-                modalControl(true, 'originDataModal', { title: '추가 기능 언급-서비스 전체 미션별 추가기능 피드백', data: additionalList.flat() })
-              }
-              style={{ marginRight: '8px' }}
-              textStyle={'custom'}
-              name={'NAVIGATION_ARROW_RIGHT'}
-              text={'원본 데이터 확인하기'}
-            />
-            <IconTextButton
-              onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [additionalCommentList[addSelectButton]] })}
-              textStyle={'custom'}
-              name={'NAVIGATION_ARROW_RIGHT'}
-              text={'리서치 코멘트 확인하기'}
-            />
-          </FlexBox>
-        </FlexBox>
+        {/*<FlexBox style={headerBosStyle} justify={'space-between'}>*/}
+        {/*  <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>*/}
+        {/*    <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflowY: 'hidden' }]}>*/}
+        {/*      서비스 전체 추가기능 피드백*/}
+        {/*    </span>*/}
+        {/*    <CheckBox*/}
+        {/*      handleChangeCheckBox={handleChangeCheckBox}*/}
+        {/*      checked={checked}*/}
+        {/*      inputName={'privacyConsentYn'}*/}
+        {/*      label={'미션에 실패한 응답자의 피드백만 보기'}*/}
+        {/*      register={register}*/}
+        {/*      errors={errors}*/}
+        {/*    />*/}
+        {/*  </FlexBox>*/}
+        {/*  <FlexBox justify={'flex-end'} width={'30%'}>*/}
+        {/*    <IconTextButton*/}
+        {/*      onClick={() =>*/}
+        {/*        modalControl(true, 'originDataModal', { title: '추가 기능 언급-서비스 전체 미션별 추가기능 피드백', data: additionalList.flat() })*/}
+        {/*      }*/}
+        {/*      style={{ marginRight: '8px' }}*/}
+        {/*      textStyle={'custom'}*/}
+        {/*      name={'NAVIGATION_ARROW_RIGHT'}*/}
+        {/*      text={'원본 데이터 확인하기'}*/}
+        {/*    />*/}
+        {/*    <IconTextButton*/}
+        {/*      onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [additionalCommentList[addSelectButton]] })}*/}
+        {/*      textStyle={'custom'}*/}
+        {/*      name={'NAVIGATION_ARROW_RIGHT'}*/}
+        {/*      text={'리서치 코멘트 확인하기'}*/}
+        {/*    />*/}
+        {/*  </FlexBox>*/}
+        {/*</FlexBox>*/}
 
         <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
           <FlexBox style={graphAreaStyle} direction={'column'}>
@@ -255,38 +255,38 @@ const AddOnFeature = ({ originDataList, title, register, errors, checked, handle
       <div css={sortationArea} />
 
       <div id={'서비스 전체 시스템오류 피드백'}>
-        <FlexBox style={headerBosStyle} justify={'space-between'}>
-          <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
-            <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-              서비스 전체 시스템오류 피드백
-            </span>
-            <CheckBox
-              handleChangeCheckBox={handleChangeCheckBox}
-              checked={checked}
-              inputName={'privacyConsentYn'}
-              label={'미션에 실패한 응답자의 피드백만 보기'}
-              register={register}
-              errors={errors}
-            />
-          </FlexBox>
-          <FlexBox justify={'flex-end'} width={'30%'}>
-            <IconTextButton
-              onClick={() =>
-                modalControl(true, 'originDataModal', { title: '추가 기능 언급-서비스 전체 미션별 시스템오류 피드백', data: systemErrorList.flat() })
-              }
-              style={{ marginRight: '8px' }}
-              textStyle={'custom'}
-              name={'NAVIGATION_ARROW_RIGHT'}
-              text={'원본 데이터 확인하기'}
-            />
-            <IconTextButton
-              onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [systemErrorCommentList[systemSelectButton]] })}
-              textStyle={'custom'}
-              name={'NAVIGATION_ARROW_RIGHT'}
-              text={'리서치 코멘트 확인하기'}
-            />
-          </FlexBox>
-        </FlexBox>
+        {/*<FlexBox style={headerBosStyle} justify={'space-between'}>*/}
+        {/*  <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>*/}
+        {/*    <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>*/}
+        {/*      서비스 전체 시스템오류 피드백*/}
+        {/*    </span>*/}
+        {/*    <CheckBox*/}
+        {/*      handleChangeCheckBox={handleChangeCheckBox}*/}
+        {/*      checked={checked}*/}
+        {/*      inputName={'privacyConsentYn'}*/}
+        {/*      label={'미션에 실패한 응답자의 피드백만 보기'}*/}
+        {/*      register={register}*/}
+        {/*      errors={errors}*/}
+        {/*    />*/}
+        {/*  </FlexBox>*/}
+        {/*  <FlexBox justify={'flex-end'} width={'30%'}>*/}
+        {/*    <IconTextButton*/}
+        {/*      onClick={() =>*/}
+        {/*        modalControl(true, 'originDataModal', { title: '추가 기능 언급-서비스 전체 미션별 시스템오류 피드백', data: systemErrorList.flat() })*/}
+        {/*      }*/}
+        {/*      style={{ marginRight: '8px' }}*/}
+        {/*      textStyle={'custom'}*/}
+        {/*      name={'NAVIGATION_ARROW_RIGHT'}*/}
+        {/*      text={'원본 데이터 확인하기'}*/}
+        {/*    />*/}
+        {/*    <IconTextButton*/}
+        {/*      onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [systemErrorCommentList[systemSelectButton]] })}*/}
+        {/*      textStyle={'custom'}*/}
+        {/*      name={'NAVIGATION_ARROW_RIGHT'}*/}
+        {/*      text={'리서치 코멘트 확인하기'}*/}
+        {/*    />*/}
+        {/*  </FlexBox>*/}
+        {/*</FlexBox>*/}
 
         <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
           <FlexBox style={graphAreaStyle} direction={'column'}>

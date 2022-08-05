@@ -22,7 +22,6 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
   const onMouseOver = useCallback(
     (e, index) => {
       e.stopPropagation();
-      console.log(index);
       setActiveIndex(index);
     },
     [activeIndex],
@@ -49,75 +48,41 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
   // }, [dataList]);
 
   return (
-    <div id={'서비스 전체 사용성 평가'}>
-      <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
-          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-            서비스 전체 사용성 평가
-          </span>
-          <CheckBox
-            handleChangeCheckBox={handleChangeCheckBox}
-            checked={checked}
-            inputName={'privacyConsentYn'}
-            label={'미션에 실패한 응답자의 피드백만 보기'}
-            register={register}
-            errors={errors}
-          />
-        </FlexBox>
-        <FlexBox justify={'flex-end'} width={'30%'}>
-          <IconTextButton
-            disabled={true}
-            style={{ marginRight: '8px' }}
-            textStyle={'custom'}
-            name={'NAVIGATION_CHEVRON_RIGHT'}
-            text={'원본 데이터 확인하기'}
-          />
-          <IconTextButton
-            // disabled={true}
-            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [dataList?.serviceTotalUsabilityInfo?.comment] })}
-            textStyle={'custom'}
-            name={'NAVIGATION_CHEVRON_RIGHT'}
-            text={'리서치 코멘트 확인하기'}
-          />
-        </FlexBox>
-      </FlexBox>
-
-      <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
-        <FlexBox style={graphAreaStyle} direction={'column'}>
-          <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
-            <div css={[heading4_bold]}>전체 사용성 요소별 점수</div>
-          </div>
-          <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
-            <FlexBox justify={'space-between'}>
-              <FlexBox justify={'flex-start'} style={{ marginBottom: '4px' }}>
-                <Icon name={'ALERT_NORMAL'} size={10} />
-                <span
-                  onClick={() => modalControl(true, 'usabilityAssessmentInfo')}
-                  css={[caption2_bold, { textDecoration: 'underline', cursor: 'pointer' }]}
-                >
-                  사용성 평가 요소가 뭔가요
-                </span>
-              </FlexBox>
-              <FlexBox justify={'flex-end'} style={{ marginBottom: '4px' }}>
-                <Icon name={'ALERT_NORMAL'} size={10} />
-                <span css={[caption2_bold, { textDecoration: 'underline' }]}>치명도가 뭔가요</span>
-              </FlexBox>
+    <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
+      <FlexBox style={graphAreaStyle} direction={'column'}>
+        <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
+          <div css={[heading4_bold]}>전체 사용성 요소별 점수</div>
+        </div>
+        <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
+          <FlexBox justify={'space-between'}>
+            <FlexBox justify={'flex-start'} style={{ marginBottom: '4px' }}>
+              <Icon name={'ALERT_NORMAL'} size={10} />
+              <span
+                onClick={() => modalControl(true, 'usabilityAssessmentInfo')}
+                css={[caption2_bold, { textDecoration: 'underline', cursor: 'pointer' }]}
+              >
+                사용성 평가 요소가 뭔가요
+              </span>
             </FlexBox>
-
-            <UsabilityTableChart
-              onMouseOver={onMouseOver}
-              onMouseLeave={onMouseLeave}
-              handleClickUsabilityIndex={handleClickUsabilityIndex}
-              usabilityIndex={usabilityIndex}
-              setUsabilityIndex={setUsabilityIndex}
-              dataList={dataList?.serviceTotalUsabilityInfo?.serviceTotalUsabilityList}
-              negative={true}
-              activeIndex={activeIndex}
-            />
+            <FlexBox justify={'flex-end'} style={{ marginBottom: '4px' }}>
+              <Icon name={'ALERT_NORMAL'} size={10} />
+              <span css={[caption2_bold, { textDecoration: 'underline' }]}>치명도가 뭔가요</span>
+            </FlexBox>
           </FlexBox>
+
+          <UsabilityTableChart
+            onMouseOver={onMouseOver}
+            onMouseLeave={onMouseLeave}
+            handleClickUsabilityIndex={handleClickUsabilityIndex}
+            usabilityIndex={usabilityIndex}
+            setUsabilityIndex={setUsabilityIndex}
+            dataList={dataList?.serviceTotalUsabilityInfo?.serviceTotalUsabilityList}
+            negative={true}
+            activeIndex={activeIndex}
+          />
         </FlexBox>
       </FlexBox>
-    </div>
+    </FlexBox>
   );
 };
 
