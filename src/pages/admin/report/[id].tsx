@@ -122,39 +122,39 @@ const Report = ({ params }) => {
 
   // 응답자 특성 ref
   const [respondentRef, respondentChildrenRef] = useOnScreen({
-    rootMargin: '-72px 0px 0px 0px',
+    rootMargin: '72px 0px 0px 0px',
     threshold: 1,
   });
   // UI 진단 전체 요약 ref
   const [uiTestRef, uiTestChildrenRef] = useOnScreen({
-    rootMargin: '-72px 0px 0px 0px',
+    rootMargin: '72px 0px 0px 0px',
     threshold: 1,
   });
   // 미션별 언급 비율 ref
   const [missionRef, missionChildrenRef] = useOnMultipleScreen({
-    rootMargin: '-72px 0px 0px 0px',
+    rootMargin: '72px 0px 0px 0px',
     threshold: 1,
   });
   // 기능별 상세 내용 ref
   const [testRef, testChildrenRef] = useOnMultipleScreen({
-    rootMargin: '-72px 0px 0px 0px',
+    rootMargin: '72px 0px 0px 0px',
     threshold: 1,
   });
   // 서비스 전체 사용성 평가 ref
   const [totalUsabilityRef, totalUsabilityChildrenRef] = useOnScreen({
-    rootMargin: '-72px 0px 0px 0px',
+    rootMargin: '72px 0px 0px 0px',
     threshold: 1,
   });
   const [completeFeedbackRef, completeFeedbackChildrenRef] = useOnScreen({
-    rootMargin: '-72px 0px 0px 0px',
+    rootMargin: '72px 0px 0px 0px',
     threshold: 1,
   });
   const [additionalFeatureFeedbackRef, additionalFeatureFeedbackChildrenRef] = useOnScreen({
-    rootMargin: '-72px 0px 0px 0px',
+    rootMargin: '72px 0px 0px 0px',
     threshold: 1,
   });
   const [systemErrorFeedbackRef, systemErrorFeedbackChildrenRef] = useOnScreen({
-    rootMargin: '-72px 0px 0px 0px',
+    rootMargin: '72px 0px 0px 0px',
     threshold: 1,
   });
   const [longQuestionRef, longQuestionChildrenRef] = useOnMultipleScreen({ rootMargin: '72px 0px 0px 0px', threshold: 1 });
@@ -302,17 +302,22 @@ const Report = ({ params }) => {
             />
           </div>
 
-          <div css={chartSectionBox}>
-            <div css={chartBox(true)} className={'scrollType1'}>
-              <ServiceOverallUsabilityTemplate
-                modalControl={modalControl}
-                handleChangeCheckBox={handleChangeCheckBox}
-                checked={filterFail}
-                dataList={data?.S1?.uiSummerySection}
-                register={register}
-                errors={errors}
-              />
-            </div>
+          <div
+            css={css`
+              overflow-y: scroll;
+              height: calc(100vh - 136px);
+            `}
+            className={'scrollType1'}
+            ref={uiTestChildrenRef}
+          >
+            <ServiceOverallUsabilityTemplate
+              modalControl={modalControl}
+              handleChangeCheckBox={handleChangeCheckBox}
+              checked={filterFail}
+              dataList={data?.S1?.uiSummerySection}
+              register={register}
+              errors={errors}
+            />
           </div>
         </div>
       )}
