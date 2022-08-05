@@ -1,13 +1,16 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import FlexBox from '../../FlexBox';
 import { css } from '@emotion/react';
 import { body3_medium, caption1_bold, heading5_bold } from '../../../../styles/FontStyles';
 import { colors } from '../../../../styles/Common.styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { ReducerType } from '../../../../store/reducers';
+import useOnScreen from '../../../../hooks/useOnScreen';
+import { updateIndexId } from '../../../../store/reducers/reportReducer';
 
 const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
+  const dispatch = useDispatch();
   const [intentList, setIntentList] = useState([]);
   const [selectIntent, setSelectIntent] = useState<number | null>(null);
   const [detailSelectIntent, setDetailSelectIntent] = useState(null);
@@ -15,6 +18,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const s1Data = useSelector<ReducerType, any>(state => state.report?.data?.S1);
   const longData = useSelector<ReducerType, any>(state => state.report?.data?.longQuestionList);
   const multipleData = useSelector<ReducerType, any>(state => state.report?.data?.multipleQuestionList);
+  const showingSectionId = useSelector<ReducerType, any>(state => state.report?.indexId);
 
   const handleSelectIntent = useCallback(
     (e, index) => {
@@ -41,8 +45,6 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
     if (dataList) {
       const missionArr = dataList.filter(el => el.code.includes('S1M'));
 
-      // console.log(missionArr, 'MISSIONARR');
-
       const newMultipleArr = multipleData?.reduce(
         (acc, cur) =>
           acc.concat({
@@ -67,6 +69,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
         { name: '서비스 전체 추가기능 피드백' },
         { name: '서비스 전체 시스템오류 피드백' },
       ];
+
       if (s1Data) {
         const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr, ...newLongArr];
         setIntentList(newArr);
@@ -74,56 +77,59 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
         const newArr = [...missionArr, ...otherArr, ...newLongArr];
         setIntentList(newArr);
       }
-      // const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr];
-      // setIntentList(newArr);
     }
   }, [dataList, missionList, multipleData]);
+
+  const onMoveScroll = id => {
+    const element = document.getElementById(id);
+    dispatch(updateIndexId(id));
+    element?.scrollIntoView({});
+  };
+
   return (
-    <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
+    <div css={testInfoBoxStyle}>
       <span css={heading5_bold}>테스트 결과</span>
       {intentList?.map((el, index) => {
         return (
-          <Fragment key={el.name}>
-            <Fragment>
-              <a
-                style={{ width: '100%', textDecoration: 'none', margin: '8px 0' }}
-                href={el.detail ? `#${el.name}` : el.code ? `#${el.code}` : `#${el.name}`}
-                // href={'#리포트 전체 요약'}
+          <Fragment key={`${el.name}-${index}`}>
+            <div
+              id={el.detail ? `${el.name}-index` : el.code ? `${el.code}-index` : `${el.name}-index`}
+              style={{ width: '100%', textDecoration: 'none', margin: '8px 0', cursor: 'pointer' }}
+              onClick={() => onMoveScroll(el.detail ? `${el.name}` : el.code ? `${el.code}` : `${el.name}`)}
+            >
+              <FlexBox
+                direction={'column'}
+                align={'flex-start'}
+                justify={'flex-start'}
+                style={showingSectionId === el.name || showingSectionId === el.code ? infoBox : infoBox2}
               >
-                <FlexBox
-                  direction={'column'}
-                  align={'flex-start'}
-                  justify={'flex-start'}
-                  style={selectIntent === index ? infoBox : infoBox2}
-                  // setSelectIntent={setSelectIntent}
-                  onClick={e => handleSelectIntent(e, index)}
-                >
-                  <div css={[body3_medium, { height: 'auto', cursor: 'pointer' }]}>
-                    {el.detail ? (
-                      <>
-                        <span>미션 {index}.</span>
-                        <br />
-                      </>
-                    ) : null}
-                    <span css={{ color: colors.grey._3c, wordBreak: 'keep-all' }}>{el.detail ? `${el.name}의 기능별 사용성 비교` : el.name}</span>
-                  </div>
-                </FlexBox>
-              </a>
-            </Fragment>
+                <div css={[body3_medium, { height: 'auto', cursor: 'pointer' }]}>
+                  {el.detail ? (
+                    <>
+                      <span>미션 {index}.</span>
+                      <br />
+                    </>
+                  ) : null}
+                  <span css={{ color: colors.grey._3c, wordBreak: 'keep-all' }}>{el.detail ? `${el.name}의 기능별 사용성 비교` : el.name}</span>
+                </div>
+              </FlexBox>
+            </div>
             {el.detail?.map((item, idx) => {
               const splitData = item.name.split('-');
               const id = splitData[1].trim();
 
               return (
-                <Fragment key={idx}>
-                  <a style={{ width: '100%', textDecoration: 'none', margin: '8px 0' }} href={`#기능-${id}`}>
+                <Fragment key={item.name}>
+                  <div
+                    id={`기능-${id}-index`}
+                    onClick={() => onMoveScroll(`기능-${id}`)}
+                    style={{ width: '100%', textDecoration: 'none', margin: '8px 0', cursor: 'pointer' }}
+                  >
                     <FlexBox
                       direction={'column'}
                       align={'flex-start'}
                       justify={'flex-start'}
-                      style={detailSelectIntent === `${index}-${idx}` ? infoBox : infoBox2}
-                      // setSelectIntent={setSelectIntent}
-                      onClick={() => handleDetailSelectIntent(`${index}-${idx}`)}
+                      style={showingSectionId === `기능-${id}` ? infoBox : infoBox2}
                     >
                       <div css={[body3_medium, { height: 'auto', cursor: 'pointer' }]}>
                         {item.title ? (
@@ -135,14 +141,14 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
                         <span css={{ color: colors.grey._3c, wordBreak: 'keep-all' }}>{item.name}</span>
                       </div>
                     </FlexBox>
-                  </a>
+                  </div>
                 </Fragment>
               );
             })}
           </Fragment>
         );
       })}
-    </FlexBox>
+    </div>
   );
 };
 
@@ -150,6 +156,10 @@ export default TestResults;
 
 const testInfoBoxStyle = css`
   padding: 32px 24px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 `;
 const infoBox = css`
   background: ${colors.white};

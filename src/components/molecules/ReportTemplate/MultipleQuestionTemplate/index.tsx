@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import FlexBox from '../../../atoms/FlexBox';
 import { heading3_bold, heading4_bold, heading5_regular } from '../../../../styles/FontStyles';
 import IconTextButton from '../../../atoms/Button/IconTextButton';
@@ -106,22 +106,23 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
             {dataList?.detailMultipleList?.length !== 0
               ? dataList.detailMultipleList?.map((detail, detailIndex) => {
                   return (
-                    <BasicBarChart
-                      onMouseOver={onMouseOver}
-                      onMouseLeave={onMouseLeave}
-                      infoBox={true}
-                      detailIndex={detailIndex}
-                      handleClickIndex={handleClickIndex}
-                      selectedIndex={selectedIndex}
-                      setSelectedIndex={setSelectedIndex}
-                      key={`detailMultiple-${detail.name}-${detailIndex}`}
-                      dataList={[detail]}
-                      value={`${detail.count}명`}
-                      valueStyle={{ color: colors.grey._99, fontWeight: 500 }}
-                      label={[<>{detail.name}</>]}
-                      rate={`${checkIsInteger(detail.value)}%`}
-                      activeIndex={activeIndex}
-                    />
+                    <Fragment key={`k-${detail.name}-${detailIndex}`}>
+                      <BasicBarChart
+                        onMouseOver={onMouseOver}
+                        onMouseLeave={onMouseLeave}
+                        infoBox={true}
+                        detailIndex={detailIndex}
+                        handleClickIndex={handleClickIndex}
+                        selectedIndex={selectedIndex}
+                        setSelectedIndex={setSelectedIndex}
+                        dataList={[detail]}
+                        value={`${detail.count}명`}
+                        valueStyle={{ color: colors.grey._99, fontWeight: 500 }}
+                        label={[<>{detail.name}</>]}
+                        rate={`${checkIsInteger(detail.value)}%`}
+                        activeIndex={activeIndex}
+                      />
+                    </Fragment>
                   );
                 })
               : null}

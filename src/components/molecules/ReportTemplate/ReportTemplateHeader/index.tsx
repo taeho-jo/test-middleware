@@ -17,7 +17,6 @@ interface PropsTypes {
 }
 
 const ReportTemplateHeader = ({ title, handleChangeCheckBox, modalControl, checked, register, errors, originData, researchData }: PropsTypes) => {
-  console.log(researchData, 'researchData');
   return (
     <FlexBox style={headerBosStyle} justify={'space-between'}>
       <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>

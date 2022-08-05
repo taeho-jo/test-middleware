@@ -15,7 +15,7 @@ const ReportLayout = ({ children }) => {
         }}
       >
         <ReportHeader />
-        <div className={'scrollType1'} css={{ marginTop: '72px' }}>
+        <div id={'reportBoxArea'} className={'scrollType1'} css={{ marginTop: '72px' }}>
           {children}
         </div>
       </div>

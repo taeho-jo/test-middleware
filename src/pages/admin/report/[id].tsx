@@ -116,54 +116,59 @@ const Report = ({ params }) => {
 
   // 응답자 특성 ref
   const [respondentRef, respondentChildrenRef] = useOnScreen({
-    rootMargin: '72px 0px 0px 0px',
-    threshold: 0.9,
+    rootMargin: '-72px 0px 0px 0px',
+    threshold: 1,
   });
   // UI 진단 전체 요약 ref
   const [uiTestRef, uiTestChildrenRef] = useOnScreen({
-    rootMargin: '72px 0px 0px 0px',
-    threshold: 0.9,
+    rootMargin: '-72px 0px 0px 0px',
+    threshold: 1,
   });
   // 미션별 언급 비율 ref
   const [missionRef, missionChildrenRef] = useOnMultipleScreen({
-    rootMargin: '72px 0px 0px 0px',
-    threshold: 0.5,
+    rootMargin: '-72px 0px 0px 0px',
+    threshold: 1,
   });
   // 기능별 상세 내용 ref
   const [testRef, testChildrenRef] = useOnMultipleScreen({
-    rootMargin: '72px 0px 0px 0px',
-    // threshold: 0.1,
+    rootMargin: '-72px 0px 0px 0px',
+    threshold: 1,
   });
   // 서비스 전체 사용성 평가 ref
   const [totalUsabilityRef, totalUsabilityChildrenRef] = useOnScreen({
-    rootMargin: '72px 0px 0px 0px',
-    threshold: 0.8,
+    rootMargin: '-72px 0px 0px 0px',
+    threshold: 1,
   });
   const [completeFeedbackRef, completeFeedbackChildrenRef] = useOnScreen({
-    rootMargin: '72px 0px 0px 0px',
-    threshold: 0.9,
+    rootMargin: '-72px 0px 0px 0px',
+    threshold: 1,
   });
   const [additionalFeatureFeedbackRef, additionalFeatureFeedbackChildrenRef] = useOnScreen({
-    rootMargin: '72px 0px 0px 0px',
-    threshold: 0.9,
+    rootMargin: '-72px 0px 0px 0px',
+    threshold: 1,
   });
   const [systemErrorFeedbackRef, systemErrorFeedbackChildrenRef] = useOnScreen({
-    rootMargin: '72px 0px 0px 0px',
-    threshold: 0.9,
+    rootMargin: '-72px 0px 0px 0px',
+    threshold: 1,
   });
+  const [longQuestionRef, longQuestionChildrenRef] = useOnMultipleScreen({ rootMargin: '72px 0px 0px 0px', threshold: 1 });
+  const [multipleQuestionRef, , multipleQuestionChildrenRef] = useOnMultipleScreen({ rootMargin: '72px 0px 0px 0px', threshold: 1 });
 
   return (
     <div css={reportContainer} className={'scrollType1'}>
       {/*응답자 특성*/}
-      <div id={'one'} css={reportSectionBox} ref={respondentRef} className={'scrollType1'}>
-        <ReportTemplateHeader
-          title={'응답자 특성'}
-          handleChangeCheckBox={handleChangeCheckBox}
-          modalControl={modalControl}
-          checked={filterFail}
-          errors={errors}
-          register={register}
-        />
+      <div css={reportSectionBox} className={'scrollType1'}>
+        <div id={'one'} ref={respondentRef}>
+          <ReportTemplateHeader
+            title={'응답자 특성'}
+            handleChangeCheckBox={handleChangeCheckBox}
+            modalControl={modalControl}
+            checked={filterFail}
+            errors={errors}
+            register={register}
+          />
+        </div>
+
         <div css={chartSectionBox}>
           <div
             css={chartBox(data?.answerInfoSection?.cellInfoList?.length === 0 ? true : false)}
@@ -178,17 +183,20 @@ const Report = ({ params }) => {
 
       {/* UI 진단 전체 요약 */}
       {data?.S1 && (
-        <div id={'UI 진단 전체 요약'} css={reportSectionBox} ref={uiTestRef} className={'scrollType1'}>
-          <ReportTemplateHeader
-            title={'UI 진단 전체 요약'}
-            handleChangeCheckBox={handleChangeCheckBox}
-            modalControl={modalControl}
-            checked={filterFail}
-            errors={errors}
-            register={register}
-            originData={[]}
-            researchData={data?.S1?.comment}
-          />
+        <div css={reportSectionBox} className={'scrollType1'} id={'UI 진단 전체 요약'} ref={uiTestRef}>
+          <div>
+            <ReportTemplateHeader
+              title={'UI 진단 전체 요약'}
+              handleChangeCheckBox={handleChangeCheckBox}
+              modalControl={modalControl}
+              checked={filterFail}
+              errors={errors}
+              register={register}
+              originData={[]}
+              researchData={data?.S1?.comment}
+            />
+          </div>
+
           {/*<div css={chartSectionBox}>*/}
           {/*  <div css={chartBox} className={'scrollType1'} ref={uiTestChildrenRef}>*/}
           <div
@@ -221,18 +229,19 @@ const Report = ({ params }) => {
         data?.S1?.uiSummerySection?.missionFatality?.map((item, index) => {
           return (
             <>
-              <div key={`${item.name}`} id={item.name} css={reportSectionBox} ref={el => (missionRef.current[index] = el)} className={'scrollType1'}>
-                <ReportTemplateHeader
-                  title={`[미션 ${index + 1}. ${item.name}]의 기능별 사용성 비교`}
-                  handleChangeCheckBox={handleChangeCheckBox}
-                  modalControl={modalControl}
-                  checked={filterFail}
-                  errors={errors}
-                  register={register}
-                  originData={[]}
-                  researchData={item?.comment}
-                />
-
+              <div key={`${item.name}`} css={reportSectionBox} className={'scrollType1'}>
+                <div id={item.name} ref={el => (missionRef.current[index] = el)}>
+                  <ReportTemplateHeader
+                    title={`[미션 ${index + 1}. ${item.name}]의 기능별 사용성 비교`}
+                    handleChangeCheckBox={handleChangeCheckBox}
+                    modalControl={modalControl}
+                    checked={filterFail}
+                    errors={errors}
+                    register={register}
+                    originData={[]}
+                    researchData={item?.comment}
+                  />
+                </div>
                 <div css={chartSectionBox}>
                   <div css={chartBox} className={'scrollType1'}>
                     <MissionUsabilityTemplate
@@ -249,23 +258,19 @@ const Report = ({ params }) => {
               </div>
               {item.missionFunctionFatality.map((el, idx) => {
                 return (
-                  <div
-                    key={`기능-${item.name}`}
-                    id={`기능-${item.name}`}
-                    css={reportSectionBox}
-                    ref={ele => (testRef.current[index] = ele)}
-                    className={'scrollType1'}
-                  >
-                    <ReportTemplateHeader
-                      title={`기능별 상세 내용 - ${el.name}`}
-                      handleChangeCheckBox={handleChangeCheckBox}
-                      modalControl={modalControl}
-                      checked={filterFail}
-                      errors={errors}
-                      register={register}
-                      originData={el?.missionFunctionRawData}
-                      researchData={el?.comment}
-                    />
+                  <div key={`기능-${item.name}`} css={reportSectionBox} className={'scrollType1'}>
+                    <div id={`기능-${el.name}`} ref={ele => testRef.current.push(ele)}>
+                      <ReportTemplateHeader
+                        title={`기능별 상세 내용 - ${el.name}`}
+                        handleChangeCheckBox={handleChangeCheckBox}
+                        modalControl={modalControl}
+                        checked={filterFail}
+                        errors={errors}
+                        register={register}
+                        originData={el?.missionFunctionRawData}
+                        researchData={el?.comment}
+                      />
+                    </div>
                     <MissionDetailTemplate item={item} dataList={el} modalControl={modalControl} />
                   </div>
                 );
@@ -277,17 +282,20 @@ const Report = ({ params }) => {
 
       {/*서비스 전체 사용성 평가*/}
       {data?.S1 && (
-        <div id={'서비스 전체 사용성 평가'} css={reportSectionBox} ref={totalUsabilityRef} className={'scrollType1'}>
-          <ReportTemplateHeader
-            title={`서비스 전체 사용성 평가`}
-            handleChangeCheckBox={handleChangeCheckBox}
-            modalControl={modalControl}
-            checked={filterFail}
-            errors={errors}
-            register={register}
-            originData={[]}
-            researchData={data?.S1?.uiSummerySection?.serviceTotalUsabilityInfo?.comment}
-          />
+        <div css={reportSectionBox} className={'scrollType1'}>
+          <div id={'서비스 전체 사용성 평가'} ref={totalUsabilityRef}>
+            <ReportTemplateHeader
+              title={`서비스 전체 사용성 평가`}
+              handleChangeCheckBox={handleChangeCheckBox}
+              modalControl={modalControl}
+              checked={filterFail}
+              errors={errors}
+              register={register}
+              originData={[]}
+              researchData={data?.S1?.uiSummerySection?.serviceTotalUsabilityInfo?.comment}
+            />
+          </div>
+
           <div css={chartSectionBox}>
             <div css={chartBox(true)} className={'scrollType1'}>
               <ServiceOverallUsabilityTemplate
@@ -306,17 +314,19 @@ const Report = ({ params }) => {
 
       {/*서비스 전체 완성도 피드백*/}
       {data?.S1 && (
-        <div id={'서비스 전체 완성도 피드백'} css={reportSectionBox} ref={completeFeedbackRef} className={'scrollType1'}>
-          <ReportTemplateHeader
-            title={`서비스 전체 완성도 피드백`}
-            handleChangeCheckBox={handleChangeCheckBox}
-            modalControl={modalControl}
-            checked={filterFail}
-            errors={errors}
-            register={register}
-            researchData={data?.S1?.uiSummerySection?.missionFatality[0].completeComment}
-            originData={data?.S1?.uiSummerySection?.missionFatality?.map(el => el.completeList).flat()}
-          />
+        <div css={reportSectionBox} className={'scrollType1'}>
+          <div id={'서비스 전체 완성도 피드백'} ref={completeFeedbackRef}>
+            <ReportTemplateHeader
+              title={`서비스 전체 완성도 피드백`}
+              handleChangeCheckBox={handleChangeCheckBox}
+              modalControl={modalControl}
+              checked={filterFail}
+              errors={errors}
+              register={register}
+              researchData={data?.S1?.uiSummerySection?.missionFatality[0].completeComment}
+              originData={data?.S1?.uiSummerySection?.missionFatality?.map(el => el.completeList).flat()}
+            />
+          </div>
 
           <div css={chartSectionBox}>
             <div css={chartBox(true)} className={'scrollType1'}>
@@ -338,17 +348,20 @@ const Report = ({ params }) => {
 
       {/*서비스 전체 추가기능 피드백*/}
       {data?.S1 && (
-        <div id={'서비스 전체 추가기능 피드백'} css={reportSectionBox} ref={additionalFeatureFeedbackRef} className={'scrollType1'}>
-          <ReportTemplateHeader
-            title={`서비스 전체 추가기능 피드백`}
-            handleChangeCheckBox={handleChangeCheckBox}
-            modalControl={modalControl}
-            checked={filterFail}
-            errors={errors}
-            register={register}
-            researchData={data?.S1?.uiSummerySection?.missionFatality[0].additionalComment}
-            originData={data?.S1?.uiSummerySection?.missionFatality?.map(el => el.additionalList).flat()}
-          />
+        <div css={reportSectionBox} className={'scrollType1'}>
+          <div id={'서비스 전체 추가기능 피드백'} ref={additionalFeatureFeedbackRef}>
+            <ReportTemplateHeader
+              title={`서비스 전체 추가기능 피드백`}
+              handleChangeCheckBox={handleChangeCheckBox}
+              modalControl={modalControl}
+              checked={filterFail}
+              errors={errors}
+              register={register}
+              researchData={data?.S1?.uiSummerySection?.missionFatality[0].additionalComment}
+              originData={data?.S1?.uiSummerySection?.missionFatality?.map(el => el.additionalList).flat()}
+            />
+          </div>
+
           <div css={chartSectionBox}>
             <div css={chartBox(true)} className={'scrollType1'}>
               <FeedbackTemplate
@@ -369,17 +382,20 @@ const Report = ({ params }) => {
 
       {/*서비스 전체 시스템오류 피드백*/}
       {data?.S1 && (
-        <div id={'서비스 전체 시스템오류 피드백'} css={reportSectionBox} ref={systemErrorFeedbackRef} className={'scrollType1'}>
-          <ReportTemplateHeader
-            title={`서비스 전체 시스템오류 피드백`}
-            handleChangeCheckBox={handleChangeCheckBox}
-            modalControl={modalControl}
-            checked={filterFail}
-            errors={errors}
-            register={register}
-            researchData={data?.S1?.uiSummerySection?.missionFatality[0].systemErrorComment}
-            originData={data?.S1?.uiSummerySection?.missionFatality?.map(el => el.systemErrorList).flat()}
-          />
+        <div css={reportSectionBox} className={'scrollType1'}>
+          <div id={'서비스 전체 시스템오류 피드백'} ref={systemErrorFeedbackRef}>
+            <ReportTemplateHeader
+              title={`서비스 전체 시스템오류 피드백`}
+              handleChangeCheckBox={handleChangeCheckBox}
+              modalControl={modalControl}
+              checked={filterFail}
+              errors={errors}
+              register={register}
+              researchData={data?.S1?.uiSummerySection?.missionFatality[0].systemErrorComment}
+              originData={data?.S1?.uiSummerySection?.missionFatality?.map(el => el.systemErrorList).flat()}
+            />
+          </div>
+
           <div css={chartSectionBox}>
             <div css={chartBox(true)} className={'scrollType1'}>
               <FeedbackTemplate
@@ -404,19 +420,22 @@ const Report = ({ params }) => {
           ? null
           : data?.multipleQuestionList?.map((item, index) => {
               return (
-                <div key={`multiple-${index}`} id={item.code}>
+                <div key={`multiple-${index}`}>
                   {item?.detailScaleList?.length === 0 ? null : (
-                    <div id={item.intent} css={reportSectionBox} ref={systemErrorFeedbackRef} className={'scrollType1'}>
-                      <ReportTemplateHeader
-                        title={item.intent}
-                        handleChangeCheckBox={handleChangeCheckBox}
-                        modalControl={modalControl}
-                        checked={filterFail}
-                        errors={errors}
-                        register={register}
-                        originData={item?.detailScaleList?.map(el => el.multipleAnswerData).flat()}
-                        researchData={item?.comment ? item?.comment : undefined}
-                      />
+                    <div css={reportSectionBox} className={'scrollType1'}>
+                      <div id={item.code} ref={el => (multipleQuestionRef.current[index] = el)}>
+                        <ReportTemplateHeader
+                          title={item.intent}
+                          handleChangeCheckBox={handleChangeCheckBox}
+                          modalControl={modalControl}
+                          checked={filterFail}
+                          errors={errors}
+                          register={register}
+                          originData={item?.detailScaleList?.map(el => el.multipleAnswerData).flat()}
+                          researchData={item?.comment ? item?.comment : undefined}
+                        />
+                      </div>
+
                       <div css={chartSectionBox}>
                         <div css={chartBox(true)} className={'scrollType1'}>
                           <GeneralScaleTypeTemplate dataList={item} modalControl={modalControl} />
@@ -426,17 +445,20 @@ const Report = ({ params }) => {
                   )}
 
                   {item?.detailMultipleList.length === 0 ? null : (
-                    <div id={item.intent} css={reportSectionBox} ref={systemErrorFeedbackRef} className={'scrollType1'}>
-                      <ReportTemplateHeader
-                        title={item.intent}
-                        handleChangeCheckBox={handleChangeCheckBox}
-                        modalControl={modalControl}
-                        checked={filterFail}
-                        errors={errors}
-                        register={register}
-                        originData={item?.detailMultipleList?.map(el => el.multipleAnswerData).flat()}
-                        researchData={item?.comment ? item?.comment : undefined}
-                      />
+                    <div css={reportSectionBox} className={'scrollType1'}>
+                      <div id={item.code} ref={el => (multipleQuestionRef.current[index] = el)}>
+                        <ReportTemplateHeader
+                          title={item.intent}
+                          handleChangeCheckBox={handleChangeCheckBox}
+                          modalControl={modalControl}
+                          checked={filterFail}
+                          errors={errors}
+                          register={register}
+                          originData={item?.detailMultipleList?.map(el => el.multipleAnswerData).flat()}
+                          researchData={item?.comment ? item?.comment : undefined}
+                        />
+                      </div>
+
                       <div css={chartSectionBox}>
                         <div css={chartBox(true)} className={'scrollType1'}>
                           <MultipleQuestionTemplate dataList={item} modalControl={modalControl} parentIndex={index} />
@@ -454,17 +476,20 @@ const Report = ({ params }) => {
         ? null
         : data?.longQuestionList?.map((item, index) => {
             return (
-              <div key={`lognQuestion-${index}`} id={item.questionCode} css={reportSectionBox} className={'scrollType1'}>
-                <ReportTemplateHeader
-                  title={`${item.intent}`}
-                  handleChangeCheckBox={handleChangeCheckBox}
-                  modalControl={modalControl}
-                  checked={filterFail}
-                  errors={errors}
-                  register={register}
-                  originData={[]}
-                  researchData={data?.S1?.comment}
-                />
+              <div key={`lognQuestion-${index}`} css={reportSectionBox} className={'scrollType1'}>
+                <div id={item.questionCode} ref={el => (longQuestionRef.current[index] = el)}>
+                  <ReportTemplateHeader
+                    title={`${item.intent}`}
+                    handleChangeCheckBox={handleChangeCheckBox}
+                    modalControl={modalControl}
+                    checked={filterFail}
+                    errors={errors}
+                    register={register}
+                    originData={[]}
+                    researchData={data?.S1?.comment}
+                  />
+                </div>
+
                 <div css={chartSectionBox}>
                   <div css={chartBox(true)} className={'scrollType1'}>
                     <LongQuestionTemplate dataList={item} modalControl={modalControl} />
@@ -509,7 +534,7 @@ export default Report;
 
 const reportContainer = css`
   scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
+  //scroll-behavior: smooth;
   overflow-y: scroll;
   //overflow-x: hidden;
   width: 100%;

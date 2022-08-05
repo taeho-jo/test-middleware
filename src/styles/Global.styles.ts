@@ -20,7 +20,7 @@ const reset = (popupShow, isAdmin, story) => css`
   }
   * {
     html {
-      scroll-behavior: smooth;
+      //scroll-behavior: smooth;
     }
     body {
       padding: 0;

@@ -43,6 +43,7 @@ const BasicBarChart = ({
   onMouseLeave,
   activeIndex,
   infoBox = false,
+  // key,
   ...props
 }: PropsType) => {
   const boxRef = useRef(null);
@@ -82,7 +83,7 @@ const BasicBarChart = ({
                   onMouseOver={e => onMouseOver(e, detailIndex)}
                   cursor="pointer"
                   fill={activeIndex === detailIndex ? '#3375d6' : barColor ? barColor : negative ? '#E87490' : '#68A0F4'}
-                  key={`cell-${index}`}
+                  key={`cell-${index}-${entry.name}`}
                 />
               ))}
             </Bar>

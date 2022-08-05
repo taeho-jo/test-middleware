@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import LogoIcon from '../../../assets/logoIcon.png';
 import LogoText from '../../../assets/DibyLogo_black.png';
@@ -52,6 +52,32 @@ const ReportSideBar = () => {
     setClicked(text);
   }, []);
 
+  // const [indexRef3] = useOnRef();
+  const indexBoxRef = useRef();
+
+  // useEffect(() => {
+  //   if (indexBoxRef) {
+  //     console.log(indexBoxRef, ' INDEX REF 3333');
+  //     const style = window.getComputedStyle(indexBoxRef.current);
+  //     console.log(style, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  //     console.log(style.height, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+  //     console.log(style.top, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+  //     style.top = '1000px';
+  //   }
+  // }, [indexBoxRef]);
+  const showingSectionId = useSelector<ReducerType, any>(state => state.report?.indexId);
+  const showingClickSectionId = useSelector<ReducerType, any>(state => state.report?.clickIndexId);
+
+  useEffect(() => {
+    const indexBoxOffsetTop = document.getElementById(`${showingSectionId}-index`)?.offsetTop; // 각 버튼 offsetTop
+    const div = document.getElementById('testBox');
+    const divHeight = document.getElementById('testBox')?.clientHeight; // 박스 높이
+
+    const offestY = indexBoxOffsetTop - divHeight / 2;
+
+    div.scrollTo(0, offestY ? offestY : 0);
+  }, [showingSectionId]);
+
   return (
     <div css={sidebarStyle}>
       <FlexBox
@@ -70,7 +96,7 @@ const ReportSideBar = () => {
           </div>
         )}
       </FlexBox>
-      <div className={'scrollType1'} css={{ height: 'calc(100vh - 136px)' }}>
+      <div className={'scrollType1'} css={{ height: 'calc(100vh - 136px)' }} id={'testBox'} ref={indexBoxRef}>
         <TestInfoBox reportData={reportData} />
         <RespondentAttributes changeClicked={changeClicked} clicked={clicked} />
         <TestResults clicked={clicked} changeClicked={changeClicked} missionList={missionList} dataList={reportData?.indexList} />

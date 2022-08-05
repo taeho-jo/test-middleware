@@ -1,14 +1,16 @@
 import React, { useEffect, useRef } from 'react';
+import { updateIndexId } from '../store/reducers/reportReducer';
+import { useDispatch } from 'react-redux';
 
 const useOnMultipleScreen = option => {
+  const dispatch = useDispatch();
   const ref = useRef([]);
   const childrenRef = useRef([]);
 
   const callbackFunction = entries => {
     const [entry] = entries;
     if (entry.isIntersecting) {
-      console.log(entry, 'ENTRY');
-      console.log(entry.target.id, 'ID');
+      dispatch(updateIndexId(entry.target.id));
       for (let i = 0; i < childrenRef.current.length; i++) {
         childrenRef?.current[i]?.scrollTo(0, 0);
       }
@@ -17,10 +19,8 @@ const useOnMultipleScreen = option => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => callbackFunction(entries), option);
-    // const observer2 = new IntersectionObserver(entries => callbackFunction2(entries), option);
-    console.log('이거 안찍힘???????????????');
-    let currentTarget; // let currentTarget2;
-    console.log('asdasd', ref);
+
+    let currentTarget;
 
     for (let i = 0; i < ref.current.length; i++) {
       currentTarget = ref.current[i];
