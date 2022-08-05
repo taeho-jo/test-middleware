@@ -13,7 +13,7 @@ import { fetchReportDetail, fetchReportShare } from '../../../api/reportApi';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { setReportData, updateCommentData, updateFilterFail, updateRawData } from '../../../store/reducers/reportReducer';
+import { resetReportData, setReportData, updateCommentData, updateFilterFail, updateRawData } from '../../../store/reducers/reportReducer';
 import { ReducerType } from '../../../store/reducers';
 import LongQuestionTemplate from '../../../components/molecules/ReportTemplate/LongQuestionTemplate';
 import MultipleQuestionTemplate from '../../../components/molecules/ReportTemplate/MultipleQuestionTemplate';
@@ -113,6 +113,12 @@ const Report = ({ params }) => {
   useEffect(() => {
     refetch();
   }, [filterFail]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetReportData());
+    };
+  }, []);
 
   // 응답자 특성 ref
   const [respondentRef, respondentChildrenRef] = useOnScreen({

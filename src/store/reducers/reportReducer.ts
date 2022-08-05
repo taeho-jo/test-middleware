@@ -22,6 +22,9 @@ export const reportSlice = createSlice({
     setReportData: (state, action) => {
       state.data = action.payload;
     },
+    resetReportData: state => {
+      state.data = null;
+    },
     updateFilterFlied: (state, action) => {
       state.filter.filterFlied = action.payload;
     },
@@ -54,6 +57,7 @@ export const reportSlice = createSlice({
 
 export const {
   setReportData,
+  resetReportData,
   updateFilterFlied,
   updateFilterValues,
   updateFilterFail,
