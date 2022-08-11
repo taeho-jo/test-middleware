@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateIndexId } from '../store/reducers/reportReducer';
+import { ReducerType } from '../store/reducers';
 
 const useOnScreen = option => {
   const dispatch = useDispatch();

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { ReducerType } from '../../../../store/reducers';
 import useOnScreen from '../../../../hooks/useOnScreen';
-import { updateIndexId } from '../../../../store/reducers/reportReducer';
+import { updateIndexId, updateTotalIndexList } from '../../../../store/reducers/reportReducer';
 
 const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const dispatch = useDispatch();
@@ -41,6 +41,30 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
     setDetailSelectIntent(index);
   }, []);
 
+  const filterTotalIndexList = arr => {
+    const totalIndexList = [];
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i]?.detail) {
+        totalIndexList.push(arr[i]?.name);
+        for (let j = 0; j < arr[i].detail.length; j++) {
+          if (arr[i].detail[j]?.name) {
+            const aa = arr[i]?.detail[j]?.name;
+            const splitData = aa.split('-');
+            const id = splitData[1].trim();
+            totalIndexList.push(`기능-${id}`);
+          }
+        }
+      } else {
+        if (arr[i]?.code) {
+          totalIndexList.push(arr[i]?.code);
+        } else {
+          totalIndexList.push(arr[i]?.name);
+        }
+      }
+    }
+    dispatch(updateTotalIndexList(totalIndexList));
+  };
+
   useEffect(() => {
     if (dataList) {
       const missionArr = dataList.filter(el => el.code.includes('S1M'));
@@ -72,9 +96,13 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
 
       if (s1Data) {
         const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr, ...newLongArr];
+
+        filterTotalIndexList([{ name: 'one' }, ...newArr]);
         setIntentList(newArr);
       } else {
         const newArr = [...missionArr, ...otherArr, ...newLongArr];
+
+        filterTotalIndexList([{ name: 'one' }, ...newArr]);
         setIntentList(newArr);
       }
     }

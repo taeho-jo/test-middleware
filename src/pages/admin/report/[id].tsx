@@ -160,8 +160,37 @@ const Report = ({ params }) => {
   const [longQuestionRef, longQuestionChildrenRef] = useOnMultipleScreen({ rootMargin: '72px 0px 0px 0px', threshold: 1 });
   const [multipleQuestionRef, , multipleQuestionChildrenRef] = useOnMultipleScreen({ rootMargin: '72px 0px 0px 0px', threshold: 1 });
 
+  const indexId = useSelector<ReducerType, string>(state => state.report.indexId);
+  const totalIndexList = useSelector<ReducerType, string[]>(state => state.report.totalIndexList);
+
+  const test = () => {
+    const indexNum = totalIndexList.indexOf(indexId);
+    const a = document.getElementById(totalIndexList[indexNum + 1]);
+    a?.scrollIntoView({ behavior: 'smooth' });
+  };
+  const test2 = () => {
+    const indexNum = totalIndexList.indexOf(indexId);
+    const a = document.getElementById(totalIndexList[indexNum - 1]);
+    a?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // useEffect(() => {
+  //   console.log(indexId, 'indexID');
+  //   console.log(totalIndexList, 'totalIndexList');
+  //   console.log(totalIndexList.indexOf(indexId), 'INDEX');
+  // }, [indexId]);
   return (
     <div css={reportContainer} className={'scrollType1'}>
+      <div
+        css={css`
+          position: absolute;
+          bottom: 100px;
+          right: 100px;
+        `}
+      >
+        <button onClick={test2}>up</button>
+        <button onClick={test}>down</button>
+      </div>
       {/*응답자 특성*/}
       <div css={reportSectionBox} className={'scrollType1'}>
         <div id={'one'} ref={respondentRef}>
