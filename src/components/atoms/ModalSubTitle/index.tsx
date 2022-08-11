@@ -31,4 +31,6 @@ const subTitleStyle = css`
 const textStyle = lastChild => css`
   display: inline-block;
   margin-bottom: ${lastChild ? 0 : '8px'};
+  word-break: break-word;
+  white-space: pre-line;
 `;

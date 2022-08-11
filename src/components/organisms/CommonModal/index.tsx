@@ -31,6 +31,10 @@ import ShareReportModal from '../Modal/ShareReportModal';
 import RemoveMemberModal from '../Modal/RemoveMemberModal';
 import ReInviteModal from '../Modal/ReInviteModal';
 import WithdrawalTeamModal from '../Modal/WithdrawalTeamModal';
+import WithdrawalModal from '../Modal/WithdrawalModal';
+import WithdrawalReasonModal from '../Modal/WithdrawalReasonModal';
+import CancelWithdrawalModal from '../Modal/CancelWithdrawalModal';
+import WithdrawalUserSignupModal from '../Modal/WithdrawalUserSignupModal';
 
 const CommonModal = () => {
   const show = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -69,6 +73,10 @@ const CommonModal = () => {
           {modalType === 'originDataModal' && <OriginDataModal />}
           {modalType === 'commentDataModal' && <CommentModal />}
           {modalType === 'shareReportModal' && <ShareReportModal />}
+          {modalType === 'withdrawalModal' && <WithdrawalModal />}
+          {modalType === 'withdrawalReasonModal' && <WithdrawalReasonModal />}
+          {modalType === 'cancelWithdrawalModal' && <CancelWithdrawalModal />}
+          {modalType === 'withdrawalUserSignupModal' && <WithdrawalUserSignupModal />}
         </Modal>
       ) : null}
     </>

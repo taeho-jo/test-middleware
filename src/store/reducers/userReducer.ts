@@ -27,6 +27,12 @@ export interface UserType {
     userId: string;
     userName: string;
   };
+  cancelWithdrawal: boolean;
+  errorMessage: string;
+  withdrawalUserInfo: {
+    userId: string;
+    password: string;
+  };
 }
 
 const initialState: UserType = {
@@ -53,6 +59,12 @@ const initialState: UserType = {
     teamSeq: null,
     userId: '',
     userName: '',
+  },
+  cancelWithdrawal: false,
+  errorMessage: '',
+  withdrawalUserInfo: {
+    userId: '',
+    password: '',
   },
 };
 
@@ -87,8 +99,25 @@ export const userSlice = createSlice({
     setSelectTeamMember: (state, action: PayloadAction<any>) => {
       state.teamMemberInfo = action.payload;
     },
+    updateCancelWithdrawal: (state, action: PayloadAction<boolean>) => {
+      state.cancelWithdrawal = action.payload;
+    },
+    updateErrorMessage: (state, action: PayloadAction<string>) => {
+      state.errorMessage = action.payload;
+    },
+    updateWithdrawalUserInfo: (state, action) => {
+      state.withdrawalUserInfo = action.payload;
+    },
   },
 });
 
-export const { setUserInfo, setEmailConfirm, removeUserInfo, setSelectTeamMember } = userSlice.actions;
+export const {
+  setUserInfo,
+  setEmailConfirm,
+  removeUserInfo,
+  setSelectTeamMember,
+  updateCancelWithdrawal,
+  updateErrorMessage,
+  updateWithdrawalUserInfo,
+} = userSlice.actions;
 export default userSlice.reducer;

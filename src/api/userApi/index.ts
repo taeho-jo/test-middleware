@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import { AXIOS_GET, AXIOS_PATCH } from '../../hooks/useAxios';
+import { AXIOS_BODY_DELETE, AXIOS_GET, AXIOS_PATCH } from '../../hooks/useAxios';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { UpdateUserInfoType } from './types';
@@ -17,6 +17,11 @@ export const fetchInviteUserInfoApi = async (seq, token) => {
 // 사용자 정보 업데이트 API
 export const fetchUserInfoUpdateApi = async sendObject => {
   return await AXIOS_PATCH('/user/update/', sendObject);
+};
+
+// 회원 탈퇴 API
+export const fetchWithdrawalUserApi = async sendObject => {
+  return await AXIOS_BODY_DELETE('/user/secession/', sendObject);
 };
 
 // 팀 초대 사용자 정보 API

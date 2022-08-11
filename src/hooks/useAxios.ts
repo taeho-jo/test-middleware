@@ -66,3 +66,12 @@ export const AXIOS_DELETE = async (url: string) => {
   const { data } = await AXIOS.delete(url, { headers });
   return data;
 };
+export const AXIOS_BODY_DELETE = async (url: string, sendObject: any) => {
+  const headers = getAuthHeader();
+  const config = {
+    headers,
+    data: sendObject,
+  };
+  const { data } = await AXIOS.delete(url, config);
+  return data;
+};

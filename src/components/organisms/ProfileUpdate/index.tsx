@@ -25,7 +25,7 @@ const ProfileUpdate = () => {
   }, []);
 
   const handleWithdrawal = useCallback(() => {
-    console.log('asdfasdfasdf');
+    dispatch(isShow({ isShow: true, type: 'withdrawalModal' }));
   }, []);
 
   return (
@@ -72,16 +72,16 @@ const ProfileUpdate = () => {
           title={'마케팅 수신동의'}
           content={userInfo.consentToUseMarketingYn === 'Y' ? '동의함' : '비동의함'}
           btnText={'수신 동의 수정하기'}
-          showBtn={false}
+          showBtn={true}
         />
         <SettingCard
-          // onClick={showModalFun}
+          // onClick={handleWithdrawal}
           name={'teamNameModify'}
           title={'계정 삭제'}
           content={`${userInfo.userId} 삭제하기`}
           contentColor={colors.red}
           contentEvent={handleWithdrawal}
-          // btnText={'수신 동의 수정하기'}
+          // btnText={'계정 삭제하기'}
           showBtn={false}
         />
       </FlexBox>

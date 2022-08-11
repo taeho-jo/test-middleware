@@ -63,11 +63,7 @@ const ProfileSettingFirst = () => {
         userName: data.userName ? data.userName : userInfo.userName,
         firstTimeYn: 'N',
       };
-      for (const key in sendObject) {
-        if (sendObject[key] === null) {
-          delete sendObject[key];
-        }
-      }
+
       console.log(sendObject);
       mutate(sendObject);
     },
