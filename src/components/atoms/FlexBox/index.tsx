@@ -28,7 +28,7 @@ interface PropsType {
   style?: any;
   // overflow?: any;
   [key: string]: any;
-  // key?: string | number;
+  // key?: any;
 }
 
 const calcWidthPercent = (span: any) => {
@@ -66,7 +66,6 @@ const FlexBox = ({
 PropsType) => {
   return (
     <div
-      // key={key}
       onClick={onClick}
       css={[
         flexBox(

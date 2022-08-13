@@ -16,10 +16,11 @@ const reset = (popupShow, isAdmin, story) => css`
     box-sizing: ${story ? 'auto' : isAdmin ? 'border-box' : 'unset'};
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
       'Malgun Gothic', sans-serif;
+    //font-family: Apple SD Gothic Neo, arial, sans-serif;
   }
   * {
     html {
-      scroll-behavior: smooth;
+      //scroll-behavior: smooth;
     }
     body {
       padding: 0;
