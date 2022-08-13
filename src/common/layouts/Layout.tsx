@@ -114,7 +114,11 @@ const Layout = ({ children }: PropsType) => {
       dispatch(updateFilterFlied(null));
       dispatch(updateFilterValues(null));
       dispatch(updateFilterFail(null));
-      dispatch(isShow({ isShow: false, type: '' }));
+      //TODO: 사이드바에서 클릭 이동 시 모달 뜨는 부분 예외 처리
+      if (Object.keys(router.query)[0] !== 'create') {
+        dispatch(isShow({ isShow: false, type: '' }));
+      }
+
       // if (isReturnPage) {
       //   dispatch(isShow({ isShow: true, type: 'signup' }));
       //   dispatch(updateReturnPage(false));
@@ -141,6 +145,10 @@ const Layout = ({ children }: PropsType) => {
   }, [commonCode]);
 
   useEffect(() => {
+    //TODO: 사이드바에서 클릭 이동 시 모달 뜨는 부분 예외 처리
+    if (Object.keys(router.query)[0] === 'create') {
+      return;
+    }
     if (Object.keys(router.query).length !== 0) {
       dispatch(isShow({ isShow: false, type: '' }));
       const query = router?.query;
@@ -185,7 +193,6 @@ const Layout = ({ children }: PropsType) => {
           dispatch(isShow({ isShow: true, type: 'withdrawalUserSignupModal' }));
           dispatch(updateCancelWithdrawal(true));
         }
-        console.log(result, '!!!!!!!!!!!!!!!!!!!');
       }
 
       // 1. 쿼리스트링 받아옴

@@ -26,7 +26,8 @@ const makeStore: MakeStore<any> = () => {
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(logger),
+      }),
+    // .concat(logger),
   });
 
   const persistor = persistStore(store);
