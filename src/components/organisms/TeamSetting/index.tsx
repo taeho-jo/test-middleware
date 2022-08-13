@@ -39,6 +39,12 @@ const TeamSetting = () => {
     }
   }, [userInfo, selectTeamList]);
 
+  useEffect(() => {
+    if (router.query?.create) {
+      dispatch(isShow({ isShow: true, type: `${router.query?.create}` }));
+    }
+  }, [router.query.create]);
+
   // ============ React Query ============ //
   const { data: productData, refetch } = useQuery(['fetchProductList', teamSeq], () => fetchProductListApi(teamSeq), {
     enabled: !!teamSeq,

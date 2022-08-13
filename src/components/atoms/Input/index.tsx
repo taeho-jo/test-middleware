@@ -53,6 +53,7 @@ const Input = ({
         disabled={disabled}
         id={label}
         name={label}
+        // value={'asdfasdf'}
         {...props}
         {...register(label, registerOptions)}
       />

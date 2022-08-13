@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import IconTextButton from '../../atoms/Button/IconTextButton';
 
 interface PropsType {
-  title: string;
+  title?: string;
   btnText: string;
   style?: any;
   onClick?: () => void;
@@ -13,7 +13,7 @@ interface PropsType {
 const ConfirmPopupNextStepBtn = ({ title, onClick, style, btnText }: PropsType) => {
   return (
     <div css={[mainBoxStyle, style]} onClick={onClick}>
-      <h4 css={[heading4_bold, titleBoxStyle]}>{title}</h4>
+      {title && <h4 css={[heading4_bold, titleBoxStyle]}>{title}</h4>}
       <IconTextButton text={btnText} name={'NAVIGATION_CHEVRON_RIGHT'} />
     </div>
   );

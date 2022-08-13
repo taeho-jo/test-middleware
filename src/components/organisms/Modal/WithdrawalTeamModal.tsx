@@ -46,6 +46,7 @@ const WithdrawalTeamModal = () => {
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
       <PopupBox padding={'0px'} width={'392px'} height={'auto'}>
         <ModalTitle
+          closed={false}
           style={{ height: 'auto', padding: '24px 32px' }}
           title={
             <>

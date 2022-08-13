@@ -33,7 +33,10 @@ const SettingCard = ({ title, content, btnText, showBtn = false, style, onClick,
     >
       <FlexBox style={{ flex: 1 }} justify={'flex-start'} direction={'column'} align={'flex-start'}>
         <span css={[heading5_regular, { marginBottom: '10px', color: colors.grey._99 }]}>{title}</span>
-        <span onClick={handleWithdrawal} css={[heading5_bold, { color: props.contentColor ? props.contentColor : '' }]}>
+        <span
+          onClick={handleWithdrawal}
+          css={[heading5_bold, { cursor: props.contentEvent ? 'pointer' : '', color: props.contentColor ? props.contentColor : '' }]}
+        >
           {content}
         </span>
       </FlexBox>
