@@ -74,7 +74,7 @@ const Layout = ({ children }: PropsType) => {
   });
 
   const { mutate, data: confirmData } = useMutation(['fetchEmailConfirm'], fetchEmailConfirmApi, {
-    onError: e => console.log('error:::', e),
+    onError: e => console.log('error::', e),
     onSuccess: data => {
       dispatch(isShow({ isShow: false, type: '' }));
       refetch();
