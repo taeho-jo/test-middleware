@@ -87,7 +87,6 @@ const SignupModal = () => {
       password,
       userName: userId.split('@')[0],
       privacyConsentYn: 'Y',
-      consentToUseMarketingYn: 'Y',
       emailTemplateName: EMAIL_CONFIRM_TEMPLATE,
     };
     signupMutate(sendObject);
@@ -95,7 +94,7 @@ const SignupModal = () => {
 
   // 구글 로그인
   const loginWithGoogle = useCallback(() => {
-    router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
+    router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=register`);
   }, []);
 
   // 회원가입 시도 실패

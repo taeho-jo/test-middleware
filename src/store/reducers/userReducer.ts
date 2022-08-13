@@ -28,7 +28,7 @@ export interface UserType {
     userName: string;
   };
   cancelWithdrawal: boolean;
-  errorMessage: string;
+  errorMessage: string | string[];
   withdrawalUserInfo: {
     userId: string;
     password: string;
@@ -102,7 +102,7 @@ export const userSlice = createSlice({
     updateCancelWithdrawal: (state, action: PayloadAction<boolean>) => {
       state.cancelWithdrawal = action.payload;
     },
-    updateErrorMessage: (state, action: PayloadAction<string>) => {
+    updateErrorMessage: (state, action: PayloadAction<string | string[]>) => {
       state.errorMessage = action.payload;
     },
     updateWithdrawalUserInfo: (state, action) => {

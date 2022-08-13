@@ -23,6 +23,7 @@ import { InputType } from '../../../common/types/commonTypes';
 import Select from '../../atoms/Select';
 import { useMutation } from 'react-query';
 import { setUserInfo } from '../../../store/reducers/userReducer';
+import CheckBox from '../../atoms/CheckBox';
 
 const ProfileSettingFirst = () => {
   const router = useRouter();
@@ -57,14 +58,19 @@ const ProfileSettingFirst = () => {
     (status, data) => {
       // loginResponse.mutate(data);
       const sendObject = {
+        userName: data.userName ? data.userName : userInfo.userName,
         funnelsType: selected.funnelsCd ? selected.funnelsCd : null,
         cpPositionType: selected.cpPosition ? selected.cpPosition : null,
         cpSizeType: selected.cpSize ? selected.cpSize : null,
-        userName: data.userName ? data.userName : userInfo.userName,
         firstTimeYn: 'N',
+        consentToUseMarketingYn: data.agree ? 'Y' : 'N',
       };
-
-      console.log(sendObject);
+      // TODO: 다 보내야 하는 지 체크 해보아야함.
+      // for (const key in sendObject) {
+      //   if (sendObject[key] === undefined || sendObject[key] === '' || sendObject[key] === null) {
+      //     delete sendObject[key];
+      //   }
+      // }
       mutate(sendObject);
     },
     [selected],
@@ -88,7 +94,13 @@ const ProfileSettingFirst = () => {
     <FlexBox style={{ marginTop: '160px', height: '100%' }} justify={'flex-start'} direction={'column'}>
       <PopupBox padding={'0'} width={'434px'} height={'auto'}>
         <ModalTitle style={{ padding: '24px 32px 0' }} closed={false} title={`반가워요. ${userInfo?.userName} 님!`} titlePosition={'center'} />
-        <ModalTitle style={{ padding: '5px 32px 24px' }} closed={false} title={`계정과 관련해서 몇 가지 질문드릴게요.`} titlePosition={'center'} />
+        <ModalTitle
+          whiteSpace={'nowrap'}
+          style={{ padding: '5px 32px 24px' }}
+          closed={false}
+          title={`계정과 관련해서 몇 가지 질문드릴게요.`}
+          titlePosition={'center'}
+        />
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
           <Input
             title={'닉네임'}
@@ -136,9 +148,23 @@ const ProfileSettingFirst = () => {
             name="funnelsCd"
             onClick={onClickValue}
           />
+          <CheckBox
+            style={{ marginTop: '42px', marginBottom: '10px' }}
+            inputName={'agree'}
+            label={'프로모션 정보 수신에 동의합니다.(선택)'}
+            register={register}
+            errors={errors}
+          />
+          <AnnouncementBox
+            style={{ padding: '12px 16px' }}
+            content={`<div>
+                Diby에서 제공하는 유저 리서치 관련 아티클을 포함한<br/>
+                혜택 등 다양한 정보를 이메일로 받아보실 수 있습니다.
+              </div>`}
+          />
 
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton theme={'dark'} type={'submit'} text={'완료하기'} style={{ marginBottom: '18px' }} />
+            <BasicButton theme={'dark'} type={'submit'} text={'적용하기'} style={{ marginBottom: '18px' }} />
           </FlexBox>
         </Form>
         {/*<FlexBox justify={'center'} align={'center'}>*/}

@@ -35,6 +35,7 @@ import WithdrawalModal from '../Modal/WithdrawalModal';
 import WithdrawalReasonModal from '../Modal/WithdrawalReasonModal';
 import CancelWithdrawalModal from '../Modal/CancelWithdrawalModal';
 import WithdrawalUserSignupModal from '../Modal/WithdrawalUserSignupModal';
+import ConsentToUseMarketingAgreeModal from '../Modal/ConsentToUseMarketingAgreeModal';
 
 const CommonModal = () => {
   const show = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -67,6 +68,7 @@ const CommonModal = () => {
           {modalType === 'profileNickName' && <ProfileUpdateNickNameModal />}
           {modalType === 'profileCpPosition' && <ProfileUpdateCpPositionModal />}
           {modalType === 'profileCpSize' && <ProfileUpdateCpSize />}
+          {modalType === 'consentToUseMarketingAgreeModal' && <ConsentToUseMarketingAgreeModal />}
           {modalType === 'fatalityInfo' && <FatalityInfoModal />}
           {modalType === 'usabilityAssessmentInfo' && <UsabilityAssessmentInfo />}
           {modalType === 'recommendedCustomerIndexModal' && <RecommendedCustomerIndexModal />}

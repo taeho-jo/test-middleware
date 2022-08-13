@@ -51,6 +51,13 @@ const ProfileUpdate = () => {
           showBtn={false}
         />
         <SettingCard
+          // onClick={showModalFun}
+          name={'credit'}
+          title={'보유 크레딧'}
+          content={userInfo?.remainingCredit ? `${userInfo?.remainingCredit?.toLocaleString()}원` : '0원'}
+          showBtn={false}
+        />
+        <SettingCard
           onClick={showModalFun}
           name={'profileCpPosition'}
           title={'직무'}
@@ -67,10 +74,14 @@ const ProfileUpdate = () => {
           showBtn={true}
         />
         <SettingCard
-          // onClick={showModalFun}
-          name={'teamNameModify'}
+          onClick={showModalFun}
+          name={'consentToUseMarketingAgreeModal'}
           title={'마케팅 수신동의'}
-          content={userInfo.consentToUseMarketingYn === 'Y' ? '동의함' : '비동의함'}
+          content={
+            userInfo.consentToUseMarketingYn === 'Y'
+              ? `${userInfo?.consentToUseMarketingDt}에 수신 동의하셨습니다.`
+              : `${userInfo?.consentToUseMarketingDt}에 수신 거부하셨습니다.`
+          }
           btnText={'수신 동의 수정하기'}
           showBtn={true}
         />

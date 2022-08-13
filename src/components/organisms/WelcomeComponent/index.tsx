@@ -103,7 +103,6 @@ const WelcomeComponent = () => {
             password,
             userName: userId.split('@')[0],
             privacyConsentYn: 'Y',
-            consentToUseMarketingYn: 'Y',
             emailTemplateName: INVITE_CONFIRM_EMAIL_TEMPLATE,
             teamSeq: teamSeq,
           };
@@ -113,7 +112,6 @@ const WelcomeComponent = () => {
             password,
             userName: userId.split('@')[0],
             privacyConsentYn: 'Y',
-            consentToUseMarketingYn: 'Y',
             emailTemplateName: INVITE_CONFIRM_EMAIL_TEMPLATE,
           };
         }

@@ -17,7 +17,7 @@ import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // API
 import { fetchCommonCodeApi, fetchEmailConfirmApi, fetchRefreshToken } from '../../api/authApi';
 import { fetchInviteUserInfoApi, fetchUserInfoApi } from '../../api/userApi';
-import { setUserInfo, UserInfoType } from '../../store/reducers/userReducer';
+import { setUserInfo, updateCancelWithdrawal, updateErrorMessage, UserInfoType } from '../../store/reducers/userReducer';
 import { isShow, updateReturnPage } from '../../store/reducers/modalReducer';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import ReportLayout from './ReportLayout';
@@ -144,31 +144,48 @@ const Layout = ({ children }: PropsType) => {
     if (Object.keys(router.query).length !== 0) {
       dispatch(isShow({ isShow: false, type: '' }));
       const query = router?.query;
-      const { token, userId, type, teamSeq, replace } = query;
+      const { token, userId, type, teamSeq, replace, result, requestView } = query;
 
       // 구글로그인 했거나, 초대받은사람이 로그인하거나
-      if (token && !userId && type && !teamSeq) {
+      if (token && !userId && type && !teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
         // dispatch(setSetting(true));
         refetch();
       }
-      if (token && !userId && !type && !teamSeq) {
-        localStorage.setItem('accessToken', `${token}`);
-        mutate();
-      }
-      if (token && !userId && type && teamSeq) {
+      if (token && !userId && type && !teamSeq && !result && requestView) {
         localStorage.setItem('accessToken', `${token}`);
         inviteRefetch();
       }
-      if (token && !userId && !type && teamSeq) {
+      if (token && !userId && !type && !teamSeq && !result && !requestView) {
+        localStorage.setItem('accessToken', `${token}`);
+        mutate();
+      }
+      if (token && !userId && type && teamSeq && !result && !requestView) {
+        localStorage.setItem('accessToken', `${token}`);
+        inviteRefetch();
+      }
+      if (token && !userId && !type && teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
         mutate();
         inviteRefetch();
       }
-      if (token && userId && !type && !teamSeq) {
+      if (token && userId && !type && !teamSeq && !result && !requestView) {
         sessionStorage.setItem('accessToken', `${token}`);
         sessionStorage.setItem('userId', `${userId}`);
         router.push('/admin/reset-password');
+      }
+      if (!token && !userId && type && !teamSeq && result && requestView) {
+        dispatch(showToast({ message: result, isShow: true, status: 'warning', duration: 5000 }));
+        if (requestView === 'login') {
+          dispatch(isShow({ isShow: true, type: 'cancelWithdrawalModal' }));
+          dispatch(updateCancelWithdrawal(true));
+        }
+        if (requestView === 'register') {
+          dispatch(updateErrorMessage(result));
+          dispatch(isShow({ isShow: true, type: 'withdrawalUserSignupModal' }));
+          dispatch(updateCancelWithdrawal(true));
+        }
+        console.log(result, '!!!!!!!!!!!!!!!!!!!');
       }
 
       // 1. 쿼리스트링 받아옴
