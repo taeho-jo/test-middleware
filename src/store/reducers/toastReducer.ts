@@ -3,7 +3,7 @@ import { v4 as uuid_v4 } from 'uuid';
 
 export interface ToastType {
   id?: string;
-  message: string;
+  message: string | string[];
   isShow: boolean;
   status: string;
   duration?: number;

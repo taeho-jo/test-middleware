@@ -29,7 +29,7 @@ import { fetchUserInfoApi } from '../../../api/userApi';
 import { CURRENT_DOMAIN, EMAIL_CONFIRM_TEMPLATE } from '../../../common/util/commonVar';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { setToken } from '../../../store/reducers/authReducer';
-import { setUserInfo } from '../../../store/reducers/userReducer';
+import { setUserInfo, updateCancelWithdrawal, updateErrorMessage } from '../../../store/reducers/userReducer';
 import AnnouncementBox from '../../molecules/AnnouncementBox';
 
 // const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
@@ -60,6 +60,9 @@ const SignupModal = () => {
     onError: (e: any) => {
       const { data } = e.response;
       dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
+      dispatch(updateErrorMessage(data.message));
+      dispatch(updateCancelWithdrawal(true));
+      dispatch(isShow({ isShow: true, type: 'withdrawalUserSignupModal' }));
     },
   });
 
@@ -84,7 +87,6 @@ const SignupModal = () => {
       password,
       userName: userId.split('@')[0],
       privacyConsentYn: 'Y',
-      consentToUseMarketingYn: 'Y',
       emailTemplateName: EMAIL_CONFIRM_TEMPLATE,
     };
     signupMutate(sendObject);
@@ -92,7 +94,7 @@ const SignupModal = () => {
 
   // 구글 로그인
   const loginWithGoogle = useCallback(() => {
-    router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
+    router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=register`);
   }, []);
 
   // 회원가입 시도 실패

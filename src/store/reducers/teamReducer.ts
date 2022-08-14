@@ -37,6 +37,7 @@ export interface TeamType {
   selectTeamList: TeamListType[] | null;
   selectTeamSeq: number | null;
   selectProduct: TeamProductType | null;
+  sidebarTeamProductInfo: TeamProductType[] | null;
 }
 
 const initialState: TeamType = {
@@ -46,6 +47,7 @@ const initialState: TeamType = {
   selectTeamList: null,
   selectTeamSeq: null,
   selectProduct: null,
+  sidebarTeamProductInfo: null,
 };
 
 export const teamSlice = createSlice({
@@ -72,8 +74,12 @@ export const teamSlice = createSlice({
     updateTeamSeq: (state, action: PayloadAction<number | null>) => {
       state.selectTeamSeq = action.payload;
     },
+    updateSidebarTeamProductInfo: (state, action: PayloadAction<TeamProductType[]>) => {
+      state.sidebarTeamProductInfo = action.payload;
+    },
   },
 });
 
-export const { updateTeamInfo, updateTeamCreateModal, updateSelectProductList, updateTeamSeq, updateSelectTeamList } = teamSlice.actions;
+export const { updateTeamInfo, updateTeamCreateModal, updateSelectProductList, updateTeamSeq, updateSelectTeamList, updateSidebarTeamProductInfo } =
+  teamSlice.actions;
 export default teamSlice.reducer;
