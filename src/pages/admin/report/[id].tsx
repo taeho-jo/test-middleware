@@ -163,13 +163,11 @@ const Report = ({ params }) => {
 
   const scrollDown = () => {
     const indexNum = totalIndexList.indexOf(indexId);
-    console.log(totalIndexList[indexNum + 1]);
     const a = document.getElementById(totalIndexList[indexNum + 1]);
     a?.scrollIntoView({ behavior: 'smooth' });
   };
   const scrollUp = () => {
     const indexNum = totalIndexList.indexOf(indexId);
-    console.log(totalIndexList[indexNum - 1]);
     const a = document.getElementById(totalIndexList[indexNum - 1]);
     a?.scrollIntoView({ behavior: 'smooth' });
   };

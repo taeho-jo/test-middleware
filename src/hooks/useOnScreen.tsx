@@ -13,9 +13,10 @@ const useOnScreen = option => {
     const [entry] = entries;
 
     if (entry.isIntersecting) {
+      const bodyStyle = document.getElementById(entry.target.id);
       dispatch(updateIndexId(entry.target.id));
 
-      childrenRef?.current?.scrollTo(0, 0);
+      childrenRef?.current?.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
   };
   // const bodyStyle = document.getElementById('reportBoxArea');

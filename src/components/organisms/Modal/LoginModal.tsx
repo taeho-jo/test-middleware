@@ -26,7 +26,7 @@ import { body3_medium } from '../../../styles/FontStyles';
 import { InputType } from '../../../common/types/commonTypes';
 import { fetchUserInfoApi } from '../../../api/userApi';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { setToken } from '../../../store/reducers/authReducer';
+import { setToken, updateLoginType } from '../../../store/reducers/authReducer';
 import { setUserInfo, updateCancelWithdrawal, updateWithdrawalUserInfo } from '../../../store/reducers/userReducer';
 
 const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
@@ -78,6 +78,7 @@ const LoginModal = () => {
           password: data.password,
         }),
       );
+      dispatch(updateLoginType('email'));
       const sendObject = {
         userId: data.userId,
         password: data.password,
@@ -96,14 +97,11 @@ const LoginModal = () => {
   const loginWithGoogle = useCallback(() => {
     // router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
     if (isWithdrawalUser) {
-      console.log(
-        `${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login&userDelWithdraw=Y`,
-        '`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login&userDelWithdraw=Y`',
-      );
       router.push(
         `${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login&userDelWithdraw=Y`,
       );
     } else {
+      dispatch(updateLoginType('google'));
       router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login`);
     }
   }, [isWithdrawalUser]);
