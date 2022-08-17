@@ -11,9 +11,11 @@ import { useMutation } from 'react-query';
 import { fetchUserInfoUpdateApi } from '../../../api/userApi';
 import { setUserInfo } from '../../../store/reducers/userReducer';
 import { colors } from '../../../styles/Common.styles';
+import { useRouter } from 'next/router';
 
 const ProfileUpdate = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const commonCode = useSelector<ReducerType, any>(state => state.common.commonCode);
 
@@ -51,11 +53,12 @@ const ProfileUpdate = () => {
           showBtn={false}
         />
         <SettingCard
-          // onClick={showModalFun}
+          onClick={() => router.push('/admin/profile/credit')}
           name={'credit'}
           title={'보유 크레딧'}
           content={userInfo?.remainingCredit ? `${userInfo?.remainingCredit?.toLocaleString()}원` : '0원'}
-          showBtn={false}
+          btnText={'크레딧 내역보기'}
+          showBtn={true}
         />
         <SettingCard
           onClick={showModalFun}
