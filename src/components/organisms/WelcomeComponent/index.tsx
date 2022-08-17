@@ -20,7 +20,7 @@ import { body3_medium } from '../../../styles/FontStyles';
 import TextButton from '../../atoms/Button/TextButton';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { fetchInviteUserInfoApi, fetchUserInfoApi } from '../../../api/userApi';
-import { setUserInfo } from '../../../store/reducers/userReducer';
+import { setUserInfo, updateCancelWithdrawal } from '../../../store/reducers/userReducer';
 import AnnouncementBox from '../../molecules/AnnouncementBox';
 
 const WelcomeComponent = () => {

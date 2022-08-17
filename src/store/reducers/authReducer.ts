@@ -4,6 +4,7 @@ export interface AuthType {
   accessToken: string;
   email: string;
   isRefreshToken: boolean;
+  loginType: string;
   // userInfo: {};
 }
 
@@ -11,6 +12,7 @@ const initialState: AuthType = {
   accessToken: '',
   email: '',
   isRefreshToken: false,
+  loginType: '',
 };
 
 export const authSlice = createSlice({
@@ -27,8 +29,14 @@ export const authSlice = createSlice({
     updateIsRefreshTokenStatus: (state, action) => {
       state.isRefreshToken = action.payload;
     },
+    updateLoginType: (state, action: PayloadAction<string>) => {
+      state.loginType = action.payload;
+    },
+    resetLoginType: state => {
+      state.loginType = '';
+    },
   },
 });
 
-export const { setToken, resetToken, updateIsRefreshTokenStatus } = authSlice.actions;
+export const { setToken, resetToken, updateIsRefreshTokenStatus, updateLoginType, resetLoginType } = authSlice.actions;
 export default authSlice.reducer;
