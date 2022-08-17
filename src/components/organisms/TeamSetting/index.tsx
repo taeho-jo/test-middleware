@@ -11,6 +11,7 @@ import { fetchProductListApi } from '../../../api/teamApi';
 import { useRouter } from 'next/router';
 import { useQuery, useQueryClient } from 'react-query';
 import { fetchRefreshToken } from '../../../api/authApi';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 const TeamSetting = () => {
   const queryClient = useQueryClient();
@@ -55,7 +56,7 @@ const TeamSetting = () => {
         queryClient.invalidateQueries(['fetchProductList', teamSeq]);
       }
       if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       }
     },

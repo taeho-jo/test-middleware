@@ -17,6 +17,7 @@ import icon2 from '../../public/assets/images/icon_uxposition1.png';
 import icon3 from '../../public/assets/images/icon_scenario1.png';
 import icon4 from '../../public/assets/images/icon_customer1.png';
 import { ReducerType } from '../../src/store/reducers';
+import { clearLocalStorage } from '../../src/common/util/commonFunc';
 
 const AppBarButton = styled(Button)({
   fontWeight: '700',
@@ -151,7 +152,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                   <DesignButton
                     style={{ color: darkMode ? 'white' : '#3c3c46' }}
                     onClick={() => {
-                      localStorage.clear();
+                      clearLocalStorage();
                       navigate.push('/');
                     }}
                   >
@@ -312,7 +313,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
               <DesignButton
                 style={{ color: darkMode ? '#3c3c46' : 'white' }}
                 onClick={() => {
-                  localStorage.clear();
+                  clearLocalStorage();
                   navigate.push('/');
                 }}
               >

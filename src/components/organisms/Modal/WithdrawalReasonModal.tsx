@@ -18,6 +18,7 @@ import { fetchUserInfoUpdateApi, fetchWithdrawalUserApi } from '../../../api/use
 import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
 import { useRouter } from 'next/router';
 import { showToast } from '../../../store/reducers/toastReducer';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 const WithdrawalReasonModal = () => {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const WithdrawalReasonModal = () => {
       console.log(data);
       dispatch(isShow({ isShow: false, type: '' }));
       if (data.message === 'SUCCESS') {
-        localStorage.clear();
+        clearLocalStorage();
         dispatch(updateQueryStatus({ name: 'userInfoQuery', status: false }));
         dispatch(showToast({ message: '회원 탈퇴 처리 되었습니다.', isShow: true, status: 'success', duration: 5000 }));
         router.push('/');

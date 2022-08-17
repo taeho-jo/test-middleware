@@ -17,6 +17,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import { fetchProductListApi } from '../../../api/teamApi';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 // Dummy
 
@@ -41,7 +42,7 @@ const AdminSideBar = () => {
         queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
       }
       if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       }
     },

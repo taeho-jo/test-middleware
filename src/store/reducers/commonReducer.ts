@@ -2,10 +2,20 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface CounterType {
   commonCode: any;
+  indicator: {
+    share: string;
+    graph: string;
+    originData: string;
+  };
 }
 
 const initialState: CounterType = {
   commonCode: [],
+  indicator: {
+    share: 'N',
+    graph: 'N',
+    originData: 'N',
+  },
 };
 
 export const commonSlice = createSlice({
@@ -15,8 +25,21 @@ export const commonSlice = createSlice({
     updateCommonCode: (state, action: PayloadAction<any>) => {
       state.commonCode = action.payload;
     },
+    updateInitIndicator: (state, action: PayloadAction<any>) => {
+      state.indicator = action.payload;
+    },
+    updateIndicatorStatus: (state, action: PayloadAction<any>) => {
+      state.indicator[action.payload.key] = action.payload.value;
+    },
+    resetIndicatorStatus: state => {
+      state.indicator = {
+        share: 'N',
+        graph: 'N',
+        originData: 'N',
+      };
+    },
   },
 });
 
-export const { updateCommonCode } = commonSlice.actions;
+export const { updateCommonCode, updateInitIndicator, updateIndicatorStatus, resetIndicatorStatus } = commonSlice.actions;
 export default commonSlice.reducer;

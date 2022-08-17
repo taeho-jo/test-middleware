@@ -38,13 +38,7 @@ const MissionDetailTemplate = ({ dataList, modalControl, item }) => {
   );
 
   return (
-    <div
-      css={css`
-        overflow-y: scroll;
-        height: calc(100vh - 136px);
-      `}
-      className={'scrollType1'}
-    >
+    <>
       <FlexBox style={{ ...graphBosStyle, overflow: 'unset' }} justify={'center'} align={'flex-start'} overflow={'unset'}>
         <FlexBox style={{ ...graphAreaStyle, overflow: 'unset' }} direction={'column'}>
           <div id={dataList.name} css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
@@ -155,7 +149,7 @@ const MissionDetailTemplate = ({ dataList, modalControl, item }) => {
           </FlexBox>
         </FlexBox>
       </FlexBox>
-    </div>
+    </>
   );
 };
 

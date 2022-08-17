@@ -4,6 +4,10 @@ import FlexBox from '../../FlexBox';
 import { heading5_bold, heading5_regular } from '../../../../styles/FontStyles';
 import ReportShortAnswerQuestionLayerPopup from '../../ReportShortAnswerQuestionLayerPopup';
 import { chart_color } from '../../../../styles/Common.styles';
+import TutorialIndicator from '../../TutorialIndicator/TutorialIndicator';
+import { useSelector } from 'react-redux';
+import { ReducerType } from '../../../../store/reducers';
+import { useRouter } from 'next/router';
 
 interface PropsType {
   dataList: any;
@@ -32,6 +36,8 @@ const StackedBarChart = ({
   count,
   ...props
 }: PropsType) => {
+  const indicatorStatus = useSelector<ReducerType, any>(state => state.common.indicator);
+  const { share } = useRouter().query;
   const [renderDataList, setRenderDataList] = useState(null);
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -104,6 +110,31 @@ const StackedBarChart = ({
             {rate ? <span css={[heading5_bold, { color: '#68a0f4', paddingRight: '10px' }]}>{rate}</span> : ''}
           </div>
         </FlexBox>
+        {share === undefined && props.detailIndex === 0 && indicatorStatus.graph === 'N' && (
+          <TutorialIndicator
+            name={'graph'}
+            left={'-17px'}
+            top={'12px'}
+            modalTitle={'주관식 응답'}
+            modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n그래프를 클릭하여 주관식응답을 볼 수 있어요.`}
+            modalTop={'60px'}
+            modalLeft={'-10px'}
+          />
+        )}
+
+        {share && props.detailIndex === 0 && indicatorStatus.graph === 'N' && (
+          <TutorialIndicator
+            share={share}
+            name={'graph'}
+            left={'-17px'}
+            top={'12px'}
+            modalTitle={'주관식 응답'}
+            modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n그래프를 클릭하여 주관식응답을 볼 수 있어요.`}
+            modalTop={'60px'}
+            modalLeft={'-10px'}
+          />
+        )}
+
         <ResponsiveContainer width={'100%'} height={50}>
           {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
           {/* @ts-ignore */}

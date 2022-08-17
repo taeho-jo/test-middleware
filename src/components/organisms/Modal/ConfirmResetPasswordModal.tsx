@@ -11,6 +11,7 @@ import { fetchRefreshToken, fetchResetPasswordEmailApi } from '../../../api/auth
 import { isShow } from '../../../store/reducers/modalReducer';
 import { PASSWORD_RESET_TEMPLATE } from '../../../common/util/commonVar';
 import { useRouter } from 'next/router';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 const ConfirmResetPasswordModal = () => {
   const queryClient = useQueryClient();
@@ -31,7 +32,7 @@ const ConfirmResetPasswordModal = () => {
         mutate(sendObject);
         queryClient.invalidateQueries();
       } else if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       } else {
         dispatch(showToast({ message: '비밀번호 재설정 메일 재발송에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));

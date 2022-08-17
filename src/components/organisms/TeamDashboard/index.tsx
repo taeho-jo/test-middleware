@@ -23,6 +23,7 @@ import { fetchTeamListApi, fetchTeamReportListApi } from '../../../api/teamApi';
 import { updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { updateProjectName } from '../../../store/reducers/reportReducer';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 const ResearchType = [
   {
@@ -89,7 +90,7 @@ const TeamDashboard = () => {
         queryClient.invalidateQueries(['fetchTeamList']);
       }
       if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       }
     },
@@ -103,7 +104,7 @@ const TeamDashboard = () => {
         refetch();
       }
       if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       }
     },

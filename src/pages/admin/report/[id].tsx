@@ -1,13 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
-import {
-  AddOnFeature,
-  GeneralScaleTypeTemplate,
-  RespondentAttributesTemplate,
-  ServiceOverallUsabilityTemplate,
-  UiOverallSummaryTemplate,
-  UsabilityByFeatureTemplate,
-} from '../../../components/molecules/ReportTemplate';
+import { GeneralScaleTypeTemplate, ServiceOverallUsabilityTemplate } from '../../../components/molecules/ReportTemplate';
 import { useQuery, useQueryClient } from 'react-query';
 import { fetchReportDetail, fetchReportShare } from '../../../api/reportApi';
 import { fetchRefreshToken } from '../../../api/authApi';
@@ -28,17 +21,22 @@ import {
 } from '../../../components/template/ReportTemplate';
 import ReportTemplateHeader from '../../../components/molecules/ReportTemplate/ReportTemplateHeader';
 import UiTestFullSummaryTemplate from '../../../components/template/ReportTemplate/UiTestFullSummaryTemplate';
-import { heading1_bold } from '../../../styles/FontStyles';
-import { colors } from '../../../styles/Common.styles';
 import useOnScreen from '../../../hooks/useOnScreen';
 import useOnMultipleScreen from '../../../hooks/useOnMultipleScreen';
-import { Scroller, Section } from 'react-fully-scrolled';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
+
+import reportNavigationTop from '/public/assets/png/reportNavigationTop.png';
+import reportNavigationBottom from '/public/assets/png/reportNavigationBotton.png';
+import Image from 'next/image';
+
 const Report = ({ params }) => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const { id } = params;
   const { share } = router.query;
+
+  // console.log(y, '###########');
 
   const filterFlied = useSelector<ReducerType, any>(state => state.report.filter.filterFlied);
   const filterValues = useSelector<ReducerType, any>(state => state.report.filter.filterValues);
@@ -77,7 +75,7 @@ const Report = ({ params }) => {
           queryClient.invalidateQueries(['fetchReportDetail', id]);
         }
         if (errorData?.code === 'E0007' || errorData?.code === 'E0002') {
-          localStorage.clear();
+          clearLocalStorage();
           router.push('/');
         }
       },
@@ -137,7 +135,7 @@ const Report = ({ params }) => {
   });
   // 기능별 상세 내용 ref
   const [testRef, testChildrenRef] = useOnMultipleScreen({
-    rootMargin: '72px 0px 0px 0px',
+    // rootMargin: '150px 0px 0px 0px',
     threshold: 1,
   });
   // 서비스 전체 사용성 평가 ref
@@ -163,33 +161,43 @@ const Report = ({ params }) => {
   const indexId = useSelector<ReducerType, string>(state => state.report.indexId);
   const totalIndexList = useSelector<ReducerType, string[]>(state => state.report.totalIndexList);
 
-  const test = () => {
+  const scrollDown = () => {
     const indexNum = totalIndexList.indexOf(indexId);
+    console.log(totalIndexList[indexNum + 1]);
     const a = document.getElementById(totalIndexList[indexNum + 1]);
     a?.scrollIntoView({ behavior: 'smooth' });
   };
-  const test2 = () => {
+  const scrollUp = () => {
     const indexNum = totalIndexList.indexOf(indexId);
+    console.log(totalIndexList[indexNum - 1]);
     const a = document.getElementById(totalIndexList[indexNum - 1]);
     a?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // useEffect(() => {
-  //   console.log(indexId, 'indexID');
-  //   console.log(totalIndexList, 'totalIndexList');
-  //   console.log(totalIndexList.indexOf(indexId), 'INDEX');
-  // }, [indexId]);
+  const featureDetailArr = data?.S1?.uiSummerySection?.missionFatality?.map(item => item.missionFunctionFatality.map(child => ({ ...child }))).flat();
+
   return (
     <div css={reportContainer} className={'scrollType1'}>
       <div
         css={css`
           position: absolute;
-          bottom: 100px;
-          right: 100px;
+          bottom: 40px;
+          right: 40px;
+          z-index: 1000;
+          width: 76px;
+          display: flex;
+          justify-content: space-between;
         `}
       >
-        <button onClick={test2}>up</button>
-        <button onClick={test}>down</button>
+        <Image style={{ cursor: 'pointer' }} onClick={scrollUp} src={reportNavigationTop} alt={'reportNavigationTop'} width={36} height={36} />
+        <Image
+          style={{ cursor: 'pointer' }}
+          onClick={scrollDown}
+          src={reportNavigationBottom}
+          alt={'reportNavigationBottom'}
+          width={36}
+          height={36}
+        />
       </div>
       {/*응답자 특성*/}
       <div css={reportSectionBox} className={'scrollType1'}>
@@ -264,8 +272,8 @@ const Report = ({ params }) => {
         data?.S1?.uiSummerySection?.missionFatality?.map((item, index) => {
           return (
             <>
-              <div key={`${item.name}`} css={reportSectionBox} className={'scrollType1'}>
-                <div id={item.name} ref={el => (missionRef.current[index] = el)}>
+              <div id={item.name} ref={el => (missionRef.current[index] = el)} key={`${item.name}`} css={reportSectionBox} className={'scrollType1'}>
+                <div>
                   <ReportTemplateHeader
                     title={`[미션 ${index + 1}. ${item.name}]의 기능별 사용성 비교`}
                     handleChangeCheckBox={handleChangeCheckBox}
@@ -278,7 +286,7 @@ const Report = ({ params }) => {
                   />
                 </div>
                 <div css={chartSectionBox}>
-                  <div css={chartBox} className={'scrollType1'}>
+                  <div css={chartBox} className={'scrollType1'} ref={el => (missionChildrenRef.current[index] = el)}>
                     <MissionUsabilityTemplate
                       modalControl={modalControl}
                       handleChangeCheckBox={handleChangeCheckBox}
@@ -292,9 +300,16 @@ const Report = ({ params }) => {
                 </div>
               </div>
               {item.missionFunctionFatality.map((el, idx) => {
+                const childrenIndex = featureDetailArr?.findIndex(count => count.name === el.name);
                 return (
-                  <div key={`기능-${item.name}`} css={reportSectionBox} className={'scrollType1'}>
-                    <div id={`기능-${el.name}`} ref={ele => testRef.current.push(ele)}>
+                  <div
+                    id={`기능-${el.name}`}
+                    ref={ele => (testRef.current[childrenIndex] = ele)}
+                    key={`기능-${item.name}`}
+                    css={[reportSectionBox]}
+                    className={'scrollType1'}
+                  >
+                    <div>
                       <ReportTemplateHeader
                         title={`기능별 상세 내용 - ${el.name}`}
                         handleChangeCheckBox={handleChangeCheckBox}
@@ -306,7 +321,16 @@ const Report = ({ params }) => {
                         researchData={el?.comment}
                       />
                     </div>
-                    <MissionDetailTemplate item={item} dataList={el} modalControl={modalControl} />
+                    <div
+                      css={css`
+                        overflow-y: scroll;
+                        height: calc(100vh - 136px);
+                      `}
+                      className={'scrollType1'}
+                      ref={ele => (testChildrenRef.current[childrenIndex] = ele)}
+                    >
+                      <MissionDetailTemplate item={item} dataList={el} modalControl={modalControl} />
+                    </div>
                   </div>
                 );
               })}
@@ -317,8 +341,8 @@ const Report = ({ params }) => {
 
       {/*서비스 전체 사용성 평가*/}
       {data?.S1 && (
-        <div css={reportSectionBox} className={'scrollType1'}>
-          <div id={'서비스 전체 사용성 평가'} ref={totalUsabilityRef}>
+        <div id={'서비스 전체 사용성 평가'} ref={totalUsabilityRef} css={reportSectionBox} className={'scrollType1'}>
+          <div>
             <ReportTemplateHeader
               title={`서비스 전체 사용성 평가`}
               handleChangeCheckBox={handleChangeCheckBox}
@@ -337,7 +361,7 @@ const Report = ({ params }) => {
               height: calc(100vh - 136px);
             `}
             className={'scrollType1'}
-            ref={uiTestChildrenRef}
+            ref={totalUsabilityChildrenRef}
           >
             <ServiceOverallUsabilityTemplate
               modalControl={modalControl}
@@ -354,8 +378,8 @@ const Report = ({ params }) => {
 
       {/*서비스 전체 완성도 피드백*/}
       {data?.S1 && (
-        <div css={reportSectionBox} className={'scrollType1'}>
-          <div id={'서비스 전체 완성도 피드백'} ref={completeFeedbackRef}>
+        <div id={'서비스 전체 완성도 피드백'} ref={completeFeedbackRef} css={reportSectionBox} className={'scrollType1'}>
+          <div>
             <ReportTemplateHeader
               title={`서비스 전체 완성도 피드백`}
               handleChangeCheckBox={handleChangeCheckBox}
@@ -369,7 +393,7 @@ const Report = ({ params }) => {
           </div>
 
           <div css={chartSectionBox}>
-            <div css={chartBox(true)} className={'scrollType1'}>
+            <div css={chartBox(true)} className={'scrollType1'} ref={completeFeedbackChildrenRef}>
               <FeedbackTemplate
                 modalControl={modalControl}
                 type={'completeList'}
@@ -388,8 +412,8 @@ const Report = ({ params }) => {
 
       {/*서비스 전체 추가기능 피드백*/}
       {data?.S1 && (
-        <div css={reportSectionBox} className={'scrollType1'}>
-          <div id={'서비스 전체 추가기능 피드백'} ref={additionalFeatureFeedbackRef}>
+        <div id={'서비스 전체 추가기능 피드백'} ref={additionalFeatureFeedbackRef} css={reportSectionBox} className={'scrollType1'}>
+          <div>
             <ReportTemplateHeader
               title={`서비스 전체 추가기능 피드백`}
               handleChangeCheckBox={handleChangeCheckBox}
@@ -403,7 +427,7 @@ const Report = ({ params }) => {
           </div>
 
           <div css={chartSectionBox}>
-            <div css={chartBox(true)} className={'scrollType1'}>
+            <div css={chartBox(true)} className={'scrollType1'} ref={additionalFeatureFeedbackChildrenRef}>
               <FeedbackTemplate
                 modalControl={modalControl}
                 type={'additionalList'}
@@ -422,8 +446,8 @@ const Report = ({ params }) => {
 
       {/*서비스 전체 시스템오류 피드백*/}
       {data?.S1 && (
-        <div css={reportSectionBox} className={'scrollType1'}>
-          <div id={'서비스 전체 시스템오류 피드백'} ref={systemErrorFeedbackRef}>
+        <div id={'서비스 전체 시스템오류 피드백'} ref={systemErrorFeedbackRef} css={reportSectionBox} className={'scrollType1'}>
+          <div>
             <ReportTemplateHeader
               title={`서비스 전체 시스템오류 피드백`}
               handleChangeCheckBox={handleChangeCheckBox}
@@ -437,7 +461,7 @@ const Report = ({ params }) => {
           </div>
 
           <div css={chartSectionBox}>
-            <div css={chartBox(true)} className={'scrollType1'}>
+            <div css={chartBox(true)} className={'scrollType1'} ref={systemErrorFeedbackChildrenRef}>
               <FeedbackTemplate
                 modalControl={modalControl}
                 type={'systemErrorList'}
@@ -462,8 +486,8 @@ const Report = ({ params }) => {
               return (
                 <div key={`multiple-${index}`}>
                   {item?.detailScaleList?.length === 0 ? null : (
-                    <div css={reportSectionBox} className={'scrollType1'}>
-                      <div id={item.code} ref={el => (multipleQuestionRef.current[index] = el)}>
+                    <div id={item.code} ref={el => (multipleQuestionRef.current[index] = el)} css={reportSectionBox} className={'scrollType1'}>
+                      <div>
                         <ReportTemplateHeader
                           title={item.intent}
                           handleChangeCheckBox={handleChangeCheckBox}
@@ -485,8 +509,8 @@ const Report = ({ params }) => {
                   )}
 
                   {item?.detailMultipleList.length === 0 ? null : (
-                    <div css={reportSectionBox} className={'scrollType1'}>
-                      <div id={item.code} ref={el => (multipleQuestionRef.current[index] = el)}>
+                    <div id={item.code} ref={el => (multipleQuestionRef.current[index] = el)} css={reportSectionBox} className={'scrollType1'}>
+                      <div>
                         <ReportTemplateHeader
                           title={item.intent}
                           handleChangeCheckBox={handleChangeCheckBox}
@@ -516,8 +540,14 @@ const Report = ({ params }) => {
         ? null
         : data?.longQuestionList?.map((item, index) => {
             return (
-              <div key={`lognQuestion-${index}`} css={reportSectionBox} className={'scrollType1'}>
-                <div id={item.questionCode} ref={el => (longQuestionRef.current[index] = el)}>
+              <div
+                id={item.questionCode}
+                ref={el => (longQuestionRef.current[index] = el)}
+                key={`lognQuestion-${index}`}
+                css={reportSectionBox}
+                className={'scrollType1'}
+              >
+                <div>
                   <ReportTemplateHeader
                     title={`${item.intent}`}
                     handleChangeCheckBox={handleChangeCheckBox}
