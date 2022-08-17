@@ -9,10 +9,12 @@ const useOnMultipleScreen = option => {
 
   const callbackFunction = entries => {
     const [entry] = entries;
+
     if (entry.isIntersecting) {
       dispatch(updateIndexId(entry.target.id));
+
       for (let i = 0; i < childrenRef.current.length; i++) {
-        childrenRef?.current[i]?.scrollTo(0, 0);
+        childrenRef?.current[i]?.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       }
     }
   };

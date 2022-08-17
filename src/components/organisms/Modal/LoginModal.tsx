@@ -96,10 +96,6 @@ const LoginModal = () => {
   const loginWithGoogle = useCallback(() => {
     // router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
     if (isWithdrawalUser) {
-      console.log(
-        `${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login&userDelWithdraw=Y`,
-        '`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login&userDelWithdraw=Y`',
-      );
       router.push(
         `${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login&userDelWithdraw=Y`,
       );
