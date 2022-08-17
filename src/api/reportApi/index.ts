@@ -26,7 +26,6 @@ export const fetchReportDetail = async (reportSeq, filterFields = null, filterVa
   }
 
   if (!filterFields && !filterValues && !filterFail) {
-    console.log(4);
     apiUrl = `/report/view/${reportSeq}/`;
     return await AXIOS_GET(apiUrl);
   }
@@ -42,27 +41,23 @@ export const fetchReportShare = async (reportSeq, filterFields = null, filterVal
   let apiUrl = `/report/share/${reportSeq}/`;
 
   if (filterFields && filterValues && !filterFail) {
-    console.log(1);
     apiUrl = `/report/share/${reportSeq}/?filterFields=${filterFields}&filterValues
 =${filterValues}`;
     return await AXIOS_GET(apiUrl);
   }
 
   if (!filterFields && !filterValues && filterFail) {
-    console.log(2);
     apiUrl = `/report/share/${reportSeq}/?filterFail=on`;
     return await AXIOS_GET(apiUrl);
   }
 
   if (filterFields && filterValues && filterFail) {
-    console.log(3);
     apiUrl = `/report/share/${reportSeq}/?filterFields=${filterFields}&filterValues
 =${filterValues}&filterFail=on`;
     return await AXIOS_GET(apiUrl);
   }
 
   if (!filterFields && !filterValues && !filterFail) {
-    console.log(4);
     apiUrl = `/report/share/${reportSeq}/`;
     return await AXIOS_GET(apiUrl);
   }

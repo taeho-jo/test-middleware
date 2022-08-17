@@ -24,6 +24,11 @@ export const fetchWithdrawalUserApi = async sendObject => {
   return await AXIOS_BODY_DELETE('/user/secession/', sendObject);
 };
 
+// 크레딧 내역 조회 API
+export const fetchCreditListApi = async () => {
+  return await AXIOS_GET('/user/info/credit/');
+};
+
 // 팀 초대 사용자 정보 API
 export const useGetInviteTeamUserInfo = (seq, isSend) => {
   const dispatch = useDispatch();

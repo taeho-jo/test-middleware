@@ -19,7 +19,6 @@ const useOnMultipleScreen = option => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => callbackFunction(entries), option);
-
     let currentTarget;
 
     for (let i = 0; i < ref.current.length; i++) {
@@ -31,7 +30,9 @@ const useOnMultipleScreen = option => {
     }
 
     return () => {
-      if (currentTarget) observer.unobserve(currentTarget);
+      if (currentTarget) {
+        observer.unobserve(currentTarget);
+      }
     };
   }, [ref, childrenRef, option]);
 

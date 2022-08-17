@@ -10,6 +10,7 @@ import LayerPopup from '../../atoms/LayerPopup';
 import { useRouter } from 'next/router';
 import { ReducerType } from '../../../store/reducers';
 import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 const CommonHeader = () => {
   const router = useRouter();
@@ -28,7 +29,8 @@ const CommonHeader = () => {
   );
 
   const handleLogout = useCallback(() => {
-    localStorage.clear();
+    // localStorage.clear();
+    clearLocalStorage();
     dispatch(updateQueryStatus({ name: 'userInfoQuery', status: false }));
     router.push('/');
   }, []);

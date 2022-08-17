@@ -124,42 +124,33 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
             </FlexBox>
 
             <FlexBox justify={'center'} align={'center'} style={{ padding: '17px 0', flex: 1 }}>
-              {
-                myRole === '멤버' ? (
-                  userInfo.userId === userId ? (
-                    <Icon
-                      onClick={() => handleClickDropdown(index, 'myRole', el)}
-                      forwardref={(el: never) => (cellsRef.current[index] = el)}
-                      name={'MORE_HORIZON'}
-                      size={24}
-                      style={{ cursor: 'pointer' }}
-                    />
-                  ) : null
-                ) : teamRoleType === '관리자' && managerCount <= 1 ? null : myRole === '관리자' && userInfo.userId === userId ? (
+              {myRole === '멤버' ? (
+                userInfo.userId === userId ? (
                   <Icon
-                    onClick={() => handleClickDropdown(index, 'myRoleManager', el)}
+                    onClick={() => handleClickDropdown(index, 'myRole', el)}
                     forwardref={(el: never) => (cellsRef.current[index] = el)}
                     name={'MORE_HORIZON'}
                     size={24}
                     style={{ cursor: 'pointer' }}
                   />
-                ) : (
-                  <Icon
-                    onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}
-                    forwardref={(el: never) => (cellsRef.current[index] = el)}
-                    name={'MORE_HORIZON'}
-                    size={24}
-                    style={{ cursor: 'pointer' }}
-                  />
-                )
-                // <Icon
-                //   onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}
-                //   forwardref={(el: never) => (cellsRef.current[index] = el)}
-                //   name={'MORE_HORIZON'}
-                //   size={24}
-                //   style={{ cursor: 'pointer' }}
-                // />
-              }
+                ) : null
+              ) : teamRoleType === '관리자' && managerCount <= 1 ? null : myRole === '관리자' && userInfo.userId === userId ? (
+                <Icon
+                  onClick={() => handleClickDropdown(index, 'myRoleManager', el)}
+                  forwardref={(el: never) => (cellsRef.current[index] = el)}
+                  name={'MORE_HORIZON'}
+                  size={24}
+                  style={{ cursor: 'pointer' }}
+                />
+              ) : (
+                <Icon
+                  onClick={() => handleClickDropdown(index, joinDate ? teamRoleType : 'invite', el)}
+                  forwardref={(el: never) => (cellsRef.current[index] = el)}
+                  name={'MORE_HORIZON'}
+                  size={24}
+                  style={{ cursor: 'pointer' }}
+                />
+              )}
             </FlexBox>
           </FlexBox>
         );

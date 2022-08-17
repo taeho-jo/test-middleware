@@ -23,6 +23,7 @@ import { CURRENT_DOMAIN, INVITE_EMAIL_TEMPLATE } from '../../../common/util/comm
 import { useMutation, useQueryClient } from 'react-query';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 interface PropsType {
   first?: boolean;
@@ -59,7 +60,7 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
         mutate(sendObject);
         queryClient.invalidateQueries(['fetchInviteMember']);
       } else if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       } else {
         dispatch(showToast({ message: errorData.message, isShow: true, status: 'waring', duration: 5000 }));

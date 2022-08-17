@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateIndexId } from '../store/reducers/reportReducer';
+import { ReducerType } from '../store/reducers';
+import { css } from '@emotion/react';
 
 const useOnScreen = option => {
   const dispatch = useDispatch();
@@ -9,12 +11,16 @@ const useOnScreen = option => {
 
   const callbackFunction = (entries, childrenRef) => {
     const [entry] = entries;
+
     if (entry.isIntersecting) {
       dispatch(updateIndexId(entry.target.id));
+
       childrenRef?.current?.scrollTo(0, 0);
     }
   };
-
+  // const bodyStyle = document.getElementById('reportBoxArea');
+  // bodyStyle.style.pointerEvents = 'none';
+  // bodyStyle.style.pointerEvents = 'auto';
   useEffect(() => {
     const observer = new IntersectionObserver(entries => callbackFunction(entries, childrenRef), option);
 

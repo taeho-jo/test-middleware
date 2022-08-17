@@ -14,6 +14,7 @@ import { updateSelectProductList } from '../../../store/reducers/teamReducer';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { fetchRefreshToken } from '../../../api/authApi';
 import IconTextButton from '../../atoms/Button/IconTextButton';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 const TeamSettingDetail = () => {
   const queryClient = useQueryClient();
@@ -39,7 +40,7 @@ const TeamSettingDetail = () => {
         queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
       }
       if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       }
     },

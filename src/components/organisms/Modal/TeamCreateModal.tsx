@@ -27,6 +27,7 @@ import { updateQueryStatus } from '../../../store/reducers/useQueryControlReduce
 import { updateTeamInfo } from '../../../store/reducers/teamReducer';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 interface PropsType {
   first?: boolean;
 }
@@ -64,7 +65,7 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
         mutate(sendObject);
         queryClient.invalidateQueries(['fetchRefreshToken']);
       } else if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       } else {
         dispatch(showToast({ message: '팀 생성에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
@@ -85,7 +86,7 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
         queryClient.invalidateQueries(['fetchTeamList']);
       }
       if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       }
     },

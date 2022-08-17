@@ -23,6 +23,7 @@ import { showToast } from '../../../store/reducers/toastReducer';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { QueryCache } from 'react-query';
 import { useRouter } from 'next/router';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 interface PropsType {
   first?: boolean;
@@ -65,7 +66,7 @@ const TeamNameModifyModal = ({ first = false }: PropsType) => {
         mutate([selectTeamSeq, sendObject]);
       }
       if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       }
     },

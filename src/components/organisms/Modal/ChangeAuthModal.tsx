@@ -14,6 +14,7 @@ import { fetchMemberAuthChangeApi } from '../../../api/teamApi';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { useRouter } from 'next/router';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 const ChangeAuthModal = () => {
   const queryClient = useQueryClient();
@@ -31,7 +32,7 @@ const ChangeAuthModal = () => {
         mutate();
         queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
       } else if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       } else {
         dispatch(showToast({ message: errorData.message, isShow: true, status: 'warning', duration: 5000 }));

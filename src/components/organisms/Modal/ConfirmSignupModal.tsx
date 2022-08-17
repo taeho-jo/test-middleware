@@ -13,6 +13,7 @@ import { EMAIL_CONFIRM_TEMPLATE } from '../../../common/util/commonVar';
 import { removeUserInfo } from '../../../store/reducers/userReducer';
 import { useMutation, useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 const ConfirmResetPasswordModal = () => {
   const queryClient = useQueryClient();
@@ -41,7 +42,7 @@ const ConfirmResetPasswordModal = () => {
   }, []);
 
   const reSignup = useCallback(() => {
-    localStorage.clear();
+    clearLocalStorage();
     dispatch(isShow({ isShow: true, type: 'signup' }));
   }, []);
 

@@ -12,7 +12,8 @@ const initialState: any = {
   rawData: null,
   commentData: null,
   indexId: 'one',
-  clickIndexId: '',
+  totalIndexList: [],
+  selectedIndexNum: 0,
 };
 
 export const reportSlice = createSlice({
@@ -52,6 +53,9 @@ export const reportSlice = createSlice({
     updateClickIndexId: (state, action) => {
       state.clickIndexId = action.payload;
     },
+    updateTotalIndexList: (state, action) => {
+      state.totalIndexList = action.payload;
+    },
   },
 });
 
@@ -67,5 +71,6 @@ export const {
   updateCommentData,
   updateIndexId,
   updateClickIndexId,
+  updateTotalIndexList,
 } = reportSlice.actions;
 export default reportSlice.reducer;

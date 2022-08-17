@@ -25,6 +25,7 @@ import { updateCommonCode } from '../../store/reducers/commonReducer';
 import { showToast } from '../../store/reducers/toastReducer';
 import { updateFilterFail, updateFilterFlied, updateFilterValues } from '../../store/reducers/reportReducer';
 import team from '../../pages/admin/team';
+import { clearLocalStorage } from '../util/commonFunc';
 
 // Types
 interface PropsType {
@@ -57,7 +58,7 @@ const Layout = ({ children }: PropsType) => {
         queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
         refetch();
       } else if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       }
     },
@@ -92,7 +93,7 @@ const Layout = ({ children }: PropsType) => {
           queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
           refetch();
         } else if (errorData.code === 'E0007') {
-          localStorage.clear();
+          clearLocalStorage();
           router.push('/');
         }
       },

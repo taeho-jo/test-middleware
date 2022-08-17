@@ -28,3 +28,13 @@ export const checkIsIntegerTwo = number => {
   const isInteger = Number.isInteger(number);
   return isInteger ? number : number?.toFixed(2);
 };
+
+export const clearLocalStorage = () => {
+  localStorage.removeItem('persist:root');
+  localStorage.removeItem('projectNm');
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('reactQueryDevtoolsSortFn');
+  localStorage.removeItem('commonCode');
+  localStorage.removeItem('selectTeamList');
+  localStorage.removeItem('teamSeq');
+};
