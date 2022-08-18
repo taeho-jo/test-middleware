@@ -3,9 +3,10 @@ import { body3_bold, body3_regular, caption1_bold, caption1_regular, heading5_bo
 import FlexBox from '../../FlexBox';
 import { colors } from '../../../../styles/Common.styles';
 import { css } from '@emotion/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../../store/reducers';
 import { useRouter } from 'next/router';
+import { updateIndexId } from '../../../../store/reducers/reportReducer';
 
 const data = [
   { value: '성별', children: [] },
@@ -21,7 +22,9 @@ const data = [
 ];
 
 const RespondentAttributes = ({ changeClicked, clicked }) => {
+  const dispatch = useDispatch();
   const answerInfo = useSelector<ReducerType, any>(state => state.report.data);
+  const showingSectionId = useSelector<ReducerType, any>(state => state.report.indexId);
   const [dataArr, setDataArr] = useState([]);
 
   const makeAnswerArr = useCallback(() => {
@@ -55,16 +58,22 @@ const RespondentAttributes = ({ changeClicked, clicked }) => {
     makeAnswerArr();
   }, [answerInfo]);
 
+  const onMoveScroll = id => {
+    const element = document.getElementById(id);
+    dispatch(updateIndexId(id));
+    element?.scrollIntoView({});
+  };
+
   return (
     <FlexBox direction={'column'} align={'flex-start'} justify={'flex-start'} style={testInfoBoxStyle}>
       <span css={heading5_bold}>응답자 특성</span>
-      <a style={{ width: '100%', textDecoration: 'none', margin: '8px 0' }} href={'#one'}>
+      <div onClick={() => onMoveScroll('one')} style={{ width: '100%', textDecoration: 'none', margin: '8px 0', cursor: 'pointer' }}>
         <FlexBox
           onClick={() => changeClicked('one')}
           direction={'column'}
           align={'flex-start'}
           justify={'flex-start'}
-          style={clicked === 'one' ? infoBox : infoBox2}
+          style={showingSectionId === 'one' ? infoBox : infoBox2}
         >
           <ul>
             {dataArr?.map((el, index) => {
@@ -83,7 +92,7 @@ const RespondentAttributes = ({ changeClicked, clicked }) => {
             })}
           </ul>
         </FlexBox>
-      </a>
+      </div>
     </FlexBox>
   );
 };

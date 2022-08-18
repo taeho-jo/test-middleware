@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // Components
 import FlexBox from '../../atoms/FlexBox';
@@ -13,17 +13,50 @@ import { ReducerType } from '../../../store/reducers';
 import { TeamListType, updateSelectTeamList, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import MoreTeamInfoPopup from '../MoreTeamInfoPopup';
 import { isShow } from '../../../store/reducers/modalReducer';
-import { useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
+import { fetchProductListApi } from '../../../api/teamApi';
+import { fetchRefreshToken } from '../../../api/authApi';
+import { useRouter } from 'next/router';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 // Dummy
 
 const AdminSideBar = () => {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const dispatch = useDispatch();
   const teamList = useSelector<ReducerType, TeamListType[]>(state => state.team.teamList);
   const modalType = useSelector<ReducerType, string>(state => state.modal.type);
+  const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
 
-  const [infoBox, setInfoBox] = useState<boolean>(true);
+  const [myRole, setMyRole] = useState<string | null>(null);
+
+  // ============ React Query ============ //
+  const { data } = useQuery(['fetchProductList', selectTeamSeq], () => fetchProductListApi(selectTeamSeq), {
+    onError: (e: any) => {
+      const errorData = e.response.data;
+      if (errorData.code === 'E0008') {
+        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
+      }
+      if (errorData.code === 'E0007') {
+        clearLocalStorage();
+        router.push('/');
+      }
+    },
+  });
+  // ============ React Query ============ //
+  // const [infoBox, setInfoBox] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (userInfo && selectTeamList) {
+      const memberArr = selectTeamList?.teamMember;
+      const myRole = memberArr?.filter(el => el.userId === userInfo.userId)?.[0]?.teamRoleType;
+      setMyRole(myRole);
+    }
+  }, [userInfo, selectTeamList]);
 
   const handleSelectTeam = useCallback(
     item => {
@@ -38,9 +71,9 @@ const AdminSideBar = () => {
     [teamList],
   );
 
-  const handleOffInfoBox = useCallback(() => {
-    setInfoBox(false);
-  }, [infoBox]);
+  // const handleOffInfoBox = useCallback(() => {
+  //   setInfoBox(false);
+  // }, [infoBox]);
 
   const sideTeamList = useCallback(() => {
     if (teamList !== null) {
@@ -67,9 +100,9 @@ const AdminSideBar = () => {
       </FlexBox>
       <div className={'scrollType1'} css={scrollContainerStyle}>
         {sideTeamList()}
-        {infoBox && (
+        {myRole === '관리자' && data?.data.length === 0 && (
           <FlexBox justify={'center'} style={{ marginTop: '24px' }}>
-            <MoreTeamInfoPopup handleOffInfoBox={handleOffInfoBox} textArr={['리서치에 필요한 응답자를', '정확하고 빠르게 모집할 수 있어요!']} />
+            <MoreTeamInfoPopup textArr={['프로덕트에 최적화된', '응답자를 더 빠르고 정확하게', '모집할 수 있습니다.']} />
           </FlexBox>
         )}
       </div>

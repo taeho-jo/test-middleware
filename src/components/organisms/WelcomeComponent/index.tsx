@@ -20,7 +20,7 @@ import { body3_medium } from '../../../styles/FontStyles';
 import TextButton from '../../atoms/Button/TextButton';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { fetchInviteUserInfoApi, fetchUserInfoApi } from '../../../api/userApi';
-import { setUserInfo } from '../../../store/reducers/userReducer';
+import { setUserInfo, updateCancelWithdrawal } from '../../../store/reducers/userReducer';
 import AnnouncementBox from '../../molecules/AnnouncementBox';
 
 const WelcomeComponent = () => {
@@ -103,7 +103,6 @@ const WelcomeComponent = () => {
             password,
             userName: userId.split('@')[0],
             privacyConsentYn: 'Y',
-            consentToUseMarketingYn: 'Y',
             emailTemplateName: INVITE_CONFIRM_EMAIL_TEMPLATE,
             teamSeq: teamSeq,
           };
@@ -113,7 +112,6 @@ const WelcomeComponent = () => {
             password,
             userName: userId.split('@')[0],
             privacyConsentYn: 'Y',
-            consentToUseMarketingYn: 'Y',
             emailTemplateName: INVITE_CONFIRM_EMAIL_TEMPLATE,
           };
         }

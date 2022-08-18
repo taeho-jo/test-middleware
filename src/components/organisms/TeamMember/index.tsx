@@ -15,6 +15,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import TableDropDown from '../../atoms/TableDropDown';
 import { useRouter } from 'next/router';
 import { fetchRefreshToken } from '../../../api/authApi';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 const TeamMember = () => {
   const {
@@ -70,7 +71,7 @@ const TeamMember = () => {
         queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
       }
       if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       }
     },

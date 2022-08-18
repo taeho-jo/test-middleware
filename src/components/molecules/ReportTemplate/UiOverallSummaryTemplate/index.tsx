@@ -89,36 +89,36 @@ const UiOverallSummaryTemplate = ({ dataList, register, errors, checked, handleC
 
   return (
     <div id="UI 진단 전체 요약">
-      <FlexBox style={headerBosStyle} justify={'space-between'}>
-        <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
-          <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
-            UI 진단 전체 요약
-          </span>
-          <CheckBox
-            handleChangeCheckBox={handleChangeCheckBox}
-            checked={checked}
-            inputName={'privacyConsentYn'}
-            label={'미션에 실패한 응답자의 피드백만 보기'}
-            register={register}
-            errors={errors}
-          />
-        </FlexBox>
-        <FlexBox justify={'flex-end'} width={'30%'}>
-          <IconTextButton
-            disabled={true}
-            style={{ marginRight: '8px' }}
-            textStyle={'custom'}
-            name={'NAVIGATION_CHEVRON_RIGHT'}
-            text={'원본 데이터 확인하기'}
-          />
-          <IconTextButton
-            onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [comment] })}
-            textStyle={'custom'}
-            name={'NAVIGATION_CHEVRON_RIGHT'}
-            text={'리서치 코멘트 확인하기'}
-          />
-        </FlexBox>
-      </FlexBox>
+      {/*<FlexBox style={headerBosStyle} justify={'space-between'}>*/}
+      {/*  <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>*/}
+      {/*    <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>*/}
+      {/*      UI 진단 전체 요약*/}
+      {/*    </span>*/}
+      {/*    <CheckBox*/}
+      {/*      handleChangeCheckBox={handleChangeCheckBox}*/}
+      {/*      checked={checked}*/}
+      {/*      inputName={'privacyConsentYn'}*/}
+      {/*      label={'미션에 실패한 응답자의 피드백만 보기'}*/}
+      {/*      register={register}*/}
+      {/*      errors={errors}*/}
+      {/*    />*/}
+      {/*  </FlexBox>*/}
+      {/*  <FlexBox justify={'flex-end'} width={'30%'}>*/}
+      {/*    <IconTextButton*/}
+      {/*      disabled={true}*/}
+      {/*      style={{ marginRight: '8px' }}*/}
+      {/*      textStyle={'custom'}*/}
+      {/*      name={'NAVIGATION_CHEVRON_RIGHT'}*/}
+      {/*      text={'원본 데이터 확인하기'}*/}
+      {/*    />*/}
+      {/*    <IconTextButton*/}
+      {/*      onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [comment] })}*/}
+      {/*      textStyle={'custom'}*/}
+      {/*      name={'NAVIGATION_CHEVRON_RIGHT'}*/}
+      {/*      text={'리서치 코멘트 확인하기'}*/}
+      {/*    />*/}
+      {/*  </FlexBox>*/}
+      {/*</FlexBox>*/}
 
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
         {/*<img css={fixImage} src={FixImage.src} alt="'FixImage" />*/}

@@ -27,6 +27,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { useRouter } from 'next/router';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 const TeamProductCreateModal = () => {
   const queryClient = useQueryClient();
@@ -57,7 +58,7 @@ const TeamProductCreateModal = () => {
 
         queryClient.invalidateQueries(['fetchCreateProduct']);
       } else if (errorData.code === 'E0007') {
-        localStorage.clear();
+        clearLocalStorage();
         router.push('/');
       } else {
         dispatch(showToast({ message: errorData.message, isShow: true, status: 'warning', duration: 5000 }));

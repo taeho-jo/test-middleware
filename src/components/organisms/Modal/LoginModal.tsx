@@ -26,8 +26,8 @@ import { body3_medium } from '../../../styles/FontStyles';
 import { InputType } from '../../../common/types/commonTypes';
 import { fetchUserInfoApi } from '../../../api/userApi';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { setToken } from '../../../store/reducers/authReducer';
-import { setUserInfo } from '../../../store/reducers/userReducer';
+import { setToken, updateLoginType } from '../../../store/reducers/authReducer';
+import { setUserInfo, updateCancelWithdrawal, updateWithdrawalUserInfo } from '../../../store/reducers/userReducer';
 
 const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
 
@@ -36,7 +36,7 @@ const LoginModal = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
-  console.log(CURRENT_DOMAIN);
+  const isWithdrawalUser = useSelector<ReducerType, boolean>(state => state.user.cancelWithdrawal);
   // hook form
   const {
     register,
@@ -58,6 +58,10 @@ const LoginModal = () => {
     onError: (e: any) => {
       const { data } = e.response;
       dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
+      if (data.code === 'E0022') {
+        dispatch(isShow({ isShow: true, type: 'cancelWithdrawalModal' }));
+        dispatch(updateCancelWithdrawal(true));
+      }
     },
   });
 
@@ -66,15 +70,41 @@ const LoginModal = () => {
   });
 
   // 이메일 로그인
-  const handleLogin = useCallback((status, data) => {
-    loginMutate(data);
-  }, []);
+  const handleLogin = useCallback(
+    (status, data) => {
+      dispatch(
+        updateWithdrawalUserInfo({
+          userId: data.userId,
+          password: data.password,
+        }),
+      );
+      dispatch(updateLoginType('email'));
+      const sendObject = {
+        userId: data.userId,
+        password: data.password,
+        userDelWithdraw: 'Y',
+      };
+      if (isWithdrawalUser) {
+        loginMutate(sendObject);
+      } else {
+        loginMutate(data);
+      }
+    },
+    [isWithdrawalUser],
+  );
 
   // 구글 로그인
   const loginWithGoogle = useCallback(() => {
     // router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
-    router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
-  }, []);
+    if (isWithdrawalUser) {
+      router.push(
+        `${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login&userDelWithdraw=Y`,
+      );
+    } else {
+      dispatch(updateLoginType('google'));
+      router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login`);
+    }
+  }, [isWithdrawalUser]);
 
   // 로그인 시도 실패
   const handleProcessingError = useCallback((status, errors) => {
@@ -97,6 +127,12 @@ const LoginModal = () => {
       dispatch(setToken(loginData.data.token));
       dispatch(showToast({ message: '로그인에 성공하였습니다.', isShow: true, status: 'success', duration: 5000 }));
       dispatch(isShow({ isShow: false, type: '' }));
+      dispatch(
+        updateWithdrawalUserInfo({
+          userId: '',
+          password: '',
+        }),
+      );
       sessionStorage.clear();
       dispatch(setUserInfo(loginData.data));
       if (loginData.data.emailVerifiedYn === 'N') {

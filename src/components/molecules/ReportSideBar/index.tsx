@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import LogoIcon from '../../../assets/logoIcon.png';
 import LogoText from '../../../assets/DibyLogo_black.png';
@@ -13,6 +13,8 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import { useQuery, useQueryClient } from 'react-query';
 import { fetchReportShareIdApi } from '../../../api/reportApi';
 import { updateReportViewId } from '../../../store/reducers/reportReducer';
+import TutorialIndicator from '../../atoms/TutorialIndicator/TutorialIndicator';
+import { userInfo } from 'os';
 
 const ReportSideBar = () => {
   const dispatch = useDispatch();
@@ -21,9 +23,13 @@ const ReportSideBar = () => {
   const reportData = useSelector<ReducerType, any>(state => state.report.data);
   const projectName = useSelector<ReducerType, string>(state => state.report.projectName);
   const projectNm = useSelector<ReducerType, string>(state => state.report?.data?.projectNm);
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const indicatorStatus = useSelector<ReducerType, any>(state => state.common.indicator);
   // console.log(dataaa, 'NM NM');
 
   const [clicked, setClicked] = useState('');
+
+  const [shareIndicator, setShareIndicator] = useState('N');
 
   const { data, refetch } = useQuery(['fetchReportShareId', id], () => fetchReportShareIdApi(id), {
     enabled: false,
@@ -52,6 +58,26 @@ const ReportSideBar = () => {
     setClicked(text);
   }, []);
 
+  const indexBoxRef = useRef();
+  const showingSectionId = useSelector<ReducerType, any>(state => state.report?.indexId);
+  const showingClickSectionId = useSelector<ReducerType, any>(state => state.report?.clickIndexId);
+
+  useEffect(() => {
+    const indexBoxOffsetTop = document.getElementById(`${showingSectionId}-index`)?.offsetTop; // 각 버튼 offsetTop
+    const div = document.getElementById('testBox');
+    const divHeight = document.getElementById('testBox')?.clientHeight; // 박스 높이
+
+    const offestY = indexBoxOffsetTop - divHeight / 2;
+
+    div.scrollTo(0, offestY ? offestY : 0);
+  }, [showingSectionId]);
+
+  useEffect(() => {
+    const userId = userInfo?.userId;
+    const shareIndicatorValue = JSON.parse(localStorage.getItem(userId));
+    setShareIndicator(shareIndicatorValue?.save?.share);
+  }, [userInfo, localStorage]);
+
   return (
     <div css={sidebarStyle}>
       <FlexBox
@@ -65,12 +91,25 @@ const ReportSideBar = () => {
       <FlexBox style={shareBoxStyle} justify={'space-between'} align={'center'}>
         <span css={[heading3_bold, projectNameStyle]}>{projectNm ? projectNm : projectName ? projectName : '@'}</span>
         {share ? null : (
-          <div css={{ cursor: 'pointer' }}>
+          <div css={{ cursor: 'pointer', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            {indicatorStatus.share === 'N' && (
+              <TutorialIndicator
+                share={share}
+                name={'share'}
+                left={'-9px'}
+                top={'-10px'}
+                modalTitle={'리포트 공유'}
+                modalSubTitle={`링크를 복사하여 팀에게 리포트를 공유해보세요.\n로그인 없이도 확인할 수 있어요.`}
+                modalTop={'-20px'}
+                modalLeft={'50px'}
+              />
+            )}
+
             <Icon name={'ACTION_SHARE'} onClick={reportShare} />
           </div>
         )}
       </FlexBox>
-      <div className={'scrollType1'} css={{ height: 'calc(100vh - 136px)' }}>
+      <div className={'scrollType1'} css={{ height: 'calc(100vh - 136px)' }} id={'testBox'} ref={indexBoxRef}>
         <TestInfoBox reportData={reportData} />
         <RespondentAttributes changeClicked={changeClicked} clicked={clicked} />
         <TestResults clicked={clicked} changeClicked={changeClicked} missionList={missionList} dataList={reportData?.indexList} />
@@ -103,6 +142,7 @@ const projectNameStyle = css`
   -webkit-box-orient: vertical;
 `;
 const shareBoxStyle = css`
+  position: relative;
   height: 64px;
   border-bottom: 1px solid #dcdcdc;
   padding: 0 24px;

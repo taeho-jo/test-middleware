@@ -7,19 +7,35 @@ import { caption1_bold, caption1_regular } from '../../../styles/FontStyles';
 import IconTextButtonStories from '../../../stories/atoms/Button/IconTextButton.stories';
 import IconTextButton from '../../atoms/Button/IconTextButton';
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReducerType } from '../../../store/reducers';
+import { isShow } from '../../../store/reducers/modalReducer';
 
 interface PropsType {
   textArr: string[];
-  handleOffInfoBox: () => void;
+  handleOffInfoBox?: () => void;
 }
 
 const MoreTeamInfoPopup = ({ textArr, handleOffInfoBox }: PropsType) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const selectedTeamInfo = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+
+  const createProduct = () => {
+    if (router.pathname === '/admin/setting') {
+      dispatch(isShow({ isShow: true, type: 'createTeamProduct' }));
+    } else {
+      router.push('/admin/setting?create=createTeamProduct');
+    }
+
+    // dispatch(isShow({ isShow: true, type: 'createTeamProduct' }));
+  };
+
   return (
     <FlexBox direction={'column'} justify={'flex-start'} align={'flex-start'} style={mainContainer}>
-      <FlexBox justify={'space-between'} align={'center'} style={{ marginBottom: '8px' }}>
-        <span css={[caption1_bold, { color: '#666666' }]}>팀에 대해 더 알려주세요.</span>
-        <Icon onClick={handleOffInfoBox} name={'NAVIGATION_CLOSE_SM'} size={24} style={{ cursor: 'pointer' }} />
+      <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={{ marginBottom: '8px' }}>
+        <span css={[caption1_bold, { color: '#666666', height: 'auto', whiteSpace: 'pre-line' }]}>{selectedTeamInfo?.teamNm}팀의</span>
+        <span css={[caption1_bold, { color: '#666666', height: 'auto', whiteSpace: 'pre-line' }]}>프로덕트 정보를 알려주세요.</span>
       </FlexBox>
       <div css={caption1_regular}>
         {textArr?.map((el, index) => {
@@ -30,12 +46,14 @@ const MoreTeamInfoPopup = ({ textArr, handleOffInfoBox }: PropsType) => {
           );
         })}
       </div>
-      <div css={{ marginTop: '50px' }}>
+      <div css={{ marginTop: '60px' }}>
         <IconTextButton
-          onClick={() => router.push('/admin/setting')}
+          whiteSpace={'unset'}
+          onClick={createProduct}
           name={'NAVIGATION_CHEVRON_RIGHT'}
+          fontSize={'12px'}
           textStyle={'custom'}
-          text={'팀 정보 입력하기'}
+          text={'프로덕트 정보 입력하기'}
         />
       </div>
     </FlexBox>
@@ -48,5 +66,5 @@ const mainContainer = css`
   width: 208px;
   border-radius: 16px;
   background: ${colors.grey._f7};
-  padding: 16px 8px 16px 16px;
+  padding: 16px;
 `;

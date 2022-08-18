@@ -16,6 +16,7 @@ import { updateFilterFail, updateFilterFlied, updateFilterValues } from '../../.
 import BasicButton from '../../atoms/Button/BasicButton';
 import IconButton from '../../atoms/Button/IconButton';
 import IconTextButton from '../../atoms/Button/IconTextButton';
+import TutorialIndicator from '../../atoms/TutorialIndicator/TutorialIndicator';
 
 const ReportHeader = () => {
   const {
@@ -27,9 +28,10 @@ const ReportHeader = () => {
   const onSubmit = data => console.log('success', data);
   const onError = errors => console.log('fail', errors);
 
+  const indicatorStatus = useSelector<ReducerType, any>(state => state.common.indicator);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { id } = router.query;
+  const { id, share } = router.query;
 
   const dispatch = useDispatch();
   const reportData = useSelector<ReducerType, any>(state => state.report.data?.filterDataList);
@@ -178,7 +180,40 @@ const ReportHeader = () => {
 
   return (
     <div css={headerStyle}>
-      <span css={[heading5_regular, { marginRight: '12px' }]}>필터</span>
+      <div
+        css={css`
+          position: relative;
+        `}
+      >
+        {share === undefined && indicatorStatus.filter === 'N' && (
+          <TutorialIndicator
+            share={share}
+            name={'filter'}
+            left={'-10px'}
+            top={'-12px'}
+            modalTitle={'필터'}
+            modalSubTitle={`필터를 사용하여 '응답자 특성' 으로 데이터를 분류\n해서 볼 수 있어요.\n필터 초기화 버튼을 클릭하면 모든 필터가 해제돼요.`}
+            modalTop={'40px'}
+            modalLeft={'-10px'}
+          />
+        )}
+
+        {share && indicatorStatus.filter === 'N' && (
+          <TutorialIndicator
+            share={share}
+            name={'filter'}
+            left={'-10px'}
+            top={'-12px'}
+            modalTitle={'필터'}
+            modalSubTitle={`필터를 사용하여 '응답자 특성' 으로 데이터를 분류\n해서 볼 수 있어요.\n필터 초기화 버튼을 클릭하면 모든 필터가 해제돼요.`}
+            modalTop={'40px'}
+            modalLeft={'-10px'}
+          />
+        )}
+
+        <span css={[heading5_regular, { marginRight: '12px' }]}>필터</span>
+      </div>
+
       <IconTextButton
         onClick={resetFilter}
         disabled={filterValues || filterFail === 'on' ? false : true}

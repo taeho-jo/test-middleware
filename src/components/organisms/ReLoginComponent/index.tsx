@@ -23,7 +23,7 @@ import { body3_medium } from '../../../styles/FontStyles';
 import { InputType } from '../../../common/types/commonTypes';
 import { useMutation, useQuery } from 'react-query';
 import { fetchUserInfoApi } from '../../../api/userApi';
-import { setUserInfo } from '../../../store/reducers/userReducer';
+import { setUserInfo, updateCancelWithdrawal, updateWithdrawalUserInfo } from '../../../store/reducers/userReducer';
 import { isShow } from '../../../store/reducers/modalReducer';
 
 const ReLoginComponent = () => {
@@ -31,6 +31,7 @@ const ReLoginComponent = () => {
   const dispatch = useDispatch();
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const isWithdrawalUser = useSelector<ReducerType, boolean>(state => state.user.cancelWithdrawal);
 
   // hook form
   const {
@@ -51,6 +52,10 @@ const ReLoginComponent = () => {
     onError: (e: any) => {
       const { data } = e.response;
       dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
+      if (data.code === 'E0022') {
+        dispatch(isShow({ isShow: true, type: 'cancelWithdrawalModal' }));
+        dispatch(updateCancelWithdrawal(true));
+      }
     },
   });
 
@@ -69,9 +74,27 @@ const ReLoginComponent = () => {
   });
 
   // 이메일 로그인
-  const handleLogin = useCallback((status, data) => {
-    loginMutate(data);
-  }, []);
+  const handleLogin = useCallback(
+    (status, data) => {
+      dispatch(
+        updateWithdrawalUserInfo({
+          userId: data.userId,
+          password: data.password,
+        }),
+      );
+      const sendObject = {
+        userId: data.userId,
+        password: data.password,
+        userDelWithdraw: 'Y',
+      };
+      if (isWithdrawalUser) {
+        loginMutate(sendObject);
+      } else {
+        loginMutate(data);
+      }
+    },
+    [isWithdrawalUser],
+  );
 
   useEffect(() => {
     if (loginData) {

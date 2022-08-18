@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 // Redux
 import { persistedReducer, wrapper } from '../store';
@@ -48,6 +48,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         },
       }),
   );
+
   return (
     <>
       <Seo path={router.pathname} />
