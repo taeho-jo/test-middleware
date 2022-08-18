@@ -170,7 +170,7 @@ const graphAreaStyle = css`
   min-width: 900px;
   max-width: 900px;
   height: auto;
-  padding-top: 40px;
+  //padding-top: 40px;
 `;
 const graphContainerStyle = css`
   padding: 36px 80px 80px;

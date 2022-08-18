@@ -102,7 +102,7 @@ const AdminSideBar = () => {
         {sideTeamList()}
         {myRole === '관리자' && data?.data.length === 0 && (
           <FlexBox justify={'center'} style={{ marginTop: '24px' }}>
-            <MoreTeamInfoPopup textArr={['프러덕트에 최적화된', '응답자를 더 빠르고 정확하게', '모집할 수 있습니다.']} />
+            <MoreTeamInfoPopup textArr={['프로덕트에 최적화된', '응답자를 더 빠르고 정확하게', '모집할 수 있습니다.']} />
           </FlexBox>
         )}
       </div>

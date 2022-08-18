@@ -29,7 +29,7 @@ const ConsentToUseMarketingAgreeModal = () => {
       dispatch(setUserInfo(data.data));
       queryClient.invalidateQueries(['fetchUserInfo', 'layout']);
       dispatch(isShow({ isShow: false, type: '' }));
-      dispatch(showToast({ message: '직무가 수정되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+      dispatch(showToast({ message: '마케팅 수신 동의가 수정되었습니다.', isShow: true, status: 'success', duration: 5000 }));
     },
   });
 
@@ -73,7 +73,7 @@ const ConsentToUseMarketingAgreeModal = () => {
           </FlexBox>
 
           <FlexBox style={{ marginTop: '18px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton theme={'dark'} type={'submit'} text={'직무 수정하기'} />
+            <BasicButton theme={'dark'} type={'submit'} text={'수정하기'} />
           </FlexBox>
         </Form>
       </PopupBox>

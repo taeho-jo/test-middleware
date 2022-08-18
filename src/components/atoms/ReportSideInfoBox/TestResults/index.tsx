@@ -19,6 +19,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const longData = useSelector<ReducerType, any>(state => state.report?.data?.longQuestionList);
   const multipleData = useSelector<ReducerType, any>(state => state.report?.data?.multipleQuestionList);
   const showingSectionId = useSelector<ReducerType, any>(state => state.report?.indexId);
+  const totalIndexList = useSelector<ReducerType, string[]>(state => state.report.totalIndexList);
 
   const handleSelectIntent = useCallback(
     (e, index) => {
@@ -51,7 +52,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
             const aa = arr[i]?.detail[j]?.name;
             const splitData = aa.split('-');
             const id = splitData[1].trim();
-            totalIndexList.push(`기능-${id}`);
+            totalIndexList.push(`${arr[i]?.name}-기능-${id}`);
           }
         }
       } else {
@@ -109,14 +110,13 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   }, [dataList, missionList, multipleData]);
 
   const onMoveScroll = id => {
-    const element = document.getElementById(id);
-    dispatch(updateIndexId(id));
-    element?.scrollIntoView({});
+    const indexNum = totalIndexList.indexOf(id);
+    const a = document.getElementById(totalIndexList[indexNum]);
+    a?.scrollIntoView({ behavior: 'smooth' });
+    // const element = document.getElementById(id);
+    // dispatch(updateIndexId(id));
+    // element?.scrollIntoView({});
   };
-
-  useEffect(() => {
-    console.log(showingSectionId, 'showingSectionId');
-  }, [showingSectionId]);
 
   return (
     <div css={testInfoBoxStyle}>

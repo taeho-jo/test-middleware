@@ -12,9 +12,17 @@ const useOnScreen = option => {
   const callbackFunction = (entries, childrenRef) => {
     const [entry] = entries;
 
+    if (entry.intersectionRatio === 1) {
+      if (childrenRef.current) {
+        childrenRef.current.style.overflowY = 'scroll';
+      }
+    } else {
+      if (childrenRef.current) {
+        childrenRef.current.style.overflowY = 'hidden';
+      }
+    }
+
     if (entry.isIntersecting) {
-      const bodyStyle = document.getElementById(entry.target.id);
-      console.log(entry.target.id, 'ENTRY TARGET ID');
       dispatch(updateIndexId(entry.target.id));
 
       childrenRef?.current?.scrollTo({ top: 0, left: 0, behavior: 'smooth' });

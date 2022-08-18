@@ -61,7 +61,7 @@ const ReportLayout = ({ children }) => {
   }, [userIndicator]);
 
   return (
-    <FlexBox style={{ width: '100%' }} justify={'flex-start'} align={'flex-start'}>
+    <FlexBox className={'jotang'} style={{ width: '100%' }} justify={'flex-start'} align={'flex-start'}>
       <ReportSideBar />
       <div
         css={{
