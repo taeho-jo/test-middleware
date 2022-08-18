@@ -112,6 +112,7 @@ const StackedBarChart = ({
         </FlexBox>
         {share === undefined && props.detailIndex === 0 && indicatorStatus.graph === 'N' && (
           <TutorialIndicator
+            share={share}
             name={'graph'}
             left={'-17px'}
             top={'12px'}

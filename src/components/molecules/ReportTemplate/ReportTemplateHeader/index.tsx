@@ -46,6 +46,7 @@ const ReportTemplateHeader = ({ title, handleChangeCheckBox, modalControl, check
         >
           {share === undefined && originData?.length > 0 && indicatorStatus.originData === 'N' && (
             <TutorialIndicator
+              share={share}
               name={'originData'}
               left={'-9px'}
               top={'-9px'}

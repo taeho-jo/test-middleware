@@ -114,6 +114,10 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
     element?.scrollIntoView({});
   };
 
+  useEffect(() => {
+    console.log(showingSectionId, 'showingSectionId');
+  }, [showingSectionId]);
+
   return (
     <div css={testInfoBoxStyle}>
       <span css={heading5_bold}>테스트 결과</span>
@@ -149,15 +153,15 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
               return (
                 <Fragment key={item.name}>
                   <div
-                    id={`기능-${id}-index`}
-                    onClick={() => onMoveScroll(`기능-${id}`)}
+                    id={`${el.name}-기능-${id}-index`}
+                    onClick={() => onMoveScroll(`${el.name}-기능-${id}`)}
                     style={{ width: '100%', textDecoration: 'none', margin: '8px 0', cursor: 'pointer' }}
                   >
                     <FlexBox
                       direction={'column'}
                       align={'flex-start'}
                       justify={'flex-start'}
-                      style={showingSectionId === `기능-${id}` ? infoBox : infoBox2}
+                      style={showingSectionId === `${el.name}-기능-${id}` ? infoBox : infoBox2}
                     >
                       <div css={[body3_medium, { height: 'auto', cursor: 'pointer' }]}>
                         {item.title ? (

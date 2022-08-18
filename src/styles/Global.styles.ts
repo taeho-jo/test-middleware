@@ -116,6 +116,15 @@ const reset = (popupShow, isAdmin, story) => css`
         background-color: rgba(0, 0, 0, 0);
       }
     }
+    .scrollType2 {
+      overflow-y: scroll;
+      overflow-x: hidden;
+      &::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+        background: white;
+      }
+    }
 
     #gradient-canvas {
       --gradient-color-1: #3c3c46;

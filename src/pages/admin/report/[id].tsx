@@ -172,10 +172,12 @@ const Report = ({ params }) => {
     a?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const featureDetailArr = data?.S1?.uiSummerySection?.missionFatality?.map(item => item.missionFunctionFatality.map(child => ({ ...child }))).flat();
+  const featureDetailArr = data?.S1?.uiSummerySection?.missionFatality
+    ?.map((item, index) => item.missionFunctionFatality.map(child => ({ ...child })))
+    .flat();
 
   return (
-    <div css={reportContainer} className={'scrollType1'}>
+    <>
       <div
         css={css`
           position: absolute;
@@ -210,14 +212,15 @@ const Report = ({ params }) => {
           />
         </div>
 
-        <div css={chartSectionBox}>
-          <div
-            css={chartBox(data?.answerInfoSection?.cellInfoList?.length === 0 ? true : false)}
-            className={'scrollType1'}
-            ref={respondentChildrenRef}
-          >
-            <RespondentCharacteristicsTemplate dataList={data?.answerInfoSection} />
-          </div>
+        <div
+          css={css`
+            overflow-y: scroll;
+            height: calc(100vh - 136px);
+          `}
+          className={'scrollType1'}
+          ref={respondentChildrenRef}
+        >
+          <RespondentCharacteristicsTemplate dataList={data?.answerInfoSection} />
         </div>
       </div>
       {/*응답자 특성*/}
@@ -298,12 +301,12 @@ const Report = ({ params }) => {
                 </div>
               </div>
               {item.missionFunctionFatality.map((el, idx) => {
-                const childrenIndex = featureDetailArr?.findIndex(count => count.name === el.name);
+                const childrenIndex = featureDetailArr?.findIndex(count => count.name === el.name && count.info === el.info);
                 return (
                   <div
-                    id={`기능-${el.name}`}
+                    id={`${item.name}-기능-${el.name}`}
                     ref={ele => (testRef.current[childrenIndex] = ele)}
-                    key={`기능-${item.name}`}
+                    key={`${el.name}-기능-${item.name}`}
                     css={[reportSectionBox]}
                     className={'scrollType1'}
                   >
@@ -567,7 +570,7 @@ const Report = ({ params }) => {
             );
           })}
       {/*주관식 문항*/}
-    </div>
+    </>
     // ---------------------------------------------------------------
     // <div css={originTestBox}>
     //     {/* 기능별 상세 내용 */}
@@ -600,27 +603,13 @@ const Report = ({ params }) => {
 // export default withTokenAuth(Report, false);
 export default Report;
 
-const reportContainer = css`
-  scroll-snap-type: y mandatory;
-  //scroll-behavior: smooth;
-  overflow-y: scroll;
-  //overflow-x: hidden;
-  width: 100%;
-  height: calc(100vh - 72px);
-`;
 const reportSectionBox = css`
   width: 100%;
   height: calc(100vh - 72px);
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  //position: relative;
   overflow-y: scroll;
-  //overflow-x: hidden;
-  //background: pink;
-  //margin-top: 72px;
-  //&:nth-of-type(even) {
-  //  background: red;
-  //}
+  //background: yellow;
 `;
 
 const chartSectionBox = css`

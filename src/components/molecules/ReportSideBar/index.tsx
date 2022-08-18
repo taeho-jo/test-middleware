@@ -94,6 +94,7 @@ const ReportSideBar = () => {
           <div css={{ cursor: 'pointer', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             {indicatorStatus.share === 'N' && (
               <TutorialIndicator
+                share={share}
                 name={'share'}
                 left={'-9px'}
                 top={'-10px'}

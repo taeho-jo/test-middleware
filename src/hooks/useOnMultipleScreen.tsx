@@ -12,7 +12,6 @@ const useOnMultipleScreen = option => {
 
     if (entry.isIntersecting) {
       dispatch(updateIndexId(entry.target.id));
-
       for (let i = 0; i < childrenRef.current.length; i++) {
         childrenRef?.current[i]?.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       }

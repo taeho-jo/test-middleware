@@ -24,6 +24,7 @@ const TutorialIndicator = ({ top = '0px', left = '0px', modalTitle, modalSubTitl
   const [showModal, setShowModal] = useState(false);
 
   const saveLocalStorage = key => {
+    console.log(share, 'SAHRE');
     if (share === undefined) {
       const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
       const indicator = JSON.parse(userIndicator);

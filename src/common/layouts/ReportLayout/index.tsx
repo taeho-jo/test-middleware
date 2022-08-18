@@ -5,49 +5,56 @@ import FlexBox from '../../../components/atoms/FlexBox';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import { updateIndicatorStatus, updateInitIndicator } from '../../../store/reducers/commonReducer';
-// const useScroll = () => {
-//   const [state, setState] = useState({
-//     x: 0,
-//     y: 0,
-//   });
-//   const onScroll = () => {
-//     console.log(window.scrollY, '~~~~~~~~~~~~~~~~~~~');
-//   };
-//   useEffect(() => {
-//     window.addEventListener('scroll', onScroll);
-//     return () => window.removeEventListener('scroll', onScroll);
-//   }, []);
-//   return state;
-// };
+import { css } from '@emotion/react';
+import { useRouter } from 'next/router';
+
 const ReportLayout = ({ children }) => {
   const dispatch = useDispatch();
+  const { share } = useRouter().query;
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const userIndicator = localStorage.getItem(userInfo?.userId);
-  // const { y } = useScroll();
+
   useEffect(() => {
-    if (userIndicator === null) {
-      const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
+    if (share === undefined) {
+      if (userIndicator === null) {
+        const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
+        const saveObject = {
+          indicator: {
+            share: 'N',
+            graph: 'N',
+            originData: 'N',
+            filter: 'N',
+          },
+        };
+        dispatch(updateInitIndicator({ share: 'N', graph: 'N', originData: 'N', filter: 'N' }));
+        const string = JSON.stringify(saveObject);
+        localStorage.setItem(objName, string);
+      } else {
+        const indicator = JSON.parse(userIndicator);
+        dispatch(updateInitIndicator(indicator.indicator));
+        const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
+        const saveObject = {
+          indicator: {
+            share: indicator.indicator.share,
+            graph: indicator.indicator.graph,
+            originData: indicator.indicator.originData,
+            filter: indicator.indicator.filter ? indicator.indicator.filter : 'N',
+          },
+        };
+        const string = JSON.stringify(saveObject);
+        localStorage.setItem(objName, string);
+      }
+    } else {
+      const objName = 'fakeUser';
       const saveObject = {
         indicator: {
           share: 'N',
           graph: 'N',
           originData: 'N',
+          filter: 'N',
         },
       };
-      dispatch(updateInitIndicator({ share: 'N', graph: 'N', originData: 'N' }));
-      const string = JSON.stringify(saveObject);
-      localStorage.setItem(objName, string);
-    } else {
-      const indicator = JSON.parse(userIndicator);
-      dispatch(updateInitIndicator(indicator.indicator));
-      const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
-      const saveObject = {
-        indicator: {
-          share: indicator.indicator.share,
-          graph: indicator.indicator.graph,
-          originData: indicator.indicator.originData,
-        },
-      };
+      dispatch(updateInitIndicator({ share: 'N', graph: 'N', originData: 'N', filter: 'N' }));
       const string = JSON.stringify(saveObject);
       localStorage.setItem(objName, string);
     }
@@ -64,7 +71,7 @@ const ReportLayout = ({ children }) => {
         }}
       >
         <ReportHeader />
-        <div id={'reportBoxArea'} className={'scrollType1'} css={{ marginTop: '72px' }}>
+        <div id={'reportBoxArea'} className={'scrollType2'} css={[reportContainer, { marginTop: '72px' }]}>
           {children}
         </div>
       </div>
@@ -73,3 +80,10 @@ const ReportLayout = ({ children }) => {
 };
 
 export default ReportLayout;
+const reportContainer = css`
+  scroll-snap-type: y mandatory;
+  //overflow-y: scroll;
+  width: 100%;
+  height: calc(100vh - 72px);
+  //background: red;
+`;
