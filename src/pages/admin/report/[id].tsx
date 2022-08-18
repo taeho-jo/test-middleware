@@ -216,6 +216,9 @@ const Report = ({ params }) => {
           css={css`
             overflow-y: scroll;
             height: calc(100vh - 136px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
           `}
           className={'scrollType1'}
           ref={respondentChildrenRef}
@@ -324,9 +327,10 @@ const Report = ({ params }) => {
                     </div>
                     <div
                       css={css`
-                        overflow-y: scroll;
+                        //overflow-y: scroll;
                         height: calc(100vh - 136px);
                       `}
+                      id={`${item.name}-기능-${el.name}-children`}
                       className={'scrollType1'}
                       ref={ele => (testChildrenRef.current[childrenIndex] = ele)}
                     >
