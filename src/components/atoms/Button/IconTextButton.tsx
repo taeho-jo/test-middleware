@@ -9,7 +9,9 @@ interface PropsType {
   // status?: 'normal' | 'disabled';
   type?: 'submit' | 'button' | 'reset';
   text?: string;
+  whiteSpace?: string;
   textStyle?: any;
+  fontSize?: string;
   name: IconType;
   iconPosition?: 'left' | 'right';
   roundBorder?: boolean;
@@ -21,7 +23,9 @@ interface PropsType {
 const IconTextButton = ({
   // status = 'disabled',
   textStyle = heading5_regular,
+  whiteSpace,
   text = 'Button',
+  fontSize = '14px',
   type = 'button',
   name,
   iconPosition = 'right',
@@ -31,11 +35,11 @@ const IconTextButton = ({
   ...props
 }: PropsType) => {
   return (
-    <button disabled={disabled} type={type} onClick={onClick} css={iconTextButtonStyle(roundBorder, iconPosition, status)} {...props}>
+    <button disabled={disabled} type={type} onClick={onClick} css={iconTextButtonStyle(roundBorder, iconPosition, whiteSpace)} {...props}>
       {iconPosition === 'left' ? <Icon name={disabled ? `${name}_DISABLED` : name} size={24} /> : null}
       <span
         css={[
-          textStyle === 'custom' ? { fontSize: '14px', fontWeight: '400' } : textStyle,
+          textStyle === 'custom' ? { fontSize: fontSize ? fontSize : '14px', fontWeight: '400', height: 'auto' } : textStyle,
           noBorderTextStyle(roundBorder, disabled),
           { margin: iconPosition === 'right' ? '0 8px 0 0' : '0 0 0 8px' },
         ]}
@@ -49,12 +53,12 @@ const IconTextButton = ({
 
 export default IconTextButton;
 
-const iconTextButtonStyle = (roundBorder, iconPosition, status) => css`
+const iconTextButtonStyle = (roundBorder, iconPosition, whiteSpace) => css`
   display: flex;
   align-items: center;
   box-sizing: border-box;
   justify-content: space-between;
-  white-space: nowrap;
+  white-space: ${whiteSpace ? whiteSpace : 'nowrap'};
   cursor: pointer;
   padding: ${iconPosition === 'right' ? '0 8px 0 16px' : '0 16px 0 8px'};
   ${roundBorder

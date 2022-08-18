@@ -6,6 +6,7 @@ export interface CounterType {
     share: string;
     graph: string;
     originData: string;
+    filter: string;
   };
 }
 
@@ -15,6 +16,7 @@ const initialState: CounterType = {
     share: 'N',
     graph: 'N',
     originData: 'N',
+    filter: 'N',
   },
 };
 
@@ -36,6 +38,7 @@ export const commonSlice = createSlice({
         share: 'N',
         graph: 'N',
         originData: 'N',
+        filter: 'N',
       };
     },
   },

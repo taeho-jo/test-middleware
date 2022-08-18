@@ -22,7 +22,12 @@ const MoreTeamInfoPopup = ({ textArr, handleOffInfoBox }: PropsType) => {
   const selectedTeamInfo = useSelector<ReducerType, any>(state => state.team.selectTeamList);
 
   const createProduct = () => {
-    router.push('/admin/setting?create=createTeamProduct');
+    if (router.pathname === '/admin/setting') {
+      dispatch(isShow({ isShow: true, type: 'createTeamProduct' }));
+    } else {
+      router.push('/admin/setting?create=createTeamProduct');
+    }
+
     // dispatch(isShow({ isShow: true, type: 'createTeamProduct' }));
   };
 
@@ -42,7 +47,14 @@ const MoreTeamInfoPopup = ({ textArr, handleOffInfoBox }: PropsType) => {
         })}
       </div>
       <div css={{ marginTop: '60px' }}>
-        <IconTextButton onClick={createProduct} name={'NAVIGATION_CHEVRON_RIGHT'} textStyle={'custom'} text={'프로덕트 정보 입력하기'} />
+        <IconTextButton
+          whiteSpace={'unset'}
+          onClick={createProduct}
+          name={'NAVIGATION_CHEVRON_RIGHT'}
+          fontSize={'12px'}
+          textStyle={'custom'}
+          text={'프로덕트 정보 입력하기'}
+        />
       </div>
     </FlexBox>
   );
@@ -54,5 +66,5 @@ const mainContainer = css`
   width: 208px;
   border-radius: 16px;
   background: ${colors.grey._f7};
-  padding: 16px 8px 16px 16px;
+  padding: 16px;
 `;
