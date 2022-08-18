@@ -14,24 +14,19 @@ const useOnMultipleScreen = option => {
     if (entry.isIntersecting) {
       dispatch(updateIndexId(entry.target.id));
 
-      for (let i = 0; i < childrenRef.current.length; i++) {
-        childrenRef?.current[i]?.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-      }
+      // for (let i = 0; i < childrenRef.current.length; i++) {
+      //   childrenRef?.current[i]?.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      // }
     }
   };
 
   const callbackFunction2 = entries => {
-    const [entry] = entries;
-
-    entry.target.style.overflowY = 'hidden';
-
-    if (entry.isIntersecting) {
-      const id = entry.target.id;
-      const a = document.getElementById(id);
-      if (id) {
-        a.style.overflowY = 'scroll';
+    for (let i = 0; i < entries.length; i++) {
+      if (entries[i].isIntersecting === false) {
+        entries[i].target.style.overflowY = 'hidden';
       } else {
-        entry.target.style.overflowY = 'hidden';
+        entries[i].target.style.overflowY = 'overlay';
+        entries[i].target.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       }
     }
   };
@@ -52,14 +47,13 @@ const useOnMultipleScreen = option => {
         observer.unobserve(currentTarget);
       }
     };
-  }, [ref, childrenRef, option]);
+  }, [ref, option]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => callbackFunction2(entries), option);
-    let currentTarget;
+
     let childrenTarget;
-    for (let i = 0; i < childrenRef.current.length; i++) {
-      childrenRef.current[i].style.overflowY = 'hidden';
+    for (let i = 0; i <= childrenRef.current.length; i++) {
       childrenTarget = childrenRef.current[i];
 
       if (childrenTarget) {
@@ -72,7 +66,7 @@ const useOnMultipleScreen = option => {
         observer.unobserve(childrenTarget);
       }
     };
-  }, [childrenRef, option]);
+  }, [option]);
 
   return [ref, childrenRef];
 };
