@@ -311,7 +311,7 @@ const Report = ({ params }) => {
                     ref={ele => (testRef.current[childrenIndex] = ele)}
                     key={`${el.name}-기능-${item.name}`}
                     css={[reportSectionBox]}
-                    className={'scrollType1'}
+                    // className={'scrollType1'}
                   >
                     <div>
                       <ReportTemplateHeader
@@ -612,7 +612,7 @@ const reportSectionBox = css`
   height: calc(100vh - 72px);
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  overflow-y: scroll;
+  //overflow-y: scroll;
   //background: yellow;
 `;
 
