@@ -110,12 +110,13 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   }, [dataList, missionList, multipleData]);
 
   const onMoveScroll = id => {
-    // const indexNum = totalIndexList.indexOf(id);
-    // const a = document.getElementById(totalIndexList[indexNum]);
-    // a?.scrollIntoView({ behavior: 'smooth' });
-    const element = document.getElementById(id);
-    dispatch(updateIndexId(id));
-    element?.scrollIntoView({});
+    const indexNum = totalIndexList.indexOf(id);
+    const a = document.getElementById(totalIndexList[indexNum]);
+    const b = document.getElementById('reportBoxArea');
+    b?.scrollTo({ top: a?.offsetTop, left: a?.offsetLeft, behavior: 'smooth' });
+    // const element = document.getElementById(id);
+    // dispatch(updateIndexId(id));
+    // element?.scrollIntoView({});
   };
 
   return (

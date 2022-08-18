@@ -164,12 +164,16 @@ const Report = ({ params }) => {
   const scrollDown = () => {
     const indexNum = totalIndexList.indexOf(indexId);
     const a = document.getElementById(totalIndexList[indexNum + 1]);
-    a?.scrollIntoView({ behavior: 'smooth' });
+    const b = document.getElementById('reportBoxArea');
+
+    b.scrollTo({ top: a?.offsetTop, left: a?.offsetLeft, behavior: 'smooth' });
   };
   const scrollUp = () => {
     const indexNum = totalIndexList.indexOf(indexId);
     const a = document.getElementById(totalIndexList[indexNum - 1]);
-    a?.scrollIntoView({ behavior: 'smooth' });
+    const b = document.getElementById('reportBoxArea');
+
+    b.scrollTo({ top: a?.offsetTop, left: a?.offsetLeft, behavior: 'smooth' });
   };
 
   const featureDetailArr = data?.S1?.uiSummerySection?.missionFatality
