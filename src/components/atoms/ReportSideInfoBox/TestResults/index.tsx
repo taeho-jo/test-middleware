@@ -112,10 +112,10 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const onMoveScroll = id => {
     const indexNum = totalIndexList.indexOf(id);
     const a = document.getElementById(totalIndexList[indexNum]);
-    a?.scrollIntoView({ behavior: 'smooth' });
+    // a?.scrollIntoView({ behavior: 'smooth' });
     // const element = document.getElementById(id);
     // dispatch(updateIndexId(id));
-    // element?.scrollIntoView({});
+    a?.scrollIntoView({});
   };
 
   return (
