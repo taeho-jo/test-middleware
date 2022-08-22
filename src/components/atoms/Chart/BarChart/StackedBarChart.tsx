@@ -110,7 +110,7 @@ const StackedBarChart = ({
             {rate ? <span css={[heading5_bold, { color: '#68a0f4', paddingRight: '10px' }]}>{rate}</span> : ''}
           </div>
         </FlexBox>
-        {share === undefined && props.detailIndex === 0 && indicatorStatus.graph === 'N' && (
+        {!share && props.detailIndex === 0 && indicatorStatus.graph === 'N' && (
           <TutorialIndicator
             share={share}
             name={'graph'}
