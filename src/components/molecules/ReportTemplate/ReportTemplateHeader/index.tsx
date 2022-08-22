@@ -44,7 +44,7 @@ const ReportTemplateHeader = ({ title, handleChangeCheckBox, modalControl, check
             position: relative;
           `}
         >
-          {share === undefined && originData?.length > 0 && indicatorStatus.originData === 'N' && (
+          {!share && originData?.length > 0 && indicatorStatus.originData === 'N' && (
             <TutorialIndicator
               share={share}
               name={'originData'}

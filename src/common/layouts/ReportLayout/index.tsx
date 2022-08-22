@@ -16,7 +16,7 @@ const ReportLayout = ({ children }) => {
 
   useEffect(() => {
     console.log(share, 'SHARE');
-    if (share === undefined) {
+    if (!share) {
       if (userIndicator === null) {
         const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
         const saveObject = {
