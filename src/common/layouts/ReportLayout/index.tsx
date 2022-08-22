@@ -10,7 +10,8 @@ import { useRouter } from 'next/router';
 
 const ReportLayout = ({ children }) => {
   const dispatch = useDispatch();
-  const { share } = useRouter().query;
+  const router = useRouter();
+  const { share } = router.query;
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const userIndicator = localStorage.getItem(userInfo?.userId);
 
