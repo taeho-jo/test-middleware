@@ -90,24 +90,25 @@ const ReportSideBar = () => {
       </FlexBox>
       <FlexBox style={shareBoxStyle} justify={'space-between'} align={'center'}>
         <span css={[heading3_bold, projectNameStyle]}>{projectNm ? projectNm : projectName ? projectName : '@'}</span>
-        {share ? null : (
-          <div css={{ cursor: 'pointer', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            {indicatorStatus.share === 'N' && (
-              <TutorialIndicator
-                share={share}
-                name={'share'}
-                left={'-9px'}
-                top={'-10px'}
-                modalTitle={'리포트 공유'}
-                modalSubTitle={`링크를 복사하여 팀에게 리포트를 공유해보세요.\n로그인 없이도 확인할 수 있어요.`}
-                modalTop={'-20px'}
-                modalLeft={'50px'}
-              />
-            )}
+        {/*{share ? null : (*/}
+        {/*  <div css={{ cursor: 'pointer', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>*/}
+        {/*    {!share && indicatorStatus.share === 'N' && (*/}
+        {/*      <TutorialIndicator*/}
+        {/*        share={share}*/}
+        {/*        name={'share'}*/}
+        {/*        left={'-9px'}*/}
+        {/*        top={'-10px'}*/}
+        {/*        modalTitle={'리포트 공유'}*/}
+        {/*        modalSubTitle={`링크를 복사하여 팀에게 리포트를 공유해보세요.\n로그인 없이도 확인할 수 있어요.`}*/}
+        {/*        modalTop={'-20px'}*/}
+        {/*        modalLeft={'50px'}*/}
+        {/*      />*/}
+        {/*    )}*/}
 
-            <Icon name={'ACTION_SHARE'} onClick={reportShare} />
-          </div>
-        )}
+        {/*    <Icon name={'ACTION_SHARE'} onClick={reportShare} />*/}
+        {/*  </div>*/}
+        {/*)}*/}
+        {share ? null : <Icon name={'ACTION_SHARE'} onClick={reportShare} />}
       </FlexBox>
       <div className={'scrollType1'} css={{ height: 'calc(100vh - 136px)' }} id={'testBox'} ref={indexBoxRef}>
         <TestInfoBox reportData={reportData} />

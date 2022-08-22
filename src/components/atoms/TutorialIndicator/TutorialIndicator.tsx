@@ -25,7 +25,7 @@ const TutorialIndicator = ({ top = '0px', left = '0px', modalTitle, modalSubTitl
 
   const saveLocalStorage = key => {
     console.log(share, 'SAHRE');
-    if (share === undefined) {
+    if (!share) {
       const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
       const indicator = JSON.parse(userIndicator);
       const updateObj = {
@@ -43,7 +43,6 @@ const TutorialIndicator = ({ top = '0px', left = '0px', modalTitle, modalSubTitl
         ...indicatorStatus,
         [key]: 'Y',
       };
-      console.log(updateObj, 'U');
       dispatch(updateInitIndicator(updateObj));
     }
   };

@@ -14,6 +14,7 @@ const useOnScreen = option => {
 
     if (entry.intersectionRatio === 1) {
       if (childrenRef.current) {
+        dispatch(updateIndexId(entry.target.id));
         childrenRef.current.style.overflowY = 'scroll';
       }
     } else {

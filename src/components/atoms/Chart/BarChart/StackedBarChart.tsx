@@ -110,31 +110,31 @@ const StackedBarChart = ({
             {rate ? <span css={[heading5_bold, { color: '#68a0f4', paddingRight: '10px' }]}>{rate}</span> : ''}
           </div>
         </FlexBox>
-        {share === undefined && props.detailIndex === 0 && indicatorStatus.graph === 'N' && (
-          <TutorialIndicator
-            share={share}
-            name={'graph'}
-            left={'-17px'}
-            top={'12px'}
-            modalTitle={'주관식 응답'}
-            modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n그래프를 클릭하여 주관식응답을 볼 수 있어요.`}
-            modalTop={'60px'}
-            modalLeft={'-10px'}
-          />
-        )}
+        {/*{!share && props.detailIndex === 0 && indicatorStatus.graph === 'N' && (*/}
+        {/*  <TutorialIndicator*/}
+        {/*    share={share}*/}
+        {/*    name={'graph'}*/}
+        {/*    left={'-17px'}*/}
+        {/*    top={'12px'}*/}
+        {/*    modalTitle={'주관식 응답'}*/}
+        {/*    modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n그래프를 클릭하여 주관식응답을 볼 수 있어요.`}*/}
+        {/*    modalTop={'60px'}*/}
+        {/*    modalLeft={'-10px'}*/}
+        {/*  />*/}
+        {/*)}*/}
 
-        {share && props.detailIndex === 0 && indicatorStatus.graph === 'N' && (
-          <TutorialIndicator
-            share={share}
-            name={'graph'}
-            left={'-17px'}
-            top={'12px'}
-            modalTitle={'주관식 응답'}
-            modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n그래프를 클릭하여 주관식응답을 볼 수 있어요.`}
-            modalTop={'60px'}
-            modalLeft={'-10px'}
-          />
-        )}
+        {/*{share && props.detailIndex === 0 && indicatorStatus.graph === 'N' && (*/}
+        {/*  <TutorialIndicator*/}
+        {/*    share={share}*/}
+        {/*    name={'graph'}*/}
+        {/*    left={'-17px'}*/}
+        {/*    top={'12px'}*/}
+        {/*    modalTitle={'주관식 응답'}*/}
+        {/*    modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n그래프를 클릭하여 주관식응답을 볼 수 있어요.`}*/}
+        {/*    modalTop={'60px'}*/}
+        {/*    modalLeft={'-10px'}*/}
+        {/*  />*/}
+        {/*)}*/}
 
         <ResponsiveContainer width={'100%'} height={50}>
           {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
