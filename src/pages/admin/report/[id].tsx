@@ -565,7 +565,7 @@ const Report = ({ params }) => {
                     errors={errors}
                     register={register}
                     originData={[]}
-                    researchData={data?.S1?.comment}
+                    researchData={item?.comment}
                   />
                 </div>
 
