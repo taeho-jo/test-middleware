@@ -43,7 +43,6 @@ const TutorialIndicator = ({ top = '0px', left = '0px', modalTitle, modalSubTitl
         ...indicatorStatus,
         [key]: 'Y',
       };
-      console.log(updateObj, 'U');
       dispatch(updateInitIndicator(updateObj));
     }
   };

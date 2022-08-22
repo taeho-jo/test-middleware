@@ -15,6 +15,7 @@ const ReportLayout = ({ children }) => {
   const userIndicator = localStorage.getItem(userInfo?.userId);
 
   useEffect(() => {
+    console.log(share, 'SHARE');
     if (share === undefined) {
       if (userIndicator === null) {
         const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
