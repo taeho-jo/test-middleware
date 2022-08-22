@@ -92,7 +92,7 @@ const ReportSideBar = () => {
         <span css={[heading3_bold, projectNameStyle]}>{projectNm ? projectNm : projectName ? projectName : '@'}</span>
         {share ? null : (
           <div css={{ cursor: 'pointer', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            {indicatorStatus.share === 'N' && (
+            {!share && indicatorStatus.share === 'N' && (
               <TutorialIndicator
                 share={share}
                 name={'share'}
