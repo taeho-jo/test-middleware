@@ -58,7 +58,7 @@ const ReportLayout = ({ children }) => {
       const string = JSON.stringify(saveObject);
       localStorage.setItem(objName, string);
     }
-  }, [userIndicator]);
+  }, [userIndicator, share]);
 
   return (
     <FlexBox className={'jotang'} style={{ width: '100%' }} justify={'flex-start'} align={'flex-start'}>
