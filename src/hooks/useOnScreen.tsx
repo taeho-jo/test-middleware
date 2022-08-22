@@ -23,6 +23,7 @@ const useOnScreen = option => {
     }
 
     if (entry.isIntersecting) {
+      // console.log(entry.target.id, 'entry.target.id');
       dispatch(updateIndexId(entry.target.id));
 
       childrenRef?.current?.scrollTo({ top: 0, left: 0, behavior: 'smooth' });

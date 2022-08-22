@@ -113,9 +113,11 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
     const indexNum = totalIndexList.indexOf(id);
     const a = document.getElementById(totalIndexList[indexNum]);
     const b = document.getElementById('reportBoxArea');
+    dispatch(updateIndexId(id));
     b?.scrollTo({ top: a?.offsetTop, left: a?.offsetLeft, behavior: 'smooth' });
+
     // const element = document.getElementById(id);
-    // dispatch(updateIndexId(id));
+
     // element?.scrollIntoView({});
   };
 

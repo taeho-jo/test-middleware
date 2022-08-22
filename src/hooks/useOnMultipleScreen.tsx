@@ -12,6 +12,7 @@ const useOnMultipleScreen = option => {
   const callbackFunction = entries => {
     const [entry] = entries;
     if (entry.isIntersecting) {
+      // console.log(entry.target.id, 'entry.target.id');
       dispatch(updateIndexId(entry.target.id));
 
       // for (let i = 0; i < childrenRef.current.length; i++) {
