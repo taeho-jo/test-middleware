@@ -108,6 +108,7 @@ const ReportSideBar = () => {
         {/*    <Icon name={'ACTION_SHARE'} onClick={reportShare} />*/}
         {/*  </div>*/}
         {/*)}*/}
+        {share ? null : <Icon name={'ACTION_SHARE'} onClick={reportShare} style={{ cursor: 'pointer' }} />}
       </FlexBox>
 
       <div className={'scrollType1'} css={{ height: 'calc(100vh - 136px)' }} id={'testBox'} ref={indexBoxRef}>
@@ -134,13 +135,14 @@ const sidebarStyle = css`
 
 const projectNameStyle = css`
   margin-right: 16px;
-  white-space: normal;
+  //white-space: normal;
   text-overflow: ellipsis;
   overflow: hidden;
   height: auto;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  white-space: nowrap;
 `;
 const shareBoxStyle = css`
   position: relative;
