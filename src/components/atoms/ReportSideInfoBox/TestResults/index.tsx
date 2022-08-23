@@ -114,8 +114,10 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
     const indexNum = totalIndexList.indexOf(id);
     const a = document.getElementById(totalIndexList[indexNum]);
     const b = document.getElementById('reportBoxArea');
-    // dispatch(updateIndexId(id));
+    // if (id === 'UI 진단 전체 요약') {
+    // }
     b?.scrollTo({ top: a?.offsetTop, left: a?.offsetLeft, behavior: 'smooth' });
+    // dispatch(updateIndexId(id));
   };
 
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateIndexId } from '../store/reducers/reportReducer';
+import { updateIndexClick, updateIndexId } from '../store/reducers/reportReducer';
 import { ReducerType } from '../store/reducers';
 import { css } from '@emotion/react';
 
@@ -40,6 +40,7 @@ const useOnScreen = option => {
 
     return () => {
       if (ref.current) {
+        dispatch(updateIndexClick(false));
         observer.unobserve(ref.current);
       }
     };
