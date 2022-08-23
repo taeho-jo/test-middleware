@@ -8,4 +8,5 @@ const AXIOS = axios.create({
   withCredentials: false,
   timeout: 5000,
 });
+
 export default AXIOS;
