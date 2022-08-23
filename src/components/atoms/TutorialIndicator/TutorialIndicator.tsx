@@ -25,7 +25,6 @@ const TutorialIndicator = ({ top = '0px', left = '0px', modalTitle, modalSubTitl
   const [showModal, setShowModal] = useState(false);
 
   const saveLocalStorage = key => {
-    console.log(key, 'KEY');
     if (share) {
       const updateObj = {
         ...indicatorStatus,
