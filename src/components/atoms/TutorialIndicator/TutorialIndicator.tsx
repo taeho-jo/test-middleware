@@ -20,7 +20,7 @@ interface PropsType {
 const TutorialIndicator = ({ top = '0px', left = '0px', modalTitle, modalSubTitle, modalTop, modalLeft, name, share = undefined }: PropsType) => {
   const dispatch = useDispatch();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
-  const userIndicator = localStorage.getItem(userInfo?.userId);
+
   const indicatorStatus = useSelector<ReducerType, any>(state => state.common.indicator);
   const [showModal, setShowModal] = useState(false);
 
