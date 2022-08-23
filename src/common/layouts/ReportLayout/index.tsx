@@ -68,7 +68,7 @@ const ReportLayout = ({ children }) => {
         css={{
           width: 'calc(100% - 296px)',
           marginLeft: '296px',
-          minWidth: '900px',
+          minWidth: '750px',
         }}
       >
         <ReportHeader />

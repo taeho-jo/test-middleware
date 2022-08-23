@@ -12,9 +12,8 @@ import { ReducerType } from '../../../store/reducers';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { useQuery, useQueryClient } from 'react-query';
 import { fetchReportShareIdApi } from '../../../api/reportApi';
-import { updateReportViewId } from '../../../store/reducers/reportReducer';
+import { updateIndexId, updateReportViewId } from '../../../store/reducers/reportReducer';
 import TutorialIndicator from '../../atoms/TutorialIndicator/TutorialIndicator';
-import { userInfo } from 'os';
 
 const ReportSideBar = () => {
   const dispatch = useDispatch();
@@ -69,7 +68,8 @@ const ReportSideBar = () => {
 
     const offestY = indexBoxOffsetTop - divHeight / 2;
 
-    div.scrollTo(0, offestY ? offestY : 0);
+    // div.scrollTo(0, offestY ? offestY : 0);
+    div.scrollTo({ top: offestY ? offestY : 0, left: 0, behavior: 'smooth' });
   }, [showingSectionId]);
 
   useEffect(() => {
@@ -108,8 +108,8 @@ const ReportSideBar = () => {
         {/*    <Icon name={'ACTION_SHARE'} onClick={reportShare} />*/}
         {/*  </div>*/}
         {/*)}*/}
-        {share ? null : <Icon name={'ACTION_SHARE'} onClick={reportShare} />}
       </FlexBox>
+
       <div className={'scrollType1'} css={{ height: 'calc(100vh - 136px)' }} id={'testBox'} ref={indexBoxRef}>
         <TestInfoBox reportData={reportData} />
         <RespondentAttributes changeClicked={changeClicked} clicked={clicked} />
@@ -144,9 +144,9 @@ const projectNameStyle = css`
 `;
 const shareBoxStyle = css`
   position: relative;
-  height: 64px;
+  //height: 64px;
   border-bottom: 1px solid #dcdcdc;
-  padding: 0 24px;
+  padding: 19.5px 24px;
 `;
 const marginStyle = css`
   margin-right: 12px;

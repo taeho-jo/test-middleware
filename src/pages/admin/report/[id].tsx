@@ -216,19 +216,28 @@ const Report = ({ params }) => {
           />
         </div>
 
+        {/*<div css={chartSectionBox}>*/}
+        {/*  <div*/}
+        {/*    css={chartBox2(true, data?.answerInfoSection?.cellInfoList?.length === 0 ? 'center' : 'flex-start')}*/}
+        {/*    className={'scrollType1'}*/}
+        {/*    ref={respondentChildrenRef}*/}
+        {/*  >*/}
         <div
           css={css`
             overflow-y: scroll;
             height: calc(100vh - 136px);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: ${data?.answerInfoSection?.cellInfoList?.length === 0 ? 'center' : 'flex-start'};
           `}
           className={'scrollType1'}
           ref={respondentChildrenRef}
         >
           <RespondentCharacteristicsTemplate dataList={data?.answerInfoSection} />
         </div>
+
+        {/*  </div>*/}
+        {/*</div>*/}
       </div>
       {/*응답자 특성*/}
 
@@ -571,7 +580,14 @@ const Report = ({ params }) => {
 
                 <div css={chartSectionBox}>
                   <div css={chartBox(true)} className={'scrollType1'}>
+                    {/*<div*/}
+                    {/*  css={css`*/}
+                    {/*    height: calc(100vh - 136px);*/}
+                    {/*  `}*/}
+                    {/*  className={'scrollType1'}*/}
+                    {/*>*/}
                     <LongQuestionTemplate dataList={item} modalControl={modalControl} />
+                    {/*</div>*/}
                   </div>
                 </div>
               </div>
@@ -627,7 +643,7 @@ const chartSectionBox = css`
   justify-content: center;
   align-items: center;
 `;
-const chartBox = (padding = false) => css`
+const chartBox = (padding = false, justify = 'center') => css`
   width: 900px;
   min-width: 900px;
   padding-top: ${padding ? '0px' : '190px'};
@@ -638,11 +654,10 @@ const chartBox = (padding = false) => css`
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: ${justify ? justify : 'center'};
   align-items: center;
   //overflow: hidden;
 `;
-
 export function getServerSideProps(context) {
   return {
     props: { params: context.params },
