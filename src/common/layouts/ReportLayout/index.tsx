@@ -15,52 +15,36 @@ const ReportLayout = ({ children }) => {
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const userIndicator = localStorage.getItem(userInfo?.userId);
 
-  // useEffect(() => {
-  //   console.log(share, 'SHARE');
-  //   if (!share) {
-  //     if (userIndicator === null) {
-  //       const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
-  //       const saveObject = {
-  //         indicator: {
-  //           share: 'N',
-  //           graph: 'N',
-  //           originData: 'N',
-  //           filter: 'N',
-  //         },
-  //       };
-  //       dispatch(updateInitIndicator({ share: 'N', graph: 'N', originData: 'N', filter: 'N' }));
-  //       const string = JSON.stringify(saveObject);
-  //       localStorage.setItem(objName, string);
-  //     } else {
-  //       const indicator = JSON.parse(userIndicator);
-  //       dispatch(updateInitIndicator(indicator.indicator));
-  //       const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
-  //       const saveObject = {
-  //         indicator: {
-  //           share: indicator.indicator.share,
-  //           graph: indicator.indicator.graph,
-  //           originData: indicator.indicator.originData,
-  //           filter: indicator.indicator.filter ? indicator.indicator.filter : 'N',
-  //         },
-  //       };
-  //       const string = JSON.stringify(saveObject);
-  //       localStorage.setItem(objName, string);
-  //     }
-  //   } else {
-  //     const objName = 'fakeUser';
-  //     const saveObject = {
-  //       indicator: {
-  //         share: 'N',
-  //         graph: 'N',
-  //         originData: 'N',
-  //         filter: 'N',
-  //       },
-  //     };
-  //     dispatch(updateInitIndicator({ share: 'N', graph: 'N', originData: 'N', filter: 'N' }));
-  //     const string = JSON.stringify(saveObject);
-  //     localStorage.setItem(objName, string);
-  //   }
-  // }, [userIndicator, share]);
+  useEffect(() => {
+    if (share) {
+      const objName = 'fakeUser';
+      const saveObject = {
+        share: 'N',
+        graph: 'N',
+        originData: 'N',
+        filter: 'N',
+      };
+      dispatch(updateInitIndicator(saveObject));
+      const string = JSON.stringify(saveObject);
+      localStorage.setItem(objName, string);
+    } else {
+      if (userIndicator) {
+        const indicator = JSON.parse(userIndicator);
+        dispatch(updateInitIndicator(indicator));
+      } else {
+        const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
+        const saveObject = {
+          share: 'N',
+          graph: 'N',
+          originData: 'N',
+          filter: 'N',
+        };
+        dispatch(updateInitIndicator(saveObject));
+        const string = JSON.stringify(saveObject);
+        localStorage.setItem(objName, string);
+      }
+    }
+  }, [userIndicator, share, userInfo]);
 
   useEffect(() => {
     dispatch(updateIndexId('one'));
