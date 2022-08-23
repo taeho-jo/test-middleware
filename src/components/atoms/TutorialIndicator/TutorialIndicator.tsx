@@ -25,26 +25,21 @@ const TutorialIndicator = ({ top = '0px', left = '0px', modalTitle, modalSubTitl
   const [showModal, setShowModal] = useState(false);
 
   const saveLocalStorage = key => {
-    const userIndicator = localStorage.getItem(userInfo?.userId);
-    if (!share) {
-      const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
-      const indicator = JSON.parse(userIndicator);
-      const updateObj = {
-        ...indicator.indicator,
-        [key]: 'Y',
-      };
-      dispatch(updateInitIndicator(updateObj));
-      const saveObject = {
-        indicator: updateObj,
-      };
-      const string = JSON.stringify(saveObject);
-      localStorage.setItem(objName, string);
-    } else {
+    if (share) {
       const updateObj = {
         ...indicatorStatus,
         [key]: 'Y',
       };
       dispatch(updateInitIndicator(updateObj));
+    } else {
+      const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
+      const updateObj = {
+        ...indicatorStatus,
+        [key]: 'Y',
+      };
+      dispatch(updateInitIndicator(updateObj));
+      const string = JSON.stringify(updateObj);
+      localStorage.setItem(objName, string);
     }
   };
 
