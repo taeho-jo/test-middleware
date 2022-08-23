@@ -185,6 +185,7 @@ const ReportHeader = () => {
           position: relative;
         `}
       >
+        {/*<></>*/}
         {/*{share === undefined && indicatorStatus.filter === 'N' && (*/}
         {/*  <TutorialIndicator*/}
         {/*    share={share}*/}
@@ -197,7 +198,6 @@ const ReportHeader = () => {
         {/*    modalLeft={'-10px'}*/}
         {/*  />*/}
         {/*)}*/}
-
         {/*{share && indicatorStatus.filter === 'N' && (*/}
         {/*  <TutorialIndicator*/}
         {/*    share={share}*/}
