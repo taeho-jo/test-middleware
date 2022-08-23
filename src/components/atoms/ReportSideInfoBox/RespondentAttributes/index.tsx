@@ -62,7 +62,7 @@ const RespondentAttributes = ({ changeClicked, clicked }) => {
     dispatch(updateIndexClick(true));
     const element = document.getElementById(id);
     const b = document.getElementById('reportBoxArea');
-    dispatch(updateIndexId(id));
+    // dispatch(updateIndexId(id));
     b?.scrollTo({ top: element?.offsetTop, left: element?.offsetLeft, behavior: 'smooth' });
   };
 
