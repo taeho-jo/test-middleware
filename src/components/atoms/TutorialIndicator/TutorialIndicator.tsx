@@ -5,6 +5,7 @@ import ModalTitle from '../../molecules/ModalTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import { resetIndicatorStatus, updateInitIndicator } from '../../../store/reducers/commonReducer';
+import testImg from '/public/assets/gif/tutorial_final.gif';
 
 interface PropsType {
   top?: string;
@@ -19,12 +20,12 @@ interface PropsType {
 const TutorialIndicator = ({ top = '0px', left = '0px', modalTitle, modalSubTitle, modalTop, modalLeft, name, share = undefined }: PropsType) => {
   const dispatch = useDispatch();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
-  const userIndicator = localStorage.getItem(userInfo?.userId);
+
   const indicatorStatus = useSelector<ReducerType, any>(state => state.common.indicator);
   const [showModal, setShowModal] = useState(false);
 
   const saveLocalStorage = key => {
-    console.log(share, 'SAHRE');
+    const userIndicator = localStorage.getItem(userInfo?.userId);
     if (!share) {
       const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
       const indicator = JSON.parse(userIndicator);
@@ -47,17 +48,10 @@ const TutorialIndicator = ({ top = '0px', left = '0px', modalTitle, modalSubTitl
     }
   };
 
-  // useEffect(() => {
-  //   if (share !== undefined) {
-  //     return () => {
-  //       dispatch(resetIndicatorStatus());
-  //     };
-  //   }
-  // }, [share]);
-
   return (
     <>
-      <div css={circleBox(top, left)} onClick={() => setShowModal(true)} />
+      {/*<div css={circleBox(top, left)} onClick={() => setShowModal(true)} />*/}
+      <img src={testImg.src} alt="indicator" css={circleBox2(top, left)} onClick={() => setShowModal(true)} />
       {showModal && (
         <div css={popupBoxStyle(modalTop, modalLeft)}>
           <span css={title}>{modalTitle}</span>
@@ -101,6 +95,16 @@ const circleBox = (top, left) => css`
     opacity: 0.2;
     animation: ${sizeUp} 1.5s ease-out infinite;
   }
+`;
+const circleBox2 = (top, left) => css`
+  height: 44px;
+  width: 44px;
+  position: absolute;
+  left: ${left};
+  top: ${top};
+  //border-radius: 50%;
+  z-index: 10;
+  cursor: pointer;
 `;
 const popupBoxStyle = (modalTop, modalLeft) => css`
   width: 400px;

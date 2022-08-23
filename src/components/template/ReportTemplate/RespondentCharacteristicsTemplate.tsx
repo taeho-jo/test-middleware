@@ -74,12 +74,12 @@ const RespondentCharacteristicsTemplate = ({ dataList }: PropsType) => {
   }, [dataList]);
   return (
     <>
-      <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
-        <FlexBox style={graphAreaStyle} direction={'column'}>
+      <FlexBox style={{ ...graphBosStyle, overflow: 'unset' }} justify={'center'} align={'flex-start'} overflow={'unset'}>
+        <FlexBox style={graphAreaStyle(dataList?.cellInfoList?.length)} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
             <div css={[heading4_bold]}>기본 정보</div>
           </div>
-          <FlexBox justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
+          <FlexBox justify={'space-between'} align={'flex-start'} style={graphContainerStyle(dataList?.cellInfoList?.length)}>
             <FlexBox direction={'column'} overflow={'unset'}>
               <span css={[heading5_bold, { textAlign: 'center' }]}>성별</span>
               <BasicPieChart
@@ -145,42 +145,27 @@ const RespondentCharacteristicsTemplate = ({ dataList }: PropsType) => {
 
 export default RespondentCharacteristicsTemplate;
 
-const mainContentsArea = css`
-  height: calc(100vh - 136px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow-y: scroll;
-`;
 const graphBosStyle = css`
   width: 100%;
   position: relative;
+  overflow: unset;
 `;
-const fixImage = css`
-  width: 278px;
-  position: absolute;
-  left: 5%;
-  top: 50%;
-  transform: translateY(-50%);
-`;
-const graphAreaStyle = css`
-  border-left: 1px solid #dcdcdc;
-  border-right: 1px solid #dcdcdc;
+const graphAreaStyle = (length = 0) => css`
+  border-left: ${length === 0 ? 'none' : '1px solid #dcdcdc'};
+  border-right: ${length === 0 ? 'none' : '1px solid #dcdcdc'};
   min-width: 900px;
   max-width: 900px;
-  height: auto;
+  height: 100%;
   padding-top: 40px;
 `;
-const graphContainerStyle = css`
+const graphContainerStyle = length => css`
   padding: 36px 80px 80px;
   width: 100%;
-  border-bottom: 1px solid #dcdcdc;
+  border-bottom: ${length === 0 ? 'none' : '1px solid #dcdcdc'};
 `;
 const graphContainerStyle2 = css`
   padding: 36px 80px 80px;
   width: 100%;
-  //border-bottom: 1px solid #dcdcdc;
 `;
 const tableStyle = css`
   border-top: 1px solid #dcdcdc;

@@ -7,59 +7,69 @@ import { ReducerType } from '../../../store/reducers';
 import { updateIndicatorStatus, updateInitIndicator } from '../../../store/reducers/commonReducer';
 import { css } from '@emotion/react';
 import { useRouter } from 'next/router';
+import { updateIndexId } from '../../../store/reducers/reportReducer';
 
 const ReportLayout = ({ children }) => {
   const dispatch = useDispatch();
-  const { share } = useRouter().query;
+  const router = useRouter();
+  const { share } = router.query;
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const userIndicator = localStorage.getItem(userInfo?.userId);
+  useEffect(() => {
+    console.log(share, 'SHARE');
+    if (!share) {
+      console.log('언디파인드');
+      if (userIndicator === null) {
+        const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
+        const saveObject = {
+          indicator: {
+            share: 'N',
+            graph: 'N',
+            originData: 'N',
+            filter: 'N',
+          },
+        };
+        dispatch(updateInitIndicator({ share: 'N', graph: 'N', originData: 'N', filter: 'N' }));
+        const string = JSON.stringify(saveObject);
+        console.log(objName, string, 'OBJ NAME, STRING, 로컬스토리지 없을 때!');
+        localStorage.setItem(objName, string);
+      } else {
+        const indicator = JSON.parse(userIndicator);
+        console.log(indicator, 'INDICATOR');
+        dispatch(updateInitIndicator(indicator.indicator));
+        const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
+        const saveObject = {
+          indicator: {
+            share: indicator.indicator.share,
+            graph: indicator.indicator.graph,
+            originData: indicator.indicator.originData,
+            filter: indicator.indicator.filter ? indicator.indicator.filter : 'N',
+          },
+        };
+        const string = JSON.stringify(saveObject);
+        console.log(objName, string, 'OBJ NAME, STRING');
+        localStorage.setItem(objName, string);
+      }
+    } else {
+      console.log('있음');
+      const objName = 'fakeUser';
+      const saveObject = {
+        indicator: {
+          share: 'N',
+          graph: 'N',
+          originData: 'N',
+          filter: 'N',
+        },
+      };
+      dispatch(updateInitIndicator({ share: 'N', graph: 'N', originData: 'N', filter: 'N' }));
+      const string = JSON.stringify(saveObject);
+      localStorage.setItem(objName, string);
+    }
+  }, [userIndicator, userInfo]);
 
-  // useEffect(() => {
-  //   console.log(share, 'SHARE');
-  //   if (!share) {
-  //     if (userIndicator === null) {
-  //       const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
-  //       const saveObject = {
-  //         indicator: {
-  //           share: 'N',
-  //           graph: 'N',
-  //           originData: 'N',
-  //           filter: 'N',
-  //         },
-  //       };
-  //       dispatch(updateInitIndicator({ share: 'N', graph: 'N', originData: 'N', filter: 'N' }));
-  //       const string = JSON.stringify(saveObject);
-  //       localStorage.setItem(objName, string);
-  //     } else {
-  //       const indicator = JSON.parse(userIndicator);
-  //       dispatch(updateInitIndicator(indicator.indicator));
-  //       const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
-  //       const saveObject = {
-  //         indicator: {
-  //           share: indicator.indicator.share,
-  //           graph: indicator.indicator.graph,
-  //           originData: indicator.indicator.originData,
-  //           filter: indicator.indicator.filter ? indicator.indicator.filter : 'N',
-  //         },
-  //       };
-  //       const string = JSON.stringify(saveObject);
-  //       localStorage.setItem(objName, string);
-  //     }
-  //   } else {
-  //     const objName = 'fakeUser';
-  //     const saveObject = {
-  //       indicator: {
-  //         share: 'N',
-  //         graph: 'N',
-  //         originData: 'N',
-  //         filter: 'N',
-  //       },
-  //     };
-  //     dispatch(updateInitIndicator({ share: 'N', graph: 'N', originData: 'N', filter: 'N' }));
-  //     const string = JSON.stringify(saveObject);
-  //     localStorage.setItem(objName, string);
-  //   }
-  // }, [userIndicator, share]);
+  useEffect(() => {
+    dispatch(updateIndexId('one'));
+  }, []);
 
   return (
     <FlexBox className={'jotang'} style={{ width: '100%' }} justify={'flex-start'} align={'flex-start'}>
@@ -68,7 +78,7 @@ const ReportLayout = ({ children }) => {
         css={{
           width: 'calc(100% - 296px)',
           marginLeft: '296px',
-          minWidth: '900px',
+          minWidth: '750px',
         }}
       >
         <ReportHeader />

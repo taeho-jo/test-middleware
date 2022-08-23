@@ -40,7 +40,7 @@ const UiTestFullSummaryTemplate = ({ dataList, register, errors, checked, handle
   );
   return (
     <>
-      <FlexBox css={graphBoxStyle} justify={'center'} align={'flex-start'}>
+      <FlexBox css={graphBoxStyle} justify={'center'} align={'flex-start'} overflow={'unset'}>
         {/*<img css={fixImage} src={FixImage.src} alt="'FixImage" />*/}
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
@@ -93,30 +93,12 @@ const UiTestFullSummaryTemplate = ({ dataList, register, errors, checked, handle
 };
 export default UiTestFullSummaryTemplate;
 
-const mainContentsArea = css`
-  height: calc(100vh - 136px);
-  //height: calc(100vh - 72px);
-  //margin-top: 136px;
-  background: red;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow-y: scroll;
-`;
-
 const graphBoxStyle = css`
   width: 100%;
   position: relative;
   overflow: unset;
 `;
-const fixImage = css`
-  width: 278px;
-  position: absolute;
-  left: 5%;
-  top: 50%;
-  transform: translateY(-50%);
-`;
+
 const graphAreaStyle = css`
   border-left: 1px solid #dcdcdc;
   border-right: 1px solid #dcdcdc;

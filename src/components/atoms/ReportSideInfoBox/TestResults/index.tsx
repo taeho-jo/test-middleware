@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { ReducerType } from '../../../../store/reducers';
 import useOnScreen from '../../../../hooks/useOnScreen';
-import { updateIndexId, updateTotalIndexList } from '../../../../store/reducers/reportReducer';
+import { updateIndexClick, updateIndexId, updateTotalIndexList } from '../../../../store/reducers/reportReducer';
 
 const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const dispatch = useDispatch();
   const [intentList, setIntentList] = useState([]);
-  const [selectIntent, setSelectIntent] = useState<number | null>(null);
-  const [detailSelectIntent, setDetailSelectIntent] = useState(null);
+  // const [selectIntent, setSelectIntent] = useState<number | null>(null);
+  // const [detailSelectIntent, setDetailSelectIntent] = useState(null);
 
   const s1Data = useSelector<ReducerType, any>(state => state.report?.data?.S1);
   const longData = useSelector<ReducerType, any>(state => state.report?.data?.longQuestionList);
@@ -21,26 +21,26 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const showingSectionId = useSelector<ReducerType, any>(state => state.report?.indexId);
   const totalIndexList = useSelector<ReducerType, string[]>(state => state.report.totalIndexList);
 
-  const handleSelectIntent = useCallback(
-    (e, index) => {
-      setDetailSelectIntent(null);
-      setSelectIntent(index);
-      changeClicked('');
-    },
-    [changeClicked, clicked],
-  );
-
-  useEffect(() => {
-    if (clicked === 'one') {
-      setSelectIntent(null);
-      setDetailSelectIntent(null);
-    }
-  }, [clicked]);
-
-  const handleDetailSelectIntent = useCallback(index => {
-    setSelectIntent(null);
-    setDetailSelectIntent(index);
-  }, []);
+  // const handleSelectIntent = useCallback(
+  //   (e, index) => {
+  //     setDetailSelectIntent(null);
+  //     setSelectIntent(index);
+  //     changeClicked('');
+  //   },
+  //   [changeClicked, clicked],
+  // );
+  //
+  // useEffect(() => {
+  //   if (clicked === 'one') {
+  //     setSelectIntent(null);
+  //     setDetailSelectIntent(null);
+  //   }
+  // }, [clicked]);
+  //
+  // const handleDetailSelectIntent = useCallback(index => {
+  //   setSelectIntent(null);
+  //   setDetailSelectIntent(index);
+  // }, []);
 
   const filterTotalIndexList = arr => {
     const totalIndexList = [];
@@ -110,15 +110,14 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   }, [dataList, missionList, multipleData]);
 
   const onMoveScroll = id => {
+    dispatch(updateIndexClick(true));
     const indexNum = totalIndexList.indexOf(id);
     const a = document.getElementById(totalIndexList[indexNum]);
     const b = document.getElementById('reportBoxArea');
-    dispatch(updateIndexId(id));
+    // if (id === 'UI 진단 전체 요약') {
+    // }
     b?.scrollTo({ top: a?.offsetTop, left: a?.offsetLeft, behavior: 'smooth' });
-
-    // const element = document.getElementById(id);
-
-    // element?.scrollIntoView({});
+    // dispatch(updateIndexId(id));
   };
 
   return (

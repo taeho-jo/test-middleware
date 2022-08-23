@@ -6,7 +6,7 @@ import { css } from '@emotion/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../../store/reducers';
 import { useRouter } from 'next/router';
-import { updateIndexId } from '../../../../store/reducers/reportReducer';
+import { updateIndexClick, updateIndexId } from '../../../../store/reducers/reportReducer';
 
 const data = [
   { value: '성별', children: [] },
@@ -59,9 +59,10 @@ const RespondentAttributes = ({ changeClicked, clicked }) => {
   }, [answerInfo]);
 
   const onMoveScroll = id => {
+    dispatch(updateIndexClick(true));
     const element = document.getElementById(id);
-    dispatch(updateIndexId(id));
-    element?.scrollIntoView({});
+    const b = document.getElementById('reportBoxArea');
+    b?.scrollTo({ top: element?.offsetTop, left: element?.offsetLeft, behavior: 'smooth' });
   };
 
   return (

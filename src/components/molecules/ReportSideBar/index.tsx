@@ -12,9 +12,8 @@ import { ReducerType } from '../../../store/reducers';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { useQuery, useQueryClient } from 'react-query';
 import { fetchReportShareIdApi } from '../../../api/reportApi';
-import { updateReportViewId } from '../../../store/reducers/reportReducer';
+import { updateIndexId, updateReportViewId } from '../../../store/reducers/reportReducer';
 import TutorialIndicator from '../../atoms/TutorialIndicator/TutorialIndicator';
-import { userInfo } from 'os';
 
 const ReportSideBar = () => {
   const dispatch = useDispatch();
@@ -69,7 +68,8 @@ const ReportSideBar = () => {
 
     const offestY = indexBoxOffsetTop - divHeight / 2;
 
-    div.scrollTo(0, offestY ? offestY : 0);
+    // div.scrollTo(0, offestY ? offestY : 0);
+    div.scrollTo({ top: offestY ? offestY : 0, left: 0, behavior: 'smooth' });
   }, [showingSectionId]);
 
   useEffect(() => {
@@ -90,6 +90,7 @@ const ReportSideBar = () => {
       </FlexBox>
       <FlexBox style={shareBoxStyle} justify={'space-between'} align={'center'}>
         <span css={[heading3_bold, projectNameStyle]}>{projectNm ? projectNm : projectName ? projectName : '@'}</span>
+
         {/*{share ? null : (*/}
         {/*  <div css={{ cursor: 'pointer', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>*/}
         {/*    {!share && indicatorStatus.share === 'N' && (*/}
@@ -108,8 +109,9 @@ const ReportSideBar = () => {
         {/*    <Icon name={'ACTION_SHARE'} onClick={reportShare} />*/}
         {/*  </div>*/}
         {/*)}*/}
-        {share ? null : <Icon name={'ACTION_SHARE'} onClick={reportShare} />}
+        {share ? null : <Icon name={'ACTION_SHARE'} onClick={reportShare} style={{ cursor: 'pointer' }} />}
       </FlexBox>
+
       <div className={'scrollType1'} css={{ height: 'calc(100vh - 136px)' }} id={'testBox'} ref={indexBoxRef}>
         <TestInfoBox reportData={reportData} />
         <RespondentAttributes changeClicked={changeClicked} clicked={clicked} />
@@ -134,19 +136,20 @@ const sidebarStyle = css`
 
 const projectNameStyle = css`
   margin-right: 16px;
-  white-space: normal;
+  //white-space: normal;
   text-overflow: ellipsis;
   overflow: hidden;
   height: auto;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  white-space: nowrap;
 `;
 const shareBoxStyle = css`
   position: relative;
-  height: 64px;
+  //height: 64px;
   border-bottom: 1px solid #dcdcdc;
-  padding: 0 24px;
+  padding: 19.5px 24px;
 `;
 const marginStyle = css`
   margin-right: 12px;

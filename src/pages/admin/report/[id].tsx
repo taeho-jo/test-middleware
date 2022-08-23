@@ -36,8 +36,6 @@ const Report = ({ params }) => {
   const { id } = params;
   const { share } = router.query;
 
-  // console.log(y, '###########');
-
   const filterFlied = useSelector<ReducerType, any>(state => state.report.filter.filterFlied);
   const filterValues = useSelector<ReducerType, any>(state => state.report.filter.filterValues);
   const filterFail = useSelector<ReducerType, any>(state => state.report.filter.filterFail);
@@ -204,8 +202,8 @@ const Report = ({ params }) => {
         />
       </div>
       {/*응답자 특성*/}
-      <div css={reportSectionBox} className={'scrollType1'}>
-        <div id={'one'} ref={respondentRef}>
+      <div css={reportSectionBox} id={'one'} ref={respondentRef}>
+        <div>
           <ReportTemplateHeader
             title={'응답자 특성'}
             handleChangeCheckBox={handleChangeCheckBox}
@@ -218,13 +216,13 @@ const Report = ({ params }) => {
 
         <div
           css={css`
-            overflow-y: scroll;
             height: calc(100vh - 136px);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: ${data?.answerInfoSection?.cellInfoList?.length === 0 ? 'center' : 'flex-start'};
           `}
-          className={'scrollType1'}
+          className={'scrollType1 asdf'}
+          id={'rkrkrkrkrk'}
           ref={respondentChildrenRef}
         >
           <RespondentCharacteristicsTemplate dataList={data?.answerInfoSection} />
@@ -234,7 +232,7 @@ const Report = ({ params }) => {
 
       {/* UI 진단 전체 요약 */}
       {data?.S1 && (
-        <div css={reportSectionBox} className={'scrollType1'} id={'UI 진단 전체 요약'} ref={uiTestRef}>
+        <div css={reportSectionBox} id={'UI 진단 전체 요약'} ref={uiTestRef}>
           <div>
             <ReportTemplateHeader
               title={'UI 진단 전체 요약'}
@@ -248,11 +246,8 @@ const Report = ({ params }) => {
             />
           </div>
 
-          {/*<div css={chartSectionBox}>*/}
-          {/*  <div css={chartBox} className={'scrollType1'} ref={uiTestChildrenRef}>*/}
           <div
             css={css`
-              overflow-y: scroll;
               height: calc(100vh - 136px);
             `}
             className={'scrollType1'}
@@ -331,7 +326,6 @@ const Report = ({ params }) => {
                     </div>
                     <div
                       css={css`
-                        //overflow-y: scroll;
                         height: calc(100vh - 136px);
                       `}
                       id={`${item.name}-기능-${el.name}-children`}
@@ -571,7 +565,14 @@ const Report = ({ params }) => {
 
                 <div css={chartSectionBox}>
                   <div css={chartBox(true)} className={'scrollType1'}>
+                    {/*<div*/}
+                    {/*  css={css`*/}
+                    {/*    height: calc(100vh - 136px);*/}
+                    {/*  `}*/}
+                    {/*  className={'scrollType1'}*/}
+                    {/*>*/}
                     <LongQuestionTemplate dataList={item} modalControl={modalControl} />
+                    {/*</div>*/}
                   </div>
                 </div>
               </div>
@@ -627,7 +628,7 @@ const chartSectionBox = css`
   justify-content: center;
   align-items: center;
 `;
-const chartBox = (padding = false) => css`
+const chartBox = (padding = false, justify = 'center') => css`
   width: 900px;
   min-width: 900px;
   padding-top: ${padding ? '0px' : '190px'};
@@ -638,11 +639,10 @@ const chartBox = (padding = false) => css`
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: ${justify ? justify : 'center'};
   align-items: center;
   //overflow: hidden;
 `;
-
 export function getServerSideProps(context) {
   return {
     props: { params: context.params },
