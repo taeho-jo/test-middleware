@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { updateIndexId } from '../store/reducers/reportReducer';
+import { updateIndexClick, updateIndexId } from '../store/reducers/reportReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../store/reducers';
 
@@ -8,29 +8,28 @@ const useOnMultipleScreen = option => {
   const ref = useRef([]);
   const childrenRef = useRef([]);
   const showingSectionId = useSelector<ReducerType, any>(state => state.report?.indexId);
+  const indexClick = useSelector<ReducerType, boolean>(state => state.report.indexClick);
 
   const callbackFunction = entries => {
     const [entry] = entries;
 
-    if (entry.isIntersecting) {
-      // console.log(entry.target.id, 'entry.target.id');
+    if (entry.isIntersecting && !indexClick) {
       dispatch(updateIndexId(entry.target.id));
-
-      // for (let i = 0; i < childrenRef.current.length; i++) {
-      //   childrenRef?.current[i]?.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-      // }
+    }
+    if (entry.isIntersecting && indexClick) {
+      dispatch(updateIndexClick(false));
     }
   };
 
   const callbackFunction2 = entries => {
     for (let i = 0; i < entries.length; i++) {
-      if (entries[i].isIntersecting === false) {
+      if (entries[i].isIntersecting === false && !indexClick) {
         entries[i].target.style.overflowY = 'hidden';
-      } else {
-        // console.log(entries[i].target.id.split('-children')[0]);
-        // dispatch(updateIndexId(entries[i].target.id.split('-children')[0]));
+      } else if (entries[i].isIntersecting && !indexClick) {
         entries[i].target.style.overflowY = 'overlay';
         entries[i].target.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      } else if (entries[i].isIntersecting && indexClick) {
+        dispatch(updateIndexClick(false));
       }
     }
   };

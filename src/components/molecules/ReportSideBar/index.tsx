@@ -12,11 +12,8 @@ import { ReducerType } from '../../../store/reducers';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { useQuery, useQueryClient } from 'react-query';
 import { fetchReportShareIdApi } from '../../../api/reportApi';
-import { updateReportViewId } from '../../../store/reducers/reportReducer';
+import { updateIndexId, updateReportViewId } from '../../../store/reducers/reportReducer';
 import TutorialIndicator from '../../atoms/TutorialIndicator/TutorialIndicator';
-import { userInfo } from 'os';
-import Image from 'next/image';
-import indicator from '/public/assets/gif/tutorial.gif';
 
 const ReportSideBar = () => {
   const dispatch = useDispatch();
@@ -71,7 +68,8 @@ const ReportSideBar = () => {
 
     const offestY = indexBoxOffsetTop - divHeight / 2;
 
-    div.scrollTo(0, offestY ? offestY : 0);
+    // div.scrollTo(0, offestY ? offestY : 0);
+    div.scrollTo({ top: offestY ? offestY : 0, left: 0, behavior: 'smooth' });
   }, [showingSectionId]);
 
   useEffect(() => {
@@ -92,25 +90,26 @@ const ReportSideBar = () => {
       </FlexBox>
       <FlexBox style={shareBoxStyle} justify={'space-between'} align={'center'}>
         <span css={[heading3_bold, projectNameStyle]}>{projectNm ? projectNm : projectName ? projectName : '@'}</span>
-        {share ? null : (
-          <div css={{ cursor: 'pointer', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            {indicatorStatus.share === 'N' && (
-              <TutorialIndicator
-                share={share}
-                name={'share'}
-                left={'-9px'}
-                top={'-10px'}
-                modalTitle={'리포트 공유'}
-                modalSubTitle={`링크를 복사하여 팀에게 리포트를 공유해보세요.\n로그인 없이도 확인할 수 있어요.`}
-                modalTop={'-20px'}
-                modalLeft={'50px'}
-              />
-            )}
-            <Icon name={'ACTION_SHARE'} onClick={reportShare} />
-          </div>
-        )}
-        {/*{share ? null : <Icon name={'ACTION_SHARE'} onClick={reportShare} />}*/}
+        {/*{share ? null : (*/}
+        {/*  <div css={{ cursor: 'pointer', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>*/}
+        {/*    {!share && indicatorStatus.share === 'N' && (*/}
+        {/*      <TutorialIndicator*/}
+        {/*        share={share}*/}
+        {/*        name={'share'}*/}
+        {/*        left={'-9px'}*/}
+        {/*        top={'-10px'}*/}
+        {/*        modalTitle={'리포트 공유'}*/}
+        {/*        modalSubTitle={`링크를 복사하여 팀에게 리포트를 공유해보세요.\n로그인 없이도 확인할 수 있어요.`}*/}
+        {/*        modalTop={'-20px'}*/}
+        {/*        modalLeft={'50px'}*/}
+        {/*      />*/}
+        {/*    )}*/}
+
+        {/*    <Icon name={'ACTION_SHARE'} onClick={reportShare} />*/}
+        {/*  </div>*/}
+        {/*)}*/}
       </FlexBox>
+
       <div className={'scrollType1'} css={{ height: 'calc(100vh - 136px)' }} id={'testBox'} ref={indexBoxRef}>
         <TestInfoBox reportData={reportData} />
         <RespondentAttributes changeClicked={changeClicked} clicked={clicked} />
@@ -145,9 +144,9 @@ const projectNameStyle = css`
 `;
 const shareBoxStyle = css`
   position: relative;
-  height: 64px;
+  //height: 64px;
   border-bottom: 1px solid #dcdcdc;
-  padding: 0 24px;
+  padding: 19.5px 24px;
 `;
 const marginStyle = css`
   margin-right: 12px;

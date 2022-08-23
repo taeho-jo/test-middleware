@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { ReducerType } from '../../../../store/reducers';
 import useOnScreen from '../../../../hooks/useOnScreen';
-import { updateIndexId, updateTotalIndexList } from '../../../../store/reducers/reportReducer';
+import { updateIndexClick, updateIndexId, updateTotalIndexList } from '../../../../store/reducers/reportReducer';
 
 const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const dispatch = useDispatch();
@@ -110,15 +110,12 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   }, [dataList, missionList, multipleData]);
 
   const onMoveScroll = id => {
+    dispatch(updateIndexClick(true));
     const indexNum = totalIndexList.indexOf(id);
     const a = document.getElementById(totalIndexList[indexNum]);
     const b = document.getElementById('reportBoxArea');
     dispatch(updateIndexId(id));
     b?.scrollTo({ top: a?.offsetTop, left: a?.offsetLeft, behavior: 'smooth' });
-
-    // const element = document.getElementById(id);
-
-    // element?.scrollIntoView({});
   };
 
   return (
