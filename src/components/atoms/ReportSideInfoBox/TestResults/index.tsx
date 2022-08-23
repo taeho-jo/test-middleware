@@ -12,8 +12,8 @@ import { updateIndexClick, updateIndexId, updateTotalIndexList } from '../../../
 const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const dispatch = useDispatch();
   const [intentList, setIntentList] = useState([]);
-  const [selectIntent, setSelectIntent] = useState<number | null>(null);
-  const [detailSelectIntent, setDetailSelectIntent] = useState(null);
+  // const [selectIntent, setSelectIntent] = useState<number | null>(null);
+  // const [detailSelectIntent, setDetailSelectIntent] = useState(null);
 
   const s1Data = useSelector<ReducerType, any>(state => state.report?.data?.S1);
   const longData = useSelector<ReducerType, any>(state => state.report?.data?.longQuestionList);
@@ -21,26 +21,26 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
   const showingSectionId = useSelector<ReducerType, any>(state => state.report?.indexId);
   const totalIndexList = useSelector<ReducerType, string[]>(state => state.report.totalIndexList);
 
-  const handleSelectIntent = useCallback(
-    (e, index) => {
-      setDetailSelectIntent(null);
-      setSelectIntent(index);
-      changeClicked('');
-    },
-    [changeClicked, clicked],
-  );
-
-  useEffect(() => {
-    if (clicked === 'one') {
-      setSelectIntent(null);
-      setDetailSelectIntent(null);
-    }
-  }, [clicked]);
-
-  const handleDetailSelectIntent = useCallback(index => {
-    setSelectIntent(null);
-    setDetailSelectIntent(index);
-  }, []);
+  // const handleSelectIntent = useCallback(
+  //   (e, index) => {
+  //     setDetailSelectIntent(null);
+  //     setSelectIntent(index);
+  //     changeClicked('');
+  //   },
+  //   [changeClicked, clicked],
+  // );
+  //
+  // useEffect(() => {
+  //   if (clicked === 'one') {
+  //     setSelectIntent(null);
+  //     setDetailSelectIntent(null);
+  //   }
+  // }, [clicked]);
+  //
+  // const handleDetailSelectIntent = useCallback(index => {
+  //   setSelectIntent(null);
+  //   setDetailSelectIntent(index);
+  // }, []);
 
   const filterTotalIndexList = arr => {
     const totalIndexList = [];
@@ -114,7 +114,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
     const indexNum = totalIndexList.indexOf(id);
     const a = document.getElementById(totalIndexList[indexNum]);
     const b = document.getElementById('reportBoxArea');
-    dispatch(updateIndexId(id));
+    // dispatch(updateIndexId(id));
     b?.scrollTo({ top: a?.offsetTop, left: a?.offsetLeft, behavior: 'smooth' });
   };
 
