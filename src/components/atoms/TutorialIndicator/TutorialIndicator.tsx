@@ -20,12 +20,12 @@ interface PropsType {
 const TutorialIndicator = ({ top = '0px', left = '0px', modalTitle, modalSubTitle, modalTop, modalLeft, name, share = undefined }: PropsType) => {
   const dispatch = useDispatch();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
-  const userIndicator = localStorage.getItem(userInfo?.userId);
+
   const indicatorStatus = useSelector<ReducerType, any>(state => state.common.indicator);
   const [showModal, setShowModal] = useState(false);
 
   const saveLocalStorage = key => {
-    console.log(share, 'SAHRE');
+    const userIndicator = localStorage.getItem(userInfo?.userId);
     if (!share) {
       const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
       const indicator = JSON.parse(userIndicator);
