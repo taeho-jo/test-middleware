@@ -47,6 +47,7 @@ const useOnMultipleScreen = option => {
 
     return () => {
       if (currentTarget) {
+        dispatch(updateIndexClick(false));
         observer.unobserve(currentTarget);
       }
     };
@@ -66,6 +67,7 @@ const useOnMultipleScreen = option => {
 
     return () => {
       if (childrenTarget) {
+        dispatch(updateIndexClick(false));
         observer.unobserve(childrenTarget);
       }
     };

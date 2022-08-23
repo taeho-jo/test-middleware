@@ -7,6 +7,7 @@ import { ReducerType } from '../../../store/reducers';
 import { updateIndicatorStatus, updateInitIndicator } from '../../../store/reducers/commonReducer';
 import { css } from '@emotion/react';
 import { useRouter } from 'next/router';
+import { updateIndexId } from '../../../store/reducers/reportReducer';
 
 const ReportLayout = ({ children }) => {
   const dispatch = useDispatch();
@@ -65,6 +66,10 @@ const ReportLayout = ({ children }) => {
       localStorage.setItem(objName, string);
     }
   }, [userIndicator, userInfo]);
+
+  useEffect(() => {
+    dispatch(updateIndexId('one'));
+  }, []);
 
   return (
     <FlexBox className={'jotang'} style={{ width: '100%' }} justify={'flex-start'} align={'flex-start'}>
