@@ -48,8 +48,8 @@ const ResearchType = [
     link: 'https://dbdlab.notion.site/e431cc58286c4b1b9113f45f1ce88f57',
     backgroundColor: `${colors.white}`,
     color: null,
-    hoverImage: icon3,
-    image: icon3_inActive,
+    hoverImage: icon2,
+    image: icon2_inActive,
     modalType: 'scenarioResearchModule',
   },
   {
@@ -57,8 +57,8 @@ const ResearchType = [
     link: 'https://dbdlab.notion.site/UX-205652e102c3439b9bcb44a7383f5bb3',
     backgroundColor: `${colors.white}`,
     color: null,
-    hoverImage: icon2,
-    image: icon2_inActive,
+    hoverImage: icon3,
+    image: icon3_inActive,
     modalType: 'uxResearchModule',
   },
   {

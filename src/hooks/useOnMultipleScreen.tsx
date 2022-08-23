@@ -26,8 +26,6 @@ const useOnMultipleScreen = option => {
       if (entries[i].isIntersecting === false && !indexClick) {
         entries[i].target.style.overflowY = 'hidden';
       } else if (entries[i].isIntersecting && !indexClick) {
-        // console.log(entries[i].target.id.split('-children')[0]);
-        // dispatch(updateIndexId(entries[i].target.id.split('-children')[0]));
         entries[i].target.style.overflowY = 'overlay';
         entries[i].target.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       } else if (entries[i].isIntersecting && indexClick) {

@@ -15,10 +15,11 @@ const useOnScreen = option => {
 
     if (entry.intersectionRatio === 1) {
       if (childrenRef.current) {
-        childrenRef.current.style.overflowY = 'scroll';
+        childrenRef.current.style.overflowY = 'overlay';
       }
     } else {
       if (childrenRef.current) {
+        entry.target.style.overflowY = 'hidden';
         childrenRef.current.style.overflowY = 'hidden';
       }
     }
