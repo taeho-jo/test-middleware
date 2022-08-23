@@ -40,14 +40,14 @@ const ReportShortAnswerQuestionLayerPopup = ({
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const boxRef = useRef(null);
-
-  useOutsideClick(boxRef, () => {
-    setStackbarIndex(null);
-  });
+  // const boxRef = useRef(null);
+  //
+  // useOutsideClick(boxRef, () => {
+  //   setStackbarIndex(null);
+  // });
 
   return (
-    <div ref={boxRef} css={popupContainer(display, top, left)}>
+    <>
       <FlexBox justify={'space-between'} align={'center'} style={{ padding: '16px' }}>
         <span css={heading5_medium}>{data?.reason}</span>
         <div>
@@ -80,7 +80,7 @@ const ReportShortAnswerQuestionLayerPopup = ({
           );
         })}
       </ul>
-    </div>
+    </>
   );
 };
 

@@ -1,13 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import FlexBox from '../../FlexBox';
 import { heading5_bold, heading5_regular } from '../../../../styles/FontStyles';
 import ReportShortAnswerQuestionLayerPopup from '../../ReportShortAnswerQuestionLayerPopup';
-import { chart_color } from '../../../../styles/Common.styles';
+import { chart_color, colors } from '../../../../styles/Common.styles';
 import TutorialIndicator from '../../TutorialIndicator/TutorialIndicator';
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../../../store/reducers';
 import { useRouter } from 'next/router';
+import useOutsideClick from '../../../../hooks/useOutsideClick';
+import { css } from '@emotion/react';
 
 interface PropsType {
   dataList: any;
@@ -93,14 +95,25 @@ const StackedBarChart = ({
     }
   }, [dataList]);
 
+  const boxRef = useRef(null);
+
+  useOutsideClick(boxRef, () => {
+    setStackbarIndex(null);
+  });
+
   return (
     <div style={{ width: '100%', position: 'relative' }}>
-      <ReportShortAnswerQuestionLayerPopup
-        data={layerData}
-        count={count}
-        display={stackbarIndex === props.detailIndex}
-        setStackbarIndex={setStackbarIndex}
-      />
+      {stackbarIndex === props.detailIndex && (
+        <div ref={boxRef} css={popupContainer}>
+          <ReportShortAnswerQuestionLayerPopup
+            data={layerData}
+            count={count}
+            display={stackbarIndex === props.detailIndex}
+            setStackbarIndex={setStackbarIndex}
+          />
+        </div>
+      )}
+
       <FlexBox justify={'center'} align={'center'} direction={'column'} style={{ width: '100%' }}>
         <FlexBox justify={'space-between'}>
           {label ? <span css={[heading5_regular, { paddingLeft: '5px' }]}>{label}</span> : ''}
@@ -172,3 +185,22 @@ const StackedBarChart = ({
 };
 
 export default StackedBarChart;
+
+const popupContainer = css`
+  width: 660px;
+  border-radius: 8px;
+  //padding: 16px;
+  background-color: ${colors.white};
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.2s ease-in;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 99;
+  border: 1px solid #dcdcdc;
+`;
