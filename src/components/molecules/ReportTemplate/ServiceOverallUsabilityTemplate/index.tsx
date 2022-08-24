@@ -66,7 +66,9 @@ const ServiceOverallUsabilityTemplate = ({ dataList, register, errors, checked, 
             </FlexBox>
             <FlexBox justify={'flex-end'} style={{ marginBottom: '4px' }}>
               <Icon name={'ALERT_NORMAL'} size={10} />
-              <span css={[caption2_bold, { textDecoration: 'underline' }]}>치명도가 뭔가요</span>
+              <span css={[caption2_bold, { textDecoration: 'underline', cursor: 'pointer' }]} onClick={() => modalControl(true, 'fatalityInfo')}>
+                치명도가 뭔가요
+              </span>
             </FlexBox>
           </FlexBox>
 
