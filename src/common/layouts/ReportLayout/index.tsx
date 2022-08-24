@@ -16,36 +16,36 @@ const ReportLayout = ({ children }) => {
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const userIndicator = localStorage.getItem(userInfo?.userId);
 
-  useEffect(() => {
-    if (share) {
-      const objName = 'fakeUser';
-      const saveObject = {
-        share: 'N',
-        graph: 'N',
-        originData: 'N',
-        filter: 'N',
-      };
-      dispatch(updateInitIndicator(saveObject));
-      const string = JSON.stringify(saveObject);
-      localStorage.setItem(objName, string);
-    } else {
-      if (userIndicator) {
-        const indicator = JSON.parse(userIndicator);
-        dispatch(updateInitIndicator(indicator));
-      } else {
-        const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
-        const saveObject = {
-          share: 'N',
-          graph: 'N',
-          originData: 'N',
-          filter: 'N',
-        };
-        dispatch(updateInitIndicator(saveObject));
-        const string = JSON.stringify(saveObject);
-        localStorage.setItem(objName, string);
-      }
-    }
-  }, [userIndicator, share, userInfo]);
+  // useEffect(() => {
+  //   if (share) {
+  //     const objName = 'fakeUser';
+  //     const saveObject = {
+  //       share: 'N',
+  //       graph: 'N',
+  //       originData: 'N',
+  //       filter: 'N',
+  //     };
+  //     dispatch(updateInitIndicator(saveObject));
+  //     const string = JSON.stringify(saveObject);
+  //     localStorage.setItem(objName, string);
+  //   } else {
+  //     if (userIndicator) {
+  //       const indicator = JSON.parse(userIndicator);
+  //       dispatch(updateInitIndicator(indicator));
+  //     } else {
+  //       const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
+  //       const saveObject = {
+  //         share: 'N',
+  //         graph: 'N',
+  //         originData: 'N',
+  //         filter: 'N',
+  //       };
+  //       dispatch(updateInitIndicator(saveObject));
+  //       const string = JSON.stringify(saveObject);
+  //       localStorage.setItem(objName, string);
+  //     }
+  //   }
+  // }, [userIndicator, share, userInfo]);
 
   useEffect(() => {
     dispatch(updateIndexId('one'));
