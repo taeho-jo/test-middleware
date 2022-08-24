@@ -8,44 +8,43 @@ import { updateIndicatorStatus, updateInitIndicator } from '../../../store/reduc
 import { css } from '@emotion/react';
 import { useRouter } from 'next/router';
 import { updateIndexId } from '../../../store/reducers/reportReducer';
+import { GetServerSideProps } from 'next';
 
 const ReportLayout = ({ children }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { share } = router.query;
+  const { isShare } = router.query;
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const userIndicator = localStorage.getItem(userInfo?.userId);
-
-  // useEffect(() => {
-  //   if (share) {
-  //     const objName = 'fakeUser';
-  //     const saveObject = {
-  //       share: 'N',
-  //       graph: 'N',
-  //       originData: 'N',
-  //       filter: 'N',
-  //     };
-  //     dispatch(updateInitIndicator(saveObject));
-  //     const string = JSON.stringify(saveObject);
-  //     localStorage.setItem(objName, string);
-  //   } else {
-  //     if (userIndicator) {
-  //       const indicator = JSON.parse(userIndicator);
-  //       dispatch(updateInitIndicator(indicator));
-  //     } else {
-  //       const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
-  //       const saveObject = {
-  //         share: 'N',
-  //         graph: 'N',
-  //         originData: 'N',
-  //         filter: 'N',
-  //       };
-  //       dispatch(updateInitIndicator(saveObject));
-  //       const string = JSON.stringify(saveObject);
-  //       localStorage.setItem(objName, string);
-  //     }
-  //   }
-  // }, [userIndicator, share, userInfo]);
+  useEffect(() => {
+    if (isShare) {
+      const saveObject = {
+        isShare: 'N',
+        graph: 'N',
+        originData: 'N',
+        isFilter: 'N',
+      };
+      dispatch(updateInitIndicator(saveObject));
+      localStorage.setItem('fakeUser', JSON.stringify(saveObject));
+    } else {
+      if (userInfo) {
+        if (userIndicator) {
+          const saveObject = JSON.parse(userIndicator);
+          dispatch(updateInitIndicator(saveObject));
+        } else {
+          const objName = userInfo.userId ? userInfo.userId : 'fakeUser';
+          const saveObject = {
+            isShare: 'N',
+            graph: 'N',
+            originData: 'N',
+            isFilter: 'N',
+          };
+          dispatch(updateInitIndicator(saveObject));
+          localStorage.setItem(objName, JSON.stringify(saveObject));
+        }
+      }
+    }
+  }, [isShare, userInfo, localStorage, userIndicator]);
 
   useEffect(() => {
     dispatch(updateIndexId('one'));
@@ -71,6 +70,7 @@ const ReportLayout = ({ children }) => {
 };
 
 export default ReportLayout;
+
 const reportContainer = css`
   scroll-snap-type: y mandatory;
   //overflow-y: scroll;

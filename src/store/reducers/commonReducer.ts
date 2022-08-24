@@ -3,20 +3,20 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface CounterType {
   commonCode: any;
   indicator: {
-    share: string;
+    isShare: string;
     graph: string;
     originData: string;
-    filter: string;
+    isFilter: string;
   };
 }
 
 const initialState: CounterType = {
   commonCode: [],
   indicator: {
-    share: 'N',
+    isShare: 'N',
     graph: 'N',
     originData: 'N',
-    filter: 'N',
+    isFilter: 'N',
   },
 };
 
@@ -35,10 +35,10 @@ export const commonSlice = createSlice({
     },
     resetIndicatorStatus: state => {
       state.indicator = {
-        share: 'N',
+        isShare: 'N',
         graph: 'N',
         originData: 'N',
-        filter: 'N',
+        isFilter: 'N',
       };
     },
   },
