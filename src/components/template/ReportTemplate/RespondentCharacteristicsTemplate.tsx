@@ -24,7 +24,6 @@ const RespondentCharacteristicsTemplate = ({ dataList }: PropsType) => {
 
   const handleMouseUp = useCallback(
     (name, index, e) => {
-      console.log(name, 'name');
       e.stopPropagation();
       setLabelStatus({
         gender: false,
