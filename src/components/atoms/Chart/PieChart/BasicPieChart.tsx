@@ -23,7 +23,6 @@ const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseU
 
   const onMouseOver = useCallback(
     (e, index) => {
-      console.log(e, index, 'index');
       e.stopPropagation();
       // if (index === activeIndex) {
       //   setActiveIndex(null);
