@@ -185,30 +185,30 @@ const ReportHeader = () => {
           position: relative;
         `}
       >
-        {/*{!isShare && indicatorStatus.isFilter === 'N' && (*/}
-        {/*  <TutorialIndicator*/}
-        {/*    share={isShare}*/}
-        {/*    name={'isFilter'}*/}
-        {/*    left={'-10px'}*/}
-        {/*    top={'-12px'}*/}
-        {/*    modalTitle={'필터'}*/}
-        {/*    modalSubTitle={`필터를 사용하여 '응답자 특성' 으로 데이터를 분류\n해서 볼 수 있어요.\n필터 초기화 버튼을 클릭하면 모든 필터가 해제돼요.`}*/}
-        {/*    modalTop={'40px'}*/}
-        {/*    modalLeft={'-10px'}*/}
-        {/*  />*/}
-        {/*)}*/}
-        {/*{isShare && indicatorStatus.isFilter === 'N' && (*/}
-        {/*  <TutorialIndicator*/}
-        {/*    share={isShare}*/}
-        {/*    name={'isFilter'}*/}
-        {/*    left={'-10px'}*/}
-        {/*    top={'-12px'}*/}
-        {/*    modalTitle={'필터'}*/}
-        {/*    modalSubTitle={`필터를 사용하여 '응답자 특성' 으로 데이터를 분류\n해서 볼 수 있어요.\n필터 초기화 버튼을 클릭하면 모든 필터가 해제돼요.`}*/}
-        {/*    modalTop={'40px'}*/}
-        {/*    modalLeft={'-10px'}*/}
-        {/*  />*/}
-        {/*)}*/}
+        {!isShare && indicatorStatus.isFilter === 'N' && (
+          <TutorialIndicator
+            share={isShare}
+            name={'isFilter'}
+            left={'-10px'}
+            top={'-12px'}
+            modalTitle={'필터'}
+            modalSubTitle={`필터를 사용하여 '응답자 특성' 으로 데이터를 분류\n해서 볼 수 있어요.\n필터 초기화 버튼을 클릭하면 모든 필터가 해제돼요.`}
+            modalTop={'40px'}
+            modalLeft={'-10px'}
+          />
+        )}
+        {isShare && indicatorStatus.isFilter === 'N' && (
+          <TutorialIndicator
+            share={isShare}
+            name={'isFilter'}
+            left={'-10px'}
+            top={'-12px'}
+            modalTitle={'필터'}
+            modalSubTitle={`필터를 사용하여 '응답자 특성' 으로 데이터를 분류\n해서 볼 수 있어요.\n필터 초기화 버튼을 클릭하면 모든 필터가 해제돼요.`}
+            modalTop={'40px'}
+            modalLeft={'-10px'}
+          />
+        )}
 
         <span css={[heading5_regular, { marginRight: '12px' }]}>필터</span>
       </div>
