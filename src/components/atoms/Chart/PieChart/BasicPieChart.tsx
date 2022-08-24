@@ -60,7 +60,7 @@ const BasicPieChart = ({ dataList, labelPadding, name, labelStatus, handleMouseU
                   fill={index === activeIndex ? hover_chart_color[index] : chart_color[index]}
                   onMouseOut={e => onMouseLeave(e)}
                   onMouseOver={e => onMouseOver(e, index)}
-                  onClick={e => handleMouseUp(name, index, e)}
+                  onMouseDown={e => handleMouseUp(name, index, e)}
                 />
               ))}
             </Pie>

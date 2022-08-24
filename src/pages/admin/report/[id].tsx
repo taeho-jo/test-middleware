@@ -34,7 +34,7 @@ const Report = ({ params }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { id } = params;
-  const { share } = router.query;
+  const { isShare } = router.query;
 
   const filterFlied = useSelector<ReducerType, any>(state => state.report.filter.filterFlied);
   const filterValues = useSelector<ReducerType, any>(state => state.report.filter.filterValues);
@@ -64,7 +64,7 @@ const Report = ({ params }) => {
 
   const { data, isLoading, refetch } = useQuery(
     ['fetchReportDetail', id],
-    share ? () => fetchReportShare(id, filterFlied, filterValues, filterFail) : () => fetchReportDetail(id, filterFlied, filterValues, filterFail),
+    isShare ? () => fetchReportShare(id, filterFlied, filterValues, filterFail) : () => fetchReportDetail(id, filterFlied, filterValues, filterFail),
     {
       onError: (e: any) => {
         const errorData = e.response?.data;
@@ -221,8 +221,7 @@ const Report = ({ params }) => {
             flex-direction: column;
             justify-content: ${data?.answerInfoSection?.cellInfoList?.length === 0 ? 'center' : 'flex-start'};
           `}
-          className={'scrollType1 asdf'}
-          id={'rkrkrkrkrk'}
+          className={'scrollType1'}
           ref={respondentChildrenRef}
         >
           <RespondentCharacteristicsTemplate dataList={data?.answerInfoSection} />

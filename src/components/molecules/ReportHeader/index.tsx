@@ -31,7 +31,7 @@ const ReportHeader = () => {
   const indicatorStatus = useSelector<ReducerType, any>(state => state.common.indicator);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { id, share } = router.query;
+  const { id, isShare } = router.query;
 
   const dispatch = useDispatch();
   const reportData = useSelector<ReducerType, any>(state => state.report.data?.filterDataList);
@@ -185,10 +185,10 @@ const ReportHeader = () => {
           position: relative;
         `}
       >
-        {/*{!share && indicatorStatus.filter === 'N' && (*/}
+        {/*{!isShare && indicatorStatus.isFilter === 'N' && (*/}
         {/*  <TutorialIndicator*/}
-        {/*    share={share}*/}
-        {/*    name={'filter'}*/}
+        {/*    share={isShare}*/}
+        {/*    name={'isFilter'}*/}
         {/*    left={'-10px'}*/}
         {/*    top={'-12px'}*/}
         {/*    modalTitle={'필터'}*/}
@@ -197,10 +197,10 @@ const ReportHeader = () => {
         {/*    modalLeft={'-10px'}*/}
         {/*  />*/}
         {/*)}*/}
-        {/*{share && indicatorStatus.filter === 'N' && (*/}
+        {/*{isShare && indicatorStatus.isFilter === 'N' && (*/}
         {/*  <TutorialIndicator*/}
-        {/*    share={share}*/}
-        {/*    name={'filter'}*/}
+        {/*    share={isShare}*/}
+        {/*    name={'isFilter'}*/}
         {/*    left={'-10px'}*/}
         {/*    top={'-12px'}*/}
         {/*    modalTitle={'필터'}*/}

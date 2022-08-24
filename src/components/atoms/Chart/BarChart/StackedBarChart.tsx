@@ -40,7 +40,7 @@ const StackedBarChart = ({
 }: PropsType) => {
   const indicatorStatus = useSelector<ReducerType, any>(state => state.common.indicator);
   const router = useRouter();
-  const { share } = router.query;
+  const { isShare } = router.query;
   const [renderDataList, setRenderDataList] = useState(null);
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -125,9 +125,9 @@ const StackedBarChart = ({
           </div>
         </FlexBox>
 
-        {/*{!share && props.detailIndex === 0 && indicatorStatus.graph === 'N' && (*/}
+        {/*{!isShare && props.detailIndex === 0 && indicatorStatus.graph === 'N' && (*/}
         {/*  <TutorialIndicator*/}
-        {/*    share={share}*/}
+        {/*    share={isShare}*/}
         {/*    name={'graph'}*/}
         {/*    left={'-17px'}*/}
         {/*    top={'12px'}*/}
@@ -138,9 +138,9 @@ const StackedBarChart = ({
         {/*  />*/}
         {/*)}*/}
 
-        {/*{share && props.detailIndex === 0 && indicatorStatus.graph === 'N' && (*/}
+        {/*{isShare && props.detailIndex === 0 && indicatorStatus.graph === 'N' && (*/}
         {/*  <TutorialIndicator*/}
-        {/*    share={share}*/}
+        {/*    share={isShare}*/}
         {/*    name={'graph'}*/}
         {/*    left={'-17px'}*/}
         {/*    top={'12px'}*/}

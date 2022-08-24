@@ -23,7 +23,7 @@ interface PropsTypes {
 const ReportTemplateHeader = ({ title, handleChangeCheckBox, modalControl, checked, register, errors, originData, researchData }: PropsTypes) => {
   const indicatorStatus = useSelector<ReducerType, any>(state => state.common.indicator);
   const router = useRouter();
-  const { share } = router.query;
+  const { isShare } = router.query;
   return (
     <FlexBox style={headerBosStyle} justify={'space-between'}>
       <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
@@ -45,9 +45,9 @@ const ReportTemplateHeader = ({ title, handleChangeCheckBox, modalControl, check
             position: relative;
           `}
         >
-          {/*{!share && originData?.length > 0 && indicatorStatus.originData === 'N' && (*/}
+          {/*{!isShare && originData?.length > 0 && indicatorStatus.originData === 'N' && (*/}
           {/*  <TutorialIndicator*/}
-          {/*    share={share}*/}
+          {/*    share={isShare}*/}
           {/*    name={'originData'}*/}
           {/*    left={'-9px'}*/}
           {/*    top={'-9px'}*/}
@@ -57,9 +57,9 @@ const ReportTemplateHeader = ({ title, handleChangeCheckBox, modalControl, check
           {/*    modalLeft={'-385px'}*/}
           {/*  />*/}
           {/*)}*/}
-          {/*{share && originData?.length > 0 && indicatorStatus.originData === 'N' && (*/}
+          {/*{isShare && originData?.length > 0 && indicatorStatus.originData === 'N' && (*/}
           {/*  <TutorialIndicator*/}
-          {/*    share={share}*/}
+          {/*    share={isShare}*/}
           {/*    name={'originData'}*/}
           {/*    left={'-9px'}*/}
           {/*    top={'-9px'}*/}

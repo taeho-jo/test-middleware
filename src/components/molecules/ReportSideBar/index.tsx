@@ -18,7 +18,7 @@ import TutorialIndicator from '../../atoms/TutorialIndicator/TutorialIndicator';
 const ReportSideBar = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { id, share } = router.query;
+  const { id, isShare } = router.query;
   const reportData = useSelector<ReducerType, any>(state => state.report.data);
   const projectName = useSelector<ReducerType, string>(state => state.report.projectName);
   const projectNm = useSelector<ReducerType, string>(state => state.report?.data?.projectNm);
@@ -91,12 +91,12 @@ const ReportSideBar = () => {
       <FlexBox style={shareBoxStyle} justify={'space-between'} align={'center'}>
         <span css={[heading3_bold, projectNameStyle]}>{projectNm ? projectNm : projectName ? projectName : '@'}</span>
 
-        {/*{share ? null : (*/}
+        {/*{isShare ? null : (*/}
         {/*  <div css={{ cursor: 'pointer', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>*/}
-        {/*    {indicatorStatus.share === 'N' && (*/}
+        {/*    {indicatorStatus.isShare === 'N' && (*/}
         {/*      <TutorialIndicator*/}
-        {/*        share={share}*/}
-        {/*        name={'share'}*/}
+        {/*        share={isShare}*/}
+        {/*        name={'isShare'}*/}
         {/*        left={'-9px'}*/}
         {/*        top={'-10px'}*/}
         {/*        modalTitle={'리포트 공유'}*/}
@@ -109,7 +109,7 @@ const ReportSideBar = () => {
         {/*    <Icon name={'ACTION_SHARE'} onClick={reportShare} style={{ cursor: 'pointer' }} />*/}
         {/*  </div>*/}
         {/*)}*/}
-        {share ? null : <Icon name={'ACTION_SHARE'} onClick={reportShare} style={{ cursor: 'pointer' }} />}
+        {isShare ? null : <Icon name={'ACTION_SHARE'} onClick={reportShare} style={{ cursor: 'pointer' }} />}
       </FlexBox>
 
       <div className={'scrollType1'} css={{ height: 'calc(100vh - 136px)' }} id={'testBox'} ref={indexBoxRef}>
