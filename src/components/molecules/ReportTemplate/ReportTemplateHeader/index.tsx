@@ -23,7 +23,7 @@ interface PropsTypes {
 const ReportTemplateHeader = ({ title, handleChangeCheckBox, modalControl, checked, register, errors, originData, researchData }: PropsTypes) => {
   const indicatorStatus = useSelector<ReducerType, any>(state => state.common.indicator);
   const router = useRouter();
-  const { share } = router.query;
+  const { isShare } = router.query;
   return (
     <FlexBox style={headerBosStyle} justify={'space-between'}>
       <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
@@ -45,30 +45,30 @@ const ReportTemplateHeader = ({ title, handleChangeCheckBox, modalControl, check
             position: relative;
           `}
         >
-          {/*{!share && originData?.length > 0 && indicatorStatus.originData === 'N' && (*/}
-          {/*  <TutorialIndicator*/}
-          {/*    share={share}*/}
-          {/*    name={'originData'}*/}
-          {/*    left={'-9px'}*/}
-          {/*    top={'-9px'}*/}
-          {/*    modalTitle={'원본 데이터'}*/}
-          {/*    modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n원본데이터를 한번에 몰아서 확인할 수 있어요.`}*/}
-          {/*    modalTop={'30px'}*/}
-          {/*    modalLeft={'-385px'}*/}
-          {/*  />*/}
-          {/*)}*/}
-          {/*{share && originData?.length > 0 && indicatorStatus.originData === 'N' && (*/}
-          {/*  <TutorialIndicator*/}
-          {/*    share={share}*/}
-          {/*    name={'originData'}*/}
-          {/*    left={'-9px'}*/}
-          {/*    top={'-9px'}*/}
-          {/*    modalTitle={'원본 데이터'}*/}
-          {/*    modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n원본데이터를 한번에 몰아서 확인할 수 있어요.`}*/}
-          {/*    modalTop={'30px'}*/}
-          {/*    modalLeft={'-385px'}*/}
-          {/*  />*/}
-          {/*)}*/}
+          {!isShare && originData?.length > 0 && indicatorStatus.originData === 'N' && (
+            <TutorialIndicator
+              share={isShare}
+              name={'originData'}
+              left={'-9px'}
+              top={'-9px'}
+              modalTitle={'원본 데이터'}
+              modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n원본데이터를 한번에 몰아서 확인할 수 있어요.`}
+              modalTop={'30px'}
+              modalLeft={'-385px'}
+            />
+          )}
+          {isShare && originData?.length > 0 && indicatorStatus.originData === 'N' && (
+            <TutorialIndicator
+              share={isShare}
+              name={'originData'}
+              left={'-9px'}
+              top={'-9px'}
+              modalTitle={'원본 데이터'}
+              modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n원본데이터를 한번에 몰아서 확인할 수 있어요.`}
+              modalTop={'30px'}
+              modalLeft={'-385px'}
+            />
+          )}
           <IconTextButton
             disabled={originData?.length > 0 ? false : true}
             style={{ marginRight: '8px' }}
