@@ -45,30 +45,30 @@ const ReportTemplateHeader = ({ title, handleChangeCheckBox, modalControl, check
             position: relative;
           `}
         >
-          {!isShare && originData?.length > 0 && indicatorStatus.originData === 'N' && (
-            <TutorialIndicator
-              share={isShare}
-              name={'originData'}
-              left={'-9px'}
-              top={'-9px'}
-              modalTitle={'원본 데이터'}
-              modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n원본데이터를 한번에 몰아서 확인할 수 있어요.`}
-              modalTop={'30px'}
-              modalLeft={'-385px'}
-            />
-          )}
-          {isShare && originData?.length > 0 && indicatorStatus.originData === 'N' && (
-            <TutorialIndicator
-              share={isShare}
-              name={'originData'}
-              left={'-9px'}
-              top={'-9px'}
-              modalTitle={'원본 데이터'}
-              modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n원본데이터를 한번에 몰아서 확인할 수 있어요.`}
-              modalTop={'30px'}
-              modalLeft={'-385px'}
-            />
-          )}
+          {/*{!isShare && originData?.length > 0 && indicatorStatus.originData === 'N' && (*/}
+          {/*  <TutorialIndicator*/}
+          {/*    share={isShare}*/}
+          {/*    name={'originData'}*/}
+          {/*    left={'-9px'}*/}
+          {/*    top={'-9px'}*/}
+          {/*    modalTitle={'원본 데이터'}*/}
+          {/*    modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n원본데이터를 한번에 몰아서 확인할 수 있어요.`}*/}
+          {/*    modalTop={'30px'}*/}
+          {/*    modalLeft={'-385px'}*/}
+          {/*  />*/}
+          {/*)}*/}
+          {/*{isShare && originData?.length > 0 && indicatorStatus.originData === 'N' && (*/}
+          {/*  <TutorialIndicator*/}
+          {/*    share={isShare}*/}
+          {/*    name={'originData'}*/}
+          {/*    left={'-9px'}*/}
+          {/*    top={'-9px'}*/}
+          {/*    modalTitle={'원본 데이터'}*/}
+          {/*    modalSubTitle={`각 선택지별로 주관식 응답이 있는 경우,\n원본데이터를 한번에 몰아서 확인할 수 있어요.`}*/}
+          {/*    modalTop={'30px'}*/}
+          {/*    modalLeft={'-385px'}*/}
+          {/*  />*/}
+          {/*)}*/}
           <IconTextButton
             disabled={originData?.length > 0 ? false : true}
             style={{ marginRight: '8px' }}

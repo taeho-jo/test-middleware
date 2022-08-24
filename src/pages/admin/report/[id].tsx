@@ -221,8 +221,7 @@ const Report = ({ params }) => {
             flex-direction: column;
             justify-content: ${data?.answerInfoSection?.cellInfoList?.length === 0 ? 'center' : 'flex-start'};
           `}
-          className={'scrollType1 asdf'}
-          id={'rkrkrkrkrk'}
+          className={'scrollType1'}
           ref={respondentChildrenRef}
         >
           <RespondentCharacteristicsTemplate dataList={data?.answerInfoSection} />

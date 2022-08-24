@@ -16,35 +16,36 @@ const ReportLayout = ({ children }) => {
   const { isShare } = router.query;
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const userIndicator = localStorage.getItem(userInfo?.userId);
-  useEffect(() => {
-    if (isShare) {
-      const saveObject = {
-        isShare: 'N',
-        graph: 'N',
-        originData: 'N',
-        isFilter: 'N',
-      };
-      dispatch(updateInitIndicator(saveObject));
-      localStorage.setItem('fakeUser', JSON.stringify(saveObject));
-    } else {
-      if (userInfo) {
-        if (userIndicator) {
-          const saveObject = JSON.parse(userIndicator);
-          dispatch(updateInitIndicator(saveObject));
-        } else {
-          const objName = userInfo.userId ? userInfo.userId : 'fakeUser';
-          const saveObject = {
-            isShare: 'N',
-            graph: 'N',
-            originData: 'N',
-            isFilter: 'N',
-          };
-          dispatch(updateInitIndicator(saveObject));
-          localStorage.setItem(objName, JSON.stringify(saveObject));
-        }
-      }
-    }
-  }, [isShare, userInfo, localStorage, userIndicator]);
+
+  // useEffect(() => {
+  //   if (isShare) {
+  //     const saveObject = {
+  //       isShare: 'N',
+  //       graph: 'N',
+  //       originData: 'N',
+  //       isFilter: 'N',
+  //     };
+  //     dispatch(updateInitIndicator(saveObject));
+  //     localStorage.setItem('fakeUser', JSON.stringify(saveObject));
+  //   } else {
+  //     if (userInfo) {
+  //       if (userIndicator) {
+  //         const saveObject = JSON.parse(userIndicator);
+  //         dispatch(updateInitIndicator(saveObject));
+  //       } else {
+  //         const objName = userInfo.userId ? userInfo.userId : 'fakeUser';
+  //         const saveObject = {
+  //           isShare: 'N',
+  //           graph: 'N',
+  //           originData: 'N',
+  //           isFilter: 'N',
+  //         };
+  //         dispatch(updateInitIndicator(saveObject));
+  //         localStorage.setItem(objName, JSON.stringify(saveObject));
+  //       }
+  //     }
+  //   }
+  // }, [isShare, userInfo, localStorage, userIndicator]);
 
   useEffect(() => {
     dispatch(updateIndexId('one'));
