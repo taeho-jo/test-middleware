@@ -91,25 +91,25 @@ const ReportSideBar = () => {
       <FlexBox style={shareBoxStyle} justify={'space-between'} align={'center'}>
         <span css={[heading3_bold, projectNameStyle]}>{projectNm ? projectNm : projectName ? projectName : '@'}</span>
 
-        {/*{isShare ? null : (*/}
-        {/*  <div css={{ cursor: 'pointer', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>*/}
-        {/*    {indicatorStatus.isShare === 'N' && (*/}
-        {/*      <TutorialIndicator*/}
-        {/*        share={isShare}*/}
-        {/*        name={'isShare'}*/}
-        {/*        left={'-9px'}*/}
-        {/*        top={'-10px'}*/}
-        {/*        modalTitle={'리포트 공유'}*/}
-        {/*        modalSubTitle={`링크를 복사하여 팀에게 리포트를 공유해보세요.\n로그인 없이도 확인할 수 있어요.`}*/}
-        {/*        modalTop={'-20px'}*/}
-        {/*        modalLeft={'50px'}*/}
-        {/*      />*/}
-        {/*    )}*/}
+        {isShare ? null : (
+          <div css={{ cursor: 'pointer', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            {indicatorStatus.isShare === 'N' && (
+              <TutorialIndicator
+                share={isShare}
+                name={'isShare'}
+                left={'-9px'}
+                top={'-10px'}
+                modalTitle={'리포트 공유'}
+                modalSubTitle={`링크를 복사하여 팀에게 리포트를 공유해보세요.\n로그인 없이도 확인할 수 있어요.`}
+                modalTop={'-20px'}
+                modalLeft={'50px'}
+              />
+            )}
 
-        {/*    <Icon name={'ACTION_SHARE'} onClick={reportShare} style={{ cursor: 'pointer' }} />*/}
-        {/*  </div>*/}
-        {/*)}*/}
-        {isShare ? null : <Icon name={'ACTION_SHARE'} onClick={reportShare} style={{ cursor: 'pointer' }} />}
+            <Icon name={'ACTION_SHARE'} onClick={reportShare} style={{ cursor: 'pointer' }} />
+          </div>
+        )}
+        {/*{isShare ? null : <Icon name={'ACTION_SHARE'} onClick={reportShare} style={{ cursor: 'pointer' }} />}*/}
       </FlexBox>
 
       <div className={'scrollType1'} css={{ height: 'calc(100vh - 136px)' }} id={'testBox'} ref={indexBoxRef}>
