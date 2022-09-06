@@ -151,8 +151,8 @@ const graphBosStyle = css`
   overflow: unset;
 `;
 const graphAreaStyle = (length = 0) => css`
-  border-left: ${length === 0 ? 'none' : '1px solid #dcdcdc'};
-  border-right: ${length === 0 ? 'none' : '1px solid #dcdcdc'};
+  // border-left: ${length === 0 ? 'none' : '1px solid #dcdcdc'};
+  // border-right: ${length === 0 ? 'none' : '1px solid #dcdcdc'};
   min-width: 900px;
   max-width: 900px;
   height: 100%;
@@ -161,7 +161,7 @@ const graphAreaStyle = (length = 0) => css`
 const graphContainerStyle = length => css`
   padding: 36px 80px 80px;
   width: 100%;
-  border-bottom: ${length === 0 ? 'none' : '1px solid #dcdcdc'};
+  // border-bottom: ${length === 0 ? 'none' : '1px solid #dcdcdc'};
 `;
 const graphContainerStyle2 = css`
   padding: 36px 80px 80px;

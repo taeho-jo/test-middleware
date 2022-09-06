@@ -85,8 +85,8 @@ const graphAreaStyle = css`
   padding-top: 40px;
   min-width: 900px;
   max-width: 900px;
-  border-left: 1px solid #dcdcdc;
-  border-right: 1px solid #dcdcdc;
+  //border-left: 1px solid #dcdcdc;
+  //border-right: 1px solid #dcdcdc;
 `;
 const graphContainerStyle = css`
   padding: 36px 80px 80px;
