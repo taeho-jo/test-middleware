@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { css } from '@emotion/react';
 import FlexBox from '../../../components/atoms/FlexBox';
@@ -8,11 +8,13 @@ import { body2_bold } from '../../../styles/FontStyles';
 import icon1_inActive from '../../../../public/assets/images/admin/team/uitest_inactive.png';
 import icon2_inActive from '../../../../public/assets/images/admin/team/scenario_inactive.png';
 import icon3_inActive from '../../../../public/assets/images/admin/team/uxposition_inactive.png';
-import icon4_inActive from '../../../../public/assets/images/admin/team/customer_inactive.png';
+import icon4_inActive from '../../../../public/assets/png/abtest_inactive.png';
+import icon5_inActive from '../../../../public/assets/png/fgd_inactive.png';
 import icon1 from '../../../../public/assets/images/admin/team/uitest_hover.png';
 import icon2 from '../../../../public/assets/images/admin/team/scenario_hover.png';
 import icon3 from '../../../../public/assets/images/admin/team/uxposition_hover.png';
-import icon4 from '../../../../public/assets/images/admin/team/customer_hover.png';
+import icon4 from '../../../../public/assets/png/abtest_hover.png';
+import icon5 from '../../../../public/assets/png/fgd_hover.png';
 import ResearchModuleButton from '../../atoms/ResearchModuleButton';
 import { isShow } from '../../../store/reducers/modalReducer';
 import ResearchList from '../ResearchList';
@@ -24,10 +26,20 @@ import { updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../st
 import { fetchRefreshToken } from '../../../api/authApi';
 import { updateProjectName } from '../../../store/reducers/reportReducer';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { increment } from '../../../store/reducers/counterReducer';
+import Select from '../../atoms/Select';
+import Form from '../../atoms/Form';
+import Input from '../../atoms/Input';
+import { useForm } from 'react-hook-form';
+import { InputType } from '../../../common/types/commonTypes';
+import Icon from '../../atoms/Icon';
+import Button from '../../atoms/Button';
+import IconButton from '../../atoms/Button/IconButton';
+import IconTextButton from '../../atoms/Button/IconTextButton';
 
 const ResearchType = [
   {
-    title: '어떤 리서치를 해야할 지 모르겠어요.',
+    title: '어떤 리서치를 해야할까요?',
     link: 'https://form.typeform.com/to/lmyqEfEb',
     backgroundColor: `${colors.grey._3c}`,
     color: `${colors.white}`,
@@ -44,7 +56,16 @@ const ResearchType = [
     modalType: 'uiResearchModule',
   },
   {
-    title: '시나리오 검증',
+    title: 'FGD',
+    link: 'https://dbdlab.notion.site/34d243dc532d462b84468a710a63c3e8',
+    backgroundColor: `${colors.white}`,
+    color: null,
+    hoverImage: icon5,
+    image: icon5_inActive,
+    modalType: 'customerResearchModule',
+  },
+  {
+    title: '가설 검증',
     link: 'https://dbdlab.notion.site/e431cc58286c4b1b9113f45f1ce88f57',
     backgroundColor: `${colors.white}`,
     color: null,
@@ -62,7 +83,7 @@ const ResearchType = [
     modalType: 'uxResearchModule',
   },
   {
-    title: '퍼소나 분석',
+    title: '짧은 설문',
     link: 'https://dbdlab.notion.site/34d243dc532d462b84468a710a63c3e8',
     backgroundColor: `${colors.white}`,
     color: null,
@@ -80,6 +101,22 @@ const TeamDashboard = () => {
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
   const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
   // const selectTeamSeq = localStorage.getItem('teamSeq');
+
+  const contValue = useSelector<ReducerType, number>(state => state.counter.value);
+
+  const [selected, setSelected] = useState({
+    allResearch: '',
+  });
+
+  // hook form
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<InputType>({});
+  const onSubmit = data => console.log('success', data);
+  const onError = errors => console.log('fail', errors);
 
   // ============ React Query ============ //
   const { data: teamListData, isLoading } = useQuery(['fetchTeamList'], fetchTeamListApi, {
@@ -154,6 +191,10 @@ const TeamDashboard = () => {
     }
   }, [teamListData, selectTeamList, selectTeamSeq]);
 
+  const aabb = () => {
+    dispatch(increment());
+  };
+
   return (
     <>
       <div css={teamMainContainer}>
@@ -179,7 +220,46 @@ const TeamDashboard = () => {
           </FlexBox>
         </FlexBox>
         <FlexBox style={{ padding: '24px 32px 32px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
-          <span css={[body2_bold, titleStyle]}>모든 리서치</span>
+          <FlexBox direction={'row'} justify={'flex-start'} align={'center'} style={{ marginBottom: '32px' }}>
+            <span css={[body2_bold, titleStyle, { width: '73px', marginBottom: 0, marginRight: '16px' }]}>모든 리서치</span>
+            <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ width: '249px', boxSizing: 'border-box', position: 'relative' }}>
+              <Input
+                title={''}
+                register={register}
+                label={'userId'}
+                errors={errors}
+                errorMsg={'필수 항목입니다.'}
+                placeholder={'검색어를 입력해주세요'}
+                style={{
+                  border: `1px solid #DCDCDC`,
+                }}
+              />
+              <div
+                css={css`
+                  position: absolute;
+                  top: 50%;
+                  right: 8px;
+                  transform: translateY(-50%);
+                `}
+              >
+                <Icon name={'ACTION_SEARCH'} />
+              </div>
+            </Form>
+
+            <IconTextButton
+              name={'ACTION_FILTER'}
+              iconPosition={'left'}
+              text={`필터(1)`}
+              css={css`
+                width: 107px;
+                height: 40px;
+                border: 1px solid #3c3c46;
+                border-radius: 8px;
+                margin-left: 16px;
+              `}
+            />
+          </FlexBox>
+
           <ResearchList handleMoveDetail={handleMoveDetail} listData={teamReportList} />
         </FlexBox>
       </div>

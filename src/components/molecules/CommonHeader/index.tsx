@@ -11,8 +11,11 @@ import { useRouter } from 'next/router';
 import { ReducerType } from '../../../store/reducers';
 import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
-
-const CommonHeader = () => {
+import LogoText from '/public/assets/png/diby_black.png';
+interface PropsType {
+  researchHeader?: boolean;
+}
+const CommonHeader = ({ researchHeader = false }: PropsType) => {
   const router = useRouter();
   const { pathname } = router;
   const dispatch = useDispatch();
@@ -37,12 +40,18 @@ const CommonHeader = () => {
 
   return (
     <FlexBox
-      style={{ boxSizing: 'border-box', minWidth: '500px', position: 'fixed', zIndex: 50 }}
-      padding={'12px 40px'}
+      style={{
+        boxSizing: 'border-box',
+        minWidth: '500px',
+        position: 'fixed',
+        zIndex: 50,
+        borderBottom: researchHeader ? `1px solid #DCDCDC` : 'none',
+      }}
+      padding={researchHeader ? '0 24px' : '12px 40px'}
       justify={'space-between'}
       align={'center'}
-      height={'48px'}
-      backgroundColor={colors.grey._3c}
+      height={researchHeader ? '72px' : '48px'}
+      backgroundColor={researchHeader ? colors.white : colors.grey._3c}
     >
       <FlexBox
         justify={'flex-start'}
@@ -51,25 +60,27 @@ const CommonHeader = () => {
         style={{ cursor: 'pointer' }}
       >
         {/*<Icon name={'LOGO_ICON'} size={40} />*/}
-        <div
-          style={{
-            background: 'rgba(255, 255, 255, 0.5)',
-            width: '32px',
-            height: '32px',
-            borderRadius: '50%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginRight: '12px',
-          }}
-        >
-          <img src={ImageLogo.src} alt={'ImageLogo'} style={{ width: '15.2px', height: '20.8px' }} />
-        </div>
+        {!researchHeader && (
+          <div
+            style={{
+              background: 'rgba(255, 255, 255, 0.5)',
+              width: '32px',
+              height: '32px',
+              borderRadius: '50%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: '12px',
+            }}
+          >
+            <img src={ImageLogo.src} alt={'ImageLogo'} style={{ width: '15.2px', height: '20.8px' }} />
+          </div>
+        )}
 
         <img
-          src={'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/diby_white1.png'}
+          src={researchHeader ? LogoText.src : 'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/diby_white1.png'}
           alt={'Logo'}
-          style={{ width: '56px', height: '30px' }}
+          style={{ width: researchHeader ? '49px' : '56px', height: researchHeader ? '32px' : '30px' }}
         />
       </FlexBox>
 
@@ -77,7 +88,11 @@ const CommonHeader = () => {
         <FlexBox justify={'flex-end'} align={'center'}>
           <FlexBox justify={'flex-end'} align={'center'} onClick={e => showLayerPopup(e)} style={{ cursor: 'pointer' }}>
             <ProfileIcon />
-            <Icon name={'NAVIGATION_CHEVRON_DOWN'} style={{ marginLeft: '8px', cursor: 'pointer' }} size={24} />
+            <Icon
+              name={researchHeader ? 'CHEVRON_DOWN_THIN' : 'NAVIGATION_CHEVRON_DOWN'}
+              style={{ marginLeft: '8px', cursor: 'pointer' }}
+              size={24}
+            />
           </FlexBox>
 
           <LayerPopup

@@ -70,7 +70,8 @@ export type IconType =
   | 'UITEST_INACTIVE'
   | 'UXPOSITION_HOVER'
   | 'UXPOSITION_INACTIVE'
-  | 'MORE_HORIZON';
+  | 'MORE_HORIZON'
+  | 'ACTION_FILTER';
 
 export interface InputType {
   label: string;

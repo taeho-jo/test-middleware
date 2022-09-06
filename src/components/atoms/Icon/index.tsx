@@ -37,6 +37,10 @@ import MoreHorizon from '/public/assets/svg/more_horizon.svg';
 import Member from '/public/assets/svg/member.svg';
 import Noti from '/public/assets/svg/noti.svg';
 import DibyLogoBlack from '/public/assets/svg/diby_logo_black.svg';
+import StatusComplete from '/public/assets/svg/status_complete.svg';
+import StatusBefore from '/public/assets/svg/status_before.svg';
+import StatusIng from '/public/assets/svg/status_ing.svg';
+import ActionFilter from '/public/assets/svg/action_filter.svg';
 
 import { css } from '@emotion/react';
 
@@ -90,6 +94,10 @@ const IconTypes = {
   MEMBER: Member,
   NOTI: Noti,
   DIBY_LOGO_BLACK: DibyLogoBlack,
+  STATUS_COMPLETE: StatusComplete,
+  STATUS_BEFORE: StatusBefore,
+  STATUS_ING: StatusIng,
+  ACTION_FILTER: ActionFilter,
 };
 
 const Icon = ({ name, size = 24, style, iconColor, onClick, forwardref, width = '24px', height = '24px' }: PropsType) => {

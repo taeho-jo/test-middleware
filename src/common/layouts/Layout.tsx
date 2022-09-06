@@ -247,6 +247,18 @@ const Layout = ({ children }: PropsType) => {
             <CommonModal />
           </>
         );
+      case '/admin/research/create':
+        return (
+          <>
+            <div css={mainContainer}>
+              <main css={contentsContainer}>
+                <CommonHeader researchHeader={true} />
+                {children}
+              </main>
+            </div>
+            <CommonModal />
+          </>
+        );
       case '/admin/reset-password':
       case '/admin/reset-password-success':
       case '/admin/re-login':

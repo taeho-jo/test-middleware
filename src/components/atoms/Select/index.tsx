@@ -45,7 +45,7 @@ const Select = ({
   ...props
 }: PropsType) => {
   const [isOpen, setOpen] = useState(false);
-  // const [selected, setSelected] = useState<string>();
+
   const selectRef = useRef(null);
   useOutsideClick(selectRef, () => {
     setOpen(false);

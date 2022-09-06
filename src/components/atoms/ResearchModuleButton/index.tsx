@@ -17,7 +17,6 @@ interface PropsType {
 const ResearchModuleButton = ({ index, title, link, backgroundColor, color, image, hoverImage, modalType, onClick }: PropsType) => {
   return (
     <div key={index} onClick={() => onClick(modalType)} css={researchBox(backgroundColor, color, image, hoverImage)}>
-      {index === 0 && <span css={absoluteTextStyle}>?</span>}
       <span css={[heading5_bold, { color: color }]}>{title}</span>
       {index !== 0 && <div className="module" css={iconContainer(image)} />}
     </div>
@@ -28,12 +27,17 @@ export default ResearchModuleButton;
 
 const researchBox = (backgroundColor, color, image, hoverImage) => css`
   position: relative;
-  width: 260px;
+  width: 240px;
+  min-width: 220px;
+  height: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-right: 16px;
   border-radius: 8px;
   cursor: pointer;
   white-space: nowrap;
-  padding: ${image ? '16px 30px' : '26.5px 30px'};
+  padding: ${image ? '16px 30px' : '0px'};
   background-color: ${backgroundColor};
   ${image
     ? `

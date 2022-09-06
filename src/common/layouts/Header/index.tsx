@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 // Redux
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';

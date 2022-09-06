@@ -73,8 +73,8 @@ const inputStyle = (disabled, width, error) => css`
   width: ${width};
   ::placeholder {
     font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
+    font-size: 14px;
+    line-height: 18px;
   }
   :focus {
     font-weight: 700;
