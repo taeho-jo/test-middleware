@@ -22,7 +22,7 @@ export const useSignupApi = () => {
   const dispatch = useDispatch();
 
   const handleSignup = async (sendObject: SignupInputType) => {
-    return await AXIOS_POST('/register/', sendObject);
+    return await AXIOS_POST('/register', sendObject);
   };
 
   return useMutation(handleSignup, {
@@ -43,7 +43,7 @@ export const useSignupApi = () => {
 export const useRefreshTokenApi = isRefreshToken => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  return useQuery(['refreshToken'], () => AXIOS_GET('/refreshToken/'), {
+  return useQuery(['refreshToken'], () => AXIOS_GET('/refreshToken'), {
     cacheTime: 0,
     enabled: isRefreshToken,
     onError: e => {
@@ -61,38 +61,38 @@ export const useRefreshTokenApi = isRefreshToken => {
 
 // 로그인 API
 export const fetchLoginApi = async sendObject => {
-  return await AXIOS_POST('/login/', sendObject);
+  return await AXIOS_POST('/login', sendObject);
 };
 
 // 회원가입 API
 export const fetchSignupApi = async sendObject => {
-  return await AXIOS_POST('/register/', sendObject);
+  return await AXIOS_POST('/register', sendObject);
 };
 
 // 이메일 확인 API
 export const fetchEmailConfirmApi = async () => {
-  return await AXIOS_POST('/user/confirm/', {});
+  return await AXIOS_POST('/user/confirm', {});
 };
 
 // 인증 이메일 재전송 API
 export const fetchEmailResendApi = async sendObject => {
-  return await AXIOS_POST('/resend/', sendObject);
+  return await AXIOS_POST('/resend', sendObject);
 };
 
 // 비밀번호 재설정 확인 메일 API
 export const fetchResetPasswordEmailApi = async sendObject => {
-  return await AXIOS_POST('/reset/', sendObject);
+  return await AXIOS_POST('/reset', sendObject);
 };
 
 // 비밀번호 재설정 API
 export const fetchChangePasswordApi = async sendObject => {
-  return await AXIOS_PATCH('/user/password/', sendObject);
+  return await AXIOS_PATCH('/user/password', sendObject);
 };
 
 // 토큰 refresh API
 export const fetchRefreshToken = async () => {
   try {
-    const response = await AXIOS_GET('/refresh/');
+    const response = await AXIOS_GET('/refresh');
     const token = response.data.token;
     localStorage.setItem('accessToken', token);
   } catch (e) {
@@ -102,5 +102,5 @@ export const fetchRefreshToken = async () => {
 
 // 공통 code API
 export const fetchCommonCodeApi = async () => {
-  return await AXIOS_GET('/admin/code/');
+  return await AXIOS_GET('/admin/code');
 };

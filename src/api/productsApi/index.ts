@@ -14,7 +14,7 @@ const defaultConfig = {
 
 // Product List Api
 export const useGetProductsListApi = () => {
-  return useQuery<ProductList[], Error>(['AllProduct'], () => AXIOS_GET(`/admin/${teamSeq}/product/`), {
+  return useQuery<ProductList[], Error>(['AllProduct'], () => AXIOS_GET(`/admin/${teamSeq}/product`), {
     cacheTime: 0,
     onError: e => defaultConfig.onError(e, 'GET', 'useGetProductsListApi'),
   });
@@ -23,7 +23,7 @@ export const useGetProductsListApi = () => {
 // Product Detail Api
 export const useGetProductDetailApi = id => {
   const queryClient = useQueryClient();
-  return useQuery(['ProductDetail', id], () => AXIOS_GET(`/admin/product/${id}/`), {
+  return useQuery(['ProductDetail', id], () => AXIOS_GET(`/admin/product/${id}`), {
     onError: e => defaultConfig.onError(e, 'GET', 'useGetProductDetailApi'),
     onSuccess: () => {
       queryClient.invalidateQueries(['AllProduct']);
