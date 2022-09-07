@@ -131,6 +131,7 @@ const Report = ({ params }) => {
     rootMargin: '72px 0px 0px 0px',
     threshold: 1,
   });
+
   // 기능별 상세 내용 ref
   const [testRef, testChildrenRef] = useOnMultipleScreen({
     // rootMargin: '150px 0px 0px 0px',
@@ -287,20 +288,31 @@ const Report = ({ params }) => {
                     researchData={item?.comment}
                   />
                 </div>
-                <div css={chartSectionBox}>
-                  <div css={chartBox} className={'scrollType1'} ref={el => (missionChildrenRef.current[index] = el)}>
-                    <MissionUsabilityTemplate
-                      modalControl={modalControl}
-                      handleChangeCheckBox={handleChangeCheckBox}
-                      checked={filterFail}
-                      index={index}
-                      dataList={item}
-                      register={register}
-                      errors={errors}
-                    />
-                  </div>
+                {/*<div css={chartSectionBox}>*/}
+                {/*  <div css={chartBox} className={'scrollType1'} ref={el => (missionChildrenRef.current[index] = el)}>*/}
+                <div
+                  // css={css`
+                  //   height: calc(100vh - 136px);
+                  //   display: flex;
+                  //   flex-direction: column;
+                  //   justify-content: center;
+                  // `}
+                  // className={'scrollType1'}
+                  ref={el => (missionChildrenRef.current[index] = el)}
+                >
+                  <MissionUsabilityTemplate
+                    modalControl={modalControl}
+                    handleChangeCheckBox={handleChangeCheckBox}
+                    checked={filterFail}
+                    index={index}
+                    dataList={item}
+                    register={register}
+                    errors={errors}
+                  />
                 </div>
               </div>
+              {/*  </div>*/}
+              {/*</div>*/}
               {item.missionFunctionFatality.map((el, idx) => {
                 const childrenIndex = featureDetailArr?.findIndex(count => count.name === el.name && count.info === el.info);
                 return (
@@ -567,6 +579,9 @@ const Report = ({ params }) => {
                     {/*<div*/}
                     {/*  css={css`*/}
                     {/*    height: calc(100vh - 136px);*/}
+                    {/*    display: flex;*/}
+                    {/*    flex-direction: column;*/}
+                    {/*    justify-content: center;*/}
                     {/*  `}*/}
                     {/*  className={'scrollType1'}*/}
                     {/*>*/}
@@ -632,8 +647,8 @@ const chartBox = (padding = false, justify = 'center') => css`
   min-width: 900px;
   padding-top: ${padding ? '0px' : '190px'};
   height: calc(100vh - 136px);
-  border-left: 1px solid #dcdcdc;
-  border-right: 1px solid #dcdcdc;
+  //border-left: 1px solid #dcdcdc;
+  //border-right: 1px solid #dcdcdc;
   overflow-y: scroll;
   overflow-x: hidden;
   display: flex;

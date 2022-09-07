@@ -105,8 +105,8 @@ const graphBosStyle = css`
   width: 100%;
 `;
 const graphAreaStyle = css`
-  border-left: 1px solid #dcdcdc;
-  border-right: 1px solid #dcdcdc;
+  //border-left: 1px solid #dcdcdc;
+  //border-right: 1px solid #dcdcdc;
   min-width: 900px;
   max-width: 900px;
   height: auto;
@@ -115,5 +115,5 @@ const graphAreaStyle = css`
 const graphContainerStyle = css`
   padding: 36px 80px 80px;
   width: 100%;
-  border-bottom: 1px solid #dcdcdc;
+  //border-bottom: 1px solid #dcdcdc;
 `;
