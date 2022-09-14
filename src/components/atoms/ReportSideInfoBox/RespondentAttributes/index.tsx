@@ -84,7 +84,11 @@ const RespondentAttributes = ({ changeClicked, clicked }) => {
                   {el?.children.map((item, index) => {
                     return (
                       <ul key={`children-${index}`}>
-                        <li css={[childrenLiStyle, caption1_regular]}>{item.value}</li>
+                        <li
+                          css={[childrenLiStyle, caption1_regular, { height: 'auto', listStyle: 'inside', textIndent: '-17px', paddingLeft: '20px' }]}
+                        >
+                          {item.value}
+                        </li>
                       </ul>
                     );
                   })}
