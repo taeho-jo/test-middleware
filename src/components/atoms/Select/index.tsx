@@ -25,6 +25,7 @@ type PropsType = {
   fontSize?: any;
   selectBoxHeight?: string;
   selectBoxMargin?: string;
+  getResearchMethod?: (value) => void;
   [key: string]: any;
 };
 const Select = ({
@@ -42,6 +43,7 @@ const Select = ({
   fontSize,
   selectBoxHeight,
   selectBoxMargin,
+  getResearchMethod,
   ...props
 }: PropsType) => {
   const [isOpen, setOpen] = useState(false);
@@ -71,6 +73,18 @@ const Select = ({
         css={selectBoxWrapper(selectBoxHeight, selectBoxMargin)}
         ref={selectRef}
         onClick={() => {
+          if (getResearchMethod) {
+            if (name === 'method') {
+              getResearchMethod('UI_DIAGNOSIS');
+            }
+            if (name === 'team') {
+              getResearchMethod('team');
+            }
+            if (name === 'product') {
+              getResearchMethod('product');
+            }
+          }
+
           setOpen(prev => !prev);
         }}
       >
@@ -92,6 +106,13 @@ const Select = ({
             {options?.map(item => (
               <div key={item.value} onClick={() => onClick(item.value, name, item.displayName)} css={optionContainer}>
                 <span
+                  onMouseEnter={
+                    getResearchMethod
+                      ? () => getResearchMethod(item.value)
+                      : () => {
+                          return;
+                        }
+                  }
                   css={selected[name] === item.value ? [customOptionSelected, customOption, fontSize] : [customOption, fontSize]}
                   data-value={item.value}
                 >

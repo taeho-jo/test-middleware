@@ -36,6 +36,8 @@ import Icon from '../../atoms/Icon';
 import Button from '../../atoms/Button';
 import IconButton from '../../atoms/Button/IconButton';
 import IconTextButton from '../../atoms/Button/IconTextButton';
+import { fetchGetResearchListApi } from '../../../api/researchApi';
+import { fetchResearchList } from '../../../store/reducers/researchCreateReducer';
 
 const ResearchType = [
   {
@@ -100,7 +102,7 @@ const TeamDashboard = () => {
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
   const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
-  // const selectTeamSeq = localStorage.getItem('teamSeq');
+  const teamResearchList = useSelector<ReducerType, any>(state => state.researchCreate.researchList);
 
   const contValue = useSelector<ReducerType, number>(state => state.counter.value);
 
@@ -150,6 +152,17 @@ const TeamDashboard = () => {
     },
   });
   // ============ React Query ============ //
+  useEffect(() => {
+    if (selectTeamSeq) {
+      const params = {
+        teamSeq: selectTeamSeq,
+        researchNm: '',
+        researchType: '',
+        statusType: '',
+      };
+      dispatch(fetchResearchList({ params: params }));
+    }
+  }, [selectTeamSeq]);
 
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));
@@ -260,7 +273,7 @@ const TeamDashboard = () => {
             />
           </FlexBox>
 
-          <ResearchList handleMoveDetail={handleMoveDetail} listData={teamReportList} />
+          <ResearchList handleMoveDetail={handleMoveDetail} listData={teamResearchList} />
         </FlexBox>
       </div>
     </>

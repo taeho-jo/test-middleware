@@ -23,19 +23,21 @@ import { fetchDeleteProductAi, fetchUpdateProductApi } from '../../../api/teamAp
 import { isShow } from '../../../store/reducers/modalReducer';
 import Select from '../../atoms/Select';
 import Icon from '../../atoms/Icon';
-import { TeamProductType } from '../../../store/reducers/teamReducer';
+import { deleteTeamProduct, TeamProductType, updateTeamProduct } from '../../../store/reducers/teamReducer';
 import { useMutation, useQueryClient } from 'react-query';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { useRouter } from 'next/router';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { css } from '@emotion/react';
+import TextArea from '../../atoms/TextArea';
 
 const TeamProductModifyModal = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const commonCode = useSelector<ReducerType, any>(state => state.common.commonCode);
-  const selectProduct = useSelector<ReducerType, TeamProductType>(state => state.team.selectProduct);
+  const selectProduct = useSelector<ReducerType, any>(state => state.team.selectProduct);
   const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
   // hook form
   const {
@@ -50,64 +52,70 @@ const TeamProductModifyModal = () => {
 
   const [sendArr, setSendArr] = useState(null);
 
-  const { mutate } = useMutation(['fetchUpdateProduct', selectTeamSeq, selectProduct.productSeq], fetchUpdateProductApi, {
-    onError: (e: any) => {
-      const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+  // const { mutate } = useMutation(['fetchUpdateProduct', selectTeamSeq, selectProduct.productSeq], fetchUpdateProductApi, {
+  //   onError: (e: any) => {
+  //     const errorData = e.response.data;
+  //     if (errorData.code === 'E0008') {
+  //       queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+  //
+  //       mutate(sendArr);
+  //
+  //       queryClient.invalidateQueries(['fetchUpdateProduct', selectTeamSeq, selectProduct.productSeq]);
+  //     } else if (errorData.code === 'E0007') {
+  //       clearLocalStorage();
+  //       router.push('/');
+  //     } else {
+  //       dispatch(showToast({ message: errorData.message, isShow: true, status: 'warning', duration: 5000 }));
+  //     }
+  //   },
+  //   onSuccess: data => {
+  //     dispatch(showToast({ message: '프로덕트 정보가 수정되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+  //     queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
+  //     dispatch(isShow({ isShow: false, type: '' }));
+  //   },
+  // });
 
-        mutate(sendArr);
-
-        queryClient.invalidateQueries(['fetchUpdateProduct', selectTeamSeq, selectProduct.productSeq]);
-      } else if (errorData.code === 'E0007') {
-        clearLocalStorage();
-        router.push('/');
-      } else {
-        dispatch(showToast({ message: errorData.message, isShow: true, status: 'warning', duration: 5000 }));
-      }
-    },
-    onSuccess: data => {
-      dispatch(showToast({ message: '프로덕트 정보가 수정되었습니다.', isShow: true, status: 'success', duration: 5000 }));
-      queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
-      dispatch(isShow({ isShow: false, type: '' }));
-    },
-  });
-
-  const { mutate: deleteMutate } = useMutation(['fetchDeleteProduct', selectTeamSeq, selectProduct.productSeq], fetchDeleteProductAi, {
-    onSuccess: data => {
-      dispatch(showToast({ message: '프로덕트가 삭제되었습니다.', isShow: true, status: 'success', duration: 5000 }));
-      queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
-      dispatch(isShow({ isShow: false, type: '' }));
-      router.push('/admin/setting');
-    },
-  });
+  // const { mutate: deleteMutate } = useMutation(['fetchDeleteProduct', selectTeamSeq, selectProduct.productSeq], fetchDeleteProductAi, {
+  //   onSuccess: data => {
+  //     dispatch(showToast({ message: '프로덕트가 삭제되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+  //     queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
+  //     dispatch(isShow({ isShow: false, type: '' }));
+  //     router.push('/admin/setting');
+  //   },
+  // });
 
   const [selected, setSelected] = useState({
-    planetType: '',
-    serviceType: '',
-    revenueModelType: '',
+    productType: '',
+    categoryType: '',
   });
 
   const handleUpdateProduct = useCallback(
     (status, data) => {
       const sendObject = {
-        productNm: data.productNm,
-        ...selected,
+        productNm: data.productNm ? data.productNm : selectProduct.productNm,
+        productType: selected.productType,
+        categoryType: [selected.categoryType],
+        productIntroduce: data.productIntroduce ? data.productIntroduce : selectProduct.productIntroduce,
+        serviceUrl: data.serviceUrl ? data.serviceUrl : selectProduct.serviceUrl,
       };
 
-      const sendArr = [selectTeamSeq, selectProduct.productSeq, sendObject];
-      setSendArr(sendArr);
-      mutate(sendArr);
+      // const sendArr = [selectTeamSeq, selectProduct.productSeq, sendObject];
+      // setSendArr(sendArr);
+      // mutate(sendArr);
+      dispatch(updateTeamProduct({ teamSeq: selectTeamSeq, productSeq: selectProduct.productSeq, sendObject: sendObject }));
     },
     [selected],
   );
 
   const deleteProduct = useCallback(() => {
-    const sendObject = {
-      teamSeq: selectTeamSeq,
-      productSeq: selectProduct.productSeq,
-    };
-    deleteMutate(sendObject);
+    // const sendObject = {
+    //   teamSeq: selectTeamSeq,
+    //   productSeq: selectProduct.productSeq,
+    // };
+    //
+    //
+    // deleteMutate(sendObject);
+    dispatch(deleteTeamProduct({ teamSeq: selectTeamSeq, productSeq: selectProduct.productSeq, callback: () => router.push('/admin/setting') }));
   }, [selectTeamSeq, selectProduct]);
 
   const onClickValue = useCallback(
@@ -126,9 +134,8 @@ const TeamProductModifyModal = () => {
   useEffect(() => {
     if (selectProduct) {
       setSelected({
-        planetType: selectProduct.planetType,
-        serviceType: selectProduct.serviceType,
-        revenueModelType: selectProduct.revenueModelType,
+        productType: selectProduct.productType,
+        categoryType: selectProduct.categoryType ? selectProduct.categoryType?.[0] : null,
       });
     }
   }, [selectProduct]);
@@ -154,32 +161,58 @@ const TeamProductModifyModal = () => {
           />
 
           <Select
-            title={'서비스 카테고리 (선택)'}
-            options={commonCode?.PlanetType}
-            value={selected.planetType}
-            selected={selected}
-            setSelected={setSelected}
-            name="planetType"
-            onClick={onClickValue}
-          />
-
-          <Select
-            title={'서비스 유형 (선택)'}
-            options={commonCode?.ServiceType}
-            value={selected.serviceType}
-            selected={selected}
-            setSelected={setSelected}
-            name="serviceType"
-            onClick={onClickValue}
-          />
-
-          <Select
-            title={'수익 모델 (선택)'}
-            options={commonCode?.RevenueModelType}
+            title={'서비스 카테고리'}
+            options={commonCode?.ProductType}
             // value={selected.funnelsCd}
             selected={selected}
             setSelected={setSelected}
-            name="revenueModelType"
+            name="productType"
+            onClick={onClickValue}
+            registerOptions={{
+              required: true,
+            }}
+          />
+
+          <div
+            css={css`
+              margin-top: 16px;
+            `}
+          >
+            <TextArea
+              title={'프로덕트 소개 (선택)'}
+              register={register}
+              label={'productIntroduce'}
+              errors={errors}
+              errorMsg={'프로덕트 소개를 입력해주세요.'}
+              placeholder={'프로덕트 소개를 입력해주세요.'}
+              defaultValue={selectProduct?.productIntroduce}
+              // titleStyle={{ marginTop: '20px' }}
+            />
+          </div>
+
+          <div
+            css={css`
+              margin-top: 10px;
+            `}
+          >
+            <Input
+              defaultValue={selectProduct?.serviceUrl}
+              title={'서비스 접속 경로 URL (선택)'}
+              register={register}
+              label={'serviceUrl'}
+              errors={errors}
+              errorMsg={'서비스 접속 경로 URL을 입력해주세요.'}
+              placeholder={`서비스 접속 경로 URL을 입력해주세요.`}
+              // style={{ marginBottom: '16px' }}
+            />
+          </div>
+          <Select
+            title={'카테고리 (선택)'}
+            options={commonCode?.CategoryType}
+            // value={selected.funnelsCd}
+            selected={selected}
+            setSelected={setSelected}
+            name="categoryType"
             onClick={onClickValue}
           />
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>

@@ -28,6 +28,9 @@ import { fetchRefreshToken } from '../../../api/authApi';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { useRouter } from 'next/router';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import TextArea from '../../atoms/TextArea';
+import { createTeamProduct } from '../../../store/reducers/teamReducer';
+import { css } from '@emotion/react';
 
 const TeamProductCreateModal = () => {
   const queryClient = useQueryClient();
@@ -40,6 +43,7 @@ const TeamProductCreateModal = () => {
     register,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors },
   } = useForm<InputType>({});
 
@@ -48,46 +52,51 @@ const TeamProductCreateModal = () => {
 
   const [sendObject, setSendObject] = useState(null);
 
-  const { mutate, isLoading } = useMutation(['fetchCreateProduct'], fetchCreateProductApi, {
-    onError: (e: any) => {
-      const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-
-        mutate([selectTeamSeq, sendObject]);
-
-        queryClient.invalidateQueries(['fetchCreateProduct']);
-      } else if (errorData.code === 'E0007') {
-        clearLocalStorage();
-        router.push('/');
-      } else {
-        dispatch(showToast({ message: errorData.message, isShow: true, status: 'warning', duration: 5000 }));
-      }
-    },
-    onSuccess: data => {
-      dispatch(showToast({ message: '프로덕트가 생성되었습니다.', isShow: true, status: 'success', duration: 5000 }));
-      queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
-      dispatch(isShow({ isShow: false, type: '' }));
-    },
-  });
+  // const { mutate, isLoading } = useMutation(['fetchCreateProduct'], fetchCreateProductApi, {
+  //   onError: (e: any) => {
+  //     const errorData = e.response.data;
+  //     if (errorData.code === 'E0008') {
+  //       queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+  //
+  //       mutate([selectTeamSeq, sendObject]);
+  //
+  //       queryClient.invalidateQueries(['fetchCreateProduct']);
+  //     } else if (errorData.code === 'E0007') {
+  //       clearLocalStorage();
+  //       router.push('/');
+  //     } else {
+  //       dispatch(showToast({ message: errorData.message, isShow: true, status: 'warning', duration: 5000 }));
+  //     }
+  //   },
+  //   onSuccess: data => {
+  //     dispatch(showToast({ message: '프로덕트가 생성되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+  //     queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
+  //     dispatch(isShow({ isShow: false, type: '' }));
+  //   },
+  // });
 
   const [selected, setSelected] = useState({
-    planetType: null,
-    serviceType: null,
-    revenueModelType: null,
+    categoryType: null,
+    productType: null,
   });
 
   const handleCreateProduct = useCallback(
     (status, data) => {
       const sendObject = {
         productNm: data.productNm,
-        ...selected,
+        productType: selected.productType,
+        categoryType: [selected.categoryType],
+        productIntroduce: data.productIntroduce,
+        serviceUrl: data.serviceUrl,
       };
-      const sendArr = [selectTeamSeq, sendObject];
-      setSendObject(sendObject);
-      mutate(sendArr);
+      console.log(sendObject);
+      if (selectTeamSeq) {
+        dispatch(createTeamProduct({ sendObject: sendObject, teamSeq: selectTeamSeq }));
+      }
+
+      // setSendObject(sendObject);
     },
-    [selected],
+    [selected, selectTeamSeq],
   );
 
   const onClickValue = useCallback(
@@ -123,36 +132,60 @@ const TeamProductCreateModal = () => {
           />
 
           <Select
-            title={'서비스 카테고리 (선택)'}
-            options={commonCode?.PlanetType}
+            title={'서비스 카테고리'}
+            options={commonCode?.ProductType}
             // value={selected.funnelsCd}
             selected={selected}
             setSelected={setSelected}
-            name="planetType"
+            name="productType"
             onClick={onClickValue}
+            registerOptions={{
+              required: true,
+            }}
           />
 
-          <Select
-            title={'서비스 유형 (선택)'}
-            options={commonCode?.ServiceType}
-            // value={selected.funnelsCd}
-            selected={selected}
-            setSelected={setSelected}
-            name="serviceType"
-            onClick={onClickValue}
-          />
+          <div
+            css={css`
+              margin-top: 16px;
+            `}
+          >
+            <TextArea
+              title={'프로덕트 소개 (선택)'}
+              register={register}
+              label={'productIntroduce'}
+              errors={errors}
+              errorMsg={'프로덕트 소개를 입력해주세요.'}
+              placeholder={'프로덕트 소개를 입력해주세요.'}
+              // titleStyle={{ marginTop: '20px' }}
+            />
+          </div>
 
+          <div
+            css={css`
+              margin-top: 10px;
+            `}
+          >
+            <Input
+              title={'서비스 접속 경로 URL (선택)'}
+              register={register}
+              label={'serviceUrl'}
+              errors={errors}
+              errorMsg={'서비스 접속 경로 URL을 입력해주세요.'}
+              placeholder={`서비스 접속 경로 URL을 입력해주세요.`}
+              // style={{ marginBottom: '16px' }}
+            />
+          </div>
           <Select
-            title={'수익 모델 (선택)'}
-            options={commonCode?.RevenueModelType}
+            title={'카테고리 (선택)'}
+            options={commonCode?.CategoryType}
             // value={selected.funnelsCd}
             selected={selected}
             setSelected={setSelected}
-            name="revenueModelType"
+            name="categoryType"
             onClick={onClickValue}
           />
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton isLoading={isLoading} theme={'dark'} type={'submit'} text={'정보 저장하기'} />
+            <BasicButton theme={'dark'} type={'submit'} text={'정보 저장하기'} />
             {/*<FlexBox justify={'center'} align={'center'} style={{ marginTop: '22px' }}>*/}
             {/*  <span css={[caption1_regular, { color: colors.red }]}>프로덕트 삭제하기</span>*/}
             {/*  <Icon name={'NAVIGATION_CLOSE_SM'} iconColor={colors.red} />*/}

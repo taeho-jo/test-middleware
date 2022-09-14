@@ -4,6 +4,8 @@ import FlexBox from '../../atoms/FlexBox';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
 import Icon from '../../atoms/Icon';
+import { useSelector } from 'react-redux';
+import { ReducerType } from '../../../store/reducers';
 
 interface PropsType {
   isStepBar?: boolean;
@@ -34,6 +36,7 @@ const STEP_ARR = [
 ];
 
 const ResearchHeader = ({ isStepBar = true, title }: PropsType) => {
+  const STEP = useSelector<ReducerType, string>(state => state.researchCreate.step);
   return (
     <FlexBox justify={isStepBar ? 'space-between' : 'flex-start'} align={'center'} height={'38px'}>
       {!isStepBar && <Icon name={'ALERT_NORMAL'} />}
@@ -43,7 +46,7 @@ const ResearchHeader = ({ isStepBar = true, title }: PropsType) => {
           {STEP_ARR.map((item, index) => {
             return (
               <div key={index} css={[body3_bold, stepTextBox]}>
-                <span>{item.label}</span>
+                <span css={stepText(STEP, item.value)}>{item.label}</span>
 
                 {index !== STEP_ARR.length - 1 && (
                   <div css={stepBarBox}>
@@ -70,10 +73,12 @@ const stepBox = css`
   display: flex;
 `;
 const stepTextBox = css`
-  color: ${colors.grey._cc};
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+const stepText = (step, text) => css`
+  color: ${step === text ? colors.grey._3c : colors.grey._cc};
 `;
 const stepBarBox = css`
   display: flex;

@@ -11,6 +11,8 @@ import Icon from '../../atoms/Icon';
 import FlexBox from '../../atoms/FlexBox';
 import ProfileIcon from '../../atoms/ProfileIcon';
 import Button from '../../atoms/Button';
+import { useSelector } from 'react-redux';
+import { ReducerType } from '../../../store/reducers';
 
 interface PropsType {
   createDt: string;
@@ -18,10 +20,15 @@ interface PropsType {
   projectNm: string;
   reportSeq: number;
   reportViewId: string;
+  statusType: string;
   onClick?: (id, name) => void;
 }
 
-const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, onClick }: PropsType) => {
+const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, statusType, onClick }: PropsType) => {
+  const STATUS_CODE = useSelector<ReducerType, { key: string; value: string; displayName: string }[]>(
+    state => state.common.commonCode.ResearchStatusType,
+  );
+
   const changeName = useCallback(name => {
     switch (name) {
       case 'UI_DIAGNOSIS':
@@ -37,22 +44,40 @@ const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, 
     }
   }, []);
 
-  const pickBackgroundImage = useCallback(name => {
-    switch (name) {
-      case 'UI_DIAGNOSIS':
-        return uiBackground.src;
-      case 'SCENARIO_VERIFICATION':
-        return scenarioBackground.src;
-      case 'UX_POSITION_ANALYSIS':
-        return uxBackground.src;
-      case 'POTENTIAL_CUSTOMER_RESEARCH':
-        return customerBackground.src;
+  const getResearchStatus = useCallback(() => {
+    const equalStatus = STATUS_CODE.filter(el => el.value === statusType);
+    return equalStatus[0].displayName;
+  }, [STATUS_CODE, statusType]);
+
+  const getResearchStatusIcon = useCallback(() => {
+    switch (statusType) {
+      case 'RESEARCH_COMPLETED':
+        return 'STATUS_COMPLETE';
+      case 'RESEARCH_INFO_ENTERING':
+      case 'RESEARCH_REQUEST_DESIGN':
+      case 'RESEARCH_DESIGN':
+      case 'RESEARCH_DESIGN_COMPLETE':
+      case 'RESEARCH_START_REQUEST':
+        return 'STATUS_BEFORE';
+      case 'RESPONSE_RECRUITING':
+      case 'RESEARCH_ANALYZING':
+        return 'STATUS_ING';
       default:
-        return uiBackground.src;
+        return 'STATUS_BEFORE';
     }
-  }, []);
+  }, [statusType]);
+
   return (
-    <div css={mainContainer}>
+    <div
+      css={mainContainer}
+      onClick={
+        statusType !== 'RESEARCH_COMPLETED'
+          ? () => console.log('asdf')
+          : () => {
+              return;
+            }
+      }
+    >
       <FlexBox direction={'row'} justify={'space-between'} align={'center'}>
         <span css={[caption1_bold, blockStyle]}>
           ({reportSeq}) {changeName(moduleType)}
@@ -69,18 +94,20 @@ const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, 
 
       <FlexBox style={statusBox} direction={'row'} justify={'flex-start'} align={'center'}>
         {/*TODO: STATUS에 따른 상태 변경*/}
-        <Icon name={'STATUS_COMPLETE'} size={24} />
-        <span css={[body3_bold, { marginLeft: '8px' }]}>진행 완료</span>
+        <Icon name={getResearchStatusIcon()} size={24} />
+        <span css={[body3_bold, { marginLeft: '8px' }]}>{getResearchStatus()}</span>
       </FlexBox>
 
-      <FlexBox>
-        <Button
-          onClick={() => onClick(reportViewId, projectNm)}
-          backgroundColor={colors.grey._3c}
-          btnText={'리포트 확인하기'}
-          btnTextColor={'white'}
-        />
-      </FlexBox>
+      {statusType === 'RESEARCH_COMPLETED' && (
+        <FlexBox>
+          <Button
+            onClick={() => onClick(reportViewId, projectNm)}
+            backgroundColor={colors.grey._3c}
+            btnText={'리포트 확인하기'}
+            btnTextColor={'white'}
+          />
+        </FlexBox>
+      )}
     </div>
   );
 };

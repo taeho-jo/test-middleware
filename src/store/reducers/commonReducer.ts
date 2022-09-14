@@ -8,6 +8,7 @@ export interface CounterType {
     originData: string;
     isFilter: string;
   };
+  error: any;
 }
 
 const initialState: CounterType = {
@@ -18,12 +19,16 @@ const initialState: CounterType = {
     originData: 'N',
     isFilter: 'N',
   },
+  error: null,
 };
 
 export const commonSlice = createSlice({
   name: 'common',
   initialState,
   reducers: {
+    getCommonCode: state => {
+      return state;
+    },
     updateCommonCode: (state, action: PayloadAction<any>) => {
       state.commonCode = action.payload;
     },
@@ -41,8 +46,12 @@ export const commonSlice = createSlice({
         isFilter: 'N',
       };
     },
+    getErrorInfo: (state, action: PayloadAction<any>) => {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { updateCommonCode, updateInitIndicator, updateIndicatorStatus, resetIndicatorStatus } = commonSlice.actions;
+export const { getCommonCode, updateCommonCode, updateInitIndicator, updateIndicatorStatus, resetIndicatorStatus, getErrorInfo } =
+  commonSlice.actions;
 export default commonSlice.reducer;

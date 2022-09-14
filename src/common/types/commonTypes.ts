@@ -71,7 +71,9 @@ export type IconType =
   | 'UXPOSITION_HOVER'
   | 'UXPOSITION_INACTIVE'
   | 'MORE_HORIZON'
-  | 'ACTION_FILTER';
+  | 'ACTION_FILTER'
+  | 'CHEVRON_RIGHT_THIN'
+  | 'CHEVRON_LEFT_THIN';
 
 export interface InputType {
   label: string;

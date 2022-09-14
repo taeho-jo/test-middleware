@@ -14,7 +14,10 @@ import NavigationArrowRight from '/public/assets/svg/navigation_arrow_right.svg'
 import NavigationChevronDown from '/public/assets/svg/navigation_chevron_down_s.svg';
 import CloseSmall from '/public/assets/svg/close_small.svg';
 import ChevronDownThin from '/public/assets/svg/chevron_down_thin.svg';
+import ChevronDown from '/public/assets/svg/chevron_down.svg';
+import ChevronUp from '/public/assets/svg/chevron_up.svg';
 import ChevronRightThin from '/public/assets/svg/chevron_right_thin.svg';
+import ChevronLeftThin from '/public/assets/svg/chevron_left_thin.svg';
 import NavigationChevronRight from '/public/assets/svg/navigation_chevron_right.svg';
 import NavigationChevronRightDisabled from '/public/assets/svg/navigation_chevron_right_disabled.svg';
 import NavigationCloseLg from '/public/assets/svg/navigation_close_l.svg';
@@ -88,8 +91,11 @@ const IconTypes = {
   UITEST_INACTIVE: UiTestInactive,
   UXPOSITION_HOVER: UxPositionHover,
   UXPOSITION_INACTIVE: UxPositionInactive,
+  CHEVRON_DOWN: ChevronDown,
+  CHEVRON_UP: ChevronUp,
   CHEVRON_DOWN_THIN: ChevronDownThin,
   CHEVRON_RIGHT_THIN: ChevronRightThin,
+  CHEVRON_LEFT_THIN: ChevronLeftThin,
   MORE_HORIZON: MoreHorizon,
   MEMBER: Member,
   NOTI: Noti,

@@ -8,11 +8,40 @@ import Icon from '../../atoms/Icon';
 import { useRouter } from 'next/router';
 
 interface PropsType {
-  listData: { reportViewId: string; createDt: string; moduleType: string; projectNm: string; reportSeq: number }[];
+  listData: any;
   handleMoveDetail?: (id, name) => void;
 }
 
 const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
+  // researchSeq
+  // researchNm
+  // researchType
+  // researchTypeNm
+  // panelInfo
+  // decisionInfo
+  // detailInfo
+  // additionalInfo
+  // managerId
+  // managerNm
+  // basicAmount
+  // panelCompensationInfo
+  // panelSampleCost
+  // additionalCosts
+  // totalAdditionalCosts
+  // vat
+  // communicationUrl
+  // memo
+  // startStatus
+  // statusType
+  // statusTypeNm
+  // questionFilePath
+  // questionFileNm
+  // startDt
+  // endDt
+  // teamSeq
+  // productSeq
+  // createDt
+
   const router = useRouter();
   const getReportList = useCallback(() => {
     if (listData === null || listData.length === 0) {
@@ -28,9 +57,10 @@ const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
             <ListReport
               onClick={handleMoveDetail}
               reportViewId={el.reportViewId}
-              reportSeq={el.reportSeq}
-              moduleType={el.moduleType}
-              projectNm={el.projectNm}
+              statusType={el.statusType}
+              reportSeq={el.researchSeq}
+              moduleType={el.researchType}
+              projectNm={el.researchNm}
               createDt={el.createDt}
             />
           </Fragment>

@@ -21,7 +21,7 @@ import { setUserInfo, updateCancelWithdrawal, updateErrorMessage, UserInfoType }
 import { isShow, updateReturnPage } from '../../store/reducers/modalReducer';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import ReportLayout from './ReportLayout';
-import { updateCommonCode } from '../../store/reducers/commonReducer';
+import { getCommonCode, updateCommonCode } from '../../store/reducers/commonReducer';
 import { showToast } from '../../store/reducers/toastReducer';
 import { updateFilterFail, updateFilterFlied, updateFilterValues } from '../../store/reducers/reportReducer';
 import team from '../../pages/admin/team';
@@ -47,7 +47,10 @@ const Layout = ({ children }: PropsType) => {
   const canvasRef = useRef(null);
 
   // ============ React Query ============ //
-  const { data: commonCode } = useQuery(['fetchCommonCode'], fetchCommonCodeApi);
+  // const { data: commonCode } = useQuery(['fetchCommonCode'], fetchCommonCodeApi);
+  useEffect(() => {
+    dispatch(getCommonCode());
+  }, []);
 
   const { data: usersInfo, refetch } = useQuery(['fetchUserInfo', 'layout'], () => fetchUserInfoApi(token), {
     enabled: !!token,
@@ -137,13 +140,6 @@ const Layout = ({ children }: PropsType) => {
   //   console.log(isReturnPage, '::::::::isReturnPage');
   //
   // }, [isReturnPage]);
-
-  useEffect(() => {
-    if (commonCode) {
-      dispatch(updateCommonCode(commonCode.data));
-      localStorage.setItem('commonCode', JSON.stringify(commonCode.data));
-    }
-  }, [commonCode]);
 
   useEffect(() => {
     //TODO: 사이드바에서 클릭 이동 시 모달 뜨는 부분 예외 처리
@@ -247,7 +243,7 @@ const Layout = ({ children }: PropsType) => {
             <CommonModal />
           </>
         );
-      case '/admin/research/create':
+      case '/admin/research/[id]':
         return (
           <>
             <div css={mainContainer}>

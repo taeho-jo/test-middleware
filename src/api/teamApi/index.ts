@@ -20,18 +20,18 @@ export const fetchProductListApi = async teamSeq => {
 };
 
 // 프로덕트 생성 API
-export const fetchCreateProductApi = async sendObject => {
-  return await AXIOS_POST(`/team/${sendObject[0]}/product`, sendObject[1]);
+export const fetchCreateProductApi = async (sendObject, teamSeq) => {
+  return await AXIOS_POST(`/team/${teamSeq}/product`, sendObject);
 };
 
 // 프로덕트 수정 API
-export const fetchUpdateProductApi = async sendObject => {
-  return await AXIOS_PATCH(`/team/${sendObject[0]}/product/${sendObject[1]}`, sendObject[2]);
+export const fetchUpdateProductApi = async (teamSeq, productSeq, sendObject) => {
+  return await AXIOS_PATCH(`/team/${teamSeq}/product/${productSeq}`, sendObject);
 };
 
 // 프로덕트 삭제 API
-export const fetchDeleteProductAi = async sendObject => {
-  return await AXIOS_DELETE(`/team/${sendObject.teamSeq}/product/${sendObject.productSeq}`);
+export const fetchDeleteProductAi = async (teamSeq, productSeq) => {
+  return await AXIOS_DELETE(`/team/${teamSeq}/product/${productSeq}`);
 };
 
 // 팀원 조회 API
