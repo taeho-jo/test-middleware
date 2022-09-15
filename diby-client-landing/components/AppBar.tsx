@@ -80,7 +80,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
   };
   const handleMoveAdmin = useCallback(
     (path: string) => {
-      if (token && userInfo.emailVerifiedYn === 'Y') {
+      if (token && userInfo?.emailVerifiedYn === 'Y') {
         navigate.push(path);
       } else {
         dispatch(isShow({ isShow: true, type: 'confirmSignup' }));

@@ -17,7 +17,7 @@ import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // API
 import { fetchCommonCodeApi, fetchEmailConfirmApi, fetchRefreshToken } from '../../api/authApi';
 import { fetchInviteUserInfoApi, fetchUserInfoApi } from '../../api/userApi';
-import { setUserInfo, updateCancelWithdrawal, updateErrorMessage, UserInfoType } from '../../store/reducers/userReducer';
+import { getUserInfo, setUserInfo, updateCancelWithdrawal, updateErrorMessage, UserInfoType } from '../../store/reducers/userReducer';
 import { isShow, updateReturnPage } from '../../store/reducers/modalReducer';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import ReportLayout from './ReportLayout';
@@ -52,36 +52,43 @@ const Layout = ({ children }: PropsType) => {
     dispatch(getCommonCode());
   }, []);
 
-  const { data: usersInfo, refetch } = useQuery(['fetchUserInfo', 'layout'], () => fetchUserInfoApi(token), {
-    enabled: !!token,
+  // const { data: usersInfo, refetch } = useQuery(['fetchUserInfo', 'layout'], () => fetchUserInfoApi(token), {
+  //   enabled: !!token,
+  //
+  //   onError: (e: any) => {
+  //     const errorData = e.response.data;
+  //     // if (errorData.code === 'E0008') {
+  //     //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+  //     //   refetch();
+  //     // } else
+  //     if (errorData.code === 'E0007') {
+  //       clearLocalStorage();
+  //       router.push('/');
+  //     }
+  //   },
+  //   onSuccess: data => {
+  //     dispatch(setUserInfo(data.data));
+  //     if (data.data.emailVerifiedYn === 'N') {
+  //       dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+  //     }
+  //     if (data.data.emailVerifiedYn === 'Y') {
+  //       return;
+  //       // router.push('/admin/team');
+  //     }
+  //   },
+  // });
 
-    onError: (e: any) => {
-      const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        refetch();
-      } else if (errorData.code === 'E0007') {
-        clearLocalStorage();
-        router.push('/');
-      }
-    },
-    onSuccess: data => {
-      dispatch(setUserInfo(data.data));
-      if (data.data.emailVerifiedYn === 'N') {
-        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-      }
-      if (data.data.emailVerifiedYn === 'Y') {
-        return;
-        // router.push('/admin/team');
-      }
-    },
-  });
+  useEffect(() => {
+    if (token) {
+      dispatch(getUserInfo());
+    }
+  }, [token]);
 
   const { mutate, data: confirmData } = useMutation(['fetchEmailConfirm'], fetchEmailConfirmApi, {
     onError: e => console.log('error::', e),
     onSuccess: data => {
       dispatch(isShow({ isShow: false, type: '' }));
-      refetch();
+      dispatch(getUserInfo());
     },
   });
 
@@ -92,10 +99,11 @@ const Layout = ({ children }: PropsType) => {
       enabled: !!confirmData,
       onError: (e: any) => {
         const errorData = e.response.data;
-        if (errorData.code === 'E0008') {
-          queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-          refetch();
-        } else if (errorData.code === 'E0007') {
+        // if (errorData.code === 'E0008') {
+        //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        //   refetch();
+        // } else
+        if (errorData.code === 'E0007') {
           clearLocalStorage();
           router.push('/');
         }
@@ -155,7 +163,7 @@ const Layout = ({ children }: PropsType) => {
       if (token && !userId && type && !teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
         // dispatch(setSetting(true));
-        refetch();
+        dispatch(getUserInfo());
       }
       if (token && !userId && type && !teamSeq && !result && requestView) {
         localStorage.setItem('accessToken', `${token}`);

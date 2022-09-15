@@ -13,6 +13,7 @@ import ProfileIcon from '../../atoms/ProfileIcon';
 import Button from '../../atoms/Button';
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
+import { useRouter } from 'next/router';
 
 interface PropsType {
   createDt: string;
@@ -25,6 +26,7 @@ interface PropsType {
 }
 
 const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, statusType, onClick }: PropsType) => {
+  const router = useRouter();
   const STATUS_CODE = useSelector<ReducerType, { key: string; value: string; displayName: string }[]>(
     state => state.common.commonCode.ResearchStatusType,
   );
@@ -46,7 +48,7 @@ const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, 
 
   const getResearchStatus = useCallback(() => {
     const equalStatus = STATUS_CODE.filter(el => el.value === statusType);
-    return equalStatus[0].displayName;
+    return equalStatus[0]?.displayName;
   }, [STATUS_CODE, statusType]);
 
   const getResearchStatusIcon = useCallback(() => {
@@ -72,7 +74,7 @@ const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, 
       css={mainContainer}
       onClick={
         statusType !== 'RESEARCH_COMPLETED'
-          ? () => console.log('asdf')
+          ? () => router.push(`/admin/research/${reportSeq}`)
           : () => {
               return;
             }
@@ -84,20 +86,16 @@ const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, 
         </span>
         <Icon name={'ACTION_MORE'} />
       </FlexBox>
-
       <span css={[heading5_bold, titleStyle]}>{projectNm}</span>
-
       <FlexBox style={dateBox} direction={'row'} justify={'flex-start'} align={'center'}>
         <ProfileIcon size={'20px'} margin={'0 8px 0 0'} fontStyle={caption2_bold} />
         <span css={[caption1_regular, dateStyle]}>{moment(createDt).format('YYYY. MM. DD')}</span>
       </FlexBox>
-
       <FlexBox style={statusBox} direction={'row'} justify={'flex-start'} align={'center'}>
         {/*TODO: STATUS에 따른 상태 변경*/}
         <Icon name={getResearchStatusIcon()} size={24} />
         <span css={[body3_bold, { marginLeft: '8px' }]}>{getResearchStatus()}</span>
       </FlexBox>
-
       {statusType === 'RESEARCH_COMPLETED' && (
         <FlexBox>
           <Button

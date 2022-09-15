@@ -8,7 +8,7 @@ import Input from '../../atoms/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import { getProductList } from '../../../store/reducers/teamReducer';
-import { updateResearchBasicInfo } from '../../../store/reducers/researchCreateReducer';
+import { updateResearchBasicInfo, updateResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
 import { isShow } from '../../../store/reducers/modalReducer';
 
 interface PropsType {
@@ -116,10 +116,12 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod }
         team: 6,
         product: 1,
       });
-      dispatch(updateResearchBasicInfo({ name: 'researchNm', value: detailInfo?.researchNm }));
-      dispatch(updateResearchBasicInfo({ name: 'researchType', value: detailInfo?.researchType }));
-      dispatch(updateResearchBasicInfo({ name: 'teamSeq', value: '6' }));
-      dispatch(updateResearchBasicInfo({ name: 'productSeq', value: '1' }));
+      dispatch(updateResearchModifyInfo({ name: 'researchNm', value: detailInfo?.researchNm }));
+      dispatch(updateResearchModifyInfo({ name: 'researchSeq', value: String(detailInfo?.researchSeq) }));
+      dispatch(updateResearchModifyInfo({ name: 'researchType', value: detailInfo?.researchType }));
+      dispatch(updateResearchModifyInfo({ name: 'teamSeq', value: '6' }));
+      dispatch(updateResearchModifyInfo({ name: 'productSeq', value: '1' }));
+      dispatch(updateResearchModifyInfo({ name: 'statusType', value: detailInfo?.statusType }));
     }
   }, [detailInfo]);
 

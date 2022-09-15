@@ -66,10 +66,10 @@ const TeamMember = () => {
     enabled: !!teamSeq,
     onError: (e: any) => {
       const errorData = e?.response?.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
-      }
+      // if (errorData.code === 'E0008') {
+      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+      //   queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
+      // }
       if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');

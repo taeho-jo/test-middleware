@@ -6,10 +6,17 @@ import {
   fetchResearchDetailSuccess,
   fetchResearchList,
   fetchResearchListSuccess,
+  fetchResearchModifyInfo,
+  fetchResearchModifyInfoSuccess,
   getResearchApiError,
   setStep,
 } from '../../reducers/researchCreateReducer';
-import { fetchCreateTeamResearchApi, fetchGetResearchDetailInfoApi, fetchGetResearchListApi } from '../../../api/researchApi';
+import {
+  fetchCreateTeamResearchApi,
+  fetchGetResearchDetailInfoApi,
+  fetchGetResearchListApi,
+  fetchModifyTeamResearchApi,
+} from '../../../api/researchApi';
 
 // 팀 리서치 목록 조회 saga
 function* fetchResearchListSaga(action) {
@@ -49,8 +56,22 @@ function* fetchCreateTeamResearchSaga(action) {
     yield put(setStep(step));
     yield put(fetchResearchBasicInfoSuccess(result));
     callback.push(`/admin/research/${result.data.researchSeq}`);
+  } catch (e: any) {
+    console.error(e);
+    yield put(getResearchApiError(e));
+  }
+}
+
+// 팀 리서치 수정 saga
+function* fetchModifyResearchSaga(action) {
+  try {
+    const result = yield call(fetchModifyTeamResearchApi, action.payload.sendObject);
+    console.log(result);
+    yield put(setStep(action.payload.step));
+    yield put(fetchResearchModifyInfoSuccess(result.data));
   } catch (e) {
     console.error(e);
+    yield put(getResearchApiError(e));
   }
 }
 
@@ -58,4 +79,5 @@ export function* researchSaga() {
   yield takeEvery(fetchResearchList, fetchResearchListSaga);
   yield takeEvery(fetchResearchDetail, fetchGetResearchDetailInfo);
   yield takeEvery(fetchResearchBasicInfo, fetchCreateTeamResearchSaga);
+  yield takeEvery(fetchResearchModifyInfo, fetchModifyResearchSaga);
 }

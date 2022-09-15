@@ -5,7 +5,13 @@ import { CreateResearchStepFour, CreateResearchStepOne, CreateResearchStepThree,
 import { css } from '@emotion/react';
 import { ResearchFooter, ResearchGuide, ResearchHeader } from '../../../components/molecules/Research';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchResearchBasicInfo, fetchResearchDetail, resetCreateResearchData, setStep } from '../../../store/reducers/researchCreateReducer';
+import {
+  fetchResearchBasicInfo,
+  fetchResearchDetail,
+  fetchResearchModifyInfo,
+  resetCreateResearchData,
+  setStep,
+} from '../../../store/reducers/researchCreateReducer';
 import { ReducerType } from '../../../store/reducers';
 import { FormProvider } from 'react-hook-form';
 
@@ -80,6 +86,7 @@ const ResearchCreate = () => {
   const CREATE_STEP = useSelector<ReducerType, string>(state => state.researchCreate.step);
   const BASIC_INFO = useSelector<ReducerType, any>(state => state.researchCreate.researchBasicInfo);
   const DETAIL_INFO = useSelector<ReducerType, any>(state => state.researchCreate.detailData);
+  const MODIFY_INFO = useSelector<ReducerType, any>(state => state.researchCreate.researchModifyInfo);
   const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
 
   const router = useRouter();
@@ -122,7 +129,8 @@ const ResearchCreate = () => {
         dispatch(fetchResearchBasicInfo({ params: BASIC_INFO, step: step, callback: router }));
       }
     } else {
-      console.log(BASIC_INFO);
+      console.log(MODIFY_INFO);
+      dispatch(fetchResearchModifyInfo({ sendObject: MODIFY_INFO, step: step }));
     }
   };
   const handleMovePrevStep = () => {
@@ -178,14 +186,14 @@ const ResearchCreate = () => {
   }, []);
 
   useEffect(() => {
-    if (pageId !== 'create') {
+    if (pageId !== 'create' && selectTeamSeq) {
       const params = {
         teamSeq: selectTeamSeq,
         researchSeq: pageId,
       };
       dispatch(fetchResearchDetail({ params: params }));
     }
-  }, [pageId]);
+  }, [pageId, selectTeamSeq, CREATE_STEP]);
 
   return (
     <div css={mainContainer}>
@@ -201,7 +209,7 @@ const ResearchCreate = () => {
               getResearchMethod={getResearchMethod}
             />
           )}
-          {CREATE_STEP === 'step2' && <CreateResearchStepTwo />}
+          {CREATE_STEP === 'step2' && <CreateResearchStepTwo detailInfo={pageId !== 'create' ? DETAIL_INFO : null} />}
           {CREATE_STEP === 'step3' && <CreateResearchStepThree />}
           {CREATE_STEP === 'step4' && <CreateResearchStepFour />}
           {CREATE_STEP === 'step5' && <CreateResearchStepFive />}

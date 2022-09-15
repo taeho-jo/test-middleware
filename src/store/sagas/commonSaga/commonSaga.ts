@@ -1,6 +1,8 @@
-import { call, put, takeEvery } from '@redux-saga/core/effects';
+import { call, delay, put, takeEvery } from '@redux-saga/core/effects';
 import { getCommonCode, getErrorInfo, updateCommonCode } from '../../reducers/commonReducer';
 import { fetchCommonCodeApi } from '../../../api/authApi';
+import { getRefreshToken } from '../../reducers/authReducer';
+import { getUserInfo } from '../../reducers/userReducer';
 
 function* getCommonCodeSaga() {
   try {
@@ -11,7 +13,11 @@ function* getCommonCodeSaga() {
     }
   } catch (e: any) {
     console.error(e);
+    console.log(e.response.data);
     yield put(getErrorInfo(e));
+    yield put(getRefreshToken());
+    yield delay(1000);
+    yield put(getCommonCode());
   }
 }
 

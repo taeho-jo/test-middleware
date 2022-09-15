@@ -55,11 +55,12 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
   const { mutate } = useMutation(['fetchInviteMember'], fetchInviteMemberApi, {
     onError: (e: any) => {
       const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        mutate(sendObject);
-        queryClient.invalidateQueries(['fetchInviteMember']);
-      } else if (errorData.code === 'E0007') {
+      // if (errorData.code === 'E0008') {
+      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+      //   mutate(sendObject);
+      //   queryClient.invalidateQueries(['fetchInviteMember']);
+      // } else
+      if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');
       } else {

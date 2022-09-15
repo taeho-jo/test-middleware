@@ -22,7 +22,7 @@ import { ReducerType } from '../../../store/reducers';
 import { useRouter } from 'next/router';
 import { useQuery, useQueryClient } from 'react-query';
 import { fetchTeamListApi, fetchTeamReportListApi } from '../../../api/teamApi';
-import { updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
+import { getProductList, updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { updateProjectName } from '../../../store/reducers/reportReducer';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
@@ -38,6 +38,7 @@ import IconButton from '../../atoms/Button/IconButton';
 import IconTextButton from '../../atoms/Button/IconTextButton';
 import { fetchGetResearchListApi } from '../../../api/researchApi';
 import { fetchResearchList } from '../../../store/reducers/researchCreateReducer';
+import { getRefreshToken } from '../../../store/reducers/authReducer';
 
 const ResearchType = [
   {
@@ -124,10 +125,10 @@ const TeamDashboard = () => {
   const { data: teamListData, isLoading } = useQuery(['fetchTeamList'], fetchTeamListApi, {
     onError: (e: any) => {
       const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        queryClient.invalidateQueries(['fetchTeamList']);
-      }
+      // if (errorData.code === 'E0008') {
+      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+      //   queryClient.invalidateQueries(['fetchTeamList']);
+      // }
       if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');
@@ -138,10 +139,10 @@ const TeamDashboard = () => {
     enabled: !!teamListData,
     onError: (e: any) => {
       const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        refetch();
-      }
+      // if (errorData.code === 'E0008') {
+      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+      //   refetch();
+      // }
       if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');
@@ -204,8 +205,8 @@ const TeamDashboard = () => {
     }
   }, [teamListData, selectTeamList, selectTeamSeq]);
 
-  const aabb = () => {
-    dispatch(increment());
+  const testApi = () => {
+    dispatch(getRefreshToken());
   };
 
   return (
@@ -235,6 +236,7 @@ const TeamDashboard = () => {
         <FlexBox style={{ padding: '24px 32px 32px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
           <FlexBox direction={'row'} justify={'flex-start'} align={'center'} style={{ marginBottom: '32px' }}>
             <span css={[body2_bold, titleStyle, { width: '73px', marginBottom: 0, marginRight: '16px' }]}>모든 리서치</span>
+            <button onClick={testApi}>asdfasdf</button>
             <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ width: '249px', boxSizing: 'border-box', position: 'relative' }}>
               <Input
                 title={''}

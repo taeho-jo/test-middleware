@@ -68,10 +68,10 @@ const Report = ({ params }) => {
     {
       onError: (e: any) => {
         const errorData = e.response?.data;
-        if (errorData?.code === 'E0008') {
-          queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-          queryClient.invalidateQueries(['fetchReportDetail', id]);
-        }
+        // if (errorData?.code === 'E0008') {
+        //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        //   queryClient.invalidateQueries(['fetchReportDetail', id]);
+        // }
         if (errorData?.code === 'E0007' || errorData?.code === 'E0002') {
           clearLocalStorage();
           router.push('/');

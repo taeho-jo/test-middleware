@@ -60,11 +60,11 @@ const TeamNameModifyModal = ({ first = false }: PropsType) => {
   const { mutate, data: updateData } = useMutation(['fetchUpdateTeam'], fetchUpdateTeamApi, {
     onError: (e: any) => {
       const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        queryClient.invalidateQueries(['fetchUpdateTeam']);
-        mutate([selectTeamSeq, sendObject]);
-      }
+      // if (errorData.code === 'E0008') {
+      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+      //   queryClient.invalidateQueries(['fetchUpdateTeam']);
+      //   mutate([selectTeamSeq, sendObject]);
+      // }
       if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');

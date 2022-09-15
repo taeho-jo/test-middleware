@@ -27,11 +27,12 @@ const ConfirmResetPasswordModal = () => {
   const { mutate, data, isLoading } = useMutation(['fetchResetPassword'], fetchResetPasswordEmailApi, {
     onError: (e: any) => {
       const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        mutate(sendObject);
-        queryClient.invalidateQueries();
-      } else if (errorData.code === 'E0007') {
+      // if (errorData.code === 'E0008') {
+      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+      //   mutate(sendObject);
+      //   queryClient.invalidateQueries();
+      // } else
+      if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');
       } else {

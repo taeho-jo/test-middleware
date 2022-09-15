@@ -11,8 +11,10 @@ import TextArea from '../../atoms/TextArea';
 import ToggleHeader from '../../atoms/ToggleHeader';
 import Icon from '../../atoms/Icon';
 import IconTextButton from '../../atoms/Button/IconTextButton';
-
-const CreateResearchStepTwo = () => {
+interface PropsType {
+  detailInfo: any;
+}
+const CreateResearchStepTwo = ({ detailInfo }: PropsType) => {
   const methodsType = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
 
   // hook saasaform

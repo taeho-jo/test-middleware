@@ -14,13 +14,14 @@ interface initialStateType {
   };
   researchModifyInfo: {
     researchSeq: string;
+    researchNm: string;
     researchType: string;
     teamSeq: string;
     productSeq: string;
-    panelInfo: { panel: string }[];
-    decisionInfo: { decision: string }[];
-    detailInfo: any | { mission: string }[] | { agenda: string }[] | { hypothesis: string; hypothesisReason: string }[];
-    additionalInfo: { additional: string }[];
+    panelInfo: { panel: string }[] | null;
+    decisionInfo: { decision: string }[] | null;
+    detailInfo: { mission: string }[] | { agenda: string }[] | { hypothesis: string; hypothesisReason: string }[] | null;
+    additionalInfo: { additional: string }[] | null;
     statusType: string;
   };
   researchStepOneData: any;
@@ -39,7 +40,18 @@ const initialState: initialStateType = {
     teamSeq: null,
     productSeq: null,
   },
-  researchModifyInfo: null,
+  researchModifyInfo: {
+    researchSeq: '',
+    researchNm: '',
+    researchType: '',
+    teamSeq: '',
+    productSeq: '',
+    panelInfo: [],
+    decisionInfo: [],
+    detailInfo: [],
+    additionalInfo: [],
+    statusType: '',
+  },
   researchStepOneData: null,
   error: null,
 };
@@ -70,12 +82,25 @@ export const researchCreateSlice = createSlice({
     updateResearchBasicInfo: (state, action) => {
       state.researchBasicInfo = { ...state.researchBasicInfo, [action.payload.name]: action.payload.value };
     },
+    // 리서치 수정 정보 업데이트
+    updateResearchModifyInfo: (state, action) => {
+      state.researchModifyInfo = { ...state.researchModifyInfo, [action.payload.name]: action.payload.value };
+    },
+    // 리서치 최초 생성
     fetchResearchBasicInfo: (state, action: PayloadAction<any>) => {
       return state;
     },
     fetchResearchBasicInfoSuccess: (state, action: PayloadAction<any>) => {
       state.researchStepOneData = action.payload;
     },
+    // 리서치 추가 정보 입력 및 수정
+    fetchResearchModifyInfo: (state, action: PayloadAction<any>) => {
+      return state;
+    },
+    fetchResearchModifyInfoSuccess: (state, action: PayloadAction<any>) => {
+      state.detailData = action.payload;
+    },
+
     // RESET
     resetCreateResearchData: state => {
       state.step = 'step1';
@@ -87,6 +112,18 @@ export const researchCreateSlice = createSlice({
         researchType: '',
         teamSeq: null,
         productSeq: null,
+      };
+      state.researchModifyInfo = {
+        researchSeq: '',
+        researchNm: '',
+        researchType: '',
+        teamSeq: '',
+        productSeq: '',
+        panelInfo: null,
+        decisionInfo: null,
+        detailInfo: null,
+        additionalInfo: null,
+        statusType: '',
       };
     },
     // 에러 처리
@@ -103,8 +140,11 @@ export const {
   fetchResearchDetail,
   fetchResearchDetailSuccess,
   updateResearchBasicInfo,
+  updateResearchModifyInfo,
   fetchResearchBasicInfo,
   fetchResearchBasicInfoSuccess,
+  fetchResearchModifyInfo,
+  fetchResearchModifyInfoSuccess,
   getResearchApiError,
   resetCreateResearchData,
 } = researchCreateSlice.actions;

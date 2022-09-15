@@ -108,6 +108,13 @@ export const userSlice = createSlice({
     updateWithdrawalUserInfo: (state, action) => {
       state.withdrawalUserInfo = action.payload;
     },
+    // Saga Redux
+    getUserInfo: state => {
+      return state;
+    },
+    getUserInfoSuccess: (state, action: PayloadAction<any>) => {
+      state.userInfo = action.payload;
+    },
   },
 });
 
@@ -119,5 +126,8 @@ export const {
   updateCancelWithdrawal,
   updateErrorMessage,
   updateWithdrawalUserInfo,
+  // Saga Redux
+  getUserInfo,
+  getUserInfoSuccess,
 } = userSlice.actions;
 export default userSlice.reducer;

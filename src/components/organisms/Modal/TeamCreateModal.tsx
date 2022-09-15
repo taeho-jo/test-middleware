@@ -60,11 +60,12 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
   const { mutate, data: createTeamData } = useMutation('fetchCreateTeam', fetchCreateTeamApi, {
     onError: (e: any) => {
       const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        mutate(sendObject);
-        queryClient.invalidateQueries(['fetchRefreshToken']);
-      } else if (errorData.code === 'E0007') {
+      // if (errorData.code === 'E0008') {
+      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+      //   mutate(sendObject);
+      //   queryClient.invalidateQueries(['fetchRefreshToken']);
+      // } else
+      if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');
       } else {
@@ -81,10 +82,10 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
     enabled: !!createTeamData,
     onError: (e: any) => {
       const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        queryClient.invalidateQueries(['fetchTeamList']);
-      }
+      // if (errorData.code === 'E0008') {
+      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+      //   queryClient.invalidateQueries(['fetchTeamList']);
+      // }
       if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');
