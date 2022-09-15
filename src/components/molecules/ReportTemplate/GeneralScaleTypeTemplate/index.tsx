@@ -56,7 +56,8 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
             }),
           [],
         )
-        .sort((a, b) => a.name - b.name);
+        .sort((a, b) => a.name - b.name)
+        .filter(el => el.name !== 'null');
 
       const rawDataArr = reMakeArr.map(el => el.multipleAnswerData).flat();
       const total = reMakeArr?.reduce((acc, cur) => {
@@ -70,30 +71,6 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
 
   return (
     <>
-      {/*<FlexBox style={headerBosStyle} justify={'space-between'}>*/}
-      {/*  <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>*/}
-      {/*    <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>*/}
-      {/*      {dataList.intent}*/}
-      {/*    </span>*/}
-      {/*    /!*<CheckBox inputName={'privacyConsentYn'} label={'미션에 실패한 응답자의 피드백만 보기'} register={register} errors={errors} />*!/*/}
-      {/*  </FlexBox>*/}
-      {/*  <FlexBox justify={'flex-end'} width={'30%'}>*/}
-      {/*    <IconTextButton*/}
-      {/*      style={{ marginRight: '8px' }}*/}
-      {/*      textStyle={'custom'}*/}
-      {/*      onClick={() => modalControl(true, 'originDataModal', { title: `${dataList.name}`, data: rawData })}*/}
-      {/*      name={'NAVIGATION_CHEVRON_RIGHT'}*/}
-      {/*      text={'원본 데이터 확인하기'}*/}
-      {/*    />*/}
-      {/*    <IconTextButton*/}
-      {/*      onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [dataList?.comment] })}*/}
-      {/*      textStyle={'custom'}*/}
-      {/*      name={'NAVIGATION_CHEVRON_RIGHT'}*/}
-      {/*      text={'리서치 코멘트 확인하기'}*/}
-      {/*    />*/}
-      {/*  </FlexBox>*/}
-      {/*</FlexBox>*/}
-
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
         <FlexBox style={graphAreaStyle} direction={'column'}>
           <div css={{ padding: '20px 0 12px 0', borderBottom: `1px solid ${colors.grey._3c}` }}>
@@ -101,8 +78,22 @@ const GeneralScaleTypeTemplate = ({ dataList, modalControl }) => {
           </div>
 
           <FlexBox direction={'column'} justify={'space-between'} align={'flex-start'} style={graphContainerStyle}>
-            <FlexBox direction={'column'} style={{ border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 0', marginBottom: '36px' }}>
-              <span css={[heading5_regular, { color: colors.grey._99, marginBottom: rawData?.length > 0 ? '12px' : '0px' }]}>Q. {dataList.name}</span>
+            <FlexBox direction={'column'} style={{ border: '1px solid #dcdcdc', borderRadius: '8px', padding: '24px 32px', marginBottom: '36px' }}>
+              <span
+                css={[
+                  heading5_regular,
+                  {
+                    color: colors.grey._99,
+                    marginBottom: '12px',
+                    height: 'auto',
+                    wordBreak: 'keep-all',
+                    textAlign: 'center',
+                    whiteSpace: 'pre-wrap',
+                  },
+                ]}
+              >
+                Q. {dataList.name}
+              </span>
               {rawData?.length > 0 && <AnnouncementBox icon={'NOTI'} content={'그래프를 클릭하면 주관식 응답도 함께 확인할 수 있어요.'} />}
             </FlexBox>
 
