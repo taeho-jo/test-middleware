@@ -15,7 +15,7 @@ import TextButton from '../../atoms/Button/TextButton';
 import { useForm } from 'react-hook-form';
 // Styles
 import { colors } from '../../../styles/Common.styles';
-import { body3_medium, caption1_regular } from '../../../styles/FontStyles';
+import { body3_medium, caption1_bold, caption1_regular } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../../../common/types/commonTypes';
 import { ReducerType } from '../../../store/reducers';
@@ -31,6 +31,8 @@ import { clearLocalStorage } from '../../../common/util/commonFunc';
 import TextArea from '../../atoms/TextArea';
 import { createTeamProduct } from '../../../store/reducers/teamReducer';
 import { css } from '@emotion/react';
+import CheckBox from '../../atoms/CheckBox';
+import { updateFilterFail } from '../../../store/reducers/reportReducer';
 
 const TeamProductCreateModal = () => {
   const queryClient = useQueryClient();
@@ -51,41 +53,19 @@ const TeamProductCreateModal = () => {
   const onError = errors => handleProcessingError('fail', errors);
 
   const [sendObject, setSendObject] = useState(null);
-
-  // const { mutate, isLoading } = useMutation(['fetchCreateProduct'], fetchCreateProductApi, {
-  //   onError: (e: any) => {
-  //     const errorData = e.response.data;
-  //     if (errorData.code === 'E0008') {
-  //       queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-  //
-  //       mutate([selectTeamSeq, sendObject]);
-  //
-  //       queryClient.invalidateQueries(['fetchCreateProduct']);
-  //     } else if (errorData.code === 'E0007') {
-  //       clearLocalStorage();
-  //       router.push('/');
-  //     } else {
-  //       dispatch(showToast({ message: errorData.message, isShow: true, status: 'warning', duration: 5000 }));
-  //     }
-  //   },
-  //   onSuccess: data => {
-  //     dispatch(showToast({ message: '프로덕트가 생성되었습니다.', isShow: true, status: 'success', duration: 5000 }));
-  //     queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
-  //     dispatch(isShow({ isShow: false, type: '' }));
-  //   },
-  // });
+  const [categoryArr, setCategoryArr] = useState([]);
 
   const [selected, setSelected] = useState({
-    categoryType: null,
     productType: null,
   });
 
   const handleCreateProduct = useCallback(
     (status, data) => {
+      // console.log(data);
       const sendObject = {
         productNm: data.productNm,
         productType: selected.productType,
-        categoryType: [selected.categoryType],
+        categoryType: categoryArr,
         productIntroduce: data.productIntroduce,
         serviceUrl: data.serviceUrl,
       };
@@ -93,10 +73,8 @@ const TeamProductCreateModal = () => {
       if (selectTeamSeq) {
         dispatch(createTeamProduct({ sendObject: sendObject, teamSeq: selectTeamSeq }));
       }
-
-      // setSendObject(sendObject);
     },
-    [selected, selectTeamSeq],
+    [selected, selectTeamSeq, categoryArr],
   );
 
   const onClickValue = useCallback(
@@ -112,84 +90,136 @@ const TeamProductCreateModal = () => {
     // dispatch(showToast({ message: '가입된 계정이 없습니다. 다시 확인해주세요!', isShow: true, status: 'warning', duration: 5000 }));
   }, []);
 
+  const handleChangeCheckBox = useCallback(
+    value => {
+      if (categoryArr.length === 0) {
+        setCategoryArr([...categoryArr, value]);
+      }
+      if (categoryArr.includes(value)) {
+        const newCategoryArr = categoryArr.filter(el => el !== value);
+        setCategoryArr(newCategoryArr);
+      } else {
+        setCategoryArr([...categoryArr, value]);
+      }
+
+      // setChecked(prev => !prev);
+      // if (checked) {
+      //   dispatch(updateFilterFail(null));
+      // } else {
+      //   dispatch(updateFilterFail('on'));
+      // }
+    },
+    [categoryArr],
+  );
+
   return (
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
-      <PopupBox style={{ position: 'absolute', top: '96px', left: '40%' }} padding={'0px'} width={'392px'} height={'auto'}>
+      <PopupBox
+        style={{ position: 'absolute', top: '96px', left: '50%', transform: 'translate(-50%, 0)' }}
+        padding={'0px'}
+        width={'1116px'}
+        height={'auto'}
+      >
         <ModalTitle title={'프로덕트에 대해 알려주세요.'} />
 
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
-          <Input
-            title={'프로덕트 이름'}
-            register={register}
-            label={'productNm'}
-            errors={errors}
-            errorMsg={'프로덕트 이름을 입력해주세요.'}
-            placeholder={`프로덕트 이름을 입력해주세요.`}
-            // style={{ marginBottom: '16px' }}
-            registerOptions={{
-              required: true,
-            }}
-          />
+          <FlexBox style={{ width: '100%' }} justify={'space-between'}>
+            <div
+              css={css`
+                width: 400px;
+              `}
+            >
+              <Input
+                title={'프로덕트 이름'}
+                register={register}
+                label={'productNm'}
+                errors={errors}
+                errorMsg={'프로덕트 이름을 입력해주세요.'}
+                placeholder={`프로덕트 이름을 입력해주세요.`}
+                registerOptions={{
+                  required: true,
+                }}
+              />
 
-          <Select
-            title={'서비스 카테고리'}
-            options={commonCode?.ProductType}
-            // value={selected.funnelsCd}
-            selected={selected}
-            setSelected={setSelected}
-            name="productType"
-            onClick={onClickValue}
-            registerOptions={{
-              required: true,
-            }}
-          />
+              <Select
+                title={'서비스 카테고리'}
+                options={commonCode?.ProductType}
+                selected={selected}
+                setSelected={setSelected}
+                name="productType"
+                onClick={onClickValue}
+                registerOptions={{
+                  required: true,
+                }}
+              />
 
-          <div
-            css={css`
-              margin-top: 16px;
-            `}
-          >
-            <TextArea
-              title={'프로덕트 소개 (선택)'}
-              register={register}
-              label={'productIntroduce'}
-              errors={errors}
-              errorMsg={'프로덕트 소개를 입력해주세요.'}
-              placeholder={'프로덕트 소개를 입력해주세요.'}
-              // titleStyle={{ marginTop: '20px' }}
-            />
-          </div>
+              <div
+                css={css`
+                  margin-top: 16px;
+                `}
+              >
+                <TextArea
+                  title={'프로덕트 소개 (선택)'}
+                  register={register}
+                  label={'productIntroduce'}
+                  errors={errors}
+                  errorMsg={'프로덕트 소개를 입력해주세요.'}
+                  placeholder={'프로덕트 소개를 입력해주세요.'}
+                  style={css`
+                    height: 142px;
+                  `}
+                />
+              </div>
 
-          <div
-            css={css`
-              margin-top: 10px;
-            `}
-          >
-            <Input
-              title={'서비스 접속 경로 URL (선택)'}
-              register={register}
-              label={'serviceUrl'}
-              errors={errors}
-              errorMsg={'서비스 접속 경로 URL을 입력해주세요.'}
-              placeholder={`서비스 접속 경로 URL을 입력해주세요.`}
-              // style={{ marginBottom: '16px' }}
-            />
-          </div>
-          <Select
-            title={'카테고리 (선택)'}
-            options={commonCode?.CategoryType}
-            // value={selected.funnelsCd}
-            selected={selected}
-            setSelected={setSelected}
-            name="categoryType"
-            onClick={onClickValue}
-          />
+              <div
+                css={css`
+                  margin-top: 10px;
+                `}
+              >
+                <Input
+                  title={'서비스 접속 경로 URL (선택)'}
+                  register={register}
+                  label={'serviceUrl'}
+                  errors={errors}
+                  errorMsg={'서비스 접속 경로 URL을 입력해주세요.'}
+                  placeholder={`서비스 접속 경로 URL을 입력해주세요.`}
+                />
+              </div>
+            </div>
+
+            <div
+              css={css`
+                width: 558px;
+              `}
+            >
+              <label css={[caption1_bold, labelTextStyle]}>카테고리 *중복 선택 가능 (선택)</label>
+              <div css={categorySelectBox}>
+                {commonCode?.CategoryType?.map((el, index) => {
+                  return (
+                    <div
+                      key={index}
+                      css={css`
+                        width: 174px;
+                        padding: 8px;
+                      `}
+                    >
+                      <CheckBox
+                        handleChangeCheckBox={() => handleChangeCheckBox(el.value)}
+                        checked={categoryArr.find(el => el.value)}
+                        inputName={el.value}
+                        label={el.displayName}
+                        register={register}
+                        errors={errors}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </FlexBox>
+
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
             <BasicButton theme={'dark'} type={'submit'} text={'정보 저장하기'} />
-            {/*<FlexBox justify={'center'} align={'center'} style={{ marginTop: '22px' }}>*/}
-            {/*  <span css={[caption1_regular, { color: colors.red }]}>프로덕트 삭제하기</span>*/}
-            {/*  <Icon name={'NAVIGATION_CLOSE_SM'} iconColor={colors.red} />*/}
-            {/*</FlexBox>*/}
           </FlexBox>
         </Form>
       </PopupBox>
@@ -198,3 +228,18 @@ const TeamProductCreateModal = () => {
 };
 
 export default TeamProductCreateModal;
+
+const categorySelectBox = css`
+  width: 100%;
+  height: 392px;
+  border: 1px solid ${colors.grey._3c};
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-wrap: wrap;
+`;
+const labelTextStyle = css`
+  margin-bottom: 8px;
+  color: #999999;
+  display: inline-block;
+`;

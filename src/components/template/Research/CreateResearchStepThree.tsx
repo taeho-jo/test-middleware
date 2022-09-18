@@ -5,20 +5,29 @@ import { heading3_bold } from '../../../styles/FontStyles';
 import { colors } from '../../../styles/Common.styles';
 import Form from '../../atoms/Form';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import TextArea from '../../atoms/TextArea';
 import ToggleHeader from '../../atoms/ToggleHeader';
 import Icon from '../../atoms/Icon';
 import IconTextButton from '../../atoms/Button/IconTextButton';
-
-const CreateResearchStepThree = () => {
+import { updateResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
+interface PropsType {
+  detailInfo: any;
+  getResearchMethod?: (value) => void;
+  register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
+  // handleSubmit: any;
+  // reset: any;
+  // watch: any;
+  // errors: any;
+}
+const CreateResearchStepThree = ({ detailInfo, getResearchMethod, register }: PropsType) => {
+  const dispatch = useDispatch();
   const methodsType = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
 
   // hook saasaform
   const {
     control,
-    register,
     handleSubmit,
     getValues,
     setValue,
@@ -27,23 +36,18 @@ const CreateResearchStepThree = () => {
   } = useForm({});
   const { fields, append, insert, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
-    name: 'decision', // unique name for your Field Array
+    name: 'decisionInfo', // unique name for your Field Array
     // keyName: 'screening_additional_id', //default to "id", you can change the key name
   });
 
   const [openField, setOpenField] = useState(null);
 
   const handleAppendPanel = () => {
-    append({ value: '' });
+    append({ decision: '' });
   };
   const handleRemovePanel = (index: number) => {
     remove(index);
   };
-
-  useEffect(() => {
-    setValue('decision', [{ value: '' }]);
-    // setPanelArr([...panelArr, data]);
-  }, []);
 
   // TODO: 리팩토링 해야함
   const handleToggleField = name => {
@@ -81,6 +85,15 @@ const CreateResearchStepThree = () => {
     }
   };
 
+  useEffect(() => {
+    if (!detailInfo?.decisionInfo || detailInfo?.decisionInfo?.length === 0) {
+      setValue('decisionInfo', [{ decision: '' }]);
+    } else {
+      dispatch(updateResearchModifyInfo({ name: 'decisionInfo', value: detailInfo?.decisionInfo }));
+      setValue('decisionInfo', detailInfo?.decisionInfo);
+    }
+  }, [detailInfo]);
+
   const onSubmit = data => console.log('success', data);
   const onError = errors => console.log('fail', errors);
   return (
@@ -89,10 +102,10 @@ const CreateResearchStepThree = () => {
         {/*<button onClick={checkField}>asdfas</button>*/}
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ boxSizing: 'border-box' }}>
           {fields?.length > 0 &&
-            fields?.map((item, index) => {
+            fields?.map((item: any, index: number) => {
               return (
                 <div
-                  key={index}
+                  key={item.id}
                   css={css`
                     margin-bottom: 50px;
                   `}
@@ -108,9 +121,10 @@ const CreateResearchStepThree = () => {
                       <TextArea
                         // title={'이메일'}
                         register={register}
-                        label={`decision${index}`}
+                        label={`decisionInfo[${index}].decision`}
                         errors={errors}
                         errorMsg={'텍스트를 입력해주세요.'}
+                        defaultValue={item.decision}
                         placeholder={'텍스트를 입력해주세요.'}
                         registerOptions={{
                           required: true,

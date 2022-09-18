@@ -86,6 +86,9 @@ export const researchCreateSlice = createSlice({
     updateResearchModifyInfo: (state, action) => {
       state.researchModifyInfo = { ...state.researchModifyInfo, [action.payload.name]: action.payload.value };
     },
+    updateResearchModifyArrayInfo: (state, action) => {
+      state.researchModifyInfo = { ...state.researchModifyInfo, [action.payload.name]: [state.researchModifyInfo.panelInfo, action.payload.value] };
+    },
     // 리서치 최초 생성
     fetchResearchBasicInfo: (state, action: PayloadAction<any>) => {
       return state;
@@ -141,6 +144,7 @@ export const {
   fetchResearchDetailSuccess,
   updateResearchBasicInfo,
   updateResearchModifyInfo,
+  updateResearchModifyArrayInfo,
   fetchResearchBasicInfo,
   fetchResearchBasicInfoSuccess,
   fetchResearchModifyInfo,

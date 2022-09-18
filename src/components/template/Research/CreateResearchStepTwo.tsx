@@ -5,32 +5,40 @@ import { heading3_bold } from '../../../styles/FontStyles';
 import { colors } from '../../../styles/Common.styles';
 import Form from '../../atoms/Form';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import TextArea from '../../atoms/TextArea';
 import ToggleHeader from '../../atoms/ToggleHeader';
 import Icon from '../../atoms/Icon';
 import IconTextButton from '../../atoms/Button/IconTextButton';
+import { updateResearchModifyArrayInfo, updateResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
+import { forEach } from 'lodash';
 interface PropsType {
   detailInfo: any;
+  getResearchMethod?: (value) => void;
+  register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
+  // handleSubmit: any;
+  // reset: any;
+  // watch: any;
+  // errors: any;
 }
-const CreateResearchStepTwo = ({ detailInfo }: PropsType) => {
+const CreateResearchStepTwo = ({ detailInfo, getResearchMethod, register }: PropsType) => {
   const methodsType = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
-
+  const dispatch = useDispatch();
   // hook saasaform
   const {
     control,
-    register,
+    // register,
     handleSubmit,
     getValues,
     setValue,
+    watch,
     reset,
     formState: { errors },
   } = useForm({});
   const { fields, append, insert, remove } = useFieldArray({
-    control, // control props comes from useForm (optional: if you are using FormContext)
-    name: 'panel', // unique name for your Field Array
-    // keyName: 'screening_additional_id', //default to "id", you can change the key name
+    control,
+    name: 'panelInfo',
   });
 
   const [openField, setOpenField] = useState(null);
@@ -41,11 +49,6 @@ const CreateResearchStepTwo = ({ detailInfo }: PropsType) => {
   const handleRemovePanel = (index: number) => {
     remove(index);
   };
-
-  useEffect(() => {
-    setValue('panel', [{ value: '' }]);
-    // setPanelArr([...panelArr, data]);
-  }, []);
 
   // TODO: 리팩토링 해야함
   const handleToggleField = name => {
@@ -82,19 +85,27 @@ const CreateResearchStepTwo = ({ detailInfo }: PropsType) => {
       }
     }
   };
+  useEffect(() => {
+    if (!detailInfo?.panelInfo || detailInfo?.panelInfo?.length === 0) {
+      setValue('panelInfo', [{ panel: '' }]);
+    } else {
+      dispatch(updateResearchModifyInfo({ name: 'panelInfo', value: detailInfo?.panelInfo }));
+      setValue('panelInfo', detailInfo?.panelInfo);
+    }
+  }, [detailInfo]);
 
   const onSubmit = data => console.log('success', data);
   const onError = errors => console.log('fail', errors);
+
   return (
     <>
       <FlexBox align={'flex-start'} width={'100%'} height={'444px'} style={selectContainer}>
-        {/*<button onClick={checkField}>asdfas</button>*/}
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ boxSizing: 'border-box' }}>
           {fields?.length > 0 &&
-            fields?.map((item, index) => {
+            fields?.map((item: any, index: number) => {
               return (
                 <div
-                  key={index}
+                  key={item.id}
                   css={css`
                     margin-bottom: 50px;
                   `}
@@ -107,9 +118,10 @@ const CreateResearchStepTwo = ({ detailInfo }: PropsType) => {
                       <TextArea
                         // title={'이메일'}
                         register={register}
-                        label={`panel${index}`}
+                        label={`panelInfo[${index}].panel`}
                         errors={errors}
                         errorMsg={'이메일을 입력해주세요.'}
+                        defaultValue={item?.panel}
                         placeholder={'ex. 20대, 여성, SNS 사용자, 25명'}
                         registerOptions={{
                           required: true,
@@ -120,7 +132,7 @@ const CreateResearchStepTwo = ({ detailInfo }: PropsType) => {
                           onClick={() => handleRemovePanel(index)}
                           text={'삭제하기'}
                           textStyle={{ color: colors.red }}
-                          iconColor={colors.red}
+                          // iconColor={colors.red}
                           roundBorder={false}
                           name={'NAVIGATION_CLOSE_SM'}
                           iconPosition={'left'}

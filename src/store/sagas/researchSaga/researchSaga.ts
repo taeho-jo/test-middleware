@@ -17,6 +17,8 @@ import {
   fetchGetResearchListApi,
   fetchModifyTeamResearchApi,
 } from '../../../api/researchApi';
+import { isShow } from '../../reducers/modalReducer';
+import { showToast } from '../../reducers/toastReducer';
 
 // 팀 리서치 목록 조회 saga
 function* fetchResearchListSaga(action) {
@@ -49,10 +51,8 @@ function* fetchGetResearchDetailInfo(action) {
 // 팀 리서치 생성 saga
 function* fetchCreateTeamResearchSaga(action) {
   try {
-    console.log(action, '!!!!!!!!!!ACTION');
     const { params, step, callback } = action.payload;
     const result = yield call(fetchCreateTeamResearchApi, params);
-    console.log(result);
     yield put(setStep(step));
     yield put(fetchResearchBasicInfoSuccess(result));
     callback.push(`/admin/research/${result.data.researchSeq}`);
@@ -66,9 +66,16 @@ function* fetchCreateTeamResearchSaga(action) {
 function* fetchModifyResearchSaga(action) {
   try {
     const result = yield call(fetchModifyTeamResearchApi, action.payload.sendObject);
-    console.log(result);
-    yield put(setStep(action.payload.step));
+    if (action.payload.step !== 'last') {
+      yield put(setStep(action.payload.step));
+    }
+
     yield put(fetchResearchModifyInfoSuccess(result.data));
+    if (action.payload.step === 'last') {
+      yield put(isShow({ isShow: true, type: 'researchStatusChangeModal' }));
+      action.payload.callback.push(`/admin/team`);
+      yield put(showToast({ message: '리서치 설계요청이 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+    }
   } catch (e) {
     console.error(e);
     yield put(getResearchApiError(e));

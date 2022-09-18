@@ -36,6 +36,7 @@ import WithdrawalReasonModal from '../Modal/WithdrawalReasonModal';
 import CancelWithdrawalModal from '../Modal/CancelWithdrawalModal';
 import WithdrawalUserSignupModal from '../Modal/WithdrawalUserSignupModal';
 import ConsentToUseMarketingAgreeModal from '../Modal/ConsentToUseMarketingAgreeModal';
+import ResearchStatusChangeModal from '../Modal/ResearchStatusChangeModal';
 
 const CommonModal = () => {
   const show = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -79,6 +80,7 @@ const CommonModal = () => {
           {modalType === 'withdrawalReasonModal' && <WithdrawalReasonModal />}
           {modalType === 'cancelWithdrawalModal' && <CancelWithdrawalModal />}
           {modalType === 'withdrawalUserSignupModal' && <WithdrawalUserSignupModal />}
+          {modalType === 'researchStatusChangeModal' && <ResearchStatusChangeModal />}
         </Modal>
       ) : null}
     </>

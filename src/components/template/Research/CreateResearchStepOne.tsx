@@ -7,30 +7,31 @@ import { useForm } from 'react-hook-form';
 import Input from '../../atoms/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
-import { getProductList } from '../../../store/reducers/teamReducer';
+// import { getProductList } from '../../../store/reducers/teamReducer';
 import { updateResearchBasicInfo, updateResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
 import { isShow } from '../../../store/reducers/modalReducer';
+import { getProductList } from '../../../store/reducers/teamReducer';
+import { useRouter } from 'next/router';
 
 interface PropsType {
   detailInfo?: any;
   setGuideStatus?: (status) => void;
   getResearchMethod?: (value) => void;
+  register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
+  handleSubmit: any;
+  reset: any;
+  errors: any;
 }
-const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod }: PropsType) => {
+const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, register, handleSubmit, reset, errors }: PropsType) => {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const pageId = router.query.id;
   const methodsType = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
   const productList = useSelector<ReducerType, any>(state => state.team.teamProductList.list);
   const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
 
   // hook saasaform
-  const {
-    register,
-    handleSubmit,
-    reset,
-    getValues,
-    watch,
-    formState: { errors },
-  } = useForm({});
+  const { watch, setValue } = useForm({});
 
   const [selected, setSelected] = useState<any>({
     method: '',
@@ -52,7 +53,11 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod }
           [label]: value,
         });
         const name = label === 'method' ? 'researchType' : label === 'team' ? 'teamSeq' : 'productSeq';
-        dispatch(updateResearchBasicInfo({ name: name, value: String(value) }));
+        if (pageId === 'create') {
+          dispatch(updateResearchBasicInfo({ name: name, value: String(value) }));
+        } else {
+          dispatch(updateResearchModifyInfo({ name: name, value: String(value) }));
+        }
       }
     },
     [selected],
@@ -93,34 +98,31 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod }
   }, [productList]);
 
   useEffect(() => {
-    dispatch(updateResearchBasicInfo({ name: 'researchNm', value: watch('researchName') }));
-  }, [watch('researchName')]);
-
-  useEffect(() => {
     if (selected?.team && selected?.team !== 'add') {
       const teamSeq = selected?.team;
-      dispatch(getProductList({ teamSeq: teamSeq }));
+      dispatch(getProductList({ teamSeq: String(teamSeq) }));
     }
   }, [selected]);
 
+  // 상세 접속 시 기본값 세팅
   useEffect(() => {
     if (detailInfo) {
       reset({
         researchName: detailInfo?.researchNm,
         method: detailInfo?.researchType,
-        team: '6',
-        product: '1',
+        team: detailInfo?.teamSeq,
+        product: detailInfo?.productSeq,
       });
       setSelected({
         method: detailInfo?.researchType,
-        team: 6,
-        product: 1,
+        team: detailInfo?.teamSeq,
+        product: detailInfo?.productSeq,
       });
       dispatch(updateResearchModifyInfo({ name: 'researchNm', value: detailInfo?.researchNm }));
       dispatch(updateResearchModifyInfo({ name: 'researchSeq', value: String(detailInfo?.researchSeq) }));
       dispatch(updateResearchModifyInfo({ name: 'researchType', value: detailInfo?.researchType }));
-      dispatch(updateResearchModifyInfo({ name: 'teamSeq', value: '6' }));
-      dispatch(updateResearchModifyInfo({ name: 'productSeq', value: '1' }));
+      dispatch(updateResearchModifyInfo({ name: 'teamSeq', value: detailInfo?.teamSeq }));
+      dispatch(updateResearchModifyInfo({ name: 'productSeq', value: detailInfo?.productSeq }));
       dispatch(updateResearchModifyInfo({ name: 'statusType', value: detailInfo?.statusType }));
     }
   }, [detailInfo]);

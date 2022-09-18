@@ -13,35 +13,6 @@ interface PropsType {
 }
 
 const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
-  // researchSeq
-  // researchNm
-  // researchType
-  // researchTypeNm
-  // panelInfo
-  // decisionInfo
-  // detailInfo
-  // additionalInfo
-  // managerId
-  // managerNm
-  // basicAmount
-  // panelCompensationInfo
-  // panelSampleCost
-  // additionalCosts
-  // totalAdditionalCosts
-  // vat
-  // communicationUrl
-  // memo
-  // startStatus
-  // statusType
-  // statusTypeNm
-  // questionFilePath
-  // questionFileNm
-  // startDt
-  // endDt
-  // teamSeq
-  // productSeq
-  // createDt
-
   const router = useRouter();
   const getReportList = useCallback(() => {
     if (listData === null || listData.length === 0) {
@@ -58,8 +29,9 @@ const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
               onClick={handleMoveDetail}
               reportViewId={el.reportViewId}
               statusType={el.statusType}
+              statusTypeNm={el.statusTypeNm}
               reportSeq={el.researchSeq}
-              moduleType={el.researchType}
+              researchTypeNm={el.researchTypeNm}
               projectNm={el.researchNm}
               createDt={el.createDt}
             />

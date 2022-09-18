@@ -22,23 +22,16 @@ import { ReducerType } from '../../../store/reducers';
 import { useRouter } from 'next/router';
 import { useQuery, useQueryClient } from 'react-query';
 import { fetchTeamListApi, fetchTeamReportListApi } from '../../../api/teamApi';
-import { getProductList, updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
-import { fetchRefreshToken } from '../../../api/authApi';
+import { updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import { updateProjectName } from '../../../store/reducers/reportReducer';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
-import { increment } from '../../../store/reducers/counterReducer';
-import Select from '../../atoms/Select';
 import Form from '../../atoms/Form';
 import Input from '../../atoms/Input';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
 import Icon from '../../atoms/Icon';
-import Button from '../../atoms/Button';
-import IconButton from '../../atoms/Button/IconButton';
 import IconTextButton from '../../atoms/Button/IconTextButton';
-import { fetchGetResearchListApi } from '../../../api/researchApi';
 import { fetchResearchList } from '../../../store/reducers/researchCreateReducer';
-import { getRefreshToken } from '../../../store/reducers/authReducer';
 
 const ResearchType = [
   {
@@ -205,10 +198,6 @@ const TeamDashboard = () => {
     }
   }, [teamListData, selectTeamList, selectTeamSeq]);
 
-  const testApi = () => {
-    dispatch(getRefreshToken());
-  };
-
   return (
     <>
       <div css={teamMainContainer}>
@@ -236,7 +225,6 @@ const TeamDashboard = () => {
         <FlexBox style={{ padding: '24px 32px 32px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
           <FlexBox direction={'row'} justify={'flex-start'} align={'center'} style={{ marginBottom: '32px' }}>
             <span css={[body2_bold, titleStyle, { width: '73px', marginBottom: 0, marginRight: '16px' }]}>모든 리서치</span>
-            <button onClick={testApi}>asdfasdf</button>
             <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ width: '249px', boxSizing: 'border-box', position: 'relative' }}>
               <Input
                 title={''}

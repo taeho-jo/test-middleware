@@ -73,7 +73,8 @@ export type IconType =
   | 'MORE_HORIZON'
   | 'ACTION_FILTER'
   | 'CHEVRON_RIGHT_THIN'
-  | 'CHEVRON_LEFT_THIN';
+  | 'CHEVRON_LEFT_THIN'
+  | 'ACTION_FILTER';
 
 export interface InputType {
   label: string;

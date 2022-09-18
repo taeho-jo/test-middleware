@@ -22,6 +22,7 @@ interface PropsType {
   start?: string;
   size?: number;
   btnTextColor?: string;
+  [key: string]: any;
 }
 
 const Button = ({
@@ -37,11 +38,12 @@ const Button = ({
   start = '',
   size,
   btnTextColor,
+  ...props
 }: PropsType) => {
   return (
     <>
       {buttonType === 'basic' ? (
-        <button type={type} onClick={onClick} css={buttonStyle(backgroundColor, full, padding)}>
+        <button type={type} onClick={onClick} css={buttonStyle(backgroundColor, full, padding)} {...props}>
           <div css={isLoading ? loadingStyle : ''}>
             <ClipLoader color={'white'} loading={isLoading} size={16} />
           </div>

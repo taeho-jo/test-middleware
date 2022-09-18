@@ -1,5 +1,5 @@
 // 팀 리서치 최초 생성
-import { AXIOS_GET, AXIOS_PATCH, AXIOS_POST } from '../../hooks/useAxios';
+import { AXIOS_GET, AXIOS_PATCH, AXIOS_POST, AXIOS_PUT } from '../../hooks/useAxios';
 
 // 리서치 목록 조회 api
 export const fetchGetResearchListApi = async params => {
@@ -20,5 +20,5 @@ export const fetchCreateTeamResearchApi = async sendObject => {
 
 // 리서치 수정 api
 export const fetchModifyTeamResearchApi = async sendObject => {
-  return await AXIOS_PATCH(`/team/${sendObject.teamSeq}/research`, sendObject);
+  return await AXIOS_PUT(`/team/${sendObject.teamSeq}/research/${sendObject.researchSeq}`, sendObject);
 };

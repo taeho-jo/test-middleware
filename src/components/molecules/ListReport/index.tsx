@@ -17,15 +17,16 @@ import { useRouter } from 'next/router';
 
 interface PropsType {
   createDt: string;
-  moduleType: string;
+  researchTypeNm: string;
   projectNm: string;
   reportSeq: number;
   reportViewId: string;
   statusType: string;
+  statusTypeNm: string;
   onClick?: (id, name) => void;
 }
 
-const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, statusType, onClick }: PropsType) => {
+const ListReport = ({ createDt, researchTypeNm, projectNm, reportSeq, reportViewId, statusType, statusTypeNm, onClick }: PropsType) => {
   const router = useRouter();
   const STATUS_CODE = useSelector<ReducerType, { key: string; value: string; displayName: string }[]>(
     state => state.common.commonCode.ResearchStatusType,
@@ -47,8 +48,8 @@ const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, 
   }, []);
 
   const getResearchStatus = useCallback(() => {
-    const equalStatus = STATUS_CODE.filter(el => el.value === statusType);
-    return equalStatus[0]?.displayName;
+    const equalStatus = STATUS_CODE?.filter(el => el.value === statusType);
+    return equalStatus?.[0]?.displayName;
   }, [STATUS_CODE, statusType]);
 
   const getResearchStatusIcon = useCallback(() => {
@@ -82,7 +83,7 @@ const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, 
     >
       <FlexBox direction={'row'} justify={'space-between'} align={'center'}>
         <span css={[caption1_bold, blockStyle]}>
-          ({reportSeq}) {changeName(moduleType)}
+          ({reportSeq}) {researchTypeNm}
         </span>
         <Icon name={'ACTION_MORE'} />
       </FlexBox>
@@ -94,7 +95,7 @@ const ListReport = ({ createDt, moduleType, projectNm, reportSeq, reportViewId, 
       <FlexBox style={statusBox} direction={'row'} justify={'flex-start'} align={'center'}>
         {/*TODO: STATUS에 따른 상태 변경*/}
         <Icon name={getResearchStatusIcon()} size={24} />
-        <span css={[body3_bold, { marginLeft: '8px' }]}>{getResearchStatus()}</span>
+        <span css={[body3_bold, { marginLeft: '8px' }]}>{statusTypeNm}</span>
       </FlexBox>
       {statusType === 'RESEARCH_COMPLETED' && (
         <FlexBox>
