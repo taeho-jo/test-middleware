@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from '@redux-saga/core/effects';
+import { call, delay, put, takeEvery } from '@redux-saga/core/effects';
 import { fetchCreateProductApi, fetchDeleteProductAi, fetchProductListApi, fetchUpdateProductApi } from '../../../api/teamApi';
 import {
   createTeamProduct,
@@ -10,6 +10,8 @@ import {
 } from '../../reducers/teamReducer';
 import { showToast } from '../../reducers/toastReducer';
 import { isShow } from '../../reducers/modalReducer';
+import { getRefreshToken } from '../../reducers/authReducer';
+import { getCommonCode } from '../../reducers/commonReducer';
 
 // 팀 프로덕트 조회 saga
 function* getProductListSaga(action) {
@@ -21,6 +23,11 @@ function* getProductListSaga(action) {
   } catch (e: any) {
     console.error(e);
     yield put(getProductListError(e));
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(getProductList({ teamSeq: action.payload.teamSeq }));
+    }
   }
 }
 
@@ -28,8 +35,7 @@ function* getProductListSaga(action) {
 function* createTeamProductSaga(action) {
   try {
     const result = yield call(fetchCreateProductApi, action.payload.sendObject, action.payload.teamSeq);
-    console.log(action);
-    console.log(result);
+
     if (result.code === '200') {
       yield put(showToast({ message: '프로덕트가 생성되었습니다.', isShow: true, status: 'success', duration: 5000 }));
       yield put(isShow({ isShow: false, type: '' }));

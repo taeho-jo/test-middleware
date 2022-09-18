@@ -26,6 +26,7 @@ import { showToast } from '../../store/reducers/toastReducer';
 import { updateFilterFail, updateFilterFlied, updateFilterValues } from '../../store/reducers/reportReducer';
 import team from '../../pages/admin/team';
 import { clearLocalStorage } from '../util/commonFunc';
+import { getRefreshToken } from '../../store/reducers/authReducer';
 
 // Types
 interface PropsType {
@@ -52,32 +53,6 @@ const Layout = ({ children }: PropsType) => {
     dispatch(getCommonCode());
   }, []);
 
-  // const { data: usersInfo, refetch } = useQuery(['fetchUserInfo', 'layout'], () => fetchUserInfoApi(token), {
-  //   enabled: !!token,
-  //
-  //   onError: (e: any) => {
-  //     const errorData = e.response.data;
-  //     // if (errorData.code === 'E0008') {
-  //     //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-  //     //   refetch();
-  //     // } else
-  //     if (errorData.code === 'E0007') {
-  //       clearLocalStorage();
-  //       router.push('/');
-  //     }
-  //   },
-  //   onSuccess: data => {
-  //     dispatch(setUserInfo(data.data));
-  //     if (data.data.emailVerifiedYn === 'N') {
-  //       dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-  //     }
-  //     if (data.data.emailVerifiedYn === 'Y') {
-  //       return;
-  //       // router.push('/admin/team');
-  //     }
-  //   },
-  // });
-
   useEffect(() => {
     if (token) {
       dispatch(getUserInfo());
@@ -100,9 +75,11 @@ const Layout = ({ children }: PropsType) => {
       onError: (e: any) => {
         const errorData = e.response.data;
         // if (errorData.code === 'E0008') {
-        //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        //   refetch();
-        // } else
+        // queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        // dispatch(getRefreshToken())
+        // refetch();
+        // }
+        // else
         if (errorData.code === 'E0007') {
           clearLocalStorage();
           router.push('/');

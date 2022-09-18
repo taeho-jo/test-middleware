@@ -15,6 +15,7 @@ import { fetchRefreshToken } from '../../../api/authApi';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { useRouter } from 'next/router';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { getRefreshToken } from '../../../store/reducers/authReducer';
 
 const ChangeAuthModal = () => {
   const queryClient = useQueryClient();
@@ -27,11 +28,11 @@ const ChangeAuthModal = () => {
   const { mutate } = useMutation(['fetchChangeMemberAuth', teamMemberInfo.userId], () => fetchMemberAuthChangeApi(teamSeq, teamMemberInfo.userId), {
     onError: (e: any) => {
       const errorData = e.response.data;
-      // if (errorData.code === 'E0008') {
-      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-      //   mutate();
-      //   queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
-      // } else
+      if (errorData.code === 'E0008') {
+        dispatch(getRefreshToken());
+        mutate();
+        queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
+      }
       if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');

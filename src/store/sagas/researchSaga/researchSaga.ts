@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from '@redux-saga/core/effects';
+import { call, delay, put, takeEvery } from '@redux-saga/core/effects';
 import {
   fetchResearchBasicInfo,
   fetchResearchBasicInfoSuccess,
@@ -19,18 +19,25 @@ import {
 } from '../../../api/researchApi';
 import { isShow } from '../../reducers/modalReducer';
 import { showToast } from '../../reducers/toastReducer';
+import { getRefreshToken } from '../../reducers/authReducer';
+import { getCommonCode } from '../../reducers/commonReducer';
 
 // 팀 리서치 목록 조회 saga
 function* fetchResearchListSaga(action) {
   try {
     const { params } = action.payload;
-    console.log(action);
+
     const result = yield call(fetchGetResearchListApi, params);
     if (result.code === '200') {
       yield put(fetchResearchListSuccess(result.data.list));
     }
   } catch (e) {
     console.error(e);
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(fetchResearchList({ params: action.payload.params }));
+    }
     yield put(getResearchApiError(e));
   }
 }
@@ -44,6 +51,11 @@ function* fetchGetResearchDetailInfo(action) {
     yield put(fetchResearchDetailSuccess(result.data));
   } catch (e) {
     console.error(e);
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(fetchResearchDetail({ params: action.payload.params }));
+    }
     yield put(getResearchApiError(e));
   }
 }
@@ -58,6 +70,11 @@ function* fetchCreateTeamResearchSaga(action) {
     callback.push(`/admin/research/${result.data.researchSeq}`);
   } catch (e: any) {
     console.error(e);
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(fetchResearchBasicInfo({ params: action.payload.params, step: action.payload.step, callback: action.payload.callback }));
+    }
     yield put(getResearchApiError(e));
   }
 }
@@ -73,11 +90,16 @@ function* fetchModifyResearchSaga(action) {
     yield put(fetchResearchModifyInfoSuccess(result.data));
     if (action.payload.step === 'last') {
       yield put(isShow({ isShow: true, type: 'researchStatusChangeModal' }));
-      action.payload.callback.push(`/admin/team`);
+      action.payload?.callback?.push(`/admin/team`);
       yield put(showToast({ message: '리서치 설계요청이 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }));
     }
   } catch (e) {
     console.error(e);
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(fetchResearchModifyInfo({ sendObject: action.payload.sendObject, step: action.payload.step, callback: action.payload.callback }));
+    }
     yield put(getResearchApiError(e));
   }
 }

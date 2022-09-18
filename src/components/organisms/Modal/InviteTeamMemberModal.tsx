@@ -24,6 +24,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { getRefreshToken } from '../../../store/reducers/authReducer';
 
 interface PropsType {
   first?: boolean;
@@ -55,11 +56,11 @@ const InviteTeamMemberModal = ({ first = false }: PropsType) => {
   const { mutate } = useMutation(['fetchInviteMember'], fetchInviteMemberApi, {
     onError: (e: any) => {
       const errorData = e.response.data;
-      // if (errorData.code === 'E0008') {
-      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-      //   mutate(sendObject);
-      //   queryClient.invalidateQueries(['fetchInviteMember']);
-      // } else
+      if (errorData.code === 'E0008') {
+        dispatch(getRefreshToken());
+        mutate(sendObject);
+        queryClient.invalidateQueries(['fetchInviteMember']);
+      }
       if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');

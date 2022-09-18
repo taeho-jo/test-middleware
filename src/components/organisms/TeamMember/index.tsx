@@ -16,6 +16,7 @@ import TableDropDown from '../../atoms/TableDropDown';
 import { useRouter } from 'next/router';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { getRefreshToken } from '../../../store/reducers/authReducer';
 
 const TeamMember = () => {
   const {
@@ -66,10 +67,10 @@ const TeamMember = () => {
     enabled: !!teamSeq,
     onError: (e: any) => {
       const errorData = e?.response?.data;
-      // if (errorData.code === 'E0008') {
-      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-      //   queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
-      // }
+      if (errorData.code === 'E0008') {
+        dispatch(getRefreshToken());
+        queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
+      }
       if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');

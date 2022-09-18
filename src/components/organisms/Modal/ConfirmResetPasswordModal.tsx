@@ -12,6 +12,7 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import { PASSWORD_RESET_TEMPLATE } from '../../../common/util/commonVar';
 import { useRouter } from 'next/router';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { getRefreshToken } from '../../../store/reducers/authReducer';
 
 const ConfirmResetPasswordModal = () => {
   const queryClient = useQueryClient();
@@ -27,11 +28,11 @@ const ConfirmResetPasswordModal = () => {
   const { mutate, data, isLoading } = useMutation(['fetchResetPassword'], fetchResetPasswordEmailApi, {
     onError: (e: any) => {
       const errorData = e.response.data;
-      // if (errorData.code === 'E0008') {
-      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-      //   mutate(sendObject);
-      //   queryClient.invalidateQueries();
-      // } else
+      if (errorData.code === 'E0008') {
+        dispatch(getRefreshToken());
+        mutate(sendObject);
+        queryClient.invalidateQueries();
+      }
       if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');

@@ -28,6 +28,7 @@ import { updateTeamInfo } from '../../../store/reducers/teamReducer';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { getRefreshToken } from '../../../store/reducers/authReducer';
 interface PropsType {
   first?: boolean;
 }
@@ -60,11 +61,11 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
   const { mutate, data: createTeamData } = useMutation('fetchCreateTeam', fetchCreateTeamApi, {
     onError: (e: any) => {
       const errorData = e.response.data;
-      // if (errorData.code === 'E0008') {
-      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-      //   mutate(sendObject);
-      //   queryClient.invalidateQueries(['fetchRefreshToken']);
-      // } else
+      if (errorData.code === 'E0008') {
+        dispatch(getRefreshToken());
+        mutate(sendObject);
+        queryClient.invalidateQueries(['fetchRefreshToken']);
+      }
       if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');
@@ -82,10 +83,10 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
     enabled: !!createTeamData,
     onError: (e: any) => {
       const errorData = e.response.data;
-      // if (errorData.code === 'E0008') {
-      //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-      //   queryClient.invalidateQueries(['fetchTeamList']);
-      // }
+      if (errorData.code === 'E0008') {
+        dispatch(getRefreshToken());
+        queryClient.invalidateQueries(['fetchTeamList']);
+      }
       if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');

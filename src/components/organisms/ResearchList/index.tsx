@@ -16,11 +16,7 @@ const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
   const router = useRouter();
   const getReportList = useCallback(() => {
     if (listData === null || listData.length === 0) {
-      return (
-        <FlexBox style={{ padding: '40px' }}>
-          <span css={heading1_bold}>조회된 리서치 리포트 목록이 없습니다.</span>
-        </FlexBox>
-      );
+      return <FlexBox style={{ padding: '40px' }}>{/*<span css={heading1_bold}>조회된 리서치 리포트 목록이 없습니다.</span>*/}</FlexBox>;
     } else {
       return listData?.map((el, index) => {
         return (
@@ -50,13 +46,6 @@ const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
         </FlexBox>
       </div>
       {getReportList()}
-      {/*{listData?.map((el, index) => {*/}
-      {/*  return (*/}
-      {/*    <Fragment key={index}>*/}
-      {/*      <ListReport onClick={handleMoveDetail} testType={el.testType} testTitle={el.testTitle} testDate={el.testDate} img={el.img} />*/}
-      {/*    </Fragment>*/}
-      {/*  );*/}
-      {/*})}*/}
     </FlexBox>
   );
 };
