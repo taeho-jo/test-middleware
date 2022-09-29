@@ -16,6 +16,7 @@ import TableDropDown from '../../atoms/TableDropDown';
 import { useRouter } from 'next/router';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { getRefreshToken } from '../../../store/reducers/authReducer';
 
 const TeamMember = () => {
   const {
@@ -67,7 +68,7 @@ const TeamMember = () => {
     onError: (e: any) => {
       const errorData = e?.response?.data;
       if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        dispatch(getRefreshToken());
         queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
       }
       if (errorData.code === 'E0007') {
@@ -122,8 +123,8 @@ const TeamMember = () => {
         <TableDropDown
           handleChangeMemberStatus={handleChangeMemberStatus}
           display={focus}
-          top={positionValue.y + 10}
-          left={positionValue.x - 120}
+          top={positionValue.y - 100}
+          left={positionValue.x - 200}
           normalText={
             teamRoleType === '멤버'
               ? dropDownList?.member

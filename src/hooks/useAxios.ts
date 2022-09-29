@@ -49,7 +49,8 @@ export const AXIOS_POST = async (url: string, sendObject: any) => {
 
 // PUT
 export const AXIOS_PUT = async (url: string, sendObject: any) => {
-  const { data } = await AXIOS.put(url, sendObject);
+  const headers = getAuthHeader();
+  const { data } = await AXIOS.put(url, sendObject, { headers });
   return data;
 };
 

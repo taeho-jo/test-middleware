@@ -2,31 +2,31 @@ import { css } from '@emotion/react';
 import { colors } from './Common.styles';
 
 const height30 = css`
-  height: 30px;
+  //height: 30px;
   line-height: 30px;
 `;
 const height24 = css`
-  height: 24px;
+  //height: 24px;
   line-height: 24px;
 `;
 const height22 = css`
-  height: 22px;
+  //height: 22px;
   line-height: 22px;
 `;
 const height20 = css`
-  height: 20px;
+  //height: 20px;
   line-height: 20px;
 `;
 const height18 = css`
-  height: 18px;
+  //height: 18px;
   line-height: 18px;
 `;
 const height14 = css`
-  height: 14px;
+  //height: 14px;
   line-height: 14px;
 `;
 const height12 = css`
-  height: 12px;
+  //height: 12px;
   line-height: 12px;
 `;
 

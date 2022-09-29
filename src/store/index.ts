@@ -3,6 +3,8 @@ import { createWrapper, MakeStore } from 'next-redux-wrapper';
 import logger from 'redux-logger';
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import createSagaMiddleware from 'redux-saga';
+import { rootSaga } from './sagas';
 
 import reducer from './reducers';
 
@@ -17,18 +19,21 @@ const persistConfig = {
 };
 
 export const persistedReducer = persistReducer(persistConfig, reducer);
+const sagaMiddleware = createSagaMiddleware();
 
 const makeStore: MakeStore<any> = () => {
   const store = configureStore({
     reducer: persistedReducer,
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware({
-        serializableCheck: {
-          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        },
-      }),
-    // .concat(logger),
+        serializableCheck: false,
+        //   {
+        //   ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        // }
+      }).concat(sagaMiddleware),
   });
+
+  sagaMiddleware.run(rootSaga);
 
   const persistor = persistStore(store);
   return { ...persistor, ...store };

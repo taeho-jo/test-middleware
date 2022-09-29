@@ -35,8 +35,24 @@ export const authSlice = createSlice({
     resetLoginType: state => {
       state.loginType = '';
     },
+    // Saga Redux
+    getRefreshToken: state => {
+      return state;
+    },
+    getRefreshTokenSuccess: (state, action: PayloadAction<any>) => {
+      state.accessToken = action.payload;
+    },
   },
 });
 
-export const { setToken, resetToken, updateIsRefreshTokenStatus, updateLoginType, resetLoginType } = authSlice.actions;
+export const {
+  setToken,
+  resetToken,
+  updateIsRefreshTokenStatus,
+  updateLoginType,
+  resetLoginType,
+  // Saga Redux
+  getRefreshToken,
+  getRefreshTokenSuccess,
+} = authSlice.actions;
 export default authSlice.reducer;

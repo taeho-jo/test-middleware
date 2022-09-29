@@ -34,14 +34,12 @@ const checkBoxContainerStyle = css`
 `;
 
 const labelTextStyle = vaildation => css`
-  white-space: nowrap;s
-  ${
-    !vaildation &&
-    css`
+  white-space: nowrap;
+  ${!vaildation &&
+  css`
+    color: red;
+    label > a {
       color: red;
-      label > a {
-        color: red;
-      }
-    `
-  }
+    }
+  `}
 `;

@@ -98,7 +98,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
                   handleClick('/usecases/ui');
                 }}
               >
-                UI 진단
+                사용성 테스트
               </FooterButton>
               <FooterButton
                 color={darkMode ? 'white' : 'primary'}

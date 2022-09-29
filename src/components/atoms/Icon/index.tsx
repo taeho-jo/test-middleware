@@ -11,10 +11,14 @@ import ActionReset from '/public/assets/svg/reset.svg';
 import ActionResetDisable from '/public/assets/svg/reset_disabled.svg';
 import NavigationArrowLeft from '/public/assets/svg/navigation_arrow_left.svg';
 import NavigationArrowRight from '/public/assets/svg/navigation_arrow_right.svg';
+import NavigationArrowRightWhite from '/public/assets/svg/arrow_right_white.svg';
 import NavigationChevronDown from '/public/assets/svg/navigation_chevron_down_s.svg';
 import CloseSmall from '/public/assets/svg/close_small.svg';
 import ChevronDownThin from '/public/assets/svg/chevron_down_thin.svg';
+import ChevronDown from '/public/assets/svg/chevron_down.svg';
+import ChevronUp from '/public/assets/svg/chevron_up.svg';
 import ChevronRightThin from '/public/assets/svg/chevron_right_thin.svg';
+import ChevronLeftThin from '/public/assets/svg/chevron_left_thin.svg';
 import NavigationChevronRight from '/public/assets/svg/navigation_chevron_right.svg';
 import NavigationChevronRightDisabled from '/public/assets/svg/navigation_chevron_right_disabled.svg';
 import NavigationCloseLg from '/public/assets/svg/navigation_close_l.svg';
@@ -37,6 +41,14 @@ import MoreHorizon from '/public/assets/svg/more_horizon.svg';
 import Member from '/public/assets/svg/member.svg';
 import Noti from '/public/assets/svg/noti.svg';
 import DibyLogoBlack from '/public/assets/svg/diby_logo_black.svg';
+import StatusComplete from '/public/assets/svg/status_complete.svg';
+import StatusBefore from '/public/assets/svg/status_before.svg';
+import StatusIng from '/public/assets/svg/status_ing.svg';
+import ActionFilter from '/public/assets/svg/action_filter.svg';
+import Lock from '/public/assets/svg/lock.svg';
+import Download from '/public/assets/svg/download.svg';
+import Receipt from '/public/assets/svg/receipt.svg';
+import Report from '/public/assets/svg/report.svg';
 
 import { css } from '@emotion/react';
 
@@ -65,6 +77,7 @@ const IconTypes = {
   ACTION_RESET_DISABLED: ActionResetDisable,
   NAVIGATION_ARROW_LEFT: NavigationArrowLeft,
   NAVIGATION_ARROW_RIGHT: NavigationArrowRight,
+  NAVIGATION_ARROW_RIGHT_WHITE: NavigationArrowRightWhite,
   NAVIGATION_CHEVRON_DOWN: NavigationChevronDown,
   NAVIGATION_CHEVRON_RIGHT: NavigationChevronRight,
   NAVIGATION_CHEVRON_RIGHT_DISABLED: NavigationChevronRightDisabled,
@@ -84,12 +97,23 @@ const IconTypes = {
   UITEST_INACTIVE: UiTestInactive,
   UXPOSITION_HOVER: UxPositionHover,
   UXPOSITION_INACTIVE: UxPositionInactive,
+  CHEVRON_DOWN: ChevronDown,
+  CHEVRON_UP: ChevronUp,
   CHEVRON_DOWN_THIN: ChevronDownThin,
   CHEVRON_RIGHT_THIN: ChevronRightThin,
+  CHEVRON_LEFT_THIN: ChevronLeftThin,
   MORE_HORIZON: MoreHorizon,
   MEMBER: Member,
   NOTI: Noti,
   DIBY_LOGO_BLACK: DibyLogoBlack,
+  STATUS_COMPLETE: StatusComplete,
+  STATUS_BEFORE: StatusBefore,
+  STATUS_ING: StatusIng,
+  ACTION_FILTER: ActionFilter,
+  LOCK: Lock,
+  DOWNLOAD: Download,
+  RECEIPT: Receipt,
+  REPORT: Report,
 };
 
 const Icon = ({ name, size = 24, style, iconColor, onClick, forwardref, width = '24px', height = '24px' }: PropsType) => {

@@ -74,7 +74,7 @@ function Solution1() {
     section1: {
       chart: SolutionChart1,
       bg: SolutionChartBG1,
-      header: 'UI 진단',
+      header: '사용성 테스트',
       title: '핵심 기능을 사용하는 과정에서\n사용자의 불편함을 파악하고\n개선 우선순위를 선정하세요.',
       labs: [
         { name: 'SolutionImage1_1', image: SolutionImage1_1 },
@@ -84,7 +84,7 @@ function Solution1() {
       ],
     },
     section2: {
-      title: '응답자가 UI 진단에 참여하는 방법',
+      title: '응답자가 사용성 테스트에 참여하는 방법',
       slides: [
         {
           title: '1. 미션 수행',
@@ -98,7 +98,7 @@ function Solution1() {
         },
         {
           title: '2. 설문 응답',
-          desc: 'UI 진단에서 필수로 포함해야하는 질문과\n' + '원하시는 질문을 추가한 질문 세트에 응답합니다. ',
+          desc: '사용성 테스트에서 필수로 포함해야하는 질문과\n' + '원하시는 질문을 추가한 질문 세트에 응답합니다. ',
           image: SolutionTopSlide1_2,
         },
         {

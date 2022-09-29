@@ -129,7 +129,7 @@ const Section1 = ({ data }) => {
                   endIcon={isMobile ? undefined : <ArrowRightAltIcon style={{ color: 'white' }} />}
                 >
                   {navigate.pathname === '/usecases/ui'
-                    ? 'UI 진단으로 사용성 개선하기'
+                    ? '사용성 테스트로 사용성 개선하기'
                     : navigate.pathname === '/usecases/ux'
                     ? 'UX 포지션 분석으로 UX 전략 수립하기'
                     : navigate.pathname === '/usecases/scenario'

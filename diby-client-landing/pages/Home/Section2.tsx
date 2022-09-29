@@ -53,7 +53,7 @@ function Section2() {
         </Grid>
         <Grid item xs={12} md={12} lg={12} style={{ paddingTop: '32px' }}>
           <Desc data-aos="fade-up">
-            리서치 방법 선정, 문항 설계, 응답자 모집까지 Diby 에서 빠르게 수행할 수 있습니다.
+            리서치 종류 선정, 문항 설계, 응답자 모집까지 Diby 에서 빠르게 수행할 수 있습니다.
             <br />
             Diby 의 고객 피드백에 특화된 분석 템플릿으로 문장형 데이터를 읽고 분류하는 시간을 절약하세요.
           </Desc>

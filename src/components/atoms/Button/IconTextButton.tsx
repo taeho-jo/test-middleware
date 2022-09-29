@@ -35,18 +35,26 @@ const IconTextButton = ({
   ...props
 }: PropsType) => {
   return (
-    <button disabled={disabled} type={type} onClick={onClick} css={iconTextButtonStyle(roundBorder, iconPosition, whiteSpace)} {...props}>
-      {iconPosition === 'left' ? <Icon name={disabled ? `${name}_DISABLED` : name} size={24} /> : null}
+    <button
+      disabled={disabled ? disabled : props.disabledbtn === 'true' ? true : false}
+      type={type}
+      onClick={onClick}
+      css={iconTextButtonStyle(roundBorder, iconPosition, whiteSpace)}
+      {...props}
+    >
+      {iconPosition === 'left' ? <Icon name={disabled ? `${name}_DISABLED` : name} size={24} iconColor={props.iconColor} /> : null}
       <span
         css={[
-          textStyle === 'custom' ? { fontSize: fontSize ? fontSize : '14px', fontWeight: '400', height: 'auto' } : textStyle,
-          noBorderTextStyle(roundBorder, disabled),
-          { margin: iconPosition === 'right' ? '0 8px 0 0' : '0 0 0 8px' },
+          textStyle === 'custom'
+            ? { fontSize: fontSize ? fontSize : '14px', fontWeight: '400', height: 'auto' }
+            : noBorderTextStyle(roundBorder, disabled),
+          { margin: iconPosition === 'right' ? '0 8px 0 0' : '0 0 0 8px', color: props.disabledbtn === 'true' ? colors.grey._99 : colors.grey._3c },
+          textStyle,
         ]}
       >
         {text}
       </span>
-      {iconPosition === 'right' ? <Icon name={disabled ? `${name}_DISABLED` : name} size={24} /> : null}
+      {iconPosition === 'right' ? <Icon name={disabled ? `${name}_DISABLED` : name} size={24} iconColor={props.iconColor} /> : null}
     </button>
   );
 };
@@ -81,12 +89,13 @@ const iconTextButtonStyle = (roundBorder, iconPosition, whiteSpace) => css`
 
   &:disabled {
     cursor: not-allowed;
-    ${roundBorder
-      ? `
+    color: ${colors.grey._99}
+      ${roundBorder
+        ? `
       background: ${colors.grey._f7};
       border: 1px solid ${colors.grey._cc};
     `
-      : ``}
+        : ``};
   }
 `;
 

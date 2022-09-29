@@ -39,26 +39,6 @@ export const useSignupApi = () => {
   });
 };
 
-// 토큰 refresh API
-export const useRefreshTokenApi = isRefreshToken => {
-  const dispatch = useDispatch();
-  const queryClient = useQueryClient();
-  return useQuery(['refreshToken'], () => AXIOS_GET('/refreshToken'), {
-    cacheTime: 0,
-    enabled: isRefreshToken,
-    onError: e => {
-      dispatch(updateIsRefreshTokenStatus(false));
-    },
-    onSuccess: data => {
-      dispatch(updateIsRefreshTokenStatus(false));
-      const response = data.data;
-      localStorage.setItem('accessToken', response.token);
-      dispatch(setToken(response.token));
-      queryClient.invalidateQueries();
-    },
-  });
-};
-
 // 로그인 API
 export const fetchLoginApi = async sendObject => {
   return await AXIOS_POST('/login', sendObject);
@@ -91,13 +71,7 @@ export const fetchChangePasswordApi = async sendObject => {
 
 // 토큰 refresh API
 export const fetchRefreshToken = async () => {
-  try {
-    const response = await AXIOS_GET('/refresh');
-    const token = response.data.token;
-    localStorage.setItem('accessToken', token);
-  } catch (e) {
-    console.log('fetchRefreshTokenApi::::  ', e);
-  }
+  return await AXIOS_GET('/refresh');
 };
 
 // 공통 code API
