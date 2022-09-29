@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
 import { body3_bold, caption1_bold, caption1_regular, caption2_bold, heading5_bold } from '../../../styles/FontStyles';
@@ -11,31 +11,40 @@ import Icon from '../../atoms/Icon';
 import FlexBox from '../../atoms/FlexBox';
 import ProfileIcon from '../../atoms/ProfileIcon';
 import Button from '../../atoms/Button';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import { useRouter } from 'next/router';
+import LayerPopup from '../../atoms/LayerPopup';
+import { isShow } from '../../../store/reducers/modalReducer';
+import { showToast } from '../../../store/reducers/toastReducer';
+import { fetchResearchDelete, updateDeleteResearchInfo } from '../../../store/reducers/researchCreateReducer';
 
 interface PropsType {
   createDt: string;
   researchTypeNm: string;
   projectNm: string;
-  reportSeq: number;
+  researchSeq: number;
   reportViewId: string;
   statusType: string;
   statusTypeNm: string;
   onClick?: (id, name) => void;
 }
 
-const ListReport = ({ createDt, researchTypeNm, projectNm, reportSeq, reportViewId, statusType, statusTypeNm, onClick }: PropsType) => {
+const ListReport = ({ createDt, researchTypeNm, projectNm, researchSeq, reportViewId, statusType, statusTypeNm, onClick }: PropsType) => {
+  const dispatch = useDispatch();
   const router = useRouter();
+  const SELECTED_TEAM_SEQ = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
   const STATUS_CODE = useSelector<ReducerType, { key: string; value: string; displayName: string }[]>(
     state => state.common.commonCode.ResearchStatusType,
   );
 
+  // LayerPopup state
+  const [focusProfile, setFocusProfile] = useState(false);
+
   const changeName = useCallback(name => {
     switch (name) {
       case 'UI_DIAGNOSIS':
-        return 'UI 진단';
+        return '사용성 테스트';
       case 'SCENARIO_VERIFICATION':
         return '시나리오 검증';
       case 'UX_POSITION_ANALYSIS':
@@ -43,7 +52,7 @@ const ListReport = ({ createDt, researchTypeNm, projectNm, reportSeq, reportView
       case 'POTENTIAL_CUSTOMER_RESEARCH':
         return '잠재 고객 조사';
       default:
-        return 'UI 진단';
+        return '사용성 테스트';
     }
   }, []);
 
@@ -52,40 +61,90 @@ const ListReport = ({ createDt, researchTypeNm, projectNm, reportSeq, reportView
     return equalStatus?.[0]?.displayName;
   }, [STATUS_CODE, statusType]);
 
-  const getResearchStatusIcon = useCallback(() => {
-    switch (statusType) {
-      case 'RESEARCH_COMPLETED':
-        return 'STATUS_COMPLETE';
-      case 'RESEARCH_INFO_ENTERING':
-      case 'RESEARCH_REQUEST_DESIGN':
-      case 'RESEARCH_DESIGN':
-      case 'RESEARCH_DESIGN_COMPLETE':
-      case 'RESEARCH_START_REQUEST':
-        return 'STATUS_BEFORE';
-      case 'RESPONSE_RECRUITING':
-      case 'RESEARCH_ANALYZING':
-        return 'STATUS_ING';
-      default:
-        return 'STATUS_BEFORE';
+  const getResearchStatusIcon = useCallback(
+    statusType => {
+      switch (statusType) {
+        case 'RESEARCH_COMPLETED':
+          return 'STATUS_COMPLETE';
+        case 'RESEARCH_INFO_ENTERING':
+        case 'RESEARCH_REQUEST_DESIGN_COMPLETE':
+        case 'RESEARCH_DESIGN':
+        case 'RESEARCH_DESIGN_COMPLETE':
+        case 'RESEARCH_START_REQUEST_COMPLETE':
+          return 'STATUS_BEFORE';
+        case 'RESPONSE_RECRUITING':
+        case 'RESEARCH_ANALYZING':
+          return 'STATUS_ING';
+        default:
+          return 'STATUS_BEFORE';
+      }
+    },
+    [statusType],
+  );
+  const handleChoiceStatusNmColor = useCallback(
+    statusType => {
+      switch (statusType) {
+        case 'RESEARCH_COMPLETED':
+        case 'RESEARCH_INFO_ENTERING':
+        case 'RESEARCH_REQUEST_DESIGN_COMPLETE':
+        case 'RESEARCH_DESIGN':
+        case 'RESEARCH_START_REQUEST_COMPLETE':
+        case 'RESEARCH_DESIGN_COMPLETE':
+          return colors.grey._3c;
+        case 'RESPONSE_RECRUITING':
+        case 'RESEARCH_ANALYZING':
+          return colors.blue._500;
+        default:
+          return 'STATUS_BEFORE';
+      }
+    },
+    [statusType],
+  );
+
+  const handleMovePage = (statusType, researchSeq) => {
+    if (statusType == 'RESEARCH_INFO_ENTERING') {
+      router.push(`/admin/research/${researchSeq}`);
+    } else {
+      router.push(`/admin/research/${researchSeq}/detail`);
     }
-  }, [statusType]);
+  };
+  const handleShowLayerPopup = e => {
+    e.stopPropagation();
+    setFocusProfile(true);
+  };
+
+  const handleRemoveResearch = researchSeq => {
+    if (statusType === 'RESEARCH_INFO_ENTERING') {
+      console.log(SELECTED_TEAM_SEQ, researchSeq);
+      dispatch(updateDeleteResearchInfo({ teamSeq: SELECTED_TEAM_SEQ, researchSeq: researchSeq }));
+      dispatch(isShow({ isShow: true, type: 'researchDeleteConfirmModal' }));
+    } else {
+      dispatch(showToast({ message: `리서치 설계 요청 이후 리서치 삭제가 불가능합니다.`, isShow: true, status: 'warning', duration: 5000 }));
+    }
+  };
 
   return (
-    <div
-      css={mainContainer}
-      onClick={
-        statusType !== 'RESEARCH_COMPLETED'
-          ? () => router.push(`/admin/research/${reportSeq}`)
-          : () => {
-              return;
-            }
-      }
-    >
+    <div css={mainContainer} onClick={() => handleMovePage(statusType, researchSeq)}>
       <FlexBox direction={'row'} justify={'space-between'} align={'center'}>
         <span css={[caption1_bold, blockStyle]}>
-          ({reportSeq}) {researchTypeNm}
+          ({researchSeq}) {researchTypeNm}
         </span>
-        <Icon name={'ACTION_MORE'} />
+        <div
+          css={css`
+            position: relative;
+          `}
+          onClick={e => handleShowLayerPopup(e)}
+        >
+          <Icon name={'ACTION_MORE'} />
+          <LayerPopup
+            display={focusProfile}
+            top={-5}
+            right={-160}
+            setFocusProfile={setFocusProfile}
+            // topText={userInfo.userId}
+            normalText={[{ text: '리서치 삭제', onClick: () => handleRemoveResearch(researchSeq) }]}
+          />
+        </div>
       </FlexBox>
       <span css={[heading5_bold, titleStyle]}>{projectNm}</span>
       <FlexBox style={dateBox} direction={'row'} justify={'flex-start'} align={'center'}>
@@ -94,8 +153,8 @@ const ListReport = ({ createDt, researchTypeNm, projectNm, reportSeq, reportView
       </FlexBox>
       <FlexBox style={statusBox} direction={'row'} justify={'flex-start'} align={'center'}>
         {/*TODO: STATUS에 따른 상태 변경*/}
-        <Icon name={getResearchStatusIcon()} size={24} />
-        <span css={[body3_bold, { marginLeft: '8px' }]}>{statusTypeNm}</span>
+        <Icon name={getResearchStatusIcon(statusType)} size={24} />
+        <span css={[body3_bold, { marginLeft: '8px', color: handleChoiceStatusNmColor(statusType) }]}>{statusTypeNm}</span>
       </FlexBox>
       {statusType === 'RESEARCH_COMPLETED' && (
         <FlexBox>
@@ -142,6 +201,9 @@ const mainContainer = css`
   margin-bottom: 20px;
   margin-right: 16px;
   cursor: pointer;
+  &:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  }
 `;
 const dateBox = css`
   margin-top: 8px;

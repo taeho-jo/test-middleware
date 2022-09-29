@@ -12,16 +12,18 @@ import ToggleHeader from '../../atoms/ToggleHeader';
 import Icon from '../../atoms/Icon';
 import IconTextButton from '../../atoms/Button/IconTextButton';
 import { updateResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
+import { debounceFunction } from '../../../common/util/commonFunc';
 interface PropsType {
   detailInfo: any;
   getResearchMethod?: (value) => void;
   register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
+  respondentDebounceSave?: (value: string) => void;
   // handleSubmit: any;
   // reset: any;
   // watch: any;
   // errors: any;
 }
-const CreateResearchStepThree = ({ detailInfo, getResearchMethod, register }: PropsType) => {
+const CreateResearchStepThree = ({ detailInfo, register, respondentDebounceSave }: PropsType) => {
   const dispatch = useDispatch();
   const methodsType = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
 
@@ -36,16 +38,16 @@ const CreateResearchStepThree = ({ detailInfo, getResearchMethod, register }: Pr
   } = useForm({});
   const { fields, append, insert, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
-    name: 'decisionInfo', // unique name for your Field Array
+    name: 'goalInfo', // unique name for your Field Array
     // keyName: 'screening_additional_id', //default to "id", you can change the key name
   });
 
   const [openField, setOpenField] = useState(null);
 
-  const handleAppendPanel = () => {
-    append({ decision: '' });
+  const handleAppendRespondent = () => {
+    append({ goal: '' });
   };
-  const handleRemovePanel = (index: number) => {
+  const handleRemoveRespondent = (index: number) => {
     remove(index);
   };
 
@@ -86,11 +88,11 @@ const CreateResearchStepThree = ({ detailInfo, getResearchMethod, register }: Pr
   };
 
   useEffect(() => {
-    if (!detailInfo?.decisionInfo || detailInfo?.decisionInfo?.length === 0) {
-      setValue('decisionInfo', [{ decision: '' }]);
+    if (!detailInfo?.goalInfo || detailInfo?.goalInfo?.length === 0) {
+      setValue('goalInfo', [{ goal: '' }]);
     } else {
-      dispatch(updateResearchModifyInfo({ name: 'decisionInfo', value: detailInfo?.decisionInfo }));
-      setValue('decisionInfo', detailInfo?.decisionInfo);
+      dispatch(updateResearchModifyInfo({ name: 'goalInfo', value: detailInfo?.goalInfo }));
+      setValue('goalInfo', detailInfo?.goalInfo);
     }
   }, [detailInfo]);
 
@@ -110,29 +112,27 @@ const CreateResearchStepThree = ({ detailInfo, getResearchMethod, register }: Pr
                     margin-bottom: 50px;
                   `}
                 >
-                  {openField?.[`decision${index}`] === false ? (
-                    <ToggleHeader title={`유저 리서치를 통해 하고 싶은 의사결정${index + 1}`} onClick={() => handleToggleField(`decision${index}`)} />
+                  {openField?.[`goal${index}`] === false ? (
+                    <ToggleHeader title={`리서치 목표${index + 1}`} onClick={() => handleToggleField(`goal${index}`)} />
                   ) : (
                     <>
-                      <ToggleHeader
-                        title={`유저 리서치를 통해 하고 싶은 의사결정${index + 1}`}
-                        onClick={() => handleToggleField(`decision${index}`)}
-                      />
+                      <ToggleHeader title={`리서치 목표${index + 1}`} onClick={() => handleToggleField(`goal${index}`)} />
                       <TextArea
                         // title={'이메일'}
                         register={register}
-                        label={`decisionInfo[${index}].decision`}
+                        label={`goalInfo[${index}].goal`}
                         errors={errors}
                         errorMsg={'텍스트를 입력해주세요.'}
-                        defaultValue={item.decision}
-                        placeholder={'텍스트를 입력해주세요.'}
+                        defaultValue={item.goal}
+                        placeholder={'이번 리서치의 결과를 어떤 의사결정에 활용하실건가요?'}
                         registerOptions={{
                           required: true,
+                          onChange: debounceFunction(e => respondentDebounceSave(e.target.value), 1000),
                         }}
                       />
                       {index !== 0 && (
                         <IconTextButton
-                          onClick={() => handleRemovePanel(index)}
+                          onClick={() => handleRemoveRespondent(index)}
                           text={'삭제하기'}
                           textStyle={{ color: colors.red }}
                           iconColor={colors.red}
@@ -148,7 +148,7 @@ const CreateResearchStepThree = ({ detailInfo, getResearchMethod, register }: Pr
             })}
         </Form>
       </FlexBox>
-      <div onClick={handleAppendPanel} css={bottomAddBtnContainer}>
+      <div onClick={handleAppendRespondent} css={bottomAddBtnContainer}>
         <span css={bottomAddBtn}>+ 의사 결정 추가하기</span>
       </div>
     </>

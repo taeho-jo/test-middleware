@@ -7,6 +7,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 interface PropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
+  disabled?: boolean;
   designBgColor?: string;
   text?: string;
   type?: 'submit' | 'button' | 'reset';
@@ -26,6 +27,7 @@ const BasicButton = ({
   status = 'normal',
   theme = 'light',
   onClick,
+  disabled = false,
   ...props
 }: PropsType) => {
   const buttonTextStyle = heading4_bold;
@@ -34,7 +36,7 @@ const BasicButton = ({
       {...props}
       onClick={onClick}
       type={type}
-      disabled={isLoading}
+      disabled={disabled}
       css={[buttonStyle(status, theme, isLoading), { ...style }, { background: designBgColor ? designBgColor : '' }]}
     >
       {isLoading ? (
@@ -66,6 +68,9 @@ const buttonStyle = (status, theme, isLoading) => css`
       &:hover {
         background: ${colors.cyan._700};
       }
+      &:disabled {
+        background: ${colors.cyan._300};
+      }
     `
         : `
           background: ${colors.cyan._300};
@@ -80,6 +85,9 @@ const buttonStyle = (status, theme, isLoading) => css`
       &:hover {
         background: ${colors.grey._2c};
       }
+      &:disabled {
+        background: ${colors.grey._99};;
+      }
     `
         : `
         background: ${colors.grey._cc};
@@ -89,4 +97,5 @@ const buttonStyle = (status, theme, isLoading) => css`
 `;
 const textStyle = css`
   color: white;
+  white-space: nowrap;
 `;

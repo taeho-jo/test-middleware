@@ -18,7 +18,7 @@ const STEP_ARR = [
     value: 'step1',
   },
   {
-    label: '2. 패널 조건',
+    label: '2. 응답자 조건',
     value: 'step2',
   },
   {
@@ -26,11 +26,11 @@ const STEP_ARR = [
     value: 'step3',
   },
   {
-    label: '4. 상세 정보',
+    label: '4. 상세 설계',
     value: 'step4',
   },
   {
-    label: '5. 추가 요청 사항',
+    label: '5. 예상 견적 확인',
     value: 'step5',
   },
 ];
@@ -39,7 +39,7 @@ const ResearchHeader = ({ isStepBar = true, title }: PropsType) => {
   const STEP = useSelector<ReducerType, string>(state => state.researchCreate.step);
   return (
     <FlexBox justify={isStepBar ? 'space-between' : 'flex-start'} align={'center'} height={'38px'}>
-      {!isStepBar && <Icon name={'ALERT_NORMAL'} />}
+      {/*{!isStepBar && <Icon name={'ALERT_NORMAL'} />}*/}
       <span css={[heading1_bold, { marginLeft: isStepBar ? 0 : '8px' }]}>{title}</span>
       {isStepBar && (
         <div css={stepBox}>

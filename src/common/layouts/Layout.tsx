@@ -229,6 +229,8 @@ const Layout = ({ children }: PropsType) => {
           </>
         );
       case '/admin/research/[id]':
+      case '/admin/research/[id]/detail':
+      case '/admin/research/recommendation':
         return (
           <>
             <div css={mainContainer}>

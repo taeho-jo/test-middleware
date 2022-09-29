@@ -19,14 +19,11 @@ const ResearchStatusChangeModal = () => {
     dispatch(isShow({ isShow: false, type: '' }));
   }, []);
 
-  console.log(DETAIL_INFO);
-
   const handleChange = () => {
     const sendObject = {
       ...DETAIL_INFO,
-      statusType: 'RESEARCH_REQUEST_DESIGN',
+      statusType: 'RESEARCH_REQUEST_DESIGN_COMPLETE',
     };
-    console.log(sendObject, '@@');
     dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'last', callback: router }));
   };
   return (

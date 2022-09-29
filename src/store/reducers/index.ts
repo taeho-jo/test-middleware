@@ -12,6 +12,7 @@ import common from './commonReducer';
 import queryStatus from './useQueryControlReducer';
 import report from './reportReducer';
 import researchCreate from './researchCreateReducer';
+import researchRecommendation from './researchRecommendationReducer';
 
 const reducer = (state, action) => {
   if (action.type === HYDRATE) {
@@ -32,6 +33,7 @@ const reducer = (state, action) => {
     queryStatus,
     report,
     researchCreate,
+    researchRecommendation,
   })(state, action);
 };
 

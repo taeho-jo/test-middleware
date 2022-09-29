@@ -1,7 +1,7 @@
 import React, { Fragment, useCallback } from 'react';
 import FlexBox from '../../atoms/FlexBox';
 import ListReport from '../../molecules/ListReport';
-import { heading1_bold, heading3_bold } from '../../../styles/FontStyles';
+import { caption1_medium, heading1_bold, heading3_bold } from '../../../styles/FontStyles';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
 import Icon from '../../atoms/Icon';
@@ -26,7 +26,7 @@ const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
               reportViewId={el.reportViewId}
               statusType={el.statusType}
               statusTypeNm={el.statusTypeNm}
-              reportSeq={el.researchSeq}
+              researchSeq={el.researchSeq}
               researchTypeNm={el.researchTypeNm}
               projectNm={el.researchNm}
               createDt={el.createDt}
@@ -42,7 +42,8 @@ const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
       <div css={mainContainer}>
         <FlexBox direction={'column'} onClick={() => router.push('/admin/research/create')}>
           <Icon name={'ACTION_CREATE'} />
-          <span css={[heading3_bold, { marginTop: '8px' }]}>리서치 생성</span>
+          <span css={[heading3_bold, { marginTop: '8px' }]}>3분만에 리서치 설계하기</span>
+          <p css={[caption1_medium, { marginTop: '4px', marginBottom: 0 }]}>( 예상 견적도 받아볼 수 있어요! )</p>
         </FlexBox>
       </div>
       {getReportList()}

@@ -47,6 +47,7 @@ const researchBox = (backgroundColor, color, image, hoverImage) => css`
   `
     : ``}
   :hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
     .module {
       background-image: url('${hoverImage?.src}');
     }

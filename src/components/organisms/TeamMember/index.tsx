@@ -123,8 +123,8 @@ const TeamMember = () => {
         <TableDropDown
           handleChangeMemberStatus={handleChangeMemberStatus}
           display={focus}
-          top={positionValue.y + 10}
-          left={positionValue.x - 120}
+          top={positionValue.y - 100}
+          left={positionValue.x - 200}
           normalText={
             teamRoleType === '멤버'
               ? dropDownList?.member

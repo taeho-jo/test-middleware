@@ -17,7 +17,7 @@ const UiResearchModuleModal = () => {
         <FlexBox height={'420px'}>
           <FlexBox style={{ paddingLeft: '52px', paddingRight: '40px' }} height={'100%'} direction={'column'} justify={'space-between'}>
             <FlexBox direction={'column'} align={'flex-start'}>
-              <span css={titleStyle}>UI 진단</span>
+              <span css={titleStyle}>사용성 테스트</span>
 
               <span css={[heading4_regular, marginStyle('24px')]}>앱 또는 웹사이트에서 고객이 느낀 불편함을</span>
               <span css={heading4_regular}>인터페이스 10 요소로 분류하여 진단합니다.</span>

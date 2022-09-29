@@ -84,28 +84,29 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
         />
       </FlexBox>
 
-      {isSessionStorage ? null : (
-        <FlexBox justify={'flex-end'} align={'center'}>
-          <FlexBox justify={'flex-end'} align={'center'} onClick={e => showLayerPopup(e)} style={{ cursor: 'pointer' }}>
-            <ProfileIcon />
-            <Icon
-              name={researchHeader ? 'CHEVRON_DOWN_THIN' : 'NAVIGATION_CHEVRON_DOWN'}
-              style={{ marginLeft: '8px', cursor: 'pointer' }}
-              size={24}
+      {router.pathname !== '/admin/research/recommendation' &&
+        (isSessionStorage ? null : (
+          <FlexBox justify={'flex-end'} align={'center'}>
+            <FlexBox justify={'flex-end'} align={'center'} onClick={e => showLayerPopup(e)} style={{ cursor: 'pointer' }}>
+              <ProfileIcon />
+              <Icon
+                name={researchHeader ? 'CHEVRON_DOWN_THIN' : 'NAVIGATION_CHEVRON_DOWN'}
+                style={{ marginLeft: '8px', cursor: 'pointer' }}
+                size={24}
+              />
+            </FlexBox>
+
+            <LayerPopup
+              display={focusProfile}
+              setFocusProfile={setFocusProfile}
+              topText={userInfo.userId}
+              normalText={[
+                { text: '프로필 설정', onClick: pathname === '/admin/profile' ? () => console.log('') : () => router.push('/admin/profile/update') },
+                { text: '로그아웃', onClick: handleLogout },
+              ]}
             />
           </FlexBox>
-
-          <LayerPopup
-            display={focusProfile}
-            setFocusProfile={setFocusProfile}
-            topText={userInfo.userId}
-            normalText={[
-              { text: '프로필 설정', onClick: pathname === '/admin/profile' ? () => console.log('') : () => router.push('/admin/profile/update') },
-              { text: '로그아웃', onClick: handleLogout },
-            ]}
-          />
-        </FlexBox>
-      )}
+        ))}
     </FlexBox>
   );
 };

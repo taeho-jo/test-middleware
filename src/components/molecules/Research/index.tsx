@@ -6,6 +6,8 @@ import ResearchGuideStepThree from './ResearchGuideStepThree';
 import ResearchGuideStepFour from './ResearchGuideStepFour';
 import ResearchGuideStepFive from './ResearchGuideStepFive';
 
+import RecommendationStep from './Recommendation/RecommendationStep';
+
 export {
   ResearchHeader,
   ResearchFooter,

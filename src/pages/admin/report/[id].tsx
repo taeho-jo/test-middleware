@@ -121,7 +121,7 @@ const Report = ({ params }) => {
     rootMargin: '72px 0px 0px 0px',
     threshold: 1,
   });
-  // UI 진단 전체 요약 ref
+  // 사용성 테스트 전체 요약 ref
   const [uiTestRef, uiTestChildrenRef] = useOnScreen({
     rootMargin: '72px 0px 0px 0px',
     threshold: 1,
@@ -230,12 +230,12 @@ const Report = ({ params }) => {
       </div>
       {/*응답자 특성*/}
 
-      {/* UI 진단 전체 요약 */}
+      {/* 사용성 테스트 전체 요약 */}
       {data?.S1 && (
-        <div css={reportSectionBox} id={'UI 진단 전체 요약'} ref={uiTestRef}>
+        <div css={reportSectionBox} id={'사용성 테스트 전체 요약'} ref={uiTestRef}>
           <div>
             <ReportTemplateHeader
-              title={'UI 진단 전체 요약'}
+              title={'사용성 테스트 전체 요약'}
               handleChangeCheckBox={handleChangeCheckBox}
               modalControl={modalControl}
               checked={filterFail}
@@ -268,7 +268,7 @@ const Report = ({ params }) => {
           {/*</div>*/}
         </div>
       )}
-      {/* UI 진단 전체 요약 */}
+      {/* 사용성 테스트 전체 요약 */}
 
       {/*기능별 상세 비교*/}
       {data?.S1 &&

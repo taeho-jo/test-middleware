@@ -43,7 +43,7 @@ const Button = ({
   return (
     <>
       {buttonType === 'basic' ? (
-        <button type={type} onClick={onClick} css={buttonStyle(backgroundColor, full, padding)} {...props}>
+        <button disabled={props.disabled} type={type} onClick={onClick} css={buttonStyle(backgroundColor, full, padding)} {...props}>
           <div css={isLoading ? loadingStyle : ''}>
             <ClipLoader color={'white'} loading={isLoading} size={16} />
           </div>
@@ -86,6 +86,13 @@ const buttonStyle = (backgroundColor, full, padding) => css`
   cursor: pointer;
   position: relative;
   box-sizing: border-box;
+  &:hover {
+    background: ${colors.cyan._700};
+    color: white;
+  }
+  &:disabled {
+    background: ${colors.cyan._300};
+  }
 `;
 
 // action button

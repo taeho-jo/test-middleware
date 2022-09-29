@@ -13,16 +13,17 @@ import Icon from '../../atoms/Icon';
 import IconTextButton from '../../atoms/Button/IconTextButton';
 import { updateResearchModifyArrayInfo, updateResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
 import { forEach } from 'lodash';
+import { debounceFunction } from '../../../common/util/commonFunc';
 interface PropsType {
   detailInfo: any;
-  getResearchMethod?: (value) => void;
   register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
+  respondentDebounceSave?: (value: string) => void;
   // handleSubmit: any;
   // reset: any;
   // watch: any;
   // errors: any;
 }
-const CreateResearchStepTwo = ({ detailInfo, getResearchMethod, register }: PropsType) => {
+const CreateResearchStepTwo = ({ detailInfo, register, respondentDebounceSave }: PropsType) => {
   const methodsType = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
   const dispatch = useDispatch();
   // hook saasaform
@@ -38,15 +39,15 @@ const CreateResearchStepTwo = ({ detailInfo, getResearchMethod, register }: Prop
   } = useForm({});
   const { fields, append, insert, remove } = useFieldArray({
     control,
-    name: 'panelInfo',
+    name: 'respondentInfo',
   });
 
   const [openField, setOpenField] = useState(null);
 
-  const handleAppendPanel = () => {
+  const handleAppendRespondent = () => {
     append({ value: '' });
   };
-  const handleRemovePanel = (index: number) => {
+  const handleRemoveRespondent = (index: number) => {
     remove(index);
   };
 
@@ -86,11 +87,11 @@ const CreateResearchStepTwo = ({ detailInfo, getResearchMethod, register }: Prop
     }
   };
   useEffect(() => {
-    if (!detailInfo?.panelInfo || detailInfo?.panelInfo?.length === 0) {
-      setValue('panelInfo', [{ panel: '' }]);
+    if (!detailInfo?.respondentInfo || detailInfo?.respondentInfo?.length === 0) {
+      setValue('respondentInfo', [{ respondent: '' }]);
     } else {
-      dispatch(updateResearchModifyInfo({ name: 'panelInfo', value: detailInfo?.panelInfo }));
-      setValue('panelInfo', detailInfo?.panelInfo);
+      dispatch(updateResearchModifyInfo({ name: 'respondentInfo', value: detailInfo?.respondentInfo }));
+      setValue('respondentInfo', detailInfo?.respondentInfo);
     }
   }, [detailInfo]);
 
@@ -110,26 +111,27 @@ const CreateResearchStepTwo = ({ detailInfo, getResearchMethod, register }: Prop
                     margin-bottom: 50px;
                   `}
                 >
-                  {openField?.[`panel${index}`] === false ? (
-                    <ToggleHeader title={`패널조건${index + 1}`} onClick={() => handleToggleField(`panel${index}`)} />
+                  {openField?.[`respondent${index}`] === false ? (
+                    <ToggleHeader title={`응답자 조건${index + 1}`} onClick={() => handleToggleField(`respondent${index}`)} />
                   ) : (
                     <>
-                      <ToggleHeader title={`패널조건${index + 1}`} onClick={() => handleToggleField(`panel${index}`)} />
+                      <ToggleHeader title={`응답자 조건${index + 1}`} onClick={() => handleToggleField(`respondent${index}`)} />
                       <TextArea
                         // title={'이메일'}
                         register={register}
-                        label={`panelInfo[${index}].panel`}
+                        label={`respondentInfo[${index}].respondent`}
                         errors={errors}
-                        errorMsg={'이메일을 입력해주세요.'}
-                        defaultValue={item?.panel}
-                        placeholder={'ex. 20대, 여성, SNS 사용자, 25명'}
+                        errorMsg={'응답자 조건을 입력해주세요.'}
+                        defaultValue={item?.respondent}
+                        placeholder={'어떤 사람에게 응답을 받고싶으신가요?'}
                         registerOptions={{
                           required: true,
+                          onChange: debounceFunction(e => respondentDebounceSave(e.target.value), 1000),
                         }}
                       />
                       {index !== 0 && (
                         <IconTextButton
-                          onClick={() => handleRemovePanel(index)}
+                          onClick={() => handleRemoveRespondent(index)}
                           text={'삭제하기'}
                           textStyle={{ color: colors.red }}
                           // iconColor={colors.red}
@@ -145,8 +147,8 @@ const CreateResearchStepTwo = ({ detailInfo, getResearchMethod, register }: Prop
             })}
         </Form>
       </FlexBox>
-      <div onClick={handleAppendPanel} css={bottomAddBtnContainer}>
-        <span css={bottomAddBtn}>+ 패널 조건 추가하기</span>
+      <div onClick={handleAppendRespondent} css={bottomAddBtnContainer}>
+        <span css={bottomAddBtn}>+ 응답자 조건 추가하기</span>
       </div>
     </>
   );

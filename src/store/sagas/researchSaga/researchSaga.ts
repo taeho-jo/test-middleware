@@ -2,6 +2,7 @@ import { call, delay, put, takeEvery } from '@redux-saga/core/effects';
 import {
   fetchResearchBasicInfo,
   fetchResearchBasicInfoSuccess,
+  fetchResearchDelete,
   fetchResearchDetail,
   fetchResearchDetailSuccess,
   fetchResearchList,
@@ -13,20 +14,27 @@ import {
 } from '../../reducers/researchCreateReducer';
 import {
   fetchCreateTeamResearchApi,
+  fetchDeleteTeamResearchApi,
   fetchGetResearchDetailInfoApi,
   fetchGetResearchListApi,
   fetchModifyTeamResearchApi,
+  fetchRecommendationQuestionApi,
 } from '../../../api/researchApi';
 import { isShow } from '../../reducers/modalReducer';
 import { showToast } from '../../reducers/toastReducer';
 import { getRefreshToken } from '../../reducers/authReducer';
 import { getCommonCode } from '../../reducers/commonReducer';
+import {
+  getRecommendationApiError,
+  getRecommendationDataAction,
+  getRecommendationDataActionSuccess,
+} from '../../reducers/researchRecommendationReducer';
 
 // 팀 리서치 목록 조회 saga
 function* fetchResearchListSaga(action) {
   try {
     const { params } = action.payload;
-
+    console.log(params, 'P');
     const result = yield call(fetchGetResearchListApi, params);
     if (result.code === '200') {
       yield put(fetchResearchListSuccess(result.data.list));
@@ -83,7 +91,7 @@ function* fetchCreateTeamResearchSaga(action) {
 function* fetchModifyResearchSaga(action) {
   try {
     const result = yield call(fetchModifyTeamResearchApi, action.payload.sendObject);
-    if (action.payload.step !== 'last') {
+    if (action.payload.step !== 'last' && action.payload.step !== 'change' && action.payload.step !== 'debounce') {
       yield put(setStep(action.payload.step));
     }
 
@@ -91,7 +99,13 @@ function* fetchModifyResearchSaga(action) {
     if (action.payload.step === 'last') {
       yield put(isShow({ isShow: true, type: 'researchStatusChangeModal' }));
       action.payload?.callback?.push(`/admin/team`);
-      yield put(showToast({ message: '리서치 설계요청이 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+      if (action.payload?.callback) {
+        yield put(showToast({ message: '리서치 설계요청이 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+      }
+    }
+    if (action.payload.step === 'change') {
+      action.payload?.callback?.push(`/admin/team`);
+      yield put(showToast({ message: '리서치 변경 사항이 저장되었습니다.', isShow: true, status: 'success', duration: 5000 }));
     }
   } catch (e) {
     console.error(e);
@@ -104,9 +118,50 @@ function* fetchModifyResearchSaga(action) {
   }
 }
 
+// 리서치 삭제 saga
+function* fetchDeleteResearchSaga(action) {
+  try {
+    const result = yield call(fetchDeleteTeamResearchApi, action.payload.teamSeq, action.payload.researchSeq);
+    if (result.code === '201') {
+      yield put(isShow({ isShow: false, type: '' }));
+      yield put(showToast({ message: '리서치 삭제가 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+      const params = { teamSeq: action.payload.teamSeq, researchNm: '', researchType: '', statusType: '' };
+      yield put(fetchResearchList({ params }));
+    }
+  } catch (e) {
+    console.error(e);
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(fetchResearchDelete({ teamSeq: action.payload.teamSeq, researchSeq: action.payload.researchSeq }));
+    }
+    yield put(getResearchApiError(e));
+  }
+}
+
+// 리서치 추천 문항 조회 saga
+function* fetchGetRecommendationQuestionSaga(action) {
+  try {
+    const result = yield call(fetchRecommendationQuestionApi);
+    if (result?.code === '200') {
+      yield put(getRecommendationDataActionSuccess(result?.data?.list));
+    }
+  } catch (e) {
+    console.error(e);
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(getRecommendationDataAction());
+    }
+    yield put(getRecommendationApiError(e));
+  }
+}
+
 export function* researchSaga() {
   yield takeEvery(fetchResearchList, fetchResearchListSaga);
   yield takeEvery(fetchResearchDetail, fetchGetResearchDetailInfo);
   yield takeEvery(fetchResearchBasicInfo, fetchCreateTeamResearchSaga);
   yield takeEvery(fetchResearchModifyInfo, fetchModifyResearchSaga);
+  yield takeEvery(fetchResearchDelete, fetchDeleteResearchSaga);
+  yield takeEvery(getRecommendationDataAction, fetchGetRecommendationQuestionSaga);
 }

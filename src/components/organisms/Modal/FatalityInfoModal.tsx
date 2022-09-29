@@ -12,7 +12,7 @@ const FatalityInfoModal = () => {
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
       <PopupBox padding={'0'} width={'400px'} height={'auto'}>
         <ModalTitle title={'치명도가 뭔가요'} titlePosition={'space-between'} />
-        <ModalSubTitle subTitle={['Diby 패널이 입력한 "불편사항"에 대해', '불편함의 정도를 패널 스스로 평가해요.']} />
+        <ModalSubTitle subTitle={['Diby 응답자가 입력한 "불편사항"에 대해', '불편함의 정도를 응답자 스스로 평가해요.']} />
         <div>
           <img src={fatalityImg.src} alt="fatalityImg" css={{ width: '100%' }} />
         </div>

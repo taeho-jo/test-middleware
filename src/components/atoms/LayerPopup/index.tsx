@@ -1,10 +1,11 @@
-import React, { Fragment, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { Fragment, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
 import { body3_regular } from '../../../styles/FontStyles';
 import useOutsideClick from '../../../hooks/useOutsideClick';
+import { ReducerType } from '../../../store/reducers';
 
 interface PropsType {
   display: boolean;
@@ -24,9 +25,24 @@ const LayerPopup = ({ display, topText, normalText, top = 16, right = 16, setFoc
   const router = useRouter();
   const boxRef = useRef(null);
 
+  const showToastStatus = useSelector<ReducerType, any>(state => state.modal.isShow);
+
   useOutsideClick(boxRef, () => {
     setFocusProfile(false);
   });
+
+  const onClickLayer = callback => {
+    callback();
+    console.log('!');
+    setFocusProfile(false);
+  };
+
+  useEffect(() => {
+    // console.log(showToastStatus, '!!!!');
+    // if (!showToastStatus) {
+    setFocusProfile(false);
+    // }
+  }, [showToastStatus]);
 
   return (
     <div ref={boxRef} css={popupContainer(display, top, right)}>
@@ -35,7 +51,7 @@ const LayerPopup = ({ display, topText, normalText, top = 16, right = 16, setFoc
       {normalText.map((el, index) => {
         return (
           <Fragment key={index}>
-            <div onClick={el.onClick ? el.onClick : null} css={[body3_regular, cursorBtnStyle]}>
+            <div onClick={el.onClick} css={[body3_regular, cursorBtnStyle]}>
               {el.text}
             </div>
           </Fragment>

@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { isShow } from '../../store/reducers/modalReducer';
 import { fetchRefreshToken } from '../../api/authApi';
+import { useCallback } from 'react';
 
 export const isLandingPage = path => {
   switch (path) {
@@ -29,6 +30,25 @@ export const checkIsIntegerTwo = number => {
   return isInteger ? number : number?.toFixed(2);
 };
 
+// 리서치 상태 아이콘 이름
+export const getResearchStatusIcon = statusType => {
+  switch (statusType) {
+    case 'RESEARCH_COMPLETED':
+      return 'STATUS_COMPLETE';
+    case 'RESEARCH_INFO_ENTERING':
+    case 'RESEARCH_REQUEST_DESIGN':
+    case 'RESEARCH_DESIGN':
+    case 'RESEARCH_DESIGN_COMPLETE':
+    case 'RESEARCH_START_REQUEST':
+      return 'STATUS_BEFORE';
+    case 'RESPONSE_RECRUITING':
+    case 'RESEARCH_ANALYZING':
+      return 'STATUS_ING';
+    default:
+      return 'STATUS_BEFORE';
+  }
+};
+
 export const clearLocalStorage = () => {
   localStorage.removeItem('persist:root');
   localStorage.removeItem('projectNm');
@@ -37,4 +57,118 @@ export const clearLocalStorage = () => {
   localStorage.removeItem('commonCode');
   localStorage.removeItem('selectTeamList');
   localStorage.removeItem('teamSeq');
+};
+// <--------------------------------- 리서치 금액 계산 ---------------------------------> //
+export const calcResearchSolutionFee = RESEARCH_TYPE => {
+  switch (RESEARCH_TYPE) {
+    case 'UI_DIAGNOSIS':
+      return '500,000원';
+    case 'FGD':
+      return '1,000,000원';
+    case 'UX_POSITION_ANALYSIS':
+      return '600,000원';
+    case 'HYPOTHESIS_VERIFICATION':
+      return '600,000원';
+    case 'SHORT_SURVEY':
+      return '10,000원';
+    default:
+      return '650,000원 ~ 1,250,000원';
+  }
+};
+export const calcRespondentFee = RESEARCH_TYPE => {
+  switch (RESEARCH_TYPE) {
+    case 'UI_DIAGNOSIS':
+      return '3,000원 ~ 15,000원';
+    case 'FGD':
+      return '7,000원 ~ 30,000원';
+    case 'UX_POSITION_ANALYSIS':
+      return '3,000원 ~ 8,000원';
+    case 'HYPOTHESIS_VERIFICATION':
+      return '1,000원 ~ 10,000원';
+    case 'SHORT_SURVEY':
+      return '100원 ~ 1,000원';
+    default:
+      return '650,000원 ~ 1,250,000원';
+  }
+};
+
+// 예상 응답자 수
+export const calcRespondentCount = RESEARCH_TYPE => {
+  switch (RESEARCH_TYPE) {
+    case 'UI_DIAGNOSIS':
+      return '50명';
+    case 'FGD':
+      return '20명';
+    case 'UX_POSITION_ANALYSIS':
+      return '150명';
+    case 'HYPOTHESIS_VERIFICATION':
+      return '100명';
+    case 'SHORT_SURVEY':
+      return '100명';
+    default:
+      return '650,000원 ~ 1,250,000원';
+  }
+};
+
+export const missionAdditionalCompensation = (count: number) => {
+  switch (count) {
+    case 3:
+      return 1000;
+    case 4:
+      return 4000;
+    case 5:
+      return 11000;
+    case 6:
+      return 21000;
+    case 7:
+      return 35000;
+    case 8:
+      return 56000;
+    default:
+      return 0;
+  }
+};
+// <--------------------------------- 리서치 금액 계산 ---------------------------------> //
+
+// <--------------------------------- Debounce ---------------------------------> //
+export const debounceFunction = (callback, delay) => {
+  let timer;
+  return (...agrs) => {
+    clearTimeout(timer);
+
+    timer = setTimeout(() => callback(...agrs), delay);
+  };
+};
+// <--------------------------------- Debounce ---------------------------------> //
+
+export const calcWhichStep = (type, stepName) => {
+  let step;
+  if (type === 'next') {
+    switch (stepName) {
+      case 'step1':
+        return (step = 'step2');
+      case 'step2':
+        return (step = 'step3');
+      case 'step3':
+        return (step = 'step4');
+      case 'step4':
+        return (step = 'step5');
+      default:
+        return (step = 'step5');
+    }
+  }
+  if (type === 'prev') {
+    switch (stepName) {
+      case 'step2':
+        return (step = 'step1');
+      case 'step3':
+        return (step = 'step2');
+      case 'step4':
+        return (step = 'step3');
+      case 'step5':
+        return (step = 'step4');
+      default:
+        return (step = 'step1');
+    }
+  }
 };

@@ -11,6 +11,7 @@ import ActionReset from '/public/assets/svg/reset.svg';
 import ActionResetDisable from '/public/assets/svg/reset_disabled.svg';
 import NavigationArrowLeft from '/public/assets/svg/navigation_arrow_left.svg';
 import NavigationArrowRight from '/public/assets/svg/navigation_arrow_right.svg';
+import NavigationArrowRightWhite from '/public/assets/svg/arrow_right_white.svg';
 import NavigationChevronDown from '/public/assets/svg/navigation_chevron_down_s.svg';
 import CloseSmall from '/public/assets/svg/close_small.svg';
 import ChevronDownThin from '/public/assets/svg/chevron_down_thin.svg';
@@ -44,6 +45,10 @@ import StatusComplete from '/public/assets/svg/status_complete.svg';
 import StatusBefore from '/public/assets/svg/status_before.svg';
 import StatusIng from '/public/assets/svg/status_ing.svg';
 import ActionFilter from '/public/assets/svg/action_filter.svg';
+import Lock from '/public/assets/svg/lock.svg';
+import Download from '/public/assets/svg/download.svg';
+import Receipt from '/public/assets/svg/receipt.svg';
+import Report from '/public/assets/svg/report.svg';
 
 import { css } from '@emotion/react';
 
@@ -72,6 +77,7 @@ const IconTypes = {
   ACTION_RESET_DISABLED: ActionResetDisable,
   NAVIGATION_ARROW_LEFT: NavigationArrowLeft,
   NAVIGATION_ARROW_RIGHT: NavigationArrowRight,
+  NAVIGATION_ARROW_RIGHT_WHITE: NavigationArrowRightWhite,
   NAVIGATION_CHEVRON_DOWN: NavigationChevronDown,
   NAVIGATION_CHEVRON_RIGHT: NavigationChevronRight,
   NAVIGATION_CHEVRON_RIGHT_DISABLED: NavigationChevronRightDisabled,
@@ -104,6 +110,10 @@ const IconTypes = {
   STATUS_BEFORE: StatusBefore,
   STATUS_ING: StatusIng,
   ACTION_FILTER: ActionFilter,
+  LOCK: Lock,
+  DOWNLOAD: Download,
+  RECEIPT: Receipt,
+  REPORT: Report,
 };
 
 const Icon = ({ name, size = 24, style, iconColor, onClick, forwardref, width = '24px', height = '24px' }: PropsType) => {

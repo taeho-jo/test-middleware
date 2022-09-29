@@ -1,3 +1,4 @@
+// export const profileColor = ['#24e1d5', '#a8ff69', '#2878f0', '#7b3ce9', '#ff6678', '#ff9466', '#ffe81b', '#23ff88', '#e16bff', '#ff66b9'];
 export const profileColor = [
   '#95efe9',
   '#94bbf5',

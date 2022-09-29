@@ -77,7 +77,7 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
           }),
         [],
       );
-      setSelectTeamList([...newArr, { value: 'add', displayName: '+ 새로 만들기', label: '+ 새로 만들기' }]);
+      setSelectTeamList([...newArr, { value: 'add', displayName: '+ 새로운 팀을 추가해보세요', label: '+ 새로운 팀을 추가해보세요' }]);
     }
   }, [teamList]);
 
@@ -93,7 +93,10 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
           }),
         [],
       );
-      setSelectProductList([...newArr, { value: 'add', displayName: '+ 새로 만들기', label: '+ 새로 만들기', teamSeq: null }]);
+      setSelectProductList([
+        ...newArr,
+        { value: 'add', displayName: '+ 새로운 프로덕트를 추가해보세요', label: '+ 새로운 프로덕트를 추가해보세요', teamSeq: null },
+      ]);
     }
   }, [productList]);
 
@@ -131,12 +134,12 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
     <FlexBox width={'100%'} height={'500px'} style={selectContainer}>
       <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ padding: '16px 40px 32px', boxSizing: 'border-box' }}>
         <Input
-          title={'리서치 명'}
+          title={'이번 리서치를 구분할 이름을 입력하세요'}
           register={register}
           label={'researchName'}
           errors={errors}
           errorMsg={'필수 항목입니다.'}
-          placeholder={'리서치 명을 입력해주세요.'}
+          placeholder={'예시) OOO 서비스 사용성 테스트'}
           // style={{ marginBottom: '16px' }}
           onFocus={() => setGuideStatus('researchName')}
           onBlur={() => setGuideStatus('inactive')}
@@ -146,7 +149,8 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
         />
         <Select
           getResearchMethod={getResearchMethod}
-          title={'리서치 방법'}
+          title={'어떤 리서치를 수행하실 건가요?'}
+          placeholder={'리서치 종류 선택'}
           options={methodsType}
           value={selected.method}
           selected={selected}
@@ -159,7 +163,8 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
         />
         <Select
           getResearchMethod={getResearchMethod}
-          title={'팀'}
+          title={'어떤 팀에서 수행하는 리서치인가요?'}
+          placeholder={'팀을 선택해주세요'}
           options={selectTeamList}
           value={selected.team}
           selected={selected}
@@ -172,7 +177,8 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
         />
         <Select
           getResearchMethod={getResearchMethod}
-          title={'프로덕트'}
+          title={'이번 리서치 대상은 어떤 프로덕트인가요?'}
+          placeholder={'프로덕트를 선택해주세요'}
           options={selectProductList}
           value={selected.product}
           selected={selected}

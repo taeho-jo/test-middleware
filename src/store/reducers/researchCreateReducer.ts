@@ -18,13 +18,18 @@ interface initialStateType {
     researchType: string;
     teamSeq: string;
     productSeq: string;
-    panelInfo: { panel: string }[] | null;
-    decisionInfo: { decision: string }[] | null;
-    detailInfo: { mission: string }[] | { agenda: string }[] | { hypothesis: string; hypothesisReason: string }[] | null;
+    respondentInfo: { panel: string }[] | null;
+    goalInfo: { goal: string }[] | null;
+    detailDesignInfo: { mission: string }[] | { agenda: string }[] | { hypothesis: string; hypothesisReason: string }[] | null;
     additionalInfo: { additional: string }[] | null;
     statusType: string;
   };
+  researchDeleteInfo: {
+    teamSeq: string | null;
+    researchSeq: string | null;
+  };
   researchStepOneData: any;
+  recommendationStep: string;
   error: any;
 }
 
@@ -46,13 +51,18 @@ const initialState: initialStateType = {
     researchType: '',
     teamSeq: '',
     productSeq: '',
-    panelInfo: [],
-    decisionInfo: [],
-    detailInfo: [],
+    respondentInfo: [],
+    goalInfo: [],
+    detailDesignInfo: [],
     additionalInfo: [],
     statusType: '',
   },
+  researchDeleteInfo: {
+    teamSeq: null,
+    researchSeq: null,
+  },
   researchStepOneData: null,
+  recommendationStep: 'step1',
   error: null,
 };
 
@@ -87,7 +97,10 @@ export const researchCreateSlice = createSlice({
       state.researchModifyInfo = { ...state.researchModifyInfo, [action.payload.name]: action.payload.value };
     },
     updateResearchModifyArrayInfo: (state, action) => {
-      state.researchModifyInfo = { ...state.researchModifyInfo, [action.payload.name]: [state.researchModifyInfo.panelInfo, action.payload.value] };
+      state.researchModifyInfo = {
+        ...state.researchModifyInfo,
+        [action.payload.name]: [state.researchModifyInfo.respondentInfo, action.payload.value],
+      };
     },
     // 리서치 최초 생성
     fetchResearchBasicInfo: (state, action: PayloadAction<any>) => {
@@ -102,6 +115,18 @@ export const researchCreateSlice = createSlice({
     },
     fetchResearchModifyInfoSuccess: (state, action: PayloadAction<any>) => {
       state.detailData = action.payload;
+    },
+    // 리서치 삭제 정보
+    updateDeleteResearchInfo: (state, action: PayloadAction<any>) => {
+      state.researchDeleteInfo = action.payload;
+    },
+    // 리서치 삭제 api Action
+    fetchResearchDelete: (state, action: PayloadAction<any>) => {
+      return state;
+    },
+    // 리서치 추천 스텝 변경
+    updateRecommendationStep: (state, action: PayloadAction<string>) => {
+      state.recommendationStep = action.payload;
     },
 
     // RESET
@@ -122,11 +147,15 @@ export const researchCreateSlice = createSlice({
         researchType: '',
         teamSeq: '',
         productSeq: '',
-        panelInfo: null,
-        decisionInfo: null,
-        detailInfo: null,
+        respondentInfo: null,
+        goalInfo: null,
+        detailDesignInfo: null,
         additionalInfo: null,
         statusType: '',
+      };
+      state.researchDeleteInfo = {
+        teamSeq: null,
+        researchSeq: null,
       };
     },
     // 에러 처리
@@ -149,7 +178,10 @@ export const {
   fetchResearchBasicInfoSuccess,
   fetchResearchModifyInfo,
   fetchResearchModifyInfoSuccess,
+  fetchResearchDelete,
   getResearchApiError,
+  updateRecommendationStep,
   resetCreateResearchData,
+  updateDeleteResearchInfo,
 } = researchCreateSlice.actions;
 export default researchCreateSlice.reducer;

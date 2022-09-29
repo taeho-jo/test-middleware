@@ -25,9 +25,9 @@ const Seo = ({
     switch (path) {
       case '/usecases/ui':
         return {
-          title: 'Diby | UI 진단',
+          title: 'Diby | 사용성 테스트',
           description: '사용성 테스트 (usabiltiy test)로 서비스내 문제점 파악',
-          ogTitle: 'UI 진단 | Diby',
+          ogTitle: '사용성 테스트 | Diby',
           ogDescription: '사용성 테스트 (usabiltiy test)로 서비스내 문제점 파악',
           url,
         };

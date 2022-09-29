@@ -39,7 +39,10 @@ export interface TeamType {
   selectProduct: TeamProductType | null;
   sidebarTeamProductInfo: TeamProductType[] | null;
   // Saga Redux Type
-  teamProductList: TeamProductType[];
+  teamProductList: {
+    list: TeamProductType[];
+    count: number;
+  };
   loading: boolean;
   error: any;
 }
@@ -53,7 +56,10 @@ const initialState: TeamType = {
   selectProduct: null,
   sidebarTeamProductInfo: null,
   // Saga Redux
-  teamProductList: [],
+  teamProductList: {
+    list: [],
+    count: 0,
+  },
   loading: false,
   error: null,
 };
@@ -89,7 +95,7 @@ export const teamSlice = createSlice({
     getProductList: (state, action: PayloadAction<{ teamSeq: string }>) => {
       return state;
     },
-    getProductListSuccess: (state, action: PayloadAction<TeamProductType[]>) => {
+    getProductListSuccess: (state, action: PayloadAction<{ list: TeamProductType[]; count: number }>) => {
       state.teamProductList = action.payload;
     },
     getProductListError: (state, action: PayloadAction<any>) => {

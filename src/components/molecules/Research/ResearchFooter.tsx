@@ -12,6 +12,7 @@ interface PropsType {
 }
 const ResearchFooter = ({ handleMoveNextStep, handleMovePrevStep }: PropsType) => {
   const CREATE_STEP = useSelector<ReducerType, string>(state => state.researchCreate.step);
+  const RESEARCH_STATUS = useSelector<ReducerType, any>(state => state.researchCreate.detailData);
 
   return (
     <div css={container}>
@@ -29,7 +30,7 @@ const ResearchFooter = ({ handleMoveNextStep, handleMovePrevStep }: PropsType) =
       {CREATE_STEP === 'step5' && (
         <Button
           onClick={handleMoveNextStep}
-          btnText={'하루안에 무료로 리서치 설계받기'}
+          btnText={RESEARCH_STATUS?.statusType === 'RESEARCH_INFO_ENTERING' ? '하루안에 무료로 리서치 설계받기' : '변경사항 저장'}
           backgroundColor={colors.grey._3c}
           btnTextColor={'white'}
           style={{ width: '498px', marginTop: '16px' }}

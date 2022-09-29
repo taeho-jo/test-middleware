@@ -4,7 +4,6 @@ import { css } from '@emotion/react';
 import FlexBox from '../../../components/atoms/FlexBox';
 import { colors } from '../../../styles/Common.styles';
 import { body1_medium, body2_bold, body3_medium, heading1_bold, heading2_bold } from '../../../styles/FontStyles';
-
 import icon1_inActive from '../../../../public/assets/images/admin/team/uitest_inactive.png';
 import icon2_inActive from '../../../../public/assets/images/admin/team/scenario_inactive.png';
 import icon3_inActive from '../../../../public/assets/images/admin/team/uxposition_inactive.png';
@@ -24,21 +23,20 @@ import { useQuery, useQueryClient } from 'react-query';
 import { fetchTeamListApi, fetchTeamReportListApi } from '../../../api/teamApi';
 import { updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import { updateProjectName } from '../../../store/reducers/reportReducer';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { clearLocalStorage, debounceFunction } from '../../../common/util/commonFunc';
 import Form from '../../atoms/Form';
 import Input from '../../atoms/Input';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
 import Icon from '../../atoms/Icon';
 import IconTextButton from '../../atoms/Button/IconTextButton';
 import { fetchResearchList } from '../../../store/reducers/researchCreateReducer';
 import { getRefreshToken } from '../../../store/reducers/authReducer';
-import ModalTitle from '../../molecules/ModalTitle';
 import CheckBox from '../../atoms/CheckBox';
 
 const ResearchType = [
   {
-    title: '어떤 리서치를 해야할까요?',
+    title: '1분만에 리서치 종류 추천받기',
     link: 'https://form.typeform.com/to/lmyqEfEb',
     backgroundColor: `${colors.grey._3c}`,
     color: `${colors.white}`,
@@ -46,7 +44,7 @@ const ResearchType = [
     image: null,
   },
   {
-    title: 'UI 진단',
+    title: '사용성 테스트',
     link: 'https://dbdlab.notion.site/UI-5a3e44a7bcb2439097e311fd62ad5e5d',
     backgroundColor: `${colors.white}`,
     color: null,
@@ -88,7 +86,7 @@ const ResearchType = [
     color: null,
     hoverImage: icon4,
     image: icon4_inActive,
-    modalType: 'customerResearchModule',
+    modalType: 'shortSurveyResearchModule',
   },
 ];
 
@@ -117,7 +115,9 @@ const TeamDashboard = () => {
     handleSubmit,
     reset,
     getValues,
+    watch,
     setValue,
+    control,
     formState: { errors },
   } = useForm<InputType>({});
   const onSubmit = data => handleSearchResearchList(data);
@@ -209,7 +209,7 @@ const TeamDashboard = () => {
   const getResearchList = (teamSeq, researchNm: any = '', researchType = '', statusType = '') => {
     const params = {
       teamSeq: teamSeq,
-      researchNm: researchNm,
+      searchText: researchNm,
       researchType: researchType,
       statusType: statusType,
     };
@@ -220,12 +220,31 @@ const TeamDashboard = () => {
   const handleSearchResearchList = data => {
     console.log(data);
     setSearchText(data.researchNm);
-    getResearchList(selectTeamSeq, data.researchNm, filterTypeArr[0] ? filterTypeArr[0] : '', filterStatusArr[0] ? filterStatusArr[0] : '');
+    getResearchList(
+      selectTeamSeq,
+      data.researchNm,
+      filterTypeArr.length > 0 ? filterTypeArr.join() : '',
+      filterStatusArr.length > 0 ? filterStatusArr.join() : '',
+    );
   };
   // 리서치 목록 필터 검색
   useEffect(() => {
-    getResearchList(selectTeamSeq, searchText, filterTypeArr[0] ? filterTypeArr[0] : '', filterStatusArr[0] ? filterStatusArr[0] : '');
+    getResearchList(
+      selectTeamSeq,
+      searchText,
+      filterTypeArr.length > 0 ? filterTypeArr.join() : '',
+      filterStatusArr.length > 0 ? filterStatusArr.join() : '',
+    );
   }, [filterStatusArr, filterTypeArr]);
+
+  const debounceSearch = value => {
+    getResearchList(
+      selectTeamSeq,
+      value,
+      filterTypeArr.length > 0 ? filterTypeArr.join() : '',
+      filterStatusArr.length > 0 ? filterStatusArr.join() : '',
+    );
+  };
 
   // 리서치 목록 조회
   useEffect(() => {
@@ -274,7 +293,11 @@ const TeamDashboard = () => {
     }
   }, [teamListData, selectTeamList, selectTeamSeq]);
 
-  console.log(RESEARCH_TYPE, 'a');
+  // useEffect(() => {
+  //   if (watch('researchNm')) {
+  //     debounceFunction(() => console.log(watch('researchNm')), 1000);
+  //   }
+  // }, [watch('researchNm')]);
   return (
     <>
       <div css={teamMainContainer}>
@@ -301,7 +324,7 @@ const TeamDashboard = () => {
         </FlexBox>
         <FlexBox style={{ padding: '24px 32px 32px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
           <FlexBox direction={'row'} justify={'flex-start'} align={'center'} style={{ marginBottom: '32px' }}>
-            <span css={[body2_bold, titleStyle, { width: '73px', marginBottom: 0, marginRight: '16px' }]}>모든 리서치</span>
+            <span css={[body2_bold, titleStyle, { marginBottom: 0, marginRight: '16px' }]}>우리 팀의 리서치 목록</span>
             <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ width: '249px', boxSizing: 'border-box', position: 'relative' }}>
               <Input
                 title={''}
@@ -309,7 +332,10 @@ const TeamDashboard = () => {
                 label={'researchNm'}
                 errors={errors}
                 errorMsg={'필수 항목입니다.'}
-                placeholder={'검색어를 입력해주세요'}
+                placeholder={'우리 팀의 리서치 검색하기'}
+                registerOptions={{
+                  onChange: debounceFunction(e => debounceSearch(e.target.value), 1000),
+                }}
                 style={{
                   border: `1px solid #DCDCDC`,
                 }}
@@ -339,13 +365,7 @@ const TeamDashboard = () => {
                 iconPosition={'left'}
                 text={`필터(${filterTypeArr.length + filterStatusArr.length})`}
                 onClick={() => handleShowFilterModal(true)}
-                css={css`
-                  width: 107px;
-                  height: 40px;
-                  border: 1px solid #3c3c46;
-                  border-radius: 8px;
-                  margin-left: 16px;
-                `}
+                css={filterBtnStyle}
               />
               {showFilterModal && (
                 <div css={filterModalStyle}>
@@ -359,7 +379,7 @@ const TeamDashboard = () => {
                       />
                     )}
 
-                    <span css={[heading2_bold]}>{filterType.type ? '리서치 방법' : filterType.status ? '리서치 상태' : '필터'}</span>
+                    <span css={[heading2_bold]}>{filterType.type ? '리서치 종류' : filterType.status ? '리서치 상태' : '필터'}</span>
                     {!filterType.type && !filterType.status && (
                       <Icon onClick={() => handleShowFilterModal(false)} name={'NAVIGATION_CLOSE_LG'} size={24} style={{ cursor: 'pointer' }} />
                     )}
@@ -376,7 +396,7 @@ const TeamDashboard = () => {
                         `}
                         onClick={() => setFilterType({ ...filterType, type: true })}
                       >
-                        <span css={[body1_medium]}>리서치 방법</span>
+                        <span css={[body1_medium]}>리서치 종류</span>
                         <span css={[body1_medium, { color: '#cccccc' }]}>{filterTypeArr.length} 필터</span>
                       </FlexBox>
                     )}
@@ -514,4 +534,11 @@ const filterModalStyle = css`
   box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   padding: 10px 16px;
+`;
+const filterBtnStyle = css`
+  width: 107px;
+  height: 40px;
+  border: 1px solid #3c3c46;
+  border-radius: 8px;
+  margin-left: 16px;
 `;

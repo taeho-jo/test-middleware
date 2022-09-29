@@ -96,7 +96,7 @@ const TestResults = ({ dataList, missionList, changeClicked, clicked }) => {
       ];
 
       if (s1Data) {
-        const newArr = [{ name: 'UI 진단 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr, ...newLongArr];
+        const newArr = [{ name: '사용성 테스트 전체 요약' }, ...missionArr, ...otherArr2, ...otherArr, ...newLongArr];
 
         filterTotalIndexList([{ name: 'one' }, ...newArr]);
         setIntentList(newArr);

@@ -24,7 +24,8 @@ export type ColorsType =
   | '#cccccc'
   | '#ececec'
   | '#fafafa'
-  | '#ffffff';
+  | '#ffffff'
+  | '#dcdcdc';
 
 export type IconType =
   | 'GOOGLE'
@@ -74,7 +75,12 @@ export type IconType =
   | 'ACTION_FILTER'
   | 'CHEVRON_RIGHT_THIN'
   | 'CHEVRON_LEFT_THIN'
-  | 'ACTION_FILTER';
+  | 'ACTION_FILTER'
+  | 'LOCK'
+  | 'DOWNLOAD'
+  | 'RECEIPT'
+  | 'REPORT'
+  | 'NOTI';
 
 export interface InputType {
   label: string;

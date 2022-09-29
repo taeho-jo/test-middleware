@@ -39,15 +39,13 @@ const CreateResearchStepFive = ({ detailInfo, getResearchMethod, register }: Pro
           `}
         >
           <TextArea
-            title={'추가 요구사항(선택)'}
+            title={'Diby 매니저가 추가로 알아야할 사항을 입력해주세요. (선택)'}
             register={register}
             label={`additional`}
             errors={errors}
             defaultValue={detailInfo?.additionalInfo?.[0]?.additional ? detailInfo?.additionalInfo?.[0]?.additional : ''}
             errorMsg={'텍스트를 입력해주세요.'}
-            placeholder={
-              'Diby 매니저가 추가로 알아야할 사항이 있다면 뭐든지 상세하게 입력해주세요.\n' + '예시 ) 원하시는 리서치 시작일자, 리서치 배경 등등 '
-            }
+            placeholder={'원하시는 리서치 시작일자, 리서치 배경 등등'}
             registerOptions={{
               required: true,
             }}

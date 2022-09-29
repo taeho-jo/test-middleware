@@ -15,20 +15,18 @@ import { updateResearchBasicInfo, updateResearchModifyInfo } from '../../../stor
 import Select from '../../atoms/Select';
 import { isShow } from '../../../store/reducers/modalReducer';
 import Input from '../../atoms/Input';
+import { debounceFunction } from '../../../common/util/commonFunc';
 interface PropsType {
   detailInfo: any;
   register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
   setValue?: any;
+  setAgendaType: any;
+  respondentDebounceSave?: (value: string) => void;
 }
 
-const FGD_ARR = [
-  { key: 'aa', value: 'aa', displayName: '직접입력' },
-  { key: 'bb', value: 'bb', displayName: '직접입력2' },
-];
-
-const CreateResearchStepFour = ({ detailInfo, register, setValue }: PropsType) => {
-  const methodsType = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
+const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType, respondentDebounceSave }: PropsType) => {
   const dispatch = useDispatch();
+  const AgendaList = useSelector<ReducerType, any>(state => state.common.commonCode.AgendaType);
 
   // hook saasaform
   const {
@@ -40,10 +38,8 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue }: PropsType) =
   } = useForm({});
   const { fields, append, insert, remove } = useFieldArray({
     control,
-    name: 'detailInfo',
+    name: 'detailDesignInfo',
   });
-
-  console.log(fields, 'FIE');
 
   const [openField, setOpenField] = useState(null);
 
@@ -53,23 +49,26 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue }: PropsType) =
   });
   const onClickValue = useCallback(
     (value, label) => {
-      // if (label === '직접입력') {
+      console.log(value, label);
       setSelected({
         ...selected,
-        topic: 'aa',
+        [label]: value,
       });
-      // }
+      setAgendaType(value);
+      if (value !== 'ETC') {
+        setValue('agenda', '');
+      }
     },
     [selected],
   );
 
-  const handleAppendPanel = () => {
+  const handleAppendRespondent = () => {
     append({ mission: '' });
   };
   const handleAppendHypo = () => {
     append({ hypothesis: '', hypothesisReason: '' });
   };
-  const handleRemovePanel = (index: number) => {
+  const handleRemoveRespondent = (index: number) => {
     remove(index);
   };
 
@@ -110,24 +109,26 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue }: PropsType) =
   };
 
   useEffect(() => {
-    if (!detailInfo?.detailInfo || detailInfo?.detailInfo?.length === 0) {
+    if (!detailInfo?.detailDesignInfo || detailInfo?.detailDesignInfo?.length === 0) {
       if (detailInfo?.researchType === 'FGD') {
         setValue('agenda', '');
+        setSelected({ topic: '' });
       } else if (detailInfo?.researchType === 'UI_DIAGNOSIS') {
-        serValueArray('detailInfo', [{ mission: '' }]);
+        serValueArray('detailDesignInfo', [{ mission: '' }]);
       } else if (detailInfo?.researchType === 'HYPOTHESIS_VERIFICATION') {
-        serValueArray('detailInfo', [{ hypothesis: '', hypothesisReason: '' }]);
+        serValueArray('detailDesignInfo', [{ hypothesis: '', hypothesisReason: '' }]);
         // setValue('detailInfo', [{ hypothesis: '', hypothesisReason: '' }]);
       }
     } else {
-      dispatch(updateResearchModifyInfo({ name: 'detailInfo', value: detailInfo?.detailInfo }));
+      dispatch(updateResearchModifyInfo({ name: 'detailInfo', value: detailInfo?.detailDesignInfo }));
       if (detailInfo?.researchType === 'FGD') {
-        setValue('agenda', detailInfo?.detailInfo?.[0].agenda);
-        setSelected({ topic: 'aa' });
+        setValue('agenda', detailInfo?.detailDesignInfo?.[0].agenda);
+        setSelected({ topic: detailInfo?.detailDesignInfo?.[0].agendaType });
+        setAgendaType(detailInfo?.detailDesignInfo?.[0].agendaType);
       } else if (detailInfo?.researchType === 'UI_DIAGNOSIS') {
-        serValueArray('detailInfo', detailInfo?.detailInfo);
+        serValueArray('detailDesignInfo', detailInfo?.detailDesignInfo);
       } else if (detailInfo?.researchType === 'HYPOTHESIS_VERIFICATION') {
-        serValueArray('detailInfo', detailInfo?.detailInfo);
+        serValueArray('detailDesignInfo', detailInfo?.detailDesignInfo);
       }
     }
   }, [detailInfo]);
@@ -147,14 +148,15 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue }: PropsType) =
           style={[selectContainer, { overflow: 'hidden', background: colors.grey._fa, borderRadius: '16px' }]}
         >
           <span css={descriptionText2}>
-            리서치 설계 단계에서
+            <strong>다음으로 넘어가주세요.</strong>
+            UX 포지션 분석의 경우 리서치 설계를 신청하신 후,
             <br />
-            서비스의 기획의도 파악을 위한 질문/답변을 별도로 진행합니다.
-          </span>
-          <br />
-          <span css={descriptionText}>
-            리서치 이후 실제 고객에게 파악한 서비스 인식과 서비스의 기획의도를
-            <br /> 비교/분석한 내용을 리포트로 제공합니다.
+            Diby 매니저가 별도로 서비스의 기획의도 파악을 위한 질문을 드릴 예정입니다.
+            <br />
+            <br />
+            리서치 결과에서 답변해주신 서비스 기획의도와 실제 고객의 인식을 비교한
+            <br />
+            리포트를 확인하실 수 있습니다.
           </span>
         </FlexBox>
       )}
@@ -170,16 +172,18 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue }: PropsType) =
           style={[selectContainer, { overflow: 'hidden', background: colors.grey._fa, borderRadius: '16px' }]}
         >
           <span css={descriptionText}>
-            리서치 설계 단계에서
+            <strong>다음으로 넘어가주세요.</strong>
             <br />
-            응답자의 선호를 확인하고 싶으신 비교 시안과
+            짧은 설문의 경우 리서치 설계를 신청하신 후,
             <br />
-            선택지를 전달해주시면 설계가 마무리됩니다.
+            Diby 매니저가 별도록 연락하여 응답자의 선호를
+            <br />
+            확인하고 싶으신 비교 시안과 선택지를 받을 예정입니다.
           </span>
         </FlexBox>
       )}
 
-      {/* UI 진단 */}
+      {/* 사용성 테스트 */}
       {detailInfo?.researchType === 'UI_DIAGNOSIS' && (
         <>
           <FlexBox align={'flex-start'} width={'100%'} height={'444px'} style={selectContainer}>
@@ -195,25 +199,34 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue }: PropsType) =
                       `}
                     >
                       {openField?.[`detail${index}`] === false ? (
-                        <ToggleHeader title={`미션${index + 1}`} onClick={() => handleToggleField(`mission${index}`)} />
+                        <ToggleHeader
+                          title={`미션${index + 1} : 응답자에게 어떤 미션을 지시할까요?`}
+                          onClick={() => handleToggleField(`mission${index}`)}
+                        />
                       ) : (
                         <>
-                          <ToggleHeader title={`미션${index + 1}`} onClick={() => handleToggleField(`mission${index}`)} />
+                          <ToggleHeader
+                            title={`미션${index + 1} : 응답자에게 어떤 미션을 지시할까요?`}
+                            onClick={() => handleToggleField(`mission${index}`)}
+                          />
                           <TextArea
                             // title={'이메일'}
                             register={register}
-                            label={`detailInfo[${index}].mission`}
+                            label={`detailDesignInfo[${index}].mission`}
                             errors={errors}
                             defaultValue={item.mission}
                             errorMsg={'텍스트를 입력해주세요.'}
-                            placeholder={'텍스트를 입력해주세요.'}
+                            placeholder={
+                              '예시) 당신은 회사에서 외부 미팅을 위해 쏘카{서비스}에서 차량을 빌려서 미팅장소에 도착하려고 합니다. 회사 혹은 집 근처 차량을 빌려보세요.'
+                            }
                             registerOptions={{
                               required: true,
+                              onChange: debounceFunction(e => respondentDebounceSave(e.target.value), 1000),
                             }}
                           />
                           {index !== 0 && (
                             <IconTextButton
-                              onClick={() => handleRemovePanel(index)}
+                              onClick={() => handleRemoveRespondent(index)}
                               text={'삭제하기'}
                               textStyle={{ color: colors.red }}
                               iconColor={colors.red}
@@ -229,7 +242,7 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue }: PropsType) =
                 })}
             </Form>
           </FlexBox>
-          <div onClick={handleAppendPanel} css={bottomAddBtnContainer}>
+          <div onClick={handleAppendRespondent} css={bottomAddBtnContainer}>
             <span css={bottomAddBtn}>+ 미션 추가하기</span>
           </div>
         </>
@@ -246,16 +259,17 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue }: PropsType) =
               `}
             >
               <Select
-                title={'FGD 아젠다'}
-                options={FGD_ARR}
+                title={'어떤 주제로 FGD를 진행할까요?'}
+                options={AgendaList}
                 value={selected.topic}
                 selected={selected}
                 setSelected={setSelected}
+                label={'topic'}
                 name="topic"
                 onClick={onClickValue}
               />
             </div>
-            {selected.topic === 'aa' && (
+            {selected.topic === 'ETC' && (
               <div>
                 <Input
                   register={register}
@@ -288,35 +302,49 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue }: PropsType) =
                       `}
                     >
                       {openField?.[`detail${index}`] === false ? (
-                        <ToggleHeader title={`가설${index + 1}`} onClick={() => handleToggleField(`mission${index}`)} />
+                        <ToggleHeader
+                          title={`가설?${index + 1} : 어떤 가설을 검증하고 싶으신가요`}
+                          onClick={() => handleToggleField(`mission${index}`)}
+                        />
                       ) : (
                         <>
-                          <ToggleHeader title={`가설${index + 1}`} onClick={() => handleToggleField(`mission${index}`)} />
+                          <ToggleHeader
+                            title={`가설?${index + 1} : 어떤 가설을 검증하고 싶으신가요?`}
+                            onClick={() => handleToggleField(`mission${index}`)}
+                          />
                           <TextArea
-                            title={'가설'}
+                            title={'검증하고 싶은 가설을 말씀해주세요'}
                             register={register}
-                            label={`detailInfo[${index}].hypothesis`}
+                            label={`detailDesignInfo[${index}].hypothesis`}
                             errors={errors}
+                            defaultValue={item.hypothesis}
                             errorMsg={'텍스트를 입력해주세요.'}
-                            placeholder={'텍스트를 입력해주세요.'}
+                            placeholder={
+                              '예시) 특정 뷰티 제품을 구매하는 사용자 중 00%가 넘는 사용자들은 인스타그램을 통해 특정 뷰티 제품의 정보를 가장 많이 조회 할 것이다.'
+                            }
                             registerOptions={{
                               required: true,
+                              onChange: debounceFunction(e => respondentDebounceSave(e.target.value), 1000),
                             }}
                           />
                           <TextArea
-                            title={'가설을 수립한 배경/이유'}
+                            title={'위 가설을 검증하고 싶은 이유는 무엇인가요?'}
                             register={register}
-                            label={`detailInfo[${index}].hypothesisReason`}
+                            label={`detailDesignInfo[${index}].hypothesisReason`}
                             errors={errors}
+                            defaultValue={item.hypothesisReason}
                             errorMsg={'텍스트를 입력해주세요.'}
-                            placeholder={'텍스트를 입력해주세요.'}
+                            placeholder={
+                              '예시) 가설 검증을 통해 특정 뷰티 제품을 구매하는 사용자들을 타겟으로 하는 인스타그램 마케팅 비중을 기존 대비 00% 높이기 위함이다.'
+                            }
                             registerOptions={{
                               required: true,
+                              onChange: debounceFunction(e => respondentDebounceSave(e.target.value), 1000),
                             }}
                           />
                           {index !== 0 && (
                             <IconTextButton
-                              onClick={() => handleRemovePanel(index)}
+                              onClick={() => handleRemoveRespondent(index)}
                               text={'삭제하기'}
                               textStyle={{ color: colors.red }}
                               iconColor={colors.red}
@@ -332,7 +360,7 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue }: PropsType) =
                 })}
             </Form>
           </FlexBox>
-          <div onClick={handleAppendPanel} css={bottomAddBtnContainer}>
+          <div onClick={handleAppendRespondent} css={bottomAddBtnContainer}>
             <span css={bottomAddBtn}>+ 가설 추가하기</span>
           </div>
         </>
