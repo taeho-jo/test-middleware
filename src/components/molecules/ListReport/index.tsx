@@ -27,7 +27,7 @@ interface PropsType {
   reportViewId: string;
   statusType: string;
   statusTypeNm: string;
-  onClick?: (id, name) => void;
+  onClick?: (e: any, id: string, name: string) => void;
 }
 
 const ListReport = ({ createDt, researchTypeNm, projectNm, researchSeq, reportViewId, statusType, statusTypeNm, onClick }: PropsType) => {
@@ -159,7 +159,7 @@ const ListReport = ({ createDt, researchTypeNm, projectNm, researchSeq, reportVi
       {statusType === 'RESEARCH_COMPLETED' && (
         <FlexBox>
           <Button
-            onClick={() => onClick(reportViewId, projectNm)}
+            onClick={(e: any) => onClick(e, reportViewId, projectNm)}
             backgroundColor={colors.grey._3c}
             btnText={'리포트 확인하기'}
             btnTextColor={'white'}

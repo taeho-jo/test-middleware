@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 
 interface PropsType {
   listData: any;
-  handleMoveDetail?: (id, name) => void;
+  handleMoveDetail?: (e: any, id: string, name: string) => void;
 }
 
 const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {

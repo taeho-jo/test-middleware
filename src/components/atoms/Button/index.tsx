@@ -14,7 +14,7 @@ interface PropsType {
   backgroundColor?: ColorsType;
   full?: boolean;
   type?: 'button' | 'submit' | 'reset';
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
   btnText?: string;
   isLoading?: boolean;
   icon?: IconType;
