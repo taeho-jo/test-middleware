@@ -221,7 +221,7 @@ const TeamDashboard = () => {
       teamSeq: selectTeamSeq,
     };
     dispatch(getTeamList(sendObject));
-  }, [userInfo, selectTeamList, selectTeamSeq]);
+  }, []);
 
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));

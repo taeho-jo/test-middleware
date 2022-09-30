@@ -15,15 +15,7 @@ interface PropsType {
   fontStyle?: any;
   style?: any;
 }
-const ProfileIcon = ({
-  fontStyle,
-  size = '32px',
-  margin = '0',
-  name,
-  backgroundColor = colors.green._500,
-  color = colors.white,
-  style,
-}: PropsType) => {
+const ProfileIcon = ({ fontStyle, size = '32px', margin = '0', name, backgroundColor = '#ff66b9', color = colors.white, style }: PropsType) => {
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const profileName = userInfo?.userName?.slice(0, 1);
 

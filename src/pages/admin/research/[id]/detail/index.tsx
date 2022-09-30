@@ -177,7 +177,7 @@ const ResearchDetail = () => {
               {detailData?.statusType === 'RESEARCH_DESIGN_COMPLETE' ? (
                 <BasicButton
                   onClick={() => showCostModal('researchStartModal')}
-                  btnTextColor={'white'}
+                  // btnTextColor={'white'}
                   // disabled={true}
                   text={'리서치 시작하기'}
                   css={css`
@@ -499,7 +499,7 @@ const researchDataContainer = css`
   p {
     margin: 0;
     padding: 0;
-    &:first-child {
+    &:first-of-type {
       margin-bottom: 12px;
     }
     &:last-child {
