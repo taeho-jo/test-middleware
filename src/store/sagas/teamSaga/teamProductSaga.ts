@@ -28,8 +28,10 @@ function* getTeamListSaga(action) {
     console.log(result, '!!!!!!!');
     if (result?.code === '200') {
       const list = result?.data?.list;
+
       const count = result?.data?.count;
-      if (count === 0) {
+      console.log(list, '!!!!!!!!LIST');
+      if (count === 0 || !list || list.length === 0) {
         yield put(
           updateTeamInfo([
             {
@@ -42,8 +44,8 @@ function* getTeamListSaga(action) {
         );
         yield put(isShow({ isShow: true, type: 'firstCreateTeam' }));
       } else {
-        localStorage.setItem('teamSeq', list[0]?.teamSeq);
-        localStorage.setItem('selectTeamList', JSON.stringify(list[0]));
+        localStorage.setItem('teamSeq', list?.[0]?.teamSeq);
+        localStorage.setItem('selectTeamList', JSON.stringify(list?.[0]));
 
         yield put(updateTeamInfo(list));
         if (selectTeamList === null) {
