@@ -12,13 +12,13 @@ function* getUserInfoSaga() {
     const result = yield call(fetchUserInfoApi, token);
 
     if (result.code === '200') {
-      const data = result.data;
+      const data = result?.data;
       yield put(setUserInfo(data));
       console.log(data, 'DATA');
-      if (data.emailVerifiedYn === 'N') {
+      if (data?.emailVerifiedYn === 'N') {
         yield put(isShow({ isShow: true, type: 'confirmSignup' }));
       }
-      if (data.emailVerifiedYn === 'Y') {
+      if (data?.emailVerifiedYn === 'Y') {
         return;
         // yield put(getTeamList());
       }

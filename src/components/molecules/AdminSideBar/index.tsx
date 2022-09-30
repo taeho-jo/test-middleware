@@ -31,8 +31,8 @@ const AdminSideBar = () => {
   const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
-  const productList = useSelector<ReducerType, any>(state => state.team.teamProductList.list);
-
+  const productList = useSelector<ReducerType, any>(state => state.team.teamProductList);
+  console.log(productList);
   const [myRole, setMyRole] = useState<string | null>(null);
 
   // 선택된 팀에 따른 프로덕트 정보 -> 프로덕트 정보 입력 팝업 노출 || 미노출
@@ -102,7 +102,7 @@ const AdminSideBar = () => {
       </FlexBox>
       <div className={'scrollType1'} css={scrollContainerStyle}>
         {teamList && sideTeamList()}
-        {myRole === '관리자' && productList?.length === 0 && (
+        {myRole === '관리자' && productList?.list?.length === 0 && (
           <FlexBox justify={'center'} style={{ marginTop: '24px' }}>
             <MoreTeamInfoPopup textArr={['프로덕트에 최적화된', '응답자를 더 빠르고 정확하게', '모집할 수 있습니다.']} />
           </FlexBox>
