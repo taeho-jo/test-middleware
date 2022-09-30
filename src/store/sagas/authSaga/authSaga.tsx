@@ -1,6 +1,7 @@
 import { call, put, takeEvery } from '@redux-saga/core/effects';
 import { getRefreshToken, getRefreshTokenSuccess } from '../../reducers/authReducer';
 import { fetchRefreshToken } from '../../../api/authApi';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 function* getRefreshTokenSaga(action) {
   try {
@@ -11,6 +12,10 @@ function* getRefreshTokenSaga(action) {
       yield put(getRefreshTokenSuccess(token));
     }
   } catch (e: any) {
+    if (e?.response?.data?.code === 'E0002') {
+      clearLocalStorage();
+      window.location.href = 'https://stag.diby.io';
+    }
     console.error(e);
   }
 }
