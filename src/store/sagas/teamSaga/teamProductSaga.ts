@@ -26,7 +26,7 @@ function* getTeamListSaga(action) {
     const { teamNm, teamMember, selectTeamList, teamSeq } = action;
     const result = yield call(fetchTeamListApi);
     console.log(result, '!!!!!!!');
-    if (result?.data?.code === '200') {
+    if (result?.code === '200') {
       const list = result?.data?.list;
       const count = result?.data?.count;
       if (count === 0) {
@@ -42,23 +42,23 @@ function* getTeamListSaga(action) {
         );
         yield put(isShow({ isShow: true, type: 'firstCreateTeam' }));
       } else {
+        localStorage.setItem('teamSeq', list[0]?.teamSeq);
+        localStorage.setItem('selectTeamList', JSON.stringify(list[0]));
+
         yield put(updateTeamInfo(list));
         if (selectTeamList === null) {
           yield put(updateSelectTeamList(list[0]));
         }
-        if (teamSeq === null) {
+        if (teamSeq !== null) {
           yield put(updateTeamSeq(list[0]?.teamSeq));
-          const params = {
-            teamSeq: teamSeq,
-            searchText: '',
-            researchType: '',
-            statusType: '',
-          };
-          yield put(fetchResearchList(params));
         }
-
-        localStorage.setItem('teamSeq', list[0]?.teamSeq);
-        localStorage.setItem('selectTeamList', JSON.stringify(list[0]));
+        const params = {
+          teamSeq: teamSeq ? teamSeq : list[0]?.teamSeq,
+          searchText: '',
+          researchType: '',
+          statusType: '',
+        };
+        yield put(fetchResearchList(params));
       }
     }
   } catch (e) {

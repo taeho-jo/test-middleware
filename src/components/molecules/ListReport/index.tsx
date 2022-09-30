@@ -115,7 +115,7 @@ const ListReport = ({ createDt, researchTypeNm, projectNm, researchSeq, reportVi
 
   const handleRemoveResearch = researchSeq => {
     if (statusType === 'RESEARCH_INFO_ENTERING') {
-      console.log(SELECTED_TEAM_SEQ, researchSeq);
+      // console.log(SELECTED_TEAM_SEQ, researchSeq);
       dispatch(updateDeleteResearchInfo({ teamSeq: SELECTED_TEAM_SEQ, researchSeq: researchSeq }));
       dispatch(isShow({ isShow: true, type: 'researchDeleteConfirmModal' }));
     } else {
