@@ -400,8 +400,9 @@ const ResearchDetail = () => {
               onMouseOver={() => showTooltip('리포트', detailData?.researchViewId ? true : false)}
               onMouseOut={closeTooltip}
             >
-              {detailData?.researchViewId ? (
+              {detailData?.reportViewId ? (
                 <IconTextButton
+                  onClick={() => window.open(`http://localhost:3000/admin/report/${detailData?.reportViewId}`)}
                   textStyle={[btnTextStyle, { color: colors.grey._3c }]}
                   name={'REPORT'}
                   text={'리포트 확인하기'}

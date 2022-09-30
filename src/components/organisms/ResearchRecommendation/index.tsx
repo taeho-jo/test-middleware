@@ -27,9 +27,9 @@ const ResearchRecommendation = () => {
   const [nextStep, setNextStep] = useState('');
   const [prevStep, setPrevStep] = useState('');
   const [selectQuestion, setSelectQuestion] = useState<{ questionSeq: number; question: string; optionsSeq: string[]; options: string[] }[]>([]);
-  // useEffect(() => {
-  //   console.log(selectQuestion, 'selectQuestion');
-  // }, [selectQuestion]);
+  useEffect(() => {
+    console.log(selectQuestion, 'selectQuestion');
+  }, [selectQuestion]);
   useEffect(() => {
     dispatch(getRecommendationDataAction());
   }, []);
@@ -70,21 +70,37 @@ const ResearchRecommendation = () => {
   }, [recommendationStep]);
 
   const handleMoveNextStep = () => {
-    // const nextStep = calcWhichStep('next', recommendationStep);
     if (step !== 100 && nextStep !== '') {
-      // setStep(step + 25);
-      setPrevStep(recommendationStep);
+      if (prevStep === '' && nextStep === 'step3') {
+        const skipQuestion = {
+          questionSeq: 2,
+          question: null,
+          nextQuestionSeq: null,
+          optionsSeq: null,
+          options: null,
+          subjective: null,
+        };
+        setSelectQuestion([...selectQuestion, skipQuestion]);
+        setPrevStep('step1');
+      } else {
+        const prevQuestionSeq = selectQuestion[selectQuestion.length - 1].questionSeq;
+        const prevQuestion = selectQuestion[selectQuestion.length - 1].question;
+        setPrevStep(`step${prevQuestionSeq}`);
+      }
       dispatch(updateRecommendationStep(nextStep));
-      // setPrevStep(nextStep);
-      // setPrevStep()
     }
   };
   const handleMovePrevStep = () => {
-    // const prevStep = calcWhichStep('prev', recommendationStep);
     if (step !== 0 && prevStep !== '') {
-      // setStep(step - 25);
+      console.log(nextStep, '!');
+      console.log(prevStep);
+      setStep(step - 25);
       dispatch(updateRecommendationStep(prevStep));
     }
+  };
+
+  const handleSubmit = () => {
+    console.log(selectQuestion, '!');
   };
 
   return (
@@ -136,7 +152,9 @@ const ResearchRecommendation = () => {
                 <Icon name={'NAVIGATION_ARROW_RIGHT_WHITE'} />
               </button>
             )}
-            {recommendationStep === 'step5' && <Button btnText={'추천 받기'} btnTextColor={'white'} disabled={true} />}
+            {recommendationStep === 'step5' && (
+              <Button onClick={handleSubmit} btnText={'추천 받기'} btnTextColor={'white'} disabled={selectQuestion.length === 5 ? false : true} />
+            )}
           </FlexBox>
           {/* ------------ 푸터 ------------ */}
         </FlexBox>

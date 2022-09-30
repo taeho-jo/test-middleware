@@ -21,7 +21,7 @@ import { ReducerType } from '../../../store/reducers';
 import { useRouter } from 'next/router';
 import { useQuery, useQueryClient } from 'react-query';
 import { fetchTeamListApi, fetchTeamReportListApi } from '../../../api/teamApi';
-import { updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
+import { getTeamList, updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import { updateProjectName } from '../../../store/reducers/reportReducer';
 import { clearLocalStorage, debounceFunction } from '../../../common/util/commonFunc';
 import Form from '../../atoms/Form';
@@ -123,39 +123,6 @@ const TeamDashboard = () => {
   const onSubmit = data => handleSearchResearchList(data);
   const onError = errors => console.log('fail', errors);
 
-  // ============ React Query ============ //
-  const { data: teamListData, isLoading } = useQuery(['fetchTeamList'], fetchTeamListApi, {
-    onError: (e: any) => {
-      const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        dispatch(getRefreshToken());
-        queryClient.invalidateQueries(['fetchTeamList']);
-      }
-      if (errorData.code === 'E0007') {
-        clearLocalStorage();
-        router.push('/');
-      }
-    },
-  });
-  const { data: teamReportList, refetch } = useQuery(['fetchTeamReportList', selectTeamSeq], () => fetchTeamReportListApi(selectTeamSeq), {
-    enabled: !!teamListData,
-    onError: (e: any) => {
-      const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        dispatch(getRefreshToken());
-        refetch();
-      }
-      if (errorData.code === 'E0007') {
-        clearLocalStorage();
-        router.push('/');
-      }
-    },
-    select: data => {
-      return data.data;
-    },
-  });
-  // ============ React Query ============ //
-
   // 리서치 필터 모달 상태
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [filterType, setFilterType] = useState({
@@ -227,16 +194,6 @@ const TeamDashboard = () => {
       filterStatusArr.length > 0 ? filterStatusArr.join() : '',
     );
   };
-  // 리서치 목록 필터 검색
-  useEffect(() => {
-    getResearchList(
-      selectTeamSeq,
-      searchText,
-      filterTypeArr.length > 0 ? filterTypeArr.join() : '',
-      filterStatusArr.length > 0 ? filterStatusArr.join() : '',
-    );
-  }, [filterStatusArr, filterTypeArr]);
-
   const debounceSearch = value => {
     getResearchList(
       selectTeamSeq,
@@ -245,59 +202,39 @@ const TeamDashboard = () => {
       filterStatusArr.length > 0 ? filterStatusArr.join() : '',
     );
   };
-
-  // 리서치 목록 조회
+  // 리서치 목록 필터 검색
   useEffect(() => {
     if (selectTeamSeq) {
-      getResearchList(selectTeamSeq);
+      getResearchList(
+        selectTeamSeq,
+        searchText,
+        filterTypeArr.length > 0 ? filterTypeArr.join() : '',
+        filterStatusArr.length > 0 ? filterStatusArr.join() : '',
+      );
     }
-  }, [selectTeamSeq]);
+  }, [filterStatusArr, filterTypeArr, selectTeamSeq]);
+  // 팀목록 조회
+  useEffect(() => {
+    const sendObject = {
+      teamNm: `${userInfo?.userName}`,
+      teamMember: [userInfo?.userName.slice(0, 1)],
+      selectTeamList,
+      teamSeq: selectTeamSeq,
+    };
+    dispatch(getTeamList(sendObject));
+  }, [userInfo, selectTeamList, selectTeamSeq]);
 
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));
   }, []);
 
-  const handleMoveDetail = useCallback((id, name) => {
-    dispatch(updateProjectName(name));
-    router.push(`/admin/report/${id}`);
+  const handleMoveDetail = useCallback((e: any, id: string, name: string) => {
+    e.stopPropagation();
+    // dispatch(updateProjectName(name));
+    console.log(id);
+    // router.push(`/admin/report/${id}`);
   }, []);
 
-  useEffect(() => {
-    if (teamListData?.code === '200') {
-      const count = teamListData?.data?.count;
-      const list = teamListData?.data?.list;
-      if (count === 0) {
-        dispatch(
-          updateTeamInfo([
-            {
-              teamSeq: null,
-              teamNm: `${userInfo?.userName}`,
-              teamMember: [userInfo?.userName.slice(0, 1)],
-              createDt: null,
-            },
-          ]),
-        );
-        dispatch(isShow({ isShow: true, type: 'firstCreateTeam' }));
-      } else {
-        dispatch(updateTeamInfo(list));
-        if (selectTeamList === null) {
-          dispatch(updateSelectTeamList(list[0]));
-        }
-        if (selectTeamSeq === null) {
-          dispatch(updateTeamSeq(list[0]?.teamSeq));
-        }
-
-        localStorage.setItem('teamSeq', list[0]?.teamSeq);
-        localStorage.setItem('selectTeamList', JSON.stringify(list[0]));
-      }
-    }
-  }, [teamListData, selectTeamList, selectTeamSeq]);
-
-  // useEffect(() => {
-  //   if (watch('researchNm')) {
-  //     debounceFunction(() => console.log(watch('researchNm')), 1000);
-  //   }
-  // }, [watch('researchNm')]);
   return (
     <>
       <div css={teamMainContainer}>

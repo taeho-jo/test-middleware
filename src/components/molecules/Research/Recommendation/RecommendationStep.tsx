@@ -37,7 +37,7 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
         setSelectQuestion([...filterArr, sendObject]);
       }
     } else {
-      let sendObject = {
+      const sendObject = {
         questionSeq: questionSeq,
         question: question,
         nextQuestionSeq: nextQuestionSeq,
@@ -47,17 +47,16 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
       };
 
       const checkArr = selectQuestion.filter(el => el.questionSeq === questionSeq);
+      const filterArr = selectQuestion.filter(el => el.questionSeq !== questionSeq);
       console.log(checkArr.length, '!!');
       if (checkArr.length === 0) {
-        console.log([...sendObject.options, options]);
         setSelectQuestion([...selectQuestion, sendObject]);
       } else {
-        sendObject = {
-          ...sendObject,
-          optionsSeq: [...sendObject.optionsSeq, optionsSeq],
-          options: [...sendObject.options, options],
-        };
-        console.log(sendObject, 'SEND');
+        const originObj = checkArr[0];
+        originObj.optionsSeq.push(sendObject.optionsSeq[0]);
+        originObj.options.push(sendObject.options[0]);
+
+        setSelectQuestion([...filterArr, originObj]);
       }
     }
   };

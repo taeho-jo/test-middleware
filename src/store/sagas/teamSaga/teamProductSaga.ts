@@ -1,17 +1,76 @@
 import { call, delay, put, takeEvery } from '@redux-saga/core/effects';
-import { fetchCreateProductApi, fetchDeleteProductAi, fetchProductListApi, fetchUpdateProductApi } from '../../../api/teamApi';
+import { fetchCreateProductApi, fetchDeleteProductAi, fetchProductListApi, fetchTeamListApi, fetchUpdateProductApi } from '../../../api/teamApi';
 import {
   createTeamProduct,
   deleteTeamProduct,
   getProductList,
-  getProductListError,
+  getError,
   getProductListSuccess,
   updateTeamProduct,
+  getTeamList,
+  updateTeamInfo,
+  updateSelectTeamList,
+  updateTeamSeq,
 } from '../../reducers/teamReducer';
 import { showToast } from '../../reducers/toastReducer';
 import { isShow } from '../../reducers/modalReducer';
 import { getRefreshToken } from '../../reducers/authReducer';
 import { getCommonCode } from '../../reducers/commonReducer';
+import { useSelector } from 'react-redux';
+import { ReducerType } from '../../reducers';
+import { fetchResearchList } from '../../reducers/researchCreateReducer';
+
+// 팀 조회 saga
+function* getTeamListSaga(action) {
+  try {
+    const { teamNm, teamMember, selectTeamList, teamSeq } = action;
+    const result = yield call(fetchTeamListApi);
+    console.log(result, '!!!!!!!');
+    if (result?.data?.code === '200') {
+      const list = result?.data?.list;
+      const count = result?.data?.count;
+      if (count === 0) {
+        yield put(
+          updateTeamInfo([
+            {
+              teamSeq: null,
+              teamNm,
+              teamMember,
+              createDt: null,
+            },
+          ]),
+        );
+        yield put(isShow({ isShow: true, type: 'firstCreateTeam' }));
+      } else {
+        yield put(updateTeamInfo(list));
+        if (selectTeamList === null) {
+          yield put(updateSelectTeamList(list[0]));
+        }
+        if (teamSeq === null) {
+          yield put(updateTeamSeq(list[0]?.teamSeq));
+          const params = {
+            teamSeq: teamSeq,
+            searchText: '',
+            researchType: '',
+            statusType: '',
+          };
+          yield put(fetchResearchList(params));
+        }
+
+        localStorage.setItem('teamSeq', list[0]?.teamSeq);
+        localStorage.setItem('selectTeamList', JSON.stringify(list[0]));
+      }
+    }
+  } catch (e) {
+    console.error(e);
+    yield put(getError(e));
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(getTeamList());
+    }
+  }
+}
 
 // 팀 프로덕트 조회 saga
 function* getProductListSaga(action) {
@@ -22,7 +81,7 @@ function* getProductListSaga(action) {
     }
   } catch (e: any) {
     console.error(e);
-    yield put(getProductListError(e));
+    yield put(getError(e));
     if (e?.response?.data?.code === 'E0008') {
       yield put(getRefreshToken());
       yield delay(1000);
@@ -44,7 +103,7 @@ function* createTeamProductSaga(action) {
   } catch (e: any) {
     console.error(e.response.data);
     showToast({ message: `${e.response.data.message}`, isShow: true, status: 'warning', duration: 5000 });
-    yield put(getProductListError(e));
+    yield put(getError(e));
   }
 }
 
@@ -58,7 +117,7 @@ function* updateTeamProductSaga(action) {
     yield put(getProductList({ teamSeq: action.payload.teamSeq }));
   } catch (e) {
     console.error(e);
-    yield put(getProductListError(e));
+    yield put(getError(e));
   }
 }
 
@@ -73,11 +132,12 @@ function* deleteTeamProductSaga(action) {
     }
   } catch (e: any) {
     console.error(e);
-    yield put(getProductListError(e));
+    yield put(getError(e));
   }
 }
 
 export function* teamProductSaga() {
+  yield takeEvery(getTeamList, getTeamListSaga);
   yield takeEvery(getProductList, getProductListSaga);
   yield takeEvery(createTeamProduct, createTeamProductSaga);
   yield takeEvery(updateTeamProduct, updateTeamProductSaga);

@@ -92,16 +92,19 @@ export const teamSlice = createSlice({
       state.sidebarTeamProductInfo = action.payload;
     },
     // Saga Redux Reducer
+    getTeamList: (state, action: PayloadAction<{ teamNm: string; teamMember: any; selectTeamList: any; teamSeq: any }>) => {
+      return state;
+    },
     getProductList: (state, action: PayloadAction<{ teamSeq: string }>) => {
       return state;
     },
     getProductListSuccess: (state, action: PayloadAction<{ list: TeamProductType[]; count: number }>) => {
       state.teamProductList = action.payload;
     },
-    getProductListError: (state, action: PayloadAction<any>) => {
+    getError: (state, action: PayloadAction<any>) => {
       state.error = action.payload;
     },
-    // Saga Redux
+
     createTeamProduct: (state, action: PayloadAction<any>) => {
       return state;
     },
@@ -122,9 +125,10 @@ export const {
   updateSelectTeamList,
   updateSidebarTeamProductInfo,
   // Saga Redux
+  getTeamList,
   getProductList,
   getProductListSuccess,
-  getProductListError,
+  getError,
   createTeamProduct,
   updateTeamProduct,
   deleteTeamProduct,
