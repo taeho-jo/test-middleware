@@ -3,7 +3,7 @@ import { getUserInfo, setUserInfo } from '../../reducers/userReducer';
 import { fetchUserInfoApi } from '../../../api/userApi';
 import { isShow } from '../../reducers/modalReducer';
 import { getRefreshToken } from '../../reducers/authReducer';
-import { getProductList } from '../../reducers/teamReducer';
+import { getProductList, getTeamList } from '../../reducers/teamReducer';
 
 function* getUserInfoSaga() {
   try {
@@ -19,7 +19,7 @@ function* getUserInfoSaga() {
         yield put(isShow({ isShow: true, type: 'confirmSignup' }));
       }
       if (data.emailVerifiedYn === 'Y') {
-        return;
+        yield put(getTeamList());
       }
     }
   } catch (e: any) {
