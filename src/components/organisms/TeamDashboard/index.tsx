@@ -214,14 +214,17 @@ const TeamDashboard = () => {
   }, [filterStatusArr, filterTypeArr, selectTeamSeq]);
   // 팀목록 조회
   useEffect(() => {
-    const sendObject = {
-      teamNm: `${userInfo?.userName}`,
-      teamMember: [userInfo?.userName.slice(0, 1)],
-      selectTeamList,
-      teamSeq: selectTeamSeq,
-    };
-    dispatch(getTeamList(sendObject));
-  }, []);
+    if (userInfo) {
+      const sendObject = {
+        teamNm: `${userInfo?.userName}`,
+        teamMember: [userInfo?.userName.slice(0, 1)],
+        selectTeamList,
+        teamSeq: selectTeamSeq,
+      };
+      console.log(sendObject, 'SEND OBJECT');
+      dispatch(getTeamList(sendObject));
+    }
+  }, [userInfo]);
 
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));
@@ -240,7 +243,7 @@ const TeamDashboard = () => {
         <FlexBox direction={'column'} justify={'flex-start'} align={'flex-start'} style={researchKinds}>
           <span css={[body2_bold, titleStyle]}>리서치 종류</span>
           <FlexBox justify={'flex-start'} align={'flex-start'}>
-            {ResearchType.map((item, index) => {
+            {ResearchType?.map((item, index) => {
               return (
                 <ResearchModuleButton
                   onClick={index === 0 ? () => window.open(item.link) : showResearchModuleModal}
@@ -436,7 +439,7 @@ const TeamDashboard = () => {
             </div>
           </FlexBox>
 
-          <ResearchList handleMoveDetail={handleMoveDetail} listData={teamResearchList} />
+          {teamResearchList && <ResearchList handleMoveDetail={handleMoveDetail} listData={teamResearchList} />}
         </FlexBox>
       </div>
     </>

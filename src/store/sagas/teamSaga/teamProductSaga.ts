@@ -25,12 +25,10 @@ function* getTeamListSaga(action) {
   try {
     const { teamNm, teamMember, selectTeamList, teamSeq } = action;
     const result = yield call(fetchTeamListApi);
-    console.log(result, '!!!!!!!');
+
     if (result?.code === '200') {
       const list = result?.data?.list;
-
       const count = result?.data?.count;
-      console.log(list, '!!!!!!!!LIST');
       if (count === 0 || !list || list.length === 0) {
         yield put(
           updateTeamInfo([
