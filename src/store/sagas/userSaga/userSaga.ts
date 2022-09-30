@@ -24,9 +24,11 @@ function* getUserInfoSaga() {
   } catch (e: any) {
     console.error(e);
     console.log(e.response.data, '!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    yield put(getRefreshToken());
-    yield delay(1000);
-    yield put(getUserInfo());
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(getUserInfo());
+    }
   }
 }
 
