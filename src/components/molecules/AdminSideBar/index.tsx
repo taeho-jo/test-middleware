@@ -18,6 +18,7 @@ import { fetchProductListApi } from '../../../api/teamApi';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { fetchGetResearchListApi } from '../../../api/researchApi';
 
 // Dummy
 
@@ -54,10 +55,18 @@ const AdminSideBar = () => {
       dispatch(updateSelectTeamList(item));
       dispatch(updateTeamSeq(item.teamSeq));
 
-      queryClient.invalidateQueries(['fetchTeamReportList', item.teamSeq]);
+      // queryClient.invalidateQueries(['fetchTeamReportList', item.teamSeq]);
 
       localStorage.setItem('selectTeamList', JSON.stringify(item));
       localStorage.setItem('teamSeq', item.teamSeq);
+
+      // const params = {
+      //   teamSeq: item.teamSeq,
+      //   searchText: '',
+      //   researchType: '',
+      //   statusType: '',
+      // };
+      // dispatch(fetchGetResearchListApi(params));
     },
     [teamList],
   );

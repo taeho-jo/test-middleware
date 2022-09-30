@@ -52,13 +52,14 @@ function* getTeamListSaga(action) {
         if (teamSeq !== null) {
           yield put(updateTeamSeq(list[0]?.teamSeq));
         }
-        const params = {
-          teamSeq: teamSeq ? teamSeq : list[0]?.teamSeq,
-          searchText: '',
-          researchType: '',
-          statusType: '',
-        };
-        yield put(fetchResearchList(params));
+        // const params = {
+        //   teamSeq: teamSeq ? teamSeq : list[0]?.teamSeq,
+        //   searchText: '',
+        //   researchType: '',
+        //   statusType: '',
+        // };
+        // console.log(params);
+        // yield put(fetchResearchList(params));
       }
     }
   } catch (e) {

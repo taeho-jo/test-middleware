@@ -10,7 +10,7 @@ import IconButton from '../../atoms/Button/IconButton';
 // Styles
 import { css } from '@emotion/react';
 import { caption2_bold, heading5_bold } from '../../../styles/FontStyles';
-import { profileColor } from '../../../common/util/commonVar';
+import { profileColor, profileColor2 } from '../../../common/util/commonVar';
 
 import { ReducerType } from '../../../store/reducers';
 import { memberListType, TeamListType, updateTeamSeq } from '../../../store/reducers/teamReducer';
@@ -88,7 +88,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
               <ProfileIcon
                 name={item?.userName?.slice(0, 1)}
                 backgroundColor={
-                  item?.userId === userInfo?.userId && parentsIndex === teamSeq ? '#cfffac' : parentsIndex === teamSeq ? profileColor[index] : 'grey'
+                  item?.userId === userInfo?.userId && parentsIndex === teamSeq ? '#ff66b9' : parentsIndex === teamSeq ? profileColor2[index] : 'grey'
                 }
                 size={'20px'}
                 fontStyle={caption2_bold}
