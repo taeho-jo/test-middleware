@@ -89,6 +89,8 @@ const AdminSideBar = () => {
           />
         );
       });
+    } else {
+      return <div>팀 조회중..</div>;
     }
   }, [teamList]);
 
@@ -99,7 +101,7 @@ const AdminSideBar = () => {
         <Icon onClick={() => dispatch(isShow({ isShow: true, type: 'createTeam' }))} name={'ACTION_CREATE'} size={24} style={{ cursor: 'pointer' }} />
       </FlexBox>
       <div className={'scrollType1'} css={scrollContainerStyle}>
-        {sideTeamList()}
+        {teamList && sideTeamList()}
         {myRole === '관리자' && productList?.length === 0 && (
           <FlexBox justify={'center'} style={{ marginTop: '24px' }}>
             <MoreTeamInfoPopup textArr={['프로덕트에 최적화된', '응답자를 더 빠르고 정확하게', '모집할 수 있습니다.']} />
