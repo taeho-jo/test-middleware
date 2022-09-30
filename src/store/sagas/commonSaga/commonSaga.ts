@@ -22,6 +22,7 @@ function* getCommonCodeSaga() {
     }
     if (e?.response?.data?.code === 'E0002') {
       clearLocalStorage();
+      window.location.href = 'https://stag.diby.io';
     }
     yield put(getErrorInfo(e));
   }
