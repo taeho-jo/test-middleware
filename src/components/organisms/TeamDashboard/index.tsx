@@ -202,29 +202,29 @@ const TeamDashboard = () => {
     );
   };
   // 리서치 목록 필터 검색
-  useEffect(() => {
-    if (selectTeamSeq) {
-      getResearchList(
-        selectTeamSeq,
-        searchText,
-        filterTypeArr.length > 0 ? filterTypeArr.join() : '',
-        filterStatusArr.length > 0 ? filterStatusArr.join() : '',
-      );
-    }
-  }, [filterStatusArr, filterTypeArr, selectTeamSeq]);
-  // 팀목록 조회
-  useEffect(() => {
-    if (userInfo) {
-      const sendObject = {
-        teamNm: `${userInfo?.userName}`,
-        teamMember: [userInfo?.userName.slice(0, 1)],
-        selectTeamList,
-        teamSeq: selectTeamSeq,
-      };
-      console.log(sendObject, 'SEND OBJECT');
-      dispatch(getTeamList(sendObject));
-    }
-  }, [userInfo]);
+  // useEffect(() => {
+  //   if (selectTeamSeq) {
+  //     getResearchList(
+  //       selectTeamSeq,
+  //       searchText,
+  //       filterTypeArr.length > 0 ? filterTypeArr.join() : '',
+  //       filterStatusArr.length > 0 ? filterStatusArr.join() : '',
+  //     );
+  //   }
+  // }, [filterStatusArr, filterTypeArr, selectTeamSeq]);
+  // // 팀목록 조회
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     const sendObject = {
+  //       teamNm: `${userInfo?.userName}`,
+  //       teamMember: [userInfo?.userName.slice(0, 1)],
+  //       selectTeamList,
+  //       teamSeq: selectTeamSeq,
+  //     };
+  //     console.log(sendObject, 'SEND OBJECT');
+  //     dispatch(getTeamList(sendObject));
+  //   }
+  // }, [userInfo]);
 
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));
