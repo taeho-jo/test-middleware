@@ -68,15 +68,22 @@ export const teamSlice = createSlice({
   name: 'team',
   initialState,
   reducers: {
-    updateSelectTeamList: (state, action) => {
-      // const selectedArr = state.teamList.filter(el => el.teamSeq === action.payload);
-      state.selectTeamList = action.payload;
-    },
     updateSelectProductList: (state, action) => {
       state.selectProduct = action.payload;
     },
     updateTeamCreateModal: (state, action) => {
       state.isFirstCreate = action.payload;
+    },
+    updateSidebarTeamProductInfo: (state, action: PayloadAction<TeamProductType[]>) => {
+      state.sidebarTeamProductInfo = action.payload;
+    },
+    // Saga Redux Reducer
+    getTeamList: (state, action: PayloadAction<{ teamNm: string; teamMember: any; selectTeamList: any; teamSeq: any }>) => {
+      return state;
+    },
+    updateSelectTeamList: (state, action) => {
+      // const selectedArr = state.teamList.filter(el => el.teamSeq === action.payload);
+      state.selectTeamList = action.payload;
     },
     updateTeamInfo: (state, action: PayloadAction<TeamListType[] | null>) => {
       if (action.payload === null) {
@@ -87,13 +94,6 @@ export const teamSlice = createSlice({
     },
     updateTeamSeq: (state, action: PayloadAction<number | null>) => {
       state.selectTeamSeq = action.payload;
-    },
-    updateSidebarTeamProductInfo: (state, action: PayloadAction<TeamProductType[]>) => {
-      state.sidebarTeamProductInfo = action.payload;
-    },
-    // Saga Redux Reducer
-    getTeamList: (state, action: PayloadAction<{ teamNm: string; teamMember: any; selectTeamList: any; teamSeq: any }>) => {
-      return state;
     },
     getProductList: (state, action: PayloadAction<{ teamSeq: string }>) => {
       return state;

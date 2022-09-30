@@ -185,7 +185,6 @@ const TeamDashboard = () => {
 
   // 리서치 목록 검색
   const handleSearchResearchList = data => {
-    console.log(data);
     setSearchText(data.researchNm);
     getResearchList(
       selectTeamSeq,
