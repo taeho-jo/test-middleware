@@ -139,7 +139,6 @@ const Layout = ({ children }: PropsType) => {
       // 구글로그인 했거나, 초대받은사람이 로그인하거나
       if (token && !userId && type && !teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
-        // dispatch(setSetting(true));
         dispatch(getUserInfo());
       }
       if (token && !userId && type && !teamSeq && !result && requestView) {
@@ -239,7 +238,7 @@ const Layout = ({ children }: PropsType) => {
                 {children}
               </main>
             </div>
-            <CommonModal />
+            {/*<CommonModal />*/}
           </>
         );
       case '/admin/reset-password':

@@ -19,7 +19,13 @@ function* getUserInfoSaga() {
         yield put(isShow({ isShow: true, type: 'confirmSignup' }));
       }
       if (data?.emailVerifiedYn === 'Y') {
-        // yield put(getTeamList());
+        // const sendObject = {
+        //   teamNm: data?.userName,
+        //   teamMember: data?.userName.slice(0, 1),
+        //   selectTeamList,
+        //   teamSeq: selectTeamSeq,
+        // };
+        yield put(getTeamList());
         return;
       }
     }

@@ -11,7 +11,7 @@ import TextArea from '../../atoms/TextArea';
 import ToggleHeader from '../../atoms/ToggleHeader';
 import Icon from '../../atoms/Icon';
 import IconTextButton from '../../atoms/Button/IconTextButton';
-import { updateResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
+import { fetchResearchModifyInfo, updateResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
 import { debounceFunction } from '../../../common/util/commonFunc';
 interface PropsType {
   detailInfo: any;
@@ -25,6 +25,7 @@ interface PropsType {
 }
 const CreateResearchStepThree = ({ detailInfo, register, respondentDebounceSave }: PropsType) => {
   const dispatch = useDispatch();
+  const DETAIL_INFO = useSelector<ReducerType, any>(state => state.researchCreate.detailData);
   const methodsType = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
 
   // hook saasaform
@@ -49,6 +50,13 @@ const CreateResearchStepThree = ({ detailInfo, register, respondentDebounceSave 
   };
   const handleRemoveRespondent = (index: number) => {
     remove(index);
+    const notRemoveArr = fields.filter((el, idx) => idx !== index);
+
+    const sendObject = {
+      ...DETAIL_INFO,
+      goalInfo: notRemoveArr,
+    };
+    dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'debounce' }));
   };
 
   // TODO: 리팩토링 해야함

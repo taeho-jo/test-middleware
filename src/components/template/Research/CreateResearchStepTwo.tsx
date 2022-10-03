@@ -11,7 +11,7 @@ import TextArea from '../../atoms/TextArea';
 import ToggleHeader from '../../atoms/ToggleHeader';
 import Icon from '../../atoms/Icon';
 import IconTextButton from '../../atoms/Button/IconTextButton';
-import { updateResearchModifyArrayInfo, updateResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
+import { fetchResearchModifyInfo, updateResearchModifyArrayInfo, updateResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
 import { forEach } from 'lodash';
 import { debounceFunction } from '../../../common/util/commonFunc';
 interface PropsType {
@@ -24,6 +24,7 @@ interface PropsType {
   // errors: any;
 }
 const CreateResearchStepTwo = ({ detailInfo, register, respondentDebounceSave }: PropsType) => {
+  const DETAIL_INFO = useSelector<ReducerType, any>(state => state.researchCreate.detailData);
   const methodsType = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
   const dispatch = useDispatch();
   // hook saasaform
@@ -37,7 +38,7 @@ const CreateResearchStepTwo = ({ detailInfo, register, respondentDebounceSave }:
     reset,
     formState: { errors },
   } = useForm({});
-  const { fields, append, insert, remove } = useFieldArray({
+  const { fields, append, insert, remove, update } = useFieldArray({
     control,
     name: 'respondentInfo',
   });
@@ -45,10 +46,17 @@ const CreateResearchStepTwo = ({ detailInfo, register, respondentDebounceSave }:
   const [openField, setOpenField] = useState(null);
 
   const handleAppendRespondent = () => {
-    append({ value: '' });
+    append({ respondent: '' });
   };
   const handleRemoveRespondent = (index: number) => {
     remove(index);
+    const notRemoveArr = fields.filter((el, idx) => idx !== index);
+
+    const sendObject = {
+      ...DETAIL_INFO,
+      respondentInfo: notRemoveArr,
+    };
+    dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'debounce' }));
   };
 
   // TODO: 리팩토링 해야함
@@ -87,10 +95,10 @@ const CreateResearchStepTwo = ({ detailInfo, register, respondentDebounceSave }:
     }
   };
   useEffect(() => {
+    console.log('작동함????????????????????????????????????');
     if (!detailInfo?.respondentInfo || detailInfo?.respondentInfo?.length === 0) {
       setValue('respondentInfo', [{ respondent: '' }]);
     } else {
-      dispatch(updateResearchModifyInfo({ name: 'respondentInfo', value: detailInfo?.respondentInfo }));
       setValue('respondentInfo', detailInfo?.respondentInfo);
     }
   }, [detailInfo]);

@@ -17,6 +17,9 @@ import TutorialIndicator from '../../../../../components/atoms/TutorialIndicator
 import ResearchDetailTooltipModal from '../../../../../components/organisms/Modal/ResearchDetailTooltipModal';
 import { isShow } from '../../../../../store/reducers/modalReducer';
 import BasicButton from '../../../../../components/atoms/Button/BasicButton';
+import CheckBox from '../../../../../components/atoms/CheckBox';
+import { useForm } from 'react-hook-form';
+import { CURRENT_DOMAIN } from '../../../../../common/util/commonVar';
 
 const ResearchDetail = () => {
   const router = useRouter();
@@ -97,7 +100,7 @@ const ResearchDetail = () => {
       case 'RESPONSE_RECRUITING':
       case 'RESEARCH_ANALYZING':
       case 'RESEARCH_COMPLETED':
-        return `${detailData?.startDt} ~ ${detailData?.endDt}`;
+        return `${detailData?.startDt ? detailData?.startDt : '----.--.--'} ~ ${detailData?.endDt ? detailData?.endDt : '----.--.--'}`;
       default:
         return 'Diby 매니저가 설계 검토 후 입력합니다';
     }
@@ -156,6 +159,12 @@ const ResearchDetail = () => {
 
   const showCostModal = name => {
     dispatch(isShow({ isShow: true, type: name }));
+  };
+
+  const checkReport = (type, id, url) => {
+    if (type === 'DIBY_WEB_REPORT') {
+      window.open(`${CURRENT_DOMAIN}/admin/report/${detailData?.reportViewId}`);
+    }
   };
 
   return (
@@ -397,12 +406,12 @@ const ResearchDetail = () => {
             </div>
             <div
               css={detailData?.researchViewId ? activeBtnContainer : btnContainer}
-              onMouseOver={() => showTooltip('리포트', detailData?.researchViewId ? true : false)}
+              onMouseOver={() => showTooltip('리포트', detailData?.reportViewId ? true : false)}
               onMouseOut={closeTooltip}
             >
               {detailData?.reportViewId ? (
                 <IconTextButton
-                  onClick={() => window.open(`http://localhost:3000/admin/report/${detailData?.reportViewId}`)}
+                  onClick={() => checkReport(detailData?.reportType, detailData?.reportViewId, detailData?.reportFileDownloadLink)}
                   textStyle={[btnTextStyle, { color: colors.grey._3c }]}
                   name={'REPORT'}
                   text={'리포트 확인하기'}

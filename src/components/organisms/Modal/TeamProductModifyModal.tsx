@@ -111,7 +111,7 @@ const TeamProductModifyModal = () => {
       });
       setCategoryArr(selectProduct.categoryType);
 
-      selectProduct.categoryType.forEach(el => setValue(el, true));
+      selectProduct?.categoryType?.forEach(el => setValue(el, true));
     }
   }, [selectProduct]);
 

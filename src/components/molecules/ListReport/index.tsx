@@ -22,15 +22,28 @@ import { fetchResearchDelete, updateDeleteResearchInfo } from '../../../store/re
 interface PropsType {
   createDt: string;
   researchTypeNm: string;
-  projectNm: string;
+  researchNm: string;
   researchSeq: number;
   reportViewId: string;
   statusType: string;
   statusTypeNm: string;
-  onClick?: (e: any, id: string, name: string) => void;
+  reportType: string;
+  downloadLink: string;
+  onClick?: (e: any, id: string, type: string, name: string, downloadLink: string) => void;
 }
 
-const ListReport = ({ createDt, researchTypeNm, projectNm, researchSeq, reportViewId, statusType, statusTypeNm, onClick }: PropsType) => {
+const ListReport = ({
+  createDt,
+  researchTypeNm,
+  researchNm,
+  researchSeq,
+  reportViewId,
+  statusType,
+  statusTypeNm,
+  reportType,
+  downloadLink,
+  onClick,
+}: PropsType) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const SELECTED_TEAM_SEQ = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
@@ -146,7 +159,7 @@ const ListReport = ({ createDt, researchTypeNm, projectNm, researchSeq, reportVi
           />
         </div>
       </FlexBox>
-      <span css={[heading5_bold, titleStyle]}>{projectNm}</span>
+      <span css={[heading5_bold, titleStyle]}>{researchNm}</span>
       <FlexBox style={dateBox} direction={'row'} justify={'flex-start'} align={'center'}>
         <ProfileIcon size={'20px'} margin={'0 8px 0 0'} fontStyle={caption2_bold} />
         <span css={[caption1_regular, dateStyle]}>{moment(createDt).format('YYYY. MM. DD')}</span>
@@ -159,7 +172,7 @@ const ListReport = ({ createDt, researchTypeNm, projectNm, researchSeq, reportVi
       {statusType === 'RESEARCH_COMPLETED' && (
         <FlexBox>
           <Button
-            onClick={(e: any) => onClick(e, reportViewId, projectNm)}
+            onClick={(e: any) => onClick(e, reportViewId, reportType, researchNm, downloadLink)}
             backgroundColor={colors.grey._3c}
             btnText={'리포트 확인하기'}
             btnTextColor={'white'}
