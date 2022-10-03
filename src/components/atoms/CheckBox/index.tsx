@@ -14,14 +14,15 @@ interface PropsType {
   registerOptions?: {
     [key: string]: any;
   };
+  [key: string]: any;
 }
 
-const CheckBox = ({ inputName, label, register, style, registerOptions, errors, checked, handleChangeCheckBox }: PropsType) => {
+const CheckBox = ({ inputName, label, register, style, registerOptions, errors, checked, handleChangeCheckBox, ...props }: PropsType) => {
   const vaildation = errors ? (errors[inputName] ? false : true) : true;
 
   return (
     <div css={[checkBoxContainerStyle, { ...style }]}>
-      <input onClick={handleChangeCheckBox} id={inputName} checked={checked} type={'checkbox'} {...register(inputName, registerOptions)} />
+      <input onClick={handleChangeCheckBox} id={inputName} checked={checked} type={'checkbox'} {...props} {...register(inputName, registerOptions)} />
       <label htmlFor={inputName} css={[caption1_regular, labelTextStyle(vaildation)]} dangerouslySetInnerHTML={{ __html: label }} />
     </div>
   );

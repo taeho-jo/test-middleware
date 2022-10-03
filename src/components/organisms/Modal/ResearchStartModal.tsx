@@ -8,34 +8,60 @@ import { ReducerType } from '../../../store/reducers';
 import { css } from '@emotion/react';
 import { heading2_bold, heading4_bold, heading4_medium, heading5_bold, heading5_medium } from '../../../styles/FontStyles';
 import CheckBox from '../../atoms/CheckBox';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
 import BasicButton from '../../atoms/Button/BasicButton';
 import { calcResearchSolutionFee, missionAdditionalCompensation } from '../../../common/util/commonFunc';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { fetchResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
 import { useRouter } from 'next/router';
+import Form from '../../atoms/Form';
+import { showToast } from '../../../store/reducers/toastReducer';
 
 const ResearchStartModal = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const DETAIL_INFO = useSelector<ReducerType, any>(state => state.researchCreate.detailData);
 
+  const [lastCheck, setLastCheck] = useState(false);
   const [addCosts, setAddCosts] = useState({
     totalRespondentSize: 0,
     totalRespondentCost: 0,
   });
 
+  const handleChangeCheckBox = () => {
+    // if (lastCheck.length === 0) {
+    //   setLastCheck([value]);
+    // }
+    // if (lastCheck.includes(value)) {
+    //   setLastCheck([]);
+    // }
+
+    setLastCheck(prev => !prev);
+  };
+
+  useEffect(() => {
+    console.log(lastCheck, '!lastCheck');
+  }, [lastCheck]);
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm({});
   const closeModal = useCallback(() => {
     dispatch(isShow({ isShow: false, type: '' }));
   }, []);
 
   const handleStartResearch = () => {
-    const sendObject = {
-      ...DETAIL_INFO,
-      statusType: 'RESEARCH_START_REQUEST_COMPLETE',
-    };
-    dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'last', callback: router }));
+    if (!lastCheck) {
+      dispatch(showToast({ message: '리서치 진행에 동의해주세요.', isShow: true, status: 'warning', duration: 5000 }));
+    } else {
+      const sendObject = {
+        ...DETAIL_INFO,
+        statusType: 'RESEARCH_START_REQUEST_COMPLETE',
+      };
+      dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'last', callback: router }));
+    }
   };
 
   useEffect(() => {
@@ -88,10 +114,6 @@ const ResearchStartModal = () => {
         return '1196px';
     }
   };
-  const {
-    register,
-    formState: { errors },
-  } = useForm({});
 
   return (
     <FlexBox style={{ marginTop: '35px', minWidth: '1440px' }} justify={'center'}>
@@ -360,22 +382,26 @@ const ResearchStartModal = () => {
               <span css={[heading4_medium, contentsStyle]}>{calcModalPeriod(DETAIL_INFO?.statusType)}</span>
             </FlexBox>
 
-            {DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost && (
-              <>
-                <FlexBox direction={'column'} align={'flex-start'} style={marginStyle}>
-                  <CheckBox
-                    inputName={'privacyConsentYn'}
-                    label={'모든 내용을 확인하고, 리서치 진행에 동의합니다.'}
-                    register={register}
-                    errors={errors}
-                  />
-                </FlexBox>
-                <FlexBox justify={'space-between'}>
-                  <BasicButton designBgColor={colors.red} style={{ width: '160px' }} onClick={closeModal} text={'취소하기'} />
-                  <BasicButton style={{ width: '160px' }} onClick={handleStartResearch} theme={'dark'} text={'시작하기'} />
-                </FlexBox>
-              </>
-            )}
+            {/*{DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost && (*/}
+            <>
+              <FlexBox direction={'column'} align={'flex-start'} style={marginStyle}>
+                <CheckBox
+                  handleChangeCheckBox={handleChangeCheckBox}
+                  checked={lastCheck}
+                  inputName={'confirm'}
+                  label={'모든 내용을 확인하고, 리서치 진행에 동의합니다.'}
+                  register={register}
+                  errors={errors}
+                />
+                {/*<input id={'1'} type={'checkbox'} checked={true} />*/}
+                {/*<label htmlFor="1"></label>*/}
+              </FlexBox>
+              <FlexBox justify={'space-between'}>
+                <BasicButton designBgColor={colors.red} style={{ width: '160px' }} onClick={closeModal} text={'취소하기'} />
+                <BasicButton style={{ width: '160px' }} onClick={handleStartResearch} theme={'dark'} text={'시작하기'} />
+              </FlexBox>
+            </>
+            {/*)}*/}
 
             {DETAIL_INFO?.remainingCredit < DETAIL_INFO?.totalCost && (
               <>

@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 
 interface PropsType {
   listData: any;
-  handleMoveDetail?: (e: any, id: string, name: string) => void;
+  handleMoveDetail?: (e: any, id: string, type: string, name: string, downloadLink: string) => void;
 }
 
 const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
@@ -24,12 +24,14 @@ const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
             <ListReport
               onClick={handleMoveDetail}
               reportViewId={el.reportViewId}
+              reportType={el.reportType}
               statusType={el.statusType}
               statusTypeNm={el.statusTypeNm}
               researchSeq={el.researchSeq}
               researchTypeNm={el.researchTypeNm}
-              projectNm={el.researchNm}
+              researchNm={el.researchNm}
               createDt={el.createDt}
+              downloadLink={el.reportFileDownloadLink}
             />
           </Fragment>
         );

@@ -55,6 +55,7 @@ const TeamProductCreateModal = () => {
   const [sendObject, setSendObject] = useState(null);
   const [categoryArr, setCategoryArr] = useState([]);
 
+  console.log(categoryArr, 'CATE');
   const [selected, setSelected] = useState({
     productType: null,
   });
@@ -92,6 +93,7 @@ const TeamProductCreateModal = () => {
 
   const handleChangeCheckBox = useCallback(
     value => {
+      console.log(value);
       if (categoryArr.length === 0) {
         setCategoryArr([...categoryArr, value]);
       }

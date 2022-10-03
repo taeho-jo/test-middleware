@@ -77,18 +77,23 @@ const AdminSideBar = () => {
 
   const sideTeamList = useCallback(() => {
     if (teamList !== null) {
-      return teamList?.map((item, index) => {
-        return (
-          <AdminSideTeamListItem
-            onClick={handleSelectTeam}
-            item={item}
-            parentsIndex={item.teamSeq}
-            key={index}
-            teamName={item.teamNm}
-            memberList={item.teamMember}
-          />
-        );
-      });
+      const arr = [...teamList];
+      return arr
+        ?.sort((a, b) => {
+          return a.teamSeq - b.teamSeq;
+        })
+        ?.map((item, index) => {
+          return (
+            <AdminSideTeamListItem
+              onClick={handleSelectTeam}
+              item={item}
+              parentsIndex={item.teamSeq}
+              key={index}
+              teamName={item.teamNm}
+              memberList={item.teamMember}
+            />
+          );
+        });
     } else {
       return <div>팀 조회중..</div>;
     }

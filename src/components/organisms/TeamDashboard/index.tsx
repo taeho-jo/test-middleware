@@ -33,6 +33,7 @@ import IconTextButton from '../../atoms/Button/IconTextButton';
 import { fetchResearchList } from '../../../store/reducers/researchCreateReducer';
 import { getRefreshToken } from '../../../store/reducers/authReducer';
 import CheckBox from '../../atoms/CheckBox';
+import { CURRENT_DOMAIN } from '../../../common/util/commonVar';
 
 const ResearchType = [
   {
@@ -93,7 +94,6 @@ const ResearchType = [
 const TeamDashboard = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const queryClient = useQueryClient();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
   const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
@@ -212,27 +212,28 @@ const TeamDashboard = () => {
       );
     }
   }, [filterStatusArr, filterTypeArr, selectTeamSeq]);
-  // // 팀목록 조회
-  useEffect(() => {
-    if (userInfo) {
-      const sendObject = {
-        teamNm: `${userInfo?.userName}`,
-        teamMember: [userInfo?.userName.slice(0, 1)],
-        selectTeamList,
-        teamSeq: selectTeamSeq,
-      };
-      console.log(sendObject, 'SEND OBJECT');
-      dispatch(getTeamList(sendObject));
-    }
-  }, [userInfo]);
 
   const showResearchModuleModal = useCallback(modalType => {
     dispatch(isShow({ isShow: true, type: modalType }));
   }, []);
 
-  const handleMoveDetail = useCallback((e: any, id: string, name: string) => {
+  const downloadFile = (link, name) => {
+    const tag = document.createElement('a');
+    tag.href = link;
+    tag.setAttribute('download', name);
+    document.body.appendChild(tag);
+    tag.click();
+  };
+
+  const handleMoveDetail = useCallback((e: any, id: string, type: string, name: string, downloadLink: string) => {
     e.stopPropagation();
     // dispatch(updateProjectName(name));
+    if (type === 'DIBY_WEB_REPORT') {
+      window.open(`${CURRENT_DOMAIN}/admin/report/${id}`);
+    }
+    if (type === 'PDF') {
+      downloadFile(downloadLink, name);
+    }
     console.log(id);
     // router.push(`/admin/report/${id}`);
   }, []);

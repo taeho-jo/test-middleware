@@ -11,7 +11,7 @@ import TextArea from '../../atoms/TextArea';
 import ToggleHeader from '../../atoms/ToggleHeader';
 import Icon from '../../atoms/Icon';
 import IconTextButton from '../../atoms/Button/IconTextButton';
-import { updateResearchBasicInfo, updateResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
+import { fetchResearchModifyInfo, updateResearchBasicInfo, updateResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
 import Select from '../../atoms/Select';
 import { isShow } from '../../../store/reducers/modalReducer';
 import Input from '../../atoms/Input';
@@ -26,6 +26,7 @@ interface PropsType {
 
 const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType, respondentDebounceSave }: PropsType) => {
   const dispatch = useDispatch();
+  const DETAIL_INFO = useSelector<ReducerType, any>(state => state.researchCreate.detailData);
   const AgendaList = useSelector<ReducerType, any>(state => state.common.commonCode.AgendaType);
 
   // hook saasaform
@@ -70,10 +71,24 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType,
   };
   const handleRemoveRespondent = (index: number) => {
     remove(index);
+    if (DETAIL_INFO.researchType !== 'FGD') {
+      const notRemoveArr = fields.filter((el, idx) => idx !== index);
+
+      const sendObject = {
+        ...DETAIL_INFO,
+        detailDesignInfo: notRemoveArr,
+      };
+      dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'debounce' }));
+    }
   };
+
+  // useEffect(() => {
+  //   append(fields);
+  // }, [fields]);
 
   // TODO: 리팩토링 해야함
   const handleToggleField = name => {
+    console.log(name, 'NAME');
     if (!openField?.[name]) {
       setOpenField({
         ...openField,
@@ -117,7 +132,6 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType,
         serValueArray('detailDesignInfo', [{ mission: '' }]);
       } else if (detailInfo?.researchType === 'HYPOTHESIS_VERIFICATION') {
         serValueArray('detailDesignInfo', [{ hypothesis: '', hypothesisReason: '' }]);
-        // setValue('detailInfo', [{ hypothesis: '', hypothesisReason: '' }]);
       }
     } else {
       dispatch(updateResearchModifyInfo({ name: 'detailInfo', value: detailInfo?.detailDesignInfo }));
@@ -198,7 +212,7 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType,
                         margin-bottom: 50px;
                       `}
                     >
-                      {openField?.[`detail${index}`] === false ? (
+                      {openField?.[`mission${index}`] === false ? (
                         <ToggleHeader
                           title={`미션${index + 1} : 응답자에게 어떤 미션을 지시할까요?`}
                           onClick={() => handleToggleField(`mission${index}`)}
@@ -242,9 +256,11 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType,
                 })}
             </Form>
           </FlexBox>
-          <div onClick={handleAppendRespondent} css={bottomAddBtnContainer}>
-            <span css={bottomAddBtn}>+ 미션 추가하기</span>
-          </div>
+          {fields.length < 8 && (
+            <div onClick={handleAppendRespondent} css={bottomAddBtnContainer}>
+              <span css={bottomAddBtn}>+ 미션 추가하기</span>
+            </div>
+          )}
         </>
       )}
 
@@ -301,16 +317,16 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType,
                         margin-bottom: 50px;
                       `}
                     >
-                      {openField?.[`detail${index}`] === false ? (
+                      {openField?.[`hypo${index}`] === false ? (
                         <ToggleHeader
-                          title={`가설?${index + 1} : 어떤 가설을 검증하고 싶으신가요`}
-                          onClick={() => handleToggleField(`mission${index}`)}
+                          title={`가설${index + 1} : 어떤 가설을 검증하고 싶으신가요`}
+                          onClick={() => handleToggleField(`hypo${index}`)}
                         />
                       ) : (
                         <>
                           <ToggleHeader
-                            title={`가설?${index + 1} : 어떤 가설을 검증하고 싶으신가요?`}
-                            onClick={() => handleToggleField(`mission${index}`)}
+                            title={`가설${index + 1} : 어떤 가설을 검증하고 싶으신가요?`}
+                            onClick={() => handleToggleField(`hypo${index}`)}
                           />
                           <TextArea
                             title={'검증하고 싶은 가설을 말씀해주세요'}
@@ -360,9 +376,11 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType,
                 })}
             </Form>
           </FlexBox>
-          <div onClick={handleAppendRespondent} css={bottomAddBtnContainer}>
-            <span css={bottomAddBtn}>+ 가설 추가하기</span>
-          </div>
+          {fields.length < 15 && (
+            <div onClick={handleAppendRespondent} css={bottomAddBtnContainer}>
+              <span css={bottomAddBtn}>+ 가설 추가하기</span>
+            </div>
+          )}
         </>
       )}
     </>

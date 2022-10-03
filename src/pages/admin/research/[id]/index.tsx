@@ -142,7 +142,6 @@ const ResearchCreate = () => {
       if (CREATE_STEP === 'step2') {
         const sendObject = {
           ...DETAIL_INFO,
-          respondentInfo: data.respondentInfo,
         };
         const checkFieldArr = data.respondentInfo.map(el => el.respondent);
         if (checkFieldArr.some(el => !el || el === '')) {
@@ -154,7 +153,7 @@ const ResearchCreate = () => {
       if (CREATE_STEP === 'step3') {
         const sendObject = {
           ...DETAIL_INFO,
-          goalInfo: data.goalInfo,
+          // goalInfo: data.goalInfo,
         };
         const checkFieldArr = data.goalInfo.map(el => el.goal);
         if (checkFieldArr.some(el => !el || el === '')) {
@@ -184,7 +183,7 @@ const ResearchCreate = () => {
         } else {
           const sendObject = {
             ...DETAIL_INFO,
-            detailDesignInfo: data.detailDesignInfo,
+            // detailDesignInfo: data.detailDesignInfo,
           };
           const checkFieldArr = data.detailDesignInfo?.map(el => el.mission || (el.hypothesisReason && el.hypothesis));
           if (checkFieldArr?.some(el => !el || el === '')) {
@@ -202,7 +201,6 @@ const ResearchCreate = () => {
           } else {
             dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: step }));
           }
-          //
         }
       }
       if (CREATE_STEP === 'step5') {

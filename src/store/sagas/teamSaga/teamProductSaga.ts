@@ -3,22 +3,18 @@ import { fetchCreateProductApi, fetchDeleteProductAi, fetchProductListApi, fetch
 import {
   createTeamProduct,
   deleteTeamProduct,
-  getProductList,
   getError,
+  getProductList,
   getProductListSuccess,
-  updateTeamProduct,
   getTeamList,
-  updateTeamInfo,
   updateSelectTeamList,
+  updateTeamInfo,
+  updateTeamProduct,
   updateTeamSeq,
 } from '../../reducers/teamReducer';
 import { showToast } from '../../reducers/toastReducer';
 import { isShow } from '../../reducers/modalReducer';
 import { getRefreshToken } from '../../reducers/authReducer';
-import { getCommonCode } from '../../reducers/commonReducer';
-import { useSelector } from 'react-redux';
-import { ReducerType } from '../../reducers';
-import { fetchResearchList } from '../../reducers/researchCreateReducer';
 
 // 팀 조회 saga
 function* getTeamListSaga(action) {
@@ -27,7 +23,9 @@ function* getTeamListSaga(action) {
     const result = yield call(fetchTeamListApi);
 
     if (result?.code === '200') {
-      const list = result?.data?.list;
+      const list = result?.data?.list?.sort((a, b) => {
+        return a.teamSeq - b.teamSeq;
+      });
       const count = result?.data?.count;
       if (count === 0 || !list || list.length === 0) {
         yield put(
@@ -42,24 +40,13 @@ function* getTeamListSaga(action) {
         );
         yield put(isShow({ isShow: true, type: 'firstCreateTeam' }));
       } else {
-        localStorage.setItem('teamSeq', list?.[0]?.teamSeq);
-        localStorage.setItem('selectTeamList', JSON.stringify(list?.[0]));
-
         yield put(updateTeamInfo(list));
-        if (selectTeamList === null) {
+        if (!selectTeamList) {
           yield put(updateSelectTeamList(list[0]));
         }
-        if (teamSeq !== null) {
+        if (!teamSeq) {
           yield put(updateTeamSeq(list[0]?.teamSeq));
         }
-        // const params = {
-        //   teamSeq: teamSeq ? teamSeq : list[0]?.teamSeq,
-        //   searchText: '',
-        //   researchType: '',
-        //   statusType: '',
-        // };
-        // console.log(params);
-        // yield put(fetchResearchList(params));
       }
     }
   } catch (e) {
@@ -105,6 +92,11 @@ function* createTeamProductSaga(action) {
     console.error(e.response.data);
     showToast({ message: `${e.response.data.message}`, isShow: true, status: 'warning', duration: 5000 });
     yield put(getError(e));
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(createTeamProduct({ sendObject: action.payload.sendObject, teamSeq: action.payload.teamSeq }));
+    }
   }
 }
 
@@ -119,6 +111,11 @@ function* updateTeamProductSaga(action) {
   } catch (e) {
     console.error(e);
     yield put(getError(e));
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(updateTeamProduct({ teamSeq: action.payload.teamSeq, productSeq: action.payload.productSeq, sendObject: action.payload.sendObject }));
+    }
   }
 }
 
@@ -134,6 +131,13 @@ function* deleteTeamProductSaga(action) {
   } catch (e: any) {
     console.error(e);
     yield put(getError(e));
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(
+        deleteTeamProduct({ teamSeq: action.payload.teamSeq, productSeq: action.payload.productSeq, callback: () => action.payload.callback() }),
+      );
+    }
   }
 }
 
