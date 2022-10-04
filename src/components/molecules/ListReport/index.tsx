@@ -29,7 +29,8 @@ interface PropsType {
   statusTypeNm: string;
   reportType: string;
   downloadLink: string;
-  onClick?: (e: any, id: string, type: string, name: string, downloadLink: string) => void;
+  webLink: string;
+  onClick?: (e: any, id: string, type: string, name: string, downloadLink: string, webLink: string) => void;
 }
 
 const ListReport = ({
@@ -42,6 +43,7 @@ const ListReport = ({
   statusTypeNm,
   reportType,
   downloadLink,
+  webLink,
   onClick,
 }: PropsType) => {
   const dispatch = useDispatch();
@@ -172,7 +174,7 @@ const ListReport = ({
       {statusType === 'RESEARCH_COMPLETED' && (
         <FlexBox>
           <Button
-            onClick={(e: any) => onClick(e, reportViewId, reportType, researchNm, downloadLink)}
+            onClick={(e: any) => onClick(e, reportViewId, reportType, researchNm, downloadLink, webLink)}
             backgroundColor={colors.grey._3c}
             btnText={'리포트 확인하기'}
             btnTextColor={'white'}

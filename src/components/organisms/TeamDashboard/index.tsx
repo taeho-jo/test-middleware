@@ -225,17 +225,18 @@ const TeamDashboard = () => {
     tag.click();
   };
 
-  const handleMoveDetail = useCallback((e: any, id: string, type: string, name: string, downloadLink: string) => {
+  const handleMoveDetail = useCallback((e: any, id: string, type: string, name: string, downloadLink: string, webLink: string) => {
     e.stopPropagation();
-    // dispatch(updateProjectName(name));
+
     if (type === 'DIBY_WEB_REPORT') {
       window.open(`${CURRENT_DOMAIN}/admin/report/${id}`);
     }
     if (type === 'PDF') {
       downloadFile(downloadLink, name);
     }
-    console.log(id);
-    // router.push(`/admin/report/${id}`);
+    if (type === 'EXTERNAL_REPORT') {
+      window.open(webLink);
+    }
   }, []);
 
   return (

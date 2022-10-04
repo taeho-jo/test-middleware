@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 
 interface PropsType {
   listData: any;
-  handleMoveDetail?: (e: any, id: string, type: string, name: string, downloadLink: string) => void;
+  handleMoveDetail?: (e: any, id: string, type: string, name: string, downloadLink: string, webLink: string) => void;
 }
 
 const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
@@ -31,6 +31,7 @@ const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
               researchTypeNm={el.researchTypeNm}
               researchNm={el.researchNm}
               createDt={el.createDt}
+              webLink={el.externalUrl}
               downloadLink={el.reportFileDownloadLink}
             />
           </Fragment>
