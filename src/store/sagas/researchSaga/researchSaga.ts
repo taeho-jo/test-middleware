@@ -19,6 +19,7 @@ import {
   fetchGetResearchListApi,
   fetchModifyTeamResearchApi,
   fetchRecommendationQuestionApi,
+  sendRecommendationQuestionListApi,
 } from '../../../api/researchApi';
 import { isShow } from '../../reducers/modalReducer';
 import { showToast } from '../../reducers/toastReducer';
@@ -28,6 +29,8 @@ import {
   getRecommendationApiError,
   getRecommendationDataAction,
   getRecommendationDataActionSuccess,
+  sendRecommendationQuestionListAction,
+  sendRecommendationQuestionListActionSuccess,
 } from '../../reducers/researchRecommendationReducer';
 
 // 팀 리서치 목록 조회 saga
@@ -157,6 +160,28 @@ function* fetchGetRecommendationQuestionSaga(action) {
   }
 }
 
+// 리서치 추천 문항 결과 제출 saga
+function* sendRecommendationQuestionListSaga(action) {
+  try {
+    console.log(action);
+    const result = yield call(sendRecommendationQuestionListApi, action.payload.sendObject);
+    console.log(result);
+    if (result.code === '201') {
+      yield put(showToast({ message: '리서치 추천이 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+      yield put(sendRecommendationQuestionListActionSuccess(result.data));
+      action.payload.callback.push('/admin/research/recommendation/result');
+    }
+  } catch (e) {
+    console.error(e);
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(getRecommendationDataAction());
+    }
+    yield put(getRecommendationApiError(e));
+  }
+}
+
 export function* researchSaga() {
   yield takeEvery(fetchResearchList, fetchResearchListSaga);
   yield takeEvery(fetchResearchDetail, fetchGetResearchDetailInfo);
@@ -164,4 +189,5 @@ export function* researchSaga() {
   yield takeEvery(fetchResearchModifyInfo, fetchModifyResearchSaga);
   yield takeEvery(fetchResearchDelete, fetchDeleteResearchSaga);
   yield takeEvery(getRecommendationDataAction, fetchGetRecommendationQuestionSaga);
+  yield takeEvery(sendRecommendationQuestionListAction, sendRecommendationQuestionListSaga);
 }

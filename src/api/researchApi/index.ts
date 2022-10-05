@@ -32,3 +32,8 @@ export const fetchDeleteTeamResearchApi = async (teamSeq, researchSeq) => {
 export const fetchRecommendationQuestionApi = async () => {
   return await AXIOS_GET(`/recommend`);
 };
+
+// 리서치 추천 문항 결과 제출 api
+export const sendRecommendationQuestionListApi = async sendObject => {
+  return await AXIOS_POST('/recommend', sendObject);
+};

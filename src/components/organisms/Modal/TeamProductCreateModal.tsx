@@ -38,8 +38,10 @@ const TeamProductCreateModal = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
+
   const commonCode = useSelector<ReducerType, any>(state => state.common.commonCode);
   const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
+  const createResearchTeamSeq = useSelector<ReducerType, any>(state => state.researchCreate.researchBasicInfo);
   // hook form
   const {
     register,
@@ -72,10 +74,16 @@ const TeamProductCreateModal = () => {
       };
       console.log(sendObject);
       if (selectTeamSeq) {
-        dispatch(createTeamProduct({ sendObject: sendObject, teamSeq: selectTeamSeq }));
+        const pathname = router.pathname;
+        dispatch(
+          createTeamProduct({
+            sendObject: sendObject,
+            teamSeq: pathname === '/admin/research/[id]' ? createResearchTeamSeq?.teamSeq : selectTeamSeq,
+          }),
+        );
       }
     },
-    [selected, selectTeamSeq, categoryArr],
+    [selected, selectTeamSeq, categoryArr, createResearchTeamSeq],
   );
 
   const onClickValue = useCallback(
