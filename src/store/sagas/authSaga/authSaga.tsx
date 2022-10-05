@@ -1,9 +1,87 @@
-import { call, put, takeEvery } from '@redux-saga/core/effects';
-import { getRefreshToken, getRefreshTokenSuccess } from '../../reducers/authReducer';
-import { fetchRefreshToken } from '../../../api/authApi';
+import { call, delay, put, takeEvery } from '@redux-saga/core/effects';
+import {
+  confirmEmailAction,
+  getRefreshToken,
+  getRefreshTokenSuccess,
+  loginAction,
+  resendConfirmEmail,
+  setToken,
+  signupAction,
+} from '../../reducers/authReducer';
+import { fetchEmailConfirmApi, fetchEmailResendApi, fetchLoginApi, fetchRefreshToken, fetchSignupApi } from '../../../api/authApi';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { showToast } from '../../reducers/toastReducer';
+import { isShow } from '../../reducers/modalReducer';
+import { getUserInfo, updateCancelWithdrawal } from '../../reducers/userReducer';
 
-function* getRefreshTokenSaga(action) {
+// 로그인
+function* loginSaga(action) {
+  try {
+    const response = yield call(fetchLoginApi, action.payload);
+    console.log(response);
+    if (response?.code === '200') {
+      localStorage.setItem('accessToken', response.data.token);
+      yield put(setToken(response.data.token));
+      yield put(showToast({ message: response.message, isShow: true, status: 'success', duration: 5000 }));
+      yield put(getUserInfo());
+    }
+  } catch (e: any) {
+    console.error(e);
+    const { data } = e?.response;
+    yield put(showToast({ message: `${data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
+    if (data.code === 'E0022') {
+      yield put(isShow({ isShow: true, type: 'cancelWithdrawalModal' }));
+      yield put(updateCancelWithdrawal(true));
+    }
+  }
+}
+
+// 회원가입
+function* signupSaga(action) {
+  try {
+    console.log(action);
+    const response = yield call(fetchSignupApi, action.payload);
+    console.log(response);
+    if (response.code === '201') {
+      yield put(showToast({ message: `${response?.message}`, isShow: true, status: 'success', duration: 5000 }));
+      // yield put(isShow({ isShow: true, type: 'confirmSignup' }));
+    }
+  } catch (e) {
+    console.error(e);
+    yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
+  }
+}
+// eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3RhbmcxMzVAbmF2ZXIuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImV4cCI6MTY2NDc4MTA1NX0.yJSdtjJKuHbguT4RprMHAxVMAh_7bVHKcbuShYLvCeM;
+// eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3RhbmcxMzVAbmF2ZXIuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImV4cCI6MTY2NDc3OTk0Mn0.jawhK_dM4xHYAAJevZ1LDQf1mP5sTH9WZ9t0YVF4gR8
+
+// 이메일 인증
+function* confirmEmailSaga(action) {
+  try {
+    const response = yield call(fetchEmailConfirmApi);
+    console.log(response, 'ㅇㅣ메일 컨펌');
+    yield put(isShow({ isShow: false, type: '' }));
+    yield put(getUserInfo());
+  } catch (e) {
+    console.error(e);
+    yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
+  }
+}
+
+// 이메일 재전송
+function* resendConfirmEmailSaga(action) {
+  try {
+    // resendConfirmEmail
+    const response = yield call(fetchEmailResendApi, action.payload);
+    console.log(response, 'resend');
+    yield put(showToast({ message: '인증메일이 재전송 되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+  } catch (e) {
+    console.error(e);
+    yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
+  }
+}
+
+// refresh 토큰 발급
+function* getRefreshTokenSaga() {
   try {
     const result = yield call(fetchRefreshToken);
     if (result.code === '200') {
@@ -21,8 +99,9 @@ function* getRefreshTokenSaga(action) {
 }
 
 export function* authSaga() {
+  yield takeEvery(loginAction, loginSaga);
   yield takeEvery(getRefreshToken, getRefreshTokenSaga);
+  yield takeEvery(signupAction, signupSaga);
+  yield takeEvery(confirmEmailAction, confirmEmailSaga);
+  yield takeEvery(resendConfirmEmail, resendConfirmEmailSaga);
 }
-
-// eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4b2RkbDEzNUBuYXRlLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE2NjMxOTk5NjJ9.GadgeNAo2NuOhwYOhQwQWHN2M3MVumEm2k0HJu55bI4
-// eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4b2RkbDEzNUBuYXRlLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJleHAiOjE2NjMyMDA1NzN9.tuWzL8-9mxwJNUukNLJ0_2tssz6lPrSugG7dsEyxVm0

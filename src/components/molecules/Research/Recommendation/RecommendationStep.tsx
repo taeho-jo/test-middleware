@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import { heading2_medium, heading3_bold } from '../../../../styles/FontStyles';
 import FlexBox from '../../../atoms/FlexBox';
@@ -10,13 +10,18 @@ interface PropsType {
   questionInfo: RecommendationQuestionListType;
   setSelectQuestion: (value) => void;
   setNextStep: (value) => void;
-  selectQuestion: { questionSeq: number; question: string; optionsSeq: string[]; options: string[] }[];
+  selectQuestion: { nextQuestionSeq: number; options: string[]; optionsSeq: number[]; question: string; questionSeq: number; subjective: string }[];
 }
 const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, setNextStep }: PropsType) => {
   const [currentOptionsList, setCurrentOptionsList] = useState(null);
 
-  const handleSelectQuestion = (value, questionInfo) => {
-    setNextStep(`step${value.nextQuestionSeq}`);
+  const [isSubjective, setIsSubjective] = useState(false);
+  const [subjective, setSubjective] = useState('');
+  const inputRef = useRef(null);
+
+  const handleSelectQuestion = (e, value, questionInfo) => {
+    e.stopPropagation();
+    e.preventDefault();
     const { questionSeq, question, questionType } = questionInfo;
     const { nextQuestionSeq, options, optionsSeq, relationOptionsSeq, relationQuestionSeq, sortNumber } = value;
 
@@ -31,10 +36,14 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
       };
       const checkArr = selectQuestion.filter(el => el.questionSeq === questionSeq);
       const filterArr = selectQuestion.filter(el => el.questionSeq !== questionSeq);
-      if (checkArr.length === 0) {
-        setSelectQuestion([...selectQuestion, sendObject]);
+      if (questionSeq === 1) {
+        setSelectQuestion([sendObject]);
       } else {
-        setSelectQuestion([...filterArr, sendObject]);
+        if (checkArr.length === 0) {
+          setSelectQuestion([...selectQuestion, sendObject]);
+        } else {
+          setSelectQuestion([...filterArr, sendObject]);
+        }
       }
     } else {
       const sendObject = {
@@ -48,18 +57,71 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
 
       const checkArr = selectQuestion.filter(el => el.questionSeq === questionSeq);
       const filterArr = selectQuestion.filter(el => el.questionSeq !== questionSeq);
-      console.log(checkArr.length, '!!');
-      if (checkArr.length === 0) {
-        setSelectQuestion([...selectQuestion, sendObject]);
-      } else {
-        const originObj = checkArr[0];
-        originObj.optionsSeq.push(sendObject.optionsSeq[0]);
-        originObj.options.push(sendObject.options[0]);
+      if (questionSeq === 1) {
+        if (checkArr.length === 0) {
+          setSelectQuestion([sendObject]);
+        } else {
+          const originObj = checkArr[0];
+          originObj.optionsSeq.push(sendObject.optionsSeq[0]);
+          originObj.options.push(sendObject.options[0]);
 
-        setSelectQuestion([...filterArr, originObj]);
+          setSelectQuestion([originObj]);
+        }
+      } else {
+        if (checkArr.length === 0) {
+          setSelectQuestion([...selectQuestion, sendObject]);
+        } else {
+          const originObj = checkArr[0];
+
+          const optionSeqCheckArr = originObj.optionsSeq.includes(sendObject.optionsSeq[0]);
+          const optionSeqFilterArr = originObj.optionsSeq.filter(el => el !== sendObject.optionsSeq[0]);
+          const optionsFilterArr = originObj.options?.filter(el => el !== sendObject.options[0]);
+
+          if (optionSeqCheckArr) {
+            originObj.optionsSeq = optionSeqFilterArr;
+            originObj.options = optionsFilterArr;
+          } else {
+            originObj.optionsSeq.push(sendObject.optionsSeq[0]);
+            originObj.options.push(sendObject.options[0]);
+          }
+
+          if (originObj.optionsSeq.length === 0) {
+            setSelectQuestion([...filterArr]);
+          } else {
+            setSelectQuestion([...filterArr, originObj]);
+          }
+        }
       }
     }
   };
+
+  const handleUpdateValue = e => {
+    setSubjective(e.target.value);
+  };
+
+  const handleUpdateQuestionArr = value => {
+    const obj = selectQuestion.filter(el => el.questionSeq === 4)[0];
+    const filterArr = selectQuestion.filter(el => el.questionSeq !== 4);
+    console.log(value, obj);
+    const sendObject = {
+      ...obj,
+      subjective: value,
+    };
+    setSelectQuestion([...filterArr, sendObject]);
+  };
+
+  useEffect(() => {
+    if (selectQuestion.length === 4) {
+      const arr = selectQuestion.filter(el => el.questionSeq === 4);
+      if (arr[0].optionsSeq.includes(16)) {
+        setIsSubjective(true);
+      } else {
+        setIsSubjective(false);
+      }
+    } else {
+      setIsSubjective(false);
+    }
+  }, [selectQuestion]);
 
   useEffect(() => {
     if (questionInfo) {
@@ -70,6 +132,12 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
       setCurrentOptionsList(sortArr);
     }
   }, [questionInfo]);
+
+  useEffect(() => {
+    if (isSubjective && inputRef) {
+      inputRef.current.focus();
+    }
+  }, [isSubjective]);
   return (
     <FlexBox
       direction={'column'}
@@ -90,15 +158,26 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
       >
         {currentOptionsList?.map((item, index) => {
           const questionIsSelected = selectQuestion.map(el => el.options).flat();
-          // console.log(questionIsSelected);
           return (
-            <span
-              key={item.options}
-              css={questionItem(questionIsSelected.includes(item.options))}
-              onClick={() => handleSelectQuestion(item, questionInfo)}
-            >
-              {item.options}
-            </span>
+            <div key={item.options} css={questionItem(questionIsSelected.includes(item.options))}>
+              <span
+                css={css`
+                  cursor: pointer;
+                `}
+                onClick={e => handleSelectQuestion(e, item, questionInfo)}
+              >
+                {item.options}
+              </span>
+              {item.options === '기타 (직접응답)' && isSubjective && (
+                <input
+                  onBlur={() => handleUpdateQuestionArr(subjective)}
+                  onChange={e => handleUpdateValue(e)}
+                  ref={inputRef}
+                  placeholder={'텍스트를 입력해주세요'}
+                  css={inputStyle}
+                />
+              )}
+            </div>
           );
         })}
       </FlexBox>
@@ -113,7 +192,7 @@ const questionItem = selected => css`
   border-radius: 56px;
   padding: 12px 32px;
   margin-bottom: 16px;
-  cursor: pointer;
+
   word-break: keep-all;
   background: ${selected ? colors.grey._3c : colors.white};
   color: ${selected ? colors.white : colors.grey._3c};
@@ -141,3 +220,18 @@ const nextButtonStyle = [
     border-radius: 8px;
   `,
 ];
+
+const inputStyle = css`
+  border: none;
+  color: ${colors.grey._cc};
+  background: ${colors.grey._3c};
+  margin-left: 10px;
+  &::placeholder {
+    color: ${colors.grey._cc};
+  }
+  &:focus {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid ${colors.grey._cc};
+  }
+`;

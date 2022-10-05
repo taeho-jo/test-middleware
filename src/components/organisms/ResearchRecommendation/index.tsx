@@ -15,18 +15,24 @@ import { calcWhichStep } from '../../../common/util/commonFunc';
 import { updateRecommendationStep } from '../../../store/reducers/researchCreateReducer';
 import RecommendationStep from '../../molecules/Research/Recommendation/RecommendationStep';
 import BasicButton from '../../atoms/Button/BasicButton';
-import { getRecommendationDataAction } from '../../../store/reducers/researchRecommendationReducer';
+import { getRecommendationDataAction, sendRecommendationQuestionListAction } from '../../../store/reducers/researchRecommendationReducer';
 import { RecommendationQuestionListType } from '../../../api/researchApi/types';
+import { showToast } from '../../../store/reducers/toastReducer';
+import { useRouter } from 'next/router';
 
 const ResearchRecommendation = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const recommendationStep = useSelector<ReducerType, string>(state => state.researchCreate.recommendationStep);
   const recommendationQuestion = useSelector<ReducerType, RecommendationQuestionListType[]>(state => state.researchRecommendation.recommendationData);
 
   const [step, setStep] = useState(0);
   const [nextStep, setNextStep] = useState('');
   const [prevStep, setPrevStep] = useState('');
-  const [selectQuestion, setSelectQuestion] = useState<{ questionSeq: number; question: string; optionsSeq: string[]; options: string[] }[]>([]);
+  const [selectQuestion, setSelectQuestion] = useState<
+    { nextQuestionSeq: number; options: string[]; optionsSeq: number[]; question: string; questionSeq: number; subjective: string }[]
+  >([]);
+
   useEffect(() => {
     console.log(selectQuestion, 'selectQuestion');
   }, [selectQuestion]);
@@ -70,37 +76,78 @@ const ResearchRecommendation = () => {
   }, [recommendationStep]);
 
   const handleMoveNextStep = () => {
-    if (step !== 100 && nextStep !== '') {
-      if (prevStep === '' && nextStep === 'step3') {
-        const skipQuestion = {
-          questionSeq: 2,
-          question: null,
-          nextQuestionSeq: null,
-          optionsSeq: null,
-          options: null,
-          subjective: null,
-        };
-        setSelectQuestion([...selectQuestion, skipQuestion]);
-        setPrevStep('step1');
+    if (recommendationStep == 'step1') {
+      if (selectQuestion.length === 0) {
+        dispatch(showToast({ message: '선택지를 선택해주세요.', isShow: true, status: 'warning', duration: 5000 }));
       } else {
-        const prevQuestionSeq = selectQuestion[selectQuestion.length - 1].questionSeq;
-        const prevQuestion = selectQuestion[selectQuestion.length - 1].question;
-        setPrevStep(`step${prevQuestionSeq}`);
+        const nextQuestionNum = selectQuestion[0]?.nextQuestionSeq;
+        dispatch(updateRecommendationStep(`step${nextQuestionNum}`));
+        if (nextQuestionNum === 3) {
+          const skipQuestion = {
+            questionSeq: 2,
+            question: null,
+            nextQuestionSeq: null,
+            optionsSeq: null,
+            options: null,
+            subjective: null,
+          };
+          setSelectQuestion([...selectQuestion, skipQuestion]);
+        }
       }
-      dispatch(updateRecommendationStep(nextStep));
+    }
+    if (recommendationStep == 'step2') {
+      if (selectQuestion.length <= 1) {
+        dispatch(showToast({ message: '선택지를 선택해주세요.', isShow: true, status: 'warning', duration: 5000 }));
+      } else {
+        dispatch(updateRecommendationStep('step3'));
+      }
+    }
+    if (recommendationStep === 'step3') {
+      if (selectQuestion.length <= 2) {
+        dispatch(showToast({ message: '선택지를 선택해주세요.', isShow: true, status: 'warning', duration: 5000 }));
+      } else {
+        dispatch(updateRecommendationStep('step4'));
+      }
+    }
+    if (recommendationStep === 'step4') {
+      if (selectQuestion.length <= 3) {
+        dispatch(showToast({ message: '선택지를 선택해주세요.', isShow: true, status: 'warning', duration: 5000 }));
+      } else {
+        dispatch(updateRecommendationStep('step5'));
+      }
+    }
+    if (recommendationStep === 'step5') {
+      return;
     }
   };
   const handleMovePrevStep = () => {
-    if (step !== 0 && prevStep !== '') {
-      console.log(nextStep, '!');
-      console.log(prevStep);
-      setStep(step - 25);
-      dispatch(updateRecommendationStep(prevStep));
+    if (recommendationStep === 'step1') {
+      return;
+    }
+    if (recommendationStep === 'step2') {
+      dispatch(updateRecommendationStep('step1'));
+    }
+    if (recommendationStep === 'step3' && selectQuestion[1]) {
+      if (!selectQuestion[1]?.question) {
+        dispatch(updateRecommendationStep('step1'));
+      } else {
+        dispatch(updateRecommendationStep('step2'));
+      }
+    }
+    if (recommendationStep === 'step4') {
+      dispatch(updateRecommendationStep('step3'));
+    }
+    if (recommendationStep === 'step5') {
+      dispatch(updateRecommendationStep('step4'));
     }
   };
 
   const handleSubmit = () => {
     console.log(selectQuestion, '!');
+    const sendObject = {
+      recommendResultData: selectQuestion,
+    };
+    dispatch(sendRecommendationQuestionListAction({ sendObject, callback: router }));
   };
 
   return (
@@ -221,6 +268,7 @@ const prevButtonStyle = [
     padding: 9px 16px;
     border-radius: 8px;
     margin-right: 12px;
+    cursor: pointer;
   `,
 ];
 const nextButtonStyle = [
@@ -234,6 +282,7 @@ const nextButtonStyle = [
     align-items: center;
     padding: 10px 17px;
     border-radius: 8px;
+    cursor: pointer;
     &:disabled {
       background: ${colors.grey._99};
     }

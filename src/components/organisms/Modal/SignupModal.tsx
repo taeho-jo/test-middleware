@@ -28,7 +28,7 @@ import { ReducerType } from '../../../store/reducers';
 import { fetchUserInfoApi } from '../../../api/userApi';
 import { CURRENT_DOMAIN, EMAIL_CONFIRM_TEMPLATE } from '../../../common/util/commonVar';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { setToken } from '../../../store/reducers/authReducer';
+import { setToken, signupAction } from '../../../store/reducers/authReducer';
 import { setUserInfo, updateCancelWithdrawal, updateErrorMessage } from '../../../store/reducers/userReducer';
 import AnnouncementBox from '../../molecules/AnnouncementBox';
 
@@ -52,32 +52,32 @@ const SignupModal = () => {
   const onSubmit = data => handleSignup('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const {
-    mutate: signupMutate,
-    isLoading,
-    data: signupData,
-  } = useMutation(['signup'], fetchSignupApi, {
-    onError: (e: any) => {
-      const { data } = e.response;
-      dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
-      dispatch(updateErrorMessage(data.message));
-      dispatch(updateCancelWithdrawal(true));
-      dispatch(isShow({ isShow: true, type: 'withdrawalUserSignupModal' }));
-    },
-  });
+  // const {
+  //   mutate: signupMutate,
+  //   isLoading,
+  //   data: signupData,
+  // } = useMutation(['signup'], fetchSignupApi, {
+  //   onError: (e: any) => {
+  //     const { data } = e.response;
+  //     dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
+  //     dispatch(updateErrorMessage(data.message));
+  //     dispatch(updateCancelWithdrawal(true));
+  //     dispatch(isShow({ isShow: true, type: 'withdrawalUserSignupModal' }));
+  //   },
+  // });
 
-  const { data: usersInfo } = useQuery(['fetchUserInfo', `signup/${signupData?.code}`], () => fetchUserInfoApi(signupData?.data.token), {
-    enabled: !!signupData?.code,
-    onSuccess: data => {
-      dispatch(setUserInfo(data.data));
-      if (data.data.emailVerifiedYn === 'N') {
-        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-      }
-      if (data.data.emailVerifiedYn === 'Y') {
-        router.push('/admin/team');
-      }
-    },
-  });
+  // const { data: usersInfo } = useQuery(['fetchUserInfo', `signup/${signupData?.code}`], () => fetchUserInfoApi(signupData?.data.token), {
+  //   enabled: !!signupData?.code,
+  //   onSuccess: data => {
+  //     dispatch(setUserInfo(data.data));
+  //     if (data.data.emailVerifiedYn === 'N') {
+  //       dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+  //     }
+  //     if (data.data.emailVerifiedYn === 'Y') {
+  //       router.push('/admin/team');
+  //     }
+  //   },
+  // });
 
   const handleSignup = useCallback((status, signupData) => {
     const { consentToUseMarketingYn, password, privacyConsentYn, userId } = signupData;
@@ -89,7 +89,10 @@ const SignupModal = () => {
       privacyConsentYn: 'Y',
       emailTemplateName: EMAIL_CONFIRM_TEMPLATE,
     };
-    signupMutate(sendObject);
+
+    console.log(sendObject);
+    dispatch(signupAction(sendObject));
+    // signupMutate(sendObject);
   }, []);
 
   // 구글 로그인
@@ -112,13 +115,13 @@ const SignupModal = () => {
     router.push(page);
   }, []);
 
-  useEffect(() => {
-    if (signupData?.code === '201') {
-      localStorage.setItem('accessToken', signupData.data.token);
-      dispatch(setToken(signupData.data.token));
-      dispatch(showToast({ message: signupData.message, isShow: true, status: 'success', duration: 5000 }));
-    }
-  }, [signupData]);
+  // useEffect(() => {
+  //   if (signupData?.code === '201') {
+  //     localStorage.setItem('accessToken', signupData.data.token);
+  //     dispatch(setToken(signupData.data.token));
+  //     dispatch(showToast({ message: signupData.message, isShow: true, status: 'success', duration: 5000 }));
+  //   }
+  // }, [signupData]);
 
   return (
     <FlexBox style={{ marginTop: modalShow ? '160px' : 0 }} justify={'center'} direction={'column'}>
@@ -160,7 +163,7 @@ const SignupModal = () => {
             ,&nbsp; 정보수신에&nbsp; 동의해요.
           </div>
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton isLoading={isLoading} type={'submit'} text={'간편하게 시작하기'} style={{ marginBottom: '18px' }} />
+            <BasicButton type={'submit'} text={'간편하게 시작하기'} style={{ marginBottom: '18px' }} />
             <IconTextButton onClick={loginWithGoogle} name={'GOOGLE'} iconPosition={'left'} text={'구글로 시작하기'} />
           </FlexBox>
         </Form>

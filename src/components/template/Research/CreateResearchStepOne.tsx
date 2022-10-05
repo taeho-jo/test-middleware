@@ -48,6 +48,7 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
       } else if (label === 'product' && value === 'add') {
         dispatch(isShow({ isShow: true, type: 'createTeamProduct' }));
       } else {
+        console.log(value);
         setSelected({
           ...selected,
           [label]: value,

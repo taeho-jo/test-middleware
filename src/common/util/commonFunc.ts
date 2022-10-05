@@ -172,3 +172,12 @@ export const calcWhichStep = (type, stepName) => {
     }
   }
 };
+
+// 다운로드 파일
+export const downloadFile = (link, name) => {
+  const tag = document.createElement('a');
+  tag.href = link;
+  tag.setAttribute('download', name);
+  document.body.appendChild(tag);
+  tag.click();
+};

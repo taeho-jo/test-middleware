@@ -36,6 +36,21 @@ export const authSlice = createSlice({
       state.loginType = '';
     },
     // Saga Redux
+    loginAction: (state, action) => {
+      return state;
+    },
+    loginActionSuccess: (state, action) => {
+      state.accessToken = action.payload.accessToken;
+    },
+    signupAction: (state, action) => {
+      return state;
+    },
+    confirmEmailAction: state => {
+      return state;
+    },
+    resendConfirmEmail: (state, action) => {
+      return state;
+    },
     getRefreshToken: state => {
       return state;
     },
@@ -52,6 +67,11 @@ export const {
   updateLoginType,
   resetLoginType,
   // Saga Redux
+  loginAction,
+  loginActionSuccess,
+  signupAction,
+  confirmEmailAction,
+  resendConfirmEmail,
   getRefreshToken,
   getRefreshTokenSuccess,
 } = authSlice.actions;

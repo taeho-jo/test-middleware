@@ -11,14 +11,9 @@ import { useRouter } from 'next/router';
 import { fetchResearchDetail, resetCreateResearchData } from '../../../../../store/reducers/researchCreateReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../../../store/reducers';
-import moment from 'moment';
-import Button from '../../../../../components/atoms/Button';
-import TutorialIndicator from '../../../../../components/atoms/TutorialIndicator/TutorialIndicator';
 import ResearchDetailTooltipModal from '../../../../../components/organisms/Modal/ResearchDetailTooltipModal';
 import { isShow } from '../../../../../store/reducers/modalReducer';
 import BasicButton from '../../../../../components/atoms/Button/BasicButton';
-import CheckBox from '../../../../../components/atoms/CheckBox';
-import { useForm } from 'react-hook-form';
 import { CURRENT_DOMAIN } from '../../../../../common/util/commonVar';
 
 const ResearchDetail = () => {
@@ -26,6 +21,7 @@ const ResearchDetail = () => {
   const dispatch = useDispatch();
   const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
   const detailData = useSelector<ReducerType, any>(state => state.researchCreate.detailData);
+  const agendaTypeArr = useSelector<ReducerType, any>(state => state.common.commonCode.AgendaType);
   const detailId = router.query.id;
 
   const [tooltipStatus, setTooltipStatus] = useState(false);
@@ -161,9 +157,15 @@ const ResearchDetail = () => {
     dispatch(isShow({ isShow: true, type: name }));
   };
 
-  const checkReport = (type, id, url) => {
+  const checkReport = (type, id, url, researchName, webLink) => {
     if (type === 'DIBY_WEB_REPORT') {
       window.open(`${CURRENT_DOMAIN}/admin/report/${detailData?.reportViewId}`);
+    }
+    if (type === 'PDF') {
+      downloadFile(url, researchName);
+    }
+    if (type === 'EXTERNAL_REPORT') {
+      window.open(webLink);
     }
   };
 
@@ -274,9 +276,12 @@ const ResearchDetail = () => {
               <FlexBox direction={'column'} align={'flex-start'} style={marginStyle}>
                 <span css={heading5_bold}>아젠다</span>
                 {detailData?.detailDesignInfo?.map((item, index) => {
+                  const agendaaa = agendaTypeArr?.filter(el => el.key === item.agendaType);
+                  const agenda = agendaaa?.[0].displayName;
                   return (
                     <span key={index} css={[heading4_medium, contentsStyle]}>
-                      {item.agenda}
+                      {item.agendaType === 'ETC' && item.agenda}
+                      {item.agendaType !== 'ETC' && agenda}
                     </span>
                   );
                 })}
@@ -406,12 +411,20 @@ const ResearchDetail = () => {
             </div>
             <div
               css={detailData?.researchViewId ? activeBtnContainer : btnContainer}
-              onMouseOver={() => showTooltip('리포트', detailData?.reportViewId ? true : false)}
+              onMouseOver={() => showTooltip('리포트', detailData?.reportType ? true : false)}
               onMouseOut={closeTooltip}
             >
-              {detailData?.reportViewId ? (
+              {detailData?.reportType ? (
                 <IconTextButton
-                  onClick={() => checkReport(detailData?.reportType, detailData?.reportViewId, detailData?.reportFileDownloadLink)}
+                  onClick={() =>
+                    checkReport(
+                      detailData?.reportType,
+                      detailData?.reportViewId,
+                      detailData?.reportFileDownloadLink,
+                      detailData?.researchNm,
+                      detailData?.externalUrl,
+                    )
+                  }
                   textStyle={[btnTextStyle, { color: colors.grey._3c }]}
                   name={'REPORT'}
                   text={'리포트 확인하기'}
