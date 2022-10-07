@@ -147,6 +147,12 @@ const ResearchRecommendation = () => {
     dispatch(updateRecommendationStep('step1'));
   };
 
+  useEffect(() => {
+    return () => {
+      dispatch(updateRecommendationStep('step1'));
+    }
+  },[])
+
   return (
     <div css={mainContainer}>
       <div css={container}>

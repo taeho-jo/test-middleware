@@ -38,7 +38,7 @@ import { CURRENT_DOMAIN } from '../../../common/util/commonVar';
 const ResearchType = [
   {
     title: '1분만에 리서치 종류 추천받기',
-    link: 'https://form.typeform.com/to/lmyqEfEb',
+    link: '/admin/research/recommendation',
     backgroundColor: `${colors.grey._3c}`,
     color: `${colors.white}`,
     hoverImage: null,
@@ -235,6 +235,14 @@ const TeamDashboard = () => {
     }
   }, [redirectPath]);
 
+  const handleMovePage = (path) => {
+    if(path === '/admin/research/recommendation') {
+      router.push(path)
+    } else {
+      window.open(path)
+    }
+  }
+
   return (
     <>
       <div css={teamMainContainer}>
@@ -244,7 +252,7 @@ const TeamDashboard = () => {
             {ResearchType?.map((item, index) => {
               return (
                 <ResearchModuleButton
-                  onClick={index === 0 ? () => window.open(item.link) : showResearchModuleModal}
+                  onClick={index === 0 ? () => handleMovePage(item.link) : showResearchModuleModal}
                   key={index}
                   title={item.title}
                   link={item.link}
