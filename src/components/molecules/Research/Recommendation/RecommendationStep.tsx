@@ -25,70 +25,74 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
     const { questionSeq, question, questionType } = questionInfo;
     const { nextQuestionSeq, options, optionsSeq, relationOptionsSeq, relationQuestionSeq, sortNumber } = value;
 
-    if (questionType === 'SINGLE_MULTIPLE_CHOICE') {
-      const sendObject = {
-        questionSeq: questionSeq,
-        question: question,
-        nextQuestionSeq: nextQuestionSeq,
-        optionsSeq: [optionsSeq],
-        options: [options],
-        subjective: null,
-      };
-      const checkArr = selectQuestion.filter(el => el.questionSeq === questionSeq);
-      const filterArr = selectQuestion.filter(el => el.questionSeq !== questionSeq);
-      if (questionSeq === 1) {
-        setSelectQuestion([sendObject]);
-      } else {
-        if (checkArr.length === 0) {
-          setSelectQuestion([...selectQuestion, sendObject]);
-        } else {
-          setSelectQuestion([...filterArr, sendObject]);
-        }
-      }
+    if (isSubjective && subjective !== '') {
+      inputRef.current.focus();
     } else {
-      const sendObject = {
-        questionSeq: questionSeq,
-        question: question,
-        nextQuestionSeq: nextQuestionSeq,
-        optionsSeq: [optionsSeq],
-        options: [options],
-        subjective: null,
-      };
-
-      const checkArr = selectQuestion.filter(el => el.questionSeq === questionSeq);
-      const filterArr = selectQuestion.filter(el => el.questionSeq !== questionSeq);
-      if (questionSeq === 1) {
-        if (checkArr.length === 0) {
+      if (questionType === 'SINGLE_MULTIPLE_CHOICE') {
+        const sendObject = {
+          questionSeq: questionSeq,
+          question: question,
+          nextQuestionSeq: nextQuestionSeq,
+          optionsSeq: [optionsSeq],
+          options: [options],
+          subjective: null,
+        };
+        const checkArr = selectQuestion.filter(el => el.questionSeq === questionSeq);
+        const filterArr = selectQuestion.filter(el => el.questionSeq !== questionSeq);
+        if (questionSeq === 1) {
           setSelectQuestion([sendObject]);
         } else {
-          const originObj = checkArr[0];
-          originObj.optionsSeq.push(sendObject.optionsSeq[0]);
-          originObj.options.push(sendObject.options[0]);
-
-          setSelectQuestion([originObj]);
+          if (checkArr.length === 0) {
+            setSelectQuestion([...selectQuestion, sendObject]);
+          } else {
+            setSelectQuestion([...filterArr, sendObject]);
+          }
         }
       } else {
-        if (checkArr.length === 0) {
-          setSelectQuestion([...selectQuestion, sendObject]);
-        } else {
-          const originObj = checkArr[0];
+        const sendObject = {
+          questionSeq: questionSeq,
+          question: question,
+          nextQuestionSeq: nextQuestionSeq,
+          optionsSeq: [optionsSeq],
+          options: [options],
+          subjective: null,
+        };
 
-          const optionSeqCheckArr = originObj.optionsSeq.includes(sendObject.optionsSeq[0]);
-          const optionSeqFilterArr = originObj.optionsSeq.filter(el => el !== sendObject.optionsSeq[0]);
-          const optionsFilterArr = originObj.options?.filter(el => el !== sendObject.options[0]);
-
-          if (optionSeqCheckArr) {
-            originObj.optionsSeq = optionSeqFilterArr;
-            originObj.options = optionsFilterArr;
+        const checkArr = selectQuestion.filter(el => el.questionSeq === questionSeq);
+        const filterArr = selectQuestion.filter(el => el.questionSeq !== questionSeq);
+        if (questionSeq === 1) {
+          if (checkArr.length === 0) {
+            setSelectQuestion([sendObject]);
           } else {
+            const originObj = checkArr[0];
             originObj.optionsSeq.push(sendObject.optionsSeq[0]);
             originObj.options.push(sendObject.options[0]);
-          }
 
-          if (originObj.optionsSeq.length === 0) {
-            setSelectQuestion([...filterArr]);
+            setSelectQuestion([originObj]);
+          }
+        } else {
+          if (checkArr.length === 0) {
+            setSelectQuestion([...selectQuestion, sendObject]);
           } else {
-            setSelectQuestion([...filterArr, originObj]);
+            const originObj = checkArr[0];
+
+            const optionSeqCheckArr = originObj.optionsSeq.includes(sendObject.optionsSeq[0]);
+            const optionSeqFilterArr = originObj.optionsSeq.filter(el => el !== sendObject.optionsSeq[0]);
+            const optionsFilterArr = originObj.options?.filter(el => el !== sendObject.options[0]);
+
+            if (optionSeqCheckArr) {
+              originObj.optionsSeq = optionSeqFilterArr;
+              originObj.options = optionsFilterArr;
+            } else {
+              originObj.optionsSeq.push(sendObject.optionsSeq[0]);
+              originObj.options.push(sendObject.options[0]);
+            }
+
+            if (originObj.optionsSeq.length === 0) {
+              setSelectQuestion([...filterArr]);
+            } else {
+              setSelectQuestion([...filterArr, originObj]);
+            }
           }
         }
       }
@@ -96,6 +100,8 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
   };
 
   const handleUpdateValue = e => {
+    e.stopPropagation();
+    e.preventDefault();
     setSubjective(e.target.value);
   };
 
@@ -159,12 +165,15 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
         {currentOptionsList?.map((item, index) => {
           const questionIsSelected = selectQuestion.map(el => el.options).flat();
           return (
-            <div key={item.options} css={questionItem(questionIsSelected.includes(item.options))}>
+            <div
+              key={item.options}
+              css={questionItem(questionIsSelected.includes(item.options))}
+              onClick={e => handleSelectQuestion(e, item, questionInfo)}
+            >
               <span
                 css={css`
                   cursor: pointer;
                 `}
-                onClick={e => handleSelectQuestion(e, item, questionInfo)}
               >
                 {item.options}
               </span>
