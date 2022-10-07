@@ -18,8 +18,6 @@ const ResearchCostModal = () => {
     totalRespondentCost: 0,
   });
 
-  console.log(DETAIL_INFO, 'DE');
-
   useEffect(() => {
     if (DETAIL_INFO) {
       const totalCosts = DETAIL_INFO?.respondentCompensationInfo?.reduce(

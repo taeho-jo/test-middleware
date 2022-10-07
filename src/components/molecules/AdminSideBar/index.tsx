@@ -32,7 +32,7 @@ const AdminSideBar = () => {
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
   const productList = useSelector<ReducerType, any>(state => state.team.teamProductList);
-  console.log(productList);
+
   const [myRole, setMyRole] = useState<string | null>(null);
 
   // 선택된 팀에 따른 프로덕트 정보 -> 프로덕트 정보 입력 팝업 노출 || 미노출

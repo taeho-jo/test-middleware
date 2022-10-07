@@ -12,7 +12,7 @@ function* getCommonCodeSaga() {
     }
   } catch (e: any) {
     console.error(e);
-    console.log(e.response.data, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
     if (e?.response?.data?.code === 'E0008') {
       yield put(getRefreshToken());
       yield delay(1000);

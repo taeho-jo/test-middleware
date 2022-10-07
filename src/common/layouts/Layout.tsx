@@ -139,7 +139,7 @@ const Layout = ({ children }: PropsType) => {
       // 구글로그인 했거나, 초대받은사람이 로그인하거나
       if (token && !userId && type && !teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
-        console.log('설마????');
+
         dispatch(getUserInfo());
       }
       if (token && !userId && type && !teamSeq && !result && requestView) {
@@ -148,7 +148,6 @@ const Layout = ({ children }: PropsType) => {
       }
       // 이메일 인증
       if (token && !userId && !type && !teamSeq && !result && !requestView) {
-        console.log('여기??');
         localStorage.setItem('accessToken', `${token}`);
         dispatch(confirmEmailAction());
       }
@@ -243,7 +242,6 @@ const Layout = ({ children }: PropsType) => {
                 {children}
               </main>
             </div>
-            {/*<CommonModal />*/}
           </>
         );
       case '/admin/reset-password':
@@ -324,6 +322,26 @@ const Layout = ({ children }: PropsType) => {
       </>
     );
   }
+  if (token && userInfo?.emailVerifiedYn === 'N') {
+    return (
+      <>
+        <div css={mainContainer}>
+          <main css={contentsContainer}>
+            <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
+            {showGradient ? (
+              <>
+                <div css={gradientDiv}></div>
+                <AppBar dark={showGradient} />
+              </>
+            ) : null}
+            <div>{children}</div>
+          </main>
+        </div>
+        <AlertToast position={'top-center'} />
+        <CommonModal />
+      </>
+    );
+  }
   if (token && userInfo?.emailVerifiedYn === 'Y') {
     return (
       <>
@@ -341,6 +359,16 @@ const Layout = ({ children }: PropsType) => {
             <div css={mainContainer}>
               <main css={contentsContainer}>
                 <ReportLayout>{children}</ReportLayout>
+              </main>
+            </div>
+            <CommonModal />
+          </>
+        ) : router.pathname === '/admin/research/recommendation' || router.pathname === '/admin/research/recommendation/result' ? (
+          <>
+            <div css={mainContainer}>
+              <main css={contentsContainer}>
+                <CommonHeader researchHeader={true} />
+                {children}
               </main>
             </div>
             <CommonModal />

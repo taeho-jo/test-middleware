@@ -55,8 +55,8 @@ export default function withTokenAuth(SpecificComponent: any, option: boolean) {
             }
           }
           if (userInfo?.emailVerifiedYn === 'N') {
-            return;
             router.replace('/');
+            return;
           }
           // if (userInfo.emailVerifiedYn !== 'Y') {
           //   return;

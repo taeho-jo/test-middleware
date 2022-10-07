@@ -14,17 +14,10 @@ function* getUserInfoSaga() {
     if (result.code === '200') {
       const data = result?.data;
       yield put(setUserInfo(data));
-      console.log(data, 'DATA');
       if (data?.emailVerifiedYn === 'N') {
         yield put(isShow({ isShow: true, type: 'confirmSignup' }));
       }
       if (data?.emailVerifiedYn === 'Y') {
-        // const sendObject = {
-        //   teamNm: data?.userName,
-        //   teamMember: data?.userName.slice(0, 1),
-        //   selectTeamList,
-        //   teamSeq: selectTeamSeq,
-        // };
         yield put(getTeamList());
         return;
       }

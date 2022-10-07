@@ -40,10 +40,6 @@ const ResearchStartModal = () => {
     setLastCheck(prev => !prev);
   };
 
-  useEffect(() => {
-    console.log(lastCheck, '!lastCheck');
-  }, [lastCheck]);
-
   const {
     register,
     formState: { errors },

@@ -8,6 +8,7 @@ export interface CounterType {
     originData: string;
     isFilter: string;
   };
+  redirectPath: string;
   error: any;
 }
 
@@ -19,6 +20,7 @@ const initialState: CounterType = {
     originData: 'N',
     isFilter: 'N',
   },
+  redirectPath: null,
   error: null,
 };
 
@@ -46,12 +48,15 @@ export const commonSlice = createSlice({
         isFilter: 'N',
       };
     },
+    setRedirectPath: (state, action: PayloadAction<string>) => {
+      state.redirectPath = action.payload;
+    },
     getErrorInfo: (state, action: PayloadAction<any>) => {
       state.error = action.payload;
     },
   },
 });
 
-export const { getCommonCode, updateCommonCode, updateInitIndicator, updateIndicatorStatus, resetIndicatorStatus, getErrorInfo } =
+export const { getCommonCode, updateCommonCode, updateInitIndicator, updateIndicatorStatus, resetIndicatorStatus, setRedirectPath, getErrorInfo } =
   commonSlice.actions;
 export default commonSlice.reducer;

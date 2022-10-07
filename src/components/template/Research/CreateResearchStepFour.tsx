@@ -50,7 +50,6 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType,
   });
   const onClickValue = useCallback(
     (value, label) => {
-      console.log(value, label);
       setSelected({
         ...selected,
         [label]: value,
@@ -88,7 +87,6 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType,
 
   // TODO: 리팩토링 해야함
   const handleToggleField = name => {
-    console.log(name, 'NAME');
     if (!openField?.[name]) {
       setOpenField({
         ...openField,

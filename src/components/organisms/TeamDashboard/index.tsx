@@ -98,26 +98,16 @@ const TeamDashboard = () => {
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
   const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
   const teamResearchList = useSelector<ReducerType, any>(state => state.researchCreate.researchList);
-
+  const redirectPath = useSelector<ReducerType, string | null>(state => state.common.redirectPath);
   // filter redux
   const RESEARCH_TYPE = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
   const RESEARCH_STATUS = useSelector<ReducerType, any>(state => state.common.commonCode.StatusType);
-
-  const contValue = useSelector<ReducerType, number>(state => state.counter.value);
-
-  const [selected, setSelected] = useState({
-    allResearch: '',
-  });
 
   // hook form
   const {
     register,
     handleSubmit,
-    reset,
-    getValues,
-    watch,
     setValue,
-    control,
     formState: { errors },
   } = useForm<InputType>({});
   const onSubmit = data => handleSearchResearchList(data);
@@ -238,6 +228,12 @@ const TeamDashboard = () => {
       window.open(webLink);
     }
   }, []);
+
+  useEffect(() => {
+    if (redirectPath) {
+      router.push(redirectPath);
+    }
+  }, [redirectPath]);
 
   return (
     <>

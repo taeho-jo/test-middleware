@@ -12,6 +12,7 @@ import { updateResearchBasicInfo, updateResearchModifyInfo } from '../../../stor
 import { isShow } from '../../../store/reducers/modalReducer';
 import { getProductList } from '../../../store/reducers/teamReducer';
 import { useRouter } from 'next/router';
+import { Cookies } from 'react-cookie';
 
 interface PropsType {
   detailInfo?: any;
@@ -29,6 +30,10 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
   const methodsType = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
   const productList = useSelector<ReducerType, any>(state => state.team.teamProductList.list);
   const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
+
+  // 추천 결과
+  const recommendationResult = useSelector<ReducerType, any>(state => state.researchRecommendation.recommendationResult);
+  const cookies = new Cookies();
 
   // hook saasaform
   const { watch, setValue } = useForm({});
@@ -48,7 +53,6 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
       } else if (label === 'product' && value === 'add') {
         dispatch(isShow({ isShow: true, type: 'createTeamProduct' }));
       } else {
-        console.log(value);
         setSelected({
           ...selected,
           [label]: value,
@@ -107,6 +111,22 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
       dispatch(getProductList({ teamSeq: String(teamSeq) }));
     }
   }, [selected]);
+
+  useEffect(() => {
+    // console.log(cookies.get('recommendResultSeq'), cookies.get('recommendResearchType'));
+    const seq = cookies.get('recommendResultSeq');
+    const type = cookies.get('recommendResearchType');
+    if (seq && type) {
+      reset({
+        method: type,
+      });
+      setSelected({
+        ...selected,
+        method: type,
+      });
+      dispatch(updateResearchBasicInfo({ name: 'researchType', value: type }));
+    }
+  }, []);
 
   // 상세 접속 시 기본값 세팅
   useEffect(() => {

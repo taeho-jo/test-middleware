@@ -34,9 +34,6 @@ const ResearchRecommendation = () => {
   >([]);
 
   useEffect(() => {
-    console.log(selectQuestion, 'selectQuestion');
-  }, [selectQuestion]);
-  useEffect(() => {
     dispatch(getRecommendationDataAction());
   }, []);
 
@@ -143,11 +140,11 @@ const ResearchRecommendation = () => {
   };
 
   const handleSubmit = () => {
-    console.log(selectQuestion, '!');
     const sendObject = {
       recommendResultData: selectQuestion,
     };
     dispatch(sendRecommendationQuestionListAction({ sendObject, callback: router }));
+    dispatch(updateRecommendationStep('step1'));
   };
 
   return (
@@ -168,7 +165,7 @@ const ResearchRecommendation = () => {
               <span css={[heading1_bold, { cursor: 'default', whiteSpace: 'pre-wrap' }]}>리서치 추천</span>
             </FlexBox>
 
-            <Icon onClick={() => console.log('XXX')} name={'NAVIGATION_CLOSE_LG'} size={24} style={{ cursor: 'pointer' }} />
+            <Icon onClick={() => router.push('/admin/team')} name={'NAVIGATION_CLOSE_LG'} size={24} style={{ cursor: 'pointer' }} />
           </FlexBox>
           {/* ------------ 헤더 ------------ */}
 

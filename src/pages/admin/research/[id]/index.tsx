@@ -30,6 +30,9 @@ import CreateResearchStepFive from '../../../../components/template/Research/Cre
 import { ReducerType } from '../../../../store/reducers';
 import { useForm } from 'react-hook-form';
 import { showToast } from '../../../../store/reducers/toastReducer';
+import { resetRecommendationResult } from '../../../../store/reducers/researchRecommendationReducer';
+import { Cookies } from 'react-cookie';
+import { setRedirectPath } from '../../../../store/reducers/commonReducer';
 
 const ResearchCreate = () => {
   const dispatch = useDispatch();
@@ -39,7 +42,11 @@ const ResearchCreate = () => {
   const MODIFY_INFO = useSelector<ReducerType, any>(state => state.researchCreate.researchModifyInfo);
   const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
 
+  // 추천 결과
+  const recommendationResult = useSelector<ReducerType, any>(state => state.researchRecommendation.recommendationResult);
+
   const router = useRouter();
+  const cookies = new Cookies();
   const pageId = router.query.id;
 
   const {
@@ -115,10 +122,12 @@ const ResearchCreate = () => {
     const step = calcWhichStep('next');
     if (pageId === 'create') {
       if (CREATE_STEP === 'step1') {
+        const seq = cookies.get('recommendResultSeq');
         const researchName = getValues().researchName;
         const sendObject = {
           ...BASIC_INFO,
           researchNm: researchName,
+          recommendationResult: seq ? seq : null,
         };
         const { researchNm, researchType, teamSeq, productSeq } = sendObject;
         if (researchNm === '' || researchType === '' || !teamSeq || !productSeq) {
@@ -127,6 +136,10 @@ const ResearchCreate = () => {
           dispatch(setStep(step));
           dispatch(updateResearchBasicInfo({ name: 'researchNm', value: researchName }));
           dispatch(fetchResearchBasicInfo({ params: sendObject, step: step, callback: router }));
+          dispatch(resetRecommendationResult());
+          // 쿠키 비우기
+          cookies.remove('recommendResultSeq', { path: '/' });
+          cookies.remove('recommendResearchType', { path: '/' });
         }
       }
     } else {
@@ -244,7 +257,6 @@ const ResearchCreate = () => {
         detailDesignInfo: data.detailDesignInfo,
       };
     }
-    console.log(sendObject);
     dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'debounce' }));
     // const checkFieldArr = data.panelInfo.map(el => el.panel);
   };
@@ -281,6 +293,10 @@ const ResearchCreate = () => {
       }
     }
   }, [DETAIL_INFO]);
+
+  useEffect(() => {
+    dispatch(setRedirectPath(null));
+  }, []);
 
   return (
     <div css={mainContainer}>

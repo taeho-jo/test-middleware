@@ -6,20 +6,17 @@ export const fetchReportDetail = async (reportSeq, filterFields = null, filterVa
   let apiUrl = `/report/view/${reportSeq}`;
 
   if (filterFields && filterValues && !filterFail) {
-    console.log(1);
     apiUrl = `/report/view/${reportSeq}/?filterFields=${filterFields}&filterValues
 =${filterValues}`;
     return await AXIOS_GET(apiUrl);
   }
 
   if (!filterFields && !filterValues && filterFail) {
-    console.log(2);
     apiUrl = `/report/view/${reportSeq}/?filterFail=on`;
     return await AXIOS_GET(apiUrl);
   }
 
   if (filterFields && filterValues && filterFail) {
-    console.log(3);
     apiUrl = `/report/view/${reportSeq}/?filterFields=${filterFields}&filterValues
 =${filterValues}&filterFail=on`;
     return await AXIOS_GET(apiUrl);
