@@ -23,6 +23,7 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
     e.stopPropagation();
     e.preventDefault();
     const { questionSeq, question, questionType } = questionInfo;
+
     const { nextQuestionSeq, options, optionsSeq, relationOptionsSeq, relationQuestionSeq, sortNumber } = value;
 
     if (isSubjective && subjective !== '') {
