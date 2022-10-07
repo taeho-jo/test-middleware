@@ -52,33 +52,6 @@ const SignupModal = () => {
   const onSubmit = data => handleSignup('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  // const {
-  //   mutate: signupMutate,
-  //   isLoading,
-  //   data: signupData,
-  // } = useMutation(['signup'], fetchSignupApi, {
-  //   onError: (e: any) => {
-  //     const { data } = e.response;
-  //     dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
-  //     dispatch(updateErrorMessage(data.message));
-  //     dispatch(updateCancelWithdrawal(true));
-  //     dispatch(isShow({ isShow: true, type: 'withdrawalUserSignupModal' }));
-  //   },
-  // });
-
-  // const { data: usersInfo } = useQuery(['fetchUserInfo', `signup/${signupData?.code}`], () => fetchUserInfoApi(signupData?.data.token), {
-  //   enabled: !!signupData?.code,
-  //   onSuccess: data => {
-  //     dispatch(setUserInfo(data.data));
-  //     if (data.data.emailVerifiedYn === 'N') {
-  //       dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-  //     }
-  //     if (data.data.emailVerifiedYn === 'Y') {
-  //       router.push('/admin/team');
-  //     }
-  //   },
-  // });
-
   const handleSignup = useCallback((status, signupData) => {
     const { consentToUseMarketingYn, password, privacyConsentYn, userId } = signupData;
 
@@ -90,7 +63,6 @@ const SignupModal = () => {
       emailTemplateName: EMAIL_CONFIRM_TEMPLATE,
     };
 
-    console.log(sendObject);
     dispatch(signupAction(sendObject));
     // signupMutate(sendObject);
   }, []);

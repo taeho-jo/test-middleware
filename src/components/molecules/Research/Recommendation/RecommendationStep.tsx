@@ -102,7 +102,7 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
   const handleUpdateQuestionArr = value => {
     const obj = selectQuestion.filter(el => el.questionSeq === 4)[0];
     const filterArr = selectQuestion.filter(el => el.questionSeq !== 4);
-    console.log(value, obj);
+
     const sendObject = {
       ...obj,
       subjective: value,

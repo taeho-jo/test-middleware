@@ -33,6 +33,10 @@ export const researchRecommendationSlice = createSlice({
     sendRecommendationQuestionListActionSuccess: (state, action: PayloadAction<any>) => {
       state.recommendationResult = action.payload;
     },
+    // 결과 초기화
+    resetRecommendationResult: state => {
+      state.recommendationResult = null;
+    },
     // 에러 처리
     getRecommendationApiError: (state, action: PayloadAction<any>) => {
       state.error = action.payload;
@@ -45,6 +49,7 @@ export const {
   getRecommendationDataActionSuccess,
   sendRecommendationQuestionListAction,
   sendRecommendationQuestionListActionSuccess,
+  resetRecommendationResult,
   getRecommendationApiError,
 } = researchRecommendationSlice.actions;
 export default researchRecommendationSlice.reducer;

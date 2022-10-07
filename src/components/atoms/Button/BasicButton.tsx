@@ -10,6 +10,7 @@ interface PropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;
   designBgColor?: string;
   text?: string;
+  textColor?: string;
   type?: 'submit' | 'button' | 'reset';
   status?: 'normal' | 'disabled';
   theme?: 'light' | 'dark';
@@ -23,6 +24,7 @@ const BasicButton = ({
   style,
   designBgColor,
   text,
+  textColor,
   type = 'button',
   status = 'normal',
   theme = 'light',
@@ -44,7 +46,7 @@ const BasicButton = ({
           <ClipLoader size={10} color={'white'} />
         </span>
       ) : (
-        <span css={[buttonTextStyle, textStyle]}>{text ? text : 'button'}</span>
+        <span css={[buttonTextStyle, textStyle, { color: textColor }]}>{text ? text : 'button'}</span>
       )}
     </button>
   );

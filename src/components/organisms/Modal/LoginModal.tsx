@@ -49,26 +49,6 @@ const LoginModal = () => {
   const onSubmit = data => handleLogin('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  // react query
-  // const {
-  //   mutate: loginMutate,
-  //   isLoading,
-  //   data: loginData,
-  // } = useMutation(['login'], fetchLoginApi, {
-  //   onError: (e: any) => {
-  //     const { data } = e.response;
-  //     dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
-  //     if (data.code === 'E0022') {
-  //       dispatch(isShow({ isShow: true, type: 'cancelWithdrawalModal' }));
-  //       dispatch(updateCancelWithdrawal(true));
-  //     }
-  //   },
-  // });
-  //
-  // const { data: usersInfo } = useQuery(['fetchUserInfo', `signup/${loginData?.code}`], () => fetchUserInfoApi(loginData?.data.token), {
-  //   enabled: !!loginData?.code,
-  // });
-
   // 이메일 로그인
   const handleLogin = useCallback(
     (status, data) => {
@@ -88,7 +68,14 @@ const LoginModal = () => {
       if (isWithdrawalUser) {
         dispatch(loginAction(sendObject));
       } else {
-        dispatch(loginAction(data));
+        const pathname = router.pathname;
+        console.log(pathname);
+        console.log(data, 'DATA');
+        if (pathname === '/admin/research/recommendation/result') {
+          dispatch(loginAction({ ...data, callback: router }));
+        } else {
+          dispatch(loginAction(data));
+        }
       }
     },
     [isWithdrawalUser],

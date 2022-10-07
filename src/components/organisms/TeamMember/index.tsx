@@ -88,7 +88,6 @@ const TeamMember = () => {
   );
 
   const handleChangeMemberStatus = useCallback(name => {
-    console.log(name);
     if (name === '관리자로 변경하기' || name === '멤버로 변경하기') {
       dispatch(isShow({ isShow: true, type: 'changeMemberAuth' }));
     }

@@ -24,7 +24,7 @@ import {
 import { isShow } from '../../reducers/modalReducer';
 import { showToast } from '../../reducers/toastReducer';
 import { getRefreshToken } from '../../reducers/authReducer';
-import { getCommonCode } from '../../reducers/commonReducer';
+import { getCommonCode, setRedirectPath } from '../../reducers/commonReducer';
 import {
   getRecommendationApiError,
   getRecommendationDataAction,
@@ -32,12 +32,13 @@ import {
   sendRecommendationQuestionListAction,
   sendRecommendationQuestionListActionSuccess,
 } from '../../reducers/researchRecommendationReducer';
+import { Cookies } from 'react-cookie';
 
 // 팀 리서치 목록 조회 saga
 function* fetchResearchListSaga(action) {
   try {
     const { params } = action.payload;
-    console.log(params, 'P');
+
     const result = yield call(fetchGetResearchListApi, params);
     if (result.code === '200') {
       yield put(fetchResearchListSuccess(result.data.list));
@@ -163,13 +164,20 @@ function* fetchGetRecommendationQuestionSaga(action) {
 // 리서치 추천 문항 결과 제출 saga
 function* sendRecommendationQuestionListSaga(action) {
   try {
-    console.log(action);
     const result = yield call(sendRecommendationQuestionListApi, action.payload.sendObject);
-    console.log(result);
+
     if (result.code === '201') {
+      const cookies = new Cookies();
       yield put(showToast({ message: '리서치 추천이 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }));
       yield put(sendRecommendationQuestionListActionSuccess(result.data));
+
+      const expires = new Date();
+      expires.setDate(expires.getDate() + 1);
+      cookies.set(`recommendResultSeq`, result.data.recommendResultSeq, { path: '/', expires });
+      cookies.set(`recommendResearchType`, result.data.recommendResearchType, { path: '/', expires });
+
       action.payload.callback.push('/admin/research/recommendation/result');
+      yield put(setRedirectPath('/admin/research/create'));
     }
   } catch (e) {
     console.error(e);

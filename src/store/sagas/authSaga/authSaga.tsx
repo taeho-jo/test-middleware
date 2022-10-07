@@ -17,13 +17,19 @@ import { getUserInfo, updateCancelWithdrawal } from '../../reducers/userReducer'
 // 로그인
 function* loginSaga(action) {
   try {
-    const response = yield call(fetchLoginApi, action.payload);
-    console.log(response);
+    const sendObject = {
+      userId: action.payload.userId,
+      password: action.payload.password,
+    };
+    const response = yield call(fetchLoginApi, sendObject);
     if (response?.code === '200') {
       localStorage.setItem('accessToken', response.data.token);
       yield put(setToken(response.data.token));
       yield put(showToast({ message: response.message, isShow: true, status: 'success', duration: 5000 }));
       yield put(getUserInfo());
+      if (action.payload.callback) {
+        action.payload.callback.push('/admin/research/create');
+      }
     }
   } catch (e: any) {
     console.error(e);
@@ -39,9 +45,8 @@ function* loginSaga(action) {
 // 회원가입
 function* signupSaga(action) {
   try {
-    console.log(action);
     const response = yield call(fetchSignupApi, action.payload);
-    console.log(response);
+
     if (response.code === '201') {
       yield put(showToast({ message: `${response?.message}`, isShow: true, status: 'success', duration: 5000 }));
       // yield put(isShow({ isShow: true, type: 'confirmSignup' }));
@@ -51,14 +56,12 @@ function* signupSaga(action) {
     yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
   }
 }
-// eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3RhbmcxMzVAbmF2ZXIuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImV4cCI6MTY2NDc4MTA1NX0.yJSdtjJKuHbguT4RprMHAxVMAh_7bVHKcbuShYLvCeM;
-// eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3RhbmcxMzVAbmF2ZXIuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImV4cCI6MTY2NDc3OTk0Mn0.jawhK_dM4xHYAAJevZ1LDQf1mP5sTH9WZ9t0YVF4gR8
 
 // 이메일 인증
 function* confirmEmailSaga(action) {
   try {
     const response = yield call(fetchEmailConfirmApi);
-    console.log(response, 'ㅇㅣ메일 컨펌');
+
     yield put(isShow({ isShow: false, type: '' }));
     yield put(getUserInfo());
   } catch (e) {
@@ -72,7 +75,7 @@ function* resendConfirmEmailSaga(action) {
   try {
     // resendConfirmEmail
     const response = yield call(fetchEmailResendApi, action.payload);
-    console.log(response, 'resend');
+
     yield put(showToast({ message: '인증메일이 재전송 되었습니다.', isShow: true, status: 'success', duration: 5000 }));
   } catch (e) {
     console.error(e);

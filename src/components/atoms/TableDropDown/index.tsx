@@ -21,8 +21,6 @@ const TableDropDown = ({ display, topText, normalText, top = 16, left = 16, hand
   const dispatch = useDispatch();
   const router = useRouter();
 
-  console.log(top, left);
-
   const handleChange = useCallback(
     name => {
       handleChangeMemberStatus(name);

@@ -33,7 +33,7 @@ export interface TeamProductType {
 export interface TeamType {
   isFirstCreate: boolean;
   isInviteModal: boolean;
-  teamList: TeamListType[] | null;
+  teamList: TeamListType[] | [];
   selectTeamList: TeamListType[] | null;
   selectTeamSeq: number | null;
   selectProduct: TeamProductType | null;
@@ -85,7 +85,7 @@ export const teamSlice = createSlice({
       // const selectedArr = state.teamList.filter(el => el.teamSeq === action.payload);
       state.selectTeamList = action.payload;
     },
-    updateTeamInfo: (state, action: PayloadAction<TeamListType[] | null>) => {
+    updateTeamInfo: (state, action: PayloadAction<TeamListType[] | []>) => {
       if (action.payload === null) {
         state.teamList = null;
       } else {
