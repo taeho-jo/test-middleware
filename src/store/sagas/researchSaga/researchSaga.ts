@@ -10,7 +10,7 @@ import {
   fetchResearchModifyInfo,
   fetchResearchModifyInfoSuccess,
   getResearchApiError,
-  setStep,
+  setStep, updateRecommendationStep,
 } from '../../reducers/researchCreateReducer';
 import {
   fetchCreateTeamResearchApi,
@@ -175,7 +175,7 @@ function* sendRecommendationQuestionListSaga(action) {
       expires.setDate(expires.getDate() + 1);
       cookies.set(`recommendResultSeq`, result.data.recommendResultSeq, { path: '/', expires });
       cookies.set(`recommendResearchType`, result.data.recommendResearchType, { path: '/', expires });
-
+      yield put(updateRecommendationStep('step1'));
       action.payload.callback.push('/admin/research/recommendation/result');
       yield put(setRedirectPath('/admin/research/create'));
     }
