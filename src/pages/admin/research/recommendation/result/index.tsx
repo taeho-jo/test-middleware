@@ -14,6 +14,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../../../store/reducers';
 import { useRouter } from 'next/router';
 import { isShow } from '../../../../../store/reducers/modalReducer';
+import {resetRecommendationResult} from "../../../../../store/reducers/researchRecommendationReducer";
+import {updateRecommendationStep} from "../../../../../store/reducers/researchCreateReducer";
+import {setRedirectPath} from "../../../../../store/reducers/commonReducer";
 
 const RESULT_OBJ = {
   UI_DIAGNOSIS: {
@@ -60,6 +63,13 @@ const Result = () => {
       dispatch(isShow({ isShow: true, type: 'login' }));
     }
   };
+
+  const handleResetRecommendation = () => {
+    router.push('/admin/research/recommendation')
+    dispatch(setRedirectPath(null));
+    // dispatch(resetRecommendationResult())
+
+  }
 
   return (
     <div css={resultMainContainer}>
@@ -124,6 +134,7 @@ const Result = () => {
             `}
           />
           <span
+            onClick={handleResetRecommendation}
             css={[
               heading4_bold,
               css`

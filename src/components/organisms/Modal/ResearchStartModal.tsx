@@ -24,21 +24,18 @@ const ResearchStartModal = () => {
   const DETAIL_INFO = useSelector<ReducerType, any>(state => state.researchCreate.detailData);
 
   const [lastCheck, setLastCheck] = useState(false);
+  const [confirmUseCreditCheck, setConfirmUseCreditCheck] = useState(false)
   const [addCosts, setAddCosts] = useState({
     totalRespondentSize: 0,
     totalRespondentCost: 0,
   });
 
   const handleChangeCheckBox = () => {
-    // if (lastCheck.length === 0) {
-    //   setLastCheck([value]);
-    // }
-    // if (lastCheck.includes(value)) {
-    //   setLastCheck([]);
-    // }
-
     setLastCheck(prev => !prev);
   };
+  const handleChangeUseCreditCheckBox = () => {
+    setConfirmUseCreditCheck(prev => !prev)
+  }
 
   const {
     register,
@@ -49,7 +46,7 @@ const ResearchStartModal = () => {
   }, []);
 
   const handleStartResearch = () => {
-    if (!lastCheck) {
+    if (!lastCheck || !confirmUseCreditCheck) {
       dispatch(showToast({ message: '리서치 진행에 동의해주세요.', isShow: true, status: 'warning', duration: 5000 }));
     } else {
       const sendObject = {
@@ -114,7 +111,7 @@ const ResearchStartModal = () => {
   return (
     <FlexBox style={{ marginTop: '35px', minWidth: '1440px' }} justify={'center'}>
       <PopupBox padding={'0px'} width={calcModalWidth(DETAIL_INFO?.statusType)} height={'auto'}>
-        <ModalTitle style={{ height: 'auto', padding: '24px 32px' }} title={<>확정 견적 확인하기</>} />
+        <ModalTitle style={{ height: 'auto', padding: '24px 32px' }} title={<>리서치를 시작하시겠어요?</>} />
 
         <FlexBox
           justify={'space-between'}
@@ -288,15 +285,20 @@ const ResearchStartModal = () => {
                 <span css={[heading4_bold, tableHeaderStyle(320, 'left', '15px 24px')]}>총 합계</span>
                 <span css={[heading4_bold, tableHeaderStyle(128, 'center', '15px 24px')]}>-</span>
                 <span css={[heading4_bold, tableHeaderStyle(192, 'right', '15px 24px')]}>
-                  {(DETAIL_INFO?.totalCost - DETAIL_INFO?.vat).toLocaleString()}원
+                   {DETAIL_INFO?.totalCost.toLocaleString()}원
                 </span>
               </FlexBox>
 
               <FlexBox justify={'space-between'}>
-                <span css={[heading4_bold, tableHeaderStyle(320, 'left', '15px 24px')]}>부가세 (VAT)</span>
+                <span css={[heading4_bold, tableHeaderStyle(320, 'left', '15px 24px')]}>크레딧 사용</span>
                 <span css={[heading4_bold, tableHeaderStyle(128, 'center', '15px 24px')]}>-</span>
-                <span css={[heading4_bold, tableHeaderStyle(192, 'right', '15px 24px')]}>{DETAIL_INFO?.vat.toLocaleString()}원</span>
+                <span css={[heading4_bold, tableHeaderStyle(192, 'right', '15px 24px', colors.red)]}>
+                  {DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost
+                    ? `-${DETAIL_INFO?.totalCost.toLocaleString()}원`
+                    : `-${DETAIL_INFO?.remainingCredit.toLocaleString()}원`}
+                </span>
               </FlexBox>
+
             </FlexBox>
 
             <FlexBox
@@ -313,16 +315,20 @@ const ResearchStartModal = () => {
               <FlexBox justify={'space-between'}>
                 <span css={[heading4_bold, tableHeaderStyle(320, 'left', '15px 24px')]}>총 리서치 수행 비용</span>
                 <span css={[heading4_bold, tableHeaderStyle(128, 'center', '15px 24px')]}>-</span>
-                <span css={[heading4_bold, tableHeaderStyle(192, 'right', '15px 24px')]}>{DETAIL_INFO.totalCost.toLocaleString()}원</span>
+                <span css={[heading4_bold, tableHeaderStyle(192, 'right', '15px 24px')]}>
+                  {DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost
+                    ? `0원`
+                    : `${(DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit).toLocaleString()}원`}
+                </span>
               </FlexBox>
 
               <FlexBox justify={'space-between'}>
-                <span css={[heading4_bold, tableHeaderStyle(320, 'left', '15px 24px')]}>크레딧 사용</span>
+                <span css={[heading4_bold, tableHeaderStyle(320, 'left', '15px 24px')]}>부가세 (VAT)</span>
                 <span css={[heading4_bold, tableHeaderStyle(128, 'center', '15px 24px')]}>-</span>
-                <span css={[heading4_bold, tableHeaderStyle(192, 'right', '15px 24px', colors.red)]}>
-                  {DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost
-                    ? `-${DETAIL_INFO?.totalCost.toLocaleString()}원`
-                    : `-${DETAIL_INFO?.remainingCredit.toLocaleString()}원`}
+                <span css={[heading4_bold, tableHeaderStyle(192, 'right', '15px 24px')]}>
+                 {DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost
+                   ? `0원`
+                   : `${((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit)*0.1).toLocaleString()}원`}
                 </span>
               </FlexBox>
             </FlexBox>
@@ -340,11 +346,10 @@ const ResearchStartModal = () => {
             >
               <FlexBox justify={'space-between'}>
                 <span css={[heading2_bold, tableHeaderStyle(320, 'left', '15px 24px')]}>결제 금액</span>
-                {/*<span css={[heading4_bold, tableHeaderStyle(128, 'center', '15px 24px')]}>-</span>*/}
                 <span css={[heading2_bold, tableHeaderStyle(192, 'right', '15px 24px')]}>
                   {DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost
                     ? `0원`
-                    : `${(DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit).toLocaleString()}원`}
+                    : `${((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit) + ((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit)*0.1)).toLocaleString()}원`}
                 </span>
               </FlexBox>
             </FlexBox>
@@ -379,9 +384,18 @@ const ResearchStartModal = () => {
             </FlexBox>
 
             {/*{DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost && (*/}
-            <>
-              <FlexBox direction={'column'} align={'flex-start'} style={marginStyle}>
-                <CheckBox
+            {DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost && (
+              <>
+                <FlexBox direction={'column'} align={'flex-start'} style={marginStyle}>
+                  <CheckBox
+                    handleChangeCheckBox={handleChangeUseCreditCheckBox}
+                    checked={confirmUseCreditCheck}
+                    inputName={'confirmUseCredit'}
+                    label={'잔여 크레딧을 모두 사용하는 것에 동의합니다.'}
+                    register={register}
+                    errors={errors}
+                  />
+                  <CheckBox
                   handleChangeCheckBox={handleChangeCheckBox}
                   checked={lastCheck}
                   inputName={'confirm'}
@@ -389,15 +403,15 @@ const ResearchStartModal = () => {
                   register={register}
                   errors={errors}
                 />
-                {/*<input id={'1'} type={'checkbox'} checked={true} />*/}
-                {/*<label htmlFor="1"></label>*/}
-              </FlexBox>
-              <FlexBox justify={'space-between'}>
-                <BasicButton designBgColor={colors.red} style={{ width: '160px' }} onClick={closeModal} text={'취소하기'} />
-                <BasicButton style={{ width: '160px' }} onClick={handleStartResearch} theme={'dark'} text={'시작하기'} />
-              </FlexBox>
-            </>
-            {/*)}*/}
+                  {/*<input id={'1'} type={'checkbox'} checked={true} />*/}
+                  {/*<label htmlFor="1"></label>*/}
+                </FlexBox>
+                <FlexBox justify={'space-between'}>
+                  <BasicButton designBgColor={colors.red} style={{ width: '160px' }} onClick={closeModal} text={'취소하기'} />
+                  <BasicButton style={{ width: '160px' }} onClick={handleStartResearch} theme={'dark'} text={'시작하기'} />
+                </FlexBox>
+              </>
+            )}
 
             {DETAIL_INFO?.remainingCredit < DETAIL_INFO?.totalCost && (
               <>

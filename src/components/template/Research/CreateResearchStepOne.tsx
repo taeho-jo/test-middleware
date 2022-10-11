@@ -30,7 +30,7 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
   const methodsType = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
   const productList = useSelector<ReducerType, any>(state => state.team.teamProductList.list);
   const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
-
+  const selectedTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq)
   // 추천 결과
   const recommendationResult = useSelector<ReducerType, any>(state => state.researchRecommendation.recommendationResult);
   const cookies = new Cookies();
@@ -114,18 +114,8 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
 
   useEffect(() => {
     // console.log(cookies.get('recommendResultSeq'), cookies.get('recommendResearchType'));
-    const seq = cookies.get('recommendResultSeq');
-    const type = cookies.get('recommendResearchType');
-    if (seq && type) {
-      reset({
-        method: type,
-      });
-      setSelected({
-        ...selected,
-        method: type,
-      });
-      dispatch(updateResearchBasicInfo({ name: 'researchType', value: type }));
-    }
+
+
   }, []);
 
   // 상세 접속 시 기본값 세팅
@@ -148,6 +138,32 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
       dispatch(updateResearchModifyInfo({ name: 'teamSeq', value: detailInfo?.teamSeq }));
       dispatch(updateResearchModifyInfo({ name: 'productSeq', value: detailInfo?.productSeq }));
       dispatch(updateResearchModifyInfo({ name: 'statusType', value: detailInfo?.statusType }));
+    } else {
+      const seq = cookies.get('recommendResultSeq');
+      const type = cookies.get('recommendResearchType');
+      if (seq && type) {
+        reset({
+          method: type,
+          team: selectedTeamSeq
+        });
+        setSelected({
+          ...selected,
+          method: type,
+          team: selectedTeamSeq
+        });
+        dispatch(updateResearchBasicInfo({ name: 'researchType', value: type }));
+        dispatch(updateResearchModifyInfo({ name: 'teamSeq', value: selectedTeamSeq }));
+      } else {
+        reset({
+          team: selectedTeamSeq
+        });
+        setSelected({
+          ...selected,
+          team: selectedTeamSeq
+        });
+        dispatch(updateResearchModifyInfo({ name: 'teamSeq', value: selectedTeamSeq }));
+      }
+
     }
   }, [detailInfo]);
 

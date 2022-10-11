@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { css } from '@emotion/react';
-import ModalTitle from '../../molecules/ModalTitle';
+import React, {useEffect, useState} from 'react';
+import {css} from '@emotion/react';
 import FlexBox from '../../atoms/FlexBox';
 import Icon from '../../atoms/Icon';
-import { heading1_bold, heading2_medium, heading3_bold } from '../../../styles/FontStyles';
-import { colors } from '../../../styles/Common.styles';
+import {heading1_bold, heading3_bold} from '../../../styles/FontStyles';
+import {colors} from '../../../styles/Common.styles';
 import Button from '../../atoms/Button';
-import Image from 'next/image';
-import reportNavigationTop from '/public/assets/png/reportNavigationTop.png';
-import reportNavigationBottom from '/public/assets/png/reportNavigationBotton.png';
-import { useDispatch, useSelector } from 'react-redux';
-import { ReducerType } from '../../../store/reducers';
-import { calcWhichStep } from '../../../common/util/commonFunc';
-import { updateRecommendationStep } from '../../../store/reducers/researchCreateReducer';
+import {useDispatch, useSelector} from 'react-redux';
+import {ReducerType} from '../../../store/reducers';
+import {updateRecommendationStep} from '../../../store/reducers/researchCreateReducer';
 import RecommendationStep from '../../molecules/Research/Recommendation/RecommendationStep';
-import BasicButton from '../../atoms/Button/BasicButton';
-import { getRecommendationDataAction, sendRecommendationQuestionListAction } from '../../../store/reducers/researchRecommendationReducer';
-import { RecommendationQuestionListType } from '../../../api/researchApi/types';
-import { showToast } from '../../../store/reducers/toastReducer';
-import { useRouter } from 'next/router';
+import {
+  getRecommendationDataAction,
+  sendRecommendationQuestionListAction
+} from '../../../store/reducers/researchRecommendationReducer';
+import {RecommendationQuestionListType} from '../../../api/researchApi/types';
+import {showToast} from '../../../store/reducers/toastReducer';
+import {useRouter} from 'next/router';
+import {Cookies} from 'react-cookie';
 
 const ResearchRecommendation = () => {
   const dispatch = useDispatch();
@@ -144,13 +142,20 @@ const ResearchRecommendation = () => {
       recommendResultData: selectQuestion,
     };
     dispatch(sendRecommendationQuestionListAction({ sendObject, callback: router }));
-    dispatch(updateRecommendationStep('step1'));
+
   };
 
   useEffect(() => {
     return () => {
       dispatch(updateRecommendationStep('step1'));
     }
+  },[])
+
+  useEffect(() => {
+    const cookies = new Cookies()
+    // 쿠키 비우기
+    cookies.remove('recommendResultSeq', { path: '/' });
+    cookies.remove('recommendResearchType', { path: '/' });
   },[])
 
   return (
