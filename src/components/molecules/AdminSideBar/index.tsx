@@ -55,18 +55,9 @@ const AdminSideBar = () => {
       dispatch(updateSelectTeamList(item));
       dispatch(updateTeamSeq(item.teamSeq));
 
-      // queryClient.invalidateQueries(['fetchTeamReportList', item.teamSeq]);
-
       localStorage.setItem('selectTeamList', JSON.stringify(item));
       localStorage.setItem('teamSeq', item.teamSeq);
 
-      // const params = {
-      //   teamSeq: item.teamSeq,
-      //   searchText: '',
-      //   researchType: '',
-      //   statusType: '',
-      // };
-      // dispatch(fetchGetResearchListApi(params));
     },
     [teamList],
   );

@@ -328,7 +328,8 @@ const ResearchStartModal = () => {
                 <span css={[heading4_bold, tableHeaderStyle(192, 'right', '15px 24px')]}>
                  {DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost
                    ? `0원`
-                   : `${((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit)*0.1).toLocaleString()}원`}
+                   : `${(Math.floor(Math.floor((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit)*0.1) / 10) * 10).toLocaleString()}원`
+                 }
                 </span>
               </FlexBox>
             </FlexBox>
@@ -349,7 +350,7 @@ const ResearchStartModal = () => {
                 <span css={[heading2_bold, tableHeaderStyle(192, 'right', '15px 24px')]}>
                   {DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost
                     ? `0원`
-                    : `${((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit) + ((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit)*0.1)).toLocaleString()}원`}
+                    : `${((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit) + (Math.floor(Math.floor((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit)*0.1) / 10) * 10)).toLocaleString()}원`}
                 </span>
               </FlexBox>
             </FlexBox>

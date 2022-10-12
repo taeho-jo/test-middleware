@@ -54,6 +54,14 @@ const Select = ({
   });
 
   useEffect(() => {
+    if(getResearchMethod && isOpen) {
+      if(name === 'method') {
+        getResearchMethod('UI_DIAGNOSIS');
+      }
+    }
+  },[isOpen])
+
+  useEffect(() => {
     const element = document.getElementById(name);
     if (element) {
       (element as HTMLInputElement).value = selected as string;
@@ -74,9 +82,9 @@ const Select = ({
         ref={selectRef}
         onClick={() => {
           if (getResearchMethod) {
-            if (name === 'method') {
-              getResearchMethod('UI_DIAGNOSIS');
-            }
+            // if (name === 'method') {
+            //   getResearchMethod('UI_DIAGNOSIS');
+            // }
             if (name === 'team') {
               getResearchMethod('team');
             }

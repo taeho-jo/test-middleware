@@ -88,7 +88,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
               <ProfileIcon
                 name={item?.userName?.slice(0, 1)}
                 backgroundColor={
-                  item?.userId === userInfo?.userId && parentsIndex === teamSeq ? '#ff66b9' : parentsIndex === teamSeq ? profileColor2[index] : 'grey'
+                  item?.userId === userInfo?.userId && parentsIndex === teamSeq ? '#ff66b9' : parentsIndex == teamSeq ? profileColor2[index] : 'grey'
                 }
                 size={'20px'}
                 fontStyle={caption2_bold}

@@ -45,8 +45,8 @@ const ResearchDetail = () => {
       setTooltipContents({
         title: '실시간 소통하기',
         content: isActive
-          ? '(리서치 명)만을 위한 \n카카오톡 오픈 채팅에 접속합니다.\nDiby 매니저와 리서치 설계를 위한 의사소통을 할 수 있어요.'
-          : '매니져가 (리서치 명)를/을 위한 \n실시간 소통채널을 개설한 이후 확인하실 수 있습니다.',
+          ? `${detailData?.researchNm}만을 위한 \n카카오톡 오픈 채팅에 접속합니다.\nDiby 매니저와 리서치 설계를 위한 의사소통을 할 수 있어요.`
+          : `매니져가 ${detailData?.researchNm}를/을 위한 \n실시간 소통채널을 개설한 이후 확인하실 수 있습니다.`,
         left: -420,
         top: 150,
         backgroundColor: isActive ? '#68A0F4' : `${colors.grey._3c}`,

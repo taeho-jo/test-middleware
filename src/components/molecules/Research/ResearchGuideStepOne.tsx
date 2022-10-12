@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { css } from '@emotion/react';
 import Image, { StaticImageData } from 'next/image';
 import { body2_medium, heading2_bold } from '../../../styles/FontStyles';
@@ -66,6 +66,10 @@ const CONTENTS = {
 };
 
 const ResearchGuideStepOne = ({ guideStatus }: PropsType) => {
+
+  useEffect(() => {
+    console.log(guideStatus, 'console.log(guideStatus, \'\')')
+  },[guideStatus])
   const calcGuideImageWidth = guideStatus => {
     switch (guideStatus) {
       case 'inactive':

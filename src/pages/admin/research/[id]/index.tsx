@@ -33,6 +33,7 @@ import { showToast } from '../../../../store/reducers/toastReducer';
 import { resetRecommendationResult } from '../../../../store/reducers/researchRecommendationReducer';
 import { Cookies } from 'react-cookie';
 import { setRedirectPath } from '../../../../store/reducers/commonReducer';
+import {updateSelectTeamList, updateTeamSeq} from "../../../../store/reducers/teamReducer";
 
 const ResearchCreate = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,7 @@ const ResearchCreate = () => {
   const DETAIL_INFO = useSelector<ReducerType, any>(state => state.researchCreate.detailData);
   const MODIFY_INFO = useSelector<ReducerType, any>(state => state.researchCreate.researchModifyInfo);
   const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
+  const teamList = useSelector<ReducerType, any>(state => state.team.teamList)
 
   // 추천 결과
   const recommendationResult = useSelector<ReducerType, any>(state => state.researchRecommendation.recommendationResult);
@@ -137,6 +139,9 @@ const ResearchCreate = () => {
           dispatch(updateResearchBasicInfo({ name: 'researchNm', value: researchName }));
           dispatch(fetchResearchBasicInfo({ params: sendObject, step: step, callback: router }));
           dispatch(resetRecommendationResult());
+          const changeTeam = teamList.filter(el => parseInt(el.teamSeq) === parseInt(teamSeq))
+          dispatch(updateSelectTeamList(changeTeam[0]))
+          dispatch(updateTeamSeq(teamSeq))
           // 쿠키 비우기
           cookies.remove('recommendResultSeq', { path: '/' });
           cookies.remove('recommendResearchType', { path: '/' });
