@@ -35,9 +35,6 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
   const recommendationResult = useSelector<ReducerType, any>(state => state.researchRecommendation.recommendationResult);
   const cookies = new Cookies();
 
-  // hook saasaform
-  const { watch, setValue } = useForm({});
-
   const [selected, setSelected] = useState<any>({
     method: '',
     team: '',
@@ -57,6 +54,8 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
           ...selected,
           [label]: value,
         });
+        console.log(value)
+        // getResearchMethod(value)
         const name = label === 'method' ? 'researchType' : label === 'team' ? 'teamSeq' : 'productSeq';
         if (pageId === 'create') {
           dispatch(updateResearchBasicInfo({ name: name, value: String(value) }));
@@ -152,6 +151,7 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
           team: selectedTeamSeq
         });
         dispatch(updateResearchBasicInfo({ name: 'researchType', value: type }));
+        dispatch(updateResearchBasicInfo({ name: 'teamSeq', value: selectedTeamSeq }));
         dispatch(updateResearchModifyInfo({ name: 'teamSeq', value: selectedTeamSeq }));
       } else {
         reset({
@@ -161,6 +161,7 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
           ...selected,
           team: selectedTeamSeq
         });
+        dispatch(updateResearchBasicInfo({ name: 'teamSeq', value: selectedTeamSeq }));
         dispatch(updateResearchModifyInfo({ name: 'teamSeq', value: selectedTeamSeq }));
       }
 

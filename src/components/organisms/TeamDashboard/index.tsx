@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { css } from '@emotion/react';
 import FlexBox from '../../../components/atoms/FlexBox';
@@ -34,6 +34,7 @@ import { fetchResearchList } from '../../../store/reducers/researchCreateReducer
 import { getRefreshToken } from '../../../store/reducers/authReducer';
 import CheckBox from '../../atoms/CheckBox';
 import { CURRENT_DOMAIN } from '../../../common/util/commonVar';
+import useOutsideClick from "../../../hooks/useOutsideClick";
 
 const ResearchType = [
   {
@@ -113,6 +114,8 @@ const TeamDashboard = () => {
   const onSubmit = data => handleSearchResearchList(data);
   const onError = errors => console.log('fail', errors);
 
+  const boxRef = useRef(null);
+
   // 리서치 필터 모달 상태
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [filterType, setFilterType] = useState({
@@ -125,6 +128,10 @@ const TeamDashboard = () => {
   const handleShowFilterModal = status => {
     setShowFilterModal(status);
   };
+
+  useOutsideClick(boxRef, () => {
+    setShowFilterModal(false);
+  });
 
   const handleChangeFilterTypeCheckBox = useCallback(
     value => {
@@ -313,7 +320,7 @@ const TeamDashboard = () => {
                 css={filterBtnStyle}
               />
               {showFilterModal && (
-                <div css={filterModalStyle}>
+                <div ref={boxRef} css={filterModalStyle}>
                   <FlexBox align={'center'} justify={'space-between'} style={{ boxSizing: 'border-box' }}>
                     {(filterType.type || filterType.status) && (
                       <Icon

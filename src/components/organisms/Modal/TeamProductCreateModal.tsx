@@ -57,24 +57,24 @@ const TeamProductCreateModal = () => {
   const [sendObject, setSendObject] = useState(null);
   const [categoryArr, setCategoryArr] = useState([]);
 
-  console.log(categoryArr, 'CATE');
   const [selected, setSelected] = useState({
     productType: null,
   });
 
   const handleCreateProduct = useCallback(
     (status, data) => {
-      // console.log(data);
+      const serviceUrlValue = data?.serviceUrl?.includes('https://') ? data?.serviceUrl : `https://${data?.serviceUrl}`
       const sendObject = {
         productNm: data.productNm,
         productType: selected.productType,
         categoryType: categoryArr,
         productIntroduce: data.productIntroduce,
-        serviceUrl: data.serviceUrl,
+        serviceUrl: serviceUrlValue,
       };
-      console.log(sendObject);
+
       if (selectTeamSeq) {
         const pathname = router.pathname;
+
         dispatch(
           createTeamProduct({
             sendObject: sendObject,
@@ -111,13 +111,6 @@ const TeamProductCreateModal = () => {
       } else {
         setCategoryArr([...categoryArr, value]);
       }
-
-      // setChecked(prev => !prev);
-      // if (checked) {
-      //   dispatch(updateFilterFail(null));
-      // } else {
-      //   dispatch(updateFilterFail('on'));
-      // }
     },
     [categoryArr],
   );
@@ -186,6 +179,7 @@ const TeamProductCreateModal = () => {
                   margin-top: 10px;
                 `}
               >
+
                 <Input
                   title={'서비스 접속 경로 URL (선택)'}
                   register={register}

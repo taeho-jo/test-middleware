@@ -58,12 +58,13 @@ const TeamProductModifyModal = () => {
 
   const handleUpdateProduct = useCallback(
     (status, data) => {
+      const serviceUrlValue = data?.serviceUrl?.includes('https://') ? data?.serviceUrl : `https://${data?.serviceUrl}`
       const sendObject = {
         productNm: data.productNm ? data.productNm : selectProduct.productNm,
         productType: selected.productType,
         categoryType: categoryArr,
         productIntroduce: data.productIntroduce ? data.productIntroduce : selectProduct.productIntroduce,
-        serviceUrl: data.serviceUrl ? data.serviceUrl : selectProduct.serviceUrl,
+        serviceUrl: data.serviceUrl ? serviceUrlValue : selectProduct.serviceUrl,
       };
 
       dispatch(updateTeamProduct({ teamSeq: selectTeamSeq, productSeq: selectProduct.productSeq, sendObject: sendObject }));
