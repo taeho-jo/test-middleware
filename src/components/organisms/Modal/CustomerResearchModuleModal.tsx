@@ -29,7 +29,7 @@ const CustomerResearchModuleModal = () => {
             </FlexBox>
             <FlexBox style={{ marginBottom: '52px', padding: '8px 0' }}>
               <BasicButton
-                onClick={() => window.open('https://dbdlab.notion.site/34d243dc532d462b84468a710a63c3e8')}
+                onClick={() => window.open('https://dbdlab.notion.site/FGD-cf1ddccbf9734575bd88128d2323afd8')}
                 theme={'dark'}
                 text={'무료로 설계안 받기'}
               />

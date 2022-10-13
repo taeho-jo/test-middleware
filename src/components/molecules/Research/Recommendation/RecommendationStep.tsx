@@ -11,12 +11,14 @@ interface PropsType {
   setSelectQuestion: (value) => void;
   setNextStep: (value) => void;
   selectQuestion: { nextQuestionSeq: number; options: string[]; optionsSeq: number[]; question: string; questionSeq: number; subjective: string }[];
+  lastStep: boolean
 }
-const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, setNextStep }: PropsType) => {
+const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, lastStep }: PropsType) => {
   const [currentOptionsList, setCurrentOptionsList] = useState(null);
 
   const [isSubjective, setIsSubjective] = useState(false);
   const [subjective, setSubjective] = useState('');
+
   const inputRef = useRef(null);
 
   const handleSelectQuestion = (e, value, questionInfo) => {
@@ -26,8 +28,9 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
 
     const { nextQuestionSeq, options, optionsSeq, relationOptionsSeq, relationQuestionSeq, sortNumber } = value;
 
-    if (isSubjective && subjective !== '') {
-      inputRef.current.focus();
+    if (isSubjective && subjective !== '' && !lastStep) {
+      console.log('a여기탐???')
+      inputRef.current?.focus();
     } else {
       if (questionType === 'SINGLE_MULTIPLE_CHOICE') {
         const sendObject = {
@@ -94,6 +97,7 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
             } else {
               setSelectQuestion([...filterArr, originObj]);
             }
+
           }
         }
       }
@@ -116,6 +120,12 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
     };
     setSelectQuestion([...filterArr, sendObject]);
   };
+
+  useEffect(() => {
+    console.log(selectQuestion)
+    console.log(selectQuestion.length)
+  },[selectQuestion])
+
 
   useEffect(() => {
     if (selectQuestion.length === 4) {
@@ -142,9 +152,9 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, s
 
   useEffect(() => {
     if (isSubjective && inputRef) {
-      inputRef.current.focus();
+      inputRef?.current.focus();
     }
-  }, [isSubjective]);
+  }, [isSubjective, inputRef]);
   return (
     <FlexBox
       direction={'column'}
