@@ -39,6 +39,9 @@ function* fetchResearchListSaga(action) {
   try {
     const { params } = action.payload;
 
+
+    console.log(params, 'PARAMS')
+
     const result = yield call(fetchGetResearchListApi, params);
     if (result.code === '200') {
       yield put(fetchResearchListSuccess(result.data.list));
@@ -129,8 +132,13 @@ function* fetchDeleteResearchSaga(action) {
     if (result.code === '201') {
       yield put(isShow({ isShow: false, type: '' }));
       yield put(showToast({ message: '리서치 삭제가 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }));
-      const params = { teamSeq: action.payload.teamSeq, researchNm: '', researchType: '', statusType: '' };
-      yield put(fetchResearchList({ params }));
+      const params = {
+        teamSeq: action.payload.teamSeq,
+        searchText: '',
+        researchType: '',
+        statusType: '',
+      };
+      yield put(fetchResearchList({ params:params }));
     }
   } catch (e) {
     console.error(e);

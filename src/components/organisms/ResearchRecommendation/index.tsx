@@ -26,7 +26,7 @@ const ResearchRecommendation = () => {
 
   const [step, setStep] = useState(0);
   const [nextStep, setNextStep] = useState('');
-  const [prevStep, setPrevStep] = useState('');
+  const [lastStep, setLastStep] = useState(false)
   const [selectQuestion, setSelectQuestion] = useState<
     { nextQuestionSeq: number; options: string[]; optionsSeq: number[]; question: string; questionSeq: number; subjective: string }[]
   >([]);
@@ -105,6 +105,7 @@ const ResearchRecommendation = () => {
       }
     }
     if (recommendationStep === 'step4') {
+      setLastStep(true)
       if (selectQuestion.length <= 3) {
         dispatch(showToast({ message: '선택지를 선택해주세요.', isShow: true, status: 'warning', duration: 5000 }));
       } else {
@@ -182,6 +183,7 @@ const ResearchRecommendation = () => {
 
           {/* ------------ 문항 ------------ */}
           <RecommendationStep
+            lastStep={lastStep}
             questionInfo={handleChangeQuestionInfo()}
             selectQuestion={selectQuestion}
             setSelectQuestion={setSelectQuestion}

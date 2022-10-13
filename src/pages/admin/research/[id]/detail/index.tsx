@@ -277,7 +277,7 @@ const ResearchDetail = () => {
                 <span css={heading5_bold}>아젠다</span>
                 {detailData?.detailDesignInfo?.map((item, index) => {
                   const agendaaa = agendaTypeArr?.filter(el => el.key === item.agendaType);
-                  const agenda = agendaaa?.[0].displayName;
+                  const agenda = agendaaa?.[0]?.displayName;
                   return (
                     <span key={index} css={[heading4_medium, contentsStyle]}>
                       {item.agendaType === 'ETC' && item.agenda}

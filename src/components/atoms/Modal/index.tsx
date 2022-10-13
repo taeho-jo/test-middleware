@@ -5,7 +5,7 @@ import Portal from '../Portal';
 const Modal = ({ children }) => {
   return (
     <Portal selector={'modal-root'}>
-      <div css={darkBackgroundStyle}>{children}</div>
+      <div className={'scrollType1'} css={darkBackgroundStyle}>{children}</div>
     </Portal>
   );
 };
