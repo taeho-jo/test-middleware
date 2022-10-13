@@ -30,6 +30,7 @@ interface PropsType {
   reportType: string;
   downloadLink: string;
   webLink: string;
+  createId:string;
   onClick?: (e: any, id: string, type: string, name: string, downloadLink: string, webLink: string) => void;
 }
 
@@ -44,6 +45,7 @@ const ListReport = ({
   reportType,
   downloadLink,
   webLink,
+                      createId,
   onClick,
 }: PropsType) => {
   const dispatch = useDispatch();
@@ -53,8 +55,26 @@ const ListReport = ({
     state => state.common.commonCode.ResearchStatusType,
   );
 
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo)
+  const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+
+
   // LayerPopup state
   const [focusProfile, setFocusProfile] = useState(false);
+  // 권한
+  const [myRole, setMyRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (userInfo && selectTeamList) {
+      const memberArr = selectTeamList?.teamMember;
+      const myRole = memberArr?.filter(el => el.userId === userInfo.userId)?.[0]?.teamRoleType;
+      setMyRole(myRole);
+    }
+  }, [userInfo, selectTeamList]);
+
+  useEffect(() => {
+    console.log(myRole)
+  },[myRole])
 
   const changeName = useCallback(name => {
     switch (name) {
@@ -116,9 +136,18 @@ const ListReport = ({
     [statusType],
   );
 
-  const handleMovePage = (statusType, researchSeq) => {
+  const handleMovePage = (statusType, researchSeq, createId) => {
     if (statusType == 'RESEARCH_INFO_ENTERING') {
-      router.push(`/admin/research/${researchSeq}`);
+      if(myRole === '관리자') {
+        router.push(`/admin/research/${researchSeq}`);
+      }
+      if(myRole === '멤버') {
+        if(createId !== userInfo?.userId) {
+          dispatch(showToast({ message: '해당 리서치에 권한이 없습니다.', isShow: true, status: 'warning', duration: 5000 }))
+        } else {
+          router.push(`/admin/research/${researchSeq}`);
+        }
+      }
     } else {
       router.push(`/admin/research/${researchSeq}/detail`);
     }
@@ -139,7 +168,7 @@ const ListReport = ({
   };
 
   return (
-    <div css={mainContainer} onClick={() => handleMovePage(statusType, researchSeq)}>
+    <div css={mainContainer} onClick={() => handleMovePage(statusType, researchSeq, createId)}>
       <FlexBox direction={'row'} justify={'space-between'} align={'center'}>
         <span css={[caption1_bold, blockStyle]}>
           ({researchSeq}) {researchTypeNm}
