@@ -20,6 +20,7 @@ export const fetchCreateTeamResearchApi = async sendObject => {
 
 // 리서치 수정 api
 export const fetchModifyTeamResearchApi = async sendObject => {
+  console.log(sendObject, 'AAAA')
   return await AXIOS_PUT(`/team/${sendObject.teamSeq}/research/${sendObject.researchSeq}`, sendObject);
 };
 

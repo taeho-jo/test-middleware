@@ -162,6 +162,8 @@ const ResearchCreate = () => {
           ...DETAIL_INFO,
         };
         const checkFieldArr = data.respondentInfo.map(el => el.respondent);
+        console.log(sendObject, 'sendObject')
+        console.log(sendObject, 'sendObject')
         if (checkFieldArr.some(el => !el || el === '')) {
           dispatch(showToast({ message: '응답자 정보를 빠짐없이 입력해주세요.', isShow: true, status: 'warning', duration: 5000 }));
         } else {
