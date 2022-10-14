@@ -24,6 +24,9 @@ const ResearchDetail = () => {
   const agendaTypeArr = useSelector<ReducerType, any>(state => state.common.commonCode.AgendaType);
   const detailId = router.query.id;
 
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo)
+  const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+
   const [tooltipStatus, setTooltipStatus] = useState(false);
   const [tooltipContents, setTooltipContents] = useState<{
     title: string;
@@ -39,6 +42,17 @@ const ResearchDetail = () => {
     backgroundColor: colors.grey._3c,
   });
 
+  // 권한
+  const [myRole, setMyRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (userInfo && selectTeamList) {
+      const memberArr = selectTeamList?.teamMember;
+      const myRole = memberArr?.filter(el => el.userId === userInfo.userId)?.[0]?.teamRoleType;
+      setMyRole(myRole);
+    }
+  }, [userInfo, selectTeamList]);
+
   const showTooltip = (type, isActive) => {
     setTooltipStatus(true);
     if (type === '소통') {
@@ -46,7 +60,7 @@ const ResearchDetail = () => {
         title: '실시간 소통하기',
         content: isActive
           ? `${detailData?.researchNm}만을 위한 \n카카오톡 오픈 채팅에 접속합니다.\nDiby 매니저와 리서치 설계를 위한 의사소통을 할 수 있어요.`
-          : `매니져가 ${detailData?.researchNm}를/을 위한 \n실시간 소통채널을 개설한 이후 확인하실 수 있습니다.`,
+          : `매니저가 ${detailData?.researchNm}를/을 위한 \n실시간 소통채널을 개설한 이후 확인하실 수 있습니다.`,
         left: -420,
         top: 150,
         backgroundColor: isActive ? '#68A0F4' : `${colors.grey._3c}`,
@@ -135,7 +149,7 @@ const ResearchDetail = () => {
         teamSeq: selectTeamSeq,
         researchSeq: detailId,
       };
-      dispatch(fetchResearchDetail({ params: params }));
+      dispatch(fetchResearchDetail({ params: params, callback:() => router.push('/admin/team') }));
     }
   }, [detailId]);
 
@@ -184,35 +198,47 @@ const ResearchDetail = () => {
         <div css={contentsContainerStyle}>
           {/* -------------------------------- 오른쪽 영역 -------------------------------- */}
           <div className={'scrollType1'} css={rightContentsStyle}>
-            <div css={researchStartBtnContainerStyle}>
-              {detailData?.statusType === 'RESEARCH_DESIGN_COMPLETE' ? (
-                <BasicButton
-                  onClick={() => showCostModal('researchStartModal')}
-                  // btnTextColor={'white'}
-                  // disabled={true}
-                  text={'리서치 시작하기'}
-                  css={css`
+            {myRole === '관리자' || (myRole === '멤버' && detailData?.createId === userInfo?.userId) ? (
+              <div css={researchStartBtnContainerStyle}>
+                {detailData?.statusType === 'RESEARCH_DESIGN_COMPLETE' ? (
+                  <BasicButton
+                    onClick={() => showCostModal('researchStartModal')}
+                    // btnTextColor={'white'}
+                    // disabled={true}
+                    text={'리서치 시작하기'}
+                    css={css`
                     width: 648px;
                     z-index: 10;
                   `}
-                />
-              ) : (
-                <BasicButton
-                  theme={'dark'}
-                  disabled={true}
-                  text={'리서치 시작하기'}
-                  css={css`
+                  />
+                ) : (
+                  <BasicButton
+                    theme={'dark'}
+                    disabled={true}
+                    text={'리서치 시작하기'}
+                    css={css`
                     width: 648px;
                     z-index: 10;
                     cursor: not-allowed;
                   `}
-                />
-              )}
-            </div>
-            {calcShowButton(detailData?.statusType) && (
-              <div css={modifyButton} onClick={() => router.push(`/admin/research/${detailId}`)}>
-                <IconTextButton name={'ACTION_SETTING'} iconPosition={'left'} text={'수정하기'} />
+                  />
+                )}
               </div>
+            ) : null}
+
+            {calcShowButton(detailData?.statusType) && (
+                myRole === '관리자' ? (
+                  <div css={modifyButton} onClick={() => router.push(`/admin/research/${detailId}`)}>
+                    <IconTextButton name={'ACTION_SETTING'} iconPosition={'left'} text={'수정하기'} />
+                  </div>
+                ) : (
+                  myRole === '멤버' && detailData?.createId === userInfo?.userId ? (
+                    <div css={modifyButton} onClick={() => router.push(`/admin/research/${detailId}`)}>
+                      <IconTextButton name={'ACTION_SETTING'} iconPosition={'left'} text={'수정하기'} />
+                    </div>
+                  ) : null
+                  )
+
             )}
 
             {/* 리서치 방법 */}
@@ -340,7 +366,7 @@ const ResearchDetail = () => {
             {detailData?.statusType === 'RESEARCH_REQUEST_DESIGN_COMPLETE' && (
               <div css={alertContainer}>
                 <span css={heading5_bold}>
-                  리서치 설계 요청이 정상적으로 전달되었어요. 최대 24시간 이내 담당 매니져가 이메일을 통해 연락을 드릴 예정입니다.
+                  리서치 설계 요청이 정상적으로 전달되었어요. 최대 24시간 이내 담당 매니저가 이메일을 통해 연락을 드릴 예정입니다.
                 </span>
               </div>
             )}

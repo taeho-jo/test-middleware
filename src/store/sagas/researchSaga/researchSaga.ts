@@ -69,7 +69,11 @@ function* fetchGetResearchDetailInfo(action) {
     if (e?.response?.data?.code === 'E0008') {
       yield put(getRefreshToken());
       yield delay(1000);
-      yield put(fetchResearchDetail({ params: action.payload.params }));
+      yield put(fetchResearchDetail({ params: action.payload.params, callback: () => action.payload.callback() }));
+    }
+    if(e?.response?.data?.code === 'E0031') {
+      action.payload.callback()
+      yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }))
     }
     yield put(getResearchApiError(e));
   }
@@ -102,7 +106,10 @@ function* fetchModifyResearchSaga(action) {
       yield put(setStep(action.payload.step));
     }
 
-    yield put(fetchResearchModifyInfoSuccess(result.data));
+    if(action.payload.step !== 'debounce') {
+      yield put(fetchResearchModifyInfoSuccess(result.data));
+    }
+
     if (action.payload.step === 'last') {
       yield put(isShow({ isShow: true, type: 'researchStatusChangeModal' }));
       action.payload?.callback?.push(`/admin/team`);

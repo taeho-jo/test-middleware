@@ -19,24 +19,26 @@ import { debounceFunction } from '../../../common/util/commonFunc';
 interface PropsType {
   detailInfo: any;
   register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
-  setValue?: any;
   setAgendaType: any;
   respondentDebounceSave?: (value: string) => void;
+  handleSubmit?: any;
+  reset?: any;
+  watch?: any;
+  errors?: any;
+  control?: any;
+  setValue?: any
 }
 
-const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType, respondentDebounceSave }: PropsType) => {
+const CreateResearchStepFour = ({ detailInfo, register, setAgendaType, respondentDebounceSave,handleSubmit, setValue, watch, errors, control, reset  }: PropsType) => {
   const dispatch = useDispatch();
   const DETAIL_INFO = useSelector<ReducerType, any>(state => state.researchCreate.detailData);
   const AgendaList = useSelector<ReducerType, any>(state => state.common.commonCode.AgendaType);
 
   // hook saasaform
-  const {
-    control,
-    handleSubmit,
-    setValue: serValueArray,
-    reset,
-    formState: { errors },
-  } = useForm({});
+  // const {
+  //   setValue: serValueArray,
+  //
+  // } = useForm({});
   const { fields, append, insert, remove } = useFieldArray({
     control,
     name: 'detailDesignInfo',
@@ -127,9 +129,9 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType,
         setValue('agenda', '');
         setSelected({ topic: '' });
       } else if (detailInfo?.researchType === 'UI_DIAGNOSIS') {
-        serValueArray('detailDesignInfo', [{ mission: '' }]);
+        setValue('detailDesignInfo', [{ mission: '' }]);
       } else if (detailInfo?.researchType === 'HYPOTHESIS_VERIFICATION') {
-        serValueArray('detailDesignInfo', [{ hypothesis: '', hypothesisReason: '' }]);
+        setValue('detailDesignInfo', [{ hypothesis: '', hypothesisReason: '' }]);
       }
     } else {
       dispatch(updateResearchModifyInfo({ name: 'detailInfo', value: detailInfo?.detailDesignInfo }));
@@ -138,9 +140,9 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType,
         setSelected({ topic: detailInfo?.detailDesignInfo?.[0].agendaType });
         setAgendaType(detailInfo?.detailDesignInfo?.[0].agendaType);
       } else if (detailInfo?.researchType === 'UI_DIAGNOSIS') {
-        serValueArray('detailDesignInfo', detailInfo?.detailDesignInfo);
+        setValue('detailDesignInfo', detailInfo?.detailDesignInfo);
       } else if (detailInfo?.researchType === 'HYPOTHESIS_VERIFICATION') {
-        serValueArray('detailDesignInfo', detailInfo?.detailDesignInfo);
+        setValue('detailDesignInfo', detailInfo?.detailDesignInfo);
       }
     }
   }, [detailInfo]);
@@ -198,7 +200,7 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType,
       {/* 사용성 테스트 */}
       {detailInfo?.researchType === 'UI_DIAGNOSIS' && (
         <>
-          <FlexBox align={'flex-start'} width={'100%'} height={'444px'} style={selectContainer}>
+          <FlexBox className={'scrollType1'} align={'flex-start'} width={'100%'} height={'444px'} style={selectContainer}>
             {/*<button onClick={checkField}>asdfas</button>*/}
             <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ boxSizing: 'border-box' }}>
               {fields?.length > 0 &&
