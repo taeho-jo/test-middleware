@@ -58,10 +58,6 @@ const AdminSideBar = () => {
     [teamList],
   );
 
-  // const handleOffInfoBox = useCallback(() => {
-  //   setInfoBox(false);
-  // }, [infoBox]);
-
   const sideTeamList = useCallback(() => {
     if (teamList !== null) {
       const arr = [...teamList];

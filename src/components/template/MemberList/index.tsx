@@ -4,7 +4,7 @@ import { colors } from '../../../styles/Common.styles';
 import { heading5_bold, heading5_regular } from '../../../styles/FontStyles';
 import ProfileIcon from '../../atoms/ProfileIcon';
 import Icon from '../../atoms/Icon';
-import { profileColor } from '../../../common/util/commonVar';
+import {profileColor, profileColor2} from '../../../common/util/commonVar';
 import { css } from '@emotion/react';
 import moment from 'moment';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -15,6 +15,7 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { ReducerType } from '../../../store/reducers';
 import { setSelectTeamMember } from '../../../store/reducers/userReducer';
+import {getBackgroundColor} from "../../../common/util/commonFunc";
 
 interface PropsType {
   isLoading: boolean;
@@ -99,7 +100,7 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
               <div css={{ flex: 1 }}>
                 <ProfileIcon
                   name={userName ? userName?.slice(0, 1) : '?'}
-                  backgroundColor={userId === userInfo?.userId ? '#cfffac' : profileColor[index]}
+                  backgroundColor={userId === userInfo?.userId ? profileColor : getBackgroundColor(index)}
                 />
               </div>
 

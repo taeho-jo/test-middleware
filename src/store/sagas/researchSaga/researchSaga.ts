@@ -39,9 +39,6 @@ function* fetchResearchListSaga(action) {
   try {
     const { params } = action.payload;
 
-
-    console.log(params, 'PARAMS')
-
     const result = yield call(fetchGetResearchListApi, params);
     if (result.code === '200') {
       yield put(fetchResearchListSuccess(result.data.list));
