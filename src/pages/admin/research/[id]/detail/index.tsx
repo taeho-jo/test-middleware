@@ -5,7 +5,7 @@ import { body3_bold, heading1_bold, heading2_bold, heading4_bold, heading4_mediu
 import { colors } from '../../../../../styles/Common.styles';
 import Icon from '../../../../../components/atoms/Icon';
 import FlexBox from '../../../../../components/atoms/FlexBox';
-import { getResearchStatusIcon } from '../../../../../common/util/commonFunc';
+import {getResearchStatusIcon, handleChoiceStatusNmColor} from '../../../../../common/util/commonFunc';
 import IconTextButton from '../../../../../components/atoms/Button/IconTextButton';
 import { useRouter } from 'next/router';
 import { fetchResearchDetail, resetCreateResearchData } from '../../../../../store/reducers/researchCreateReducer';
@@ -185,13 +185,13 @@ const ResearchDetail = () => {
 
   return (
     <div css={mainContainerStyle}>
-      <div>
+      <div css={css`height: 100%`}>
         <div css={titleContainerStyle}>
           <span css={[heading1_bold, titleStyle]}>{detailData?.researchNm}</span>
           <FlexBox style={statusBox} direction={'row'} justify={'flex-start'} align={'center'}>
             {/*TODO: STATUS에 따른 상태 변경*/}
             <Icon name={getResearchStatusIcon(detailData?.statusType)} size={24} />
-            <span css={[body3_bold, { marginLeft: '8px' }]}>{detailData?.statusTypeNm}</span>
+            <span css={[body3_bold, { marginLeft: '8px', color: handleChoiceStatusNmColor(detailData?.statusType) }]}>{detailData?.statusTypeNm}</span>
           </FlexBox>
         </div>
 
@@ -346,7 +346,7 @@ const ResearchDetail = () => {
               <span css={heading5_bold}>추가 요구사항</span>
               {detailData?.additionalInfo?.map((item, index) => {
                 return (
-                  <span key={index} css={[heading4_medium, contentsStyle]}>
+                  <span key={index} css={[heading4_medium, contentsStyle, css`padding-bottom: 80px`]}>
                     {item.additional}
                   </span>
                 );
@@ -478,8 +478,8 @@ const mainContainerStyle = css`
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 72px;
-  height: calc(100vh - 72px);
+  margin-top: 160px;
+  //height: calc(100vh - 72px);
 `;
 
 const titleContainerStyle = css`
@@ -499,7 +499,8 @@ const contentsContainerStyle = css`
   width: 100%;
   max-width: 1260px;
   min-width: 1260px;
-  height: 766px;
+  
+  height: 100vh;
   border: 1px solid #dcdcdc;
   border-bottom: none;
   border-top-left-radius: 16px;
@@ -511,10 +512,14 @@ const rightContentsStyle = css`
   padding: 32px 32px 0 48px;
   position: relative;
   overflow-y: scroll;
+  max-height: 750px;
 `;
 const researchStartBtnContainerStyle = css`
-  position: sticky;
-  top: 630px;
+  position: fixed;
+  //top: 80%;
+  left: 39%;
+  transform: translateX(-50%);
+  bottom: 50px;
   display: flex;
   justify-content: center;
 `;

@@ -180,7 +180,7 @@ const ResearchCreate = () => {
           respondentInfo: data.respondentInfo
         };
         const checkFieldArr = data.respondentInfo.map(el => el.respondent);
-        if (DETAIL_INFO?.respondentInfo?.length === 1 && checkFieldArr?.some(el => !el || el === '')) {
+        if (checkFieldArr?.some(el => !el || el === '')) {
           dispatch(showToast({ message: '응답자 정보를 빠짐없이 입력해주세요.', isShow: true, status: 'warning', duration: 5000 }));
         } else {
           dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: step }));

@@ -131,7 +131,9 @@ function* deleteTeamProductSaga(action) {
   } catch (e: any) {
     console.error(e);
     yield put(getError(e));
+    yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }))
     if (e?.response?.data?.code === 'E0008') {
+
       yield put(getRefreshToken());
       yield delay(1000);
       yield put(

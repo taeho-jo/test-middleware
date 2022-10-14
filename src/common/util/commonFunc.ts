@@ -4,6 +4,7 @@ import { fetchRefreshToken } from '../../api/authApi';
 import { useCallback } from 'react';
 import {persistor} from "../../pages/_app";
 import {profileColor2} from "./commonVar";
+import {colors} from "../../styles/Common.styles";
 
 export const isLandingPage = path => {
   switch (path) {
@@ -38,10 +39,10 @@ export const getResearchStatusIcon = statusType => {
     case 'RESEARCH_COMPLETED':
       return 'STATUS_COMPLETE';
     case 'RESEARCH_INFO_ENTERING':
-    case 'RESEARCH_REQUEST_DESIGN':
+    case 'RESEARCH_REQUEST_DESIGN_COMPLETE':
     case 'RESEARCH_DESIGN':
     case 'RESEARCH_DESIGN_COMPLETE':
-    case 'RESEARCH_START_REQUEST':
+    case 'RESEARCH_START_REQUEST_COMPLETE':
       return 'STATUS_BEFORE';
     case 'RESPONSE_RECRUITING':
     case 'RESEARCH_ANALYZING':
@@ -50,6 +51,24 @@ export const getResearchStatusIcon = statusType => {
       return 'STATUS_BEFORE';
   }
 };
+
+// 리서치 상태 색상
+export const handleChoiceStatusNmColor = statusType => {
+    switch (statusType) {
+      case 'RESEARCH_COMPLETED':
+      case 'RESEARCH_INFO_ENTERING':
+      case 'RESEARCH_REQUEST_DESIGN_COMPLETE':
+      case 'RESEARCH_DESIGN':
+      case 'RESEARCH_START_REQUEST_COMPLETE':
+      case 'RESEARCH_DESIGN_COMPLETE':
+        return colors.grey._3c;
+      case 'RESPONSE_RECRUITING':
+      case 'RESEARCH_ANALYZING':
+        return colors.blue._500;
+      default:
+        return 'STATUS_BEFORE';
+    }
+  }
 // const purge = async () => {
 //   await persistor.purge();
 // }
