@@ -114,6 +114,9 @@ function* fetchModifyResearchSaga(action) {
         yield put(showToast({ message: '리서치 설계요청이 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }));
       }
     }
+    if(action.payload.step === 'startResearch') {
+      yield put(isShow({ isShow: false, type: '' }));
+    }
     if (action.payload.step === 'change') {
       action.payload?.callback?.push(`/admin/team`);
       yield put(showToast({ message: '리서치 변경 사항이 저장되었습니다.', isShow: true, status: 'success', duration: 5000 }));

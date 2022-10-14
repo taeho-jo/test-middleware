@@ -19,7 +19,7 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { fetchResearchDelete, updateDeleteResearchInfo } from '../../../store/reducers/researchCreateReducer';
 import {profileColor} from "../../../common/util/commonVar";
-import {getBackgroundColor} from "../../../common/util/commonFunc";
+import {getBackgroundColor, handleChoiceStatusNmColor} from "../../../common/util/commonFunc";
 
 interface PropsType {
   createDt: string;
@@ -121,25 +121,6 @@ const ListReport = ({
         case 'RESPONSE_RECRUITING':
         case 'RESEARCH_ANALYZING':
           return 'STATUS_ING';
-        default:
-          return 'STATUS_BEFORE';
-      }
-    },
-    [statusType],
-  );
-  const handleChoiceStatusNmColor = useCallback(
-    statusType => {
-      switch (statusType) {
-        case 'RESEARCH_COMPLETED':
-        case 'RESEARCH_INFO_ENTERING':
-        case 'RESEARCH_REQUEST_DESIGN_COMPLETE':
-        case 'RESEARCH_DESIGN':
-        case 'RESEARCH_START_REQUEST_COMPLETE':
-        case 'RESEARCH_DESIGN_COMPLETE':
-          return colors.grey._3c;
-        case 'RESPONSE_RECRUITING':
-        case 'RESEARCH_ANALYZING':
-          return colors.blue._500;
         default:
           return 'STATUS_BEFORE';
       }

@@ -53,7 +53,7 @@ const ResearchStartModal = () => {
         ...DETAIL_INFO,
         statusType: 'RESEARCH_START_REQUEST_COMPLETE',
       };
-      dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'last', callback: router }));
+      dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'startResearch' }));
     }
   };
 
