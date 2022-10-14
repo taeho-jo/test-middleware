@@ -12,6 +12,9 @@ import { ReducerType } from '../../../store/reducers';
 import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
 import LogoText from '/public/assets/png/diby_black.png';
+import {persistor} from "../../../pages/_app";
+import {userReset} from "../../../store/reducers/userReducer";
+import {authReset} from "../../../store/reducers/authReducer";
 interface PropsType {
   researchHeader?: boolean;
 }
@@ -31,9 +34,10 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
     [focusProfile],
   );
 
-  const handleLogout = useCallback(() => {
-    // localStorage.clear();
-    clearLocalStorage();
+  const handleLogout = useCallback(async () => {
+    clearLocalStorage()
+    dispatch(userReset())
+    dispatch(authReset())
     dispatch(updateQueryStatus({ name: 'userInfoQuery', status: false }));
     router.push('/');
   }, []);

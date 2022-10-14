@@ -23,6 +23,7 @@ const ResearchRecommendation = () => {
   const router = useRouter();
   const recommendationStep = useSelector<ReducerType, string>(state => state.researchCreate.recommendationStep);
   const recommendationQuestion = useSelector<ReducerType, RecommendationQuestionListType[]>(state => state.researchRecommendation.recommendationData);
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo)
 
   const [step, setStep] = useState(0);
   const [nextStep, setNextStep] = useState('');
@@ -139,10 +140,12 @@ const ResearchRecommendation = () => {
   };
 
   const handleSubmit = () => {
+    console.log(userInfo.userId, 'userInfo')
     const sendObject = {
       recommendResultData: selectQuestion,
     };
-    dispatch(sendRecommendationQuestionListAction({ sendObject, callback: router }));
+
+    dispatch(sendRecommendationQuestionListAction({ sendObject, callback: router, isLogin: userInfo.userId === '' ? false : true }));
 
   };
 
@@ -157,6 +160,7 @@ const ResearchRecommendation = () => {
     // 쿠키 비우기
     cookies.remove('recommendResultSeq', { path: '/' });
     cookies.remove('recommendResearchType', { path: '/' });
+    cookies.remove('isLogin', { path: '/' });
   },[])
 
   return (

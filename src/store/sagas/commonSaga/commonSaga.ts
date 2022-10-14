@@ -1,9 +1,10 @@
 import { call, delay, put, takeEvery } from '@redux-saga/core/effects';
 import { getCommonCode, getErrorInfo, updateCommonCode } from '../../reducers/commonReducer';
 import { fetchCommonCodeApi } from '../../../api/authApi';
-import { getRefreshToken } from '../../reducers/authReducer';
+import {authReset, getRefreshToken} from '../../reducers/authReducer';
 import {clearLocalStorage} from "../../../common/util/commonFunc";
 import {showToast} from "../../reducers/toastReducer";
+import {userReset} from "../../reducers/userReducer";
 
 function* getCommonCodeSaga() {
   try {
@@ -21,6 +22,8 @@ function* getCommonCodeSaga() {
       yield put(getCommonCode());
     }
     if (e?.response?.data?.code === 'E0027') {
+      yield put(userReset())
+      yield put(authReset())
       clearLocalStorage()
       yield put(showToast({ message: '세션이 만료되어 로그아웃되었습니다.', isShow: true, status: 'warning', duration: 5000 }))
     }

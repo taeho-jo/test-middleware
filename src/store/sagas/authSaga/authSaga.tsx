@@ -1,5 +1,6 @@
 import { call, delay, put, takeEvery } from '@redux-saga/core/effects';
 import {
+  authReset,
   confirmEmailAction,
   getRefreshToken,
   getRefreshTokenSuccess,
@@ -12,7 +13,7 @@ import { fetchEmailConfirmApi, fetchEmailResendApi, fetchLoginApi, fetchRefreshT
 import { clearLocalStorage } from '../../../common/util/commonFunc';
 import { showToast } from '../../reducers/toastReducer';
 import { isShow } from '../../reducers/modalReducer';
-import { getUserInfo, updateCancelWithdrawal } from '../../reducers/userReducer';
+import {getUserInfo, updateCancelWithdrawal, userReset} from '../../reducers/userReducer';
 
 // 로그인
 function* loginSaga(action) {
@@ -94,8 +95,16 @@ function* getRefreshTokenSaga() {
     }
   } catch (e: any) {
     if (e?.response?.data?.code === 'E0002') {
+      yield put(userReset())
+      yield put(authReset())
       clearLocalStorage();
       window.location.href = 'https://stag.diby.io';
+    }
+    if (e?.response?.data?.code === 'E0027') {
+      yield put(userReset())
+      yield put(authReset())
+      clearLocalStorage()
+      yield put(showToast({ message: '세션이 만료되어 로그아웃되었습니다.', isShow: true, status: 'warning', duration: 5000 }))
     }
     console.error(e);
   }

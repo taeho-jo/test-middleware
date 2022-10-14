@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {configureStore, createEntityAdapter} from '@reduxjs/toolkit';
 import { createWrapper, MakeStore } from 'next-redux-wrapper';
 import logger from 'redux-logger';
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
@@ -8,11 +8,18 @@ import { rootSaga } from './sagas';
 
 import reducer from './reducers';
 
+
+const customEntityAdapter = createEntityAdapter()
 const persistConfig = {
   key: 'root',
   storage,
   // stateReconciler: autoMergeLevel2,
   whitelist: ['auth', 'user', 'team', 'common', 'report', 'researchCreate', 'researchRecommendation'],
+  // extraReducers: (builder) => {
+  //   builder.addCase(PURGE, (state) => {
+  //     customEntityAdapter.removeAll(state);
+  //   });
+  // }
   // blacklist: ['counter', 'modal', 'team'],
   // stateReconciler: hardSet,
   // migrate: createMigrate(migrations, { debug: true }),
