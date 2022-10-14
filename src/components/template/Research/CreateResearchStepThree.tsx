@@ -121,10 +121,10 @@ const CreateResearchStepThree = ({ detailInfo, register, respondentDebounceSave 
                   `}
                 >
                   {openField?.[`goal${index}`] === false ? (
-                    <ToggleHeader title={`리서치 목표${index + 1}`} onClick={() => handleToggleField(`goal${index}`)} />
+                    <ToggleHeader title={`리서치 목표 ${index + 1}`} onClick={() => handleToggleField(`goal${index}`)} />
                   ) : (
                     <>
-                      <ToggleHeader title={`리서치 목표${index + 1}`} onClick={() => handleToggleField(`goal${index}`)} />
+                      <ToggleHeader title={`리서치 목표 ${index + 1}`} onClick={() => handleToggleField(`goal${index}`)} />
                       <TextArea
                         // title={'이메일'}
                         register={register}

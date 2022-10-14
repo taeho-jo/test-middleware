@@ -22,7 +22,7 @@ const STEP_ARR = [
     value: 'step2',
   },
   {
-    label: '3. 하고 싶은 의사 결정',
+    label: '3. 리서치 목표',
     value: 'step3',
   },
   {

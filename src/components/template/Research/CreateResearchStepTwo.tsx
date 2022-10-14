@@ -119,10 +119,10 @@ const CreateResearchStepTwo = ({ detailInfo, register, respondentDebounceSave }:
                   `}
                 >
                   {openField?.[`respondent${index}`] === false ? (
-                    <ToggleHeader title={`응답자 조건${index + 1}`} onClick={() => handleToggleField(`respondent${index}`)} />
+                    <ToggleHeader title={`응답자 조건 ${index + 1}`} onClick={() => handleToggleField(`respondent${index}`)} />
                   ) : (
                     <>
-                      <ToggleHeader title={`응답자 조건${index + 1}`} onClick={() => handleToggleField(`respondent${index}`)} />
+                      <ToggleHeader title={`응답자 조건 ${index + 1}`} onClick={() => handleToggleField(`respondent${index}`)} />
                       <TextArea
                         // title={'이메일'}
                         register={register}

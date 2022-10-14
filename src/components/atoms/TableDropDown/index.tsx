@@ -11,25 +11,26 @@ interface PropsType {
   left?: number;
   normalText: {
     text: string;
-    onClick: () => void;
   }[];
   handleChangeMemberStatus: (name) => void;
+  forwardref?: any
   [key: string]: any;
 }
 
-const TableDropDown = ({ display, topText, normalText, top = 16, left = 16, handleChangeMemberStatus, ...props }: PropsType) => {
+const TableDropDown = ({ display, topText, normalText, top = 16, left = 16, handleChangeMemberStatus,forwardref, ...props }: PropsType) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const handleChange = useCallback(
     name => {
+      console.log(name, 'NAME')
       handleChangeMemberStatus(name);
     },
     [handleChangeMemberStatus],
   );
 
   return (
-    <div css={popupContainer(display, top, left)}>
+    <div css={popupContainer(display, top, left)} ref={forwardref}>
       {normalText.map((el, index) => {
         return (
           <Fragment key={index}>
@@ -47,6 +48,7 @@ export default TableDropDown;
 
 const popupContainer = (display, top, left) => css`
   opacity: ${display ? '100%' : 0};
+  min-width: 214px;
   //width: 220px;
   border-radius: 16px;
   padding: 16px;

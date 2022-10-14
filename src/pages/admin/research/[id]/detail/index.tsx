@@ -54,10 +54,10 @@ const ResearchDetail = () => {
     }
     if (type === '다운로드') {
       setTooltipContents({
-        title: '문항 리스트 다운로드',
+        title: '질문 리스트 다운로드',
         content: isActive
-          ? '실제 리서치에 활용할 문항 리스트 파일을 \n다운로드 하실 수 있습니다.'
-          : '리서치 매니저가 설계 과정에서 리서치에 대한\n각종 진행상황을 슬랙을 통해 공유 및 확정합니다.\n설계 완료 이후 실제 리서치에 활용할 문항 리스트 파일을\n다운로드하실 수 있습니다.',
+          ? '실제 리서치에 활용할 질문 리스트 파일을 \n다운로드 하실 수 있습니다.'
+          : '리서치 매니저가 설계 과정에서 리서치에 대한\n각종 진행상황을 슬랙을 통해 공유 및 확정합니다.\n설계 완료 이후 실제 리서치에 활용할 질문 리스트 파일을\n다운로드하실 수 있습니다.',
         left: -420,
         top: 190,
         backgroundColor: isActive ? '#68A0F4' : `${colors.grey._3c}`,
@@ -400,13 +400,13 @@ const ResearchDetail = () => {
                 <IconTextButton
                   textStyle={[btnTextStyle, { color: colors.grey._3c }]}
                   name={'RECEIPT'}
-                  text={'확정 견적 확인하기'}
+                  text={'실제 견적 확인하기'}
                   roundBorder={false}
                   iconPosition={'left'}
                   onClick={() => showCostModal('researchCostModal')}
                 />
               ) : (
-                <IconTextButton textStyle={btnTextStyle} name={'LOCK'} text={'확정 견적 확인하기'} roundBorder={false} iconPosition={'left'} />
+                <IconTextButton textStyle={btnTextStyle} name={'LOCK'} text={'실제 견적 확인하기'} roundBorder={false} iconPosition={'left'} />
               )}
             </div>
             <div

@@ -212,13 +212,13 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType,
                     >
                       {openField?.[`mission${index}`] === false ? (
                         <ToggleHeader
-                          title={`미션${index + 1} : 응답자에게 어떤 미션을 지시할까요?`}
+                          title={`미션 ${index + 1} : 응답자에게 어떤 미션을 지시할까요?`}
                           onClick={() => handleToggleField(`mission${index}`)}
                         />
                       ) : (
                         <>
                           <ToggleHeader
-                            title={`미션${index + 1} : 응답자에게 어떤 미션을 지시할까요?`}
+                            title={`미션 ${index + 1} : 응답자에게 어떤 미션을 지시할까요?`}
                             onClick={() => handleToggleField(`mission${index}`)}
                           />
                           <TextArea
@@ -317,13 +317,13 @@ const CreateResearchStepFour = ({ detailInfo, register, setValue, setAgendaType,
                     >
                       {openField?.[`hypo${index}`] === false ? (
                         <ToggleHeader
-                          title={`가설${index + 1} : 어떤 가설을 검증하고 싶으신가요`}
+                          title={`가설 ${index + 1} : 어떤 가설을 검증하고 싶으신가요`}
                           onClick={() => handleToggleField(`hypo${index}`)}
                         />
                       ) : (
                         <>
                           <ToggleHeader
-                            title={`가설${index + 1} : 어떤 가설을 검증하고 싶으신가요?`}
+                            title={`가설 ${index + 1} : 어떤 가설을 검증하고 싶으신가요?`}
                             onClick={() => handleToggleField(`hypo${index}`)}
                           />
                           <TextArea
