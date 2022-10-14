@@ -3,6 +3,7 @@ import { isShow } from '../../store/reducers/modalReducer';
 import { fetchRefreshToken } from '../../api/authApi';
 import { useCallback } from 'react';
 import {persistor} from "../../pages/_app";
+import {profileColor2} from "./commonVar";
 
 export const isLandingPage = path => {
   switch (path) {
@@ -60,8 +61,18 @@ export const clearLocalStorage = () => {
   localStorage.removeItem('commonCode');
   localStorage.removeItem('selectTeamList');
   localStorage.removeItem('teamSeq');
-
 };
+
+export const getBackgroundColor = index => {
+  if (index < 10) {
+    return profileColor2[index]
+  }
+  if (index >= 10) {
+    const splitNum = String(index).split('')
+    const changeNum = parseInt(splitNum[splitNum.length - 1])
+    return profileColor2[changeNum]
+  }
+}
 
 // <--------------------------------- 리서치 금액 계산 ---------------------------------> //
 export const calcResearchSolutionFee = RESEARCH_TYPE => {

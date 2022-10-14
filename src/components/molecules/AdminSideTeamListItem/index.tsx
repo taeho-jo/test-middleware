@@ -16,6 +16,7 @@ import { ReducerType } from '../../../store/reducers';
 import { memberListType, TeamListType, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import { useRouter } from 'next/router';
 import { colors } from '../../../styles/Common.styles';
+import {getBackgroundColor} from "../../../common/util/commonFunc";
 interface PropsType {
   teamName?: string;
   memberList?: memberListType[];
@@ -61,6 +62,8 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
     }
   }, [modalType]);
 
+
+
   return (
     <FlexBox
       direction={'column'}
@@ -88,7 +91,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
               <ProfileIcon
                 name={item?.userName?.slice(0, 1)}
                 backgroundColor={
-                  item?.userId === userInfo?.userId && parentsIndex === teamSeq ? '#ff66b9' : parentsIndex == teamSeq ? profileColor2[index] : 'grey'
+                  item?.userId === userInfo?.userId && parentsIndex === teamSeq ? profileColor : parentsIndex == teamSeq ? getBackgroundColor(index) : 'grey'
                 }
                 size={'20px'}
                 fontStyle={caption2_bold}

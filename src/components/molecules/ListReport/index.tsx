@@ -18,6 +18,8 @@ import LayerPopup from '../../atoms/LayerPopup';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { fetchResearchDelete, updateDeleteResearchInfo } from '../../../store/reducers/researchCreateReducer';
+import {profileColor} from "../../../common/util/commonVar";
+import {getBackgroundColor} from "../../../common/util/commonFunc";
 
 interface PropsType {
   createDt: string;
@@ -71,6 +73,18 @@ const ListReport = ({
       setMyRole(myRole);
     }
   }, [userInfo, selectTeamList]);
+
+  const findIndexFun = () => {
+    const index = selectTeamList?.teamMember?.findIndex(el => el.userId === createId)
+    return index
+  }
+  const findUserName = () => {
+    const teamMember = selectTeamList?.teamMember
+    const findMakeUser = teamMember.filter(el => el.userId === createId)[0]
+    const userName = findMakeUser?.userName
+    return userName
+
+  }
 
 
   const changeName = useCallback(name => {
@@ -198,7 +212,7 @@ const ListReport = ({
       </FlexBox>
       <span css={[heading5_bold, titleStyle]}>{researchNm}</span>
       <FlexBox style={dateBox} direction={'row'} justify={'flex-start'} align={'center'}>
-        <ProfileIcon name={createId.slice(0,1)} size={'20px'} margin={'0 8px 0 0'} fontStyle={caption2_bold} />
+        <ProfileIcon name={findUserName()?.slice(0,1)} size={'20px'} margin={'0 8px 0 0'} fontStyle={caption2_bold} backgroundColor={createId === userInfo.userId ? profileColor : getBackgroundColor(findIndexFun())}/>
         <span css={[caption1_regular, dateStyle]}>{moment(createDt).format('YYYY. MM. DD')}</span>
       </FlexBox>
       <FlexBox style={statusBox} direction={'row'} justify={'flex-start'} align={'center'}>

@@ -5,6 +5,7 @@ import FlexBox from '../FlexBox';
 import { body2_bold } from '../../../styles/FontStyles';
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
+import {profileColor} from "../../../common/util/commonVar";
 
 interface PropsType {
   size?: string;
@@ -15,7 +16,7 @@ interface PropsType {
   fontStyle?: any;
   style?: any;
 }
-const ProfileIcon = ({ fontStyle, size = '32px', margin = '0', name, backgroundColor = '#ff66b9', color = colors.white, style }: PropsType) => {
+const ProfileIcon = ({ fontStyle, size = '32px', margin = '0', name, backgroundColor = profileColor, color = colors.white, style }: PropsType) => {
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const profileName = userInfo?.userName?.slice(0, 1);
 
