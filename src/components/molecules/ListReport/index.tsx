@@ -45,7 +45,7 @@ const ListReport = ({
   reportType,
   downloadLink,
   webLink,
-                      createId,
+  createId,
   onClick,
 }: PropsType) => {
   const dispatch = useDispatch();
@@ -72,9 +72,6 @@ const ListReport = ({
     }
   }, [userInfo, selectTeamList]);
 
-  useEffect(() => {
-    console.log(myRole)
-  },[myRole])
 
   const changeName = useCallback(name => {
     switch (name) {
@@ -157,11 +154,20 @@ const ListReport = ({
     setFocusProfile(true);
   };
 
-  const handleRemoveResearch = researchSeq => {
+  const handleRemoveResearch = (researchSeq, createId) => {
     if (statusType === 'RESEARCH_INFO_ENTERING') {
-      // console.log(SELECTED_TEAM_SEQ, researchSeq);
-      dispatch(updateDeleteResearchInfo({ teamSeq: SELECTED_TEAM_SEQ, researchSeq: researchSeq }));
-      dispatch(isShow({ isShow: true, type: 'researchDeleteConfirmModal' }));
+      if(myRole === '관리자') {
+        dispatch(updateDeleteResearchInfo({ teamSeq: SELECTED_TEAM_SEQ, researchSeq: researchSeq }));
+        dispatch(isShow({ isShow: true, type: 'researchDeleteConfirmModal' }));
+      }
+      if(myRole === '멤버') {
+        if(userInfo.userId === createId) {
+          dispatch(updateDeleteResearchInfo({ teamSeq: SELECTED_TEAM_SEQ, researchSeq: researchSeq }));
+          dispatch(isShow({ isShow: true, type: 'researchDeleteConfirmModal' }));
+        } else {
+          dispatch(showToast({ message: `리서치를 삭제 할 권한이 없습니다.`, isShow: true, status: 'warning', duration: 5000 }));
+        }
+      }
     } else {
       dispatch(showToast({ message: `리서치 설계 요청 이후 리서치 삭제가 불가능합니다.`, isShow: true, status: 'warning', duration: 5000 }));
     }
@@ -186,13 +192,13 @@ const ListReport = ({
             right={-160}
             setFocusProfile={setFocusProfile}
             // topText={userInfo.userId}
-            normalText={[{ text: '리서치 삭제', onClick: () => handleRemoveResearch(researchSeq) }]}
+            normalText={[{ text: '리서치 삭제', onClick: () => handleRemoveResearch(researchSeq, createId) }]}
           />
         </div>
       </FlexBox>
       <span css={[heading5_bold, titleStyle]}>{researchNm}</span>
       <FlexBox style={dateBox} direction={'row'} justify={'flex-start'} align={'center'}>
-        <ProfileIcon size={'20px'} margin={'0 8px 0 0'} fontStyle={caption2_bold} />
+        <ProfileIcon name={createId.slice(0,1)} size={'20px'} margin={'0 8px 0 0'} fontStyle={caption2_bold} />
         <span css={[caption1_regular, dateStyle]}>{moment(createDt).format('YYYY. MM. DD')}</span>
       </FlexBox>
       <FlexBox style={statusBox} direction={'row'} justify={'flex-start'} align={'center'}>

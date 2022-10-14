@@ -18,25 +18,22 @@ interface PropsType {
   getResearchMethod?: (value) => void;
   register?: (name: string, RegisterOptions?) => { onChange; onBlur; name; ref };
   respondentDebounceSave?: (value: string) => void;
+  handleSubmit?: any;
+  reset?: any;
+  watch?: any;
+  errors?: any;
+  control?: any;
+  setValue?: any
   // handleSubmit: any;
   // reset: any;
   // watch: any;
   // errors: any;
 }
-const CreateResearchStepThree = ({ detailInfo, register, respondentDebounceSave }: PropsType) => {
+const CreateResearchStepThree = ({ detailInfo, register, respondentDebounceSave,handleSubmit, setValue, watch, errors, control, reset }: PropsType) => {
   const dispatch = useDispatch();
   const DETAIL_INFO = useSelector<ReducerType, any>(state => state.researchCreate.detailData);
   const methodsType = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
 
-  // hook saasaform
-  const {
-    control,
-    handleSubmit,
-    getValues,
-    setValue,
-    reset,
-    formState: { errors },
-  } = useForm({});
   const { fields, append, insert, remove } = useFieldArray({
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: 'goalInfo', // unique name for your Field Array
@@ -108,7 +105,7 @@ const CreateResearchStepThree = ({ detailInfo, register, respondentDebounceSave 
   const onError = errors => console.log('fail', errors);
   return (
     <>
-      <FlexBox align={'flex-start'} width={'100%'} height={'444px'} style={selectContainer}>
+      <FlexBox className={'scrollType1'} align={'flex-start'} width={'100%'} height={'444px'} style={selectContainer}>
         {/*<button onClick={checkField}>asdfas</button>*/}
         <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ boxSizing: 'border-box' }}>
           {fields?.length > 0 &&

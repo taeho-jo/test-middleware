@@ -44,6 +44,9 @@ const ResearchCreate = () => {
   const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
   const teamList = useSelector<ReducerType, any>(state => state.team.teamList)
 
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo)
+  const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+
   // 추천 결과
   const recommendationResult = useSelector<ReducerType, any>(state => state.researchRecommendation.recommendationResult);
 
@@ -62,8 +65,22 @@ const ResearchCreate = () => {
     formState: { errors },
   } = useForm({});
 
+  const [firstView, setFirstView] = useState(false)
+
   const [guideStatus, setGuideStatus] = useState('inactive');
   const [agendaType, setAgendaType] = useState('');
+
+  const [myRole, setMyRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (userInfo && selectTeamList) {
+      const memberArr = selectTeamList?.teamMember;
+      const myRole = memberArr?.filter(el => el.userId === userInfo.userId)?.[0]?.teamRoleType;
+      setMyRole(myRole);
+    }
+  }, [userInfo, selectTeamList]);
+
+
   const getResearchMethod = value => {
     if (value === 'UI_DIAGNOSIS') {
       setGuideStatus('ui');
@@ -160,11 +177,10 @@ const ResearchCreate = () => {
       if (CREATE_STEP === 'step2') {
         const sendObject = {
           ...DETAIL_INFO,
+          respondentInfo: data.respondentInfo
         };
         const checkFieldArr = data.respondentInfo.map(el => el.respondent);
-        console.log(sendObject, 'sendObject')
-        console.log(sendObject, 'sendObject')
-        if (checkFieldArr.some(el => !el || el === '')) {
+        if (DETAIL_INFO?.respondentInfo?.length === 1 && checkFieldArr?.some(el => !el || el === '')) {
           dispatch(showToast({ message: '응답자 정보를 빠짐없이 입력해주세요.', isShow: true, status: 'warning', duration: 5000 }));
         } else {
           dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: step }));
@@ -173,7 +189,7 @@ const ResearchCreate = () => {
       if (CREATE_STEP === 'step3') {
         const sendObject = {
           ...DETAIL_INFO,
-          // goalInfo: data.goalInfo,
+          goalInfo: data.goalInfo,
         };
         const checkFieldArr = data.goalInfo.map(el => el.goal);
         if (checkFieldArr.some(el => !el || el === '')) {
@@ -203,7 +219,7 @@ const ResearchCreate = () => {
         } else {
           const sendObject = {
             ...DETAIL_INFO,
-            // detailDesignInfo: data.detailDesignInfo,
+            detailDesignInfo: data.detailDesignInfo,
           };
           const checkFieldArr = data.detailDesignInfo?.map(el => el.mission || (el.hypothesisReason && el.hypothesis));
           if (checkFieldArr?.some(el => !el || el === '')) {
@@ -245,6 +261,7 @@ const ResearchCreate = () => {
   // 응답자 디바운스 함수
   const respondentDebounceSave = value => {
     const data = getValues();
+
     let sendObject;
     if (CREATE_STEP === 'step2') {
       sendObject = {
@@ -282,7 +299,7 @@ const ResearchCreate = () => {
         teamSeq: selectTeamSeq,
         researchSeq: pageId,
       };
-      dispatch(fetchResearchDetail({ params: params }));
+      dispatch(fetchResearchDetail({ params: params,callback:() => router.push('/admin/team') }));
     }
   }, [pageId, selectTeamSeq, CREATE_STEP]);
 
@@ -298,8 +315,37 @@ const ResearchCreate = () => {
         dispatch(showToast({ message: '리서치를 수정할 수 없습니다.', isShow: true, status: 'warning', duration: 5000 }));
         router.push('/admin/team');
       }
+
     }
   }, [DETAIL_INFO]);
+
+
+  useEffect(() => {
+    if(DETAIL_INFO?.statusType === 'RESEARCH_INFO_ENTERING' && !firstView) {
+      const { respondentInfo, goalInfo, detailDesignInfo, additionalInfo, createId } = DETAIL_INFO
+
+      if(myRole === '관리자' || (myRole === '멤버' && createId == userInfo?.userId)) {
+        setFirstView(true)
+        if(respondentInfo && !goalInfo && !detailDesignInfo && !additionalInfo) {
+          dispatch(setStep('step2'))
+        }
+        if(respondentInfo && goalInfo && !detailDesignInfo && !additionalInfo) {
+          dispatch(setStep('step3'))
+        }
+        if(respondentInfo && goalInfo && detailDesignInfo && !additionalInfo) {
+          dispatch(setStep('step4'))
+        }
+        if(respondentInfo && goalInfo && !detailDesignInfo && additionalInfo) {
+          dispatch(setStep('step5'))
+        }
+      } else {
+        router.push('/admin/team')
+        dispatch(showToast({ message: '해당 리서치에 권한이 없습니다.', isShow: true, status: 'warning', duration: 5000 }))
+      }
+
+
+    }
+  },[DETAIL_INFO, firstView, myRole])
 
   useEffect(() => {
     dispatch(setRedirectPath(null));
@@ -323,13 +369,23 @@ const ResearchCreate = () => {
           )}
           {CREATE_STEP === 'step2' && (
             <CreateResearchStepTwo
+              control={control}
+              handleSubmit={handleSubmit}
+              reset={reset}
+              setValue={setValue}
               register={register}
+              errors={errors}
               detailInfo={pageId !== 'create' ? DETAIL_INFO : null}
               respondentDebounceSave={respondentDebounceSave}
             />
           )}
           {CREATE_STEP === 'step3' && (
             <CreateResearchStepThree
+              control={control}
+              handleSubmit={handleSubmit}
+              reset={reset}
+              setValue={setValue}
+              errors={errors}
               register={register}
               detailInfo={pageId !== 'create' ? DETAIL_INFO : null}
               respondentDebounceSave={respondentDebounceSave}
@@ -337,6 +393,10 @@ const ResearchCreate = () => {
           )}
           {CREATE_STEP === 'step4' && (
             <CreateResearchStepFour
+              control={control}
+              handleSubmit={handleSubmit}
+              reset={reset}
+              errors={errors}
               register={register}
               setValue={setValue}
               setAgendaType={setAgendaType}
