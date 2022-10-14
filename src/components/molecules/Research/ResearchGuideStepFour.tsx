@@ -15,7 +15,7 @@ import { colors } from '../../../styles/Common.styles';
 const CONTENTS = {
   goal: {
     image: decisionImage,
-    title: '유저 리서치를 통해 하고 싶은 의사결정',
+    title: '리서치 목표 = 유저 리서치를 통해 하고 싶은 의사결정',
     guideContent: `좋은 리서치는 비즈니스 의사결정에 활용할 수 있는 결과를 \n제공하는 리서치입니다.\n그러려면 먼저 어떤 의사결정을 해야하는지에 대해 알아야합니다.\nDiby는 고객의 의사결정 사항에 맞춰서 질문을 추천, 검토하고 \n리포트 결과를 분석합니다. \n단순한 궁금증을 해소하는, 혹은 구체적이지 않은 리서치 목표는 \n적합하지 않습니다.`,
   },
   ui: {

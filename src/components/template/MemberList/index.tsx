@@ -73,17 +73,15 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
     dispath(setSelectTeamMember(el));
     cellRef.current = cellsRef.current[index];
     const option = {
-      x: getElementProperty('x'),
-      y: window.pageYOffset + getElementProperty('y'),
+      x: getElementProperty('x')-20,
+      y: window.pageYOffset + getElementProperty('y') + 60,
     };
     setPositionValue(option);
     setTeamRoleType(teamRoleType);
     setFocus(true);
   };
 
-  useOutsideClick(cellRef, () => {
-    setFocus(false);
-  });
+
 
   const getList = useCallback(() => {
     if (isLoading) {

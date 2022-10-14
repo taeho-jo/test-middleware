@@ -42,7 +42,7 @@ const ReportSideBar = () => {
   const missionList = reportData?.S1?.uiSummerySection?.missionSuccess?.reduce(
     (acc, cur, index) =>
       acc.concat({
-        title: `Task${index + 1}`,
+        title: `Task ${index + 1}`,
         name: cur.name,
       }),
     [],

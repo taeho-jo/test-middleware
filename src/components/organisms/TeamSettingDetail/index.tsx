@@ -50,7 +50,7 @@ const TeamSettingDetail = () => {
           return (
             <Fragment key={index}>
               <SettingCard
-                title={`프로덕트${index + 1}`}
+                title={`프로덕트 ${index + 1}`}
                 content={productNm}
                 btnText={'프로덕트 수정하기'}
                 showBtn={true}
