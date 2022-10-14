@@ -181,6 +181,7 @@ function* sendRecommendationQuestionListSaga(action) {
 
       const expires = new Date();
       expires.setDate(expires.getDate() + 1);
+      cookies.set(`isLogin`, `${action.payload.isLogin}`, { path: '/', expires })
       cookies.set(`recommendResultSeq`, result.data.recommendResultSeq, { path: '/', expires });
       cookies.set(`recommendResearchType`, result.data.recommendResearchType, { path: '/', expires });
       yield put(updateRecommendationStep('step1'));

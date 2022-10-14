@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { isShow } from '../../store/reducers/modalReducer';
 import { fetchRefreshToken } from '../../api/authApi';
 import { useCallback } from 'react';
+import {persistor} from "../../pages/_app";
 
 export const isLandingPage = path => {
   switch (path) {
@@ -48,16 +49,20 @@ export const getResearchStatusIcon = statusType => {
       return 'STATUS_BEFORE';
   }
 };
-
+// const purge = async () => {
+//   await persistor.purge();
+// }
 export const clearLocalStorage = () => {
-  localStorage.removeItem('persist:root');
+  // localStorage.removeItem('persist:root');
   localStorage.removeItem('projectNm');
   localStorage.removeItem('accessToken');
   localStorage.removeItem('reactQueryDevtoolsSortFn');
   localStorage.removeItem('commonCode');
   localStorage.removeItem('selectTeamList');
   localStorage.removeItem('teamSeq');
+
 };
+
 // <--------------------------------- 리서치 금액 계산 ---------------------------------> //
 export const calcResearchSolutionFee = RESEARCH_TYPE => {
   switch (RESEARCH_TYPE) {

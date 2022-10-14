@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {PURGE} from "redux-persist";
 
 export interface AuthType {
   accessToken: string;
@@ -57,6 +58,9 @@ export const authSlice = createSlice({
     getRefreshTokenSuccess: (state, action: PayloadAction<any>) => {
       state.accessToken = action.payload;
     },
+    authReset(state) {
+      Object.assign(state, initialState)
+    },
   },
 });
 
@@ -74,5 +78,6 @@ export const {
   resendConfirmEmail,
   getRefreshToken,
   getRefreshTokenSuccess,
+  authReset
 } = authSlice.actions;
 export default authSlice.reducer;

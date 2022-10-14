@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {PURGE} from "redux-persist";
 
 export interface UserInfoType {
   authTokenProvider: string | null;
@@ -115,6 +116,9 @@ export const userSlice = createSlice({
     getUserInfoSuccess: (state, action: PayloadAction<any>) => {
       state.userInfo = action.payload;
     },
+    userReset(state) {
+      Object.assign(state, initialState)
+    },
   },
 });
 
@@ -129,5 +133,6 @@ export const {
   // Saga Redux
   getUserInfo,
   getUserInfoSuccess,
+  userReset
 } = userSlice.actions;
 export default userSlice.reducer;
