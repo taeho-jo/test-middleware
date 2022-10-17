@@ -10,7 +10,8 @@ import {
   fetchResearchModifyInfo,
   fetchResearchModifyInfoSuccess,
   getResearchApiError,
-  setStep, updateRecommendationStep,
+  setStep,
+  updateRecommendationStep,
 } from '../../reducers/researchCreateReducer';
 import {
   fetchCreateTeamResearchApi,
@@ -68,9 +69,9 @@ function* fetchGetResearchDetailInfo(action) {
       yield delay(1000);
       yield put(fetchResearchDetail({ params: action.payload.params, callback: () => action.payload.callback() }));
     }
-    if(e?.response?.data?.code === 'E0031') {
-      action.payload.callback()
-      yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }))
+    if (e?.response?.data?.code === 'E0031') {
+      action.payload.callback();
+      yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
     }
     yield put(getResearchApiError(e));
   }
@@ -103,7 +104,7 @@ function* fetchModifyResearchSaga(action) {
       yield put(setStep(action.payload.step));
     }
 
-    if(action.payload.step !== 'debounce') {
+    if (action.payload.step !== 'debounce') {
       yield put(fetchResearchModifyInfoSuccess(result.data));
     }
 
@@ -114,7 +115,7 @@ function* fetchModifyResearchSaga(action) {
         yield put(showToast({ message: '리서치 설계요청이 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }));
       }
     }
-    if(action.payload.step === 'startResearch') {
+    if (action.payload.step === 'startResearch') {
       yield put(isShow({ isShow: false, type: '' }));
     }
     if (action.payload.step === 'change') {
@@ -145,7 +146,7 @@ function* fetchDeleteResearchSaga(action) {
         researchType: '',
         statusType: '',
       };
-      yield put(fetchResearchList({ params:params }));
+      yield put(fetchResearchList({ params: params }));
     }
   } catch (e) {
     console.error(e);
@@ -188,7 +189,7 @@ function* sendRecommendationQuestionListSaga(action) {
 
       const expires = new Date();
       expires.setDate(expires.getDate() + 1);
-      cookies.set(`isLogin`, `${action.payload.isLogin}`, { path: '/', expires })
+      cookies.set(`isLogin`, `${action.payload.isLogin}`, { path: '/', expires });
       cookies.set(`recommendResultSeq`, result.data.recommendResultSeq, { path: '/', expires });
       cookies.set(`recommendResearchType`, result.data.recommendResearchType, { path: '/', expires });
       yield put(updateRecommendationStep('step1'));

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import { colors } from '../../../styles/Common.styles';
 import { body3_bold, caption1_bold, caption1_regular, caption2_bold, heading5_bold } from '../../../styles/FontStyles';
@@ -18,8 +18,10 @@ import LayerPopup from '../../atoms/LayerPopup';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { fetchResearchDelete, updateDeleteResearchInfo } from '../../../store/reducers/researchCreateReducer';
-import {profileColor} from "../../../common/util/commonVar";
-import {getBackgroundColor, handleChoiceStatusNmColor} from "../../../common/util/commonFunc";
+import { profileColor } from '../../../common/util/commonVar';
+import { getBackgroundColor, handleChoiceResearchStatusTooltip, handleChoiceStatusNmColor } from '../../../common/util/commonFunc';
+import ResearchDetailTooltipModal from '../../organisms/Modal/ResearchDetailTooltipModal';
+import { closeTooltip, showTooltip } from '../../../store/reducers/commonReducer';
 
 interface PropsType {
   createDt: string;
@@ -32,7 +34,7 @@ interface PropsType {
   reportType: string;
   downloadLink: string;
   webLink: string;
-  createId:string;
+  createId: string;
   onClick?: (e: any, id: string, type: string, name: string, downloadLink: string, webLink: string) => void;
 }
 
@@ -57,14 +59,15 @@ const ListReport = ({
     state => state.common.commonCode.ResearchStatusType,
   );
 
-  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo)
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
-
 
   // LayerPopup state
   const [focusProfile, setFocusProfile] = useState(false);
   // 권한
   const [myRole, setMyRole] = useState<string | null>(null);
+
+  const statusRef = useRef(null);
 
   useEffect(() => {
     if (userInfo && selectTeamList) {
@@ -75,37 +78,15 @@ const ListReport = ({
   }, [userInfo, selectTeamList]);
 
   const findIndexFun = () => {
-    const index = selectTeamList?.teamMember?.findIndex(el => el.userId === createId)
-    return index
-  }
+    const index = selectTeamList?.teamMember?.findIndex(el => el.userId === createId);
+    return index;
+  };
   const findUserName = () => {
-    const teamMember = selectTeamList?.teamMember
-    const findMakeUser = teamMember.filter(el => el.userId === createId)[0]
-    const userName = findMakeUser?.userName
-    return userName
-
-  }
-
-
-  const changeName = useCallback(name => {
-    switch (name) {
-      case 'UI_DIAGNOSIS':
-        return '사용성 테스트';
-      case 'SCENARIO_VERIFICATION':
-        return '시나리오 검증';
-      case 'UX_POSITION_ANALYSIS':
-        return 'UX 포지션 분석';
-      case 'POTENTIAL_CUSTOMER_RESEARCH':
-        return '잠재 고객 조사';
-      default:
-        return '사용성 테스트';
-    }
-  }, []);
-
-  const getResearchStatus = useCallback(() => {
-    const equalStatus = STATUS_CODE?.filter(el => el.value === statusType);
-    return equalStatus?.[0]?.displayName;
-  }, [STATUS_CODE, statusType]);
+    const teamMember = selectTeamList?.teamMember;
+    const findMakeUser = teamMember.filter(el => el.userId === createId)[0];
+    const userName = findMakeUser?.userName;
+    return userName;
+  };
 
   const getResearchStatusIcon = useCallback(
     statusType => {
@@ -128,14 +109,18 @@ const ListReport = ({
     [statusType],
   );
 
+  useEffect(() => {
+    console.log(myRole);
+  }, [myRole]);
+
   const handleMovePage = (statusType, researchSeq, createId) => {
     if (statusType == 'RESEARCH_INFO_ENTERING') {
-      if(myRole === '관리자') {
+      if (myRole === '관리자') {
         router.push(`/admin/research/${researchSeq}`);
       }
-      if(myRole === '멤버') {
-        if(createId !== userInfo?.userId) {
-          dispatch(showToast({ message: '해당 리서치에 권한이 없습니다.', isShow: true, status: 'warning', duration: 5000 }))
+      if (myRole === '멤버') {
+        if (createId !== userInfo?.userId) {
+          dispatch(showToast({ message: '해당 리서치에 권한이 없습니다.', isShow: true, status: 'warning', duration: 5000 }));
         } else {
           router.push(`/admin/research/${researchSeq}`);
         }
@@ -151,12 +136,12 @@ const ListReport = ({
 
   const handleRemoveResearch = (researchSeq, createId) => {
     if (statusType === 'RESEARCH_INFO_ENTERING') {
-      if(myRole === '관리자') {
+      if (myRole === '관리자') {
         dispatch(updateDeleteResearchInfo({ teamSeq: SELECTED_TEAM_SEQ, researchSeq: researchSeq }));
         dispatch(isShow({ isShow: true, type: 'researchDeleteConfirmModal' }));
       }
-      if(myRole === '멤버') {
-        if(userInfo.userId === createId) {
+      if (myRole === '멤버') {
+        if (userInfo.userId === createId) {
           dispatch(updateDeleteResearchInfo({ teamSeq: SELECTED_TEAM_SEQ, researchSeq: researchSeq }));
           dispatch(isShow({ isShow: true, type: 'researchDeleteConfirmModal' }));
         } else {
@@ -167,6 +152,29 @@ const ListReport = ({
       dispatch(showToast({ message: `리서치 설계 요청 이후 리서치 삭제가 불가능합니다.`, isShow: true, status: 'warning', duration: 5000 }));
     }
   };
+
+  const handleShowTooltip = (statusTypeNm, statusType) => {
+    const positionObject = statusRef?.current?.getBoundingClientRect();
+
+    const top = positionObject.top + 60;
+    const left = statusRef?.current?.offsetLeft - 100;
+    dispatch(
+      showTooltip({
+        show: true,
+        title: statusTypeNm,
+        content: handleChoiceResearchStatusTooltip(statusType),
+        top,
+        left,
+        backgroundColor: colors.grey._3c,
+      }),
+    );
+  };
+
+  useEffect(() => {
+    return () => {
+      dispatch(closeTooltip());
+    };
+  }, []);
 
   return (
     <div css={mainContainer} onClick={() => handleMovePage(statusType, researchSeq, createId)}>
@@ -193,13 +201,25 @@ const ListReport = ({
       </FlexBox>
       <span css={[heading5_bold, titleStyle]}>{researchNm}</span>
       <FlexBox style={dateBox} direction={'row'} justify={'flex-start'} align={'center'}>
-        <ProfileIcon name={findUserName()?.slice(0,1)} size={'20px'} margin={'0 8px 0 0'} fontStyle={caption2_bold} backgroundColor={createId === userInfo.userId ? profileColor : getBackgroundColor(findIndexFun())}/>
+        <ProfileIcon
+          name={findUserName()?.slice(0, 1)}
+          size={'20px'}
+          margin={'0 8px 0 0'}
+          fontStyle={caption2_bold}
+          backgroundColor={createId === userInfo.userId ? profileColor : getBackgroundColor(findIndexFun())}
+        />
         <span css={[caption1_regular, dateStyle]}>{moment(createDt).format('YYYY. MM. DD')}</span>
       </FlexBox>
-      <FlexBox style={statusBox} direction={'row'} justify={'flex-start'} align={'center'}>
+      <FlexBox forwardRef={statusRef} style={statusBox} direction={'row'} justify={'flex-start'} align={'center'}>
         {/*TODO: STATUS에 따른 상태 변경*/}
         <Icon name={getResearchStatusIcon(statusType)} size={24} />
-        <span css={[body3_bold, { marginLeft: '8px', color: handleChoiceStatusNmColor(statusType) }]}>{statusTypeNm}</span>
+        <span
+          onMouseOver={() => handleShowTooltip(statusTypeNm, statusType)}
+          onMouseOut={() => dispatch(closeTooltip())}
+          css={[body3_bold, { marginLeft: '8px', color: handleChoiceStatusNmColor(statusType) }]}
+        >
+          {statusTypeNm}
+        </span>
       </FlexBox>
       {statusType === 'RESEARCH_COMPLETED' && (
         <FlexBox>
@@ -246,6 +266,7 @@ const mainContainer = css`
   margin-bottom: 20px;
   margin-right: 16px;
   cursor: pointer;
+
   &:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
   }

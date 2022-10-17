@@ -26,7 +26,9 @@ import { showToast } from '../../store/reducers/toastReducer';
 import { updateFilterFail, updateFilterFlied, updateFilterValues } from '../../store/reducers/reportReducer';
 import team from '../../pages/admin/team';
 import { clearLocalStorage } from '../util/commonFunc';
-import {confirmEmailAction, getRefreshToken, setToken} from '../../store/reducers/authReducer';
+import { confirmEmailAction, getRefreshToken, setToken } from '../../store/reducers/authReducer';
+import Tooltip from '../../components/atoms/Tooltip';
+import Dialog from '../../components/molecules/Dialog';
 
 // Types
 interface PropsType {
@@ -139,12 +141,12 @@ const Layout = ({ children }: PropsType) => {
       // 구글로그인 했거나, 초대받은사람이 로그인하거나
       if (token && !userId && type && !teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
-        dispatch(setToken(token))
+        dispatch(setToken(token));
         dispatch(getUserInfo());
       }
       if (token && !userId && type && !teamSeq && !result && requestView) {
         localStorage.setItem('accessToken', `${token}`);
-        dispatch(setToken(token))
+        dispatch(setToken(token));
         inviteRefetch();
       }
       // 이메일 인증
@@ -320,6 +322,8 @@ const Layout = ({ children }: PropsType) => {
         </div>
         <AlertToast position={'top-center'} />
         <CommonModal />
+        <Tooltip />
+        <Dialog />
       </>
     );
   }
@@ -340,6 +344,8 @@ const Layout = ({ children }: PropsType) => {
         </div>
         <AlertToast position={'top-center'} />
         <CommonModal />
+        <Tooltip />
+        <Dialog />
       </>
     );
   }
@@ -349,6 +355,8 @@ const Layout = ({ children }: PropsType) => {
         {separateDomain()}
         <AlertToast position={'top-center'} />
         <CommonModal />
+        <Tooltip />
+        <Dialog />
       </>
     );
   }
@@ -363,6 +371,8 @@ const Layout = ({ children }: PropsType) => {
               </main>
             </div>
             <CommonModal />
+            <Tooltip />
+            <Dialog />
           </>
         ) : router.pathname === '/admin/research/recommendation' || router.pathname === '/admin/research/recommendation/result' ? (
           <>
@@ -373,6 +383,8 @@ const Layout = ({ children }: PropsType) => {
               </main>
             </div>
             <CommonModal />
+            <Tooltip />
+            <Dialog />
           </>
         ) : (
           <>
@@ -390,6 +402,8 @@ const Layout = ({ children }: PropsType) => {
             </div>
             <AlertToast position={'top-center'} />
             <CommonModal />
+            <Tooltip />
+            <Dialog />
           </>
         )}
       </>

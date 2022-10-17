@@ -12,9 +12,10 @@ import { ReducerType } from '../../../store/reducers';
 import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
 import LogoText from '/public/assets/png/diby_black.png';
-import {persistor} from "../../../pages/_app";
-import {userReset} from "../../../store/reducers/userReducer";
-import {authReset} from "../../../store/reducers/authReducer";
+import { persistor } from '../../../pages/_app';
+import { userReset } from '../../../store/reducers/userReducer';
+import { authReset } from '../../../store/reducers/authReducer';
+import { showDialog } from '../../../store/reducers/commonReducer';
 interface PropsType {
   researchHeader?: boolean;
 }
@@ -35,12 +36,51 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
   );
 
   const handleLogout = useCallback(async () => {
-    clearLocalStorage()
-    dispatch(userReset())
-    dispatch(authReset())
+    clearLocalStorage();
+    dispatch(userReset());
+    dispatch(authReset());
     dispatch(updateQueryStatus({ name: 'userInfoQuery', status: false }));
     router.push('/');
   }, []);
+
+  const handleMoveHome = () => {
+    if (pathname === '/admin/profile') {
+      return;
+    } else if (pathname === '/admin/research/[id]') {
+      const id = router.query.id;
+      if (id === 'create') {
+        dispatch(
+          showDialog({
+            show: true,
+            title: `리서치 설계를 종료하시겠습니까?`,
+            content: `기본 정보 입력 후 다음 버튼을 눌러주시면 입력하신 정보를 저장해두실 수 있습니다.`,
+            okButton: '종료',
+            cancelButton: '취소',
+            okButtonColor: colors.red,
+            cancelButtonColor: '',
+            okFunction: () => router.push('/admin/team'),
+            cancelFunction: null,
+          }),
+        );
+      } else {
+        dispatch(
+          showDialog({
+            show: true,
+            title: `리서치 설계를 종료하시겠습니까?`,
+            content: `종료 이후에도 다시 이어서 진행이 가능합니다.`,
+            okButton: '종료',
+            cancelButton: '취소',
+            okButtonColor: colors.red,
+            cancelButtonColor: '',
+            okFunction: () => router.push('/admin/team'),
+            cancelFunction: null,
+          }),
+        );
+      }
+    } else {
+      router.push('/admin/team');
+    }
+  };
 
   return (
     <FlexBox
@@ -60,7 +100,8 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
       <FlexBox
         justify={'flex-start'}
         align={'center'}
-        onClick={pathname === '/admin/profile' ? () => console.log('') : () => router.push('/admin/team')}
+        // onClick={pathname === '/admin/profile' ? () => console.log('') : () => router.push('/admin/team')}
+        onClick={handleMoveHome}
         style={{ cursor: 'pointer' }}
       >
         {/*<Icon name={'LOGO_ICON'} size={40} />*/}
@@ -80,7 +121,6 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
             <img src={ImageLogo.src} alt={'ImageLogo'} style={{ width: '15.2px', height: '20.8px' }} />
           </div>
         )}
-
         <img
           src={researchHeader ? LogoText.src : 'https://diby-storage.s3.ap-northeast-2.amazonaws.com/static/images/diby_white1.png'}
           alt={'Logo'}

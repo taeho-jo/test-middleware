@@ -83,7 +83,7 @@ const buttonStyle = (status, theme, isLoading) => css`
     ${
       status === 'normal'
         ? `
-      background: ${colors.grey._3c};
+      background: ${colors.grey._99};
       &:hover {
         background: ${colors.grey._2c};
       }
