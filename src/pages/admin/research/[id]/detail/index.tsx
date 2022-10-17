@@ -1,11 +1,11 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import withTokenAuth from '../../../../../hoc/withTokenAuth';
 import { css } from '@emotion/react';
 import { body3_bold, heading1_bold, heading2_bold, heading4_bold, heading4_medium, heading5_bold } from '../../../../../styles/FontStyles';
 import { colors } from '../../../../../styles/Common.styles';
 import Icon from '../../../../../components/atoms/Icon';
 import FlexBox from '../../../../../components/atoms/FlexBox';
-import {getResearchStatusIcon, handleChoiceStatusNmColor} from '../../../../../common/util/commonFunc';
+import { getResearchStatusIcon, handleChoiceResearchStatusTooltip, handleChoiceStatusNmColor } from '../../../../../common/util/commonFunc';
 import IconTextButton from '../../../../../components/atoms/Button/IconTextButton';
 import { useRouter } from 'next/router';
 import { fetchResearchDetail, resetCreateResearchData } from '../../../../../store/reducers/researchCreateReducer';
@@ -15,6 +15,7 @@ import ResearchDetailTooltipModal from '../../../../../components/organisms/Moda
 import { isShow } from '../../../../../store/reducers/modalReducer';
 import BasicButton from '../../../../../components/atoms/Button/BasicButton';
 import { CURRENT_DOMAIN } from '../../../../../common/util/commonVar';
+import { closeTooltip, showTooltip } from '../../../../../store/reducers/commonReducer';
 
 const ResearchDetail = () => {
   const router = useRouter();
@@ -24,7 +25,7 @@ const ResearchDetail = () => {
   const agendaTypeArr = useSelector<ReducerType, any>(state => state.common.commonCode.AgendaType);
   const detailId = router.query.id;
 
-  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo)
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
 
   const [tooltipStatus, setTooltipStatus] = useState(false);
@@ -45,6 +46,8 @@ const ResearchDetail = () => {
   // 권한
   const [myRole, setMyRole] = useState<string | null>(null);
 
+  const statusRef = useRef(null);
+
   useEffect(() => {
     if (userInfo && selectTeamList) {
       const memberArr = selectTeamList?.teamMember;
@@ -53,7 +56,7 @@ const ResearchDetail = () => {
     }
   }, [userInfo, selectTeamList]);
 
-  const showTooltip = (type, isActive) => {
+  const handleStepShowTooltip = (type, isActive) => {
     setTooltipStatus(true);
     if (type === '소통') {
       setTooltipContents({
@@ -132,7 +135,7 @@ const ResearchDetail = () => {
     }
   };
 
-  const closeTooltip = () => {
+  const handleSideCloseTooltip = () => {
     setTooltipStatus(false);
     setTooltipContents({
       title: '',
@@ -144,14 +147,21 @@ const ResearchDetail = () => {
   };
 
   useEffect(() => {
-    if (detailId) {
+    if (detailId && !router.query?.teamSeq) {
       const params = {
         teamSeq: selectTeamSeq,
         researchSeq: detailId,
       };
-      dispatch(fetchResearchDetail({ params: params, callback:() => router.push('/admin/team') }));
+      dispatch(fetchResearchDetail({ params: params, callback: () => router.push('/admin/team') }));
     }
-  }, [detailId]);
+    if (detailId && router.query?.teamSeq) {
+      const params = {
+        teamSeq: router.query?.teamSeq,
+        researchSeq: detailId,
+      };
+      dispatch(fetchResearchDetail({ params: params, callback: () => router.push('/admin/team') }));
+    }
+  }, [detailId, router.query]);
 
   useEffect(() => {
     return () => {
@@ -183,15 +193,54 @@ const ResearchDetail = () => {
     }
   };
 
+  const handleShowTooltip = (statusTypeNm, statusType) => {
+    const positionObject = statusRef?.current?.getBoundingClientRect();
+
+    const top = positionObject.top + 30;
+    const left = statusRef?.current?.offsetLeft - 100;
+    dispatch(
+      showTooltip({
+        show: true,
+        title: statusTypeNm,
+        content: handleChoiceResearchStatusTooltip(statusType),
+        top,
+        left,
+        backgroundColor: colors.grey._3c,
+      }),
+    );
+  };
+
+  const researchStartButtonText = () => {
+    if (detailData?.statusType === 'RESPONSE_RECRUITING' || detailData?.statusType === 'RESEARCH_ANALYZING') {
+      return '응답 수집중이예요.';
+    } else if (detailData?.statusType === 'RESEARCH_COMPLETED') {
+      return '리포트를 확인하세요.';
+    } else if (detailData?.statusType === 'RESEARCH_START_REQUEST_COMPLETE') {
+      return '리서치를 요청했어요.';
+    } else {
+      return '리서치 시작하기';
+    }
+  };
+
   return (
     <div css={mainContainerStyle}>
-      <div css={css`height: 100%`}>
+      <div
+        css={css`
+          height: 100%;
+        `}
+      >
         <div css={titleContainerStyle}>
           <span css={[heading1_bold, titleStyle]}>{detailData?.researchNm}</span>
-          <FlexBox style={statusBox} direction={'row'} justify={'flex-start'} align={'center'}>
+          <FlexBox forwardRef={statusRef} style={statusBox} direction={'row'} justify={'flex-start'} align={'center'}>
             {/*TODO: STATUS에 따른 상태 변경*/}
             <Icon name={getResearchStatusIcon(detailData?.statusType)} size={24} />
-            <span css={[body3_bold, { marginLeft: '8px', color: handleChoiceStatusNmColor(detailData?.statusType) }]}>{detailData?.statusTypeNm}</span>
+            <span
+              onMouseOver={() => handleShowTooltip(detailData?.statusTypeNm, detailData?.statusType)}
+              onMouseOut={() => dispatch(closeTooltip())}
+              css={[body3_bold, { marginLeft: '8px', color: handleChoiceStatusNmColor(detailData?.statusType) }]}
+            >
+              {detailData?.statusTypeNm}
+            </span>
           </FlexBox>
         </div>
 
@@ -203,43 +252,37 @@ const ResearchDetail = () => {
                 {detailData?.statusType === 'RESEARCH_DESIGN_COMPLETE' ? (
                   <BasicButton
                     onClick={() => showCostModal('researchStartModal')}
-                    // btnTextColor={'white'}
-                    // disabled={true}
                     text={'리서치 시작하기'}
                     css={css`
-                    width: 648px;
-                    z-index: 10;
-                  `}
+                      width: 648px;
+                      z-index: 10;
+                    `}
                   />
                 ) : (
                   <BasicButton
                     theme={'dark'}
                     disabled={true}
-                    text={'리서치 시작하기'}
+                    text={researchStartButtonText()}
                     css={css`
-                    width: 648px;
-                    z-index: 10;
-                    cursor: not-allowed;
-                  `}
+                      width: 648px;
+                      z-index: 10;
+                      cursor: not-allowed;
+                    `}
                   />
                 )}
               </div>
             ) : null}
 
-            {calcShowButton(detailData?.statusType) && (
-                myRole === '관리자' ? (
-                  <div css={modifyButton} onClick={() => router.push(`/admin/research/${detailId}`)}>
-                    <IconTextButton name={'ACTION_SETTING'} iconPosition={'left'} text={'수정하기'} />
-                  </div>
-                ) : (
-                  myRole === '멤버' && detailData?.createId === userInfo?.userId ? (
-                    <div css={modifyButton} onClick={() => router.push(`/admin/research/${detailId}`)}>
-                      <IconTextButton name={'ACTION_SETTING'} iconPosition={'left'} text={'수정하기'} />
-                    </div>
-                  ) : null
-                  )
-
-            )}
+            {calcShowButton(detailData?.statusType) &&
+              (myRole === '관리자' ? (
+                <div css={modifyButton} onClick={() => router.push(`/admin/research/${detailId}`)}>
+                  <IconTextButton name={'ACTION_SETTING'} iconPosition={'left'} text={'수정하기'} />
+                </div>
+              ) : myRole === '멤버' && detailData?.createId === userInfo?.userId ? (
+                <div css={modifyButton} onClick={() => router.push(`/admin/research/${detailId}`)}>
+                  <IconTextButton name={'ACTION_SETTING'} iconPosition={'left'} text={'수정하기'} />
+                </div>
+              ) : null)}
 
             {/* 리서치 방법 */}
             <FlexBox direction={'column'} align={'flex-start'} style={marginStyle}>
@@ -346,7 +389,16 @@ const ResearchDetail = () => {
               <span css={heading5_bold}>추가 요구사항</span>
               {detailData?.additionalInfo?.map((item, index) => {
                 return (
-                  <span key={index} css={[heading4_medium, contentsStyle, css`padding-bottom: 80px`]}>
+                  <span
+                    key={index}
+                    css={[
+                      heading4_medium,
+                      contentsStyle,
+                      css`
+                        padding-bottom: 80px;
+                      `,
+                    ]}
+                  >
                     {item.additional}
                   </span>
                 );
@@ -377,8 +429,8 @@ const ResearchDetail = () => {
 
             <div
               css={detailData?.communicationUrl ? activeBtnContainer : btnContainer}
-              onMouseOver={() => showTooltip('소통', detailData?.communicationUrl ? true : false)}
-              onMouseOut={closeTooltip}
+              onMouseOver={() => handleStepShowTooltip('소통', detailData?.communicationUrl ? true : false)}
+              onMouseOut={handleSideCloseTooltip}
             >
               {detailData?.communicationUrl ? (
                 <IconTextButton
@@ -401,8 +453,8 @@ const ResearchDetail = () => {
             </div>
             <div
               css={detailData?.questionFileDownloadLink ? activeBtnContainer : btnContainer}
-              onMouseOver={() => showTooltip('다운로드', detailData?.questionFileDownloadLink ? true : false)}
-              onMouseOut={closeTooltip}
+              onMouseOver={() => handleStepShowTooltip('다운로드', detailData?.questionFileDownloadLink ? true : false)}
+              onMouseOut={handleSideCloseTooltip}
             >
               {detailData?.questionFileDownloadLink ? (
                 <IconTextButton
@@ -419,8 +471,8 @@ const ResearchDetail = () => {
             </div>
             <div
               css={detailData?.totalCost ? activeBtnContainer : btnContainer}
-              onMouseOver={() => showTooltip('견적', detailData?.totalCost ? true : false)}
-              onMouseOut={closeTooltip}
+              onMouseOver={() => handleStepShowTooltip('견적', detailData?.totalCost ? true : false)}
+              onMouseOut={handleSideCloseTooltip}
             >
               {detailData?.totalCost ? (
                 <IconTextButton
@@ -437,8 +489,8 @@ const ResearchDetail = () => {
             </div>
             <div
               css={detailData?.researchViewId ? activeBtnContainer : btnContainer}
-              onMouseOver={() => showTooltip('리포트', detailData?.reportType ? true : false)}
-              onMouseOut={closeTooltip}
+              onMouseOver={() => handleStepShowTooltip('리포트', detailData?.reportType ? true : false)}
+              onMouseOut={handleSideCloseTooltip}
             >
               {detailData?.reportType ? (
                 <IconTextButton
@@ -499,7 +551,7 @@ const contentsContainerStyle = css`
   width: 100%;
   max-width: 1260px;
   min-width: 1260px;
-  
+
   height: 100vh;
   border: 1px solid #dcdcdc;
   border-bottom: none;
@@ -586,6 +638,7 @@ const statusBox = css`
   //padding: 20px 0;
   width: auto;
   margin-right: 20px;
+  cursor: pointer;
 `;
 const marginStyle = css`
   margin-bottom: 32px;

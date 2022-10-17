@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { colors } from '../../styles/Common.styles';
 
 export interface CounterType {
   commonCode: any;
@@ -7,6 +8,25 @@ export interface CounterType {
     graph: string;
     originData: string;
     isFilter: string;
+  };
+  tooltip: {
+    show: boolean;
+    title: string;
+    content: string;
+    top: number;
+    left: number;
+    backgroundColor: '#68A0F4' | '#3c3c46';
+  };
+  dialog: {
+    show: boolean;
+    title: string;
+    content: string;
+    okButton: string;
+    cancelButton: string;
+    okButtonColor: string;
+    cancelButtonColor: string;
+    okFunction: any;
+    cancelFunction: any;
   };
   redirectPath: string;
   error: any;
@@ -19,6 +39,25 @@ const initialState: CounterType = {
     graph: 'N',
     originData: 'N',
     isFilter: 'N',
+  },
+  tooltip: {
+    show: false,
+    title: '',
+    content: '',
+    top: 0,
+    left: 0,
+    backgroundColor: colors.grey._3c,
+  },
+  dialog: {
+    show: false,
+    title: '',
+    content: '',
+    okButton: '',
+    cancelButton: '',
+    okButtonColor: '',
+    cancelButtonColor: '',
+    okFunction: null,
+    cancelFunction: null,
   },
   redirectPath: null,
   error: null,
@@ -40,6 +79,51 @@ export const commonSlice = createSlice({
     updateIndicatorStatus: (state, action: PayloadAction<any>) => {
       state.indicator[action.payload.key] = action.payload.value;
     },
+    showTooltip: (
+      state,
+      action: PayloadAction<{ show: boolean; title: string; content: string; top: number; left: number; backgroundColor: '#68A0F4' | '#3c3c46' }>,
+    ) => {
+      state.tooltip = action.payload;
+    },
+    closeTooltip: state => {
+      state.tooltip = {
+        show: false,
+        title: '',
+        content: '',
+        top: 0,
+        left: 0,
+        backgroundColor: colors.grey._3c,
+      };
+    },
+    showDialog: (
+      state,
+      action: PayloadAction<{
+        show: boolean;
+        title: string;
+        content: string;
+        okButton: string;
+        cancelButton: string;
+        okButtonColor: string;
+        cancelButtonColor: string;
+        okFunction: any;
+        cancelFunction: any;
+      }>,
+    ) => {
+      state.dialog = action.payload;
+    },
+    closeDialog: state => {
+      state.dialog = {
+        show: false,
+        title: '',
+        content: '',
+        okButton: '',
+        cancelButton: '',
+        okButtonColor: '',
+        cancelButtonColor: '',
+        okFunction: null,
+        cancelFunction: null,
+      };
+    },
     resetIndicatorStatus: state => {
       state.indicator = {
         isShare: 'N',
@@ -57,6 +141,17 @@ export const commonSlice = createSlice({
   },
 });
 
-export const { getCommonCode, updateCommonCode, updateInitIndicator, updateIndicatorStatus, resetIndicatorStatus, setRedirectPath, getErrorInfo } =
-  commonSlice.actions;
+export const {
+  getCommonCode,
+  updateCommonCode,
+  updateInitIndicator,
+  updateIndicatorStatus,
+  showTooltip,
+  closeTooltip,
+  showDialog,
+  closeDialog,
+  resetIndicatorStatus,
+  setRedirectPath,
+  getErrorInfo,
+} = commonSlice.actions;
 export default commonSlice.reducer;

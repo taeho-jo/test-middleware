@@ -2,9 +2,9 @@ import { useDispatch } from 'react-redux';
 import { isShow } from '../../store/reducers/modalReducer';
 import { fetchRefreshToken } from '../../api/authApi';
 import { useCallback } from 'react';
-import {persistor} from "../../pages/_app";
-import {profileColor2} from "./commonVar";
-import {colors} from "../../styles/Common.styles";
+import { persistor } from '../../pages/_app';
+import { profileColor2 } from './commonVar';
+import { colors } from '../../styles/Common.styles';
 
 export const isLandingPage = path => {
   switch (path) {
@@ -54,24 +54,45 @@ export const getResearchStatusIcon = statusType => {
 
 // 리서치 상태 색상
 export const handleChoiceStatusNmColor = statusType => {
-    switch (statusType) {
-      case 'RESEARCH_COMPLETED':
-      case 'RESEARCH_INFO_ENTERING':
-      case 'RESEARCH_REQUEST_DESIGN_COMPLETE':
-      case 'RESEARCH_DESIGN':
-      case 'RESEARCH_START_REQUEST_COMPLETE':
-      case 'RESEARCH_DESIGN_COMPLETE':
-        return colors.grey._3c;
-      case 'RESPONSE_RECRUITING':
-      case 'RESEARCH_ANALYZING':
-        return colors.blue._500;
-      default:
-        return 'STATUS_BEFORE';
-    }
+  switch (statusType) {
+    case 'RESEARCH_COMPLETED':
+    case 'RESEARCH_INFO_ENTERING':
+    case 'RESEARCH_REQUEST_DESIGN_COMPLETE':
+    case 'RESEARCH_DESIGN':
+    case 'RESEARCH_START_REQUEST_COMPLETE':
+    case 'RESEARCH_DESIGN_COMPLETE':
+      return colors.grey._3c;
+    case 'RESPONSE_RECRUITING':
+    case 'RESEARCH_ANALYZING':
+      return colors.blue._500;
+    default:
+      return 'STATUS_BEFORE';
   }
-// const purge = async () => {
-//   await persistor.purge();
-// }
+};
+// 리서치 상태 툴팁 설명
+export const handleChoiceResearchStatusTooltip = statsType => {
+  switch (statsType) {
+    case 'RESEARCH_INFO_ENTERING':
+      return `고객사가 리서치 설계를 맡기기 전 필수 정보 입력 단계입니다.`;
+    case 'RESEARCH_REQUEST_DESIGN_COMPLETE':
+      return `고객사가 설계 요청 한 이후의 상태입니다.`;
+    case 'RESEARCH_DESIGN':
+      return `설계안 전달 이후 설계 미팅, 문항리스트 작성 및 검토 등의 과정이 진행되는 과정입니다.`;
+    case 'RESEARCH_DESIGN_COMPLETE':
+      return `리서치 설계가 완료되고나서 리서치 시작이 가능한 상태입니다.`;
+    case 'RESEARCH_START_REQUEST_COMPLETE':
+      return `고객사에서 리서치 시작 요청을 한 상태입니다.`;
+    case 'RESPONSE_RECRUITING':
+      return `테스트를 시작하고나서 응답을 모집중인 상태입니다.`;
+    case 'RESEARCH_ANALYZING':
+      return `테스트 응답모집이 끝나고 데이터 분석/리포트 제작 단계입니다.`;
+    case 'RESEARCH_COMPLETED':
+      return `리포트 업로드 / 발행후 리서치가 완료된 상태입니다.`;
+    default:
+      return ``;
+  }
+};
+
 export const clearLocalStorage = () => {
   // localStorage.removeItem('persist:root');
   localStorage.removeItem('projectNm');
@@ -84,14 +105,14 @@ export const clearLocalStorage = () => {
 
 export const getBackgroundColor = index => {
   if (index < 10) {
-    return profileColor2[index]
+    return profileColor2[index];
   }
   if (index >= 10) {
-    const splitNum = String(index).split('')
-    const changeNum = parseInt(splitNum[splitNum.length - 1])
-    return profileColor2[changeNum]
+    const splitNum = String(index).split('');
+    const changeNum = parseInt(splitNum[splitNum.length - 1]);
+    return profileColor2[changeNum];
   }
-}
+};
 
 // <--------------------------------- 리서치 금액 계산 ---------------------------------> //
 export const calcResearchSolutionFee = RESEARCH_TYPE => {
