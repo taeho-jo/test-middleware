@@ -39,6 +39,9 @@ export interface CounterType {
   };
   redirectPath: string;
   error: any;
+  loading: {
+    [key: string]: boolean;
+  };
 }
 
 const initialState: CounterType = {
@@ -79,12 +82,19 @@ const initialState: CounterType = {
   },
   redirectPath: null,
   error: null,
+  loading: {},
 };
 
 export const commonSlice = createSlice({
   name: 'common',
   initialState,
   reducers: {
+    startLoading: (state, action) => {
+      state.loading = { ...state.loading, [action.payload.name]: true };
+    },
+    stopLoading: state => {
+      state.loading = null;
+    },
     getCommonCode: state => {
       return state;
     },
@@ -177,6 +187,8 @@ export const commonSlice = createSlice({
 });
 
 export const {
+  startLoading,
+  stopLoading,
   getCommonCode,
   updateCommonCode,
   updateInitIndicator,

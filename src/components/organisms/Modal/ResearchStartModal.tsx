@@ -15,11 +15,14 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import { fetchResearchModifyInfo } from '../../../store/reducers/researchCreateReducer';
 import { useRouter } from 'next/router';
 import { showToast } from '../../../store/reducers/toastReducer';
+import { startLoading } from '../../../store/reducers/commonReducer';
 
 const ResearchStartModal = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const DETAIL_INFO = useSelector<ReducerType, any>(state => state.researchCreate.detailData);
+
+  const isLoading = useSelector<ReducerType, any>(state => state.common.loading);
 
   const [lastCheck, setLastCheck] = useState(false);
   const [confirmUseCreditCheck, setConfirmUseCreditCheck] = useState(false);
@@ -47,6 +50,7 @@ const ResearchStartModal = () => {
     if (!lastCheck || !confirmUseCreditCheck) {
       dispatch(showToast({ message: '리서치 진행에 동의해주세요.', isShow: true, status: 'warning', duration: 5000 }));
     } else {
+      dispatch(startLoading({ name: 'researchStart' }));
       const sendObject = {
         ...DETAIL_INFO,
         statusType: 'RESEARCH_START_REQUEST_COMPLETE',
@@ -197,16 +201,16 @@ const ResearchStartModal = () => {
               {/* // --------------- 응답자 표집 비용 --------------- //*/}
 
               {/* // --------------- 리서치 방법별 추가 요금 --------------- //*/}
-              <FlexBox justify={'space-between'}>
-                <span css={[heading4_bold, tableHeaderStyle(320, 'left', '15px 24px')]}>리서치 종류별 추가 요금</span>
-                <span css={[heading4_bold, tableHeaderStyle(128, 'center', '15px 24px')]} />
-                <span css={[heading4_bold, tableHeaderStyle(192, 'right', '15px 24px')]}>
-                  {DETAIL_INFO?.researchTypeAdditionalCost.toLocaleString()}원
-                </span>
-              </FlexBox>
+              {DETAIL_INFO?.researchTypeAdditionalCost != 0 && (
+                <FlexBox justify={'space-between'}>
+                  <span css={[heading4_bold, tableHeaderStyle(320, 'left', '20px 24px')]}>리서치 종류별 추가 요금</span>
+                  <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]} />
+                  <span css={[heading4_bold, tableHeaderStyle(192, 'right', '20px 24px')]}>
+                    {DETAIL_INFO?.researchTypeAdditionalCost >= 0 ? DETAIL_INFO?.researchTypeAdditionalCost.toLocaleString() : 0}원
+                  </span>
+                </FlexBox>
+              )}
 
-              {/* TODO : 리서치 방법별 추가 요금 , map함수로 랜더 필요 */}
-              {/* TODO : 리서치 방법별 추가 요금 , map함수로 랜더 필요 */}
               {DETAIL_INFO?.researchType === 'UI_DIAGNOSIS' && DETAIL_INFO?.detailDesignInfo.length - 2 > 0 && (
                 <FlexBox
                   justify={'space-between'}
@@ -258,25 +262,30 @@ const ResearchStartModal = () => {
               {/* // --------------- 리서치 방법별 추가 요금 --------------- //*/}
 
               {/* // --------------- 추가 요금 --------------- //*/}
-              <FlexBox justify={'space-between'}>
-                <span css={[heading4_bold, tableHeaderStyle(320, 'left', '15px 24px')]}>추가 요금</span>
-                <span css={[heading4_bold, tableHeaderStyle(128, 'center', '15px 24px')]} />
-                <span css={[heading4_bold, tableHeaderStyle(192, 'right', '15px 24px')]}>{DETAIL_INFO?.additionalCost.toLocaleString()}원</span>
-              </FlexBox>
+              {DETAIL_INFO?.additionalCost > 0 && (
+                <>
+                  <FlexBox justify={'space-between'}>
+                    <span css={[heading4_bold, tableHeaderStyle(320, 'left', '15px 24px')]}>추가 요금</span>
+                    <span css={[heading4_bold, tableHeaderStyle(128, 'center', '15px 24px')]} />
+                    <span css={[heading4_bold, tableHeaderStyle(192, 'right', '15px 24px')]}>{DETAIL_INFO?.additionalCost.toLocaleString()}원</span>
+                  </FlexBox>
 
-              {/* TODO : 리서치 방법별 추가 요금 , map함수로 랜더 필요 */}
-              <FlexBox
-                justify={'space-between'}
-                style={css`
-                  background: #f7f7f8;
-                `}
-              >
-                <span css={[heading5_medium, tableHeaderStyle(320, 'left', '15px 24px', '#646466')]}>과금 사유</span>
-                <span css={[heading5_medium, tableHeaderStyle(128, 'center', '15px 24px', '#646466')]}>{DETAIL_INFO?.additionalCostReason}</span>
-                <span css={[heading5_medium, tableHeaderStyle(192, 'right', '15px 24px', '#646466')]}>
-                  {DETAIL_INFO?.additionalCost.toLocaleString()}원
-                </span>
-              </FlexBox>
+                  {/* TODO : 리서치 방법별 추가 요금 , map함수로 랜더 필요 */}
+                  <FlexBox
+                    justify={'space-between'}
+                    style={css`
+                      background: #f7f7f8;
+                    `}
+                  >
+                    <span css={[heading5_medium, tableHeaderStyle(320, 'left', '15px 24px', '#646466')]}>과금 사유</span>
+                    <span css={[heading5_medium, tableHeaderStyle(128, 'center', '15px 24px', '#646466')]}>{DETAIL_INFO?.additionalCostReason}</span>
+                    <span css={[heading5_medium, tableHeaderStyle(192, 'right', '15px 24px', '#646466')]}>
+                      {DETAIL_INFO?.additionalCost.toLocaleString()}원
+                    </span>
+                  </FlexBox>
+                </>
+              )}
+
               {/* // --------------- 추가 요금 --------------- //*/}
 
               <FlexBox justify={'space-between'}>
@@ -405,7 +414,13 @@ const ResearchStartModal = () => {
                 </FlexBox>
                 <FlexBox justify={'space-between'}>
                   <BasicButton theme={'dark'} onClick={closeModal} text={'취소하기'} style={{ width: '160px' }} />
-                  <BasicButton designBgColor={colors.cyan._500} text={'시작하기'} style={{ width: '160px' }} onClick={handleStartResearch} />
+                  <BasicButton
+                    isLoading={isLoading?.['researchStart']}
+                    designBgColor={colors.cyan._500}
+                    text={'시작하기'}
+                    style={{ width: '160px' }}
+                    onClick={handleStartResearch}
+                  />
                 </FlexBox>
               </>
             )}

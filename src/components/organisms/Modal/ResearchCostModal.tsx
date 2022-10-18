@@ -214,7 +214,9 @@ const ResearchCostModal = () => {
                 >
                   <span css={[heading5_medium, tableHeaderStyle(320, 'left', '20px 24px', '#646466')]}>과금 사유</span>
                   <span css={[heading5_medium, tableHeaderStyle(128, 'center', '20px 24px', '#646466')]}>{DETAIL_INFO?.additionalCostReason}</span>
-                  <span css={[heading5_medium, tableHeaderStyle(192, 'right', '20px 24px', '#646466')]}>{DETAIL_INFO?.additionalCostReason}</span>
+                  <span css={[heading5_medium, tableHeaderStyle(192, 'right', '20px 24px', '#646466')]}>
+                    {DETAIL_INFO?.additionalCost.toLocaleString()}원
+                  </span>
                 </FlexBox>
               </>
             )}

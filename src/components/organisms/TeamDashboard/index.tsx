@@ -341,6 +341,7 @@ const TeamDashboard = () => {
                 errors={errors}
                 errorMsg={'필수 항목입니다.'}
                 placeholder={'우리 팀의 리서치 검색하기'}
+                placeholderStyle={{ fontSize: '14px' }}
                 registerOptions={{
                   onChange: debounceFunction(e => debounceSearch(e.target.value), 1000),
                 }}
