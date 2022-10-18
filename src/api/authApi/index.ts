@@ -18,26 +18,26 @@ export const useGoogleLogin = () => {
 };
 
 // 회원가입 API
-export const useSignupApi = () => {
-  const dispatch = useDispatch();
-
-  const handleSignup = async (sendObject: SignupInputType) => {
-    return await AXIOS_POST('/register', sendObject);
-  };
-
-  return useMutation(handleSignup, {
-    onError: (error: any) => {
-      const { data, status } = error.response;
-      dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
-    },
-    onSuccess: async res => {
-      localStorage.setItem('accessToken', res.data.token);
-      dispatch(setToken(res.data.token));
-      dispatch(showToast({ message: res.message, isShow: true, status: 'success', duration: 5000 }));
-      dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-    },
-  });
-};
+// export const useSignupApi = () => {
+//   const dispatch = useDispatch();
+//
+//   const handleSignup = async (sendObject: SignupInputType) => {
+//     return await AXIOS_POST('/register', sendObject);
+//   };
+//
+//   return useMutation(handleSignup, {
+//     onError: (error: any) => {
+//       const { data, status } = error.response;
+//       dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
+//     },
+//     onSuccess: async res => {
+//       localStorage.setItem('accessToken', res.data.token);
+//       dispatch(setToken(res.data.token));
+//       dispatch(showToast({ message: res.message, isShow: true, status: 'success', duration: 5000 }));
+//       dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+//     },
+//   });
+// };
 
 // 로그인 API
 export const fetchLoginApi = async sendObject => {

@@ -52,7 +52,7 @@ const SignupModal = () => {
   const onSubmit = data => handleSignup('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const handleSignup = useCallback((status, signupData) => {
+  const handleSignup = (status, signupData) => {
     const { consentToUseMarketingYn, password, privacyConsentYn, userId } = signupData;
 
     const sendObject = {
@@ -65,7 +65,7 @@ const SignupModal = () => {
 
     dispatch(signupAction(sendObject));
     // signupMutate(sendObject);
-  }, []);
+  };
 
   // 구글 로그인
   const loginWithGoogle = useCallback(() => {

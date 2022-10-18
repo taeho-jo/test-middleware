@@ -213,8 +213,6 @@ const ResearchDetail = () => {
   const researchStartButtonText = () => {
     if (detailData?.statusType === 'RESPONSE_RECRUITING' || detailData?.statusType === 'RESEARCH_ANALYZING') {
       return '응답 수집중이예요.';
-    } else if (detailData?.statusType === 'RESEARCH_COMPLETED') {
-      return '리포트를 확인하세요.';
     } else if (detailData?.statusType === 'RESEARCH_START_REQUEST_COMPLETE') {
       return '리서치를 요청했어요.';
     } else {
@@ -258,7 +256,7 @@ const ResearchDetail = () => {
                       z-index: 10;
                     `}
                   />
-                ) : (
+                ) : detailData?.statusType === 'RESEARCH_COMPLETED' ? null : (
                   <BasicButton
                     theme={'dark'}
                     disabled={true}

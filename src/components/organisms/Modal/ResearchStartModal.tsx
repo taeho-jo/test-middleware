@@ -207,7 +207,7 @@ const ResearchStartModal = () => {
 
               {/* TODO : 리서치 방법별 추가 요금 , map함수로 랜더 필요 */}
               {/* TODO : 리서치 방법별 추가 요금 , map함수로 랜더 필요 */}
-              {DETAIL_INFO?.researchType === 'UI_DIAGNOSIS' && (
+              {DETAIL_INFO?.researchType === 'UI_DIAGNOSIS' && DETAIL_INFO?.detailDesignInfo.length - 2 > 0 && (
                 <FlexBox
                   justify={'space-between'}
                   style={css`
@@ -219,11 +219,11 @@ const ResearchStartModal = () => {
                     {DETAIL_INFO?.detailDesignInfo.length - 2}개
                   </span>
                   <span css={[heading5_medium, tableHeaderStyle(192, 'right', '20px 24px', '#646466')]}>
-                    {(missionAdditionalCompensation(DETAIL_INFO?.detailDesignInfo.length) * addCosts.totalRespondentSize).toLocaleString()}원
+                    {DETAIL_INFO?.researchTypeAdditionalCost.toLocaleString()}원
                   </span>
                 </FlexBox>
               )}
-              {DETAIL_INFO?.researchType === 'FGD' && (
+              {DETAIL_INFO?.researchType === 'FGD' && DETAIL_INFO?.respondentInfo.length - 1 > 0 && (
                 <FlexBox
                   justify={'space-between'}
                   style={css`
@@ -239,7 +239,7 @@ const ResearchStartModal = () => {
                   </span>
                 </FlexBox>
               )}
-              {DETAIL_INFO?.researchType === 'HYPOTHESIS_VERIFICATION' && (
+              {DETAIL_INFO?.researchType === 'HYPOTHESIS_VERIFICATION' && DETAIL_INFO?.detailDesignInfo.length - 10 > 0 && (
                 <FlexBox
                   justify={'space-between'}
                   style={css`
@@ -251,7 +251,7 @@ const ResearchStartModal = () => {
                     {DETAIL_INFO?.detailDesignInfo.length - 10}개
                   </span>
                   <span css={[heading5_medium, tableHeaderStyle(192, 'right', '20px 24px', '#646466')]}>
-                    {(addCosts.totalRespondentCost * 0.2 * (DETAIL_INFO?.detailDesignInfo.length - 10)).toLocaleString()}원
+                    {DETAIL_INFO?.researchTypeAdditionalCost.toLocaleString()}원
                   </span>
                 </FlexBox>
               )}
