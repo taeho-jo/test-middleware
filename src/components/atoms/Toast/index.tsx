@@ -89,4 +89,6 @@ const alertTextStyle = css`
   display: flex;
   justify-content: center;
   align-items: center;
+  white-space: pre-line;
+  word-break: break-word;
 `;
