@@ -30,6 +30,7 @@ import { confirmEmailAction, getRefreshToken, setToken } from '../../store/reduc
 import Tooltip from '../../components/atoms/Tooltip';
 import Dialog from '../../components/molecules/Dialog';
 import ResearchRecommendationModal from '../../components/molecules/ResearchRecommendationModal';
+import AuthToast from '../../components/organisms/AuthToast';
 
 // Types
 interface PropsType {
@@ -356,6 +357,8 @@ const Layout = ({ children }: PropsType) => {
       <>
         {separateDomain()}
         <AlertToast position={'top-center'} />
+        <AuthToast position={'top-center'} />
+        {/*<AlertToast position={'top-center'} />*/}
         <CommonModal />
         <Tooltip />
         <Dialog />
@@ -373,6 +376,7 @@ const Layout = ({ children }: PropsType) => {
                 <ReportLayout>{children}</ReportLayout>
               </main>
             </div>
+            <AlertToast position={'top-center'} />
             <CommonModal />
             <Tooltip />
             <Dialog />
@@ -386,6 +390,7 @@ const Layout = ({ children }: PropsType) => {
                 {children}
               </main>
             </div>
+            <AlertToast position={'top-center'} />
             <CommonModal />
             <Tooltip />
             <Dialog />

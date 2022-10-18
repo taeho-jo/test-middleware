@@ -167,6 +167,7 @@ export const calcRespondentCount = RESEARCH_TYPE => {
 };
 
 export const missionAdditionalCompensation = (count: number) => {
+  const length = count - 2;
   switch (count) {
     case 3:
       return 1000;

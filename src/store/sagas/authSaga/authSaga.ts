@@ -13,7 +13,7 @@ import { fetchEmailConfirmApi, fetchEmailResendApi, fetchLoginApi, fetchRefreshT
 import { clearLocalStorage } from '../../../common/util/commonFunc';
 import { showToast } from '../../reducers/toastReducer';
 import { isShow } from '../../reducers/modalReducer';
-import {getUserInfo, updateCancelWithdrawal, userReset} from '../../reducers/userReducer';
+import { getUserInfo, updateCancelWithdrawal, userReset } from '../../reducers/userReducer';
 
 // 로그인
 function* loginSaga(action) {
@@ -34,9 +34,8 @@ function* loginSaga(action) {
     }
   } catch (e: any) {
     console.error(e);
-    const { data } = e?.response;
-    yield put(showToast({ message: `${data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
-    if (data.code === 'E0022') {
+    yield put(showToast({ message: '???????????????', isShow: true, status: 'success', duration: 5000 }));
+    if (e?.response?.data?.code === 'E0022') {
       yield put(isShow({ isShow: true, type: 'cancelWithdrawalModal' }));
       yield put(updateCancelWithdrawal(true));
     }
@@ -54,7 +53,8 @@ function* signupSaga(action) {
     }
   } catch (e) {
     console.error(e);
-    yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
+    alert('asdfasdfasdfasdfasdfasdfasdfasdfasdfasdf');
+    yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'success', duration: 5000 }));
   }
 }
 
@@ -67,6 +67,7 @@ function* confirmEmailSaga(action) {
     yield put(getUserInfo());
   } catch (e) {
     console.error(e);
+
     yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
   }
 }
@@ -95,16 +96,16 @@ function* getRefreshTokenSaga() {
     }
   } catch (e: any) {
     if (e?.response?.data?.code === 'E0002') {
-      yield put(userReset())
-      yield put(authReset())
+      yield put(userReset());
+      yield put(authReset());
       clearLocalStorage();
       window.location.href = 'https://stag.diby.io';
     }
     if (e?.response?.data?.code === 'E0027') {
-      yield put(userReset())
-      yield put(authReset())
-      clearLocalStorage()
-      yield put(showToast({ message: '세션이 만료되어 로그아웃되었습니다.', isShow: true, status: 'warning', duration: 5000 }))
+      yield put(userReset());
+      yield put(authReset());
+      clearLocalStorage();
+      yield put(showToast({ message: '세션이 만료되어 로그아웃되었습니다.', isShow: true, status: 'warning', duration: 5000 }));
     }
     console.error(e);
   }
