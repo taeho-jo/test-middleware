@@ -181,7 +181,7 @@ const ResearchCreate = () => {
         };
         const checkFieldArr = data.respondentInfo.map(el => el.respondent);
         if (checkFieldArr?.some(el => !el || el === '')) {
-          dispatch(showToast({ message: '응답자 정보를 빠짐없이 입력해주세요.', isShow: true, status: 'warning', duration: 5000 }));
+          dispatch(showToast({ message: '응답자 조건을 모두 입력 후 다음 버튼을 눌러주세요.', isShow: true, status: 'warning', duration: 5000 }));
         } else {
           dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: step }));
         }
@@ -193,7 +193,7 @@ const ResearchCreate = () => {
         };
         const checkFieldArr = data.goalInfo.map(el => el.goal);
         if (checkFieldArr.some(el => !el || el === '')) {
-          dispatch(showToast({ message: '의사결정 정보를 빠짐없이 입력해주세요.', isShow: true, status: 'warning', duration: 5000 }));
+          dispatch(showToast({ message: '리서치 목표를 모두 입력 후 다음 버튼을 눌러주세요.', isShow: true, status: 'warning', duration: 5000 }));
         } else {
           dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: step }));
         }
@@ -227,8 +227,8 @@ const ResearchCreate = () => {
               showToast({
                 message:
                   DETAIL_INFO.researchType === 'UI_DIAGNOSIS'
-                    ? '미션 정보를 빠짐없이 입력해주세요.'
-                    : '가설, 가설 배경/이유 정보를 빠짐없이 입력해주세요.',
+                    ? '미션 정보를 모두 입력 후 다음 버튼을 눌러주세요.'
+                    : '가설과 배경을 모두 입력 후 다음 버튼을 눌러주세요.',
                 isShow: true,
                 status: 'warning',
                 duration: 5000,
