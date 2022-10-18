@@ -271,16 +271,16 @@ const ResearchDetail = () => {
               </div>
             ) : null}
 
-            {calcShowButton(detailData?.statusType) &&
-              (myRole === '관리자' ? (
-                <div css={modifyButton} onClick={() => router.push(`/admin/research/${detailId}`)}>
-                  <IconTextButton name={'ACTION_SETTING'} iconPosition={'left'} text={'수정하기'} />
-                </div>
-              ) : myRole === '멤버' && detailData?.createId === userInfo?.userId ? (
-                <div css={modifyButton} onClick={() => router.push(`/admin/research/${detailId}`)}>
-                  <IconTextButton name={'ACTION_SETTING'} iconPosition={'left'} text={'수정하기'} />
-                </div>
-              ) : null)}
+            {/*{calcShowButton(detailData?.statusType) &&*/}
+            {/*  (myRole === '관리자' ? (*/}
+            {/*    <div css={modifyButton} onClick={() => router.push(`/admin/research/${detailId}`)}>*/}
+            {/*      <IconTextButton name={'ACTION_SETTING'} iconPosition={'left'} text={'수정하기'} />*/}
+            {/*    </div>*/}
+            {/*  ) : myRole === '멤버' && detailData?.createId === userInfo?.userId ? (*/}
+            {/*    <div css={modifyButton} onClick={() => router.push(`/admin/research/${detailId}`)}>*/}
+            {/*      <IconTextButton name={'ACTION_SETTING'} iconPosition={'left'} text={'수정하기'} />*/}
+            {/*    </div>*/}
+            {/*  ) : null)}*/}
 
             {/* 리서치 방법 */}
             <FlexBox direction={'column'} align={'flex-start'} style={marginStyle}>

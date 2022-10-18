@@ -1,20 +1,20 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 // Components
 import FlexBox from '../../atoms/FlexBox';
 import Icon from '../../atoms/Icon';
 import AdminSideTeamListItem from '../AdminSideTeamListItem';
 // Styles
-import {css} from '@emotion/react';
-import {colors} from '../../../styles/Common.styles';
-import {heading5_bold} from '../../../styles/FontStyles';
+import { css } from '@emotion/react';
+import { colors } from '../../../styles/Common.styles';
+import { heading5_bold } from '../../../styles/FontStyles';
 // Types
-import {ReducerType} from '../../../store/reducers';
-import {getProductList, TeamListType, updateSelectTeamList, updateTeamSeq} from '../../../store/reducers/teamReducer';
+import { ReducerType } from '../../../store/reducers';
+import { getProductList, TeamListType, updateSelectTeamList, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import MoreTeamInfoPopup from '../MoreTeamInfoPopup';
-import {isShow} from '../../../store/reducers/modalReducer';
-import {useQueryClient} from 'react-query';
-import {useRouter} from 'next/router';
+import { isShow } from '../../../store/reducers/modalReducer';
+import { useQueryClient } from 'react-query';
+import { useRouter } from 'next/router';
 
 // Dummy
 
@@ -48,12 +48,12 @@ const AdminSideBar = () => {
 
   const handleSelectTeam = useCallback(
     item => {
+      router.push('/admin/team');
       dispatch(updateSelectTeamList(item));
       dispatch(updateTeamSeq(item.teamSeq));
 
       localStorage.setItem('selectTeamList', JSON.stringify(item));
       localStorage.setItem('teamSeq', item.teamSeq);
-
     },
     [teamList],
   );

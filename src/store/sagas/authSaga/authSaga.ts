@@ -53,7 +53,6 @@ function* signupSaga(action) {
     }
   } catch (e) {
     console.error(e);
-    alert('asdfasdfasdfasdfasdfasdfasdfasdfasdfasdf');
     yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'success', duration: 5000 }));
   }
 }

@@ -109,10 +109,6 @@ const ListReport = ({
     [statusType],
   );
 
-  useEffect(() => {
-    console.log(myRole);
-  }, [myRole]);
-
   const handleMovePage = (statusType, researchSeq, createId) => {
     if (statusType == 'RESEARCH_INFO_ENTERING') {
       if (myRole === '관리자') {
