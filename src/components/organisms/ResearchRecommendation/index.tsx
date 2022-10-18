@@ -1,33 +1,30 @@
-import React, {useEffect, useState} from 'react';
-import {css} from '@emotion/react';
+import React, { useEffect, useState } from 'react';
+import { css } from '@emotion/react';
 import FlexBox from '../../atoms/FlexBox';
 import Icon from '../../atoms/Icon';
-import {heading1_bold, heading3_bold} from '../../../styles/FontStyles';
-import {colors} from '../../../styles/Common.styles';
+import { heading1_bold, heading3_bold } from '../../../styles/FontStyles';
+import { colors } from '../../../styles/Common.styles';
 import Button from '../../atoms/Button';
-import {useDispatch, useSelector} from 'react-redux';
-import {ReducerType} from '../../../store/reducers';
-import {updateRecommendationStep} from '../../../store/reducers/researchCreateReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReducerType } from '../../../store/reducers';
+import { updateRecommendationStep } from '../../../store/reducers/researchCreateReducer';
 import RecommendationStep from '../../molecules/Research/Recommendation/RecommendationStep';
-import {
-  getRecommendationDataAction,
-  sendRecommendationQuestionListAction
-} from '../../../store/reducers/researchRecommendationReducer';
-import {RecommendationQuestionListType} from '../../../api/researchApi/types';
-import {showToast} from '../../../store/reducers/toastReducer';
-import {useRouter} from 'next/router';
-import {Cookies} from 'react-cookie';
+import { getRecommendationDataAction, sendRecommendationQuestionListAction } from '../../../store/reducers/researchRecommendationReducer';
+import { RecommendationQuestionListType } from '../../../api/researchApi/types';
+import { showToast } from '../../../store/reducers/toastReducer';
+import { useRouter } from 'next/router';
+import { Cookies } from 'react-cookie';
 
 const ResearchRecommendation = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const recommendationStep = useSelector<ReducerType, string>(state => state.researchCreate.recommendationStep);
   const recommendationQuestion = useSelector<ReducerType, RecommendationQuestionListType[]>(state => state.researchRecommendation.recommendationData);
-  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo)
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
 
   const [step, setStep] = useState(0);
   const [nextStep, setNextStep] = useState('');
-  const [lastStep, setLastStep] = useState(false)
+  const [lastStep, setLastStep] = useState(false);
   const [selectQuestion, setSelectQuestion] = useState<
     { nextQuestionSeq: number; options: string[]; optionsSeq: number[]; question: string; questionSeq: number; subjective: string }[]
   >([]);
@@ -45,6 +42,7 @@ const ResearchRecommendation = () => {
       case 'step3':
         return recommendationQuestion[2];
       case 'step4':
+        console.log(recommendationQuestion[3]);
         return recommendationQuestion[3];
       case 'step5':
         return recommendationQuestion[4];
@@ -106,7 +104,7 @@ const ResearchRecommendation = () => {
       }
     }
     if (recommendationStep === 'step4') {
-      setLastStep(true)
+      setLastStep(true);
       if (selectQuestion.length <= 3) {
         dispatch(showToast({ message: '선택지를 선택해주세요.', isShow: true, status: 'warning', duration: 5000 }));
       } else {
@@ -140,28 +138,27 @@ const ResearchRecommendation = () => {
   };
 
   const handleSubmit = () => {
-    console.log(userInfo.userId, 'userInfo')
+    console.log(userInfo.userId, 'userInfo');
     const sendObject = {
       recommendResultData: selectQuestion,
     };
 
     dispatch(sendRecommendationQuestionListAction({ sendObject, callback: router, isLogin: userInfo.userId === '' ? false : true }));
-
   };
 
   useEffect(() => {
     return () => {
       dispatch(updateRecommendationStep('step1'));
-    }
-  },[])
+    };
+  }, []);
 
   useEffect(() => {
-    const cookies = new Cookies()
+    const cookies = new Cookies();
     // 쿠키 비우기
     cookies.remove('recommendResultSeq', { path: '/' });
     cookies.remove('recommendResearchType', { path: '/' });
     cookies.remove('isLogin', { path: '/' });
-  },[])
+  }, []);
 
   return (
     <div css={mainContainer}>

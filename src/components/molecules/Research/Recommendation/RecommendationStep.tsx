@@ -11,7 +11,7 @@ interface PropsType {
   setSelectQuestion: (value) => void;
   setNextStep: (value) => void;
   selectQuestion: { nextQuestionSeq: number; options: string[]; optionsSeq: number[]; question: string; questionSeq: number; subjective: string }[];
-  lastStep: boolean
+  lastStep: boolean;
 }
 const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, lastStep }: PropsType) => {
   const [currentOptionsList, setCurrentOptionsList] = useState(null);
@@ -29,7 +29,6 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, l
     const { nextQuestionSeq, options, optionsSeq, relationOptionsSeq, relationQuestionSeq, sortNumber } = value;
 
     if (isSubjective && subjective !== '' && !lastStep) {
-      console.log('a여기탐???')
       inputRef.current?.focus();
     } else {
       if (questionType === 'SINGLE_MULTIPLE_CHOICE') {
@@ -97,7 +96,6 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, l
             } else {
               setSelectQuestion([...filterArr, originObj]);
             }
-
           }
         }
       }
@@ -122,12 +120,6 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, l
   };
 
   useEffect(() => {
-    console.log(selectQuestion)
-    console.log(selectQuestion.length)
-  },[selectQuestion])
-
-
-  useEffect(() => {
     if (selectQuestion.length === 4) {
       const arr = selectQuestion.filter(el => el.questionSeq === 4);
       if (arr[0].optionsSeq.includes(16)) {
@@ -143,12 +135,33 @@ const RecommendationStep = ({ questionInfo, selectQuestion, setSelectQuestion, l
   useEffect(() => {
     if (questionInfo) {
       const copyArr = [...questionInfo.optionsData];
-      const sortArr = copyArr?.sort(function (a, b) {
+      // const checkArr = selectQuestion?.filter(el => el.questionSeq ===)
+      const selectOptionSeq = selectQuestion
+        ?.map(el => el?.optionsSeq)
+        .flat()
+        .filter(Boolean);
+
+      const newCopyArr = [];
+
+      copyArr.forEach((items: any, index) => {
+        if (items?.relationOptionsSeq) {
+          const a = selectOptionSeq?.some(el => items?.relationOptionsSeq?.includes(el));
+          if (a) {
+            newCopyArr.push(items);
+          } else {
+            return;
+          }
+        } else {
+          newCopyArr.push(items);
+        }
+      });
+
+      const sortArr = newCopyArr?.sort(function (a, b) {
         return a.sortNumber - b.sortNumber;
       });
       setCurrentOptionsList(sortArr);
     }
-  }, [questionInfo]);
+  }, [questionInfo, selectQuestion]);
 
   useEffect(() => {
     if (isSubjective && inputRef) {

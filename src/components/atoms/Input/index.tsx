@@ -12,6 +12,7 @@ interface PropsType extends InputHTMLAttributes<HTMLInputElement> {
   validation?: boolean;
   type?: string;
   placeholder?: string;
+  placeholderStyle?: any;
   width?: string;
   label: string;
   disabled?: boolean;
@@ -28,6 +29,7 @@ interface PropsType extends InputHTMLAttributes<HTMLInputElement> {
 const Input = ({
   type = 'text',
   placeholder,
+  placeholderStyle,
   width = '100%',
   label,
   register,
@@ -46,7 +48,7 @@ const Input = ({
       {title ? <label css={[caption1_bold, labelTextStyle(errors[label])]}>{title}</label> : null}
 
       <input
-        css={[inputStyle(disabled, width, errors[label]), { ...style }]}
+        css={[inputStyle(disabled, width, errors[label], placeholderStyle), { ...style }]}
         type={type}
         autoComplete={'off'}
         placeholder={errors[label] ? errorMsg : placeholder}
@@ -63,7 +65,7 @@ const Input = ({
 };
 export default Input;
 
-const inputStyle = (disabled, width, error) => css`
+const inputStyle = (disabled, width, error, placeholderStyle) => css`
   box-sizing: border-box;
   outline: none;
   font-weight: 500;
@@ -72,11 +74,10 @@ const inputStyle = (disabled, width, error) => css`
   border-radius: 4px;
   padding: 10px 16px;
   width: ${width};
-  //::placeholder {
-  //  font-weight: 400;
-  //  font-size: 14px;
-  //  line-height: 18px;
-  //}
+  ::placeholder {
+    font-weight: 400;
+    ${placeholderStyle ? { ...placeholderStyle } : null}
+  }
   :focus {
     font-weight: 700;
     border: 2px solid ${colors.grey._3c};

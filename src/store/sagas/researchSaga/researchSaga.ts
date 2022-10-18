@@ -25,7 +25,7 @@ import {
 import { isShow } from '../../reducers/modalReducer';
 import { showToast } from '../../reducers/toastReducer';
 import { getRefreshToken } from '../../reducers/authReducer';
-import { getCommonCode, setRedirectPath, showDialog } from '../../reducers/commonReducer';
+import { getCommonCode, setRedirectPath, showDialog, stopLoading } from '../../reducers/commonReducer';
 import {
   getRecommendationApiError,
   getRecommendationDataAction,
@@ -136,6 +136,7 @@ function* fetchModifyResearchSaga(action) {
       action.payload?.callback?.push(`/admin/team`);
       yield put(showToast({ message: '리서치 변경 사항이 저장되었습니다.', isShow: true, status: 'success', duration: 5000 }));
     }
+    yield put(stopLoading());
   } catch (e) {
     console.error(e);
     if (e?.response?.data?.code === 'E0008') {
@@ -144,6 +145,9 @@ function* fetchModifyResearchSaga(action) {
       yield put(fetchResearchModifyInfo({ sendObject: action.payload.sendObject, step: action.payload.step, callback: action.payload.callback }));
     }
     yield put(getResearchApiError(e));
+    yield put(stopLoading());
+  } finally {
+    yield put(stopLoading());
   }
 }
 
