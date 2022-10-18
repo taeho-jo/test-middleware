@@ -39,7 +39,7 @@ const BasicButton = ({
       onClick={onClick}
       type={type}
       disabled={disabled}
-      css={[buttonStyle(status, theme, isLoading), { ...style }, { background: designBgColor ? designBgColor : '' }]}
+      css={[buttonStyle(status, theme, isLoading, designBgColor), { ...style }, { background: designBgColor ? designBgColor : '' }]}
     >
       {isLoading ? (
         <span css={[buttonTextStyle, textStyle]}>
@@ -54,7 +54,7 @@ const BasicButton = ({
 
 export default BasicButton;
 
-const buttonStyle = (status, theme, isLoading) => css`
+const buttonStyle = (status, theme, isLoading, designBgColor) => css`
   width: 100%;
   padding: 16px 56px;
   border-radius: 8px;
@@ -68,7 +68,7 @@ const buttonStyle = (status, theme, isLoading) => css`
         ? `
       background: ${colors.cyan._500};
       &:hover {
-        background: ${colors.cyan._700};
+        background: ${designBgColor === colors.red ? '#de3a42' : colors.cyan._700};
       }
       &:disabled {
         background: ${colors.cyan._300};
