@@ -32,8 +32,9 @@ import { useForm } from 'react-hook-form';
 import { showToast } from '../../../../store/reducers/toastReducer';
 import { resetRecommendationResult } from '../../../../store/reducers/researchRecommendationReducer';
 import { Cookies } from 'react-cookie';
-import { setRedirectPath } from '../../../../store/reducers/commonReducer';
-import {updateSelectTeamList, updateTeamSeq} from "../../../../store/reducers/teamReducer";
+import { setRedirectPath, showDialog } from '../../../../store/reducers/commonReducer';
+import { updateSelectTeamList, updateTeamSeq } from '../../../../store/reducers/teamReducer';
+import { colors } from '../../../../styles/Common.styles';
 
 const ResearchCreate = () => {
   const dispatch = useDispatch();
@@ -42,9 +43,9 @@ const ResearchCreate = () => {
   const DETAIL_INFO = useSelector<ReducerType, any>(state => state.researchCreate.detailData);
   const MODIFY_INFO = useSelector<ReducerType, any>(state => state.researchCreate.researchModifyInfo);
   const selectTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
-  const teamList = useSelector<ReducerType, any>(state => state.team.teamList)
+  const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
 
-  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo)
+  const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
 
   // 추천 결과
@@ -65,7 +66,7 @@ const ResearchCreate = () => {
     formState: { errors },
   } = useForm({});
 
-  const [firstView, setFirstView] = useState(false)
+  const [firstView, setFirstView] = useState(false);
 
   const [guideStatus, setGuideStatus] = useState('inactive');
   const [agendaType, setAgendaType] = useState('');
@@ -79,7 +80,6 @@ const ResearchCreate = () => {
       setMyRole(myRole);
     }
   }, [userInfo, selectTeamList]);
-
 
   const getResearchMethod = value => {
     if (value === 'UI_DIAGNOSIS') {
@@ -150,15 +150,15 @@ const ResearchCreate = () => {
         };
         const { researchNm, researchType, teamSeq, productSeq } = sendObject;
         if (researchNm === '' || researchType === '' || !teamSeq || !productSeq) {
-          dispatch(showToast({ message: '입력필드를 확인 해주세요.', isShow: true, status: 'warning', duration: 5000 }));
+          dispatch(showToast({ message: '모든 기본 정보를 입력해주신 뒤 다음 버튼을 눌러주세요.', isShow: true, status: 'warning', duration: 5000 }));
         } else {
           dispatch(setStep(step));
           dispatch(updateResearchBasicInfo({ name: 'researchNm', value: researchName }));
           dispatch(fetchResearchBasicInfo({ params: sendObject, step: step, callback: router }));
           dispatch(resetRecommendationResult());
-          const changeTeam = teamList.filter(el => parseInt(el.teamSeq) === parseInt(teamSeq))
-          dispatch(updateSelectTeamList(changeTeam[0]))
-          dispatch(updateTeamSeq(teamSeq))
+          const changeTeam = teamList.filter(el => parseInt(el.teamSeq) === parseInt(teamSeq));
+          dispatch(updateSelectTeamList(changeTeam[0]));
+          dispatch(updateTeamSeq(teamSeq));
           // 쿠키 비우기
           cookies.remove('recommendResultSeq', { path: '/' });
           cookies.remove('recommendResearchType', { path: '/' });
@@ -177,7 +177,7 @@ const ResearchCreate = () => {
       if (CREATE_STEP === 'step2') {
         const sendObject = {
           ...DETAIL_INFO,
-          respondentInfo: data.respondentInfo
+          respondentInfo: data.respondentInfo,
         };
         const checkFieldArr = data.respondentInfo.map(el => el.respondent);
         if (checkFieldArr?.some(el => !el || el === '')) {
@@ -243,9 +243,23 @@ const ResearchCreate = () => {
         const sendObject = {
           ...DETAIL_INFO,
           additionalInfo: [{ additional: data.additional }],
+          statusType: 'RESEARCH_REQUEST_DESIGN_COMPLETE',
         };
         if (DETAIL_INFO?.statusType === 'RESEARCH_INFO_ENTERING') {
-          dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'last' }));
+          // dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'last' }));
+          dispatch(
+            showDialog({
+              show: true,
+              title: `입력하신 정보를 바탕으로\n 리서치 설계를 받아보시겠습니까?`,
+              content: `리서치 설계 과정은 모두 무료로 진행됩니다.`,
+              okButton: '받아보기',
+              cancelButton: '취소하기',
+              okButtonColor: colors.cyan._500,
+              cancelButtonColor: '',
+              cancelFunction: null,
+              okFunction: () => dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'last', callback: router })),
+            }),
+          );
         } else {
           dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'change', callback: router }));
         }
@@ -299,7 +313,7 @@ const ResearchCreate = () => {
         teamSeq: selectTeamSeq,
         researchSeq: pageId,
       };
-      dispatch(fetchResearchDetail({ params: params,callback:() => router.push('/admin/team') }));
+      dispatch(fetchResearchDetail({ params: params, callback: () => router.push('/admin/team') }));
     }
   }, [pageId, selectTeamSeq, CREATE_STEP]);
 
@@ -315,37 +329,33 @@ const ResearchCreate = () => {
         dispatch(showToast({ message: '리서치를 수정할 수 없습니다.', isShow: true, status: 'warning', duration: 5000 }));
         router.push('/admin/team');
       }
-
     }
   }, [DETAIL_INFO]);
 
-
   useEffect(() => {
-    if(DETAIL_INFO?.statusType === 'RESEARCH_INFO_ENTERING' && !firstView) {
-      const { respondentInfo, goalInfo, detailDesignInfo, additionalInfo, createId } = DETAIL_INFO
+    if (DETAIL_INFO?.statusType === 'RESEARCH_INFO_ENTERING' && !firstView) {
+      const { respondentInfo, goalInfo, detailDesignInfo, additionalInfo, createId } = DETAIL_INFO;
 
-      if(myRole === '관리자' || (myRole === '멤버' && createId == userInfo?.userId)) {
-        setFirstView(true)
-        if(respondentInfo && !goalInfo && !detailDesignInfo && !additionalInfo) {
-          dispatch(setStep('step2'))
+      if (myRole === '관리자' || (myRole === '멤버' && createId == userInfo?.userId)) {
+        setFirstView(true);
+        if (respondentInfo && !goalInfo && !detailDesignInfo && !additionalInfo) {
+          dispatch(setStep('step2'));
         }
-        if(respondentInfo && goalInfo && !detailDesignInfo && !additionalInfo) {
-          dispatch(setStep('step3'))
+        if (respondentInfo && goalInfo && !detailDesignInfo && !additionalInfo) {
+          dispatch(setStep('step3'));
         }
-        if(respondentInfo && goalInfo && detailDesignInfo && !additionalInfo) {
-          dispatch(setStep('step4'))
+        if (respondentInfo && goalInfo && detailDesignInfo && !additionalInfo) {
+          dispatch(setStep('step4'));
         }
-        if(respondentInfo && goalInfo && !detailDesignInfo && additionalInfo) {
-          dispatch(setStep('step5'))
+        if (respondentInfo && goalInfo && !detailDesignInfo && additionalInfo) {
+          dispatch(setStep('step5'));
         }
       } else {
-        router.push('/admin/team')
-        dispatch(showToast({ message: '해당 리서치에 권한이 없습니다.', isShow: true, status: 'warning', duration: 5000 }))
+        router.push('/admin/team');
+        dispatch(showToast({ message: '해당 리서치에 권한이 없습니다.', isShow: true, status: 'warning', duration: 5000 }));
       }
-
-
     }
-  },[DETAIL_INFO, firstView, myRole])
+  }, [DETAIL_INFO, firstView, myRole]);
 
   useEffect(() => {
     dispatch(setRedirectPath(null));

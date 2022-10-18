@@ -1,9 +1,9 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {css} from '@emotion/react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { css } from '@emotion/react';
 import FlexBox from '../../../components/atoms/FlexBox';
-import {colors} from '../../../styles/Common.styles';
-import {body1_medium, body2_bold, body3_medium, heading2_bold} from '../../../styles/FontStyles';
+import { colors } from '../../../styles/Common.styles';
+import { body1_medium, body2_bold, body3_medium, heading2_bold } from '../../../styles/FontStyles';
 import icon1_inActive from '../../../../public/assets/images/admin/team/uitest_inactive.png';
 import icon2_inActive from '../../../../public/assets/images/admin/team/scenario_inactive.png';
 import icon3_inActive from '../../../../public/assets/images/admin/team/uxposition_inactive.png';
@@ -15,22 +15,22 @@ import icon3 from '../../../../public/assets/images/admin/team/uxposition_hover.
 import icon4 from '../../../../public/assets/png/abtest_hover.png';
 import icon5 from '../../../../public/assets/png/fgd_hover.png';
 import ResearchModuleButton from '../../atoms/ResearchModuleButton';
-import {isShow} from '../../../store/reducers/modalReducer';
+import { isShow } from '../../../store/reducers/modalReducer';
 import ResearchList from '../ResearchList';
-import {ReducerType} from '../../../store/reducers';
-import {useRouter} from 'next/router';
-import {debounceFunction} from '../../../common/util/commonFunc';
+import { ReducerType } from '../../../store/reducers';
+import { useRouter } from 'next/router';
+import { debounceFunction } from '../../../common/util/commonFunc';
 import Form from '../../atoms/Form';
 import Input from '../../atoms/Input';
-import {useForm} from 'react-hook-form';
-import {InputType} from '../../../common/types/commonTypes';
+import { useForm } from 'react-hook-form';
+import { InputType } from '../../../common/types/commonTypes';
 import Icon from '../../atoms/Icon';
 import IconTextButton from '../../atoms/Button/IconTextButton';
-import {fetchResearchList} from '../../../store/reducers/researchCreateReducer';
+import { fetchResearchList } from '../../../store/reducers/researchCreateReducer';
 import CheckBox from '../../atoms/CheckBox';
-import {CURRENT_DOMAIN} from '../../../common/util/commonVar';
-import useOutsideClick from "../../../hooks/useOutsideClick";
-import {Cookies} from "react-cookie";
+import { CURRENT_DOMAIN } from '../../../common/util/commonVar';
+import useOutsideClick from '../../../hooks/useOutsideClick';
+import { Cookies } from 'react-cookie';
 
 const ResearchType = [
   {
@@ -241,13 +241,13 @@ const TeamDashboard = () => {
     }
   }, [redirectPath]);
 
-  const handleMovePage = (path) => {
-    if(path === '/admin/research/recommendation') {
-      router.push(path)
+  const handleMovePage = path => {
+    if (path === '/admin/research/recommendation') {
+      router.push(path);
     } else {
-      window.open(path)
+      window.open(path);
     }
-  }
+  };
 
   return (
     <>

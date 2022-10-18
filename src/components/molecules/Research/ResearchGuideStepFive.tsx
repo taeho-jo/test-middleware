@@ -2,7 +2,7 @@ import React from 'react';
 import { css } from '@emotion/react';
 import FlexBox from '../../atoms/FlexBox';
 import { colors } from '../../../styles/Common.styles';
-import {heading3_medium, heading4_bold, heading5_medium} from '../../../styles/FontStyles';
+import { heading3_medium, heading4_bold, heading5_medium } from '../../../styles/FontStyles';
 import Icon from '../../atoms/Icon';
 import { useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
@@ -46,12 +46,26 @@ const ResearchGuideStepFive = () => {
       height={'500px'}
       style={[selectContainer, { border: '1px solid #dcdcdc', background: colors.grey._fa }]}
     >
-      <div css={[topContainer, { background: '#68A0F4' }]} >
-        <span css={[heading3_medium, css`color: white`]}>Diby 매니저가 추가로 알아야할 사항이 있다면<br/>뭐든지 상세하게 입력해주세요.<br/><br/>예시 ) 원하시는 리서치 시작일자, 리서치 배경 등등</span>
+      <div css={[topContainer, { background: '#68A0F4' }]}>
+        <span
+          css={[
+            heading3_medium,
+            css`
+              color: white;
+            `,
+          ]}
+        >
+          Diby 매니저가 추가로 알아야할 사항이 있다면
+          <br />
+          뭐든지 상세하게 입력해주세요.
+          <br />
+          <br />
+          예시 ) 원하시는 리서치 시작일자, 리서치 배경 등등
+        </span>
       </div>
       <div css={bottomContainer}>
         <FlexBox justify={'space-between'} align={'center'} style={{ marginBottom: '20px' }}>
-          <span css={heading4_bold}>예상 견적 (VAT 별도)</span>
+          <span css={heading4_bold}>예상 비용 (VAT 별도)</span>
           <span css={heading4_bold}>{calcEstimatedAmount()}</span>
         </FlexBox>
 

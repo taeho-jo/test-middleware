@@ -47,7 +47,7 @@ const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
         <FlexBox direction={'column'}>
           <Icon name={'ACTION_CREATE'} />
           <span css={[heading3_bold, { marginTop: '8px' }]}>3분만에 리서치 설계하기</span>
-          <p css={[caption1_medium, { marginTop: '4px', marginBottom: 0 }]}>( 예상 견적도 받아볼 수 있어요! )</p>
+          <p css={[caption1_medium, { marginTop: '4px', marginBottom: 0 }]}>( 예상 비용도 받아볼 수 있어요! )</p>
         </FlexBox>
       </div>
       {getReportList()}

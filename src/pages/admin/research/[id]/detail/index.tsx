@@ -82,7 +82,7 @@ const ResearchDetail = () => {
     }
     if (type === '견적') {
       setTooltipContents({
-        title: '실제 견적 확인하기',
+        title: '리서치 가격 확인하기',
         content: isActive
           ? '최종 리서치 수행 비용 견적을 확인하실 수 있습니다.'
           : '리서치 설계 완료 후,\n최종 리서치 수행 비용 견적을 확인하실 수 있습니다.',
@@ -478,13 +478,13 @@ const ResearchDetail = () => {
                 <IconTextButton
                   textStyle={[btnTextStyle, { color: colors.grey._3c }]}
                   name={'RECEIPT'}
-                  text={'실제 견적 확인하기'}
+                  text={'리서치 가격 확인하기'}
                   roundBorder={false}
                   iconPosition={'left'}
                   onClick={() => showCostModal('researchCostModal')}
                 />
               ) : (
-                <IconTextButton textStyle={btnTextStyle} name={'LOCK'} text={'실제 견적 확인하기'} roundBorder={false} iconPosition={'left'} />
+                <IconTextButton textStyle={btnTextStyle} name={'LOCK'} text={'리서치 가격 확인하기'} roundBorder={false} iconPosition={'left'} />
               )}
             </div>
             <div

@@ -72,11 +72,11 @@ const inputStyle = (disabled, width, error) => css`
   border-radius: 4px;
   padding: 10px 16px;
   width: ${width};
-  ::placeholder {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 18px;
-  }
+  //::placeholder {
+  //  font-weight: 400;
+  //  font-size: 14px;
+  //  line-height: 18px;
+  //}
   :focus {
     font-weight: 700;
     border: 2px solid ${colors.grey._3c};

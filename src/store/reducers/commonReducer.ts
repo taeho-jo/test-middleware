@@ -15,7 +15,7 @@ export interface CounterType {
     content: string;
     top: number;
     left: number;
-    backgroundColor: '#68A0F4' | '#3c3c46';
+    backgroundColor: '#68A0F4' | '#3c3c46' | '#24E1D5';
   };
   dialog: {
     show: boolean;

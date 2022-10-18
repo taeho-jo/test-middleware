@@ -32,7 +32,7 @@ const Dialog = () => {
               <BasicButton
                 theme={'dark'}
                 onClick={() => dispatch(closeDialog())}
-                // designBgColor={colors.red}
+                designBgColor={dialog?.cancelButtonColor}
                 text={dialog?.cancelButton}
                 style={{ width: '160px', padding: '16px 52px' }}
               />
