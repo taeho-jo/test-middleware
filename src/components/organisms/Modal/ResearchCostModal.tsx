@@ -23,7 +23,7 @@ const ResearchCostModal = () => {
       const totalCosts = DETAIL_INFO?.respondentCompensationInfo?.reduce(
         (acc, cur) => {
           acc.totalRespondentSize = acc.totalRespondentSize + cur?.respondentSize ? cur?.respondentSize : 0;
-          acc.totalRespondentCost = acc.totalRespondentCost + (parseInt(cur?.respondentCost) * cur?.respondentSize);
+          acc.totalRespondentCost = acc.totalRespondentCost + parseInt(cur?.respondentCost) * cur?.respondentSize;
           return acc;
         },
         {
@@ -35,7 +35,7 @@ const ResearchCostModal = () => {
     }
   }, [DETAIL_INFO]);
 
-  console.log(addCosts,' ADD')
+  console.log(addCosts, ' ADD');
 
   const calcModalWidth = status => {
     switch (status) {
@@ -57,7 +57,7 @@ const ResearchCostModal = () => {
   return (
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>
       <PopupBox padding={'0px'} width={calcModalWidth('760px')} height={'auto'}>
-        <ModalTitle style={{ height: 'auto', padding: '24px 32px' }} title={<>실제 견적 확인하기</>} />
+        <ModalTitle style={{ height: 'auto', padding: '24px 32px' }} title={<>리서치 가격 확인하기</>} />
 
         <FlexBox
           direction={'column'}
@@ -93,7 +93,7 @@ const ResearchCostModal = () => {
             {/* // --------------- Diby 사용료 --------------- //*/}
             <FlexBox justify={'space-between'}>
               <span css={[heading4_bold, tableHeaderStyle(320, 'left', '20px 24px')]}>Diby 사용료</span>
-              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]}>-</span>
+              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]} />
               <span css={[heading4_bold, tableHeaderStyle(192, 'right', '20px 24px')]}>{calcResearchSolutionFee(DETAIL_INFO?.researchType)}</span>
             </FlexBox>
             {/* // --------------- Diby 사용료 --------------- //*/}
@@ -102,7 +102,9 @@ const ResearchCostModal = () => {
             <FlexBox justify={'space-between'}>
               <span css={[heading4_bold, tableHeaderStyle(320, 'left', '20px 24px')]}>응답자 보상비용</span>
               <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]}>{addCosts?.totalRespondentSize}명</span>
-              <span css={[heading4_bold, tableHeaderStyle(192, 'right', '20px 24px')]}>{addCosts?.totalRespondentCost ? addCosts?.totalRespondentCost.toLocaleString() : 0}원</span>
+              <span css={[heading4_bold, tableHeaderStyle(192, 'right', '20px 24px')]}>
+                {addCosts?.totalRespondentCost ? addCosts?.totalRespondentCost.toLocaleString() : 0}원
+              </span>
             </FlexBox>
             {/* TODO : 응답자당 금액, map함수로 랜더 필요 */}
             {DETAIL_INFO?.respondentCompensationInfo?.map((el, index) => {
@@ -127,7 +129,7 @@ const ResearchCostModal = () => {
             {/* // --------------- 응답자 표집 비용 --------------- //*/}
             <FlexBox justify={'space-between'}>
               <span css={[heading4_bold, tableHeaderStyle(320, 'left', '20px 24px')]}>응답자 표집 비용</span>
-              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]}>-</span>
+              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]} />
               <span css={[heading4_bold, tableHeaderStyle(192, 'right', '20px 24px')]}>{DETAIL_INFO?.respondentSampleCost.toLocaleString()}원</span>
             </FlexBox>
             {/* // --------------- 응답자 표집 비용 --------------- //*/}
@@ -135,14 +137,14 @@ const ResearchCostModal = () => {
             {/* // --------------- 리서치 방법별 추가 요금 --------------- //*/}
             <FlexBox justify={'space-between'}>
               <span css={[heading4_bold, tableHeaderStyle(320, 'left', '20px 24px')]}>리서치 종류별 추가 요금</span>
-              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]}>-</span>
+              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]} />
               <span css={[heading4_bold, tableHeaderStyle(192, 'right', '20px 24px')]}>
                 {DETAIL_INFO?.researchTypeAdditionalCost >= 0 ? DETAIL_INFO?.researchTypeAdditionalCost.toLocaleString() : 0}원
               </span>
             </FlexBox>
 
             {/* TODO : 리서치 방법별 추가 요금 , map함수로 랜더 필요 */}
-            {DETAIL_INFO?.researchType === 'UI_DIAGNOSIS' && DETAIL_INFO?.detailDesignInfo.length - 2 > 0 &&(
+            {DETAIL_INFO?.researchType === 'UI_DIAGNOSIS' && DETAIL_INFO?.detailDesignInfo.length - 2 > 0 && (
               <FlexBox
                 justify={'space-between'}
                 style={css`
@@ -174,7 +176,7 @@ const ResearchCostModal = () => {
                 </span>
               </FlexBox>
             )}
-            {DETAIL_INFO?.researchType === 'HYPOTHESIS_VERIFICATION' &&  DETAIL_INFO?.detailDesignInfo.length - 10 > 0 &&(
+            {DETAIL_INFO?.researchType === 'HYPOTHESIS_VERIFICATION' && DETAIL_INFO?.detailDesignInfo.length - 10 > 0 && (
               <FlexBox
                 justify={'space-between'}
                 style={css`
@@ -195,7 +197,7 @@ const ResearchCostModal = () => {
             {/* // --------------- 추가 요금 --------------- //*/}
             <FlexBox justify={'space-between'}>
               <span css={[heading4_bold, tableHeaderStyle(320, 'left', '20px 24px')]}>추가 요금</span>
-              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]}>-</span>
+              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]} />
               <span css={[heading4_bold, tableHeaderStyle(192, 'right', '20px 24px')]}>{DETAIL_INFO?.additionalCost.toLocaleString()}원</span>
             </FlexBox>
 
@@ -216,15 +218,13 @@ const ResearchCostModal = () => {
 
             <FlexBox justify={'space-between'}>
               <span css={[heading4_bold, tableHeaderStyle(320, 'left', '20px 24px')]}>총 합계</span>
-              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]}>-</span>
-              <span css={[heading4_bold, tableHeaderStyle(192, 'right', '20px 24px')]}>
-                {DETAIL_INFO?.totalCost.toLocaleString()}원
-              </span>
+              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]} />
+              <span css={[heading4_bold, tableHeaderStyle(192, 'right', '20px 24px')]}>{DETAIL_INFO?.totalCost.toLocaleString()}원</span>
             </FlexBox>
 
             <FlexBox justify={'space-between'}>
               <span css={[heading4_bold, tableHeaderStyle(320, 'left', '20px 24px')]}>크레딧 사용</span>
-              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]}>-</span>
+              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]} />
               <span css={[heading4_bold, tableHeaderStyle(192, 'right', '20px 24px', colors.red)]}>
                 {DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost
                   ? `-${DETAIL_INFO?.totalCost.toLocaleString()}원`
@@ -234,7 +234,7 @@ const ResearchCostModal = () => {
 
             {/*<FlexBox justify={'space-between'}>*/}
             {/*  <span css={[heading4_bold, tableHeaderStyle(320, 'left', '20px 24px')]}>부가세 (VAT)</span>*/}
-            {/*  <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]}>-</span>*/}
+            {/*  <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]}/*/}
             {/*  <span css={[heading4_bold, tableHeaderStyle(192, 'right', '20px 24px')]}>{DETAIL_INFO?.vat.toLocaleString()}원</span>*/}
             {/*</FlexBox>*/}
           </FlexBox>
@@ -252,7 +252,7 @@ const ResearchCostModal = () => {
           >
             <FlexBox justify={'space-between'}>
               <span css={[heading4_bold, tableHeaderStyle(320, 'left', '20px 24px')]}>총 리서치 수행 비용</span>
-              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]}>-</span>
+              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]} />
               <span css={[heading4_bold, tableHeaderStyle(192, 'right', '20px 24px')]}>
                 {DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost
                   ? `0원`
@@ -262,12 +262,11 @@ const ResearchCostModal = () => {
 
             <FlexBox justify={'space-between'}>
               <span css={[heading4_bold, tableHeaderStyle(320, 'left', '20px 24px')]}>부가세 (VAT)</span>
-              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]}>-</span>
+              <span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]} />
               <span css={[heading4_bold, tableHeaderStyle(192, 'right', '20px 24px')]}>
                 {DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost
                   ? `0원`
-                  : `${(Math.floor(Math.floor((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit) * 0.1) / 10) * 10).toLocaleString()}원`
-                }
+                  : `${(Math.floor(Math.floor((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit) * 0.1) / 10) * 10).toLocaleString()}원`}
               </span>
             </FlexBox>
           </FlexBox>
@@ -285,12 +284,15 @@ const ResearchCostModal = () => {
           >
             <FlexBox justify={'space-between'}>
               <span css={[heading2_bold, tableHeaderStyle(320, 'left', '20px 24px')]}>결제 금액</span>
-              {/*<span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]}>-</span>*/}
+              {/*<span css={[heading4_bold, tableHeaderStyle(128, 'center', '20px 24px')]}/*/}
               <span css={[heading2_bold, tableHeaderStyle(192, 'right', '20px 24px')]}>
                 {DETAIL_INFO?.remainingCredit >= DETAIL_INFO?.totalCost
                   ? `0원`
-                  : `${((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit) + (Math.floor(Math.floor((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit)*0.1) / 10) * 10)).toLocaleString()}원`
-                }
+                  : `${(
+                      DETAIL_INFO?.totalCost -
+                      DETAIL_INFO?.remainingCredit +
+                      Math.floor(Math.floor((DETAIL_INFO?.totalCost - DETAIL_INFO?.remainingCredit) * 0.1) / 10) * 10
+                    ).toLocaleString()}원`}
               </span>
             </FlexBox>
           </FlexBox>

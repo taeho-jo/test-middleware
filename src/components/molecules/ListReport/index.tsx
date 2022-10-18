@@ -120,7 +120,9 @@ const ListReport = ({
       }
       if (myRole === '멤버') {
         if (createId !== userInfo?.userId) {
-          dispatch(showToast({ message: '해당 리서치에 권한이 없습니다.', isShow: true, status: 'warning', duration: 5000 }));
+          dispatch(
+            showToast({ message: '정보입력중인 리서치는 본인과 관리자만 조회할 수 있습니다.', isShow: true, status: 'warning', duration: 5000 }),
+          );
         } else {
           router.push(`/admin/research/${researchSeq}`);
         }
@@ -182,22 +184,23 @@ const ListReport = ({
         <span css={[caption1_bold, blockStyle]}>
           ({researchSeq}) {researchTypeNm}
         </span>
-        <div
-          css={css`
-            position: relative;
-          `}
-          onClick={e => handleShowLayerPopup(e)}
-        >
-          <Icon name={'ACTION_MORE'} />
-          <LayerPopup
-            display={focusProfile}
-            top={-5}
-            right={-160}
-            setFocusProfile={setFocusProfile}
-            // topText={userInfo.userId}
-            normalText={[{ text: '리서치 삭제', onClick: () => handleRemoveResearch(researchSeq, createId) }]}
-          />
-        </div>
+        {(myRole === '관리자' || (myRole === '멤버' && createId === userInfo?.userId)) && (
+          <div
+            css={css`
+              position: relative;
+            `}
+            onClick={e => handleShowLayerPopup(e)}
+          >
+            <Icon name={'ACTION_MORE'} />
+            <LayerPopup
+              display={focusProfile}
+              top={-5}
+              right={-160}
+              setFocusProfile={setFocusProfile}
+              normalText={[{ text: '리서치 삭제', onClick: () => handleRemoveResearch(researchSeq, createId) }]}
+            />
+          </div>
+        )}
       </FlexBox>
       <span css={[heading5_bold, titleStyle]}>{researchNm}</span>
       <FlexBox style={dateBox} direction={'row'} justify={'flex-start'} align={'center'}>
@@ -211,7 +214,6 @@ const ListReport = ({
         <span css={[caption1_regular, dateStyle]}>{moment(createDt).format('YYYY. MM. DD')}</span>
       </FlexBox>
       <FlexBox forwardRef={statusRef} style={statusBox} direction={'row'} justify={'flex-start'} align={'center'}>
-        {/*TODO: STATUS에 따른 상태 변경*/}
         <Icon name={getResearchStatusIcon(statusType)} size={24} />
         <span
           onMouseOver={() => handleShowTooltip(statusTypeNm, statusType)}

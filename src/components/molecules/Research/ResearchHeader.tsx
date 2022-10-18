@@ -30,7 +30,7 @@ const STEP_ARR = [
     value: 'step4',
   },
   {
-    label: '5. 예상 견적 확인',
+    label: '5. 예상 비용 확인',
     value: 'step5',
   },
 ];

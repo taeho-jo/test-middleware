@@ -36,7 +36,7 @@ import WithdrawalReasonModal from '../Modal/WithdrawalReasonModal';
 import CancelWithdrawalModal from '../Modal/CancelWithdrawalModal';
 import WithdrawalUserSignupModal from '../Modal/WithdrawalUserSignupModal';
 import ConsentToUseMarketingAgreeModal from '../Modal/ConsentToUseMarketingAgreeModal';
-import ResearchStatusChangeModal from '../Modal/ResearchStatusChangeModal';
+// import ResearchStatusChangeModal from '../Modal/ResearchStatusChangeModal';
 import ResearchDeleteConfirmModal from '../Modal/ResearchDeleteConfirmModal';
 import ResearchCostModal from '../Modal/ResearchCostModal';
 import ResearchStartModal from '../Modal/ResearchStartModal';
@@ -85,7 +85,7 @@ const CommonModal = () => {
           {modalType === 'withdrawalReasonModal' && <WithdrawalReasonModal />}
           {modalType === 'cancelWithdrawalModal' && <CancelWithdrawalModal />}
           {modalType === 'withdrawalUserSignupModal' && <WithdrawalUserSignupModal />}
-          {modalType === 'researchStatusChangeModal' && <ResearchStatusChangeModal />}
+          {/*{modalType === 'researchStatusChangeModal' && <ResearchStatusChangeModal />}*/}
           {modalType === 'researchDeleteConfirmModal' && <ResearchDeleteConfirmModal />}
           {modalType === 'researchCostModal' && <ResearchCostModal />}
           {modalType === 'researchStartModal' && <ResearchStartModal />}
