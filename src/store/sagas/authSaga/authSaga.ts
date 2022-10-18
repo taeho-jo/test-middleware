@@ -6,6 +6,7 @@ import {
   getRefreshTokenSuccess,
   loginAction,
   resendConfirmEmail,
+  setEmail,
   setToken,
   signupAction,
 } from '../../reducers/authReducer';
@@ -34,7 +35,7 @@ function* loginSaga(action) {
     }
   } catch (e: any) {
     console.error(e);
-    yield put(showToast({ message: '???????????????', isShow: true, status: 'success', duration: 5000 }));
+    yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
     if (e?.response?.data?.code === 'E0022') {
       yield put(isShow({ isShow: true, type: 'cancelWithdrawalModal' }));
       yield put(updateCancelWithdrawal(true));
@@ -45,15 +46,16 @@ function* loginSaga(action) {
 // 회원가입
 function* signupSaga(action) {
   try {
-    const response = yield call(fetchSignupApi, action.payload);
+    const response = yield call(fetchSignupApi, action.payload.sendObject);
 
     if (response.code === '201') {
       yield put(showToast({ message: `${response?.message}`, isShow: true, status: 'success', duration: 5000 }));
-      // yield put(isShow({ isShow: true, type: 'confirmSignup' }));
+      yield put(setEmail(action.paylod?.sendObject?.userId));
+      yield put(isShow({ isShow: true, type: 'confirmSignup' }));
     }
   } catch (e) {
     console.error(e);
-    yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'success', duration: 5000 }));
+    yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
   }
 }
 

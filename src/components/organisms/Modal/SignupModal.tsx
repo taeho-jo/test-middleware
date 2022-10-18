@@ -63,7 +63,7 @@ const SignupModal = () => {
       emailTemplateName: EMAIL_CONFIRM_TEMPLATE,
     };
 
-    dispatch(signupAction(sendObject));
+    dispatch(signupAction({ sendObject, callback: router }));
     // signupMutate(sendObject);
   };
 

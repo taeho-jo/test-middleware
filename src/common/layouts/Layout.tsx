@@ -15,18 +15,17 @@ import { css } from '@emotion/react';
 import AOS from 'aos';
 import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // API
-import { fetchCommonCodeApi, fetchEmailConfirmApi, fetchRefreshToken } from '../../api/authApi';
-import { fetchInviteUserInfoApi, fetchUserInfoApi } from '../../api/userApi';
+import { fetchEmailConfirmApi } from '../../api/authApi';
+import { fetchInviteUserInfoApi } from '../../api/userApi';
 import { getUserInfo, setUserInfo, updateCancelWithdrawal, updateErrorMessage, UserInfoType } from '../../store/reducers/userReducer';
-import { isShow, updateReturnPage } from '../../store/reducers/modalReducer';
+import { isShow } from '../../store/reducers/modalReducer';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import ReportLayout from './ReportLayout';
-import { getCommonCode, updateCommonCode } from '../../store/reducers/commonReducer';
+import { getCommonCode } from '../../store/reducers/commonReducer';
 import { showToast } from '../../store/reducers/toastReducer';
 import { updateFilterFail, updateFilterFlied, updateFilterValues } from '../../store/reducers/reportReducer';
-import team from '../../pages/admin/team';
 import { clearLocalStorage } from '../util/commonFunc';
-import { confirmEmailAction, getRefreshToken, setToken } from '../../store/reducers/authReducer';
+import { confirmEmailAction, setToken } from '../../store/reducers/authReducer';
 import Tooltip from '../../components/atoms/Tooltip';
 import Dialog from '../../components/molecules/Dialog';
 import ResearchRecommendationModal from '../../components/molecules/ResearchRecommendationModal';
@@ -239,14 +238,12 @@ const Layout = ({ children }: PropsType) => {
       case '/admin/research/recommendation':
       case '/admin/research/recommendation/result':
         return (
-          <>
-            <div css={mainContainer}>
-              <main css={contentsContainer}>
-                <CommonHeader researchHeader={true} />
-                {children}
-              </main>
-            </div>
-          </>
+          <div css={mainContainer}>
+            <main css={contentsContainer}>
+              <CommonHeader researchHeader={true} />
+              {children}
+            </main>
+          </div>
         );
       case '/admin/reset-password':
       case '/admin/reset-password-success':
@@ -357,7 +354,6 @@ const Layout = ({ children }: PropsType) => {
       <>
         {separateDomain()}
         <AlertToast position={'top-center'} />
-        <AuthToast position={'top-center'} />
         {/*<AlertToast position={'top-center'} />*/}
         <CommonModal />
         <Tooltip />
@@ -391,6 +387,7 @@ const Layout = ({ children }: PropsType) => {
               </main>
             </div>
             <AlertToast position={'top-center'} />
+            <AuthToast position={'top-center'} />
             <CommonModal />
             <Tooltip />
             <Dialog />
@@ -411,6 +408,7 @@ const Layout = ({ children }: PropsType) => {
               </main>
             </div>
             <AlertToast position={'top-center'} />
+            <AuthToast position={'top-center'} />
             <CommonModal />
             <Tooltip />
             <Dialog />

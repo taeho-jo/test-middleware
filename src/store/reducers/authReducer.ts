@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {PURGE} from "redux-persist";
+import { PURGE } from 'redux-persist';
 
 export interface AuthType {
   accessToken: string;
@@ -20,6 +20,9 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setEmail: (state, action: PayloadAction<string>) => {
+      state.email = action.payload;
+    },
     setToken: (state, action: PayloadAction<any>) => {
       state.accessToken = action.payload;
       // state.email = action.payload;
@@ -59,7 +62,7 @@ export const authSlice = createSlice({
       state.accessToken = action.payload;
     },
     authReset(state) {
-      Object.assign(state, initialState)
+      Object.assign(state, initialState);
     },
   },
 });
@@ -71,6 +74,7 @@ export const {
   updateLoginType,
   resetLoginType,
   // Saga Redux
+  setEmail,
   loginAction,
   loginActionSuccess,
   signupAction,
@@ -78,6 +82,6 @@ export const {
   resendConfirmEmail,
   getRefreshToken,
   getRefreshTokenSuccess,
-  authReset
+  authReset,
 } = authSlice.actions;
 export default authSlice.reducer;
