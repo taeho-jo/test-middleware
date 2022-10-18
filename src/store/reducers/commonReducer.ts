@@ -28,6 +28,15 @@ export interface CounterType {
     okFunction: any;
     cancelFunction: any;
   };
+  researchRecommendationModalInfo: {
+    show: boolean;
+    title: string;
+    content: string;
+    tags: string;
+    img: any;
+    link: string;
+    type: string;
+  };
   redirectPath: string;
   error: any;
 }
@@ -58,6 +67,15 @@ const initialState: CounterType = {
     cancelButtonColor: '',
     okFunction: null,
     cancelFunction: null,
+  },
+  researchRecommendationModalInfo: {
+    show: false,
+    title: '',
+    content: '',
+    tags: '',
+    img: '',
+    link: '',
+    type: '',
   },
   redirectPath: null,
   error: null,
@@ -124,6 +142,23 @@ export const commonSlice = createSlice({
         cancelFunction: null,
       };
     },
+    showResearchRecommendationModal: (
+      state,
+      action: PayloadAction<{ show: boolean; title: string; content: string; tags: string; img: any; link: string; type: string }>,
+    ) => {
+      state.researchRecommendationModalInfo = action.payload;
+    },
+    closeResearchRecommendationModal: state => {
+      state.researchRecommendationModalInfo = {
+        show: false,
+        title: '',
+        content: '',
+        tags: '',
+        img: '',
+        link: '',
+        type: '',
+      };
+    },
     resetIndicatorStatus: state => {
       state.indicator = {
         isShare: 'N',
@@ -150,6 +185,8 @@ export const {
   closeTooltip,
   showDialog,
   closeDialog,
+  showResearchRecommendationModal,
+  closeResearchRecommendationModal,
   resetIndicatorStatus,
   setRedirectPath,
   getErrorInfo,

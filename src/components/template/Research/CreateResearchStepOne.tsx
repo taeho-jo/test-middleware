@@ -30,7 +30,7 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
   const methodsType = useSelector<ReducerType, any>(state => state.common.commonCode.ResearchType);
   const productList = useSelector<ReducerType, any>(state => state.team.teamProductList.list);
   const teamList = useSelector<ReducerType, any>(state => state.team.teamList);
-  const selectedTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq)
+  const selectedTeamSeq = useSelector<ReducerType, any>(state => state.team.selectTeamSeq);
   // 추천 결과
   const recommendationResult = useSelector<ReducerType, any>(state => state.researchRecommendation.recommendationResult);
   const cookies = new Cookies();
@@ -54,7 +54,7 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
           ...selected,
           [label]: value,
         });
-        console.log(value)
+        console.log(value);
         // getResearchMethod(value)
         const name = label === 'method' ? 'researchType' : label === 'team' ? 'teamSeq' : 'productSeq';
         if (pageId === 'create') {
@@ -113,8 +113,6 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
 
   useEffect(() => {
     // console.log(cookies.get('recommendResultSeq'), cookies.get('recommendResearchType'));
-
-
   }, []);
 
   // 상세 접속 시 기본값 세팅
@@ -140,31 +138,31 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
     } else {
       const seq = cookies.get('recommendResultSeq');
       const type = cookies.get('recommendResearchType');
-      if (seq && type) {
+
+      if (seq || type) {
         reset({
           method: type,
-          team: selectedTeamSeq
+          team: selectedTeamSeq,
         });
         setSelected({
           ...selected,
           method: type,
-          team: selectedTeamSeq
+          team: selectedTeamSeq,
         });
         dispatch(updateResearchBasicInfo({ name: 'researchType', value: type }));
         dispatch(updateResearchBasicInfo({ name: 'teamSeq', value: selectedTeamSeq }));
         dispatch(updateResearchModifyInfo({ name: 'teamSeq', value: selectedTeamSeq }));
       } else {
         reset({
-          team: selectedTeamSeq
+          team: selectedTeamSeq,
         });
         setSelected({
           ...selected,
-          team: selectedTeamSeq
+          team: selectedTeamSeq,
         });
         dispatch(updateResearchBasicInfo({ name: 'teamSeq', value: selectedTeamSeq }));
         dispatch(updateResearchModifyInfo({ name: 'teamSeq', value: selectedTeamSeq }));
       }
-
     }
   }, [detailInfo]);
 

@@ -31,7 +31,12 @@ import CheckBox from '../../atoms/CheckBox';
 import { CURRENT_DOMAIN } from '../../../common/util/commonVar';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { Cookies } from 'react-cookie';
-
+import { showResearchRecommendationModal } from '../../../store/reducers/commonReducer';
+import UX from '/public/assets/png/uxFrame.png';
+import Ui from '/public/assets/png/uiFrame.png';
+import FGD_IMAGE from '/public/assets/png/image_module_fgd.png';
+import HYPO_IMAGE from '/public/assets/png/senarioFrame.png';
+import SHORT_IMAGE from '/public/assets/png/image_module_quicktest.png';
 const ResearchType = [
   {
     title: '1분만에 리서치 종류 추천받기',
@@ -43,48 +48,88 @@ const ResearchType = [
   },
   {
     title: '사용성 테스트',
-    link: 'https://dbdlab.notion.site/UI-5a3e44a7bcb2439097e311fd62ad5e5d',
     backgroundColor: `${colors.white}`,
     color: null,
     hoverImage: icon1,
     image: icon1_inActive,
     modalType: 'uiResearchModule',
+    modalInfo: {
+      show: true,
+      title: '사용성 테스트',
+      content: `앱 또는 웹사이트에서 고객이 느낀 불편함을\n인터페이스 10 요소로 분류하여 진단합니다.`,
+      tags: `#인터페이스 진단\n#사용성 확인\n#디자인 10 요소`,
+      img: Ui,
+      link: 'https://dbdlab.notion.site/UI-5a3e44a7bcb2439097e311fd62ad5e5d',
+      type: 'UI_DIAGNOSIS',
+    },
   },
   {
     title: 'FGD',
-    link: 'https://dbdlab.notion.site/34d243dc532d462b84468a710a63c3e8',
     backgroundColor: `${colors.white}`,
     color: null,
     hoverImage: icon5,
     image: icon5_inActive,
     modalType: 'customerResearchModule',
+    modalInfo: {
+      show: true,
+      title: 'FGD',
+      content: `그룹채팅 방식으로 그룹인터뷰를 진행합니다.\n챗봇이 모더레이터가 질문을 하고,\n응답자별 참여도를 관리합니다.`,
+      tags: `#이탈, 동기부여 분석\n#경쟁사 분석\n#고객라이프스타일 파악\n#그룹인터뷰`,
+      img: FGD_IMAGE,
+      link: 'https://dbdlab.notion.site/34d243dc532d462b84468a710a63c3e8',
+      type: 'FGD',
+    },
   },
   {
     title: '가설 검증',
-    link: 'https://dbdlab.notion.site/e431cc58286c4b1b9113f45f1ce88f57',
     backgroundColor: `${colors.white}`,
     color: null,
     hoverImage: icon2,
     image: icon2_inActive,
     modalType: 'scenarioResearchModule',
+    modalInfo: {
+      show: true,
+      title: '가설 검증',
+      content: `상황 시나리오를 설정하고\n고객의 인식, 의향, 선호도 등을 확인합니다.\n고객에 대한 가설을 검증할 수 있습니다.`,
+      tags: `#고객 가설 검증\n#사용자 인식 파악`,
+      img: HYPO_IMAGE,
+      link: 'https://dbdlab.notion.site/e431cc58286c4b1b9113f45f1ce88f57',
+      type: 'HYPOTHESIS_VERIFICATION',
+    },
   },
   {
     title: 'UX 포지션 분석',
-    link: 'https://dbdlab.notion.site/UX-205652e102c3439b9bcb44a7383f5bb3',
     backgroundColor: `${colors.white}`,
     color: null,
     hoverImage: icon3,
     image: icon3_inActive,
     modalType: 'uxResearchModule',
+    modalInfo: {
+      show: true,
+      title: 'UX 포지션 분석',
+      content: `고객에게 전달하고자 하는 제품/서비스의\n 전략과고객이 실제로 인식한 경험을\n 비교 분석합니다.`,
+      tags: `#UX 전략 점검\n#고객-제품 인식 검증`,
+      img: UX,
+      link: 'https://dbdlab.notion.site/UX-205652e102c3439b9bcb44a7383f5bb3',
+      type: 'UX_POSITION_ANALYSIS',
+    },
   },
   {
     title: '짧은 설문',
-    link: 'https://dbdlab.notion.site/34d243dc532d462b84468a710a63c3e8',
     backgroundColor: `${colors.white}`,
     color: null,
     hoverImage: icon4,
     image: icon4_inActive,
     modalType: 'shortSurveyResearchModule',
+    modalInfo: {
+      show: true,
+      title: '짧은 설문',
+      content: `디자인 시안, 광고 시안, UX writing 등의\n선호도를 잠재고객을 대상으로 빠르게\n확인 할 수 있습니다.\n\nA/B 안을 선택하게 하고,\n그 이유를 주관식 응답으로 받아보세요.`,
+      tags: `#디자인의사결정\n#브랜드 인식`,
+      img: SHORT_IMAGE,
+      link: 'https://dbdlab.notion.site/34d243dc532d462b84468a710a63c3e8',
+      type: 'SHORT_SURVEY',
+    },
   },
 ];
 
@@ -209,7 +254,19 @@ const TeamDashboard = () => {
   }, [filterStatusArr, filterTypeArr, selectTeamSeq]);
 
   const showResearchModuleModal = useCallback(modalType => {
-    dispatch(isShow({ isShow: true, type: modalType }));
+    // dispatch(isShow({ isShow: true, type: modalType }));
+    const { show, title, content, tags, img, link, type } = modalType;
+    dispatch(
+      showResearchRecommendationModal({
+        show,
+        title,
+        content,
+        tags,
+        img,
+        link,
+        type,
+      }),
+    );
   }, []);
 
   const downloadFile = (link, name) => {
@@ -258,7 +315,7 @@ const TeamDashboard = () => {
             {ResearchType?.map((item, index) => {
               return (
                 <ResearchModuleButton
-                  onClick={index === 0 ? () => handleMovePage(item.link) : showResearchModuleModal}
+                  onClick={index === 0 ? () => handleMovePage(item.link) : () => showResearchModuleModal(item.modalInfo)}
                   key={index}
                   title={item.title}
                   link={item.link}

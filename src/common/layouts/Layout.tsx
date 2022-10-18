@@ -29,6 +29,7 @@ import { clearLocalStorage } from '../util/commonFunc';
 import { confirmEmailAction, getRefreshToken, setToken } from '../../store/reducers/authReducer';
 import Tooltip from '../../components/atoms/Tooltip';
 import Dialog from '../../components/molecules/Dialog';
+import ResearchRecommendationModal from '../../components/molecules/ResearchRecommendationModal';
 
 // Types
 interface PropsType {
@@ -230,7 +231,6 @@ const Layout = ({ children }: PropsType) => {
                 <ReportLayout>{children}</ReportLayout>
               </main>
             </div>
-            <CommonModal />
           </>
         );
       case '/admin/research/[id]':
@@ -324,6 +324,7 @@ const Layout = ({ children }: PropsType) => {
         <CommonModal />
         <Tooltip />
         <Dialog />
+        <ResearchRecommendationModal />
       </>
     );
   }
@@ -346,6 +347,7 @@ const Layout = ({ children }: PropsType) => {
         <CommonModal />
         <Tooltip />
         <Dialog />
+        <ResearchRecommendationModal />
       </>
     );
   }
@@ -357,6 +359,7 @@ const Layout = ({ children }: PropsType) => {
         <CommonModal />
         <Tooltip />
         <Dialog />
+        <ResearchRecommendationModal />
       </>
     );
   }
@@ -373,6 +376,7 @@ const Layout = ({ children }: PropsType) => {
             <CommonModal />
             <Tooltip />
             <Dialog />
+            <ResearchRecommendationModal />
           </>
         ) : router.pathname === '/admin/research/recommendation' || router.pathname === '/admin/research/recommendation/result' ? (
           <>
@@ -385,6 +389,7 @@ const Layout = ({ children }: PropsType) => {
             <CommonModal />
             <Tooltip />
             <Dialog />
+            <ResearchRecommendationModal />
           </>
         ) : (
           <>
@@ -404,6 +409,7 @@ const Layout = ({ children }: PropsType) => {
             <CommonModal />
             <Tooltip />
             <Dialog />
+            <ResearchRecommendationModal />
           </>
         )}
       </>
