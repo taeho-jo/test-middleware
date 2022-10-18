@@ -418,7 +418,10 @@ const ResearchDetail = () => {
             {detailData?.statusType === 'RESEARCH_REQUEST_DESIGN_COMPLETE' && (
               <div css={alertContainer}>
                 <span css={heading5_bold}>
-                  리서치 설계 요청이 정상적으로 전달되었어요. 최대 24시간 이내 담당 매니저가 이메일을 통해 연락을 드릴 예정입니다.
+                  리서치 설계 요청이 정상적으로 전달되었어요.
+                  <br />
+                  최대 24시간 이내 담당 매니저가 이메일을 통해
+                  <br /> 연락을 드릴 예정입니다.
                 </span>
               </div>
             )}

@@ -104,6 +104,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <Main />
           <div id="toast-root" />
           <div id="modal-root" />
+          <div id="research-recommendation-modal-root" />
           <div id="tooltip-root" />
           <div id="dialog-root" />
           {/*Below we add the modal wrapper*/}

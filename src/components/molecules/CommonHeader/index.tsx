@@ -16,6 +16,7 @@ import { persistor } from '../../../pages/_app';
 import { userReset } from '../../../store/reducers/userReducer';
 import { authReset } from '../../../store/reducers/authReducer';
 import { showDialog } from '../../../store/reducers/commonReducer';
+import { Cookies } from 'react-cookie';
 interface PropsType {
   researchHeader?: boolean;
 }
@@ -48,6 +49,11 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
       return;
     } else if (pathname === '/admin/research/[id]') {
       const id = router.query.id;
+      const cookies = new Cookies();
+      // 쿠키 비우기
+      cookies.remove('recommendResultSeq', { path: '/' });
+      cookies.remove('recommendResearchType', { path: '/' });
+      cookies.remove('isLogin', { path: '/' });
       if (id === 'create') {
         dispatch(
           showDialog({
