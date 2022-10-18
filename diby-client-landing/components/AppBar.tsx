@@ -18,6 +18,7 @@ import icon3 from '../../public/assets/images/icon_scenario1.png';
 import icon4 from '../../public/assets/images/icon_customer1.png';
 import { ReducerType } from '../../src/store/reducers';
 import { clearLocalStorage } from '../../src/common/util/commonFunc';
+import { showToast } from '../../src/store/reducers/toastReducer';
 
 const AppBarButton = styled(Button)({
   fontWeight: '700',
