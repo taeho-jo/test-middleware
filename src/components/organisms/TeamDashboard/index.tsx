@@ -37,6 +37,7 @@ import Ui from '/public/assets/png/uiFrame.png';
 import FGD_IMAGE from '/public/assets/png/image_module_fgd.png';
 import HYPO_IMAGE from '/public/assets/png/senarioFrame.png';
 import SHORT_IMAGE from '/public/assets/png/image_module_quicktest.png';
+import { showToast } from '../../../store/reducers/toastReducer';
 const ResearchType = [
   {
     title: '1분만에 리서치 종류 추천받기',
@@ -333,6 +334,9 @@ const TeamDashboard = () => {
         <FlexBox style={{ padding: '24px 32px 32px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
           <FlexBox direction={'row'} justify={'flex-start'} align={'center'} style={{ marginBottom: '32px' }}>
             <span css={[body2_bold, titleStyle, { marginBottom: 0, marginRight: '16px' }]}>우리 팀의 리서치 목록</span>
+            <button onClick={() => dispatch(showToast({ message: '데모 신청이 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }))}>
+              asdfasdfasdfasdf
+            </button>
             <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ width: '249px', boxSizing: 'border-box', position: 'relative' }}>
               <Input
                 title={''}
