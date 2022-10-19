@@ -51,11 +51,11 @@ const CreditList = ({ isLoading, data }: PropsType) => {
 
             <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>
               <span css={heading5_regular}>
-                {creditProcessType === 'ADMIN_PAYMENTS' ? `+ ${processCredit.toLocaleString()}원` : `- ${processCredit.toLocaleString()}원`}
+                {creditProcessType === 'ADMIN_PAYMENTS' ? `+ ${processCredit?.toLocaleString()}원` : `- ${processCredit.toLocaleString()}원`}
               </span>
             </FlexBox>
             <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>
-              <span css={heading5_regular}>{remainingCredit.toLocaleString()}원</span>
+              <span css={heading5_regular}>{remainingCredit?.toLocaleString()}원</span>
             </FlexBox>
             <FlexBox justify={'flex-start'} style={{ padding: '17px 0', flex: 2 }}>
               <span css={heading5_regular}>{creditProcessContents}</span>
