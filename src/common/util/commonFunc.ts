@@ -109,7 +109,7 @@ export const getBackgroundColor = index => {
   }
   if (index >= 10) {
     const splitNum = String(index).split('');
-    const changeNum = parseInt(splitNum[splitNum.length - 1]);
+    const changeNum = parseInt(splitNum[splitNum?.length - 1]);
     return profileColor2[changeNum];
   }
 };
