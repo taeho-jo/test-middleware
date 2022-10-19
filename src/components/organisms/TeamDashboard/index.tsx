@@ -334,9 +334,6 @@ const TeamDashboard = () => {
         <FlexBox style={{ padding: '24px 32px 32px' }} direction={'column'} align={'flex-start'} justify={'flex-start'}>
           <FlexBox direction={'row'} justify={'flex-start'} align={'center'} style={{ marginBottom: '32px' }}>
             <span css={[body2_bold, titleStyle, { marginBottom: 0, marginRight: '16px' }]}>우리 팀의 리서치 목록</span>
-            <button onClick={() => dispatch(showToast({ message: '데모 신청이 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }))}>
-              asdfasdfasdfasdf
-            </button>
             <Form onSubmit={handleSubmit(onSubmit, onError)} style={{ width: '249px', boxSizing: 'border-box', position: 'relative' }}>
               <Input
                 title={''}
@@ -555,3 +552,7 @@ const filterBtnStyle = css`
   border-radius: 8px;
   margin-left: 16px;
 `;
+
+{
+  /* <!-- Channel Plugin Scripts --> */
+}

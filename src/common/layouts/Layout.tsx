@@ -30,6 +30,8 @@ import Tooltip from '../../components/atoms/Tooltip';
 import Dialog from '../../components/molecules/Dialog';
 import ResearchRecommendationModal from '../../components/molecules/ResearchRecommendationModal';
 // import AlertToast from '../../components/organisms/AlertToast';
+import ChannelService from '../util/channelTalk';
+import { createHmac } from 'crypto';
 
 // Types
 interface PropsType {
@@ -69,6 +71,42 @@ const Layout = ({ children }: PropsType) => {
       dispatch(getUserInfo());
     },
   });
+
+  useEffect(() => {
+    const channelTalk = new ChannelService();
+    channelTalk.boot({
+      pluginKey: '8d0981ea-89d1-435f-884f-2b659cd1f065',
+    });
+    // if (token && userInfo) {
+    //   // channelTalk.shutdown();
+    //
+    //   const secret = 'DBD';
+    //   const memberId = createHmac('sha256', secret).update(userInfo?.userSeq).digest('hex');
+    //   const name = userInfo?.userName;
+    //   const email = userInfo?.userId;
+    //   channelTalk.boot({
+    //     // 우주 키
+    //     pluginKey: 'd3efd253-f921-449e-973d-8f5fa08fda9d',
+    //     // 디비 키
+    //     // pluginKey: '8d0981ea-89d1-435f-884f-2b659cd1f065',
+    //     memberId,
+    //     profile: {
+    //       name,
+    //       email,
+    //     },
+    //   });
+    // } else {
+    //   channelTalk.boot({
+    //     pluginKey: '8d0981ea-89d1-435f-884f-2b659cd1f065',
+    //   });
+    // }
+
+    return () => {
+      channelTalk.shutdown();
+    };
+  }, [userInfo, token]);
+
+  useEffect(() => {});
 
   const { data: usersInviteInfo, refetch: inviteRefetch } = useQuery(
     ['fetchInviteUserInfo', 'layout'],
