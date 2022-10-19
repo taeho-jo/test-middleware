@@ -27,7 +27,10 @@ const ReportTemplateHeader = ({ title, handleChangeCheckBox, modalControl, check
   return (
     <FlexBox style={headerBosStyle} justify={'space-between'}>
       <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>
-        <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>
+        <span
+          className={'title'}
+          css={[heading3_bold, { marginRight: '32px', overflow: 'hidden', maxWidth: '600px', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }]}
+        >
           {title}
         </span>
         <CheckBox

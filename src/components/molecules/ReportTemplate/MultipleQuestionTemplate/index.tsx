@@ -45,35 +45,6 @@ const MultipleQuestionTemplate = ({ dataList, modalControl, parentIndex }) => {
 
   return (
     <>
-      {/*<FlexBox style={headerBosStyle} justify={'space-between'}>*/}
-      {/*  <FlexBox style={reportHeader} justify={'flex-start'} align={'center'}>*/}
-      {/*    <span className={'title'} css={[heading3_bold, { marginRight: '32px', overflow: 'hidden' }]}>*/}
-      {/*      {dataList.intent}*/}
-      {/*    </span>*/}
-      {/*  </FlexBox>*/}
-      {/*  <FlexBox justify={'flex-end'} width={'30%'}>*/}
-      {/*    <IconTextButton*/}
-      {/*      onClick={() =>*/}
-      {/*        modalControl(true, 'originDataModal', {*/}
-      {/*          title: `${dataList.intent}`,*/}
-      {/*          data: rawData.flat(),*/}
-      {/*        })*/}
-      {/*      }*/}
-      {/*      disabled={bool?.length === 0 ? true : false}*/}
-      {/*      style={{ marginRight: '8px' }}*/}
-      {/*      textStyle={'custom'}*/}
-      {/*      name={'NAVIGATION_CHEVRON_RIGHT'}*/}
-      {/*      text={'원본 데이터 확인하기'}*/}
-      {/*    />*/}
-      {/*    <IconTextButton*/}
-      {/*      onClick={() => modalControl(true, 'commentDataModal', { title: 'commentModal', list: [dataList?.comment] })}*/}
-      {/*      textStyle={'custom'}*/}
-      {/*      name={'NAVIGATION_CHEVRON_RIGHT'}*/}
-      {/*      text={'리서치 코멘트 확인하기'}*/}
-      {/*    />*/}
-      {/*  </FlexBox>*/}
-      {/*</FlexBox>*/}
-
       <FlexBox style={graphBosStyle} justify={'center'} align={'flex-start'}>
         <div css={graphAreaStyle}>
           <div css={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', padding: '20px 0 12px 0' }}>
