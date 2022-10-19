@@ -15,27 +15,27 @@ const ResearchGuideStepFive = () => {
     if (RESEARCH_TYPE === 'UI_DIAGNOSIS') {
       const min = 500000 + (3000 + missionAdditionalCompensation(DETAIL_INFO?.detailDesignInfo?.length) * 50);
       const max = 500000 + (15000 + missionAdditionalCompensation(DETAIL_INFO?.detailDesignInfo?.length) * 50);
-      return `${min.toLocaleString()}원 ~ ${max.toLocaleString()}원`;
+      return `${min?.toLocaleString()}원 ~ ${max?.toLocaleString()}원`;
     }
     if (RESEARCH_TYPE === 'FGD') {
       const min = 1000000 + (300000 * (DETAIL_INFO?.respondentInfo?.length - 1) + 140000);
       const max = 1000000 + (300000 * (DETAIL_INFO?.respondentInfo?.length - 1) + 600000);
-      return `${min.toLocaleString()}원 ~ ${max.toLocaleString()}원`;
+      return `${min?.toLocaleString()}원 ~ ${max?.toLocaleString()}원`;
     }
     if (RESEARCH_TYPE === 'UX_POSITION_ANALYSIS') {
       const min = 600000 + 450000;
       const max = 600000 + 1200000;
-      return `${min.toLocaleString()}원 ~ ${max.toLocaleString()}원`;
+      return `${min?.toLocaleString()}원 ~ ${max?.toLocaleString()}원`;
     }
     if (RESEARCH_TYPE === 'HYPOTHESIS_VERIFICATION') {
       const min = 500000 + 100000 * (1 + DETAIL_INFO?.detailDesignInfo?.length * 0.2);
       const max = 500000 + 1000000 * (1 + DETAIL_INFO?.detailDesignInfo?.length * 0.2);
-      return `${min.toLocaleString()}원 ~ ${max.toLocaleString()}원`;
+      return `${min?.toLocaleString()}원 ~ ${max?.toLocaleString()}원`;
     }
     if (RESEARCH_TYPE === 'SHORT_SURVEY') {
       const min = 10000 + 10000;
       const max = 10000 + 100000;
-      return `${min.toLocaleString()}원 ~ ${max.toLocaleString()}원`;
+      return `${min?.toLocaleString()}원 ~ ${max?.toLocaleString()}원`;
     }
   };
 
