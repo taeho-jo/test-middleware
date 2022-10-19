@@ -8,7 +8,7 @@ import AppBar from '../../../diby-client-landing/components/AppBar';
 import CommonModal from '../../components/organisms/CommonModal';
 import CommonHeader from '../../components/molecules/CommonHeader';
 import AdminLayout from './AdminLayout';
-import AlertToast from '../../components/organisms/AlertToast';
+// import AlertToast from '../../components/organisms/AlertToast';
 import FlexBox from '../../components/atoms/FlexBox';
 // Styles
 import { css } from '@emotion/react';
@@ -29,7 +29,7 @@ import { confirmEmailAction, setToken } from '../../store/reducers/authReducer';
 import Tooltip from '../../components/atoms/Tooltip';
 import Dialog from '../../components/molecules/Dialog';
 import ResearchRecommendationModal from '../../components/molecules/ResearchRecommendationModal';
-import AuthToast from '../../components/organisms/AuthToast';
+import AlertToast from '../../components/organisms/AlertToast';
 
 // Types
 interface PropsType {
@@ -354,7 +354,6 @@ const Layout = ({ children }: PropsType) => {
       <>
         {separateDomain()}
         <AlertToast position={'top-center'} />
-        {/*<AlertToast position={'top-center'} />*/}
         <CommonModal />
         <Tooltip />
         <Dialog />
@@ -387,7 +386,6 @@ const Layout = ({ children }: PropsType) => {
               </main>
             </div>
             <AlertToast position={'top-center'} />
-            <AuthToast position={'top-center'} />
             <CommonModal />
             <Tooltip />
             <Dialog />
@@ -408,7 +406,6 @@ const Layout = ({ children }: PropsType) => {
               </main>
             </div>
             <AlertToast position={'top-center'} />
-            <AuthToast position={'top-center'} />
             <CommonModal />
             <Tooltip />
             <Dialog />
