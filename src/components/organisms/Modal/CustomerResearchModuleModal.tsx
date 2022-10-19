@@ -16,19 +16,20 @@ const CustomerResearchModuleModal = () => {
         <FlexBox height={'420px'}>
           <FlexBox style={{ paddingLeft: '52px', paddingRight: '40px' }} height={'100%'} direction={'column'} justify={'space-between'}>
             <FlexBox direction={'column'} align={'flex-start'}>
-              <span css={titleStyle}>잠재 고객 조사</span>
+              <span css={titleStyle}>FGD</span>
 
-              <span css={[heading4_regular, marginStyle('24px')]}>제품/서비스의 잠재 고객에 대한 조사로</span>
-              <span css={heading4_regular}>고객에 대한 전반적인 이해를 돕고,</span>
-              <span css={heading4_regular}>다양한 고객 집단 중</span>
-              <span css={heading4_regular}>가장 첫 번째로 공략해야 할 집단을 파악합니다.</span>
+              <span css={[heading4_regular, marginStyle('24px')]}>그룹채팅 방식으로 그룹인터뷰를 진행합니다.</span>
+              <span css={heading4_regular}>챗봇이 모더레이터가 질문을 하고,</span>
+              <span css={heading4_regular}>응답자별 참여도를 관리합니다.</span>
 
-              <span css={[heading4_bold, marginStyle('24px')]}>#타게팅 우선순위 파악</span>
-              <span css={[heading4_bold, marginStyle('4px')]}>#대략적인 이해</span>
+              <span css={[heading4_bold, marginStyle('24px')]}>#이탈, 동기부여 분석</span>
+              <span css={[heading4_bold, marginStyle('4px')]}>#경쟁사 분석</span>
+              <span css={[heading4_bold, marginStyle('4px')]}>#고객라이프스타일 파악</span>
+              <span css={[heading4_bold, marginStyle('4px')]}>#그룹인터뷰</span>
             </FlexBox>
             <FlexBox style={{ marginBottom: '52px', padding: '8px 0' }}>
               <BasicButton
-                onClick={() => window.open('https://dbdlab.notion.site/34d243dc532d462b84468a710a63c3e8')}
+                onClick={() => window.open('https://dbdlab.notion.site/FGD-cf1ddccbf9734575bd88128d2323afd8')}
                 theme={'dark'}
                 text={'무료로 설계안 받기'}
               />

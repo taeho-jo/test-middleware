@@ -9,6 +9,7 @@ import { ReducerType } from '../../../store/reducers';
 import { updateTeamSeq } from '../../../store/reducers/teamReducer';
 import { updateRawData } from '../../../store/reducers/reportReducer';
 import { updateCancelWithdrawal, updateErrorMessage, updateWithdrawalUserInfo } from '../../../store/reducers/userReducer';
+import { closeResearchRecommendationModal } from '../../../store/reducers/commonReducer';
 
 interface PropsType {
   title?: any;
@@ -32,20 +33,9 @@ const ModalTitle = ({
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
   const cancelWithdrawalStatus = useSelector<ReducerType, boolean>(state => state.user.cancelWithdrawal);
   const closeModal = useCallback(() => {
-    if (cancelWithdrawalStatus) {
-      dispatch(updateCancelWithdrawal(false));
-      dispatch(updateErrorMessage(''));
-      dispatch(
-        updateWithdrawalUserInfo({
-          userId: '',
-          password: '',
-        }),
-      );
-    }
     dispatch(isShow({ isShow: false, type: '' }));
-    dispatch(updateRawData(null));
-    dispatch(updateReturnPage(false));
-  }, [cancelWithdrawalStatus]);
+    dispatch(closeResearchRecommendationModal());
+  }, []);
 
   const goBackLogin = useCallback(() => {
     dispatch(isShow({ isShow: true, type: 'login' }));

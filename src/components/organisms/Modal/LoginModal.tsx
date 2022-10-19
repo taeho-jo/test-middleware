@@ -26,7 +26,7 @@ import { body3_medium } from '../../../styles/FontStyles';
 import { InputType } from '../../../common/types/commonTypes';
 import { fetchUserInfoApi } from '../../../api/userApi';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { setToken, updateLoginType } from '../../../store/reducers/authReducer';
+import { loginAction, setToken, updateLoginType } from '../../../store/reducers/authReducer';
 import { setUserInfo, updateCancelWithdrawal, updateWithdrawalUserInfo } from '../../../store/reducers/userReducer';
 
 const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
@@ -49,29 +49,10 @@ const LoginModal = () => {
   const onSubmit = data => handleLogin('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  // react query
-  const {
-    mutate: loginMutate,
-    isLoading,
-    data: loginData,
-  } = useMutation(['login'], fetchLoginApi, {
-    onError: (e: any) => {
-      const { data } = e.response;
-      dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
-      if (data.code === 'E0022') {
-        dispatch(isShow({ isShow: true, type: 'cancelWithdrawalModal' }));
-        dispatch(updateCancelWithdrawal(true));
-      }
-    },
-  });
-
-  const { data: usersInfo } = useQuery(['fetchUserInfo', `signup/${loginData?.code}`], () => fetchUserInfoApi(loginData?.data.token), {
-    enabled: !!loginData?.code,
-  });
-
   // 이메일 로그인
   const handleLogin = useCallback(
     (status, data) => {
+      console.log(data, 'data');
       dispatch(
         updateWithdrawalUserInfo({
           userId: data.userId,
@@ -85,9 +66,16 @@ const LoginModal = () => {
         userDelWithdraw: 'Y',
       };
       if (isWithdrawalUser) {
-        loginMutate(sendObject);
+        dispatch(loginAction(sendObject));
       } else {
-        loginMutate(data);
+        const pathname = router.pathname;
+        console.log(pathname);
+        console.log(data, 'DATA');
+        if (pathname === '/admin/research/recommendation/result') {
+          dispatch(loginAction({ ...data, callback: router }));
+        } else {
+          dispatch(loginAction(data));
+        }
       }
     },
     [isWithdrawalUser],
@@ -121,30 +109,30 @@ const LoginModal = () => {
     dispatch(isShow({ isShow: true, type: 'signup' }));
   }, []);
 
-  useEffect(() => {
-    if (loginData?.code === '200') {
-      localStorage.setItem('accessToken', loginData.data.token);
-      dispatch(setToken(loginData.data.token));
-      dispatch(showToast({ message: '로그인에 성공하였습니다.', isShow: true, status: 'success', duration: 5000 }));
-      dispatch(isShow({ isShow: false, type: '' }));
-      dispatch(
-        updateWithdrawalUserInfo({
-          userId: '',
-          password: '',
-        }),
-      );
-      sessionStorage.clear();
-      dispatch(setUserInfo(loginData.data));
-      if (loginData.data.emailVerifiedYn === 'N') {
-        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-      }
-      if (loginData.data.emailVerifiedYn === 'Y') {
-        router.push('/admin/team');
-      }
-
-      // router.push('/admin/team');
-    }
-  }, [loginData]);
+  // useEffect(() => {
+  //   if (loginData?.code === '200') {
+  //     localStorage.setItem('accessToken', loginData.data.token);
+  //     dispatch(setToken(loginData.data.token));
+  //     dispatch(showToast({ message: '로그인에 성공하였습니다.', isShow: true, status: 'success', duration: 5000 }));
+  //     dispatch(isShow({ isShow: false, type: '' }));
+  //     dispatch(
+  //       updateWithdrawalUserInfo({
+  //         userId: '',
+  //         password: '',
+  //       }),
+  //     );
+  //     sessionStorage.clear();
+  //     dispatch(setUserInfo(loginData.data));
+  //     if (loginData.data.emailVerifiedYn === 'N') {
+  //       dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+  //     }
+  //     if (loginData.data.emailVerifiedYn === 'Y') {
+  //       router.push('/admin/team');
+  //     }
+  //
+  //     // router.push('/admin/team');
+  //   }
+  // }, [loginData]);
 
   return (
     <FlexBox style={{ marginTop: modalShow ? '160px' : 0 }} justify={'center'} direction={'column'}>
@@ -180,7 +168,7 @@ const LoginModal = () => {
           />
 
           <FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>
-            <BasicButton isLoading={isLoading} type={'submit'} text={'로그인하기'} style={{ marginBottom: '18px' }} />
+            <BasicButton type={'submit'} text={'로그인하기'} style={{ marginBottom: '18px' }} />
             <IconTextButton onClick={loginWithGoogle} name={'GOOGLE'} iconPosition={'left'} text={'구글로 로그인'} />
           </FlexBox>
         </Form>

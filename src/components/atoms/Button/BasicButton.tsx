@@ -7,8 +7,10 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 interface PropsType extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
+  disabled?: boolean;
   designBgColor?: string;
   text?: string;
+  textColor?: string;
   type?: 'submit' | 'button' | 'reset';
   status?: 'normal' | 'disabled';
   theme?: 'light' | 'dark';
@@ -22,10 +24,12 @@ const BasicButton = ({
   style,
   designBgColor,
   text,
+  textColor,
   type = 'button',
   status = 'normal',
   theme = 'light',
   onClick,
+  disabled = false,
   ...props
 }: PropsType) => {
   const buttonTextStyle = heading4_bold;
@@ -34,15 +38,15 @@ const BasicButton = ({
       {...props}
       onClick={onClick}
       type={type}
-      disabled={isLoading}
-      css={[buttonStyle(status, theme, isLoading), { ...style }, { background: designBgColor ? designBgColor : '' }]}
+      disabled={disabled}
+      css={[buttonStyle(status, theme, isLoading, designBgColor), { ...style }, { background: designBgColor ? designBgColor : '' }]}
     >
       {isLoading ? (
         <span css={[buttonTextStyle, textStyle]}>
           <ClipLoader size={10} color={'white'} />
         </span>
       ) : (
-        <span css={[buttonTextStyle, textStyle]}>{text ? text : 'button'}</span>
+        <span css={[buttonTextStyle, textStyle, { color: textColor }]}>{text ? text : 'button'}</span>
       )}
     </button>
   );
@@ -50,7 +54,7 @@ const BasicButton = ({
 
 export default BasicButton;
 
-const buttonStyle = (status, theme, isLoading) => css`
+const buttonStyle = (status, theme, isLoading, designBgColor) => css`
   width: 100%;
   padding: 16px 56px;
   border-radius: 8px;
@@ -64,7 +68,10 @@ const buttonStyle = (status, theme, isLoading) => css`
         ? `
       background: ${colors.cyan._500};
       &:hover {
-        background: ${colors.cyan._700};
+        background: ${designBgColor === colors.red ? '#de3a42' : colors.cyan._700};
+      }
+      &:disabled {
+        background: ${colors.cyan._300};
       }
     `
         : `
@@ -80,6 +87,9 @@ const buttonStyle = (status, theme, isLoading) => css`
       &:hover {
         background: ${colors.grey._2c};
       }
+      &:disabled {
+        background: ${colors.grey._99};;
+      }
     `
         : `
         background: ${colors.grey._cc};
@@ -89,4 +99,5 @@ const buttonStyle = (status, theme, isLoading) => css`
 `;
 const textStyle = css`
   color: white;
+  white-space: nowrap;
 `;

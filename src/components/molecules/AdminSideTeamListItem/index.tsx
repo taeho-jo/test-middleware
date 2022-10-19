@@ -10,11 +10,13 @@ import IconButton from '../../atoms/Button/IconButton';
 // Styles
 import { css } from '@emotion/react';
 import { caption2_bold, heading5_bold } from '../../../styles/FontStyles';
-import { profileColor } from '../../../common/util/commonVar';
+import { profileColor, profileColor2 } from '../../../common/util/commonVar';
 
 import { ReducerType } from '../../../store/reducers';
 import { memberListType, TeamListType, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import { useRouter } from 'next/router';
+import { colors } from '../../../styles/Common.styles';
+import {getBackgroundColor} from "../../../common/util/commonFunc";
 interface PropsType {
   teamName?: string;
   memberList?: memberListType[];
@@ -60,13 +62,15 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
     }
   }, [modalType]);
 
+
+
   return (
     <FlexBox
       direction={'column'}
       align={'flex-start'}
       column={'flex-start'}
       onClick={() => onClick(item)}
-      style={{ ...itemBox(modalType, isFirstCreateTeam, isInviteModal, parentsIndex, focusItem) }}
+      style={[hoverShadow, { ...itemBox(modalType, isFirstCreateTeam, isInviteModal, parentsIndex, focusItem) }]}
     >
       <FlexBox style={{ marginBottom: '15px' }} justify={'space-between'} align={'center'}>
         <span css={[heading5_bold, textStyle]}>{teamName}</span>
@@ -87,11 +91,11 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
               <ProfileIcon
                 name={item?.userName?.slice(0, 1)}
                 backgroundColor={
-                  item?.userId === userInfo?.userId && parentsIndex === teamSeq ? '#cfffac' : parentsIndex === teamSeq ? profileColor[index] : 'grey'
+                  item?.userId === userInfo?.userId && parentsIndex === teamSeq ? profileColor : parentsIndex == teamSeq ? getBackgroundColor(index) : 'grey'
                 }
                 size={'20px'}
                 fontStyle={caption2_bold}
-                margin={'0 6px 0 0'}
+                margin={'3px'}
               />
               {index + 1 === memberList?.length ? (
                 <IconButton
@@ -102,6 +106,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
                   }
                   style={{ cursor: modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember' ? 'not-allowed' : 'pointer' }}
                   name={'ACTION_ADD_CIRCLE'}
+                  size={24}
                 />
               ) : null}
             </Fragment>
@@ -138,4 +143,10 @@ const textStyle = css`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+const hoverShadow = css`
+  border-bottom: 1px solid #dcdcdc;
+  &:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  }
 `;

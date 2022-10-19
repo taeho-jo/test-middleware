@@ -16,7 +16,7 @@ const ScenarioResearchModuleModal = () => {
         <FlexBox height={'420px'}>
           <FlexBox style={{ paddingLeft: '52px', paddingRight: '40px' }} height={'100%'} direction={'column'} justify={'space-between'}>
             <FlexBox direction={'column'} align={'flex-start'}>
-              <span css={titleStyle}>시나리오 검증</span>
+              <span css={titleStyle}>가설 검증</span>
 
               <span css={[heading4_regular, marginStyle('24px')]}>상황 시나리오를 설정하고</span>
               <span css={heading4_regular}>고객의 인식, 의향, 선호도 등을 확인합니다.</span>

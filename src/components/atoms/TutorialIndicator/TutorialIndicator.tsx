@@ -30,7 +30,7 @@ const TutorialIndicator = ({ top = '0px', left = '0px', modalTitle, modalSubTitl
         ...indicatorStatus,
         [key]: 'Y',
       };
-      console.log(updateObj, 'Share');
+
       dispatch(updateInitIndicator(updateObj));
     } else {
       const objName = userInfo?.userId === '' ? 'fakeUser' : userInfo?.userId;
@@ -38,7 +38,7 @@ const TutorialIndicator = ({ top = '0px', left = '0px', modalTitle, modalSubTitl
         ...indicatorStatus,
         [key]: 'Y',
       };
-      console.log(objName, updateObj, '공유아님');
+
       dispatch(updateInitIndicator(updateObj));
       const string = JSON.stringify(updateObj);
       localStorage.setItem(objName, string);

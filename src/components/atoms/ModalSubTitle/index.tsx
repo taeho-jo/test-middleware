@@ -3,21 +3,24 @@ import { css } from '@emotion/react';
 import { body2_regular } from '../../../styles/FontStyles';
 
 interface PropsType {
-  subTitle: any[];
+  subTitle?: any[];
+  text?: string;
 }
 
-const ModalSubTitle = ({ subTitle }: PropsType) => {
+const ModalSubTitle = ({ subTitle, text }: PropsType) => {
   return (
     <div css={subTitleStyle}>
-      {subTitle?.map((item, index) => {
-        const lastChild = index === subTitle.length - 1;
-        return (
-          <Fragment key={index}>
-            <span css={[body2_regular, textStyle(lastChild)]}>{item}</span>
-            {lastChild ? null : <br />}
-          </Fragment>
-        );
-      })}
+      {text && <span css={[body2_regular, textStyle(null)]}>{text}</span>}
+      {!text &&
+        subTitle?.map((item, index) => {
+          const lastChild = index === subTitle.length - 1;
+          return (
+            <Fragment key={index}>
+              <span css={[body2_regular, textStyle(lastChild)]}>{item}</span>
+              {lastChild ? null : <br />}
+            </Fragment>
+          );
+        })}
     </div>
   );
 };

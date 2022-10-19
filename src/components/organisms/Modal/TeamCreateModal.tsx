@@ -28,6 +28,7 @@ import { updateTeamInfo } from '../../../store/reducers/teamReducer';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { useRouter } from 'next/router';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { getRefreshToken } from '../../../store/reducers/authReducer';
 interface PropsType {
   first?: boolean;
 }
@@ -61,10 +62,11 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
     onError: (e: any) => {
       const errorData = e.response.data;
       if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        dispatch(getRefreshToken());
         mutate(sendObject);
         queryClient.invalidateQueries(['fetchRefreshToken']);
-      } else if (errorData.code === 'E0007') {
+      }
+      if (errorData.code === 'E0007') {
         clearLocalStorage();
         router.push('/');
       } else {
@@ -82,7 +84,7 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
     onError: (e: any) => {
       const errorData = e.response.data;
       if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        dispatch(getRefreshToken());
         queryClient.invalidateQueries(['fetchTeamList']);
       }
       if (errorData.code === 'E0007') {

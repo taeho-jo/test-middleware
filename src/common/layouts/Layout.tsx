@@ -15,17 +15,21 @@ import { css } from '@emotion/react';
 import AOS from 'aos';
 import { setGradient } from '../../../diby-client-landing/lib/stripe-gradient';
 // API
-import { fetchCommonCodeApi, fetchEmailConfirmApi, fetchRefreshToken } from '../../api/authApi';
-import { fetchInviteUserInfoApi, fetchUserInfoApi } from '../../api/userApi';
-import { setUserInfo, updateCancelWithdrawal, updateErrorMessage, UserInfoType } from '../../store/reducers/userReducer';
-import { isShow, updateReturnPage } from '../../store/reducers/modalReducer';
+import { fetchEmailConfirmApi } from '../../api/authApi';
+import { fetchInviteUserInfoApi } from '../../api/userApi';
+import { getUserInfo, setUserInfo, updateCancelWithdrawal, updateErrorMessage, UserInfoType } from '../../store/reducers/userReducer';
+import { isShow } from '../../store/reducers/modalReducer';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import ReportLayout from './ReportLayout';
-import { updateCommonCode } from '../../store/reducers/commonReducer';
+import { getCommonCode } from '../../store/reducers/commonReducer';
 import { showToast } from '../../store/reducers/toastReducer';
 import { updateFilterFail, updateFilterFlied, updateFilterValues } from '../../store/reducers/reportReducer';
-import team from '../../pages/admin/team';
 import { clearLocalStorage } from '../util/commonFunc';
+import { confirmEmailAction, setToken } from '../../store/reducers/authReducer';
+import Tooltip from '../../components/atoms/Tooltip';
+import Dialog from '../../components/molecules/Dialog';
+import ResearchRecommendationModal from '../../components/molecules/ResearchRecommendationModal';
+import AuthToast from '../../components/organisms/AuthToast';
 
 // Types
 interface PropsType {
@@ -47,38 +51,22 @@ const Layout = ({ children }: PropsType) => {
   const canvasRef = useRef(null);
 
   // ============ React Query ============ //
-  const { data: commonCode } = useQuery(['fetchCommonCode'], fetchCommonCodeApi);
+  // const { data: commonCode } = useQuery(['fetchCommonCode'], fetchCommonCodeApi);
+  useEffect(() => {
+    dispatch(getCommonCode());
+  }, []);
 
-  const { data: usersInfo, refetch } = useQuery(['fetchUserInfo', 'layout'], () => fetchUserInfoApi(token), {
-    enabled: !!token,
-
-    onError: (e: any) => {
-      const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        refetch();
-      } else if (errorData.code === 'E0007') {
-        clearLocalStorage();
-        router.push('/');
-      }
-    },
-    onSuccess: data => {
-      dispatch(setUserInfo(data.data));
-      if (data.data.emailVerifiedYn === 'N') {
-        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-      }
-      if (data.data.emailVerifiedYn === 'Y') {
-        return;
-        // router.push('/admin/team');
-      }
-    },
-  });
+  useEffect(() => {
+    if (token) {
+      dispatch(getUserInfo());
+    }
+  }, [token]);
 
   const { mutate, data: confirmData } = useMutation(['fetchEmailConfirm'], fetchEmailConfirmApi, {
     onError: e => console.log('error::', e),
     onSuccess: data => {
       dispatch(isShow({ isShow: false, type: '' }));
-      refetch();
+      dispatch(getUserInfo());
     },
   });
 
@@ -89,10 +77,13 @@ const Layout = ({ children }: PropsType) => {
       enabled: !!confirmData,
       onError: (e: any) => {
         const errorData = e.response.data;
-        if (errorData.code === 'E0008') {
-          queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-          refetch();
-        } else if (errorData.code === 'E0007') {
+        // if (errorData.code === 'E0008') {
+        // queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        // dispatch(getRefreshToken())
+        // refetch();
+        // }
+        // else
+        if (errorData.code === 'E0007') {
           clearLocalStorage();
           router.push('/');
         }
@@ -139,13 +130,6 @@ const Layout = ({ children }: PropsType) => {
   // }, [isReturnPage]);
 
   useEffect(() => {
-    if (commonCode) {
-      dispatch(updateCommonCode(commonCode.data));
-      localStorage.setItem('commonCode', JSON.stringify(commonCode.data));
-    }
-  }, [commonCode]);
-
-  useEffect(() => {
     //TODO: 사이드바에서 클릭 이동 시 모달 뜨는 부분 예외 처리
     if (Object.keys(router.query)[0] === 'create') {
       return;
@@ -158,16 +142,18 @@ const Layout = ({ children }: PropsType) => {
       // 구글로그인 했거나, 초대받은사람이 로그인하거나
       if (token && !userId && type && !teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
-        // dispatch(setSetting(true));
-        refetch();
+        dispatch(setToken(token));
+        dispatch(getUserInfo());
       }
       if (token && !userId && type && !teamSeq && !result && requestView) {
         localStorage.setItem('accessToken', `${token}`);
+        dispatch(setToken(token));
         inviteRefetch();
       }
+      // 이메일 인증
       if (token && !userId && !type && !teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
-        mutate();
+        dispatch(confirmEmailAction());
       }
       if (token && !userId && type && teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
@@ -175,7 +161,8 @@ const Layout = ({ children }: PropsType) => {
       }
       if (token && !userId && !type && teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
-        mutate();
+        // mutate();
+        dispatch(confirmEmailAction());
         inviteRefetch();
       }
       if (token && userId && !type && !teamSeq && !result && !requestView) {
@@ -244,8 +231,19 @@ const Layout = ({ children }: PropsType) => {
                 <ReportLayout>{children}</ReportLayout>
               </main>
             </div>
-            <CommonModal />
           </>
+        );
+      case '/admin/research/[id]':
+      case '/admin/research/[id]/detail':
+      case '/admin/research/recommendation':
+      case '/admin/research/recommendation/result':
+        return (
+          <div css={mainContainer}>
+            <main css={contentsContainer}>
+              <CommonHeader researchHeader={true} />
+              {children}
+            </main>
+          </div>
         );
       case '/admin/reset-password':
       case '/admin/reset-password-success':
@@ -322,6 +320,32 @@ const Layout = ({ children }: PropsType) => {
         </div>
         <AlertToast position={'top-center'} />
         <CommonModal />
+        <Tooltip />
+        <Dialog />
+        <ResearchRecommendationModal />
+      </>
+    );
+  }
+  if (token && userInfo?.emailVerifiedYn === 'N') {
+    return (
+      <>
+        <div css={mainContainer}>
+          <main css={contentsContainer}>
+            <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
+            {showGradient ? (
+              <>
+                <div css={gradientDiv}></div>
+                <AppBar dark={showGradient} />
+              </>
+            ) : null}
+            <div>{children}</div>
+          </main>
+        </div>
+        <AlertToast position={'top-center'} />
+        <CommonModal />
+        <Tooltip />
+        <Dialog />
+        <ResearchRecommendationModal />
       </>
     );
   }
@@ -330,7 +354,11 @@ const Layout = ({ children }: PropsType) => {
       <>
         {separateDomain()}
         <AlertToast position={'top-center'} />
+        {/*<AlertToast position={'top-center'} />*/}
         <CommonModal />
+        <Tooltip />
+        <Dialog />
+        <ResearchRecommendationModal />
       </>
     );
   }
@@ -344,7 +372,26 @@ const Layout = ({ children }: PropsType) => {
                 <ReportLayout>{children}</ReportLayout>
               </main>
             </div>
+            <AlertToast position={'top-center'} />
             <CommonModal />
+            <Tooltip />
+            <Dialog />
+            <ResearchRecommendationModal />
+          </>
+        ) : router.pathname === '/admin/research/recommendation' || router.pathname === '/admin/research/recommendation/result' ? (
+          <>
+            <div css={mainContainer}>
+              <main css={contentsContainer}>
+                <CommonHeader researchHeader={true} />
+                {children}
+              </main>
+            </div>
+            <AlertToast position={'top-center'} />
+            <AuthToast position={'top-center'} />
+            <CommonModal />
+            <Tooltip />
+            <Dialog />
+            <ResearchRecommendationModal />
           </>
         ) : (
           <>
@@ -361,7 +408,11 @@ const Layout = ({ children }: PropsType) => {
               </main>
             </div>
             <AlertToast position={'top-center'} />
+            <AuthToast position={'top-center'} />
             <CommonModal />
+            <Tooltip />
+            <Dialog />
+            <ResearchRecommendationModal />
           </>
         )}
       </>

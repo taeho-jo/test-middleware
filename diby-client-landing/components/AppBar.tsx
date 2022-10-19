@@ -18,6 +18,7 @@ import icon3 from '../../public/assets/images/icon_scenario1.png';
 import icon4 from '../../public/assets/images/icon_customer1.png';
 import { ReducerType } from '../../src/store/reducers';
 import { clearLocalStorage } from '../../src/common/util/commonFunc';
+import { showToast } from '../../src/store/reducers/toastReducer';
 
 const AppBarButton = styled(Button)({
   fontWeight: '700',
@@ -80,7 +81,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
   };
   const handleMoveAdmin = useCallback(
     (path: string) => {
-      if (token && userInfo.emailVerifiedYn === 'Y') {
+      if (token && userInfo?.emailVerifiedYn === 'Y') {
         navigate.push(path);
       } else {
         dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
@@ -232,7 +233,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                 <div style={{ width: '24px', height: '24px', margin: 'auto 0' }}>
                   <Image src={icon1} alt={'diby1'} width={24} height={24} priority={true} quality={100} />
                 </div>
-                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UI 진단</p>
+                <p style={{ margin: '0 0 0 10px', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>사용성 테스트</p>
               </div>
             </Button>
             <Button
@@ -378,7 +379,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
                   {/*<img src={icon1.src} alt={'diby1'} style={{ width: '40px', height: '40px' }} />*/}
                 </div>
                 <div style={{ paddingLeft: '16px' }}>
-                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>UI 진단</p>
+                  <p style={{ margin: '0', textAlign: 'left', fontSize: '14px', fontWeight: 'bold' }}>사용성 테스트</p>
                   <p style={{ margin: '0', textAlign: 'left', fontSize: '14px' }}>사용성 문제점 파악</p>
                 </div>
               </div>

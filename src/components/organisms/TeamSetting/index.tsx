@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { useQuery, useQueryClient } from 'react-query';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { getProductList } from '../../../store/reducers/teamReducer';
 
 const TeamSetting = () => {
   const queryClient = useQueryClient();
@@ -25,6 +26,7 @@ const TeamSetting = () => {
   const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
   const localSelectTeamSeq = localStorage.getItem('teamSeq');
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+  const productList = useSelector<ReducerType, any>(state => state.team.teamProductList);
   const localSelectTeamList = JSON.parse(localStorage.getItem('selectTeamList'));
 
   const teamSeq = selectTeamSeq ? selectTeamSeq : localSelectTeamSeq;
@@ -46,28 +48,15 @@ const TeamSetting = () => {
     }
   }, [router.query.create]);
 
-  // ============ React Query ============ //
-  const { data: productData, refetch } = useQuery(['fetchProductList', teamSeq], () => fetchProductListApi(teamSeq), {
-    enabled: !!teamSeq,
-    onError: (e: any) => {
-      const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        queryClient.invalidateQueries(['fetchProductList', teamSeq]);
-      }
-      if (errorData.code === 'E0007') {
-        clearLocalStorage();
-        router.push('/');
-      }
-    },
-  });
-  // ============ React Query ============ //
-
   useEffect(() => {
     if (selectTeamSeq) {
-      refetch();
+      dispatch(getProductList({ teamSeq: String(selectTeamSeq) }));
     }
   }, [selectTeamSeq]);
+
+  useEffect(() => {
+    console.log(productList);
+  }, [productList]);
 
   return (
     <>
@@ -87,16 +76,16 @@ const TeamSetting = () => {
         <SettingCard
           title={'프로덕트'}
           content={
-            productData?.data?.length === 0
+            productList?.list?.length === 0
               ? '프로덕트 없음'
-              : productData?.data?.length > 1
-              ? `${productData?.data[0]?.productNm} 외 ${productData?.data?.length - 1}개`
-              : productData?.data[0]?.productNm
+              : productList?.list?.length > 1
+              ? `${productList?.list?.[0]?.productNm} 외 ${productList?.list?.length - 1}개`
+              : productList?.list?.[0]?.productNm
           }
           btnText={'프로덕트 관리하기'}
           showBtn={myRole === '멤버' ? false : true}
           // style={{ marginTop: '100px' }}
-          onClick={productData?.data?.length === 0 ? showModalFun : () => router.push('/admin/setting/detail')}
+          onClick={productList?.list?.length === 0 ? showModalFun : () => router.push('/admin/setting/detail')}
           name={'createTeamProduct'}
         />
         <SettingCard title={'팀 생성일'} content={teamList ? teamList?.createDt : '----.--.--'} />

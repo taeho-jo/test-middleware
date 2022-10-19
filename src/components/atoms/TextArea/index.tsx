@@ -42,7 +42,7 @@ const TextArea = ({
 }: PropsType) => {
   return (
     <>
-      {title ? <label css={[caption1_bold, labelTextStyle(errors[label])]}>{title}</label> : null}
+      {title ? <label css={[caption1_bold, labelTextStyle(errors[label]), { ...props.titleStyle }]}>{title}</label> : null}
 
       <textarea
         css={[inputStyle(disabled, width, errors[label]), { ...style }]}

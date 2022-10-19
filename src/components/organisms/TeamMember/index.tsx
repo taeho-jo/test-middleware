@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import PageTitle from '../../atoms/PageTitle';
 import FlexBox from '../../atoms/FlexBox';
@@ -16,6 +16,8 @@ import TableDropDown from '../../atoms/TableDropDown';
 import { useRouter } from 'next/router';
 import { fetchRefreshToken } from '../../../api/authApi';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { getRefreshToken } from '../../../store/reducers/authReducer';
+import useOutsideClick from "../../../hooks/useOutsideClick";
 
 const TeamMember = () => {
   const {
@@ -43,21 +45,21 @@ const TeamMember = () => {
   const [teamRoleType, setTeamRoleType] = useState(null);
   const [dropDownList, setDropDownList] = useState({
     manager: [
-      { text: '멤버로 변경하기', onClick: null },
-      { text: '우리 팀에서 내보내기', onClick: null },
+      { text: '멤버로 변경하기'},
+      { text: '우리 팀에서 내보내기'},
     ],
     member: [
-      { text: '관리자로 변경하기', onClick: null },
-      { text: '우리 팀에서 내보내기', onClick: null },
+      { text: '관리자로 변경하기'},
+      { text: '우리 팀에서 내보내기'},
     ],
     invite: [
-      { text: '우리 팀에서 내보내기', onClick: null },
-      { text: '초대 메일 다시 보내기', onClick: null },
+      { text: '우리 팀에서 내보내기'},
+      { text: '초대 메일 다시 보내기'},
     ],
-    myRole: [{ text: '팀에서 나가기', onClick: null }],
+    myRole: [{ text: '팀에서 나가기'}],
     myRoleManager: [
-      { text: '멤버로 변경하기', onClick: null },
-      { text: '팀에서 나가기', onClick: null },
+      { text: '멤버로 변경하기'},
+      { text: '팀에서 나가기'},
     ],
   });
 
@@ -67,7 +69,7 @@ const TeamMember = () => {
     onError: (e: any) => {
       const errorData = e?.response?.data;
       if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        dispatch(getRefreshToken());
         queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
       }
       if (errorData.code === 'E0007') {
@@ -87,7 +89,6 @@ const TeamMember = () => {
   );
 
   const handleChangeMemberStatus = useCallback(name => {
-    console.log(name);
     if (name === '관리자로 변경하기' || name === '멤버로 변경하기') {
       dispatch(isShow({ isShow: true, type: 'changeMemberAuth' }));
     }
@@ -100,7 +101,17 @@ const TeamMember = () => {
     if (name === '팀에서 나가기') {
       dispatch(isShow({ isShow: true, type: 'withdrawalTeam' }));
     }
+    setFocus(false)
   }, []);
+
+  // useOutsideClick(cellRef, () => {
+  //   setFocus(false);
+  // });
+  const dropDownRef = useRef(null)
+
+  useOutsideClick(dropDownRef, () => {
+    setFocus(false);
+  });
 
   return (
     <>
@@ -119,23 +130,25 @@ const TeamMember = () => {
       </FlexBox>
 
       <div>
-        <TableDropDown
-          handleChangeMemberStatus={handleChangeMemberStatus}
-          display={focus}
-          top={positionValue.y + 10}
-          left={positionValue.x - 120}
-          normalText={
-            teamRoleType === '멤버'
-              ? dropDownList?.member
-              : teamRoleType === '관리자'
-              ? dropDownList?.manager
-              : teamRoleType === 'myRole'
-              ? dropDownList.myRole
-              : teamRoleType === 'myRoleManager'
-              ? dropDownList.myRoleManager
-              : dropDownList.invite
-          }
-        />
+          <TableDropDown
+            forwardref={dropDownRef}
+            handleChangeMemberStatus={handleChangeMemberStatus}
+            display={focus}
+            top={positionValue.y - 100}
+            left={positionValue.x - 200}
+            normalText={
+              teamRoleType === '멤버'
+                ? dropDownList?.member
+                : teamRoleType === '관리자'
+                  ? dropDownList?.manager
+                  : teamRoleType === 'myRole'
+                    ? dropDownList.myRole
+                    : teamRoleType === 'myRoleManager'
+                      ? dropDownList.myRoleManager
+                      : dropDownList.invite
+            }
+          />
+
         <MemberList
           isLoading={isLoading}
           listData={data?.data?.list}

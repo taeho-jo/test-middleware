@@ -11,7 +11,6 @@ export default {
 } as ComponentMeta<typeof ListReport>;
 
 const Template: ComponentStory<typeof ListReport> = args => <ListReport {...args} />;
-console.log(reportCardImage);
 
 export const ReportCardComponent = Template.bind({});
 ReportCardComponent.args = {

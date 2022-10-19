@@ -24,6 +24,7 @@ import { fetchRefreshToken } from '../../../api/authApi';
 import { QueryCache } from 'react-query';
 import { useRouter } from 'next/router';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { getRefreshToken } from '../../../store/reducers/authReducer';
 
 interface PropsType {
   first?: boolean;
@@ -61,7 +62,7 @@ const TeamNameModifyModal = ({ first = false }: PropsType) => {
     onError: (e: any) => {
       const errorData = e.response.data;
       if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
+        dispatch(getRefreshToken());
         queryClient.invalidateQueries(['fetchUpdateTeam']);
         mutate([selectTeamSeq, sendObject]);
       }

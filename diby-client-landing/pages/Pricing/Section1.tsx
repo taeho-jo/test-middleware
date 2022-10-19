@@ -165,11 +165,11 @@ function Section1() {
             <Title data-aos="fade-up">리서치 1회 주문</Title>
             <Card data-aos="fade-up" className="box-shadow-active">
               <p style={{ fontSize: '16px', lineHeight: '24px', fontWeight: 'bold', margin: '16px auto 8px' }}>응답자 보상 비용</p>
-              <p style={{ fontSize: '16px', lineHeight: '24px', margin: '8px auto 16px', paddingTop: '8px' }}>(패널 보상 비용 * 패널 수)</p>
+              <p style={{ fontSize: '16px', lineHeight: '24px', margin: '8px auto 16px', paddingTop: '8px' }}>(응답자 보상 비용 * 응답자 수)</p>
             </Card>
             <Card data-aos="fade-up" className="box-shadow-active">
               <p style={{ fontSize: '16px', lineHeight: '24px', fontWeight: 'bold', margin: '16px auto 8px' }}>응답자 모집 비용</p>
-              <p style={{ fontSize: '16px', lineHeight: '24px', margin: '8px auto 16px', paddingTop: '8px' }}>(패널 보상 비용 * 30%)</p>
+              <p style={{ fontSize: '16px', lineHeight: '24px', margin: '8px auto 16px', paddingTop: '8px' }}>(응답자 보상 비용 * 30%)</p>
             </Card>
             <Card data-aos="fade-up" className="box-shadow-active">
               <p style={{ fontSize: '16px', lineHeight: '24px', fontWeight: 'bold', margin: '16px auto 8px' }}>솔루션 사용료 (회당)</p>
@@ -188,11 +188,11 @@ function Section1() {
             <Title data-aos="fade-up">리서치 정기 구독</Title>
             <Card data-aos="fade-up" className="box-shadow-active">
               <p style={{ fontSize: '16px', lineHeight: '24px', fontWeight: 'bold', margin: '16px auto 8px' }}>응답자 보상 비용</p>
-              <p style={{ fontSize: '16px', lineHeight: '24px', margin: '8px auto 16px', paddingTop: '8px' }}>(패널 보상 비용 * 패널 수)</p>
+              <p style={{ fontSize: '16px', lineHeight: '24px', margin: '8px auto 16px', paddingTop: '8px' }}>(응답자 보상 비용 * 응답자 수)</p>
             </Card>
             <Card data-aos="fade-up" className="box-shadow-active">
               <p style={{ fontSize: '16px', lineHeight: '24px', fontWeight: 'bold', margin: '16px auto 8px' }}>응답자 모집 비용</p>
-              <p style={{ fontSize: '16px', lineHeight: '24px', margin: '8px auto 16px', paddingTop: '8px' }}>(패널 보상 비용 * 30%)</p>
+              <p style={{ fontSize: '16px', lineHeight: '24px', margin: '8px auto 16px', paddingTop: '8px' }}>(응답자 보상 비용 * 30%)</p>
             </Card>
             <Card data-aos="fade-up" className="box-shadow-active">
               <p style={{ fontSize: '16px', lineHeight: '24px', fontWeight: 'bold', margin: '16px auto 8px' }}>정기 구독료 (연간 결제)</p>

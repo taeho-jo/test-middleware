@@ -18,89 +18,63 @@ export const useGoogleLogin = () => {
 };
 
 // 회원가입 API
-export const useSignupApi = () => {
-  const dispatch = useDispatch();
-
-  const handleSignup = async (sendObject: SignupInputType) => {
-    return await AXIOS_POST('/register/', sendObject);
-  };
-
-  return useMutation(handleSignup, {
-    onError: (error: any) => {
-      const { data, status } = error.response;
-      dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
-    },
-    onSuccess: async res => {
-      localStorage.setItem('accessToken', res.data.token);
-      dispatch(setToken(res.data.token));
-      dispatch(showToast({ message: res.message, isShow: true, status: 'success', duration: 5000 }));
-      dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-    },
-  });
-};
-
-// 토큰 refresh API
-export const useRefreshTokenApi = isRefreshToken => {
-  const dispatch = useDispatch();
-  const queryClient = useQueryClient();
-  return useQuery(['refreshToken'], () => AXIOS_GET('/refreshToken/'), {
-    cacheTime: 0,
-    enabled: isRefreshToken,
-    onError: e => {
-      dispatch(updateIsRefreshTokenStatus(false));
-    },
-    onSuccess: data => {
-      dispatch(updateIsRefreshTokenStatus(false));
-      const response = data.data;
-      localStorage.setItem('accessToken', response.token);
-      dispatch(setToken(response.token));
-      queryClient.invalidateQueries();
-    },
-  });
-};
+// export const useSignupApi = () => {
+//   const dispatch = useDispatch();
+//
+//   const handleSignup = async (sendObject: SignupInputType) => {
+//     return await AXIOS_POST('/register', sendObject);
+//   };
+//
+//   return useMutation(handleSignup, {
+//     onError: (error: any) => {
+//       const { data, status } = error.response;
+//       dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
+//     },
+//     onSuccess: async res => {
+//       localStorage.setItem('accessToken', res.data.token);
+//       dispatch(setToken(res.data.token));
+//       dispatch(showToast({ message: res.message, isShow: true, status: 'success', duration: 5000 }));
+//       dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+//     },
+//   });
+// };
 
 // 로그인 API
 export const fetchLoginApi = async sendObject => {
-  return await AXIOS_POST('/login/', sendObject);
+  return await AXIOS_POST('/login', sendObject);
 };
 
 // 회원가입 API
 export const fetchSignupApi = async sendObject => {
-  return await AXIOS_POST('/register/', sendObject);
+  return await AXIOS_POST('/register', sendObject);
 };
 
 // 이메일 확인 API
 export const fetchEmailConfirmApi = async () => {
-  return await AXIOS_POST('/user/confirm/', {});
+  return await AXIOS_POST('/user/confirm', {});
 };
 
 // 인증 이메일 재전송 API
 export const fetchEmailResendApi = async sendObject => {
-  return await AXIOS_POST('/resend/', sendObject);
+  return await AXIOS_POST('/resend', sendObject);
 };
 
 // 비밀번호 재설정 확인 메일 API
 export const fetchResetPasswordEmailApi = async sendObject => {
-  return await AXIOS_POST('/reset/', sendObject);
+  return await AXIOS_POST('/reset', sendObject);
 };
 
 // 비밀번호 재설정 API
 export const fetchChangePasswordApi = async sendObject => {
-  return await AXIOS_PATCH('/user/password/', sendObject);
+  return await AXIOS_PATCH('/user/password', sendObject);
 };
 
 // 토큰 refresh API
 export const fetchRefreshToken = async () => {
-  try {
-    const response = await AXIOS_GET('/refresh/');
-    const token = response.data.token;
-    localStorage.setItem('accessToken', token);
-  } catch (e) {
-    console.log('fetchRefreshTokenApi::::  ', e);
-  }
+  return await AXIOS_GET('/refresh');
 };
 
 // 공통 code API
 export const fetchCommonCodeApi = async () => {
-  return await AXIOS_GET('/admin/code/');
+  return await AXIOS_GET('/admin/code');
 };

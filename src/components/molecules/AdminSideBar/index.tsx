@@ -10,14 +10,11 @@ import { colors } from '../../../styles/Common.styles';
 import { heading5_bold } from '../../../styles/FontStyles';
 // Types
 import { ReducerType } from '../../../store/reducers';
-import { TeamListType, updateSelectTeamList, updateTeamSeq } from '../../../store/reducers/teamReducer';
+import { getProductList, TeamListType, updateSelectTeamList, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import MoreTeamInfoPopup from '../MoreTeamInfoPopup';
 import { isShow } from '../../../store/reducers/modalReducer';
-import { useQuery, useQueryClient } from 'react-query';
-import { fetchProductListApi } from '../../../api/teamApi';
-import { fetchRefreshToken } from '../../../api/authApi';
+import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 // Dummy
 
@@ -30,25 +27,16 @@ const AdminSideBar = () => {
   const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
+  const productList = useSelector<ReducerType, any>(state => state.team.teamProductList);
 
   const [myRole, setMyRole] = useState<string | null>(null);
 
-  // ============ React Query ============ //
-  const { data } = useQuery(['fetchProductList', selectTeamSeq], () => fetchProductListApi(selectTeamSeq), {
-    onError: (e: any) => {
-      const errorData = e.response.data;
-      if (errorData.code === 'E0008') {
-        queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
-        queryClient.invalidateQueries(['fetchProductList', selectTeamSeq]);
-      }
-      if (errorData.code === 'E0007') {
-        clearLocalStorage();
-        router.push('/');
-      }
-    },
-  });
-  // ============ React Query ============ //
-  // const [infoBox, setInfoBox] = useState<boolean>(true);
+  // 선택된 팀에 따른 프로덕트 정보 -> 프로덕트 정보 입력 팝업 노출 || 미노출
+  useEffect(() => {
+    if (selectTeamSeq) {
+      dispatch(getProductList({ teamSeq: String(selectTeamSeq) }));
+    }
+  }, [selectTeamSeq]);
 
   useEffect(() => {
     if (userInfo && selectTeamList) {
@@ -60,10 +48,9 @@ const AdminSideBar = () => {
 
   const handleSelectTeam = useCallback(
     item => {
+      router.push('/admin/team');
       dispatch(updateSelectTeamList(item));
       dispatch(updateTeamSeq(item.teamSeq));
-
-      queryClient.invalidateQueries(['fetchTeamReportList', item.teamSeq]);
 
       localStorage.setItem('selectTeamList', JSON.stringify(item));
       localStorage.setItem('teamSeq', item.teamSeq);
@@ -71,24 +58,27 @@ const AdminSideBar = () => {
     [teamList],
   );
 
-  // const handleOffInfoBox = useCallback(() => {
-  //   setInfoBox(false);
-  // }, [infoBox]);
-
   const sideTeamList = useCallback(() => {
     if (teamList !== null) {
-      return teamList?.map((item, index) => {
-        return (
-          <AdminSideTeamListItem
-            onClick={handleSelectTeam}
-            item={item}
-            parentsIndex={item.teamSeq}
-            key={index}
-            teamName={item.teamNm}
-            memberList={item.teamMember}
-          />
-        );
-      });
+      const arr = [...teamList];
+      return arr
+        ?.sort((a, b) => {
+          return a.teamSeq - b.teamSeq;
+        })
+        ?.map((item, index) => {
+          return (
+            <AdminSideTeamListItem
+              onClick={handleSelectTeam}
+              item={item}
+              parentsIndex={item.teamSeq}
+              key={index}
+              teamName={item.teamNm}
+              memberList={item.teamMember}
+            />
+          );
+        });
+    } else {
+      return <div>팀 조회중..</div>;
     }
   }, [teamList]);
 
@@ -99,8 +89,8 @@ const AdminSideBar = () => {
         <Icon onClick={() => dispatch(isShow({ isShow: true, type: 'createTeam' }))} name={'ACTION_CREATE'} size={24} style={{ cursor: 'pointer' }} />
       </FlexBox>
       <div className={'scrollType1'} css={scrollContainerStyle}>
-        {sideTeamList()}
-        {myRole === '관리자' && data?.data.length === 0 && (
+        {teamList && sideTeamList()}
+        {myRole === '관리자' && productList?.list?.length === 0 && (
           <FlexBox justify={'center'} style={{ marginTop: '24px' }}>
             <MoreTeamInfoPopup textArr={['프로덕트에 최적화된', '응답자를 더 빠르고 정확하게', '모집할 수 있습니다.']} />
           </FlexBox>

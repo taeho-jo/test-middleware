@@ -98,7 +98,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
                   handleClick('/usecases/ui');
                 }}
               >
-                UI 진단
+                사용성 테스트
               </FooterButton>
               <FooterButton
                 color={darkMode ? 'white' : 'primary'}
@@ -153,7 +153,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
                   <FooterButton
                     color={darkMode ? 'white' : 'primary'}
                     onClick={() => {
-                      handleClick('/tri');
+                      handleClick('/admin/research/recommendation');
                     }}
                   >
                     설계 신청하기
@@ -170,7 +170,7 @@ function Footer(props: { dark?: boolean; style?: React.CSSProperties }) {
                 <FooterButton
                   color={darkMode ? 'white' : 'primary'}
                   onClick={() => {
-                    handleClick('/tri');
+                    handleClick('/admin/research/recommendation');
                   }}
                 >
                   설계 신청하기

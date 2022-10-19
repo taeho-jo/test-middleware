@@ -151,7 +151,7 @@ function Section1() {
               <p style={{ margin: '10px 0 0 0', color: 'white', fontSize: '16px', fontWeight: 'bold' }}>유저리서치 솔루션</p>
               <NextButton
                 onClick={() => {
-                  handleClick('/tri');
+                  handleClick('/admin/research/recommendation');
                 }}
                 color="blue"
                 variant="contained"

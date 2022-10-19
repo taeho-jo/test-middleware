@@ -14,31 +14,38 @@ import { removeUserInfo } from '../../../store/reducers/userReducer';
 import { useMutation, useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { resendConfirmEmail } from '../../../store/reducers/authReducer';
 
 const ConfirmResetPasswordModal = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
+  const userId = useSelector<ReducerType, string>(state => state.auth?.email);
 
   const [sendObject, setSendObject] = useState(null);
 
   // ============ React Query ============ //
-  const { mutate } = useMutation('fetchResendEmail', fetchEmailResendApi, {
-    onSuccess: data => {
-      dispatch(showToast({ message: '인증메일이 재전송 되었습니다.', isShow: true, status: 'success', duration: 5000 }));
-    },
-  });
+  // const { mutate } = useMutation('fetchResendEmail', fetchEmailResendApi, {
+  //   onSuccess: data => {
+  //     dispatch(showToast({ message: '인증메일이 재전송 되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+  //   },
+  // });
   // ============ React Query ============ //
 
-  const SubTitleArr = [`${userInfo.userId} 로`, '인증 메일을 보내드렸습니다.', '메일을 확인하시고, 확인 버튼을 클릭해주세요.'];
+  const SubTitleArr = [
+    `${userInfo?.userid !== '' ? userInfo?.userid : userId} 로`,
+    '인증 메일을 보내드렸습니다.',
+    '메일을 확인하시고, 확인 버튼을 클릭해주세요.',
+  ];
 
   const resendEmail = useCallback(() => {
     const sendObject = {
       emailTemplateName: EMAIL_CONFIRM_TEMPLATE,
     };
     setSendObject(sendObject);
-    mutate(sendObject);
+    // mutate(sendObject);
+    dispatch(resendConfirmEmail(sendObject));
   }, []);
 
   const reSignup = useCallback(() => {

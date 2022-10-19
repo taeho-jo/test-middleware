@@ -64,7 +64,8 @@ const AlertToast = ({ position }: PropsType) => {
       <div css={[positionStyle, toastPosition(position)]}>
         {arr?.map((el, index) => {
           if (el.isShow) {
-            return <Toast position={position} key={index} {...el} />;
+            return;
+            <Toast position={position} key={index} {...el} />;
           } else {
             return null;
           }

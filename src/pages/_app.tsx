@@ -21,6 +21,11 @@ import 'slick-carousel/slick/slick-theme.css';
 // Types
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next';
+import AlertToast from '../components/organisms/AlertToast';
+import CommonModal from '../components/organisms/CommonModal';
+import Tooltip from '../components/atoms/Tooltip';
+import Dialog from '../components/molecules/Dialog';
+import ResearchRecommendationModal from '../components/molecules/ResearchRecommendationModal';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;

@@ -2,10 +2,14 @@ import React from 'react';
 import { css } from '@emotion/react';
 import Portal from '../Portal';
 
-const Modal = ({ children }) => {
+const Modal = ({ children, selector = 'modal-root', show = true }) => {
   return (
-    <Portal selector={'modal-root'}>
-      <div css={darkBackgroundStyle}>{children}</div>
+    <Portal selector={selector}>
+      {show && (
+        <div className={'scrollType1'} css={darkBackgroundStyle}>
+          {children}
+        </div>
+      )}
     </Portal>
   );
 };

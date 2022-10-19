@@ -8,7 +8,6 @@ import { css } from '@emotion/react';
 const Credit = () => {
   const { data, isLoading } = useQuery('fetchCreditList', fetchCreditListApi);
 
-  console.log(data, '1!');
   return (
     <>
       <PageTitle title={'크레딧 내역'} />

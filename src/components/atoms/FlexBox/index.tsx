@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 // Styles
 import { css } from '@emotion/react';
@@ -26,8 +26,11 @@ interface PropsType {
   column?: string;
   row?: string;
   style?: any;
+  forwardRef?: any;
+
   // overflow?: any;
   [key: string]: any;
+
   // key?: any;
 }
 
@@ -60,12 +63,14 @@ const FlexBox = ({
   column,
   row,
   style,
+  forwardRef,
   // overflow = 'auto',
   ...props
 }: // key,
 PropsType) => {
   return (
     <div
+      ref={forwardRef}
       onClick={onClick}
       css={[
         flexBox(

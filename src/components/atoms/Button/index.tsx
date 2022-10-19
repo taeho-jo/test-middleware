@@ -14,7 +14,7 @@ interface PropsType {
   backgroundColor?: ColorsType;
   full?: boolean;
   type?: 'button' | 'submit' | 'reset';
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
   btnText?: string;
   isLoading?: boolean;
   icon?: IconType;
@@ -22,6 +22,7 @@ interface PropsType {
   start?: string;
   size?: number;
   btnTextColor?: string;
+  [key: string]: any;
 }
 
 const Button = ({
@@ -37,11 +38,12 @@ const Button = ({
   start = '',
   size,
   btnTextColor,
+  ...props
 }: PropsType) => {
   return (
     <>
       {buttonType === 'basic' ? (
-        <button type={type} onClick={onClick} css={buttonStyle(backgroundColor, full, padding)}>
+        <button disabled={props.disabled} type={type} onClick={onClick} css={buttonStyle(backgroundColor, full, padding)} {...props}>
           <div css={isLoading ? loadingStyle : ''}>
             <ClipLoader color={'white'} loading={isLoading} size={16} />
           </div>
@@ -84,6 +86,13 @@ const buttonStyle = (backgroundColor, full, padding) => css`
   cursor: pointer;
   position: relative;
   box-sizing: border-box;
+  &:hover {
+    background: ${colors.cyan._700};
+    color: white;
+  }
+  &:disabled {
+    background: ${colors.cyan._300};
+  }
 `;
 
 // action button
