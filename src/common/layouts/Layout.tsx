@@ -30,6 +30,8 @@ import Tooltip from '../../components/atoms/Tooltip';
 import Dialog from '../../components/molecules/Dialog';
 import ResearchRecommendationModal from '../../components/molecules/ResearchRecommendationModal';
 // import AlertToast from '../../components/organisms/AlertToast';
+import ChannelService from '../util/channelTalk';
+import { createHmac } from 'crypto';
 
 // Types
 interface PropsType {
@@ -69,6 +71,45 @@ const Layout = ({ children }: PropsType) => {
       dispatch(getUserInfo());
     },
   });
+
+  useEffect(() => {
+    const channelTalk = new ChannelService();
+
+    channelTalk.boot({
+      pluginKey: '8d0981ea-89d1-435f-884f-2b659cd1f065',
+    });
+    if (userInfo?.userId !== '') {
+      // const secretKey = '74cb222dd085a30560de9722dc8c127943936e50c23e0fa64140f8300781d1b0';
+      //
+      const name = userInfo?.userName;
+      const email = userInfo?.userId;
+      const secretKey = '74cb222dd085a30560de9722dc8c127943936e50c23e0fa64140f8300781d1b0';
+      const memberId = createHmac('sha256', Buffer.from(secretKey, 'hex')).update(email).digest('hex');
+
+      console.log(email, 'email!');
+      console.log(memberId, '암호화 된 memberId');
+      channelTalk.boot({
+        pluginKey: '8d0981ea-89d1-435f-884f-2b659cd1f065',
+        memberId: memberId,
+        profile: {
+          name,
+          email,
+        },
+      });
+    } else {
+      console.log('이거 실행안됌???');
+      channelTalk.shutdown();
+
+      channelTalk.boot({
+        pluginKey: '8d0981ea-89d1-435f-884f-2b659cd1f065',
+      });
+    }
+
+    return () => {
+      console.log('이건??? 실행안됌???');
+      channelTalk.shutdown();
+    };
+  }, [userInfo]);
 
   const { data: usersInviteInfo, refetch: inviteRefetch } = useQuery(
     ['fetchInviteUserInfo', 'layout'],
