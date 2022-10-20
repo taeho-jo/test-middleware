@@ -17,6 +17,7 @@ import { userReset } from '../../../store/reducers/userReducer';
 import { authReset } from '../../../store/reducers/authReducer';
 import { showDialog } from '../../../store/reducers/commonReducer';
 import { Cookies } from 'react-cookie';
+import ChannelService from '../../../common/util/channelTalk';
 interface PropsType {
   researchHeader?: boolean;
 }
@@ -37,6 +38,9 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
   );
 
   const handleLogout = useCallback(async () => {
+    const channelTalk = new ChannelService();
+    channelTalk.shutdown();
+
     clearLocalStorage();
     dispatch(userReset());
     dispatch(authReset());
