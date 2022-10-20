@@ -28,6 +28,7 @@ import { clearLocalStorage } from '../../../common/util/commonFunc';
 import reportNavigationTop from '/public/assets/png/reportNavigationTop.png';
 import reportNavigationBottom from '/public/assets/png/reportNavigationBotton.png';
 import Image from 'next/image';
+import { showToast } from '../../../store/reducers/toastReducer';
 
 const Report = ({ params }) => {
   const queryClient = useQueryClient();
@@ -72,10 +73,13 @@ const Report = ({ params }) => {
         //   queryClient.setQueryData(['fetchRefreshToken'], fetchRefreshToken);
         //   queryClient.invalidateQueries(['fetchReportDetail', id]);
         // }
+        dispatch(showToast({ message: `${e.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
+
         if (errorData?.code === 'E0007' || errorData?.code === 'E0002') {
           clearLocalStorage();
-          router.push('/');
+          // router.push('/');
         }
+        router.push('/');
       },
       select: data => {
         localStorage.setItem('projectNm', data.data.projectNm);
