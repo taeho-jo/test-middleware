@@ -67,9 +67,7 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
             okButton: '종료',
             cancelButton: '취소',
             okButtonColor: colors.red,
-            cancelButtonColor: colors.grey._99,
             okFunction: () => router.push('/admin/team'),
-            cancelFunction: null,
           }),
         );
       } else {
@@ -81,9 +79,7 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
             okButton: '종료',
             cancelButton: '취소',
             okButtonColor: colors.red,
-            cancelButtonColor: '',
             okFunction: () => router.push('/admin/team'),
-            cancelFunction: null,
           }),
         );
       }

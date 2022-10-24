@@ -32,6 +32,7 @@ const ResearchList = ({ listData = [], handleMoveDetail }: PropsType) => {
               researchNm={el.researchNm}
               createDt={el.createDt}
               createId={el.createId}
+              createName={el.createName}
               webLink={el.externalUrl}
               downloadLink={el.reportFileDownloadLink}
             />

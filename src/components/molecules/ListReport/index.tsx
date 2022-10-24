@@ -35,6 +35,7 @@ interface PropsType {
   downloadLink: string;
   webLink: string;
   createId: string;
+  createName: string;
   onClick?: (e: any, id: string, type: string, name: string, downloadLink: string, webLink: string) => void;
 }
 
@@ -50,6 +51,7 @@ const ListReport = ({
   downloadLink,
   webLink,
   createId,
+  createName,
   onClick,
 }: PropsType) => {
   const dispatch = useDispatch();
@@ -80,12 +82,6 @@ const ListReport = ({
   const findIndexFun = () => {
     const index = selectTeamList?.teamMember?.findIndex(el => el.userId === createId);
     return index;
-  };
-  const findUserName = () => {
-    const teamMember = selectTeamList?.teamMember;
-    const findMakeUser = teamMember.filter(el => el.userId === createId)[0];
-    const userName = findMakeUser?.userName;
-    return userName;
   };
 
   const getResearchStatusIcon = useCallback(
@@ -201,7 +197,7 @@ const ListReport = ({
       <span css={[heading5_bold, titleStyle]}>{researchNm}</span>
       <FlexBox style={dateBox} direction={'row'} justify={'flex-start'} align={'center'}>
         <ProfileIcon
-          name={findUserName()?.slice(0, 1)}
+          name={createName?.slice(0, 1)}
           size={'20px'}
           margin={'0 8px 0 0'}
           fontStyle={caption2_bold}
