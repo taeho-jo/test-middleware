@@ -52,7 +52,6 @@ const LoginModal = () => {
   // 이메일 로그인
   const handleLogin = useCallback(
     (status, data) => {
-      console.log(data, 'data');
       dispatch(
         updateWithdrawalUserInfo({
           userId: data.userId,
@@ -69,8 +68,6 @@ const LoginModal = () => {
         dispatch(loginAction(sendObject));
       } else {
         const pathname = router.pathname;
-        console.log(pathname);
-        console.log(data, 'DATA');
         if (pathname === '/admin/research/recommendation/result') {
           dispatch(loginAction({ ...data, callback: router }));
         } else {
