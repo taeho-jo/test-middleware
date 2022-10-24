@@ -6,7 +6,10 @@ export interface AuthType {
   email: string;
   isRefreshToken: boolean;
   loginType: string;
-  // userInfo: {};
+  signupUserInfo: {
+    userName: string;
+    userId: string;
+  };
 }
 
 const initialState: AuthType = {
@@ -14,6 +17,10 @@ const initialState: AuthType = {
   email: '',
   isRefreshToken: false,
   loginType: '',
+  signupUserInfo: {
+    userName: '',
+    userId: '',
+  },
 };
 
 export const authSlice = createSlice({
@@ -49,6 +56,9 @@ export const authSlice = createSlice({
     signupAction: (state, action) => {
       return state;
     },
+    getSignupUserInfo: (state, action) => {
+      state.signupUserInfo = action.payload;
+    },
     confirmEmailAction: state => {
       return state;
     },
@@ -78,6 +88,7 @@ export const {
   loginAction,
   loginActionSuccess,
   signupAction,
+  getSignupUserInfo,
   confirmEmailAction,
   resendConfirmEmail,
   getRefreshToken,

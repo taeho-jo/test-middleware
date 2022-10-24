@@ -1,17 +1,5 @@
-export const profileColor2 = [
-  '#24e1d5',
-  '#a8ff69',
-  '#2878f0',
-  '#7b3ce9',
-  '#ff6678',
-  '#ff9466',
-  '#ffe81b',
-  '#23ff88',
-  '#e16bff',
-  '#ff66b9',
-];
-export const profileColor = '#1890ff'
-
+export const profileColor2 = ['#24e1d5', '#a8ff69', '#2878f0', '#7b3ce9', '#ff6678', '#ff9466', '#ffe81b', '#23ff88', '#e16bff', '#ff66b9'];
+export const profileColor = '#1890ff';
 
 export const RULES_SERVICE_DATE_OPTION = [
   { value: '20220705', displayName: '2022.07.05' },
@@ -41,4 +29,4 @@ export const INVITE_EMAIL_TEMPLATE =
 
 // <-------------------- 초대 팀원 인증 이메일 템플릿 변수 --------------------> //
 export const INVITE_CONFIRM_EMAIL_TEMPLATE =
-  process.env.NODE_ENV === 'development' ? 'local_invite_confirm_email_template' : process.env.NEXT_PUBLIC_INVITE_EMAIL_TEMPLATE;
+  process.env.NODE_ENV === 'development' ? 'local_invite_confirm_email_template' : process.env.NEXT_PUBLIC_INVITE_CONFIRM_EMAIL_TEMPLATE;

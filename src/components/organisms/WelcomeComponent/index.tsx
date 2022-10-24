@@ -15,12 +15,12 @@ import { useForm } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
 import { CURRENT_DOMAIN, INVITE_CONFIRM_EMAIL_TEMPLATE } from '../../../common/util/commonVar';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { setToken } from '../../../store/reducers/authReducer';
+import { loginAction, setToken, signupAction } from '../../../store/reducers/authReducer';
 import { body3_medium } from '../../../styles/FontStyles';
 import TextButton from '../../atoms/Button/TextButton';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { fetchInviteUserInfoApi, fetchUserInfoApi } from '../../../api/userApi';
-import { setUserInfo, updateCancelWithdrawal } from '../../../store/reducers/userReducer';
+import { setUserInfo, updateCancelWithdrawal, updateWithdrawalUserInfo } from '../../../store/reducers/userReducer';
 import AnnouncementBox from '../../molecules/AnnouncementBox';
 
 const WelcomeComponent = () => {
@@ -46,16 +46,16 @@ const WelcomeComponent = () => {
 
   // ============ React Query ============ //
   // 로그인
-  const { mutate: loginMutate, data: loginData } = useMutation(['login'], fetchLoginApi, {
-    onError: (e: any) => {
-      const { data } = e.response;
-      dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
-    },
-    onSuccess: data => {
-      // localStorage.setItem('accessToken', data?.data?.token);
-      router.push(`/?teamSeq=${teamSeq}&token=${data?.data?.token}`);
-    },
-  });
+  // const { mutate: loginMutate, data: loginData } = useMutation(['login'], fetchLoginApi, {
+  //   onError: (e: any) => {
+  //     const { data } = e.response;
+  //     dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
+  //   },
+  //   onSuccess: data => {
+  //     // localStorage.setItem('accessToken', data?.data?.token);
+  //     router.push(`/?teamSeq=${teamSeq}&token=${data?.data?.token}`);
+  //   },
+  // });
 
   const { mutate: signupMutate, data: signupData } = useMutation(['signup', 'invite', teamSeq], fetchSignupApi, {
     onError: (e: any) => {
@@ -72,22 +72,23 @@ const WelcomeComponent = () => {
       queryClient.invalidateQueries(['fetchInviteUserInfo']);
     }
   }, [signupData]);
-  const { data: signUpUsersInfo, refetch: inviteInfoRefetch } = useQuery(
-    ['fetchInviteUserInfo'],
-    () => fetchInviteUserInfoApi(router.query.teamSeq, loginData?.data.token),
-    {
-      enabled: !!signupData?.code,
-      onSuccess: data => {
-        dispatch(setUserInfo(data.data));
-        if (data.data.emailVerifiedYn === 'N') {
-          dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-        }
-        if (data.data.emailVerifiedYn === 'Y') {
-          router.push('/admin/team');
-        }
-      },
-    },
-  );
+
+  // const { data: signUpUsersInfo, refetch: inviteInfoRefetch } = useQuery(
+  //   ['fetchInviteUserInfo'],
+  //   () => fetchInviteUserInfoApi(router.query.teamSeq, loginData?.data.token),
+  //   {
+  //     enabled: !!signupData?.code,
+  //     onSuccess: data => {
+  //       dispatch(setUserInfo(data.data));
+  //       if (data.data.emailVerifiedYn === 'N') {
+  //         dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+  //       }
+  //       if (data.data.emailVerifiedYn === 'Y') {
+  //         router.push('/admin/team');
+  //       }
+  //     },
+  //   },
+  // );
   // ============ React Query ============ //
 
   // token이 있는 경우 --> 로그인이 되어있는 경우
@@ -116,7 +117,7 @@ const WelcomeComponent = () => {
           };
         }
 
-        signupMutate(sendObject);
+        dispatch(signupAction({ sendObject, callback: router }));
       }
     },
     [toggleStatus, teamSeq],
@@ -130,7 +131,7 @@ const WelcomeComponent = () => {
           userId,
           password,
         };
-        loginMutate(sendObject);
+        dispatch(loginAction({ ...sendObject, joinCallback: router, teamSeq: teamSeq }));
       }
     },
     [toggleStatus],
