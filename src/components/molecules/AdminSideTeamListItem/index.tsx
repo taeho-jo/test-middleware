@@ -16,7 +16,7 @@ import { ReducerType } from '../../../store/reducers';
 import { memberListType, TeamListType, updateTeamSeq } from '../../../store/reducers/teamReducer';
 import { useRouter } from 'next/router';
 import { colors } from '../../../styles/Common.styles';
-import {getBackgroundColor} from "../../../common/util/commonFunc";
+import { getBackgroundColor } from '../../../common/util/commonFunc';
 interface PropsType {
   teamName?: string;
   memberList?: memberListType[];
@@ -45,7 +45,8 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
   );
 
   const handToggleInviteModal = useCallback(
-    num => {
+    (e, num) => {
+      e.stopPropagation();
       setFocusItem(num);
       dispatch(updateTeamSeq(num));
       dispatch(isShow({ isShow: true, type: 'inviteTeamMember' }));
@@ -61,8 +62,6 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
       setFocusItem('first');
     }
   }, [modalType]);
-
-
 
   return (
     <FlexBox
@@ -91,7 +90,11 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
               <ProfileIcon
                 name={item?.userName?.slice(0, 1)}
                 backgroundColor={
-                  item?.userId === userInfo?.userId && parentsIndex === teamSeq ? profileColor : parentsIndex == teamSeq ? getBackgroundColor(index) : 'grey'
+                  item?.userId === userInfo?.userId && parentsIndex === teamSeq
+                    ? profileColor
+                    : parentsIndex == teamSeq
+                    ? getBackgroundColor(index)
+                    : 'grey'
                 }
                 size={'20px'}
                 fontStyle={caption2_bold}
@@ -102,7 +105,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
                   onClick={
                     modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember'
                       ? () => console.log('1')
-                      : () => handToggleInviteModal(item.teamSeq)
+                      : e => handToggleInviteModal(e, item.teamSeq)
                   }
                   style={{ cursor: modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember' ? 'not-allowed' : 'pointer' }}
                   name={'ACTION_ADD_CIRCLE'}

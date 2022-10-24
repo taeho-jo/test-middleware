@@ -22,6 +22,7 @@ const ConfirmResetPasswordModal = () => {
   const router = useRouter();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const userId = useSelector<ReducerType, string>(state => state.auth?.email);
+  const signupUserInfo = useSelector<ReducerType, { userName: string; userId: string }>(state => state.auth.signupUserInfo);
 
   const [sendObject, setSendObject] = useState(null);
 
@@ -34,7 +35,7 @@ const ConfirmResetPasswordModal = () => {
   // ============ React Query ============ //
 
   const SubTitleArr = [
-    `${userInfo?.userid !== '' ? userInfo?.userid : userId} 로`,
+    `${signupUserInfo?.userId !== '' ? signupUserInfo?.userId : userId} 로`,
     '인증 메일을 보내드렸습니다.',
     '메일을 확인하시고, 확인 버튼을 클릭해주세요.',
   ];

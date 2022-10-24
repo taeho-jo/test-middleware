@@ -8,7 +8,7 @@ interface PropsType {
   name: IconType;
   size?: number;
   style?: any;
-  onClick?: () => void;
+  onClick?: (e?) => void;
   [key: string]: any;
 }
 

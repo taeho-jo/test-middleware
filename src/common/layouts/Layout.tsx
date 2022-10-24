@@ -101,7 +101,6 @@ const Layout = ({ children }: PropsType) => {
     }
 
     return () => {
-      console.log('이건??? 실행안됌???');
       channelTalk.shutdown();
     };
   }, [userInfo]);
