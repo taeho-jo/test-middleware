@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import PopupBox from '../../atoms/PopupBox';
 import ModalTitle from '../../molecules/ModalTitle';
 import FlexBox from '../../atoms/FlexBox';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
 import ConfirmPopupNextStepBtn from '../../molecules/ConfirmPopupNextStepBtn';
 import { showToast } from '../../../store/reducers/toastReducer';
@@ -13,12 +13,14 @@ import { PASSWORD_RESET_TEMPLATE } from '../../../common/util/commonVar';
 import { useRouter } from 'next/router';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
 import { getRefreshToken } from '../../../store/reducers/authReducer';
+import { ReducerType } from '../../../store/reducers';
 
 const ConfirmResetPasswordModal = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const userEmail = sessionStorage.getItem('userId');
+  const signupUserInfo = useSelector<ReducerType, { userName: string; userId: string }>(state => state.auth.signupUserInfo);
 
   const resetPasswordSubTitleArr = [`${userEmail} 로`, '새 비밀번호를 설정할 수 있는 메일을 보냈어요.', '새로운 비밀번호를 설정해주세요.'];
 
@@ -49,13 +51,13 @@ const ConfirmResetPasswordModal = () => {
 
   const resendEmail = useCallback(() => {
     const sendObject = {
-      userId: userEmail,
+      userId: signupUserInfo?.userId,
       emailTemplateName: PASSWORD_RESET_TEMPLATE,
     };
     setSendObject(sendObject);
     mutate(sendObject);
     dispatch(showToast({ message: '비밀번호 재설정 메일이 발송되었습니다.', isShow: true, status: '', duration: 5000 }));
-  }, [sessionStorage]);
+  }, [sessionStorage, signupUserInfo]);
 
   return (
     <FlexBox style={{ marginTop: '160px' }} justify={'center'} direction={'column'}>

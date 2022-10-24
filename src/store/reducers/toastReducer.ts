@@ -22,7 +22,6 @@ export const toastSlice = createSlice({
   initialState,
   reducers: {
     showToast: (state, action: PayloadAction<ToastType>) => {
-      console.log(action, '!!!!!!!!!!!!!!!!!!!!!!!');
       state.toastArr = [];
       state.toastArr.push({ ...action.payload, id: uuid_v4() });
     },

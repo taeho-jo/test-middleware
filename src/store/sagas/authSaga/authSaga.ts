@@ -4,6 +4,7 @@ import {
   confirmEmailAction,
   getRefreshToken,
   getRefreshTokenSuccess,
+  getSignupUserInfo,
   loginAction,
   resendConfirmEmail,
   setEmail,
@@ -32,6 +33,9 @@ function* loginSaga(action) {
       if (action.payload.callback) {
         action.payload.callback.push('/admin/research/create');
       }
+      if (action.payload.joinCallback) {
+        action.payload.joinCallback.push(`/?teamSeq=${action.payload.teamSeq}&token=${response.data.token}`);
+      }
     }
   } catch (e: any) {
     console.error(e);
@@ -40,6 +44,8 @@ function* loginSaga(action) {
       yield put(isShow({ isShow: true, type: 'cancelWithdrawalModal' }));
       yield put(updateCancelWithdrawal(true));
     }
+  } finally {
+    yield put(getSignupUserInfo({ userName: '', userId: '' }));
   }
 }
 
@@ -50,8 +56,9 @@ function* signupSaga(action) {
 
     if (response.code === '201') {
       yield put(showToast({ message: `${response?.message}`, isShow: true, status: 'success', duration: 5000 }));
-      yield put(setEmail(action.paylod?.sendObject?.userId));
+      yield put(setEmail(action.payload?.sendObject?.userId));
       yield put(isShow({ isShow: true, type: 'confirmSignup' }));
+      yield put(getSignupUserInfo({ userName: action.payload?.sendObject?.userName, userId: action.payload?.sendObject?.userId }));
     }
   } catch (e) {
     console.error(e);
