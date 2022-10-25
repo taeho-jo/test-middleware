@@ -31,24 +31,6 @@ const RatePieChart = ({
   onMouseLeave,
 }: PropsType) => {
   const boxRef = useRef(null);
-  // const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
-  // const onMouseOver = useCallback(
-  //   (e, index) => {
-  //     console.log(index);
-  //     e.stopPropagation();
-  //     setActiveIndex(index);
-  //   },
-  //   [activeIndex],
-  // );
-  //
-  // const onMouseLeave = useCallback(
-  //   e => {
-  //     e.stopPropagation();
-  //     setActiveIndex(null);
-  //   },
-  //   [activeIndex],
-  // );
 
   const renderActiveShape = useCallback(props => {
     const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill, payload } = props;

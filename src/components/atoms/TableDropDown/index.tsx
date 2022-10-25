@@ -13,17 +13,16 @@ interface PropsType {
     text: string;
   }[];
   handleChangeMemberStatus: (name) => void;
-  forwardref?: any
+  forwardref?: any;
   [key: string]: any;
 }
 
-const TableDropDown = ({ display, topText, normalText, top = 16, left = 16, handleChangeMemberStatus,forwardref, ...props }: PropsType) => {
+const TableDropDown = ({ display, topText, normalText, top = 16, left = 16, handleChangeMemberStatus, forwardref, ...props }: PropsType) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const handleChange = useCallback(
     name => {
-      console.log(name, 'NAME')
       handleChangeMemberStatus(name);
     },
     [handleChangeMemberStatus],

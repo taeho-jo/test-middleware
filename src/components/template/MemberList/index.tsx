@@ -4,7 +4,7 @@ import { colors } from '../../../styles/Common.styles';
 import { heading5_bold, heading5_regular } from '../../../styles/FontStyles';
 import ProfileIcon from '../../atoms/ProfileIcon';
 import Icon from '../../atoms/Icon';
-import {profileColor, profileColor2} from '../../../common/util/commonVar';
+import { profileColor, profileColor2 } from '../../../common/util/commonVar';
 import { css } from '@emotion/react';
 import moment from 'moment';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -15,17 +15,17 @@ import { isShow } from '../../../store/reducers/modalReducer';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { ReducerType } from '../../../store/reducers';
 import { setSelectTeamMember } from '../../../store/reducers/userReducer';
-import {getBackgroundColor} from "../../../common/util/commonFunc";
+import { getBackgroundColor } from '../../../common/util/commonFunc';
 
 interface PropsType {
-  isLoading: boolean;
+  isLoading?: boolean;
   searchText: string;
   listData: {
     joinDate: string;
-    teamSeq: string;
+    teamRoleType: string;
+    teamSeq: number | null;
     userId: string;
     userName: string;
-    teamRoleType?: string;
   }[];
   setPositionValue?: any;
   setFocus?: any;
@@ -74,15 +74,13 @@ const MemberList = ({ listData, isLoading, searchText, setPositionValue, setFocu
     dispath(setSelectTeamMember(el));
     cellRef.current = cellsRef.current[index];
     const option = {
-      x: getElementProperty('x')-20,
+      x: getElementProperty('x') - 20,
       y: window.pageYOffset + getElementProperty('y') + 60,
     };
     setPositionValue(option);
     setTeamRoleType(teamRoleType);
     setFocus(true);
   };
-
-
 
   const getList = useCallback(() => {
     if (isLoading) {
