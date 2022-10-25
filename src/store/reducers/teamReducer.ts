@@ -144,6 +144,9 @@ export const teamSlice = createSlice({
     deleteTeamProduct: (state, action: PayloadAction<any>) => {
       return state;
     },
+    teamReset(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
@@ -167,5 +170,6 @@ export const {
   createTeamProduct,
   updateTeamProduct,
   deleteTeamProduct,
+  teamReset,
 } = teamSlice.actions;
 export default teamSlice.reducer;
