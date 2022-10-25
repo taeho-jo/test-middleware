@@ -93,7 +93,7 @@ export const teamSlice = createSlice({
       state.sidebarTeamProductInfo = action.payload;
     },
     // Saga Redux Reducer
-    getTeamList: (state, action: PayloadAction<{ teamNm: string; teamMember: any; selectTeamList: any; teamSeq: any }>) => {
+    getTeamList: (state, action) => {
       return state;
     },
     updateSelectTeamList: (state, action) => {

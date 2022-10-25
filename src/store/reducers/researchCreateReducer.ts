@@ -162,6 +162,9 @@ export const researchCreateSlice = createSlice({
     getResearchApiError: (state, action: PayloadAction<any>) => {
       state.error = action.payload;
     },
+    researchReset(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
@@ -183,5 +186,6 @@ export const {
   updateRecommendationStep,
   resetCreateResearchData,
   updateDeleteResearchInfo,
+  researchReset,
 } = researchCreateSlice.actions;
 export default researchCreateSlice.reducer;

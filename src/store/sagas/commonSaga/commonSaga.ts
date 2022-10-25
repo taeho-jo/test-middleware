@@ -6,6 +6,7 @@ import { clearLocalStorage } from '../../../common/util/commonFunc';
 import { showToast } from '../../reducers/toastReducer';
 import { userReset } from '../../reducers/userReducer';
 import { teamReset } from '../../reducers/teamReducer';
+import { researchReset } from '../../reducers/researchCreateReducer';
 
 function* getCommonCodeSaga() {
   try {
@@ -26,6 +27,7 @@ function* getCommonCodeSaga() {
       yield put(userReset());
       yield put(authReset());
       yield put(teamReset());
+      yield put(researchReset());
       clearLocalStorage();
       yield put(showToast({ message: '세션이 만료되어 로그아웃되었습니다.', isShow: true, status: 'warning', duration: 5000 }));
     }

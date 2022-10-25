@@ -18,7 +18,7 @@ function* getUserInfoSaga() {
         yield put(isShow({ isShow: true, type: 'confirmSignup' }));
       }
       if (data?.emailVerifiedYn === 'Y') {
-        yield put(getTeamList());
+        yield put(getTeamList(null));
         return;
       }
     }
