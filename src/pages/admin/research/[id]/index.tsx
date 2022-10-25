@@ -255,8 +255,6 @@ const ResearchCreate = () => {
               okButton: '받아보기',
               cancelButton: '취소하기',
               okButtonColor: colors.cyan._500,
-              cancelButtonColor: '',
-              cancelFunction: null,
               okFunction: () => dispatch(fetchResearchModifyInfo({ sendObject: sendObject, step: 'last', callback: router })),
             }),
           );

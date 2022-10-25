@@ -20,7 +20,6 @@ const TestFromBox2 = () => {
         name={'name'}
         control={control}
         render={({ field }) => {
-          console.log('### field', field);
           return <input css={inputStyle} autoComplete={'off'} {...field} />;
         }}
       />
@@ -29,7 +28,6 @@ const TestFromBox2 = () => {
         name={'animal.name'}
         control={control}
         render={({ field }) => {
-          console.log('### field', field);
           return <input css={inputStyle} autoComplete={'off'} {...field} />;
         }}
       />
@@ -38,7 +36,6 @@ const TestFromBox2 = () => {
         name={'animal.color'}
         control={control}
         render={({ field }) => {
-          console.log('### field', field);
           return <input css={inputStyle} autoComplete={'off'} {...field} />;
         }}
       />
@@ -47,7 +44,6 @@ const TestFromBox2 = () => {
         name={'money'}
         control={control}
         render={({ field }) => {
-          console.log('### field', field);
           return <input css={inputStyle} autoComplete={'off'} {...field} />;
         }}
       />

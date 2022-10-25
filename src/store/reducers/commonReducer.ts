@@ -24,9 +24,7 @@ export interface CounterType {
     okButton: string;
     cancelButton: string;
     okButtonColor: string;
-    cancelButtonColor: string;
     okFunction: any;
-    cancelFunction: any;
   };
   researchRecommendationModalInfo: {
     show: boolean;
@@ -67,9 +65,7 @@ const initialState: CounterType = {
     okButton: '',
     cancelButton: '',
     okButtonColor: '',
-    cancelButtonColor: '',
     okFunction: null,
-    cancelFunction: null,
   },
   researchRecommendationModalInfo: {
     show: false,
@@ -132,9 +128,7 @@ export const commonSlice = createSlice({
         okButton: string;
         cancelButton: string;
         okButtonColor: string;
-        cancelButtonColor: string;
         okFunction: any;
-        cancelFunction: any;
       }>,
     ) => {
       state.dialog = action.payload;
@@ -147,9 +141,7 @@ export const commonSlice = createSlice({
         okButton: '',
         cancelButton: '',
         okButtonColor: '',
-        cancelButtonColor: '',
         okFunction: null,
-        cancelFunction: null,
       };
     },
     showResearchRecommendationModal: (

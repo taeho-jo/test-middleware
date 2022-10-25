@@ -44,7 +44,6 @@ const WithdrawalReasonModal = () => {
 
   const { mutate } = useMutation('fetchWithdrawalUser', fetchWithdrawalUserApi, {
     onSuccess: data => {
-      console.log(data);
       dispatch(isShow({ isShow: false, type: '' }));
       if (data.message === 'SUCCESS') {
         clearLocalStorage();

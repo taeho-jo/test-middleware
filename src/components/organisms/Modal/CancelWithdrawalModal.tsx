@@ -53,7 +53,6 @@ const CancelWithdrawalModal = () => {
     dispatch(isShow({ isShow: false, type: '' }));
   }, []);
   const handleChange = () => {
-    console.log(loginType);
     if (loginType === 'google') {
       router.push(
         `${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login&userDelWithdraw=Y`,

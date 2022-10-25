@@ -49,7 +49,6 @@ const BasicBarChart = ({
   const boxRef = useRef(null);
 
   const bool = dataList[0]?.multipleAnswerData;
-  // console.log(bool, 'bool~');
 
   useOutsideClick(boxRef, () => {
     setSelectedIndex(null);

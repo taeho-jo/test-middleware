@@ -46,7 +46,6 @@ const TableBarChart = ({ fatality = true, dataList, dataValueList, name, negativ
   const handleClickChart = useCallback((e, index) => {
     e.stopPropagation();
     setSelectInfo(index);
-    // console.log(index);
   }, []);
 
   useOutsideClick(infoBoxRef, () => {

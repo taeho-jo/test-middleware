@@ -38,7 +38,6 @@ const ResetPasswordModal = () => {
 
   const { mutate, data, isLoading } = useMutation(['fetchResetPassword'], fetchResetPasswordEmailApi, {
     onError: (e: any) => {
-      console.log(e.response.data);
       dispatch(showToast({ message: `${e.response.data.message}`, isShow: true, status: 'warning', duration: 5000 }));
     },
     onSuccess: data => {

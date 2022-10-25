@@ -30,6 +30,16 @@ export interface TeamProductType {
   serviceType: string;
   teamSeq: number;
 }
+export interface TeamMemberListType {
+  count: number;
+  list: {
+    joinDate: string;
+    teamRoleType: string;
+    teamSeq: number | null;
+    userId: string;
+    userName: string;
+  }[];
+}
 export interface TeamType {
   isFirstCreate: boolean;
   isInviteModal: boolean;
@@ -43,6 +53,7 @@ export interface TeamType {
     list: TeamProductType[];
     count: number;
   };
+  teamMemberList: TeamMemberListType;
   loading: boolean;
   error: any;
 }
@@ -59,6 +70,10 @@ const initialState: TeamType = {
   teamProductList: {
     list: [],
     count: 0,
+  },
+  teamMemberList: {
+    count: 0,
+    list: [],
   },
   loading: false,
   error: null,
@@ -101,6 +116,21 @@ export const teamSlice = createSlice({
     getProductListSuccess: (state, action: PayloadAction<{ list: TeamProductType[]; count: number }>) => {
       state.teamProductList = action.payload;
     },
+    getTeamMemberListAction: (state, action) => {
+      return state;
+    },
+    getTeamMemberListActionSuccess: (state, action: PayloadAction<TeamMemberListType>) => {
+      state.teamMemberList = action.payload;
+    },
+    changeMemberPowerAction: (state, action) => {
+      return state;
+    },
+    removeTeamMemberAction: (state, action) => {
+      return state;
+    },
+    inviteTeamMemberEmailAction: (state, action) => {
+      return state;
+    },
     getError: (state, action: PayloadAction<any>) => {
       state.error = action.payload;
     },
@@ -128,6 +158,11 @@ export const {
   getTeamList,
   getProductList,
   getProductListSuccess,
+  getTeamMemberListAction,
+  getTeamMemberListActionSuccess,
+  changeMemberPowerAction,
+  removeTeamMemberAction,
+  inviteTeamMemberEmailAction,
   getError,
   createTeamProduct,
   updateTeamProduct,

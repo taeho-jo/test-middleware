@@ -33,7 +33,7 @@ const LayerPopup = ({ display, topText, normalText, top = 16, right = 16, setFoc
 
   const onClickLayer = callback => {
     callback();
-    console.log('!');
+
     setFocusProfile(false);
   };
 
