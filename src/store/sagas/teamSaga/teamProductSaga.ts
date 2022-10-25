@@ -89,7 +89,7 @@ function* changeMemberPowerSaga(action) {
 
     if (response?.code === '201') {
       yield put(showToast({ message: `${response?.message}`, isShow: true, status: 'success', duration: 5000 }));
-      yield put(getTeamList({ teamSeq: action.payload.teamSeq }));
+      yield put(getTeamList());
       yield put(getTeamMemberListAction(action.payload.teamSeq));
     }
   } catch (e: any) {

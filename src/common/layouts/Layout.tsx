@@ -159,11 +159,6 @@ const Layout = ({ children }: PropsType) => {
 
   // ============ React Query ============ //
 
-  // useEffect(() => {
-  //   console.log(isReturnPage, '::::::::isReturnPage');
-  //
-  // }, [isReturnPage]);
-
   useEffect(() => {
     //TODO: 사이드바에서 클릭 이동 시 모달 뜨는 부분 예외 처리
     if (Object.keys(router.query)[0] === 'create') {

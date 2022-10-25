@@ -54,10 +54,6 @@ const TeamSetting = () => {
     }
   }, [selectTeamSeq]);
 
-  useEffect(() => {
-    console.log(productList);
-  }, [productList]);
-
   return (
     <>
       <PageTitle title={'설정'} />

@@ -55,7 +55,6 @@ const ProfileUpdateCpSize = () => {
       const sendObject = {
         cpSizeType: selected.cpSize,
       };
-      console.log(sendObject);
       mutate(sendObject);
     },
     [selected],
