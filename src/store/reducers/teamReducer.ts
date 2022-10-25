@@ -122,6 +122,15 @@ export const teamSlice = createSlice({
     getTeamMemberListActionSuccess: (state, action: PayloadAction<TeamMemberListType>) => {
       state.teamMemberList = action.payload;
     },
+    changeMemberPowerAction: (state, action) => {
+      return state;
+    },
+    removeTeamMemberAction: (state, action) => {
+      return state;
+    },
+    inviteTeamMemberEmailAction: (state, action) => {
+      return state;
+    },
     getError: (state, action: PayloadAction<any>) => {
       state.error = action.payload;
     },
@@ -151,6 +160,9 @@ export const {
   getProductListSuccess,
   getTeamMemberListAction,
   getTeamMemberListActionSuccess,
+  changeMemberPowerAction,
+  removeTeamMemberAction,
+  inviteTeamMemberEmailAction,
   getError,
   createTeamProduct,
   updateTeamProduct,

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import PageTitle from '../../atoms/PageTitle';
 import FlexBox from '../../atoms/FlexBox';
@@ -7,19 +7,22 @@ import SearchInput from '../../atoms/SearchInput';
 import IconTextButton from '../../atoms/Button/IconTextButton';
 import MemberList from '../../template/MemberList';
 import { css } from '@emotion/react';
-import { fetchMemberListApi } from '../../../api/teamApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { ReducerType } from '../../../store/reducers';
-import { useQuery, useQueryClient } from 'react-query';
 import TableDropDown from '../../atoms/TableDropDown';
 import { useRouter } from 'next/router';
-import { fetchRefreshToken } from '../../../api/authApi';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
-import { getRefreshToken } from '../../../store/reducers/authReducer';
 import useOutsideClick from '../../../hooks/useOutsideClick';
 import { showDialog } from '../../../store/reducers/commonReducer';
 import { colors } from '../../../styles/Common.styles';
+import {
+  changeMemberPowerAction,
+  getTeamMemberListAction,
+  inviteTeamMemberEmailAction,
+  removeTeamMemberAction,
+  TeamMemberListType,
+} from '../../../store/reducers/teamReducer';
+import { INVITE_EMAIL_TEMPLATE } from '../../../common/util/commonVar';
 
 const TeamMember = () => {
   const {
@@ -31,16 +34,15 @@ const TeamMember = () => {
   const onSubmit = data => submitData('success', data);
   const onError = errors => console.log('fail', errors);
 
-  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const selectTeamSeq = useSelector<ReducerType, number>(state => state.team.selectTeamSeq);
   const selectTeam = useSelector<ReducerType, any>(state => state.team.selectTeamList);
   const localSelectTeamSeq = localStorage.getItem('teamSeq');
-  const teamSeq = selectTeamSeq ? selectTeamSeq : localSelectTeamSeq;
 
+  // const teamMemberList
+  const teamMemberList = useSelector<ReducerType, TeamMemberListType>(state => state.team.teamMemberList);
   const teamMemberInfo = useSelector<ReducerType, any>(state => state.user.teamMemberInfo);
-  console.log(teamMemberInfo, ' ?');
 
   const [searchText, setSearchText] = useState<string>('');
   const [positionValue, setPositionValue] = useState({
@@ -56,24 +58,6 @@ const TeamMember = () => {
     myRole: [{ text: '팀에서 나가기' }],
     myRoleManager: [{ text: '멤버로 변경하기' }, { text: '팀에서 나가기' }],
   });
-
-  // ============ React Query ============ //
-  const { data, isLoading, refetch } = useQuery(['fetchMemberList', teamSeq], () => fetchMemberListApi(teamSeq), {
-    enabled: !!teamSeq,
-    onError: (e: any) => {
-      const errorData = e?.response?.data;
-      if (errorData.code === 'E0008') {
-        dispatch(getRefreshToken());
-        queryClient.invalidateQueries(['fetchMemberList', teamSeq]);
-      }
-      if (errorData.code === 'E0007') {
-        clearLocalStorage();
-        router.push('/');
-      }
-    },
-  });
-
-  // ============ React Query ============ //
 
   const submitData = useCallback(
     (status, data) => {
@@ -95,12 +79,11 @@ const TeamMember = () => {
             okButton: '변경하기',
             cancelButton: '취소하기',
             okButtonColor: colors.cyan._500,
-            okFunction: () => router.push('/admin/team'),
+            okFunction: () => dispatch(changeMemberPowerAction({ teamSeq: teamMemberInfo?.teamSeq, userId: teamMemberInfo?.userId })),
           }),
         );
       }
       if (name === '우리 팀에서 내보내기' || name === '팀에서 나가기') {
-        // dispatch(isShow({ isShow: true, type: 'removeMember' }));
         dispatch(
           showDialog({
             show: true,
@@ -109,12 +92,17 @@ const TeamMember = () => {
             okButton: '삭제하기',
             cancelButton: '취소하기',
             okButtonColor: colors.red,
-            okFunction: () => router.push('/admin/team'),
+            okFunction: () => dispatch(removeTeamMemberAction({ teamSeq: teamMemberInfo?.teamSeq, userId: teamMemberInfo?.userId })),
           }),
         );
       }
       if (name === '초대 메일 다시 보내기') {
-        // dispatch(isShow({ isShow: true, type: 'inviteMember' }));
+        const sendObject = {
+          teamSeq: teamMemberInfo?.teamSeq,
+          inviteUserName: teamMemberInfo?.userName,
+          emailTemplateName: INVITE_EMAIL_TEMPLATE,
+          inviteMembers: [teamMemberInfo?.userId],
+        };
         dispatch(
           showDialog({
             show: true,
@@ -123,7 +111,7 @@ const TeamMember = () => {
             okButton: '보내기',
             cancelButton: '취소하기',
             okButtonColor: colors.cyan._500,
-            okFunction: () => router.push('/admin/team'),
+            okFunction: () => dispatch(inviteTeamMemberEmailAction(sendObject)),
           }),
         );
       }
@@ -137,7 +125,7 @@ const TeamMember = () => {
             okButton: '나가기',
             cancelButton: '취소하기',
             okButtonColor: colors.red,
-            okFunction: () => router.push('/admin/team'),
+            okFunction: () => dispatch(removeTeamMemberAction({ teamSeq: teamMemberInfo?.teamSeq, userId: teamMemberInfo?.userId })),
           }),
         );
       }
@@ -146,14 +134,18 @@ const TeamMember = () => {
     [teamMemberInfo, selectTeam],
   );
 
-  // useOutsideClick(cellRef, () => {
-  //   setFocus(false);
-  // });
   const dropDownRef = useRef(null);
 
   useOutsideClick(dropDownRef, () => {
     setFocus(false);
   });
+
+  // 팀 멤버 리스트 호출
+  useEffect(() => {
+    if (selectTeamSeq) {
+      dispatch(getTeamMemberListAction(selectTeamSeq));
+    }
+  }, [selectTeamSeq]);
 
   return (
     <>
@@ -192,8 +184,7 @@ const TeamMember = () => {
         />
 
         <MemberList
-          isLoading={isLoading}
-          listData={data?.data?.list}
+          listData={teamMemberList?.list}
           searchText={searchText}
           setFocus={setFocus}
           focus={focus}

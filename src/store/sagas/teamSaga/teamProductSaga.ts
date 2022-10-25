@@ -1,16 +1,29 @@
 import { call, delay, put, takeEvery } from '@redux-saga/core/effects';
-import { fetchCreateProductApi, fetchDeleteProductAi, fetchProductListApi, fetchTeamListApi, fetchUpdateProductApi } from '../../../api/teamApi';
 import {
+  fetchCreateProductApi,
+  fetchDeleteProductAi,
+  fetchInviteMemberApi,
+  fetchMemberAuthChangeApi,
+  fetchMemberListApi,
+  fetchMemberRemoveApi,
+  fetchProductListApi,
+  fetchTeamListApi,
+  fetchUpdateProductApi,
+} from '../../../api/teamApi';
+import {
+  changeMemberPowerAction,
   createTeamProduct,
   deleteTeamProduct,
   getError,
   getProductList,
   getProductListSuccess,
   getTeamList,
-  updateSelectTeamList,
+  getTeamMemberListAction,
+  getTeamMemberListActionSuccess,
+  inviteTeamMemberEmailAction,
+  removeTeamMemberAction,
   updateTeamInfo,
   updateTeamProduct,
-  updateTeamSeq,
 } from '../../reducers/teamReducer';
 import { showToast } from '../../reducers/toastReducer';
 import { isShow } from '../../reducers/modalReducer';
@@ -19,7 +32,6 @@ import { getRefreshToken } from '../../reducers/authReducer';
 // 팀 조회 saga
 function* getTeamListSaga(action) {
   try {
-    const { teamNm, teamMember, selectTeamList, teamSeq } = action;
     const result = yield call(fetchTeamListApi);
 
     if (result?.code === '200') {
@@ -28,25 +40,18 @@ function* getTeamListSaga(action) {
       });
       const count = result?.data?.count;
       if (count === 0 || !list || list.length === 0) {
-        yield put(
-          updateTeamInfo([
-            {
-              teamSeq: null,
-              teamNm,
-              teamMember,
-              createDt: null,
-            },
-          ]),
-        );
+        yield put(updateTeamInfo(null));
         yield put(isShow({ isShow: true, type: 'firstCreateTeam' }));
-      } else {
+      }
+      // TODO: 살펴볼 필요가 있음
+      else {
         yield put(updateTeamInfo(list));
-        if (!selectTeamList) {
-          yield put(updateSelectTeamList(list[0]));
-        }
-        if (!teamSeq) {
-          yield put(updateTeamSeq(list[0]?.teamSeq));
-        }
+        // if (!selectTeamList) {
+        //   yield put(updateSelectTeamList(list[0]));
+        // }
+        // if (!teamSeq) {
+        //   yield put(updateTeamSeq(list[0]?.teamSeq));
+        // }
       }
     }
   } catch (e) {
@@ -56,6 +61,83 @@ function* getTeamListSaga(action) {
       yield put(getRefreshToken());
       yield delay(1000);
       yield put(getTeamList());
+    }
+  }
+}
+
+// 팀 멤버 조회 saga
+function* getTeamMemberListSaga(action) {
+  try {
+    const response = yield call(fetchMemberListApi, action.payload);
+
+    yield put(getTeamMemberListActionSuccess(response.data));
+  } catch (e: any) {
+    console.error(e);
+    yield put(getError(e));
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(getTeamMemberListAction(action.payload));
+    }
+  }
+}
+
+// 팀 멤버 권한 변경 saga
+function* changeMemberPowerSaga(action) {
+  try {
+    const response = yield call(fetchMemberAuthChangeApi, action.payload.teamSeq, action.payload.userId);
+
+    if (response?.code === '201') {
+      yield put(showToast({ message: `${response?.message}`, isShow: true, status: 'success', duration: 5000 }));
+      yield put(getTeamList({ teamSeq: action.payload.teamSeq }));
+      yield put(getTeamMemberListAction(action.payload.teamSeq));
+    }
+  } catch (e: any) {
+    console.error(e);
+    yield put(getError(e));
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(changeMemberPowerAction({ teamSeq: action.payload.teamSeq, userId: action.payload.userId }));
+    }
+  }
+}
+
+// 팀멤버 삭제
+function* removeTeamMemberSaga(action) {
+  try {
+    const response = yield call(fetchMemberRemoveApi, action.payload.teamSeq, action.payload.userId);
+
+    if (response?.code === '201') {
+      yield put(showToast({ message: `${response?.message}`, isShow: true, status: 'success', duration: 5000 }));
+      yield put(getTeamList());
+      yield put(getTeamMemberListAction(action.payload.teamSeq));
+    }
+  } catch (e: any) {
+    console.error(e);
+    yield put(getError(e));
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(removeTeamMemberAction({ teamSeq: action.payload.teamSeq, userId: action.payload.userId }));
+    }
+  }
+}
+// 팀원 이메일 초대
+function* inviteTeamMemberEmailSaga(action) {
+  try {
+    const response = yield call(fetchInviteMemberApi, action.payload);
+
+    if (response?.code === '201') {
+      yield put(showToast({ message: `${response?.message}`, isShow: true, status: 'success', duration: 5000 }));
+    }
+  } catch (e: any) {
+    console.error(e);
+    yield put(getError(e));
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(inviteTeamMemberEmailAction(action.payload));
     }
   }
 }
@@ -104,7 +186,7 @@ function* createTeamProductSaga(action) {
 function* updateTeamProductSaga(action) {
   try {
     const result = yield call(fetchUpdateProductApi, action.payload.teamSeq, action.payload.productSeq, action.payload.sendObject);
-    console.log(result);
+
     yield put(showToast({ message: '프로덕트가 수정되었습니다.', isShow: true, status: 'success', duration: 5000 }));
     yield put(isShow({ isShow: false, type: '' }));
     yield put(getProductList({ teamSeq: action.payload.teamSeq }));
@@ -131,9 +213,8 @@ function* deleteTeamProductSaga(action) {
   } catch (e: any) {
     console.error(e);
     yield put(getError(e));
-    yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }))
+    yield put(showToast({ message: `${e?.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
     if (e?.response?.data?.code === 'E0008') {
-
       yield put(getRefreshToken());
       yield delay(1000);
       yield put(
@@ -145,6 +226,11 @@ function* deleteTeamProductSaga(action) {
 
 export function* teamProductSaga() {
   yield takeEvery(getTeamList, getTeamListSaga);
+  yield takeEvery(getTeamMemberListAction, getTeamMemberListSaga);
+  yield takeEvery(changeMemberPowerAction, changeMemberPowerSaga);
+  yield takeEvery(removeTeamMemberAction, removeTeamMemberSaga);
+  yield takeEvery(inviteTeamMemberEmailAction, inviteTeamMemberEmailSaga);
+
   yield takeEvery(getProductList, getProductListSaga);
   yield takeEvery(createTeamProduct, createTeamProductSaga);
   yield takeEvery(updateTeamProduct, updateTeamProductSaga);
