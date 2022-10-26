@@ -16,6 +16,8 @@ import { clearLocalStorage } from '../../../common/util/commonFunc';
 import { showToast } from '../../reducers/toastReducer';
 import { isShow } from '../../reducers/modalReducer';
 import { getUserInfo, updateCancelWithdrawal, userReset } from '../../reducers/userReducer';
+import { teamReset } from '../../reducers/teamReducer';
+import { researchReset } from '../../reducers/researchCreateReducer';
 
 // 로그인
 function* loginSaga(action) {
@@ -106,12 +108,17 @@ function* getRefreshTokenSaga() {
     if (e?.response?.data?.code === 'E0002') {
       yield put(userReset());
       yield put(authReset());
+      yield put(teamReset());
+      yield put(researchReset());
+
       clearLocalStorage();
       window.location.href = 'https://stag.diby.io';
     }
     if (e?.response?.data?.code === 'E0027') {
       yield put(userReset());
       yield put(authReset());
+      yield put(teamReset());
+      yield put(researchReset());
       clearLocalStorage();
       yield put(showToast({ message: '세션이 만료되어 로그아웃되었습니다.', isShow: true, status: 'warning', duration: 5000 }));
     }

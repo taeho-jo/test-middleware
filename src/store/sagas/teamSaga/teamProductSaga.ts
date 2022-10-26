@@ -22,8 +22,10 @@ import {
   getTeamMemberListActionSuccess,
   inviteTeamMemberEmailAction,
   removeTeamMemberAction,
+  updateSelectTeamList,
   updateTeamInfo,
   updateTeamProduct,
+  updateTeamSeq,
 } from '../../reducers/teamReducer';
 import { showToast } from '../../reducers/toastReducer';
 import { isShow } from '../../reducers/modalReducer';
@@ -45,13 +47,11 @@ function* getTeamListSaga(action) {
       }
       // TODO: 살펴볼 필요가 있음
       else {
-        yield put(updateTeamInfo(list));
-        // if (!selectTeamList) {
-        //   yield put(updateSelectTeamList(list[0]));
-        // }
-        // if (!teamSeq) {
-        //   yield put(updateTeamSeq(list[0]?.teamSeq));
-        // }
+        if (!action.payload?.teamSeq) {
+          yield put(updateTeamInfo(list));
+          yield put(updateSelectTeamList(list[0]));
+          yield put(updateTeamSeq(list[0]?.teamSeq));
+        }
       }
     }
   } catch (e) {
@@ -60,7 +60,7 @@ function* getTeamListSaga(action) {
     if (e?.response?.data?.code === 'E0008') {
       yield put(getRefreshToken());
       yield delay(1000);
-      yield put(getTeamList());
+      yield put(getTeamList(null));
     }
   }
 }
@@ -89,7 +89,7 @@ function* changeMemberPowerSaga(action) {
 
     if (response?.code === '201') {
       yield put(showToast({ message: `${response?.message}`, isShow: true, status: 'success', duration: 5000 }));
-      yield put(getTeamList());
+      yield put(getTeamList({ teamSeq: action.payload.teamSeq }));
       yield put(getTeamMemberListAction(action.payload.teamSeq));
     }
   } catch (e: any) {
@@ -110,7 +110,7 @@ function* removeTeamMemberSaga(action) {
 
     if (response?.code === '201') {
       yield put(showToast({ message: `${response?.message}`, isShow: true, status: 'success', duration: 5000 }));
-      yield put(getTeamList());
+      yield put(getTeamList({ teamSeq: action.payload.teamSeq }));
       yield put(getTeamMemberListAction(action.payload.teamSeq));
     }
   } catch (e: any) {

@@ -18,6 +18,8 @@ import { authReset } from '../../../store/reducers/authReducer';
 import { showDialog } from '../../../store/reducers/commonReducer';
 import { Cookies } from 'react-cookie';
 import ChannelService from '../../../common/util/channelTalk';
+import { teamReset } from '../../../store/reducers/teamReducer';
+import { researchReset } from '../../../store/reducers/researchCreateReducer';
 interface PropsType {
   researchHeader?: boolean;
 }
@@ -44,6 +46,8 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
     clearLocalStorage();
     dispatch(userReset());
     dispatch(authReset());
+    dispatch(teamReset());
+    dispatch(researchReset());
     dispatch(updateQueryStatus({ name: 'userInfoQuery', status: false }));
     router.push('/');
   }, []);

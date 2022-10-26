@@ -53,6 +53,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-WR7GKCP');`,
             }}
           />
+
+          {/* beusable code */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(w, d, a){
+    w.__beusablerumclient__ = {
+        load : function(src){
+            var b = d.createElement("script");
+            b.src = src; b.async=true; b.type = "text/javascript";
+            d.getElementsByTagName("head")[0].appendChild(b);
+        }
+    };w.__beusablerumclient__.load(a + "?url=" + encodeURIComponent(d.URL));
+})(window, document, "//rum.beusable.net/load/b220408e125654u410");`,
+            }}
+          />
         </Head>
 
         <body>
