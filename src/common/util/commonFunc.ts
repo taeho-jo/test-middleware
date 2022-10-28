@@ -124,7 +124,7 @@ export const calcResearchSolutionFee = RESEARCH_TYPE => {
     case 'UX_POSITION_ANALYSIS':
       return '600,000원';
     case 'HYPOTHESIS_VERIFICATION':
-      return '600,000원';
+      return '500,000원';
     case 'SHORT_SURVEY':
       return '10,000원';
     default:

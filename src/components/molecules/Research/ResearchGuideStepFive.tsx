@@ -13,29 +13,37 @@ const ResearchGuideStepFive = () => {
   const DETAIL_INFO = useSelector<ReducerType, any>(state => state.researchCreate?.detailData);
   const calcEstimatedAmount = () => {
     if (RESEARCH_TYPE === 'UI_DIAGNOSIS') {
-      const min = 500000 + (3000 + missionAdditionalCompensation(DETAIL_INFO?.detailDesignInfo?.length) * 50);
-      const max = 500000 + (15000 + missionAdditionalCompensation(DETAIL_INFO?.detailDesignInfo?.length) * 50);
-      return `${min?.toLocaleString()}원 ~ ${max?.toLocaleString()}원`;
+      const basicMoney = 500000;
+      const minMoney = 3000 + missionAdditionalCompensation(DETAIL_INFO?.detailDesignInfo?.length);
+      const maxMoney = 15000 + missionAdditionalCompensation(DETAIL_INFO?.detailDesignInfo?.length);
+      const panel = 50;
+      return `${((basicMoney + minMoney) * panel)?.toLocaleString()}원 ~ ${((basicMoney + maxMoney) * panel)?.toLocaleString()}원`;
     }
     if (RESEARCH_TYPE === 'FGD') {
-      const min = 1000000 + (300000 * (DETAIL_INFO?.respondentInfo?.length - 1) + 140000);
-      const max = 1000000 + (300000 * (DETAIL_INFO?.respondentInfo?.length - 1) + 600000);
-      return `${min?.toLocaleString()}원 ~ ${max?.toLocaleString()}원`;
+      const basicMoney = 1000000;
+      const min = 500000 * (DETAIL_INFO?.respondentInfo?.length - 1) + 140000;
+      const max = 500000 * (DETAIL_INFO?.respondentInfo?.length - 1) + 600000;
+      return `${(basicMoney + min)?.toLocaleString()}원 ~ ${(basicMoney + max)?.toLocaleString()}원`;
     }
     if (RESEARCH_TYPE === 'UX_POSITION_ANALYSIS') {
+      const basicMoney = 600000;
       const min = 600000 + 450000;
       const max = 600000 + 1200000;
-      return `${min?.toLocaleString()}원 ~ ${max?.toLocaleString()}원`;
+      return `${(basicMoney + min)?.toLocaleString()}원 ~ ${(basicMoney + max)?.toLocaleString()}원`;
     }
     if (RESEARCH_TYPE === 'HYPOTHESIS_VERIFICATION') {
-      const min = 500000 + 100000 * (1 + DETAIL_INFO?.detailDesignInfo?.length * 0.2);
-      const max = 500000 + 1000000 * (1 + DETAIL_INFO?.detailDesignInfo?.length * 0.2);
-      return `${min?.toLocaleString()}원 ~ ${max?.toLocaleString()}원`;
+      const basicMoney = 500000;
+      const addCount = DETAIL_INFO?.detailDesignInfo?.length - 10 > 0 ? DETAIL_INFO?.detailDesignInfo?.length - 10 : 0;
+      const min = 1000 * (1 + addCount * 0.2);
+      const max = 10000 * (1 + addCount * 0.2);
+      const panel = 100;
+      return `${(basicMoney + min * panel)?.toLocaleString()}원 ~ ${(basicMoney + max * panel)?.toLocaleString()}원`;
     }
     if (RESEARCH_TYPE === 'SHORT_SURVEY') {
-      const min = 10000 + 10000;
-      const max = 10000 + 100000;
-      return `${min?.toLocaleString()}원 ~ ${max?.toLocaleString()}원`;
+      const basicMoney = 10000;
+      const min = 10000;
+      const max = 100000;
+      return `${(basicMoney + min)?.toLocaleString()}원 ~ ${(basicMoney + max)?.toLocaleString()}원`;
     }
   };
 
