@@ -12,7 +12,6 @@ const Share = () => {
 
   useEffect(() => {
     if (teamSeq) {
-      // router.replace(`/admin/report/${teamSeq}/?share=true`);
       router.replace(`/admin/report/${teamSeq}/?isShare=true`);
     }
   }, [teamSeq]);
@@ -28,5 +27,3 @@ const Share = () => {
 };
 
 export default Share;
-// https://nextjs.org/docs/messages/client-side-exception-occurred
-//   main-cc8aaf46e409e659.js:1 A client-side exception has occurred, see here for more info

@@ -63,7 +63,7 @@ const TeamProductCreateModal = () => {
 
   const handleCreateProduct = useCallback(
     (status, data) => {
-      const serviceUrlValue = data?.serviceUrl?.includes('https://') ? data?.serviceUrl : `https://${data?.serviceUrl}`
+      const serviceUrlValue = data?.serviceUrl?.includes('https://') ? data?.serviceUrl : `https://${data?.serviceUrl}`;
       const sendObject = {
         productNm: data.productNm,
         productType: selected.productType,
@@ -101,7 +101,6 @@ const TeamProductCreateModal = () => {
 
   const handleChangeCheckBox = useCallback(
     value => {
-      console.log(value);
       if (categoryArr.length === 0) {
         setCategoryArr([...categoryArr, value]);
       }
@@ -179,7 +178,6 @@ const TeamProductCreateModal = () => {
                   margin-top: 10px;
                 `}
               >
-
                 <Input
                   title={'서비스 접속 경로 URL (선택)'}
                   register={register}
