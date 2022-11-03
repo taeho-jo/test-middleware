@@ -19,6 +19,8 @@ const Template: ComponentStory<typeof IconButton> = args => {
 
 export const IconButtonComponent = Template.bind({});
 IconButtonComponent.args = {
-  onClick: () => console.log('Icon Button'),
+  onClick: () => {
+    return;
+  },
   name: 'NAVIGATION_CHEVRON_RIGHT',
 };

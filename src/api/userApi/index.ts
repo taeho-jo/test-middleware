@@ -38,7 +38,7 @@ export const useGetInviteTeamUserInfo = (seq, isSend) => {
     // staleTime: 10000,
     enabled: isSend,
     onError: e => {
-      console.log(e);
+      console.error('useGetInviteTeamUserInfo ::: ', e);
     },
     onSuccess: data => {
       router.push('/admin/team');

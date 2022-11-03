@@ -35,7 +35,6 @@ const ResearchRecommendationModal = () => {
       const cookies = new Cookies();
       const expires = new Date();
       expires.setDate(expires.getDate() + 1);
-      console.log(researchRecommendationModalInfo?.type);
       cookies.set(`recommendResearchType`, researchRecommendationModalInfo?.type, { path: '/', expires });
     }
   }, [researchRecommendationModalInfo]);

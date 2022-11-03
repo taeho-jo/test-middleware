@@ -8,7 +8,7 @@ const teamSeq = JSON.parse(selectTeamList).teamSeq;
 
 const defaultConfig = {
   enabled: status => status,
-  onSuccess: data => console.log(data),
+  // onSuccess: data => console.log(data),
   onError: (e, method, apiName) => console.error(`AXIOS_${method} => ${apiName} API ::::`, e),
 };
 
@@ -48,13 +48,13 @@ export const useGetProductAndCategoryApi = () => {
     {
       queryKey: 'Product',
       queryFn: () => AXIOS_GET('/products/category/jewelery'),
-      onSuccess: () => console.log('jewelery 성공'),
+      // onSuccess: () => console.log('jewelery 성공'),
       onError: e => console.error(`AXIOS_GET => Product API :::: `, e),
     },
     {
       queryKey: 'Category',
       queryFn: () => AXIOS_GET('/products/categories'),
-      onSuccess: () => console.log('categories 성공'),
+      // onSuccess: () => console.log('categories 성공'),
       onError: e => console.error(`AXIOS_GET => Category API :::: `, e),
     },
   ]);

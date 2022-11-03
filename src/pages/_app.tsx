@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import { useRouter } from 'next/router';
 // Redux
 import { persistedReducer, wrapper } from '../store';
@@ -21,11 +21,6 @@ import 'slick-carousel/slick/slick-theme.css';
 // Types
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next';
-// import AlertToast from '../components/organisms/AlertToast';
-import CommonModal from '../components/organisms/CommonModal';
-import Tooltip from '../components/atoms/Tooltip';
-import Dialog from '../components/molecules/Dialog';
-import ResearchRecommendationModal from '../components/molecules/ResearchRecommendationModal';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;

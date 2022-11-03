@@ -77,7 +77,11 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
           name={'ACTION_SETTING'}
           size={24}
           onClick={
-            modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember' ? () => console.log('1') : () => handleChangeTeamName(parentsIndex)
+            modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember'
+              ? () => {
+                  return;
+                }
+              : () => handleChangeTeamName(parentsIndex)
           }
           style={{ cursor: modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember' ? 'not-allowed' : 'pointer' }}
         />

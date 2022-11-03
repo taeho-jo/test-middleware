@@ -56,7 +56,7 @@ const Input = ({
         id={label}
         name={label}
         // value={'asdfasdf'}
-        onChange={() => console.log('12312')}
+        // onChange={() => console.log('12312')}
         {...props}
         {...register(label, registerOptions)}
       />

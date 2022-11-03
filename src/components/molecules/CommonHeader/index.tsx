@@ -12,7 +12,6 @@ import { ReducerType } from '../../../store/reducers';
 import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
 import { clearLocalStorage } from '../../../common/util/commonFunc';
 import LogoText from '/public/assets/png/diby_black.png';
-import { persistor } from '../../../pages/_app';
 import { userReset } from '../../../store/reducers/userReducer';
 import { authReset } from '../../../store/reducers/authReducer';
 import { showDialog } from '../../../store/reducers/commonReducer';
@@ -20,6 +19,7 @@ import { Cookies } from 'react-cookie';
 import ChannelService from '../../../common/util/channelTalk';
 import { teamReset } from '../../../store/reducers/teamReducer';
 import { researchReset } from '../../../store/reducers/researchCreateReducer';
+
 interface PropsType {
   researchHeader?: boolean;
 }
@@ -156,7 +156,15 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
               setFocusProfile={setFocusProfile}
               topText={userInfo.userId}
               normalText={[
-                { text: '프로필 설정', onClick: pathname === '/admin/profile' ? () => console.log('') : () => router.push('/admin/profile/update') },
+                {
+                  text: '프로필 설정',
+                  onClick:
+                    pathname === '/admin/profile'
+                      ? () => {
+                          return;
+                        }
+                      : () => router.push('/admin/profile/update'),
+                },
                 { text: '로그아웃', onClick: handleLogout },
               ]}
             />

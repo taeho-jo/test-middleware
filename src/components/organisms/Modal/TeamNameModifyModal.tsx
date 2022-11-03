@@ -37,9 +37,9 @@ const TeamNameModifyModal = ({ first = false }: PropsType) => {
     onError: error => {
       console.log(error);
     },
-    onSuccess: data => {
-      console.log(data);
-    },
+    // onSuccess: data => {
+    //   console.log(data);
+    // },
   });
   // hook form
   const {
