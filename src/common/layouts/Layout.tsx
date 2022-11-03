@@ -32,6 +32,7 @@ import ResearchRecommendationModal from '../../components/molecules/ResearchReco
 // import AlertToast from '../../components/organisms/AlertToast';
 import ChannelService from '../util/channelTalk';
 import { createHmac } from 'crypto';
+import LowResolution from '../../components/template/LowResolution';
 
 // Types
 interface PropsType {
@@ -65,7 +66,7 @@ const Layout = ({ children }: PropsType) => {
   }, [token]);
 
   const { mutate, data: confirmData } = useMutation(['fetchEmailConfirm'], fetchEmailConfirmApi, {
-    onError: e => console.log('error::', e),
+    onError: e => console.error('fetchEmailConfirm error::', e),
     onSuccess: data => {
       dispatch(isShow({ isShow: false, type: '' }));
       dispatch(getUserInfo());
@@ -359,6 +360,7 @@ const Layout = ({ children }: PropsType) => {
   if (token && userInfo?.emailVerifiedYn === 'N') {
     return (
       <>
+        <LowResolution />
         <div css={mainContainer}>
           <main css={contentsContainer}>
             <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
@@ -382,6 +384,7 @@ const Layout = ({ children }: PropsType) => {
   if (token && userInfo?.emailVerifiedYn === 'Y') {
     return (
       <>
+        <LowResolution />
         {separateDomain()}
         <AuthToast position={'top-center'} />
         <CommonModal />
@@ -396,6 +399,7 @@ const Layout = ({ children }: PropsType) => {
       <>
         {router.pathname === '/admin/report/[id]' ? (
           <>
+            <LowResolution />
             <div css={mainContainer}>
               <main css={contentsContainer}>
                 <ReportLayout>{children}</ReportLayout>
@@ -409,6 +413,7 @@ const Layout = ({ children }: PropsType) => {
           </>
         ) : router.pathname === '/admin/research/recommendation' || router.pathname === '/admin/research/recommendation/result' ? (
           <>
+            <LowResolution />
             <div css={mainContainer}>
               <main css={contentsContainer}>
                 <CommonHeader researchHeader={true} />

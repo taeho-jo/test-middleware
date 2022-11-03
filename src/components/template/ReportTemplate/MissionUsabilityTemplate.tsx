@@ -28,10 +28,6 @@ const MissionUsabilityTemplate = ({ dataList, index, register, errors, checked, 
     }
   }, [tableRef, containerRef]);
 
-  // useEffect(() => {
-  //   console.log(graphHeight, '!!!!!!!!!!!!!');
-  // }, [graphHeight]);
-
   return (
     <div
       css={css`

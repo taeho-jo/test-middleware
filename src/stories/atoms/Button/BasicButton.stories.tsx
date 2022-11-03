@@ -20,5 +20,7 @@ const Template: ComponentStory<typeof BasicButton> = args => {
 export const BasicButtonComponent = Template.bind({});
 BasicButtonComponent.args = {
   text: '간편하게 시작하기',
-  onClick: () => console.log('Basic Button'),
+  onClick: () => {
+    return;
+  },
 };
