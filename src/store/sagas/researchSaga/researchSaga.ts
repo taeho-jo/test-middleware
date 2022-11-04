@@ -110,20 +110,6 @@ function* fetchModifyResearchSaga(action) {
     }
 
     if (action.payload.step === 'last') {
-      // yield put(isShow({ isShow: true, type: 'researchStatusChangeModal' }));
-      // yield put(
-      //   showDialog({
-      //     show: true,
-      //     title: `입력하신 정보를 바탕으로\n 리서치 설계를 받아보시겠습니까?`,
-      //     content: `리서치 설계 과정은 모두 무료로 진행됩니다.`,
-      //     okButton: '받아보기',
-      //     cancelButton: '취소하기',
-      //     okButtonColor: colors.cyan._500,
-      //     cancelButtonColor: '',
-      //     cancelFunction: null,
-      //     okFunction: () => yield put(fetchResearchModifyInfo({ sendObject: sendObject, step: 'last', callback: router })),
-      //   }),
-      // );
       action.payload?.callback?.push(`/admin/team`);
       if (action.payload?.callback) {
         yield put(showToast({ message: '리서치 설계요청이 완료되었습니다.', isShow: true, status: 'success', duration: 5000 }));

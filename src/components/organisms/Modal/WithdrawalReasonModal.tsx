@@ -1,24 +1,23 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, {Fragment, useCallback, useEffect, useState} from 'react';
 import PopupBox from '../../atoms/PopupBox';
 import ModalTitle from '../../molecules/ModalTitle';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
 import FlexBox from '../../atoms/FlexBox';
 import BasicButton from '../../atoms/Button/BasicButton';
-import { colors } from '../../../styles/Common.styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { isShow } from '../../../store/reducers/modalReducer';
+import {colors} from '../../../styles/Common.styles';
+import {useDispatch, useSelector} from 'react-redux';
+import {isShow} from '../../../store/reducers/modalReducer';
 import CheckBox from '../../atoms/CheckBox';
-import { useForm } from 'react-hook-form';
-import { InputType } from '../../../common/types/commonTypes';
-import { ReducerType } from '../../../store/reducers';
+import {useForm} from 'react-hook-form';
+import {ReducerType} from '../../../store/reducers';
 import Input from '../../atoms/Input';
 import Form from '../../atoms/Form';
-import { useMutation } from 'react-query';
-import { fetchUserInfoUpdateApi, fetchWithdrawalUserApi } from '../../../api/userApi';
-import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
-import { useRouter } from 'next/router';
-import { showToast } from '../../../store/reducers/toastReducer';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
+import {useMutation} from 'react-query';
+import {fetchWithdrawalUserApi} from '../../../api/userApi';
+import {updateQueryStatus} from '../../../store/reducers/useQueryControlReducer';
+import {useRouter} from 'next/router';
+import {showToast} from '../../../store/reducers/toastReducer';
+import {clearLocalStorage} from '../../../common/util/commonFunc';
 
 const WithdrawalReasonModal = () => {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useState} from 'react';
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 // Components
 import PopupBox from '../../atoms/PopupBox';
 import ModalTitle from '../../molecules/ModalTitle';
@@ -10,21 +10,19 @@ import Input from '../../atoms/Input';
 import BasicButton from '../../atoms/Button/BasicButton';
 import Form from '../../atoms/Form';
 // libraries
-import { useForm } from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 // Styles
 // Types
-import { InputType } from '../../../common/types/commonTypes';
-import { ReducerType } from '../../../store/reducers';
-import { fetchTeamListApi, fetchUpdateTeamApi } from '../../../api/teamApi';
-import { isShow } from '../../../store/reducers/modalReducer';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { updateSelectTeamList, updateTeamInfo, updateTeamSeq } from '../../../store/reducers/teamReducer';
-import { showToast } from '../../../store/reducers/toastReducer';
-import { fetchRefreshToken } from '../../../api/authApi';
-import { QueryCache } from 'react-query';
-import { useRouter } from 'next/router';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
-import { getRefreshToken } from '../../../store/reducers/authReducer';
+import {InputType} from '../../../common/types/commonTypes';
+import {ReducerType} from '../../../store/reducers';
+import {fetchTeamListApi, fetchUpdateTeamApi} from '../../../api/teamApi';
+import {isShow} from '../../../store/reducers/modalReducer';
+import {QueryCache, useMutation, useQuery, useQueryClient} from 'react-query';
+import {updateSelectTeamList, updateTeamInfo, updateTeamSeq} from '../../../store/reducers/teamReducer';
+import {showToast} from '../../../store/reducers/toastReducer';
+import {useRouter} from 'next/router';
+import {clearLocalStorage} from '../../../common/util/commonFunc';
+import {getRefreshToken} from '../../../store/reducers/authReducer';
 
 interface PropsType {
   first?: boolean;

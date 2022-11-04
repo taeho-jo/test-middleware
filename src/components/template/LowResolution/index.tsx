@@ -18,7 +18,7 @@ import { useRouter } from 'next/router';
 const LowResolution = () => {
   const dispatch = useDispatch();
   const { push } = useRouter();
-  const infoText = `아쉽게도 현재 Diby는 1440p 이상 해상도에서 모든 기능을 원활하게 이용하실 수 있습니다.\n해당 해상도를 지원하는 PC나 태블릿 등의\n웹 브라우저를 통해 접속하시면 모든 기능을 이용하실 수 있습니다.`;
+  const infoText = `아쉽게도 현재 Diby는 PC 환경에서\n모든 기능을 원활하게 이용하실 수 있습니다.\nPC의 웹 브라우저를 통해 접속하시면 모든 기능을 이용하실 수 있습니다.`;
 
   const handleLogout = useCallback(async () => {
     const channelTalk = new ChannelService();
