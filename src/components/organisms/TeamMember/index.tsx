@@ -120,12 +120,12 @@ const TeamMember = () => {
         dispatch(
           showDialog({
             show: true,
-            title: `팀에서 정말 나가사겠습니까?`,
+            title: `팀에서 정말 나가시겠습니까?`,
             content: `${teamMemberInfo?.userName}님을\n${selectTeam?.teamNm}팀에서 삭제합니다.`,
             okButton: '나가기',
             cancelButton: '취소하기',
             okButtonColor: colors.red,
-            okFunction: () => dispatch(removeTeamMemberAction({ teamSeq: teamMemberInfo?.teamSeq, userId: teamMemberInfo?.userId })),
+            okFunction: () => dispatch(removeTeamMemberAction({ teamSeq: teamMemberInfo?.teamSeq, userId: teamMemberInfo?.userId, callback:() => router.push('/') })),
           }),
         );
       }

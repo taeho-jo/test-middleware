@@ -47,8 +47,8 @@ function* getTeamListSaga(action) {
       }
       // TODO: 살펴볼 필요가 있음
       else {
+        yield put(updateTeamInfo(list));
         if (!action.payload?.teamSeq) {
-          yield put(updateTeamInfo(list));
           yield put(updateSelectTeamList(list[0]));
           yield put(updateTeamSeq(list[0]?.teamSeq));
         }
@@ -112,6 +112,7 @@ function* removeTeamMemberSaga(action) {
       yield put(showToast({ message: `${response?.message}`, isShow: true, status: 'success', duration: 5000 }));
       yield put(getTeamList({ teamSeq: action.payload.teamSeq }));
       yield put(getTeamMemberListAction(action.payload.teamSeq));
+      action?.payload?.callback()
     }
   } catch (e: any) {
     console.error(e);

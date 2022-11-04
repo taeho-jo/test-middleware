@@ -1,7 +1,7 @@
 import React from 'react';
 // Redux
-import { useSelector } from 'react-redux';
-import { ReducerType } from '../../../store/reducers';
+import {useSelector} from 'react-redux';
+import {ReducerType} from '../../../store/reducers';
 // Components
 import Modal from '../../atoms/Modal';
 import LoginModal from '../Modal/LoginModal';
@@ -18,7 +18,6 @@ import CustomerResearchModuleModal from '../Modal/CustomerResearchModuleModal';
 import TeamNameModifyModal from '../Modal/TeamNameModifyModal';
 import TeamProductCreateModal from '../Modal/TeamProductCreateModal';
 import TeamProductModifyModal from '../Modal/TeamProductModifyModal';
-import ChangeAuthModal from '../Modal/ChangeAuthModal';
 import ProfileUpdateNickNameModal from '../Modal/ProfileUpdateNickNameModal';
 import ProfileUpdateCpPositionModal from '../Modal/ProfileUpdateCpPositionModal';
 import ProfileUpdateCpSize from '../Modal/ProfileUpdateCpSize';
@@ -28,15 +27,12 @@ import RecommendedCustomerIndexModal from '../Modal/RecommendedCustomerIndexModa
 import OriginDataModal from '../Modal/OriginDataModal';
 import CommentModal from '../Modal/CommentModal';
 import ShareReportModal from '../Modal/ShareReportModal';
-import RemoveMemberModal from '../Modal/RemoveMemberModal';
 import ReInviteModal from '../Modal/ReInviteModal';
-import WithdrawalTeamModal from '../Modal/WithdrawalTeamModal';
 import WithdrawalModal from '../Modal/WithdrawalModal';
 import WithdrawalReasonModal from '../Modal/WithdrawalReasonModal';
 import CancelWithdrawalModal from '../Modal/CancelWithdrawalModal';
 import WithdrawalUserSignupModal from '../Modal/WithdrawalUserSignupModal';
 import ConsentToUseMarketingAgreeModal from '../Modal/ConsentToUseMarketingAgreeModal';
-// import ResearchStatusChangeModal from '../Modal/ResearchStatusChangeModal';
 import ResearchDeleteConfirmModal from '../Modal/ResearchDeleteConfirmModal';
 import ResearchCostModal from '../Modal/ResearchCostModal';
 import ResearchStartModal from '../Modal/ResearchStartModal';
@@ -67,9 +63,6 @@ const CommonModal = () => {
           {modalType === 'scenarioResearchModule' && <ScenarioResearchModuleModal />}
           {modalType === 'customerResearchModule' && <CustomerResearchModuleModal />}
           {modalType === 'shortSurveyResearchModule' && <ShortSurveyResearchModule />}
-          {modalType === 'changeMemberAuth' && <ChangeAuthModal />}
-          {modalType === 'removeMember' && <RemoveMemberModal />}
-          {modalType === 'withdrawalTeam' && <WithdrawalTeamModal />}
           {modalType === 'inviteMember' && <ReInviteModal />}
           {modalType === 'profileNickName' && <ProfileUpdateNickNameModal />}
           {modalType === 'profileCpPosition' && <ProfileUpdateCpPositionModal />}
@@ -85,7 +78,6 @@ const CommonModal = () => {
           {modalType === 'withdrawalReasonModal' && <WithdrawalReasonModal />}
           {modalType === 'cancelWithdrawalModal' && <CancelWithdrawalModal />}
           {modalType === 'withdrawalUserSignupModal' && <WithdrawalUserSignupModal />}
-          {/*{modalType === 'researchStatusChangeModal' && <ResearchStatusChangeModal />}*/}
           {modalType === 'researchDeleteConfirmModal' && <ResearchDeleteConfirmModal />}
           {modalType === 'researchCostModal' && <ResearchCostModal />}
           {modalType === 'researchStartModal' && <ResearchStartModal />}
