@@ -117,7 +117,7 @@ const Sidebar = ({ showSidebar, onClick }: PropsTyps) => {
       </FlexBox>
       {MENU_LIST.map((el, index) => {
         return (
-          <Fragment key={index}>
+          <Fragment key={el.label}>
             <FlexBox padding={'10px 30px'} justify={'space-between'} width={'80%'} onClick={() => handleClickMenu(el.label, el.path, false)}>
               {el.child.length === 0 ? null : el.child.length > 0 && showSubMenu && subMenuName === el.label ? (
                 <MdOutlineKeyboardArrowDown color={'white'} size={28} cursor={'pointer'} onClick={() => handleClickMenu(el.label, el.path, false)} />
