@@ -42,8 +42,12 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
   const handleLogout = useCallback(async () => {
     const channelTalk = new ChannelService();
     channelTalk.shutdown();
-
+    const cookies = new Cookies();
+    cookies.remove('accessToken', { path: '/' });
+    cookies.remove('emailVerifiedYn', { path: '/' });
+    cookies.remove('firstTimeYn', { path: '/' });
     clearLocalStorage();
+
     dispatch(userReset());
     dispatch(authReset());
     dispatch(teamReset());

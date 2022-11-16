@@ -213,19 +213,6 @@ const Layout = ({ children }: PropsType) => {
           dispatch(updateCancelWithdrawal(true));
         }
       }
-
-      // 1. 쿼리스트링 받아옴
-      // 로그인 = token, 회원가입 = rToken
-      // 구글 = gToken, 초대 = iToken, 재설정 = rToken , 이메일인증 = cToken,
-      // if (iToken) {
-      //   // 초대(쿼리)
-      // } else if (gToken) {
-      //   // 구글(쿼리)
-      // } else if (rToken) {
-      //   // 재설정(쿼리)
-      // } else {
-      //   // 로그인, 회원가입
-      // }
     }
   }, [router.query, token]);
 
@@ -360,7 +347,7 @@ const Layout = ({ children }: PropsType) => {
   if (token && userInfo?.emailVerifiedYn === 'N') {
     return (
       <>
-        <LowResolution />
+        {process.env.NODE_ENV === 'production' && <LowResolution />}
         <div css={mainContainer}>
           <main css={contentsContainer}>
             <canvas css={gradientCanvas(showGradient)} id="gradient-canvas" ref={canvasRef}></canvas>
@@ -384,7 +371,7 @@ const Layout = ({ children }: PropsType) => {
   if (token && userInfo?.emailVerifiedYn === 'Y') {
     return (
       <>
-        <LowResolution />
+        {process.env.NODE_ENV === 'production' && <LowResolution />}
         {separateDomain()}
         <AuthToast position={'top-center'} />
         <CommonModal />
@@ -399,7 +386,7 @@ const Layout = ({ children }: PropsType) => {
       <>
         {router.pathname === '/admin/report/[id]' ? (
           <>
-            <LowResolution />
+            {process.env.NODE_ENV === 'production' && <LowResolution />}
             <div css={mainContainer}>
               <main css={contentsContainer}>
                 <ReportLayout>{children}</ReportLayout>
@@ -413,7 +400,7 @@ const Layout = ({ children }: PropsType) => {
           </>
         ) : router.pathname === '/admin/research/recommendation' || router.pathname === '/admin/research/recommendation/result' ? (
           <>
-            <LowResolution />
+            {process.env.NODE_ENV === 'production' && <LowResolution />}
             <div css={mainContainer}>
               <main css={contentsContainer}>
                 <CommonHeader researchHeader={true} />

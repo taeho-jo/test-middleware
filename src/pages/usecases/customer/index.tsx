@@ -7,4 +7,4 @@ const Customer = () => {
   return <Solution4 />;
 };
 
-export default withTokenAuth(Customer, true);
+export default Customer;

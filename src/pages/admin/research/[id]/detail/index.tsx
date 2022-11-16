@@ -523,7 +523,7 @@ const ResearchDetail = () => {
   );
 };
 
-export default withTokenAuth(ResearchDetail, false);
+export default ResearchDetail;
 
 const mainContainerStyle = css`
   display: flex;

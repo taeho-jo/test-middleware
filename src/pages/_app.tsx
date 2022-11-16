@@ -21,6 +21,7 @@ import 'slick-carousel/slick/slick-theme.css';
 // Types
 import type { AppProps } from 'next/app';
 import type { NextPage } from 'next';
+import Layout2 from '../common/layouts/Layout2';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -57,11 +58,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           <Hydrate state={pageProps.dehydratedState}>
             <ThemeProvider theme={theme}>
               <GlobalStyles />
-              <Layout>
+              <Layout2>
                 {/*<AppAnimation>*/}
                 <Component {...pageProps} />
                 {/*</AppAnimation>*/}
-              </Layout>
+              </Layout2>
               {/*<Script type="text/javascript" src="/lib/beusableHeatmap.js" />*/}
             </ThemeProvider>
           </Hydrate>

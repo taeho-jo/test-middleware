@@ -18,8 +18,12 @@ import { isShow } from '../../reducers/modalReducer';
 import { getUserInfo, updateCancelWithdrawal, userReset } from '../../reducers/userReducer';
 import { teamReset } from '../../reducers/teamReducer';
 import { researchReset } from '../../reducers/researchCreateReducer';
+import { Cookies } from 'react-cookie';
+const cookies = new Cookies();
+const expires = new Date();
+expires.setDate(expires.getDate() + 9);
 
-// 로그인
+// 로그인 saga
 function* loginSaga(action) {
   try {
     const sendObject = {
@@ -28,13 +32,24 @@ function* loginSaga(action) {
     };
     const response = yield call(fetchLoginApi, sendObject);
     if (response?.code === '200') {
-      localStorage.setItem('accessToken', response.data.token);
+      // 쿠키에 token 저장
+      cookies.set(`accessToken`, response.data.token, { path: '/', expires });
+
+      // store token 세팅
       yield put(setToken(response.data.token));
       yield put(showToast({ message: response.message, isShow: true, status: 'success', duration: 5000 }));
-      yield put(getUserInfo());
+
+      // UserInfo 호출
+      yield put(getUserInfo({ callback: action.payload.emailLoginCallback }));
+
+      //
+      if (!action.payload?.callback) {
+        window.location.href = '/admin/team';
+      }
       if (action.payload.callback) {
         action.payload.callback.push('/admin/research/create');
       }
+      // 초대
       if (action.payload.joinCallback) {
         action.payload.joinCallback.push(`/?teamSeq=${action.payload.teamSeq}&token=${response.data.token}`);
       }
@@ -74,7 +89,7 @@ function* confirmEmailSaga(action) {
     const response = yield call(fetchEmailConfirmApi);
 
     yield put(isShow({ isShow: false, type: '' }));
-    yield put(getUserInfo());
+    yield put(getUserInfo({ callback: action.payload?.callback }));
   } catch (e) {
     console.error(e);
 
@@ -101,7 +116,8 @@ function* getRefreshTokenSaga() {
     const result = yield call(fetchRefreshToken);
     if (result.code === '200') {
       const token = result?.data?.token;
-      localStorage.setItem('accessToken', token);
+      cookies.set(`accessToken`, token, { path: '/', expires });
+      // localStorage.setItem('accessToken', token);
       yield put(getRefreshTokenSuccess(token));
     }
   } catch (e: any) {
@@ -111,15 +127,17 @@ function* getRefreshTokenSaga() {
       yield put(teamReset());
       yield put(researchReset());
 
-      clearLocalStorage();
-      window.location.href = 'https://stag.diby.io';
+      // clearLocalStorage();
+      cookies?.remove('accessToken', { path: '/' });
+      window.location.href = process.env.NEXT_PUBLIC_DOMAIN;
     }
     if (e?.response?.data?.code === 'E0027') {
       yield put(userReset());
       yield put(authReset());
       yield put(teamReset());
       yield put(researchReset());
-      clearLocalStorage();
+      cookies?.remove('accessToken', { path: '/' });
+      // clearLocalStorage();
       yield put(showToast({ message: '세션이 만료되어 로그아웃되었습니다.', isShow: true, status: 'warning', duration: 5000 }));
     }
     console.error(e);

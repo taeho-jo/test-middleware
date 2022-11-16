@@ -6,4 +6,4 @@ const Ux = () => {
   return <Solution2 />;
 };
 
-export default withTokenAuth(Ux, true);
+export default Ux;

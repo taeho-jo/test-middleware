@@ -50,8 +50,8 @@ export const fetchSignupApi = async sendObject => {
 };
 
 // 이메일 확인 API
-export const fetchEmailConfirmApi = async () => {
-  return await AXIOS_POST('/user/confirm', {});
+export const fetchEmailConfirmApi = async (token?: string) => {
+  return await AXIOS_POST('/user/confirm', {}, token);
 };
 
 // 인증 이메일 재전송 API

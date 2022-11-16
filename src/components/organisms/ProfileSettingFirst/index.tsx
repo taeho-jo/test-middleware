@@ -175,4 +175,5 @@ const ProfileSettingFirst = () => {
   );
 };
 
-export default withTokenAuth(ProfileSettingFirst, false);
+// export default withTokenAuth(ProfileSettingFirst, false);
+export default ProfileSettingFirst;

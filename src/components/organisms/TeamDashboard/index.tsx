@@ -38,6 +38,9 @@ import FGD_IMAGE from '/public/assets/png/image_module_fgd.png';
 import HYPO_IMAGE from '/public/assets/png/senarioFrame.png';
 import SHORT_IMAGE from '/public/assets/png/image_module_quicktest.png';
 import { showToast } from '../../../store/reducers/toastReducer';
+import { getTeamList } from '../../../store/reducers/teamReducer';
+import { fetchEmailConfirmApi } from '../../../api/authApi';
+import axios from 'axios';
 const ResearchType = [
   {
     title: '1분만에 리서치 종류 추천받기',
@@ -296,6 +299,8 @@ const TeamDashboard = () => {
     const isLoginUser = cookies.get('isLogin');
     if (redirectPath && !isLoginUser) {
       router.push(redirectPath);
+    } else {
+      return;
     }
   }, [redirectPath]);
 
@@ -306,6 +311,10 @@ const TeamDashboard = () => {
       window.open(path);
     }
   };
+
+  useEffect(() => {
+    dispatch(getTeamList(null));
+  }, [dispatch]);
 
   return (
     <>

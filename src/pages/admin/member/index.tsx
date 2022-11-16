@@ -6,4 +6,4 @@ const Member = () => {
   return <TeamMember />;
 };
 
-export default withTokenAuth(Member, false);
+export default Member;

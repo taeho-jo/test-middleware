@@ -32,7 +32,6 @@ import { setUserInfo, updateCancelWithdrawal, updateWithdrawalUserInfo } from '.
 const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
 
 const LoginModal = () => {
-  const queryClient = useQueryClient();
   const router = useRouter();
   const dispatch = useDispatch();
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -41,9 +40,6 @@ const LoginModal = () => {
   const {
     register,
     handleSubmit,
-    reset,
-    watch,
-    getValues,
     formState: { errors },
   } = useForm<InputType>({});
   const onSubmit = data => handleLogin('success', data);
@@ -71,7 +67,7 @@ const LoginModal = () => {
         if (pathname === '/admin/research/recommendation/result') {
           dispatch(loginAction({ ...data, callback: router }));
         } else {
-          dispatch(loginAction(data));
+          dispatch(loginAction({ ...data, emailLoginCallback: router }));
         }
       }
     },
@@ -80,7 +76,6 @@ const LoginModal = () => {
 
   // 구글 로그인
   const loginWithGoogle = useCallback(() => {
-    // router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
     if (isWithdrawalUser) {
       router.push(
         `${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login&userDelWithdraw=Y`,
