@@ -17,7 +17,7 @@ const ResearchGuideStepFive = () => {
       const minMoney = 3000 + missionAdditionalCompensation(DETAIL_INFO?.detailDesignInfo?.length);
       const maxMoney = 15000 + missionAdditionalCompensation(DETAIL_INFO?.detailDesignInfo?.length);
       const panel = 50;
-      return `${((basicMoney + minMoney) * panel)?.toLocaleString()}원 ~ ${((basicMoney + maxMoney) * panel)?.toLocaleString()}원`;
+      return `${(basicMoney + minMoney * panel)?.toLocaleString()}원 ~ ${(basicMoney + maxMoney * panel)?.toLocaleString()}원`;
     }
     if (RESEARCH_TYPE === 'FGD') {
       const basicMoney = 1000000;
@@ -27,8 +27,8 @@ const ResearchGuideStepFive = () => {
     }
     if (RESEARCH_TYPE === 'UX_POSITION_ANALYSIS') {
       const basicMoney = 600000;
-      const min = 600000 + 450000;
-      const max = 600000 + 1200000;
+      const min = 450000;
+      const max = 1200000;
       return `${(basicMoney + min)?.toLocaleString()}원 ~ ${(basicMoney + max)?.toLocaleString()}원`;
     }
     if (RESEARCH_TYPE === 'HYPOTHESIS_VERIFICATION') {
