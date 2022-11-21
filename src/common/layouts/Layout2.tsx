@@ -63,28 +63,14 @@ const Layout2 = ({ children }: PropsType) => {
     dispatch(getCommonCode());
   }, [dispatch]);
 
-  // token이 있고 pathname이 '/'일 경우 team dashboard로 이동
-  // useEffect(() => {
-  //   const accessToken = cookies.get('accessToken');
-  //   if (accessToken) {
-  //     router.push('/admin/team');
-  //   }
-  // }, [cookies]);
-
-  // 유입경로에 따른 이동
+  // 이메일 인증이 안된 로그인 계정일 경우 인증 모달 노출
   useEffect(() => {
-    if (queryToken) {
-      // 이메일 확인 API 호출
-      // if (!type) {
-      //   cookies.set(`accessToken`, queryToken, { path: '/', expires });
-      //   dispatch(confirmEmailAction({ callback: router }));
-      // }
-      // if (type === 'google') {
-      //   cookies.set(`accessToken`, queryToken, { path: '/', expires });
-      //   dispatch(getUserInfo({ callback: router }));
-      // }
+    const accessToken = cookies.get('accessToken');
+    const emailVerifiedYn = cookies.get('emailVerifiedYn');
+    if (accessToken && emailVerifiedYn === 'N') {
+      dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
     }
-  }, [teamSeq, queryToken, type, dispatch]);
+  }, [cookies]);
 
   useEffect(() => {
     if (router?.pathname !== '/' && router?.pathname !== '/admin/report/[id]') {
@@ -102,16 +88,15 @@ const Layout2 = ({ children }: PropsType) => {
   useEffect(() => {
     const channelTalk = new ChannelService();
 
-    const name = userInfo?.userName;
+    const name = userInfo.userName;
     const email = userInfo?.userId;
     const pluginKey = process.env.NEXT_PUBLIC_CHANNEL_IO_KEY;
     const secretKey = process.env.NEXT_PUBLIC_CHANNEL_IO_SECRET_KEY;
-
     channelTalk.boot({
       pluginKey,
     });
 
-    if (email !== '') {
+    if (userInfo && email !== '') {
       const memberId = createHmac('sha256', Buffer.from(secretKey, 'hex')).update(email).digest('hex');
       channelTalk.boot({
         pluginKey,

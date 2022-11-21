@@ -15,7 +15,7 @@ import { fetchEmailConfirmApi, fetchEmailResendApi, fetchLoginApi, fetchRefreshT
 import { clearLocalStorage } from '../../../common/util/commonFunc';
 import { showToast } from '../../reducers/toastReducer';
 import { isShow } from '../../reducers/modalReducer';
-import { getUserInfo, updateCancelWithdrawal, userReset } from '../../reducers/userReducer';
+import { getInviteUserInfo, getUserInfo, updateCancelWithdrawal, userReset } from '../../reducers/userReducer';
 import { teamReset } from '../../reducers/teamReducer';
 import { researchReset } from '../../reducers/researchCreateReducer';
 import { Cookies } from 'react-cookie';
@@ -33,25 +33,18 @@ function* loginSaga(action) {
     const response = yield call(fetchLoginApi, sendObject);
     if (response?.code === '200') {
       // 쿠키에 token 저장
-      cookies.set(`accessToken`, response.data.token, { path: '/', expires });
+      cookies.set(`accessToken`, response.data?.token, { path: '/', expires });
 
       // store token 세팅
-      yield put(setToken(response.data.token));
+      yield put(setToken(response.data?.token));
       yield put(showToast({ message: response.message, isShow: true, status: 'success', duration: 5000 }));
 
-      // UserInfo 호출
-      yield put(getUserInfo({ callback: action.payload.emailLoginCallback }));
-
-      //
-      if (!action.payload?.callback) {
-        window.location.href = '/admin/team';
-      }
-      if (action.payload.callback) {
-        action.payload.callback.push('/admin/research/create');
-      }
-      // 초대
-      if (action.payload.joinCallback) {
-        action.payload.joinCallback.push(`/?teamSeq=${action.payload.teamSeq}&token=${response.data.token}`);
+      if (action.payload.teamSeq) {
+        // 초대받았을 경우 UserInfo 호출
+        yield put(getInviteUserInfo({ teamSeq: action.payload.teamSeq, callback: action.payload.callback }));
+      } else {
+        // UserInfo 호출
+        yield put(getUserInfo({ callback: action.payload.callback }));
       }
     }
   } catch (e: any) {
@@ -89,7 +82,7 @@ function* confirmEmailSaga(action) {
     const response = yield call(fetchEmailConfirmApi);
 
     yield put(isShow({ isShow: false, type: '' }));
-    yield put(getUserInfo({ callback: action.payload?.callback }));
+    // yield put(getUserInfo());
   } catch (e) {
     console.error(e);
 

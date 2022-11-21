@@ -97,15 +97,17 @@ function AppBar({ dark = false }: { dark?: boolean }) {
         dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
       }
     },
-    [accessToken, userInfo.emailVerifiedYn],
+    [accessToken, userInfo?.emailVerifiedYn],
   );
 
   const handleLogout = useCallback(async () => {
     const channelTalk = new ChannelService();
     channelTalk.shutdown();
 
-    // clearLocalStorage();
     cookies.remove('accessToken', { path: '/' });
+    cookies.remove('emailVerifiedYn', { path: '/' });
+    cookies.remove('firstTimeYn', { path: '/' });
+    cookies.remove('userInfo', { path: '/' });
     dispatch(userReset());
     dispatch(authReset());
     dispatch(teamReset());

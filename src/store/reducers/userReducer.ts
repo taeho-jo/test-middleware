@@ -2,20 +2,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
 
 export interface UserInfoType {
-  authTokenProvider: string | null;
-  authTypeCd?: string | null;
+  consentToUseMarketingDt: string | null;
   consentToUseMarketingYn: string | null;
-  cpPostion: string | null;
-  cpSize: string | null;
-  cxResearch: string | null;
+  cpPositionType: string | null;
+  cpSizeType: string | null;
   emailVerifiedYn: string | null;
   firstTimeYn: string | null;
-  funnelsCd: string | null;
+  funnelsType: string | null;
   privacyConsentYn: string | null;
-  purposeOfUse: string | null;
+  remainingCredit: number | null;
   userId: string | null;
   userName: string | null;
-  userSeq: string | null;
+  userSeq: number | null;
 }
 
 export interface UserType {
@@ -38,20 +36,18 @@ export interface UserType {
 
 const initialState: UserType = {
   userInfo: {
-    authTokenProvider: '',
-    authTypeCd: '',
+    consentToUseMarketingDt: '',
     consentToUseMarketingYn: '',
-    cpPostion: '',
-    cpSize: '',
-    cxResearch: '',
+    cpPositionType: '',
+    cpSizeType: '',
     emailVerifiedYn: '',
     firstTimeYn: '',
-    funnelsCd: '',
+    funnelsType: '',
     privacyConsentYn: '',
-    purposeOfUse: '',
+    remainingCredit: null,
     userId: '',
     userName: '',
-    userSeq: '',
+    userSeq: null,
   },
   emailConfirm: false,
   teamMemberInfo: {
@@ -77,24 +73,23 @@ export const userSlice = createSlice({
       state.emailConfirm = action.payload;
     },
     setUserInfo: (state, action: PayloadAction<any>) => {
+      console.log(action);
       state.userInfo = action.payload;
     },
     removeUserInfo: state => {
       state.userInfo = {
-        authTokenProvider: '',
-        authTypeCd: '',
+        consentToUseMarketingDt: '',
         consentToUseMarketingYn: '',
-        cpPostion: '',
-        cpSize: '',
-        cxResearch: '',
+        cpPositionType: '',
+        cpSizeType: '',
         emailVerifiedYn: '',
         firstTimeYn: '',
-        funnelsCd: '',
+        funnelsType: '',
         privacyConsentYn: '',
-        purposeOfUse: '',
+        remainingCredit: null,
         userId: '',
         userName: '',
-        userSeq: '',
+        userSeq: null,
       };
     },
     setSelectTeamMember: (state, action: PayloadAction<any>) => {
@@ -111,6 +106,9 @@ export const userSlice = createSlice({
     },
     // Saga Redux
     getUserInfo: (state, action) => {
+      return state;
+    },
+    getInviteUserInfo: (state, action) => {
       return state;
     },
     getUserInfoSuccess: (state, action: PayloadAction<any>) => {
@@ -132,6 +130,7 @@ export const {
   updateWithdrawalUserInfo,
   // Saga Redux
   getUserInfo,
+  getInviteUserInfo,
   getUserInfoSuccess,
   userReset,
 } = userSlice.actions;
