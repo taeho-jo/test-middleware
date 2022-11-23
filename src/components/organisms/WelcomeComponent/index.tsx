@@ -140,7 +140,7 @@ const WelcomeComponent = () => {
 
   // 구글 로그인
   const loginWithGoogle = () => {
-    router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?teamSeq=${teamSeq}&type=google`);
+    router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/api/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?teamSeq=${teamSeq}&type=google`);
   };
 
   // 회원가입 시도 실패
