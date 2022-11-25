@@ -72,10 +72,6 @@ export const userSlice = createSlice({
     setEmailConfirm: (state, action: PayloadAction<boolean>) => {
       state.emailConfirm = action.payload;
     },
-    setUserInfo: (state, action: PayloadAction<any>) => {
-      console.log(action);
-      state.userInfo = action.payload;
-    },
     removeUserInfo: state => {
       state.userInfo = {
         consentToUseMarketingDt: '',
@@ -111,8 +107,14 @@ export const userSlice = createSlice({
     getInviteUserInfo: (state, action) => {
       return state;
     },
+    setUserInfo: (state, action: PayloadAction<any>) => {
+      state.userInfo = action.payload;
+    },
     getUserInfoSuccess: (state, action: PayloadAction<any>) => {
       state.userInfo = action.payload;
+    },
+    updateUserProfile: (state, action: PayloadAction<any>) => {
+      return state;
     },
     userReset(state) {
       Object.assign(state, initialState);
@@ -121,7 +123,6 @@ export const userSlice = createSlice({
 });
 
 export const {
-  setUserInfo,
   setEmailConfirm,
   removeUserInfo,
   setSelectTeamMember,
@@ -131,7 +132,9 @@ export const {
   // Saga Redux
   getUserInfo,
   getInviteUserInfo,
+  setUserInfo,
   getUserInfoSuccess,
+  updateUserProfile,
   userReset,
 } = userSlice.actions;
 export default userSlice.reducer;

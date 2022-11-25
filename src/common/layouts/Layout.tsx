@@ -61,7 +61,7 @@ const Layout = ({ children }: PropsType) => {
 
   useEffect(() => {
     if (token) {
-      dispatch(getUserInfo());
+      // dispatch(getUserInfo());
     }
   }, [token]);
 
@@ -69,7 +69,7 @@ const Layout = ({ children }: PropsType) => {
     onError: e => console.error('fetchEmailConfirm error::', e),
     onSuccess: data => {
       dispatch(isShow({ isShow: false, type: '' }));
-      dispatch(getUserInfo());
+      // dispatch(getUserInfo());
     },
   });
 
@@ -174,7 +174,7 @@ const Layout = ({ children }: PropsType) => {
       if (token && !userId && type && !teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
         dispatch(setToken(token));
-        dispatch(getUserInfo());
+        // dispatch(getUserInfo());
       }
       if (token && !userId && type && !teamSeq && !result && requestView) {
         localStorage.setItem('accessToken', `${token}`);
@@ -184,7 +184,7 @@ const Layout = ({ children }: PropsType) => {
       // 이메일 인증
       if (token && !userId && !type && !teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
-        dispatch(confirmEmailAction());
+        // dispatch(confirmEmailAction());
       }
       if (token && !userId && type && teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
@@ -193,7 +193,7 @@ const Layout = ({ children }: PropsType) => {
       if (token && !userId && !type && teamSeq && !result && !requestView) {
         localStorage.setItem('accessToken', `${token}`);
         // mutate();
-        dispatch(confirmEmailAction());
+        // dispatch(confirmEmailAction());
         inviteRefetch();
       }
       if (token && userId && !type && !teamSeq && !result && !requestView) {
