@@ -514,7 +514,7 @@ const Service20220705 = () => {
   );
 };
 
-export default withTokenAuth(Service20220705, true);
+export default Service20220705;
 
 const mainContainer = css`
   width: 100%;

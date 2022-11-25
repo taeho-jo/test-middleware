@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 import { persistor } from '../../pages/_app';
 import { profileColor2 } from './commonVar';
 import { colors } from '../../styles/Common.styles';
+import { Cookies } from 'react-cookie';
 
 export const isLandingPage = path => {
   switch (path) {
@@ -94,13 +95,17 @@ export const handleChoiceResearchStatusTooltip = statsType => {
 };
 
 export const clearLocalStorage = () => {
+  const cookies = new Cookies();
+  cookies.remove('accessToken', { path: '/' });
+  cookies.remove('emailVerifiedYn', { path: '/' });
+  cookies.remove('firstTimeYn', { path: '/' });
   // localStorage.removeItem('persist:root');
-  localStorage.removeItem('projectNm');
-  localStorage.removeItem('accessToken');
-  localStorage.removeItem('reactQueryDevtoolsSortFn');
-  localStorage.removeItem('commonCode');
-  localStorage.removeItem('selectTeamList');
-  localStorage.removeItem('teamSeq');
+  // localStorage.removeItem('projectNm');
+  // localStorage.removeItem('accessToken');
+  // localStorage.removeItem('reactQueryDevtoolsSortFn');
+  // localStorage.removeItem('commonCode');
+  // localStorage.removeItem('selectTeamList');
+  // localStorage.removeItem('teamSeq');
 };
 
 export const getBackgroundColor = index => {

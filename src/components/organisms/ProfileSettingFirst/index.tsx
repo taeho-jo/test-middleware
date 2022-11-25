@@ -22,7 +22,7 @@ import withTokenAuth from '../../../hoc/withTokenAuth';
 import { InputType } from '../../../common/types/commonTypes';
 import Select from '../../atoms/Select';
 import { useMutation } from 'react-query';
-import { setUserInfo } from '../../../store/reducers/userReducer';
+import { setUserInfo, updateUserProfile } from '../../../store/reducers/userReducer';
 import CheckBox from '../../atoms/CheckBox';
 
 const ProfileSettingFirst = () => {
@@ -47,16 +47,8 @@ const ProfileSettingFirst = () => {
     cpSize: '',
   });
 
-  const { mutate } = useMutation('fetchUserInfoUpdate', fetchUserInfoUpdateApi, {
-    onSuccess: data => {
-      dispatch(setUserInfo(data.data));
-      router.push('/admin/team');
-    },
-  });
-
   const handleUpdateUserInfo = useCallback(
     (status, data) => {
-      // loginResponse.mutate(data);
       const sendObject = {
         userName: data.userName ? data.userName : userInfo.userName,
         funnelsType: selected.funnelsCd ? selected.funnelsCd : null,
@@ -71,7 +63,7 @@ const ProfileSettingFirst = () => {
       //     delete sendObject[key];
       //   }
       // }
-      mutate(sendObject);
+      dispatch(updateUserProfile({ sendObject, callback: router }));
     },
     [selected],
   );
@@ -85,7 +77,6 @@ const ProfileSettingFirst = () => {
     [selected],
   );
 
-  // 로그인 시도 실패
   const handleProcessingError = useCallback((status, errors) => {
     console.log(errors, 'ERRORS');
   }, []);
@@ -175,4 +166,5 @@ const ProfileSettingFirst = () => {
   );
 };
 
-export default withTokenAuth(ProfileSettingFirst, false);
+// export default withTokenAuth(ProfileSettingFirst, false);
+export default ProfileSettingFirst;

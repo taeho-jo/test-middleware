@@ -6,4 +6,4 @@ const Detail = () => {
   return <TeamSettingDetail />;
 };
 
-export default withTokenAuth(Detail, false);
+export default Detail;

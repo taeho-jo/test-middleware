@@ -15,7 +15,6 @@ import icon3 from '../../../../public/assets/images/admin/team/uxposition_hover.
 import icon4 from '../../../../public/assets/png/abtest_hover.png';
 import icon5 from '../../../../public/assets/png/fgd_hover.png';
 import ResearchModuleButton from '../../atoms/ResearchModuleButton';
-import { isShow } from '../../../store/reducers/modalReducer';
 import ResearchList from '../ResearchList';
 import { ReducerType } from '../../../store/reducers';
 import { useRouter } from 'next/router';
@@ -37,7 +36,8 @@ import Ui from '/public/assets/png/uiFrame.png';
 import FGD_IMAGE from '/public/assets/png/image_module_fgd.png';
 import HYPO_IMAGE from '/public/assets/png/senarioFrame.png';
 import SHORT_IMAGE from '/public/assets/png/image_module_quicktest.png';
-import { showToast } from '../../../store/reducers/toastReducer';
+import { getTeamList } from '../../../store/reducers/teamReducer';
+
 const ResearchType = [
   {
     title: '1분만에 리서치 종류 추천받기',
@@ -296,6 +296,8 @@ const TeamDashboard = () => {
     const isLoginUser = cookies.get('isLogin');
     if (redirectPath && !isLoginUser) {
       router.push(redirectPath);
+    } else {
+      return;
     }
   }, [redirectPath]);
 
@@ -306,6 +308,10 @@ const TeamDashboard = () => {
       window.open(path);
     }
   };
+
+  useEffect(() => {
+    dispatch(getTeamList(null));
+  }, [dispatch]);
 
   return (
     <>

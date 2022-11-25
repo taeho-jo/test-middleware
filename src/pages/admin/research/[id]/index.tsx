@@ -431,7 +431,7 @@ const ResearchCreate = () => {
   );
 };
 
-export default withTokenAuth(ResearchCreate, false);
+export default ResearchCreate;
 
 export function getServerSideProps(context) {
   return {

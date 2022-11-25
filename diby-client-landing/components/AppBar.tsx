@@ -25,6 +25,7 @@ import { authReset } from '../../src/store/reducers/authReducer';
 import { teamReset } from '../../src/store/reducers/teamReducer';
 import { researchReset } from '../../src/store/reducers/researchCreateReducer';
 import { updateQueryStatus } from '../../src/store/reducers/useQueryControlReducer';
+import { Cookies } from 'react-cookie';
 
 const AppBarButton = styled(Button)({
   fontWeight: '700',
@@ -57,7 +58,9 @@ function AppBar({ dark = false }: { dark?: boolean }) {
   const [mobileMenuAnchor, setMobileMenuAnchor] = useState<HTMLButtonElement | null>(null);
   const isUseCaseOpen = Boolean(useCasesMenuAnchor);
   const isMobileMenuOpen = Boolean(mobileMenuAnchor);
-  const token = localStorage.getItem('accessToken');
+  const cookies = new Cookies();
+  const accessToken = cookies.get('accessToken');
+  // const token = localStorage.getItem('accessToken');
   const userId = sessionStorage.getItem('userId');
   const resetToken = sessionStorage.getItem('accessToken');
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
@@ -87,20 +90,24 @@ function AppBar({ dark = false }: { dark?: boolean }) {
   };
   const handleMoveAdmin = useCallback(
     (path: string) => {
-      if (token && userInfo?.emailVerifiedYn === 'Y') {
+      // if (token && userInfo?.emailVerifiedYn === 'Y') {
+      if (accessToken && userInfo?.emailVerifiedYn === 'Y') {
         navigate.push(path);
       } else {
         dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
       }
     },
-    [token, userInfo.emailVerifiedYn],
+    [accessToken, userInfo?.emailVerifiedYn],
   );
 
   const handleLogout = useCallback(async () => {
     const channelTalk = new ChannelService();
     channelTalk.shutdown();
 
-    clearLocalStorage();
+    cookies.remove('accessToken', { path: '/' });
+    cookies.remove('emailVerifiedYn', { path: '/' });
+    cookies.remove('firstTimeYn', { path: '/' });
+    cookies.remove('userInfo', { path: '/' });
     dispatch(userReset());
     dispatch(authReset());
     dispatch(teamReset());
@@ -167,7 +174,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
 
           {!isMobile && (
             <div>
-              {token && !userId ? (
+              {accessToken && !userId ? (
                 <>
                   <DesignButton style={{ color: darkMode ? 'white' : '#3c3c46' }} onClick={() => handleLogout()}>
                     로그아웃

@@ -42,8 +42,13 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
   const handleLogout = useCallback(async () => {
     const channelTalk = new ChannelService();
     channelTalk.shutdown();
-
+    const cookies = new Cookies();
+    cookies.remove('accessToken', { path: '/' });
+    cookies.remove('emailVerifiedYn', { path: '/' });
+    cookies.remove('firstTimeYn', { path: '/' });
+    cookies.remove('userInfo', { path: '/' });
     clearLocalStorage();
+
     dispatch(userReset());
     dispatch(authReset());
     dispatch(teamReset());
@@ -140,6 +145,7 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
 
       {router.pathname !== '/admin/research/recommendation' &&
         router.pathname !== '/admin/research/recommendation/result' &&
+        router.pathname !== '/admin/welcome' &&
         (isSessionStorage ? null : (
           <FlexBox justify={'flex-end'} align={'center'}>
             <FlexBox justify={'flex-end'} align={'center'} onClick={e => showLayerPopup(e)} style={{ cursor: 'pointer' }}>

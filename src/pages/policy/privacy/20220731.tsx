@@ -26,7 +26,7 @@ const Privacy20220712 = () => {
   );
 };
 
-export default withTokenAuth(Privacy20220712, true);
+export default Privacy20220712;
 const mainContainer = css`
   width: 100%;
   overflow-y: scroll;

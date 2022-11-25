@@ -1,11 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 // Redux
-import { showToast } from '../../../store/reducers/toastReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 // API
-import { fetchLoginApi } from '../../../api/authApi';
 // Libraries
 import { useForm } from 'react-hook-form';
 // Components
@@ -24,15 +22,12 @@ import { colors } from '../../../styles/Common.styles';
 import { body3_medium } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../../../common/types/commonTypes';
-import { fetchUserInfoApi } from '../../../api/userApi';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { loginAction, setToken, updateLoginType } from '../../../store/reducers/authReducer';
-import { setUserInfo, updateCancelWithdrawal, updateWithdrawalUserInfo } from '../../../store/reducers/userReducer';
+import { loginAction, updateLoginType } from '../../../store/reducers/authReducer';
+import { updateWithdrawalUserInfo } from '../../../store/reducers/userReducer';
 
 const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
 
 const LoginModal = () => {
-  const queryClient = useQueryClient();
   const router = useRouter();
   const dispatch = useDispatch();
   const modalShow = useSelector<ReducerType, boolean>(state => state.modal.isShow);
@@ -41,9 +36,6 @@ const LoginModal = () => {
   const {
     register,
     handleSubmit,
-    reset,
-    watch,
-    getValues,
     formState: { errors },
   } = useForm<InputType>({});
   const onSubmit = data => handleLogin('success', data);
@@ -65,13 +57,16 @@ const LoginModal = () => {
         userDelWithdraw: 'Y',
       };
       if (isWithdrawalUser) {
-        dispatch(loginAction(sendObject));
+        console.log('탈퇴유저 로그인');
+        // dispatch(loginAction(sendObject));
       } else {
         const pathname = router.pathname;
         if (pathname === '/admin/research/recommendation/result') {
-          dispatch(loginAction({ ...data, callback: router }));
+          console.log('리서치 추천 받은 유저');
+          // dispatch(loginAction({ ...data, callback: router }));
         } else {
-          dispatch(loginAction(data));
+          console.log('일반 유저 로그인');
+          dispatch(loginAction({ ...data, callback: router }));
         }
       }
     },
@@ -80,14 +75,13 @@ const LoginModal = () => {
 
   // 구글 로그인
   const loginWithGoogle = useCallback(() => {
-    // router.push(`https://stag-backend.diby.io/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google`);
     if (isWithdrawalUser) {
       router.push(
-        `${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login&userDelWithdraw=Y`,
+        `${process.env.NEXT_PUBLIC_GOOGLE}/api/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login&userDelWithdraw=Y`,
       );
     } else {
       dispatch(updateLoginType('google'));
-      router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login`);
+      router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/api/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=login`);
     }
   }, [isWithdrawalUser]);
 

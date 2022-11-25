@@ -3,7 +3,6 @@ import PopupBox from '../../atoms/PopupBox';
 import ModalTitle from '../../molecules/ModalTitle';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
 import Form from '../../atoms/Form';
-import Input from '../../atoms/Input';
 import FlexBox from '../../atoms/FlexBox';
 import BasicButton from '../../atoms/Button/BasicButton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,26 +10,14 @@ import { ReducerType } from '../../../store/reducers';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
 import Select from '../../atoms/Select';
-import { useMutation, useQueryClient } from 'react-query';
-import { fetchUserInfoUpdateApi } from '../../../api/userApi';
-import { setUserInfo } from '../../../store/reducers/userReducer';
-import { isShow } from '../../../store/reducers/modalReducer';
-import { showToast } from '../../../store/reducers/toastReducer';
+import { updateUserProfile } from '../../../store/reducers/userReducer';
+import { useRouter } from 'next/router';
 
 const ProfileUpdateCpPositionModal = () => {
-  const queryClient = useQueryClient();
   const dispatch = useDispatch();
+  const router = useRouter();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const commonCode = useSelector<ReducerType, any>(state => state.common.commonCode);
-
-  const { mutate } = useMutation('fetchUserInfoUpdate', fetchUserInfoUpdateApi, {
-    onSuccess: data => {
-      dispatch(setUserInfo(data.data));
-      queryClient.invalidateQueries(['fetchUserInfo', 'layout']);
-      dispatch(isShow({ isShow: false, type: '' }));
-      dispatch(showToast({ message: '직무가 수정되었습니다.', isShow: true, status: 'success', duration: 5000 }));
-    },
-  });
 
   const cpPositionType = commonCode?.CpPositionType;
   const userCpPosition = userInfo.cpPositionType;
@@ -48,7 +35,7 @@ const ProfileUpdateCpPositionModal = () => {
       const sendObject = {
         cpPositionType: selected.cpPosition,
       };
-      mutate(sendObject);
+      dispatch(updateUserProfile({ sendObject, callback: router, type: 'modify' }));
     },
     [selected],
   );
