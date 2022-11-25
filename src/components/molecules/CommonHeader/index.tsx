@@ -145,6 +145,7 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
 
       {router.pathname !== '/admin/research/recommendation' &&
         router.pathname !== '/admin/research/recommendation/result' &&
+        router.pathname !== '/admin/welcome' &&
         (isSessionStorage ? null : (
           <FlexBox justify={'flex-end'} align={'center'}>
             <FlexBox justify={'flex-end'} align={'center'} onClick={e => showLayerPopup(e)} style={{ cursor: 'pointer' }}>

@@ -7,24 +7,17 @@ import { showToast } from '../../../store/reducers/toastReducer';
 import FlexBox from '../../atoms/FlexBox';
 import BasicButton from '../../atoms/Button/BasicButton';
 import IconTextButton from '../../atoms/Button/IconTextButton';
-import { fetchLoginApi, fetchSignupApi } from '../../../api/authApi';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { ReducerType } from '../../../store/reducers';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
 import { CURRENT_DOMAIN, INVITE_CONFIRM_EMAIL_TEMPLATE } from '../../../common/util/commonVar';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { loginAction, setToken, signupAction } from '../../../store/reducers/authReducer';
+import { loginAction, signupAction } from '../../../store/reducers/authReducer';
 import { body3_medium } from '../../../styles/FontStyles';
 import TextButton from '../../atoms/Button/TextButton';
-import { isShow } from '../../../store/reducers/modalReducer';
-import { fetchInviteUserInfoApi, fetchUserInfoApi } from '../../../api/userApi';
-import { setUserInfo, updateCancelWithdrawal, updateWithdrawalUserInfo } from '../../../store/reducers/userReducer';
 import AnnouncementBox from '../../molecules/AnnouncementBox';
 
 const WelcomeComponent = () => {
-  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const localToken = localStorage.getItem('accessToken');
@@ -36,62 +29,11 @@ const WelcomeComponent = () => {
   const {
     register,
     handleSubmit,
-    reset,
-    watch,
-    // setFocus,
     formState: { errors },
   } = useForm<InputType>({});
   const onSubmit = data => (toggleStatus ? handleLogin('loginsuccess', data) : handleSignup('success', data));
   const onError = errors => handleProcessingError('fail', errors);
 
-  // ============ React Query ============ //
-  // 로그인
-  // const { mutate: loginMutate, data: loginData } = useMutation(['login'], fetchLoginApi, {
-  //   onError: (e: any) => {
-  //     const { data } = e.response;
-  //     dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
-  //   },
-  //   onSuccess: data => {
-  //     // localStorage.setItem('accessToken', data?.data?.token);
-  //     router.push(`/?teamSeq=${teamSeq}&token=${data?.data?.token}`);
-  //   },
-  // });
-
-  const { mutate: signupMutate, data: signupData } = useMutation(['signup', 'invite', teamSeq], fetchSignupApi, {
-    onError: (e: any) => {
-      const { data } = e.response;
-      dispatch(showToast({ message: data.message, isShow: true, status: 'warning', duration: 5000 }));
-    },
-  });
-
-  useEffect(() => {
-    if (signupData) {
-      localStorage.setItem('accessToken', signupData.data.token);
-      dispatch(setToken(signupData.data.token));
-      dispatch(showToast({ message: '회원가입에 성공하셨습니다.', isShow: true, status: 'success', duration: 5000 }));
-      queryClient.invalidateQueries(['fetchInviteUserInfo']);
-    }
-  }, [signupData]);
-
-  // const { data: signUpUsersInfo, refetch: inviteInfoRefetch } = useQuery(
-  //   ['fetchInviteUserInfo'],
-  //   () => fetchInviteUserInfoApi(router.query.teamSeq, loginData?.data.token),
-  //   {
-  //     enabled: !!signupData?.code,
-  //     onSuccess: data => {
-  //       dispatch(setUserInfo(data.data));
-  //       if (data.data.emailVerifiedYn === 'N') {
-  //         dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-  //       }
-  //       if (data.data.emailVerifiedYn === 'Y') {
-  //         router.push('/admin/team');
-  //       }
-  //     },
-  //   },
-  // );
-  // ============ React Query ============ //
-
-  // token이 있는 경우 --> 로그인이 되어있는 경우
   // 회원가입 후
   const handleSignup = useCallback(
     (status, signupData) => {
@@ -140,7 +82,7 @@ const WelcomeComponent = () => {
 
   // 구글 로그인
   const loginWithGoogle = () => {
-    router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?teamSeq=${teamSeq}&type=google`);
+    router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/api/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?teamSeq=${teamSeq}&type=google`);
   };
 
   // 회원가입 시도 실패
@@ -213,10 +155,6 @@ const WelcomeComponent = () => {
               </FlexBox>
             </>
           )}
-          {/*<FlexBox style={{ marginTop: '32px' }} direction={'column'} align={'center'} justify={'space-between'}>*/}
-          {/*  <BasicButton type={'submit'} text={'간편하게 시작하기'} style={{ marginBottom: '34px' }} />*/}
-          {/*  <IconTextButton onClick={loginWithGoogle} name={'GOOGLE'} iconPosition={'left'} text={'구글로 시작하기'} textStyle={'custom'} />*/}
-          {/*</FlexBox>*/}
         </Form>
       </PopupBox>
     </FlexBox>

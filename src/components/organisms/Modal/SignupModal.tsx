@@ -1,11 +1,11 @@
-import React, {useCallback} from 'react';
-import {useRouter} from 'next/router';
+import React, { useCallback } from 'react';
+import { useRouter } from 'next/router';
 // Redux
-import {useDispatch, useSelector} from 'react-redux';
-import {isShow, updateReturnPage} from '../../../store/reducers/modalReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { isShow, updateReturnPage } from '../../../store/reducers/modalReducer';
 // API
 // Libraries
-import {useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 // Components
 import FlexBox from '../../atoms/FlexBox';
 import PopupBox from '../../atoms/PopupBox';
@@ -16,15 +16,15 @@ import ModalTitle from '../../molecules/ModalTitle';
 import BasicButton from '../../atoms/Button/BasicButton';
 import IconTextButton from '../../atoms/Button/IconTextButton';
 // Styles
-import {body3_medium, caption1_regular} from '../../../styles/FontStyles';
-import {colors} from '../../../styles/Common.styles';
+import { body3_medium, caption1_regular } from '../../../styles/FontStyles';
+import { colors } from '../../../styles/Common.styles';
 // Typesz
 // import { InputType } from '../AddInfoPopup';
-import {InputType} from '../../../common/types/commonTypes';
-import {ReducerType} from '../../../store/reducers';
-import {CURRENT_DOMAIN, EMAIL_CONFIRM_TEMPLATE} from '../../../common/util/commonVar';
-import {useQueryClient} from 'react-query';
-import {signupAction} from '../../../store/reducers/authReducer';
+import { InputType } from '../../../common/types/commonTypes';
+import { ReducerType } from '../../../store/reducers';
+import { CURRENT_DOMAIN, EMAIL_CONFIRM_TEMPLATE } from '../../../common/util/commonVar';
+import { useQueryClient } from 'react-query';
+import { signupAction } from '../../../store/reducers/authReducer';
 import AnnouncementBox from '../../molecules/AnnouncementBox';
 
 // const CURRENT_DOMAIN = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.NEXT_PUBLIC_DOMAIN;
@@ -64,7 +64,7 @@ const SignupModal = () => {
 
   // 구글 로그인
   const loginWithGoogle = useCallback(() => {
-    router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=register`);
+    router.push(`${process.env.NEXT_PUBLIC_GOOGLE}/api/oauth2/authorization/google?redirect_uri=${CURRENT_DOMAIN}?type=google&requestView=register`);
   }, []);
 
   // 회원가입 시도 실패
