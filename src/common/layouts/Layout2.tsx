@@ -138,6 +138,14 @@ const Layout2 = ({ children }: PropsType) => {
   }, [router.pathname]);
   // <------------- LandingPage css 및 animation 을 위한 useEffect -------------> //
 
+  // 기존에 localStorage에 토큰이 있다면 삭제
+  useEffect(() => {
+    const localAccessToken = localStorage.getItem('accessToken');
+    if (localAccessToken) {
+      localStorage.removeItem('accessToken');
+    }
+  }, []);
+
   return (
     <>
       <div css={mainContainer}>
