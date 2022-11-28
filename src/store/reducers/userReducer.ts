@@ -119,6 +119,9 @@ export const userSlice = createSlice({
     resetPassword: (state, action: PayloadAction<any>) => {
       return state;
     },
+    changePassword: (state, action: PayloadAction<any>) => {
+      return state;
+    },
     withdrawalUser: (state, action: PayloadAction<any>) => {
       return state;
     },
@@ -142,6 +145,7 @@ export const {
   getUserInfoSuccess,
   updateUserProfile,
   resetPassword,
+  changePassword,
   withdrawalUser,
   userReset,
 } = userSlice.actions;

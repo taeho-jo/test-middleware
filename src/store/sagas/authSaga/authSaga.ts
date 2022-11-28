@@ -53,7 +53,7 @@ function* loginSaga(action) {
         yield put(getInviteUserInfo({ teamSeq: action.payload.teamSeq, callback: action.payload.callback }));
       } else {
         // UserInfo 호출
-        yield put(getUserInfo({ callback: action.payload.callback }));
+        yield put(getUserInfo({ callback: action.payload.callback, recommendation: action.payload.recommendation }));
       }
     }
   } catch (e: any) {
