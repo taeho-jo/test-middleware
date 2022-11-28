@@ -69,14 +69,20 @@ const ResearchRecommendation = () => {
     }
   }, [recommendationStep]);
 
+  useEffect(() => {
+    console.log(selectQuestion);
+  }, [selectQuestion]);
+
   const handleMoveNextStep = () => {
     if (recommendationStep == 'step1') {
       if (selectQuestion.length === 0) {
         dispatch(showToast({ message: '선택지를 선택해주세요.', isShow: true, status: 'warning', duration: 5000 }));
       } else {
         const nextQuestionNum = selectQuestion[0]?.nextQuestionSeq;
+        const checkAlreadyIncludes = selectQuestion.filter(el => el.questionSeq === 2);
         dispatch(updateRecommendationStep(`step${nextQuestionNum}`));
-        if (nextQuestionNum === 3) {
+
+        if (checkAlreadyIncludes.length === 0 && nextQuestionNum === 3) {
           const skipQuestion = {
             questionSeq: 2,
             question: null,
@@ -200,10 +206,13 @@ const ResearchRecommendation = () => {
               //background: ;
             `}
           >
-            <button onClick={handleMovePrevStep} css={prevButtonStyle}>
-              <Icon name={'NAVIGATION_ARROW_LEFT'} />
-              이전
-            </button>
+            {recommendationStep !== 'step1' && (
+              <button onClick={handleMovePrevStep} css={prevButtonStyle}>
+                <Icon name={'NAVIGATION_ARROW_LEFT'} />
+                이전
+              </button>
+            )}
+
             {recommendationStep !== 'step5' && (
               <button onClick={() => handleMoveNextStep()} css={nextButtonStyle}>
                 다음
