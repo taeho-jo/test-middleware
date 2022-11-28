@@ -151,6 +151,7 @@ const Layout2 = ({ children }: PropsType) => {
     const localAccessToken = localStorage.getItem('accessToken');
     if (localAccessToken) {
       localStorage.removeItem('accessToken');
+      dispatch(isShow({ isShow: false, type: '' }));
     }
   }, []);
 
