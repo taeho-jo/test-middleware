@@ -56,19 +56,20 @@ const LoginModal = () => {
         password: data.password,
         userDelWithdraw: 'Y',
       };
-      if (isWithdrawalUser) {
-        console.log('탈퇴유저 로그인');
-        // dispatch(loginAction(sendObject));
+      // if (isWithdrawalUser) {
+      //   console.log('탈퇴유저 로그인');
+      //   console.log(sendObject, 'a');
+      // dispatch(loginAction(sendObject));
+      // } else {
+      const pathname = router.pathname;
+      if (pathname === '/admin/research/recommendation/result') {
+        console.log('리서치 추천 받은 유저');
+        // dispatch(loginAction({ ...data, callback: router }));
       } else {
-        const pathname = router.pathname;
-        if (pathname === '/admin/research/recommendation/result') {
-          console.log('리서치 추천 받은 유저');
-          // dispatch(loginAction({ ...data, callback: router }));
-        } else {
-          console.log('일반 유저 로그인');
-          dispatch(loginAction({ ...data, callback: router }));
-        }
+        console.log('일반 유저 로그인');
+        dispatch(loginAction({ ...data, callback: router }));
       }
+      // }
     },
     [isWithdrawalUser],
   );

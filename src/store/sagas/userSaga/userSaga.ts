@@ -1,11 +1,13 @@
 import { call, delay, put, takeEvery } from '@redux-saga/core/effects';
-import { getInviteUserInfo, getUserInfo, setUserInfo, updateUserProfile } from '../../reducers/userReducer';
-import { fetchInviteUserInfoApi, fetchUserInfoApi, fetchUserInfoUpdateApi } from '../../../api/userApi';
+import { getInviteUserInfo, getUserInfo, resetPassword, setUserInfo, updateUserProfile, withdrawalUser } from '../../reducers/userReducer';
+import { fetchInviteUserInfoApi, fetchUserInfoApi, fetchUserInfoUpdateApi, fetchWithdrawalUserApi } from '../../../api/userApi';
 import { isShow } from '../../reducers/modalReducer';
 import { getRefreshToken } from '../../reducers/authReducer';
 import { getProductList, getTeamList } from '../../reducers/teamReducer';
 import { Cookies } from 'react-cookie';
 import { showToast } from '../../reducers/toastReducer';
+import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { fetchResetPasswordEmailApi } from '../../../api/authApi';
 const cookies = new Cookies();
 const expires = new Date();
 expires.setDate(expires.getDate() + 9);
@@ -104,9 +106,54 @@ function* updateUserProfileInfo(action) {
     }
   }
 }
+// 비밀번호 초기화
+function* resetPasswordSaga(action) {
+  try {
+    console.log(action.payload);
+    const result = yield call(fetchResetPasswordEmailApi, action.payload.sendObject);
+    if (result.code === '200') {
+      yield put(showToast({ message: '비밀번호 재설정 메일이 발송되었습니다.', isShow: true, status: '', duration: 5000 }));
+      yield put(isShow({ isShow: true, type: 'confirmResetPassword' }));
+    }
+  } catch (e: any) {
+    console.error(e);
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(resetPassword({ sendObject: action.payload.sendObject }));
+    } else {
+      yield put(showToast({ message: `${e.response.data.message}`, isShow: true, status: 'warning', duration: 5000 }));
+    }
+  }
+}
+
+// 회원 탈퇴
+function* withdrawalUserSaga(action) {
+  try {
+    const result = yield call(fetchWithdrawalUserApi, action.payload.sendObject);
+    if (result.code === '200') {
+      yield put(isShow({ isShow: false, type: '' }));
+      clearLocalStorage();
+      yield put(showToast({ message: '회원 탈퇴 처리 되었습니다.', isShow: true, status: 'success', duration: 5000 }));
+
+      action.payload.callback.push('/');
+    }
+  } catch (e: any) {
+    console.error(e);
+    if (e?.response?.data?.code === 'E0008') {
+      yield put(getRefreshToken());
+      yield delay(1000);
+      yield put(withdrawalUser({ sendObject: action.payload.sendObject, callback: action.payload.callback }));
+    } else {
+      yield put(showToast({ message: '회원 탈퇴 처리에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
+    }
+  }
+}
 
 export function* userSaga() {
   yield takeEvery(getUserInfo, getUserInfoSaga);
   yield takeEvery(getInviteUserInfo, getInviteUserInfoSaga);
   yield takeEvery(updateUserProfile, updateUserProfileInfo);
+  yield takeEvery(withdrawalUser, withdrawalUserSaga);
+  yield takeEvery(resetPassword, resetPasswordSaga);
 }

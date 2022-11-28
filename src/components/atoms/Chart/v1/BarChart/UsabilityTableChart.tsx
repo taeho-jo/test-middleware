@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { body3_bold, body3_medium, caption2_regular, heading5_bold } from '../../../../styles/FontStyles';
-import { BasicBarChart } from '../index';
-import { basicBarTestData } from '../../../../assets/dummy/dummyData';
+import { body3_bold, body3_medium, caption2_regular, heading5_bold } from '../../../../../styles/FontStyles';
+import { BasicBarChart } from '../../index';
+import { basicBarTestData } from '../../../../../assets/dummy/dummyData';
 import { css } from '@emotion/react';
-import { checkIsInteger } from '../../../../common/util/commonFunc';
-import FlexBox from '../../FlexBox';
-import useOutsideClick from '../../../../hooks/useOutsideClick';
-import { colors } from '../../../../styles/Common.styles';
+import { checkIsInteger } from '../../../../../common/util/commonFunc';
+import FlexBox from '../../../FlexBox';
+import useOutsideClick from '../../../../../hooks/useOutsideClick';
+import { colors } from '../../../../../styles/Common.styles';
 interface PropsType {
   dataList: { name: string; value: number; fatality: number; mention: number }[];
   negative?: boolean;

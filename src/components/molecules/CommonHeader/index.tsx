@@ -47,7 +47,7 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
     cookies.remove('emailVerifiedYn', { path: '/' });
     cookies.remove('firstTimeYn', { path: '/' });
     cookies.remove('userInfo', { path: '/' });
-    clearLocalStorage();
+    // clearLocalStorage();
 
     dispatch(userReset());
     dispatch(authReset());

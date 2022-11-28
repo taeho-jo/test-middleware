@@ -1,13 +1,13 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LabelList } from 'recharts';
-import { basicBarTestData, basicBarTestData3 } from '../../../../assets/dummy/dummyData';
-import FlexBox from '../../FlexBox';
+import { basicBarTestData, basicBarTestData3 } from '../../../../../assets/dummy/dummyData';
+import FlexBox from '../../../FlexBox';
 import { css } from '@emotion/react';
-import { body3_bold, body3_medium, heading5_bold, heading5_medium, heading5_regular } from '../../../../styles/FontStyles';
-import { colors } from '../../../../styles/Common.styles';
-import { checkIsInteger } from '../../../../common/util/commonFunc';
-import useOutsideClick from '../../../../hooks/useOutsideClick';
-import ReportShortAnswerQuestionLayerPopup from '../../ReportShortAnswerQuestionLayerPopup';
+import { body3_bold, body3_medium, heading5_bold, heading5_medium, heading5_regular } from '../../../../../styles/FontStyles';
+import { colors } from '../../../../../styles/Common.styles';
+import { checkIsInteger } from '../../../../../common/util/commonFunc';
+import useOutsideClick from '../../../../../hooks/useOutsideClick';
+import ReportShortAnswerQuestionLayerPopup from '../../../ReportShortAnswerQuestionLayerPopup';
 interface PropsType {
   selectedIndex?: any;
   setSelectedIndex?: any;

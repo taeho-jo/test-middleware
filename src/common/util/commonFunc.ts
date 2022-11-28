@@ -6,6 +6,10 @@ import { persistor } from '../../pages/_app';
 import { profileColor2 } from './commonVar';
 import { colors } from '../../styles/Common.styles';
 import { Cookies } from 'react-cookie';
+import { userReset } from '../../store/reducers/userReducer';
+import { authReset } from '../../store/reducers/authReducer';
+import { teamReset } from '../../store/reducers/teamReducer';
+import { researchReset } from '../../store/reducers/researchCreateReducer';
 
 export const isLandingPage = path => {
   switch (path) {
@@ -96,16 +100,16 @@ export const handleChoiceResearchStatusTooltip = statsType => {
 
 export const clearLocalStorage = () => {
   const cookies = new Cookies();
+  // const dispatch = useDispatch();
   cookies.remove('accessToken', { path: '/' });
   cookies.remove('emailVerifiedYn', { path: '/' });
   cookies.remove('firstTimeYn', { path: '/' });
-  // localStorage.removeItem('persist:root');
-  // localStorage.removeItem('projectNm');
-  // localStorage.removeItem('accessToken');
-  // localStorage.removeItem('reactQueryDevtoolsSortFn');
-  // localStorage.removeItem('commonCode');
-  // localStorage.removeItem('selectTeamList');
-  // localStorage.removeItem('teamSeq');
+  cookies.remove('userInfo', { path: '/' });
+
+  // dispatch(userReset());
+  // dispatch(authReset());
+  // dispatch(teamReset());
+  // dispatch(researchReset());
 };
 
 export const getBackgroundColor = index => {
