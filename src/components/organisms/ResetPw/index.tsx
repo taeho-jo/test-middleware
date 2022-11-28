@@ -15,6 +15,7 @@ import TextButton from '../../atoms/Button/TextButton';
 import { useMutation } from 'react-query';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { useDispatch } from 'react-redux';
+import { changePassword } from '../../../store/reducers/userReducer';
 
 const pwInquiryInputArr = [
   {
@@ -40,19 +41,13 @@ const ResetPw = () => {
   const onSubmit = data => handleResetPassword('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const { mutate, isLoading, data } = useMutation(['fetchChangePassword'], fetchChangePasswordApi, {
-    onSuccess: data => {
-      dispatch(showToast({ message: '비밀번호가 성공적으로 변경되었습니다.', isShow: true, status: 'success', duration: 5000 }));
-      router.push('/admin/reset-password-success');
-    },
-  });
-
   const handleResetPassword = useCallback((status, data) => {
     const sendObject = {
       password: data.password,
     };
-    mutate(sendObject);
+    dispatch(changePassword({ sendObject, callback: router }));
   }, []);
+
   const handleProcessingError = useCallback((status, errors) => {
     // dispatch(showToast({ message: '가입된 계정이 없습니다. 다시 확인해주세요!', isShow: true, status: 'warning', duration: 5000 }));
   }, []);

@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 const permissionDomain = [
   '/admin/welcome',
   '/admin/research/recommendation',
+  '/admin/research/recommendation/result',
   '/admin/report/share',
   '/admin/reset-password',
   '/admin/reset-password-success',
@@ -24,7 +25,6 @@ export default function middleware(req: NextRequest) {
   const redirectUrl = req.nextUrl.clone();
 
   // 토큰이 있는 경우
-  // dispatch(getCommonCode());
   if (accessToken) {
     // 이메일 인증이 안되어 있는 경우에는 /admin 접근 불가
     if (emailVerifiedYn === 'N') {
@@ -42,10 +42,6 @@ export default function middleware(req: NextRequest) {
   }
   // 토큰이 없는 경우
   else {
-    // if (resetPasswordToken) {
-    //   console.log(resetPasswordToken);
-    //   return NextResponse.next();
-    // }
     if (permissionDomain.includes(currentPath) || searchParams.get('isShare') === 'true') {
       console.log(currentPath, 'currentPath');
       return NextResponse.next();

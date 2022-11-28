@@ -54,7 +54,6 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
           ...selected,
           [label]: value,
         });
-        console.log(value);
         // getResearchMethod(value)
         const name = label === 'method' ? 'researchType' : label === 'team' ? 'teamSeq' : 'productSeq';
         if (pageId === 'create') {
@@ -144,6 +143,7 @@ const CreateResearchStepOne = ({ detailInfo, setGuideStatus, getResearchMethod, 
           method: type,
           team: selectedTeamSeq,
         });
+
         setSelected({
           ...selected,
           method: type,

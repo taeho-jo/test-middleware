@@ -65,8 +65,8 @@ export const fetchResetPasswordEmailApi = async sendObject => {
 };
 
 // 비밀번호 재설정 API
-export const fetchChangePasswordApi = async sendObject => {
-  return await AXIOS_PATCH('/user/password', sendObject);
+export const fetchChangePasswordApi = async (sendObject, token) => {
+  return await AXIOS_PATCH('/user/password', sendObject, token);
 };
 
 // 토큰 refresh API

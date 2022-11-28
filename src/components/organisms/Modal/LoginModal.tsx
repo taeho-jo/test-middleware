@@ -64,7 +64,7 @@ const LoginModal = () => {
       const pathname = router.pathname;
       if (pathname === '/admin/research/recommendation/result') {
         console.log('리서치 추천 받은 유저');
-        // dispatch(loginAction({ ...data, callback: router }));
+        dispatch(loginAction({ ...data, callback: router, recommendation: true }));
       } else {
         console.log('일반 유저 로그인');
         dispatch(loginAction({ ...data, callback: router }));

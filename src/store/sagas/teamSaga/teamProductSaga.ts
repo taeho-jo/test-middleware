@@ -112,7 +112,7 @@ function* removeTeamMemberSaga(action) {
       yield put(showToast({ message: `${response?.message}`, isShow: true, status: 'success', duration: 5000 }));
       yield put(getTeamList({ teamSeq: action.payload.teamSeq }));
       yield put(getTeamMemberListAction(action.payload.teamSeq));
-      action?.payload?.callback()
+      action?.payload?.callback();
     }
   } catch (e: any) {
     console.error(e);
@@ -173,7 +173,7 @@ function* createTeamProductSaga(action) {
     }
   } catch (e: any) {
     console.error(e.response.data);
-    showToast({ message: `${e.response.data.message}`, isShow: true, status: 'warning', duration: 5000 });
+    yield put(showToast({ message: `${e.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
     yield put(getError(e));
     if (e?.response?.data?.code === 'E0008') {
       yield put(getRefreshToken());

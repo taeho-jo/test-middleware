@@ -14,9 +14,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../../../store/reducers';
 import { useRouter } from 'next/router';
 import { isShow } from '../../../../../store/reducers/modalReducer';
-import {resetRecommendationResult} from "../../../../../store/reducers/researchRecommendationReducer";
-import {updateRecommendationStep} from "../../../../../store/reducers/researchCreateReducer";
-import {setRedirectPath} from "../../../../../store/reducers/commonReducer";
+import { resetRecommendationResult } from '../../../../../store/reducers/researchRecommendationReducer';
+import { updateRecommendationStep } from '../../../../../store/reducers/researchCreateReducer';
+import { setRedirectPath } from '../../../../../store/reducers/commonReducer';
+import { Cookies } from 'react-cookie';
 
 const RESULT_OBJ = {
   UI_DIAGNOSIS: {
@@ -56,7 +57,8 @@ const Result = () => {
   const recommendationResult = useSelector<ReducerType, any>(state => state.researchRecommendation.recommendationResult);
   const router = useRouter();
   const handleMovePage = () => {
-    const token = localStorage.getItem('accessToken');
+    const cookies = new Cookies();
+    const token = cookies.get('accessToken');
     if (token) {
       router.push('/admin/research/create');
     } else {
@@ -65,11 +67,10 @@ const Result = () => {
   };
 
   const handleResetRecommendation = () => {
-    router.push('/admin/research/recommendation')
+    router.push('/admin/research/recommendation');
     dispatch(setRedirectPath(null));
     // dispatch(resetRecommendationResult())
-
-  }
+  };
 
   return (
     <div css={resultMainContainer}>
