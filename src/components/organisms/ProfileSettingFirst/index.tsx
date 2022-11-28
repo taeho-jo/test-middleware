@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PopupBox from '../../atoms/PopupBox';
 import ModalTitle from '../../molecules/ModalTitle';
 import Form from '../../atoms/Form';
@@ -37,26 +37,48 @@ const ProfileSettingFirst = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<InputType>({});
   const onSubmit = data => handleUpdateUserInfo('success', data);
   const onError = errors => handleProcessingError('fail', errors);
+  const [phoneNum, setPhoneNum] = useState('');
   const [selected, setSelected] = useState({
     funnelsCd: '',
     cpPosition: '',
     cpSize: '',
   });
 
+  // useEffect(() => {
+  //   console.log(
+  //     watch('phoneNumber')
+  //       .replace(/[^0-9]/g, '')
+  //       .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, '$1-$2-$3')
+  //       .replace(/(\-{1,2})$/g, ''),
+  //   );
+  // }, [watch('phoneNumber')]);
+
+  const changePhoneForm = value => {
+    const phone = value
+      .replace(/[^0-9]/g, '')
+      .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, '$1-$2-$3')
+      .replace(/(\-{1,2})$/g, '');
+
+    setPhoneNum(phone);
+  };
+
   const handleUpdateUserInfo = useCallback(
     (status, data) => {
       const sendObject = {
         userName: data.userName ? data.userName : userInfo.userName,
+        phoneNumber: data.phoneNumber,
         funnelsType: selected.funnelsCd ? selected.funnelsCd : null,
         cpPositionType: selected.cpPosition ? selected.cpPosition : null,
         cpSizeType: selected.cpSize ? selected.cpSize : null,
         firstTimeYn: 'N',
         consentToUseMarketingYn: data.agree ? 'Y' : 'N',
       };
+      console.log(sendObject);
       // TODO: 다 보내야 하는 지 체크 해보아야함.
       // for (const key in sendObject) {
       //   if (sendObject[key] === undefined || sendObject[key] === '' || sendObject[key] === null) {
@@ -105,10 +127,34 @@ const ProfileSettingFirst = () => {
           />
 
           <AnnouncementBox
-            style={{ padding: '12px 16px' }}
+            style={{ padding: '12px 16px', marginBottom: '16px' }}
             content={`<div>
                 닉네임을 입력하지 않을 경우,<br/>
                 회원님의 이메일 계정으로 닉네임이 생성돼요.
+              </div>`}
+          />
+
+          <Input
+            title={'휴대폰 번호(필수)'}
+            register={register}
+            label={'phoneNumber'}
+            errors={errors}
+            defaultValue={userInfo?.phoneNumber}
+            value={phoneNum}
+            maxlength="13"
+            placeholder={'휴대폰 번호를 입력해주세요.'}
+            style={{ marginBottom: '16px' }}
+            registerOptions={{
+              required: true,
+              onChange: e => changePhoneForm(e.target.value),
+              pattern: /^\d{3}-\d{3,4}-\d{4}$/,
+            }}
+          />
+
+          <AnnouncementBox
+            style={{ padding: '12px 16px' }}
+            content={`<div>
+                휴대폰 번호는 '-'을 제외한 숫자만 입력해주세요.
               </div>`}
           />
 
@@ -158,9 +204,6 @@ const ProfileSettingFirst = () => {
             <BasicButton theme={'dark'} type={'submit'} text={'적용하기'} style={{ marginBottom: '18px' }} />
           </FlexBox>
         </Form>
-        {/*<FlexBox justify={'center'} align={'center'}>*/}
-        {/*  <TextButton onClick={handleSkip} textStyle={body3_medium} text={'다음에 할게요.'} />*/}
-        {/*</FlexBox>*/}
       </PopupBox>
     </FlexBox>
   );

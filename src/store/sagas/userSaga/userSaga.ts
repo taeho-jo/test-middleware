@@ -114,6 +114,8 @@ function* updateUserProfileInfo(action) {
       yield put(getRefreshToken());
       yield delay(1000);
       yield put(updateUserProfile({ sendObject: action.payload.sendObject, callback: action.payload.callback }));
+    } else {
+      yield put(showToast({ message: `${e.response.data.message?.[0].error}`, isShow: true, status: 'warning', duration: 5000 }));
     }
   }
 }

@@ -8,7 +8,7 @@ import AOS from 'aos';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../store/reducers';
 import { getUserInfo, UserInfoType } from '../../store/reducers/userReducer';
-import { getCommonCode } from '../../store/reducers/commonReducer';
+import { closeResearchRecommendationModal, getCommonCode } from '../../store/reducers/commonReducer';
 import { updateFilterFail, updateFilterFlied, updateFilterValues } from '../../store/reducers/reportReducer';
 import { isShow } from '../../store/reducers/modalReducer';
 // Components
@@ -151,8 +151,13 @@ const Layout2 = ({ children }: PropsType) => {
     const localAccessToken = localStorage.getItem('accessToken');
     if (localAccessToken) {
       localStorage.removeItem('accessToken');
-      dispatch(isShow({ isShow: false, type: '' }));
+      // dispatch(isShow({ isShow: false, type: '' }));
+      // dispatch(closeResearchRecommendationModal());
     }
+  }, []);
+  useEffect(() => {
+    dispatch(isShow({ isShow: false, type: '' }));
+    dispatch(closeResearchRecommendationModal());
   }, []);
 
   return (
