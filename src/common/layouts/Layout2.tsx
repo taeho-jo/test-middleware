@@ -34,7 +34,15 @@ const expires = new Date();
 expires.setDate(expires.getDate() + 9);
 
 // 상수
-const ADMIN_ROUTE = ['/admin/team', '/admin/member', '/admin/setting', '/admin/profile/update', , '/admin/profile/credit'];
+const ADMIN_ROUTE = [
+  '/admin/team',
+  '/admin/member',
+  '/admin/setting',
+  '/admin/setting/detail',
+  '/admin/profile/update',
+  '/admin/profile/credit',
+  '/admin/report/share',
+];
 const RESEARCH_ROUTE = [
   '/admin/research/[id]',
   '/admin/research/[id]/detail',

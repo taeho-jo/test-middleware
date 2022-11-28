@@ -6,6 +6,7 @@ const permissionDomain = [
   '/admin/research/recommendation',
   '/admin/research/recommendation/result',
   '/admin/report/share',
+  '/admin/report/[id]',
   '/admin/reset-password',
   '/admin/reset-password-success',
 ];
@@ -23,6 +24,7 @@ export default function middleware(req: NextRequest) {
   const firstTimeYn = cookies.firstTimeYn;
   const currentPath = req?.nextUrl?.pathname;
   const redirectUrl = req.nextUrl.clone();
+  const isShare = searchParams.get('teamSeq');
 
   // 토큰이 있는 경우
   if (accessToken) {
@@ -43,7 +45,6 @@ export default function middleware(req: NextRequest) {
   // 토큰이 없는 경우
   else {
     if (permissionDomain.includes(currentPath) || searchParams.get('isShare') === 'true') {
-      console.log(currentPath, 'currentPath');
       return NextResponse.next();
     } else {
       redirectUrl.pathname = '/';
