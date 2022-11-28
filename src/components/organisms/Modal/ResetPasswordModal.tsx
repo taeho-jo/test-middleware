@@ -15,10 +15,8 @@ import { body3_medium } from '../../../styles/FontStyles';
 import TextButton from '../../atoms/Button/TextButton';
 import { useRouter } from 'next/router';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
-import { fetchResetPasswordEmailApi } from '../../../api/authApi';
 import { PASSWORD_RESET_TEMPLATE } from '../../../common/util/commonVar';
-import { useMutation } from 'react-query';
-import { showToast } from '../../../store/reducers/toastReducer';
+import { resetPassword } from '../../../store/reducers/userReducer';
 
 const subTitleArr = ['비밀번호 재설정을 위해', 'Diby 에서 사용한 이메일을 입력해주세요.'];
 
@@ -36,16 +34,6 @@ const ResetPasswordModal = () => {
   const onSubmit = data => handleResetPassword('success', data);
   const onError = errors => handleProcessingError('fail', errors);
 
-  const { mutate, data, isLoading } = useMutation(['fetchResetPassword'], fetchResetPasswordEmailApi, {
-    onError: (e: any) => {
-      dispatch(showToast({ message: `${e.response.data.message}`, isShow: true, status: 'warning', duration: 5000 }));
-    },
-    onSuccess: data => {
-      dispatch(showToast({ message: '비밀번호 재설정 메일이 발송되었습니다.', isShow: true, status: '', duration: 5000 }));
-      dispatch(isShow({ isShow: true, type: 'confirmResetPassword' }));
-    },
-  });
-
   const handleProcessingError = useCallback((status, errors) => {
     console.log(status, errors);
   }, []);
@@ -61,7 +49,7 @@ const ResetPasswordModal = () => {
       emailTemplateName: PASSWORD_RESET_TEMPLATE,
     };
     sessionStorage.setItem('userId', data.email);
-    mutate(sendObject);
+    dispatch(resetPassword({ sendObject }));
   }, []);
 
   return (
@@ -82,7 +70,7 @@ const ResetPasswordModal = () => {
               pattern: /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
             }}
           />
-          <BasicButton isLoading={isLoading} type={'submit'} text={'비밀번호 재설정 메일 보내기'} style={{ marginTop: '32px' }} />
+          <BasicButton type={'submit'} text={'비밀번호 재설정 메일 보내기'} style={{ marginTop: '32px' }} />
         </Form>
 
         <FlexBox

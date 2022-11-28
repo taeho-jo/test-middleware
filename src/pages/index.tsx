@@ -78,6 +78,19 @@ export async function getServerSideProps({ req, res, query }) {
           return response.data;
         }
 
+        // 비밀번호 재설정으로 접근
+        if (query.type === 'resetPassword') {
+          setCookie('resetPasswordToken', query.token, { req, res, maxAge: 24 * 60 * 60 * 1000 * 9 });
+          setCookie('userId', query.userId, { req, res, maxAge: 24 * 60 * 60 * 1000 * 9 });
+          return {
+            redirect: {
+              permanent: false,
+              destination: '/admin/reset-password',
+            },
+            props: {},
+          };
+        }
+
         // 구글 로그인
         if (query.type === 'google') {
           // 초대받은 회원 구글 로그인

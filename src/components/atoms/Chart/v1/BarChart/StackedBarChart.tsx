@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts';
-import FlexBox from '../../FlexBox';
-import { heading5_bold, heading5_regular } from '../../../../styles/FontStyles';
-import ReportShortAnswerQuestionLayerPopup from '../../ReportShortAnswerQuestionLayerPopup';
-import { chart_color, colors } from '../../../../styles/Common.styles';
-import TutorialIndicator from '../../TutorialIndicator/TutorialIndicator';
+import FlexBox from '../../../FlexBox';
+import { heading5_bold, heading5_regular } from '../../../../../styles/FontStyles';
+import ReportShortAnswerQuestionLayerPopup from '../../../ReportShortAnswerQuestionLayerPopup';
+import { chart_color, colors } from '../../../../../styles/Common.styles';
+import TutorialIndicator from '../../../TutorialIndicator/TutorialIndicator';
 import { useSelector } from 'react-redux';
-import { ReducerType } from '../../../../store/reducers';
+import { ReducerType } from '../../../../../store/reducers';
 import { useRouter } from 'next/router';
-import useOutsideClick from '../../../../hooks/useOutsideClick';
+import useOutsideClick from '../../../../../hooks/useOutsideClick';
 import { css } from '@emotion/react';
 
 interface PropsType {

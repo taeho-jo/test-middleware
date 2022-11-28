@@ -116,6 +116,12 @@ export const userSlice = createSlice({
     updateUserProfile: (state, action: PayloadAction<any>) => {
       return state;
     },
+    resetPassword: (state, action: PayloadAction<any>) => {
+      return state;
+    },
+    withdrawalUser: (state, action: PayloadAction<any>) => {
+      return state;
+    },
     userReset(state) {
       Object.assign(state, initialState);
     },
@@ -135,6 +141,8 @@ export const {
   setUserInfo,
   getUserInfoSuccess,
   updateUserProfile,
+  resetPassword,
+  withdrawalUser,
   userReset,
 } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,7 +1,13 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-const permissionDomain = ['/admin/welcome', '/admin/research/recommendation', '/admin/report/share'];
+const permissionDomain = [
+  '/admin/welcome',
+  '/admin/research/recommendation',
+  '/admin/report/share',
+  '/admin/reset-password',
+  '/admin/reset-password-success',
+];
 
 export default function middleware(req: NextRequest) {
   // const dispatch = useDispatch();
@@ -12,6 +18,7 @@ export default function middleware(req: NextRequest) {
 
   const accessToken = cookies.accessToken;
   const emailVerifiedYn = cookies.emailVerifiedYn;
+  const resetPasswordToken = cookies.resetPasswordToken;
   const firstTimeYn = cookies.firstTimeYn;
   const currentPath = req?.nextUrl?.pathname;
   const redirectUrl = req.nextUrl.clone();
@@ -35,7 +42,12 @@ export default function middleware(req: NextRequest) {
   }
   // 토큰이 없는 경우
   else {
+    // if (resetPasswordToken) {
+    //   console.log(resetPasswordToken);
+    //   return NextResponse.next();
+    // }
     if (permissionDomain.includes(currentPath) || searchParams.get('isShare') === 'true') {
+      console.log(currentPath, 'currentPath');
       return NextResponse.next();
     } else {
       redirectUrl.pathname = '/';

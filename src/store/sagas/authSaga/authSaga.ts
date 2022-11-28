@@ -15,7 +15,7 @@ import { fetchEmailConfirmApi, fetchEmailResendApi, fetchLoginApi, fetchRefreshT
 import { clearLocalStorage } from '../../../common/util/commonFunc';
 import { showToast } from '../../reducers/toastReducer';
 import { isShow } from '../../reducers/modalReducer';
-import { getInviteUserInfo, getUserInfo, updateCancelWithdrawal, userReset } from '../../reducers/userReducer';
+import { getInviteUserInfo, getUserInfo, updateCancelWithdrawal, updateWithdrawalUserInfo, userReset } from '../../reducers/userReducer';
 import { teamReset } from '../../reducers/teamReducer';
 import { researchReset } from '../../reducers/researchCreateReducer';
 import { Cookies } from 'react-cookie';
@@ -30,12 +30,21 @@ function* loginSaga(action) {
       userId: action.payload.userId,
       password: action.payload.password,
     };
-    const response = yield call(fetchLoginApi, sendObject);
+    const response = yield call(
+      fetchLoginApi,
+      action.payload.userDelWithdraw ? { ...sendObject, userDelWithdraw: action.payload.userDelWithdraw } : sendObject,
+    );
     if (response?.code === '200') {
       // 쿠키에 token 저장
       cookies.set(`accessToken`, response.data?.token, { path: '/', expires });
 
       // store token 세팅
+      yield put(
+        updateWithdrawalUserInfo({
+          userId: '',
+          password: '',
+        }),
+      );
       yield put(setToken(response.data?.token));
       yield put(showToast({ message: response.message, isShow: true, status: 'success', duration: 5000 }));
 
