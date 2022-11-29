@@ -17,8 +17,6 @@ import icon2 from '../../public/assets/images/icon_uxposition1.png';
 import icon3 from '../../public/assets/images/icon_scenario1.png';
 import icon4 from '../../public/assets/images/icon_customer1.png';
 import { ReducerType } from '../../src/store/reducers';
-import { clearLocalStorage } from '../../src/common/util/commonFunc';
-import { showToast } from '../../src/store/reducers/toastReducer';
 import ChannelService from '../../src/common/util/channelTalk';
 import { userReset } from '../../src/store/reducers/userReducer';
 import { authReset } from '../../src/store/reducers/authReducer';
@@ -26,6 +24,7 @@ import { teamReset } from '../../src/store/reducers/teamReducer';
 import { researchReset } from '../../src/store/reducers/researchCreateReducer';
 import { updateQueryStatus } from '../../src/store/reducers/useQueryControlReducer';
 import { Cookies } from 'react-cookie';
+import { clearCookies } from '../../src/common/util/commonFunc';
 
 const AppBarButton = styled(Button)({
   fontWeight: '700',
@@ -104,10 +103,7 @@ function AppBar({ dark = false }: { dark?: boolean }) {
     const channelTalk = new ChannelService();
     channelTalk.shutdown();
 
-    cookies.remove('accessToken', { path: '/' });
-    cookies.remove('emailVerifiedYn', { path: '/' });
-    cookies.remove('firstTimeYn', { path: '/' });
-    cookies.remove('userInfo', { path: '/' });
+    clearCookies();
     dispatch(userReset());
     dispatch(authReset());
     dispatch(teamReset());
@@ -317,48 +313,6 @@ function AppBar({ dark = false }: { dark?: boolean }) {
             <p style={{ width: '100%', fontSize: '16px', fontWeight: 'bold', textTransform: 'none', textAlign: 'left', margin: '0' }}>가격안내</p>
           </Button>
           <div style={{ margin: '0 -24px', borderTop: '1px dashed #ccc', opacity: '0.3' }} />
-
-          {/*TODO: 모바일 로그인 회원가입 주석*/}
-          {/*{token && !userId ? (*/}
-          {/*  <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '18px' }}>*/}
-          {/*    <DesignButton*/}
-          {/*      style={{ color: darkMode ? '#3c3c46' : 'white' }}*/}
-          {/*      onClick={() => {*/}
-          {/*        clearLocalStorage();*/}
-          {/*        navigate.push('/');*/}
-          {/*      }}*/}
-          {/*    >*/}
-          {/*      로그아웃*/}
-          {/*    </DesignButton>*/}
-          {/*    <DesignButton*/}
-          {/*      color={darkMode ? 'green' : 'white'}*/}
-          {/*      style={{ backgroundColor: darkMode ? '#24E1D5' : 'rgba(255, 255, 255, 0.1)' }}*/}
-          {/*      onClick={() => handleMoveAdmin('/admin/team')}*/}
-          {/*    >*/}
-          {/*      대시보드*/}
-          {/*    </DesignButton>*/}
-          {/*  </div>*/}
-          {/*) : (*/}
-          {/*  <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '18px' }}>*/}
-          {/*    <DesignButton*/}
-          {/*      style={{ color: darkMode ? '#3c3c46' : 'white' }}*/}
-          {/*      onClick={() => {*/}
-          {/*        dispatch(isShow({ isShow: true, type: 'login' }));*/}
-          {/*      }}*/}
-          {/*    >*/}
-          {/*      로그인*/}
-          {/*    </DesignButton>*/}
-          {/*    <DesignButton*/}
-          {/*      color={darkMode ? 'white' : 'green'}*/}
-          {/*      style={{ backgroundColor: darkMode ? '#24E1D5' : 'rgba(255, 255, 255, 0.1)' }}*/}
-          {/*      onClick={() => {*/}
-          {/*        dispatch(isShow({ isShow: true, type: 'signup' }));*/}
-          {/*      }}*/}
-          {/*    >*/}
-          {/*      회원가입*/}
-          {/*    </DesignButton>*/}
-          {/*  </div>*/}
-          {/*)}*/}
         </div>
       </Popover>
       <Popover

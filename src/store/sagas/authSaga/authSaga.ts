@@ -12,7 +12,7 @@ import {
   signupAction,
 } from '../../reducers/authReducer';
 import { fetchEmailConfirmApi, fetchEmailResendApi, fetchLoginApi, fetchRefreshToken, fetchSignupApi } from '../../../api/authApi';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { clearCookies } from '../../../common/util/commonFunc';
 import { showToast } from '../../reducers/toastReducer';
 import { isShow } from '../../reducers/modalReducer';
 import { getInviteUserInfo, getUserInfo, updateCancelWithdrawal, updateWithdrawalUserInfo, userReset } from '../../reducers/userReducer';
@@ -129,8 +129,7 @@ function* getRefreshTokenSaga() {
       yield put(teamReset());
       yield put(researchReset());
 
-      // clearLocalStorage();
-      cookies?.remove('accessToken', { path: '/' });
+      clearCookies();
       window.location.href = process.env.NEXT_PUBLIC_DOMAIN;
     }
     if (e?.response?.data?.code === 'E0027') {
@@ -138,8 +137,7 @@ function* getRefreshTokenSaga() {
       yield put(authReset());
       yield put(teamReset());
       yield put(researchReset());
-      cookies?.remove('accessToken', { path: '/' });
-      // clearLocalStorage();
+      clearCookies();
       yield put(showToast({ message: '세션이 만료되어 로그아웃되었습니다.', isShow: true, status: 'warning', duration: 5000 }));
     }
     console.error(e);

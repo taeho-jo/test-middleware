@@ -24,7 +24,7 @@ import ReportLayout from './ReportLayout';
 import { getCommonCode } from '../../store/reducers/commonReducer';
 import { showToast } from '../../store/reducers/toastReducer';
 import { updateFilterFail, updateFilterFlied, updateFilterValues } from '../../store/reducers/reportReducer';
-import { clearLocalStorage } from '../util/commonFunc';
+import { clearCookies } from '../util/commonFunc';
 import { confirmEmailAction, setToken } from '../../store/reducers/authReducer';
 import Tooltip from '../../components/atoms/Tooltip';
 import Dialog from '../../components/molecules/Dialog';
@@ -120,7 +120,7 @@ const Layout = ({ children }: PropsType) => {
         // }
         // else
         if (errorData.code === 'E0007') {
-          clearLocalStorage();
+          clearCookies();
           router.push('/');
         }
       },

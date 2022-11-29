@@ -11,11 +11,11 @@ import {
 import { fetchInviteUserInfoApi, fetchUserInfoApi, fetchUserInfoUpdateApi, fetchWithdrawalUserApi } from '../../../api/userApi';
 import { isShow } from '../../reducers/modalReducer';
 import { getRefreshToken } from '../../reducers/authReducer';
-import { getProductList, getTeamList } from '../../reducers/teamReducer';
 import { Cookies } from 'react-cookie';
 import { showToast } from '../../reducers/toastReducer';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { clearCookies } from '../../../common/util/commonFunc';
 import { fetchChangePasswordApi, fetchResetPasswordEmailApi } from '../../../api/authApi';
+
 const cookies = new Cookies();
 const expires = new Date();
 expires.setDate(expires.getDate() + 9);
@@ -168,7 +168,7 @@ function* withdrawalUserSaga(action) {
     const result = yield call(fetchWithdrawalUserApi, action.payload.sendObject);
     if (result.code === '200') {
       yield put(isShow({ isShow: false, type: '' }));
-      clearLocalStorage();
+      clearCookies();
       yield put(showToast({ message: '회원 탈퇴 처리 되었습니다.', isShow: true, status: 'success', duration: 5000 }));
 
       action.payload.callback.push('/');

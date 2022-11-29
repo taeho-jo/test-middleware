@@ -10,7 +10,7 @@ import LayerPopup from '../../atoms/LayerPopup';
 import { useRouter } from 'next/router';
 import { ReducerType } from '../../../store/reducers';
 import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { clearCookies } from '../../../common/util/commonFunc';
 import LogoText from '/public/assets/png/diby_black.png';
 import { userReset } from '../../../store/reducers/userReducer';
 import { authReset } from '../../../store/reducers/authReducer';
@@ -42,12 +42,7 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
   const handleLogout = useCallback(async () => {
     const channelTalk = new ChannelService();
     channelTalk.shutdown();
-    const cookies = new Cookies();
-    cookies.remove('accessToken', { path: '/' });
-    cookies.remove('emailVerifiedYn', { path: '/' });
-    cookies.remove('firstTimeYn', { path: '/' });
-    cookies.remove('userInfo', { path: '/' });
-    // clearLocalStorage();
+    clearCookies();
 
     dispatch(userReset());
     dispatch(authReset());

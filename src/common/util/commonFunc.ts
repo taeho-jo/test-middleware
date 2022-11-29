@@ -98,18 +98,13 @@ export const handleChoiceResearchStatusTooltip = statsType => {
   }
 };
 
-export const clearLocalStorage = () => {
+export const clearCookies = () => {
   const cookies = new Cookies();
-  // const dispatch = useDispatch();
   cookies.remove('accessToken', { path: '/' });
   cookies.remove('emailVerifiedYn', { path: '/' });
   cookies.remove('firstTimeYn', { path: '/' });
   cookies.remove('userInfo', { path: '/' });
-
-  // dispatch(userReset());
-  // dispatch(authReset());
-  // dispatch(teamReset());
-  // dispatch(researchReset());
+  cookies.remove('userId', { path: '/' });
 };
 
 export const getBackgroundColor = index => {

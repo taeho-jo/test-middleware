@@ -23,7 +23,7 @@ import ReportTemplateHeader from '../../../components/molecules/ReportTemplate/R
 import UiTestFullSummaryTemplate from '../../../components/template/ReportTemplate/UiTestFullSummaryTemplate';
 import useOnScreen from '../../../hooks/useOnScreen';
 import useOnMultipleScreen from '../../../hooks/useOnMultipleScreen';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { clearCookies } from '../../../common/util/commonFunc';
 
 import reportNavigationTop from '/public/assets/png/reportNavigationTop.png';
 import reportNavigationBottom from '/public/assets/png/reportNavigationBotton.png';
@@ -76,7 +76,7 @@ const Report = ({ params }) => {
         dispatch(showToast({ message: `${e.response?.data?.message}`, isShow: true, status: 'warning', duration: 5000 }));
 
         if (errorData?.code === 'E0007' || errorData?.code === 'E0002') {
-          clearLocalStorage();
+          clearCookies();
           // router.push('/');
         }
         router.push('/');
