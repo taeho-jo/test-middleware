@@ -2,7 +2,6 @@ import React from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 // Components
 import { body2_regular, caption1_regular, heading1_bold } from '../../../styles/FontStyles';
-import GridBox from '../../../components/atoms/GridBox';
 import Input from '../../../components/atoms/Input';
 import { useForm } from 'react-hook-form';
 import FlexBox from '../../../components/atoms/FlexBox';

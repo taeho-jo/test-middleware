@@ -49,6 +49,7 @@ const RESEARCH_ROUTE = [
   '/admin/research/recommendation',
   '/admin/research/recommendation/result',
 ];
+const REPORT_ROUTE = ['/admin/report/[id]', '/admin/report/v2/atom-chart'];
 const AUTH_ROUTE = ['/admin/reset-password', '/admin/reset-password-success', '/admin/re-login', '/admin/profile', '/admin/welcome'];
 const LANDING_ROUTE = ['/', '/main', '/usecases/ui', '/usecases/ux', '/usecases/scenario', '/usecases/customer', '/feature', '/tri', '/pricing'];
 
@@ -76,16 +77,8 @@ const Layout2 = ({ children }: PropsType) => {
     const accessToken = cookies.get('accessToken');
     const emailVerifiedYn = cookies.get('emailVerifiedYn');
     const firstTimeYn = cookies.get('firstTimeYn');
-    if (accessToken) {
-      if (emailVerifiedYn === 'N' && firstTimeYn === 'Y') {
-        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
-      }
-      if (emailVerifiedYn === 'Y' && firstTimeYn === 'Y') {
-        router.push('/admin/profile');
-      }
-      if (emailVerifiedYn === 'Y' && firstTimeYn === 'N') {
-        router.push('/admin/team');
-      }
+    if (accessToken && emailVerifiedYn === 'N') {
+      dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
     }
   }, [cookies]);
 
@@ -182,7 +175,7 @@ const Layout2 = ({ children }: PropsType) => {
           )}
 
           {/* ------------------- diby 웹 리포트 페이지 ------------------- */}
-          {router.pathname === '/admin/report/[id]' && <ReportLayout>{children}</ReportLayout>}
+          {REPORT_ROUTE.includes(router?.pathname) && <ReportLayout>{children}</ReportLayout>}
 
           {/* ------------------- 리서치 설계 및 추천 페이지 ------------------- */}
           {RESEARCH_ROUTE?.includes(router?.pathname) && (

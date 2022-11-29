@@ -12,6 +12,9 @@ import HistogramBarChart from './v1/BarChart/HistogramBarChart';
 // Line
 import BasicLineChart from './v1/LineChart/BasicLineChart';
 
+// V2
+import { BarChartV2, StackBarChartV2 } from './v2';
+
 export {
   // -------- v1 -------- //
   BasicPieChart,
@@ -26,5 +29,7 @@ export {
   BasicLineChart,
   // -------- v1 -------- //
   // -------- v2 -------- //
+  BarChartV2,
+  StackBarChartV2,
   // -------- v2 -------- //
 };
