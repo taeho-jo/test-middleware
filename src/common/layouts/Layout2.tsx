@@ -75,8 +75,17 @@ const Layout2 = ({ children }: PropsType) => {
   useEffect(() => {
     const accessToken = cookies.get('accessToken');
     const emailVerifiedYn = cookies.get('emailVerifiedYn');
-    if (accessToken && emailVerifiedYn === 'N') {
-      dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+    const firstTimeYn = cookies.get('firstTimeYn');
+    if (accessToken) {
+      if (emailVerifiedYn === 'N' && firstTimeYn === 'Y') {
+        dispatch(isShow({ isShow: true, type: 'confirmSignup' }));
+      }
+      if (emailVerifiedYn === 'Y' && firstTimeYn === 'Y') {
+        router.push('/admin/profile');
+      }
+      if (emailVerifiedYn === 'Y' && firstTimeYn === 'N') {
+        router.push('/admin/team');
+      }
     }
   }, [cookies]);
 
