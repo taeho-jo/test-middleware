@@ -46,7 +46,6 @@ export default async function (req, res) {
     }
     // 이메일 인증 api 실패
     else {
-      setCookie('test', '!!!!!!!!!!!!!!!!!!!!!!!!!!!!', { req, res, maxAge: 24 * 60 * 60 * 1000 * 9 });
       res.status(500).json({ message: '이메일 인증에 실패했습니다.' });
     }
   } catch (e) {

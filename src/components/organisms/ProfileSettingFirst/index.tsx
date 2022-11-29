@@ -36,8 +36,6 @@ const ProfileSettingFirst = () => {
   const {
     register,
     handleSubmit,
-    reset,
-    watch,
     formState: { errors },
   } = useForm<InputType>({});
   const onSubmit = data => handleUpdateUserInfo('success', data);
@@ -48,15 +46,6 @@ const ProfileSettingFirst = () => {
     cpPosition: '',
     cpSize: '',
   });
-
-  // useEffect(() => {
-  //   console.log(
-  //     watch('phoneNumber')
-  //       .replace(/[^0-9]/g, '')
-  //       .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, '$1-$2-$3')
-  //       .replace(/(\-{1,2})$/g, ''),
-  //   );
-  // }, [watch('phoneNumber')]);
 
   const changePhoneForm = value => {
     const phone = value
@@ -71,7 +60,8 @@ const ProfileSettingFirst = () => {
     (status, data) => {
       const sendObject = {
         userName: data.userName ? data.userName : userInfo.userName,
-        phoneNumber: data.phoneNumber,
+        // TODO: 서버 운영에 배포 시, 함께 배포
+        // phoneNumber: data.phoneNumber,
         funnelsType: selected.funnelsCd ? selected.funnelsCd : null,
         cpPositionType: selected.cpPosition ? selected.cpPosition : null,
         cpSizeType: selected.cpSize ? selected.cpSize : null,
@@ -134,29 +124,30 @@ const ProfileSettingFirst = () => {
               </div>`}
           />
 
-          <Input
-            title={'휴대폰 번호(필수)'}
-            register={register}
-            label={'phoneNumber'}
-            errors={errors}
-            defaultValue={userInfo?.phoneNumber}
-            value={phoneNum}
-            maxlength="13"
-            placeholder={'휴대폰 번호를 입력해주세요.'}
-            style={{ marginBottom: '16px' }}
-            registerOptions={{
-              required: true,
-              onChange: e => changePhoneForm(e.target.value),
-              pattern: /^\d{3}-\d{3,4}-\d{4}$/,
-            }}
-          />
+          {/*TODO: 서버 운영에 배포 시, 함께 배포*/}
+          {/*<Input*/}
+          {/*  title={'휴대폰 번호(필수)'}*/}
+          {/*  register={register}*/}
+          {/*  label={'phoneNumber'}*/}
+          {/*  errors={errors}*/}
+          {/*  defaultValue={userInfo?.phoneNumber}*/}
+          {/*  value={phoneNum}*/}
+          {/*  maxlength="13"*/}
+          {/*  placeholder={'휴대폰 번호를 입력해주세요.'}*/}
+          {/*  style={{ marginBottom: '16px' }}*/}
+          {/*  registerOptions={{*/}
+          {/*    required: true,*/}
+          {/*    onChange: e => changePhoneForm(e.target.value),*/}
+          {/*    pattern: /^\d{3}-\d{3,4}-\d{4}$/,*/}
+          {/*  }}*/}
+          {/*/>*/}
 
-          <AnnouncementBox
-            style={{ padding: '12px 16px' }}
-            content={`<div>
-                휴대폰 번호는 '-'을 제외한 숫자만 입력해주세요.
-              </div>`}
-          />
+          {/*<AnnouncementBox*/}
+          {/*  style={{ padding: '12px 16px' }}*/}
+          {/*  content={`<div>*/}
+          {/*      휴대폰 번호는 '-'을 제외한 숫자만 입력해주세요.*/}
+          {/*    </div>`}*/}
+          {/*/>*/}
 
           <Select
             title={'맡고 계신 직무 (선택)'}
