@@ -8,9 +8,9 @@ export default function middleware(req: NextRequest) {
   } = req;
   const redirectUrl = req.nextUrl.clone();
 
-  const recommendResearchType = cookies.recommendResearchType;
+  const recommendResultSeq = cookies.recommendResultSeq;
 
-  if (recommendResearchType) {
+  if (recommendResultSeq) {
     redirectUrl.pathname = '/admin/research/create';
     return NextResponse.redirect(redirectUrl);
   } else {

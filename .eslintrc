@@ -13,6 +13,7 @@
     "ecmaVersion": 2020
   },
   "rules": {
+    "no-useless-escape": "off",
     "react/react-in-jsx-scope": "off",
     "react-hooks/rules-of-hooks": 0,
     "react/no-unescaped-entities": 0,

@@ -30,3 +30,6 @@ export const INVITE_EMAIL_TEMPLATE =
 // <-------------------- 초대 팀원 인증 이메일 템플릿 변수 --------------------> //
 export const INVITE_CONFIRM_EMAIL_TEMPLATE =
   process.env.NODE_ENV === 'development' ? 'local_invite_confirm_email_template' : process.env.NEXT_PUBLIC_INVITE_CONFIRM_EMAIL_TEMPLATE;
+
+// <-------------------- 쿠키 유효기간 --------------------> //
+export const expirationPeriod = 24 * 60 * 60 * 9;

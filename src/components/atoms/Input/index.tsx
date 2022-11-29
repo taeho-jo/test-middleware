@@ -40,6 +40,7 @@ const Input = ({
   disabled = false,
   style,
   title,
+  value,
   // defaultValue,
   ...props
 }: PropsType) => {
@@ -55,7 +56,7 @@ const Input = ({
         disabled={disabled}
         id={label}
         name={label}
-        // value={'asdfasdf'}
+        value={value}
         // onChange={() => console.log('12312')}
         {...props}
         {...register(label, registerOptions)}
