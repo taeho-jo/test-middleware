@@ -7,11 +7,11 @@ import ModalSubTitle from '../../atoms/ModalSubTitle';
 import ConfirmPopupNextStepBtn from '../../molecules/ConfirmPopupNextStepBtn';
 import { showToast } from '../../../store/reducers/toastReducer';
 import { useMutation, useQueryClient } from 'react-query';
-import { fetchRefreshToken, fetchResetPasswordEmailApi } from '../../../api/authApi';
+import { fetchResetPasswordEmailApi } from '../../../api/authApi';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { PASSWORD_RESET_TEMPLATE } from '../../../common/util/commonVar';
 import { useRouter } from 'next/router';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { clearCookies } from '../../../common/util/commonFunc';
 import { getRefreshToken } from '../../../store/reducers/authReducer';
 import { ReducerType } from '../../../store/reducers';
 
@@ -36,7 +36,7 @@ const ConfirmResetPasswordModal = () => {
         queryClient.invalidateQueries();
       }
       if (errorData.code === 'E0007') {
-        clearLocalStorage();
+        clearCookies();
         router.push('/');
       } else {
         dispatch(showToast({ message: '비밀번호 재설정 메일 재발송에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
