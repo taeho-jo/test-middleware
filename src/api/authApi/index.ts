@@ -50,8 +50,8 @@ export const fetchSignupApi = async sendObject => {
 };
 
 // 이메일 확인 API
-export const fetchEmailConfirmApi = async () => {
-  return await AXIOS_POST('/user/confirm', {});
+export const fetchEmailConfirmApi = async (token?: string) => {
+  return await AXIOS_POST('/user/confirm', {}, token);
 };
 
 // 인증 이메일 재전송 API
@@ -65,8 +65,8 @@ export const fetchResetPasswordEmailApi = async sendObject => {
 };
 
 // 비밀번호 재설정 API
-export const fetchChangePasswordApi = async sendObject => {
-  return await AXIOS_PATCH('/user/password', sendObject);
+export const fetchChangePasswordApi = async (sendObject, token) => {
+  return await AXIOS_PATCH('/user/password', sendObject, token);
 };
 
 // 토큰 refresh API

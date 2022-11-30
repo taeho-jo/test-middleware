@@ -2,26 +2,21 @@ import AXIOS from '../api/axios/axios';
 import { useRouter } from 'next/router';
 import { fetchRefreshToken } from '../api/authApi';
 import { useQueryClient } from 'react-query';
+import { Cookies } from 'react-cookie';
 
 const searchParam = key => {
   return new URLSearchParams(location.search).get(key);
 };
 
 export const getAuthHeader = (accessToken?: string) => {
-  const token = localStorage.getItem('accessToken');
-  const resetToken = sessionStorage.getItem('accessToken');
-  const queryToken = searchParam('token');
+  const cookies = new Cookies();
+  const token = cookies.get('accessToken');
+  // const token = localStorage.getItem('accessToken');
+  // const resetToken = sessionStorage.getItem('accessToken');
+  // const queryToken = searchParam('token');
 
   const header = {
-    Authorization: token
-      ? `Bearer ${token}`
-      : queryToken
-      ? `Bearer ${queryToken}`
-      : resetToken
-      ? `Bearer ${resetToken}`
-      : accessToken
-      ? `Bearer ${accessToken}`
-      : '',
+    Authorization: token ? `Bearer ${token}` : accessToken ? `Bearer ${accessToken}` : null,
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': false,
@@ -39,8 +34,8 @@ export const AXIOS_GET = async (url: string, token?: string) => {
 };
 
 // READ POST 요청 ( 단순 DATA Fetching )
-export const AXIOS_POST = async (url: string, sendObject: any) => {
-  const headers = getAuthHeader();
+export const AXIOS_POST = async (url: string, sendObject: any, token?: string) => {
+  const headers = token ? getAuthHeader(token) : getAuthHeader();
   const { data } = await AXIOS.post(url, sendObject, { headers });
   return data;
 };
@@ -55,8 +50,8 @@ export const AXIOS_PUT = async (url: string, sendObject: any) => {
 };
 
 // PATCH
-export const AXIOS_PATCH = async (url: string, sendObject?: any) => {
-  const headers = getAuthHeader();
+export const AXIOS_PATCH = async (url: string, sendObject?: any, token?: string) => {
+  const headers = token ? getAuthHeader(token) : getAuthHeader();
   const { data } = await AXIOS.patch(url, sendObject, { headers });
   return data;
 };

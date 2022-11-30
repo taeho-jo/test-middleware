@@ -1,6 +1,6 @@
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useState } from 'react';
 // Redux
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // Components
 import PopupBox from '../../atoms/PopupBox';
 import ModalTitle from '../../molecules/ModalTitle';
@@ -12,22 +12,22 @@ import Form from '../../atoms/Form';
 import AnnouncementBox from '../../molecules/AnnouncementBox';
 import TextButton from '../../atoms/Button/TextButton';
 // libraries
-import {useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 // Styles
-import {colors} from '../../../styles/Common.styles';
-import {body3_medium} from '../../../styles/FontStyles';
+import { colors } from '../../../styles/Common.styles';
+import { body3_medium } from '../../../styles/FontStyles';
 // Types
-import {InputType} from '../../../common/types/commonTypes';
-import {ReducerType} from '../../../store/reducers';
-import {fetchCreateTeamApi, fetchTeamListApi} from '../../../api/teamApi';
-import {isShow} from '../../../store/reducers/modalReducer';
-import {useMutation, useQuery, useQueryClient} from 'react-query';
-import {showToast} from '../../../store/reducers/toastReducer';
-import {updateTeamInfo} from '../../../store/reducers/teamReducer';
-import {fetchRefreshToken} from '../../../api/authApi';
-import {useRouter} from 'next/router';
-import {clearLocalStorage} from '../../../common/util/commonFunc';
-import {getRefreshToken} from '../../../store/reducers/authReducer';
+import { InputType } from '../../../common/types/commonTypes';
+import { ReducerType } from '../../../store/reducers';
+import { fetchCreateTeamApi, fetchTeamListApi } from '../../../api/teamApi';
+import { isShow } from '../../../store/reducers/modalReducer';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { showToast } from '../../../store/reducers/toastReducer';
+import { updateTeamInfo } from '../../../store/reducers/teamReducer';
+import { fetchRefreshToken } from '../../../api/authApi';
+import { useRouter } from 'next/router';
+import { clearCookies } from '../../../common/util/commonFunc';
+import { getRefreshToken } from '../../../store/reducers/authReducer';
 
 interface PropsType {
   first?: boolean;
@@ -67,7 +67,7 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
         queryClient.invalidateQueries(['fetchRefreshToken']);
       }
       if (errorData.code === 'E0007') {
-        clearLocalStorage();
+        clearCookies();
         router.push('/');
       } else {
         dispatch(showToast({ message: '팀 생성에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
@@ -88,7 +88,7 @@ const TeamCreateModal = ({ first = false }: PropsType) => {
         queryClient.invalidateQueries(['fetchTeamList']);
       }
       if (errorData.code === 'E0007') {
-        clearLocalStorage();
+        clearCookies();
         router.push('/');
       }
     },

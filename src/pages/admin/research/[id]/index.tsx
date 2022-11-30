@@ -33,10 +33,11 @@ import { showToast } from '../../../../store/reducers/toastReducer';
 import { resetRecommendationResult } from '../../../../store/reducers/researchRecommendationReducer';
 import { Cookies } from 'react-cookie';
 import { setRedirectPath, showDialog } from '../../../../store/reducers/commonReducer';
-import { updateSelectTeamList, updateTeamSeq } from '../../../../store/reducers/teamReducer';
+import { getTeamList, updateSelectTeamList, updateTeamSeq } from '../../../../store/reducers/teamReducer';
 import { colors } from '../../../../styles/Common.styles';
+import { setUserInfo } from '../../../../store/reducers/userReducer';
 
-const ResearchCreate = () => {
+const ResearchCreate = props => {
   const dispatch = useDispatch();
   const CREATE_STEP = useSelector<ReducerType, string>(state => state.researchCreate.step);
   const BASIC_INFO = useSelector<ReducerType, any>(state => state.researchCreate.researchBasicInfo);
@@ -74,12 +75,20 @@ const ResearchCreate = () => {
   const [myRole, setMyRole] = useState<string | null>(null);
 
   useEffect(() => {
-    if (userInfo && selectTeamList) {
+    if (userInfo && !selectTeamList) {
+      dispatch(getTeamList(null));
+    } else if (userInfo && selectTeamList) {
       const memberArr = selectTeamList?.teamMember;
       const myRole = memberArr?.filter(el => el.userId === userInfo.userId)?.[0]?.teamRoleType;
       setMyRole(myRole);
     }
-  }, [userInfo, selectTeamList]);
+  }, [userInfo, selectTeamList, dispatch]);
+
+  useEffect(() => {
+    if (props.data) {
+      dispatch(setUserInfo(JSON.parse(props.data)));
+    }
+  }, [props?.data, dispatch]);
 
   const getResearchMethod = value => {
     if (value === 'UI_DIAGNOSIS') {
@@ -431,12 +440,22 @@ const ResearchCreate = () => {
   );
 };
 
-export default withTokenAuth(ResearchCreate, false);
+export default ResearchCreate;
 
-export function getServerSideProps(context) {
-  return {
-    props: { params: context.params },
-  };
+export async function getServerSideProps({ req, res }) {
+  const { cookies } = req;
+  if (cookies.userInfo) {
+    console.log(cookies.userInfo);
+    return {
+      props: {
+        data: cookies?.userInfo,
+      },
+    };
+  } else {
+    return {
+      props: {},
+    };
+  }
 }
 
 const mainContainer = css`

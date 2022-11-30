@@ -59,7 +59,7 @@ export const authSlice = createSlice({
     getSignupUserInfo: (state, action) => {
       state.signupUserInfo = action.payload;
     },
-    confirmEmailAction: state => {
+    confirmEmailAction: (state, action) => {
       return state;
     },
     resendConfirmEmail: (state, action) => {

@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { Cell, Pie, PieChart, ResponsiveContainer, Sector } from 'recharts';
-import { chart_color, colors } from '../../../../styles/Common.styles';
-import FlexBox from '../../FlexBox';
-import { heading5_regular } from '../../../../styles/FontStyles';
+import { chart_color, colors } from '../../../../../styles/Common.styles';
+import FlexBox from '../../../FlexBox';
+import { heading5_regular } from '../../../../../styles/FontStyles';
 import { css } from '@emotion/react';
 
 interface PropsType {

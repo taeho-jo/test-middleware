@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PopupBox from '../../atoms/PopupBox';
 import ModalTitle from '../../molecules/ModalTitle';
 import Form from '../../atoms/Form';
@@ -22,7 +22,7 @@ import withTokenAuth from '../../../hoc/withTokenAuth';
 import { InputType } from '../../../common/types/commonTypes';
 import Select from '../../atoms/Select';
 import { useMutation } from 'react-query';
-import { setUserInfo } from '../../../store/reducers/userReducer';
+import { setUserInfo, updateUserProfile } from '../../../store/reducers/userReducer';
 import CheckBox from '../../atoms/CheckBox';
 
 const ProfileSettingFirst = () => {
@@ -36,42 +36,46 @@ const ProfileSettingFirst = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<InputType>({});
   const onSubmit = data => handleUpdateUserInfo('success', data);
   const onError = errors => handleProcessingError('fail', errors);
+  const [phoneNum, setPhoneNum] = useState('');
   const [selected, setSelected] = useState({
     funnelsCd: '',
     cpPosition: '',
     cpSize: '',
   });
 
-  const { mutate } = useMutation('fetchUserInfoUpdate', fetchUserInfoUpdateApi, {
-    onSuccess: data => {
-      dispatch(setUserInfo(data.data));
-      router.push('/admin/team');
-    },
-  });
+  const changePhoneForm = value => {
+    const phone = value
+      .replace(/[^0-9]/g, '')
+      .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, '$1-$2-$3')
+      .replace(/(\-{1,2})$/g, '');
+
+    setPhoneNum(phone);
+  };
 
   const handleUpdateUserInfo = useCallback(
     (status, data) => {
-      // loginResponse.mutate(data);
       const sendObject = {
         userName: data.userName ? data.userName : userInfo.userName,
+        // TODO: 서버 운영에 배포 시, 함께 배포
+        // phoneNumber: data.phoneNumber,
         funnelsType: selected.funnelsCd ? selected.funnelsCd : null,
         cpPositionType: selected.cpPosition ? selected.cpPosition : null,
         cpSizeType: selected.cpSize ? selected.cpSize : null,
         firstTimeYn: 'N',
         consentToUseMarketingYn: data.agree ? 'Y' : 'N',
       };
+      console.log(sendObject);
       // TODO: 다 보내야 하는 지 체크 해보아야함.
       // for (const key in sendObject) {
       //   if (sendObject[key] === undefined || sendObject[key] === '' || sendObject[key] === null) {
       //     delete sendObject[key];
       //   }
       // }
-      mutate(sendObject);
+      dispatch(updateUserProfile({ sendObject, callback: router }));
     },
     [selected],
   );
@@ -85,7 +89,6 @@ const ProfileSettingFirst = () => {
     [selected],
   );
 
-  // 로그인 시도 실패
   const handleProcessingError = useCallback((status, errors) => {
     console.log(errors, 'ERRORS');
   }, []);
@@ -114,12 +117,37 @@ const ProfileSettingFirst = () => {
           />
 
           <AnnouncementBox
-            style={{ padding: '12px 16px' }}
+            style={{ padding: '12px 16px', marginBottom: '16px' }}
             content={`<div>
                 닉네임을 입력하지 않을 경우,<br/>
                 회원님의 이메일 계정으로 닉네임이 생성돼요.
               </div>`}
           />
+
+          {/*TODO: 서버 운영에 배포 시, 함께 배포*/}
+          {/*<Input*/}
+          {/*  title={'휴대폰 번호(필수)'}*/}
+          {/*  register={register}*/}
+          {/*  label={'phoneNumber'}*/}
+          {/*  errors={errors}*/}
+          {/*  defaultValue={userInfo?.phoneNumber}*/}
+          {/*  value={phoneNum}*/}
+          {/*  maxlength="13"*/}
+          {/*  placeholder={'휴대폰 번호를 입력해주세요.'}*/}
+          {/*  style={{ marginBottom: '16px' }}*/}
+          {/*  registerOptions={{*/}
+          {/*    required: true,*/}
+          {/*    onChange: e => changePhoneForm(e.target.value),*/}
+          {/*    pattern: /^\d{3}-\d{3,4}-\d{4}$/,*/}
+          {/*  }}*/}
+          {/*/>*/}
+
+          {/*<AnnouncementBox*/}
+          {/*  style={{ padding: '12px 16px' }}*/}
+          {/*  content={`<div>*/}
+          {/*      휴대폰 번호는 '-'을 제외한 숫자만 입력해주세요.*/}
+          {/*    </div>`}*/}
+          {/*/>*/}
 
           <Select
             title={'맡고 계신 직무 (선택)'}
@@ -167,12 +195,10 @@ const ProfileSettingFirst = () => {
             <BasicButton theme={'dark'} type={'submit'} text={'적용하기'} style={{ marginBottom: '18px' }} />
           </FlexBox>
         </Form>
-        {/*<FlexBox justify={'center'} align={'center'}>*/}
-        {/*  <TextButton onClick={handleSkip} textStyle={body3_medium} text={'다음에 할게요.'} />*/}
-        {/*</FlexBox>*/}
       </PopupBox>
     </FlexBox>
   );
 };
 
-export default withTokenAuth(ProfileSettingFirst, false);
+// export default withTokenAuth(ProfileSettingFirst, false);
+export default ProfileSettingFirst;

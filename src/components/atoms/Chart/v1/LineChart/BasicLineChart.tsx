@@ -1,10 +1,10 @@
 import React from 'react';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, LabelList, BarChart, XAxis, YAxis, Bar, Line } from 'recharts';
-import FlexBox from '../../FlexBox';
-import { heading5_bold, heading5_regular } from '../../../../styles/FontStyles';
+import FlexBox from '../../../FlexBox';
+import { heading5_bold, heading5_regular } from '../../../../../styles/FontStyles';
 import { css } from '@emotion/react';
-import { chart_color, colors } from '../../../../styles/Common.styles';
-import { LineChart } from '../../../../stories/atoms/SimpleLineGraph.stories';
+import { chart_color, colors } from '../../../../../styles/Common.styles';
+import { LineChart } from '../../../../../stories/atoms/SimpleLineGraph.stories';
 
 interface PropsType {
   dataList: any;

@@ -4,38 +4,26 @@ import { useDispatch, useSelector } from 'react-redux';
 // Components
 import PopupBox from '../../atoms/PopupBox';
 import ModalTitle from '../../molecules/ModalTitle';
-import ModalSubTitle from '../../atoms/ModalSubTitle';
 import FlexBox from '../../atoms/FlexBox';
 import Input from '../../atoms/Input';
 import BasicButton from '../../atoms/Button/BasicButton';
 import Form from '../../atoms/Form';
-import AnnouncementBox from '../../molecules/AnnouncementBox';
-import TextButton from '../../atoms/Button/TextButton';
 // libraries
 import { useForm } from 'react-hook-form';
 // Styles
 import { colors } from '../../../styles/Common.styles';
-import { body3_medium, caption1_bold, caption1_regular } from '../../../styles/FontStyles';
+import { caption1_bold } from '../../../styles/FontStyles';
 // Types
 import { InputType } from '../../../common/types/commonTypes';
 import { ReducerType } from '../../../store/reducers';
-import { fetchCreateProductApi } from '../../../api/teamApi';
-import { isShow } from '../../../store/reducers/modalReducer';
 import Select from '../../atoms/Select';
-import Icon from '../../atoms/Icon';
-import { useMutation, useQueryClient } from 'react-query';
-import { fetchRefreshToken } from '../../../api/authApi';
-import { showToast } from '../../../store/reducers/toastReducer';
 import { useRouter } from 'next/router';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
 import TextArea from '../../atoms/TextArea';
 import { createTeamProduct } from '../../../store/reducers/teamReducer';
 import { css } from '@emotion/react';
 import CheckBox from '../../atoms/CheckBox';
-import { updateFilterFail } from '../../../store/reducers/reportReducer';
 
 const TeamProductCreateModal = () => {
-  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -46,8 +34,6 @@ const TeamProductCreateModal = () => {
   const {
     register,
     handleSubmit,
-    reset,
-    getValues,
     formState: { errors },
   } = useForm<InputType>({});
 

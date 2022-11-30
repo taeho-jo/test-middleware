@@ -1,11 +1,11 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import FlexBox from '../../FlexBox';
-import { body3_bold, body3_medium, body3_regular, heading5_bold, heading5_medium, heading5_regular } from '../../../../styles/FontStyles';
-import { colors, gery_chart_color } from '../../../../styles/Common.styles';
-import { checkIsInteger } from '../../../../common/util/commonFunc';
+import FlexBox from '../../../FlexBox';
+import { body3_bold, body3_medium, body3_regular, heading5_bold, heading5_medium, heading5_regular } from '../../../../../styles/FontStyles';
+import { colors, gery_chart_color } from '../../../../../styles/Common.styles';
+import { checkIsInteger } from '../../../../../common/util/commonFunc';
 import { css } from '@emotion/react';
-import useOutsideClick from '../../../../hooks/useOutsideClick';
+import useOutsideClick from '../../../../../hooks/useOutsideClick';
 
 interface PropsType {
   dataList: { count?: number; multipleAnswerData?: string[]; name: string; rawData?: string[]; value: number }[];

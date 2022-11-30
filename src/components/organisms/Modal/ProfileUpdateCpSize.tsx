@@ -3,7 +3,6 @@ import PopupBox from '../../atoms/PopupBox';
 import ModalTitle from '../../molecules/ModalTitle';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
 import Form from '../../atoms/Form';
-import Input from '../../atoms/Input';
 import FlexBox from '../../atoms/FlexBox';
 import BasicButton from '../../atoms/Button/BasicButton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,14 +10,11 @@ import { ReducerType } from '../../../store/reducers';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
 import Select from '../../atoms/Select';
-import { useMutation, useQueryClient } from 'react-query';
-import { fetchUserInfoUpdateApi } from '../../../api/userApi';
-import { setUserInfo } from '../../../store/reducers/userReducer';
-import { isShow } from '../../../store/reducers/modalReducer';
-import { showToast } from '../../../store/reducers/toastReducer';
+import { updateUserProfile } from '../../../store/reducers/userReducer';
+import { useRouter } from 'next/router';
 
 const ProfileUpdateCpSize = () => {
-  const queryClient = useQueryClient();
+  const router = useRouter();
   const dispatch = useDispatch();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
   const commonCode = useSelector<ReducerType, any>(state => state.common.commonCode);
@@ -26,19 +22,6 @@ const ProfileUpdateCpSize = () => {
   const cpSizeType = commonCode?.CpSizeType;
   const userCpSize = userInfo?.cpSizeType;
   const currentCpSize = cpSizeType.filter(el => el.key === userCpSize);
-
-  const { mutate } = useMutation('fetchUserInfoUpdate', fetchUserInfoUpdateApi, {
-    onError: (e: any) => {
-      const errorData = e?.response?.data;
-      dispatch(showToast({ message: errorData.message, isShow: true, status: 'warning', duration: 5000 }));
-    },
-    onSuccess: data => {
-      dispatch(setUserInfo(data.data));
-      queryClient.invalidateQueries(['fetchUserInfo', 'layout']);
-      dispatch(isShow({ isShow: false, type: '' }));
-      dispatch(showToast({ message: '회사 규모가 수정되었습니다.', isShow: true, status: 'success', duration: 5000 }));
-    },
-  });
 
   // hook form
   const { handleSubmit } = useForm<InputType>({});
@@ -55,7 +38,7 @@ const ProfileUpdateCpSize = () => {
       const sendObject = {
         cpSizeType: selected.cpSize,
       };
-      mutate(sendObject);
+      dispatch(updateUserProfile({ sendObject, callback: router, type: 'modify' }));
     },
     [selected],
   );

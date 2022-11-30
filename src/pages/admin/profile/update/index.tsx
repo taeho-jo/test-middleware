@@ -6,4 +6,4 @@ const Update = () => {
   return <ProfileUpdate />;
 };
 
-export default withTokenAuth(Update, false);
+export default Update;

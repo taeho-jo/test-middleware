@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, LabelList } from 'recharts';
 import { css } from '@emotion/react';
-import { heading5_bold, heading5_regular } from '../../../../styles/FontStyles';
-import { colors } from '../../../../styles/Common.styles';
-import FlexBox from '../../FlexBox';
+import { heading5_bold, heading5_regular } from '../../../../../styles/FontStyles';
+import { colors } from '../../../../../styles/Common.styles';
+import FlexBox from '../../../FlexBox';
 interface PropsType {
   dataList: { name: string; value: number; data: number }[];
 }

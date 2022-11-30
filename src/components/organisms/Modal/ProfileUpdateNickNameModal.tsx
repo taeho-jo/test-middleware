@@ -10,15 +10,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import { useForm } from 'react-hook-form';
 import { InputType } from '../../../common/types/commonTypes';
-import { useMutation, useQueryClient } from 'react-query';
-import { fetchUserInfoUpdateApi } from '../../../api/userApi';
-import { setUserInfo } from '../../../store/reducers/userReducer';
+import { updateUserProfile } from '../../../store/reducers/userReducer';
 import { useRouter } from 'next/router';
-import { isShow } from '../../../store/reducers/modalReducer';
-import { showToast } from '../../../store/reducers/toastReducer';
 
 const ProfileUpdateNickNameModal = () => {
-  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const userInfo = useSelector<ReducerType, any>(state => state.user.userInfo);
@@ -33,26 +28,11 @@ const ProfileUpdateNickNameModal = () => {
   const onSubmit = data => handleUpdate('success', data);
   const onError = errors => console.log('fail', errors);
 
-  const { mutate } = useMutation('fetchUserInfoUpdate', fetchUserInfoUpdateApi, {
-    onSuccess: data => {
-      dispatch(setUserInfo(data.data));
-      queryClient.invalidateQueries(['fetchUserInfo', 'layout']);
-      dispatch(isShow({ isShow: false, type: '' }));
-      dispatch(showToast({ message: '닉네임이 수정되었습니다.', isShow: true, status: 'success', duration: 5000 }));
-    },
-  });
-
-  // userName : 사용자명
-  // - funnelsCd : 유입경로
-  // - cpPosition : 회사포지션
-  // - cpSize : 회사규모
-  // - firstTimeYn : 최초사용여부
-
   const handleUpdate = useCallback((status, data) => {
     const sendObject = {
       userName: data.nickname,
     };
-    mutate(sendObject);
+    dispatch(updateUserProfile({ sendObject, callback: router, type: 'modify' }));
     // console.log(sendObject);
   }, []);
 

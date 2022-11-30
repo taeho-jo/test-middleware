@@ -7,17 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import { isShow } from '../../../store/reducers/modalReducer';
 import { css } from '@emotion/react';
-import { fetchProductListApi } from '../../../api/teamApi';
 import Icon from '../../atoms/Icon';
 import { useRouter } from 'next/router';
 import { getProductList, TeamProductType, updateSelectProductList } from '../../../store/reducers/teamReducer';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { fetchRefreshToken } from '../../../api/authApi';
 import IconTextButton from '../../atoms/Button/IconTextButton';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
 
 const TeamSettingDetail = () => {
-  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const selectTeamList = useSelector<ReducerType, any>(state => state.team.selectTeamList);
@@ -34,8 +29,6 @@ const TeamSettingDetail = () => {
   useEffect(() => {
     dispatch(getProductList({ teamSeq: String(selectTeamSeq) }));
   }, []);
-
-  // ============ React Query ============ //
 
   return (
     <>

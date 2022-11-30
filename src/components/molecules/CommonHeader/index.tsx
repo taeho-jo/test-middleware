@@ -10,7 +10,7 @@ import LayerPopup from '../../atoms/LayerPopup';
 import { useRouter } from 'next/router';
 import { ReducerType } from '../../../store/reducers';
 import { updateQueryStatus } from '../../../store/reducers/useQueryControlReducer';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { clearCookies } from '../../../common/util/commonFunc';
 import LogoText from '/public/assets/png/diby_black.png';
 import { userReset } from '../../../store/reducers/userReducer';
 import { authReset } from '../../../store/reducers/authReducer';
@@ -42,8 +42,8 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
   const handleLogout = useCallback(async () => {
     const channelTalk = new ChannelService();
     channelTalk.shutdown();
+    clearCookies();
 
-    clearLocalStorage();
     dispatch(userReset());
     dispatch(authReset());
     dispatch(teamReset());
@@ -140,6 +140,9 @@ const CommonHeader = ({ researchHeader = false }: PropsType) => {
 
       {router.pathname !== '/admin/research/recommendation' &&
         router.pathname !== '/admin/research/recommendation/result' &&
+        router.pathname !== '/admin/welcome' &&
+        router.pathname !== '/admin/reset-password' &&
+        router.pathname !== '/admin/reset-password-success' &&
         (isSessionStorage ? null : (
           <FlexBox justify={'flex-end'} align={'center'}>
             <FlexBox justify={'flex-end'} align={'center'} onClick={e => showLayerPopup(e)} style={{ cursor: 'pointer' }}>

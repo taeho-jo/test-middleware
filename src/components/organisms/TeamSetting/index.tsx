@@ -7,15 +7,10 @@ import { css } from '@emotion/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from '../../../store/reducers';
 import { isShow } from '../../../store/reducers/modalReducer';
-import { fetchProductListApi } from '../../../api/teamApi';
 import { useRouter } from 'next/router';
-import { useQuery, useQueryClient } from 'react-query';
-import { fetchRefreshToken } from '../../../api/authApi';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
 import { getProductList } from '../../../store/reducers/teamReducer';
 
 const TeamSetting = () => {
-  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const router = useRouter();
   const showModalFun = useCallback(name => {

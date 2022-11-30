@@ -6,7 +6,7 @@ import LogoText from '/public/assets/png/diby_black.png';
 import RowResolution from '/public/assets/png/rowResolution.png';
 import BasicButton from '../../atoms/Button/BasicButton';
 import ChannelService from '../../../common/util/channelTalk';
-import { clearLocalStorage } from '../../../common/util/commonFunc';
+import { clearCookies } from '../../../common/util/commonFunc';
 import { userReset } from '../../../store/reducers/userReducer';
 import { authReset } from '../../../store/reducers/authReducer';
 import { teamReset } from '../../../store/reducers/teamReducer';
@@ -24,7 +24,7 @@ const LowResolution = () => {
     const channelTalk = new ChannelService();
     channelTalk.shutdown();
 
-    clearLocalStorage();
+    clearCookies();
     dispatch(userReset());
     dispatch(authReset());
     dispatch(teamReset());

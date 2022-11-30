@@ -5,4 +5,5 @@ const Feature = () => {
   return <FeatureComponent />;
 };
 
-export default withTokenAuth(Feature, true);
+// export default withTokenAuth(Feature, true);
+export default Feature;

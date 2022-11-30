@@ -6,4 +6,4 @@ const Scenario = () => {
   return <Solution3 />;
 };
 
-export default withTokenAuth(Scenario, true);
+export default Scenario;

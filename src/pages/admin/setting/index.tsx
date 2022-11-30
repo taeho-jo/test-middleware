@@ -6,4 +6,4 @@ const Setting = () => {
   return <TeamSetting />;
 };
 
-export default withTokenAuth(Setting, false);
+export default Setting;

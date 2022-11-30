@@ -1,23 +1,20 @@
-import React, {Fragment, useCallback, useEffect, useState} from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import PopupBox from '../../atoms/PopupBox';
 import ModalTitle from '../../molecules/ModalTitle';
 import ModalSubTitle from '../../atoms/ModalSubTitle';
 import FlexBox from '../../atoms/FlexBox';
 import BasicButton from '../../atoms/Button/BasicButton';
-import {colors} from '../../../styles/Common.styles';
-import {useDispatch, useSelector} from 'react-redux';
-import {isShow} from '../../../store/reducers/modalReducer';
+import { colors } from '../../../styles/Common.styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { isShow } from '../../../store/reducers/modalReducer';
 import CheckBox from '../../atoms/CheckBox';
-import {useForm} from 'react-hook-form';
-import {ReducerType} from '../../../store/reducers';
+import { useForm } from 'react-hook-form';
+import { ReducerType } from '../../../store/reducers';
 import Input from '../../atoms/Input';
 import Form from '../../atoms/Form';
-import {useMutation} from 'react-query';
-import {fetchWithdrawalUserApi} from '../../../api/userApi';
-import {updateQueryStatus} from '../../../store/reducers/useQueryControlReducer';
-import {useRouter} from 'next/router';
-import {showToast} from '../../../store/reducers/toastReducer';
-import {clearLocalStorage} from '../../../common/util/commonFunc';
+import { useRouter } from 'next/router';
+import { showToast } from '../../../store/reducers/toastReducer';
+import { withdrawalUser } from '../../../store/reducers/userReducer';
 
 const WithdrawalReasonModal = () => {
   const dispatch = useDispatch();
@@ -30,32 +27,13 @@ const WithdrawalReasonModal = () => {
     handleSubmit,
     reset,
     watch,
-    // setFocus,
-    setValue,
     getValues,
-    resetField,
     formState: { errors },
   } = useForm({});
   const onSubmit = data => handleOnSubmit('success', data);
   const onError = errors => console.log('fail', errors);
 
   const [inputStatus, setInputStatus] = useState(true);
-
-  const { mutate } = useMutation('fetchWithdrawalUser', fetchWithdrawalUserApi, {
-    onSuccess: data => {
-      dispatch(isShow({ isShow: false, type: '' }));
-      if (data.message === 'SUCCESS') {
-        clearLocalStorage();
-        dispatch(updateQueryStatus({ name: 'userInfoQuery', status: false }));
-        dispatch(showToast({ message: '회원 탈퇴 처리 되었습니다.', isShow: true, status: 'success', duration: 5000 }));
-        router.push('/');
-      }
-    },
-    onError: error => {
-      console.log(error);
-      dispatch(showToast({ message: '회원 탈퇴 처리에 실패하였습니다.', isShow: true, status: 'warning', duration: 5000 }));
-    },
-  });
 
   const closeModal = useCallback(() => {
     dispatch(isShow({ isShow: false, type: '' }));
@@ -83,7 +61,7 @@ const WithdrawalReasonModal = () => {
           delete sendObject[key];
         }
       }
-      mutate(sendObject);
+      dispatch(withdrawalUser({ sendObject, callback: router }));
     }
   }, []);
 
@@ -127,8 +105,8 @@ const WithdrawalReasonModal = () => {
           </FlexBox>
 
           <FlexBox justify={'space-around'} style={{ padding: '32px 20px 40px' }}>
-            <BasicButton type={'submit'} designBgColor={colors.red} text={'제출하기'} style={{ width: '160px', padding: '16px 52px' }} />
-            <BasicButton onClick={closeModal} theme={'dark'} text={'취소'} style={{ width: '160px', padding: '16px 52px' }} />
+            <BasicButton type={'submit'} theme={'dark'} text={'제출하기'} style={{ width: '160px', padding: '16px 52px' }} />
+            <BasicButton onClick={closeModal} designBgColor={colors.red} text={'취소'} style={{ width: '160px', padding: '16px 52px' }} />
           </FlexBox>
         </Form>
       </PopupBox>
