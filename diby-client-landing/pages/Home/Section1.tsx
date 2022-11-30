@@ -140,7 +140,7 @@ function Section1() {
           <LeftGrid item xs={12} md={7} lg={6}>
             <div style={{ flex: 1 }} />
             <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" style={{ width: 'fix-content' }}>
-              <Title>Do it</Title>
+              <Title>Do it!!!!!!!</Title>
               <SwitchTransition>
                 <CSSTransition key={count} timeout={{ appear: 500, enter: 300, exit: 200 }} classNames="fade">
                   <Title className="gradient-title">{titles[count % titles.length]}</Title>
