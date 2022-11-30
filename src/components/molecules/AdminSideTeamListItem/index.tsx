@@ -36,14 +36,11 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
 
   const [focusItem, setFocusItem] = useState(null);
 
-  const handleChangeTeamName = useCallback(
-    num => {
-      setFocusItem(num - 1);
-      router.push('/admin/setting');
-    },
-    [focusItem],
-  );
-
+  const handleChangeTeamName = (e: any, num: any) => {
+    e.stopPropagation();
+    setFocusItem(num - 1);
+    router.push('/admin/setting');
+  };
   const handToggleInviteModal = useCallback(
     (e, num) => {
       e.stopPropagation();
@@ -81,7 +78,7 @@ const AdminSideTeamListItem = ({ teamName = 'dbdlab의 팀', memberList, parents
               ? () => {
                   return;
                 }
-              : () => handleChangeTeamName(parentsIndex)
+              : e => handleChangeTeamName(e, parentsIndex)
           }
           style={{ cursor: modalType === 'firstCreateTeam' || modalType === 'inviteTeamMember' ? 'not-allowed' : 'pointer' }}
         />
