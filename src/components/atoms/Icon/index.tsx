@@ -58,7 +58,7 @@ interface PropsType {
   size?: number;
   style?: any;
   iconColor?: string;
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
   width?: string;
   height?: string;
 }

@@ -310,8 +310,10 @@ const TeamDashboard = () => {
   };
 
   useEffect(() => {
-    dispatch(getTeamList(null));
-  }, [dispatch]);
+    if (!selectTeamSeq) {
+      dispatch(getTeamList(null));
+    }
+  }, [dispatch, selectTeamSeq]);
 
   return (
     <>

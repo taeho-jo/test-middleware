@@ -1,4 +1,4 @@
-import BarChartV2 from './BarChartV2';
+import VerticalBarChartV2 from './VerticalBarChartV2';
 import StackBarChartV2 from './StackBarChartV2';
 
-export { BarChartV2, StackBarChartV2 };
+export { VerticalBarChartV2, StackBarChartV2 };
