@@ -34,6 +34,7 @@ export default function middleware(req: NextRequest) {
         return NextResponse.next();
       } else {
         redirectUrl.pathname = '/';
+
         return NextResponse.redirect(redirectUrl);
       }
     }
@@ -48,7 +49,9 @@ export default function middleware(req: NextRequest) {
       return NextResponse.next();
     } else {
       redirectUrl.pathname = '/';
-      return NextResponse.redirect(redirectUrl);
+      redirectUrl.searchParams.delete('teamSeq');
+      redirectUrl.searchParams.delete('isShare');
+      return NextResponse.redirect(`${redirectUrl}`);
     }
   }
 }
