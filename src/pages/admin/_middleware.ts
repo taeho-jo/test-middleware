@@ -22,7 +22,6 @@ export default function middleware(req: NextRequest) {
   const emailVerifiedYn = cookies.emailVerifiedYn;
   const currentPath = req?.nextUrl?.pathname;
   const redirectUrl = req.nextUrl.clone();
-  const isShare = searchParams.get('teamSeq');
 
   // 토큰이 있는 경우
   if (accessToken) {
