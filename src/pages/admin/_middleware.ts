@@ -20,8 +20,6 @@ export default function middleware(req: NextRequest) {
 
   const accessToken = cookies.accessToken;
   const emailVerifiedYn = cookies.emailVerifiedYn;
-  const resetPasswordToken = cookies.resetPasswordToken;
-  const firstTimeYn = cookies.firstTimeYn;
   const currentPath = req?.nextUrl?.pathname;
   const redirectUrl = req.nextUrl.clone();
   const isShare = searchParams.get('teamSeq');
